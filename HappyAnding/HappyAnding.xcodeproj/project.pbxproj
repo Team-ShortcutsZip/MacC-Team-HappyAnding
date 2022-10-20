@@ -32,6 +32,14 @@
 		87E99CBD28FFF2A1009B691F /* WriteShortcutdescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CBC28FFF2A1009B691F /* WriteShortcutdescriptionView.swift */; };
 		87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CBE28FFF2AB009B691F /* WriteShortcutTagView.swift */; };
 		87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC028FFF2B5009B691F /* CategoryModalView.swift */; };
+		87E99CC429014572009B691F /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC329014572009B691F /* Color+Extension.swift */; };
+		87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC6290145AD009B691F /* ShortcutCell.swift */; };
+		87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC8290145B8009B691F /* ListShortcutView.swift */; };
+		87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCA290145C4009B691F /* UserCurationCell.swift */; };
+		87E99CCD290145CC009B691F /* AdminCurationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCC290145CC009B691F /* AdminCurationCell.swift */; };
+		87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCE290145D5009B691F /* PaletteCell.swift */; };
+		87E99CD1290145DE009B691F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD0290145DE009B691F /* PaletteView.swift */; };
+		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +88,14 @@
 		87E99CBC28FFF2A1009B691F /* WriteShortcutdescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteShortcutdescriptionView.swift; sourceTree = "<group>"; };
 		87E99CBE28FFF2AB009B691F /* WriteShortcutTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteShortcutTagView.swift; sourceTree = "<group>"; };
 		87E99CC028FFF2B5009B691F /* CategoryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModalView.swift; sourceTree = "<group>"; };
+		87E99CC329014572009B691F /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		87E99CC6290145AD009B691F /* ShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCell.swift; sourceTree = "<group>"; };
+		87E99CC8290145B8009B691F /* ListShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListShortcutView.swift; sourceTree = "<group>"; };
+		87E99CCA290145C4009B691F /* UserCurationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationCell.swift; sourceTree = "<group>"; };
+		87E99CCC290145CC009B691F /* AdminCurationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCurationCell.swift; sourceTree = "<group>"; };
+		87E99CCE290145D5009B691F /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
+		87E99CD0290145DE009B691F /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
+		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +146,7 @@
 		87E99C6C28F94EA6009B691F /* HappyAnding */ = {
 			isa = PBXGroup;
 			children = (
+				87E99CC22901454D009B691F /* Extensions */,
 				87E99C9828FFF1D2009B691F /* Views */,
 				87E99C7128F94EA8009B691F /* Assets.xcassets */,
 				87E99C7328F94EA8009B691F /* Preview Content */,
@@ -177,6 +194,7 @@
 		87E99C9828FFF1D2009B691F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				87E99CC52901457B009B691F /* Components */,
 				87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */,
 				87E99C6F28F94EA6009B691F /* TabView.swift */,
 				87E99C9B28FFF1F4009B691F /* ExploreShortcutViews */,
@@ -235,6 +253,28 @@
 				87E99CA028FFF225009B691F /* MyPageView.swift */,
 			);
 			path = MyPageViews;
+			sourceTree = "<group>";
+		};
+		87E99CC22901454D009B691F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				87E99CC329014572009B691F /* Color+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		87E99CC52901457B009B691F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				87E99CC6290145AD009B691F /* ShortcutCell.swift */,
+				87E99CC8290145B8009B691F /* ListShortcutView.swift */,
+				87E99CCA290145C4009B691F /* UserCurationCell.swift */,
+				87E99CCC290145CC009B691F /* AdminCurationCell.swift */,
+				87E99CCE290145D5009B691F /* PaletteCell.swift */,
+				87E99CD0290145DE009B691F /* PaletteView.swift */,
+				87E99CD22901465F009B691F /* ValidationCheckTextField.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,13 +408,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				87E99CAF28FFF26A009B691F /* EditShortcutView.swift in Sources */,
+				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87E99CB728FFF288009B691F /* WriteCurationColorView.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
+				87E99CD1290145DE009B691F /* PaletteView.swift in Sources */,
 				87E99CA728FFF23E009B691F /* ListCurationView.swift in Sources */,
 				87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */,
 				87E99C9F28FFF21B009B691F /* SettingView.swift in Sources */,
 				87E99CA928FFF24F009B691F /* ExploreShortcutView.swift in Sources */,
 				87E99CA128FFF225009B691F /* MyPageView.swift in Sources */,
+				87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */,
+				87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */,
 				87E99CAB28FFF256009B691F /* ExploreCategoryView.swift in Sources */,
 				87E99CBB28FFF298009B691F /* IconModalView.swift in Sources */,
 				87E99C7028F94EA6009B691F /* TabView.swift in Sources */,
@@ -382,9 +426,13 @@
 				87E99CB328FFF27C009B691F /* SelectShortcutModalView.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				87E99CB928FFF291009B691F /* WriteShortcutTitleView.swift in Sources */,
+				87E99CCD290145CC009B691F /* AdminCurationCell.swift in Sources */,
 				87E99CBD28FFF2A1009B691F /* WriteShortcutdescriptionView.swift in Sources */,
+				87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */,
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
+				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
+				87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
 				87E99CA528FFF238009B691F /* ReadCurationView.swift in Sources */,
 			);
