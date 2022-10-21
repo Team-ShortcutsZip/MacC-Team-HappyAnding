@@ -55,6 +55,13 @@ extension Color {
     static let Gray02 = Color("Gray02")
     static let Khaki02 = Color("Khaki02")
     static let Brown02 = Color("Brown02")
+    
+    static func fetchGradient(colorNames: [String]) -> LinearGradient {
+        var colors = colorNames.map {
+            Color($0)
+        }
+        return LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
 }
 
 extension LinearGradient{
