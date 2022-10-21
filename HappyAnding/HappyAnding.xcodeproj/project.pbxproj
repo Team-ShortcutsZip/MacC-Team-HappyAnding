@@ -40,6 +40,7 @@
 		87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCE290145D5009B691F /* PaletteCell.swift */; };
 		87E99CD1290145DE009B691F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD0290145DE009B691F /* PaletteView.swift */; };
 		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
+		A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0029027BDE004A85A6 /* TabRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		87E99CCE290145D5009B691F /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
 		87E99CD0290145DE009B691F /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
 		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
+		A04ACB0029027BDE004A85A6 /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,9 +196,9 @@
 		87E99C9828FFF1D2009B691F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A04ACB0229027F4F004A85A6 /* TabView */,
 				87E99CC52901457B009B691F /* Components */,
 				87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */,
-				87E99C6F28F94EA6009B691F /* TabView.swift */,
 				87E99C9B28FFF1F4009B691F /* ExploreShortcutViews */,
 				87E99C9728FFF1C0009B691F /* WriteShortcutViews */,
 				87E99C9A28FFF1E9009B691F /* ShortcutDetailViews */,
@@ -275,6 +277,15 @@
 				87E99CD22901465F009B691F /* ValidationCheckTextField.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		A04ACB0229027F4F004A85A6 /* TabView */ = {
+			isa = PBXGroup;
+			children = (
+				87E99C6F28F94EA6009B691F /* TabView.swift */,
+				A04ACB0029027BDE004A85A6 /* TabRouter.swift */,
+			);
+			path = TabView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,6 +428,7 @@
 				87E99C9F28FFF21B009B691F /* SettingView.swift in Sources */,
 				87E99CA928FFF24F009B691F /* ExploreShortcutView.swift in Sources */,
 				87E99CA128FFF225009B691F /* MyPageView.swift in Sources */,
+				A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */,
 				87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */,
 				87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */,
 				87E99CAB28FFF256009B691F /* ExploreCategoryView.swift in Sources */,
