@@ -78,7 +78,7 @@ struct ShortcutCell: View {
         
         ZStack(alignment: .center) {
             Rectangle()
-                .fill(Color.blue)
+                .fill(Color.fetchGradient(color: color))
                 .cornerRadius(8)
                 .frame(width: 50, height: 50)
             
@@ -134,6 +134,6 @@ struct ShortcutCell: View {
 
 struct ShortcutCell_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutCell(color: "green", sfSymbol: "books.vertical.fill", name: "Name", description: "Description", numberOfDownload: 102, downloadLink: "https")
+        ShortcutCell(color: "Red", sfSymbol: "books.vertical.fill", name: "Name", description: "Description", numberOfDownload: 102, downloadLink: "https")
     }
 }
