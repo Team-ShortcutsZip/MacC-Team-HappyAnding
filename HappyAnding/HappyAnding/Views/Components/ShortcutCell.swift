@@ -51,6 +51,7 @@ struct ShortcutCell: View {
                 EmptyView()
             }
             .opacity(0)
+            
             HStack {
                 icon
                 shortcutInfo
@@ -58,7 +59,6 @@ struct ShortcutCell: View {
                 VStack {
                     downloadInfo
                 }
-                .background(Color.red)
                 .onTapGesture {
                     
                     // TODO: 앱 여는 기능 추가
@@ -67,9 +67,7 @@ struct ShortcutCell: View {
                 }
             }
             .padding(.vertical, 20)
-            .background(
-                background
-            )
+            .background( background )
             .padding(.horizontal, 16)
         }
         .padding(.top, 12)
@@ -94,10 +92,12 @@ struct ShortcutCell: View {
         
         VStack(alignment: .leading, spacing: 4) {
             Text(name)
-                .foregroundColor(.black)
+                .Headline()
+                .foregroundColor(.Gray5)
                 .lineLimit(1)
             Text(description)
-                .foregroundColor(.gray)
+                .Footnote()
+                .foregroundColor(.Gray3)
                 .lineLimit(2)
         }
         .padding(.horizontal, 12)
@@ -107,12 +107,13 @@ struct ShortcutCell: View {
         
         VStack(alignment: numberOfDownload > 999 ? .trailing : .center, spacing: 0) {
             Image(systemName: "arrow.down.app.fill")
-                .foregroundColor(.gray)
+                .foregroundColor(.Gray4)
                 .font(.system(size: 24, weight: .medium))
                 .frame(height: 32)
             
             Text(String(numberOfDownload))
-                .foregroundColor(.gray)
+                .Footnote()
+                .foregroundColor(.Gray4)
                 .font(.system(size: 13, weight: .regular))
         }
         .padding(.leading, 12)
@@ -122,10 +123,10 @@ struct ShortcutCell: View {
     var background: some View {
         
         RoundedRectangle(cornerRadius: 12)
-            .fill(.white)
+            .fill(Color.White)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.gray)
+                    .stroke(Color.Gray1)
             )
     }
 }
