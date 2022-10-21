@@ -40,6 +40,7 @@
 		87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCE290145D5009B691F /* PaletteCell.swift */; };
 		87E99CD1290145DE009B691F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD0290145DE009B691F /* PaletteView.swift */; };
 		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
+		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		87E99CCE290145D5009B691F /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
 		87E99CD0290145DE009B691F /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
 		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
+		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				87E99CC329014572009B691F /* Color+Extension.swift */,
+				F99569172901DC4D0060AAEF /* Font+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */,
 				87E99CAB28FFF256009B691F /* ExploreCategoryView.swift in Sources */,
 				87E99CBB28FFF298009B691F /* IconModalView.swift in Sources */,
+				F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */,
 				87E99C7028F94EA6009B691F /* TabView.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				87E99CB328FFF27C009B691F /* SelectShortcutModalView.swift in Sources */,
