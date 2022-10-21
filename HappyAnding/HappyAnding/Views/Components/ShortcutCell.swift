@@ -75,8 +75,10 @@ struct ShortcutCell: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(name)
                 .foregroundColor(.black)
+                .lineLimit(1)
             Text(description)
                 .foregroundColor(.gray)
+                .lineLimit(2)
         }
         .padding(.horizontal, 12)
     }
