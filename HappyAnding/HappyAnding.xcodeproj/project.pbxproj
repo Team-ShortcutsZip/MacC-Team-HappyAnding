@@ -40,6 +40,7 @@
 		87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCE290145D5009B691F /* PaletteCell.swift */; };
 		87E99CD1290145DE009B691F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD0290145DE009B691F /* PaletteView.swift */; };
 		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
+		F911F0E02902E31700A69732 /* EShortcutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F911F0DF2902E31700A69732 /* EShortcutModel.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +98,7 @@
 		87E99CCE290145D5009B691F /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
 		87E99CD0290145DE009B691F /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
 		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
+		F911F0DF2902E31700A69732 /* EShortcutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EShortcutModel.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -253,6 +255,7 @@
 			children = (
 				87E99C9E28FFF21B009B691F /* SettingView.swift */,
 				87E99CA028FFF225009B691F /* MyPageView.swift */,
+				F911F0DF2902E31700A69732 /* EShortcutModel.swift */,
 			);
 			path = MyPageViews;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */,
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
 				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
+				F911F0E02902E31700A69732 /* EShortcutModel.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
 				87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
