@@ -88,7 +88,7 @@ struct UserCurationCell: View {
                     
                     //단축어가 4개 이상인 경우에만 그리는 아이콘
                     if shortcuts.count > 4 {
-                        ZStack(alignment: .center){
+                        ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Color.Gray2)
                                 .cornerRadius(8)
@@ -112,7 +112,7 @@ struct UserCurationCell: View {
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, subtitle == nil ? 20 : 0)
-                if let subtitle{
+                if let subtitle {
                     Text(subtitle)
                         .Body2()
                         .foregroundColor(Color.Gray5)
