@@ -22,7 +22,7 @@ enum Tab: CaseIterable {
     
     var systemImage: String {
         switch self {
-        case .exploreShortcut : return "quare.stack.3d.up.fill"
+        case .exploreShortcut : return "square.stack.3d.up.fill"
         case .collect: return "folder.fill"
         case .myPage: return "person.crop.circle.fill"
         }

@@ -11,7 +11,7 @@ import SwiftUI
 struct HappyAndingApp: App {
     var body: some Scene {
         WindowGroup {
-            TabView()
+            ShortcutTabView()
         }
     }
 }

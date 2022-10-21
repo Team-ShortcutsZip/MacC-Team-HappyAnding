@@ -13,7 +13,7 @@ struct ShortcutTabView: View {
             ForEach(Tab.allCases, id: \.self) { tab in
                 tab.view
                     .tabItem {
-                        Label(tab.tabName, image: tab.systemImage)
+                        Label(tab.tabName, systemImage: tab.systemImage)
                     }
             }
         }
