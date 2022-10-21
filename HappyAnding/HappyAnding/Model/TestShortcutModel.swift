@@ -104,7 +104,7 @@ extension Shortcut {
     }
 }
 
-class getShortcuts: ObservableObject {
+class fetchShortcuts: ObservableObject {
     
     @Published var data = [Shortcut]()
     @Published var count = 1
@@ -149,7 +149,7 @@ extension UserCuration {
                 UserCuration(
                     title: title.randomElement() ?? "title",
                     subtitle: subtitle.randomElement(),
-                    shortcuts: getShortcuts().data
+                    shortcuts: fetchShortcuts().data
                 )
             )
         }
