@@ -81,7 +81,7 @@ struct UserCurationCell: View {
                                     .frame(width: 36, height: 36)
                                 Image(systemName: shortcuts[index].symbol)
                                     .foregroundColor(Color.White)
-                                    .font(.system(size: 12))
+                                    .Footnote()
                             }
                         }
                     }
