@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+extension String {
+    
+    func converToColor() -> Color {
+        Color(self)
+    }
+}
+
 extension Color {
     ///System Colors
     static let Background = Color("Background")
