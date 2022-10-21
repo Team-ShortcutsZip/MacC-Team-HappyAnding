@@ -19,6 +19,15 @@ import SwiftUI
  - description: 한 줄 설명
  - numberOfDownload: 다운로드 수
  - downloadLink: 다운로드 링크
+ 
+ - description:
+ - 해당 뷰를 리스트로 사용할 때 다음과 같은 속성을 작성해주세요
+ 
+ ```
+ .listRowInsets(EdgeInsets())
+ .listRowSeparator(.hidden)
+ ```
+ - list의 경우, plain으로 설정해주세요
  */
 
 
@@ -46,15 +55,25 @@ struct ShortcutCell: View {
                 icon
                 shortcutInfo
                 Spacer()
-                downloadInfo
+                VStack {
+                    downloadInfo
+                }
+                .background(Color.red)
+                .onTapGesture {
+                    
+                    // TODO: 앱 여는 기능 추가
+                    
+                    print("\(downloadLink)로 이동합니다.")
+                }
             }
             .padding(.vertical, 20)
-            .padding(.horizontal, 36)
             .background(
                 background
             )
-            .buttonStyle(PlainButtonStyle())
+            .padding(.horizontal, 16)
         }
+        .padding(.top, 12)
+        .background(Color.white)
     }
     
     var icon: some View {
@@ -68,6 +87,7 @@ struct ShortcutCell: View {
             Image(systemName: sfSymbol)
                 .foregroundColor(.white)
         }
+        .padding(.leading, 20)
     }
     
     var shortcutInfo: some View {
@@ -95,6 +115,8 @@ struct ShortcutCell: View {
                 .foregroundColor(.gray)
                 .font(.system(size: 13, weight: .regular))
         }
+        .padding(.leading, 12)
+        .padding(.trailing, 18)
     }
     
     var background: some View {
@@ -105,7 +127,6 @@ struct ShortcutCell: View {
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(Color.gray)
             )
-            .padding(.horizontal, 16)
     }
 }
 
