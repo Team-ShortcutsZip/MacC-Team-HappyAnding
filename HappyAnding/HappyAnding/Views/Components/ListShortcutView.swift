@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+/// 카테고리에서 해당 뷰를 호출할 때에는 categoryName에 카테고리 이름을 넣어주세요
 struct ListShortcutView: View {
     
     @ObservedObject var shortcutData = fetchData()
     
-    let title: String
+    var categoryName: String?
     
     var body: some View {
         
@@ -55,7 +56,7 @@ struct ListShortcutView: View {
                 .padding(.horizontal, 16)
                 .foregroundColor(.Gray1)
             
-            Text(title)
+            Text("\(categoryName ?? "") 1위 ~ 100위")
                 .Body2()
                 .foregroundColor(.Gray5)
         }
@@ -64,7 +65,7 @@ struct ListShortcutView: View {
 
 struct ListShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ListShortcutView(title: "1위 ~ 100위")
+        ListShortcutView()
     }
 }
 
