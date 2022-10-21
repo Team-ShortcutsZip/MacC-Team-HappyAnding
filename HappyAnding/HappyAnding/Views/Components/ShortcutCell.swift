@@ -85,7 +85,7 @@ struct ShortcutCell: View {
     
     var downloadInfo: some View {
         
-        VStack(spacing: 0) {
+        VStack(alignment: numberOfDownload > 999 ? .trailing : .center, spacing: 0) {
             Image(systemName: "arrow.down.app.fill")
                 .foregroundColor(.gray)
                 .font(.system(size: 24, weight: .medium))
