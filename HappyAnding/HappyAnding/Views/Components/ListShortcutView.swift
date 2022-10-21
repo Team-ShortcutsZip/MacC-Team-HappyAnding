@@ -19,6 +19,8 @@ struct ListShortcutView: View {
             
             header
                 .listRowBackground(Color.Background)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets())
             
             ForEach(0..<shortcutData.data.count, id: \.self) { index in
                 ShortcutCell(color: self.shortcutData.data[index].color,
