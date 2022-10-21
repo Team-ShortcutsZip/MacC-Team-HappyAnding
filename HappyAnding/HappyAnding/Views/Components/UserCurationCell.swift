@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//MARK: - 테스트를 위한 모델 구현 (추후 삭제 필요)
+// TODO: 테스트를 위한 모델 구현 (추후 삭제 필요)
 
 struct EShortCurtaionModel {
     var title: String
