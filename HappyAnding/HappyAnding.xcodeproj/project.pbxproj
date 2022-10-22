@@ -247,11 +247,8 @@
 		87E99C9B28FFF1F4009B691F /* ExploreShortcutViews */ = {
 			isa = PBXGroup;
 			children = (
-				87E99CA828FFF24F009B691F /* ExploreShortcutView.swift */,
+				A04ACB0F29044E52004A85A6 /* ExploreShortcutView */,
 				87E99CAA28FFF256009B691F /* ExploreCategoryView.swift */,
-				A04ACB0929041CD8004A85A6 /* DownloadRankView.swift */,
-				A04ACB0B29041CEE004A85A6 /* LovedShortcutView.swift */,
-				A04ACB0D29041D61004A85A6 /* CategoryView.swift */,
 			);
 			path = ExploreShortcutViews;
 			sourceTree = "<group>";
@@ -307,6 +304,17 @@
 				A04ACB0029027BDE004A85A6 /* TabRouter.swift */,
 			);
 			path = TabView;
+			sourceTree = "<group>";
+		};
+		A04ACB0F29044E52004A85A6 /* ExploreShortcutView */ = {
+			isa = PBXGroup;
+			children = (
+				87E99CA828FFF24F009B691F /* ExploreShortcutView.swift */,
+				A04ACB0B29041CEE004A85A6 /* LovedShortcutView.swift */,
+				A04ACB0929041CD8004A85A6 /* DownloadRankView.swift */,
+				A04ACB0D29041D61004A85A6 /* CategoryView.swift */,
+			);
+			path = ExploreShortcutView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
