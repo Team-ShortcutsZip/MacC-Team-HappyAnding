@@ -41,8 +41,9 @@
 		87E99CD1290145DE009B691F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD0290145DE009B691F /* PaletteView.swift */; };
 		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
 		A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0029027BDE004A85A6 /* TabRouter.swift */; };
+		A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */; };
+		A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,8 +101,9 @@
 		87E99CD0290145DE009B691F /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
 		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
 		A04ACB0029027BDE004A85A6 /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
+		A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardView.swift; sourceTree = "<group>"; };
+		A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardListView.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,8 @@
 		87E99CC52901457B009B691F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */,
+				A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */,
 				87E99CC6290145AD009B691F /* ShortcutCell.swift */,
 				87E99CC8290145B8009B691F /* ListShortcutView.swift */,
 				87E99CCA290145C4009B691F /* UserCurationCell.swift */,
@@ -428,10 +432,12 @@
 				87E99CB728FFF288009B691F /* WriteCurationColorView.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				87E99CD1290145DE009B691F /* PaletteView.swift in Sources */,
+				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
 				87E99CA728FFF23E009B691F /* ListCurationView.swift in Sources */,
 				87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */,
 				87E99C9F28FFF21B009B691F /* SettingView.swift in Sources */,
 				87E99CA928FFF24F009B691F /* ExploreShortcutView.swift in Sources */,
+				A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */,
 				87E99CA128FFF225009B691F /* MyPageView.swift in Sources */,
 				A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */,
 				87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */,
