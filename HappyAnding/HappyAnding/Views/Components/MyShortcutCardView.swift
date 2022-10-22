@@ -28,6 +28,7 @@ struct MyShortcutCardView: View {
                     .Subtitle()
                     .frame(alignment: .leading)
                     .foregroundColor(Color.Gray1)
+                    .lineLimit(3)
                 Spacer()
             }
         }

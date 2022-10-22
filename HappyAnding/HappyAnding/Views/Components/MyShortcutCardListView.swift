@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-// MARK: 더미데이터를 위한 임시 구조체. 나중에 지울꺼
-/// PR날리고 머지되면 나중에 컴파일 에러날까봐 Shortcut에서 MyShortcut으로 이름 바꿈
-///  더미데이터 생성 머지되면 바로 지울예정!
+// TODO: 더미데이터를 위한 임시 구조체. 더미데이터 머지 후 삭제 필요
+// PR날리고 머지되면 나중에 컴파일 에러날까봐 Shortcut에서 MyShortcut으로 이름 바꿈
 
 
 struct MyShortcut: Identifiable {
@@ -117,7 +116,7 @@ struct MyShortcutCardListView: View {
                 Text("내 단축어")
                     .Title2()
                     .foregroundColor(Color.Gray5)
-                .frame(maxWidth: .infinity,alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
                 
