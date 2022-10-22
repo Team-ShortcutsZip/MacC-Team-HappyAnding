@@ -10,6 +10,14 @@ import SwiftUI
 /*
  어드민 큐레이션 썸네일입니다.
  
+ #parameters
+ - curationThumbnail: 썸네일 배경의 이미지명
+ - title: 큐레이션 제목
+ - subtitle: 큐레이션 부제목
+ 
+ #description
+ - 어드민 큐레이션 데이터가 만들어진 후 데이터 연결이 필요합니다.
+ - padding 값이 설정되어있지 않습니다. 사용 시 padding 설정 후 사용해주세요.
  */
 
 struct AdminCurationCell: View {
@@ -17,6 +25,8 @@ struct AdminCurationCell: View {
     let curationThumbnail: String
     let title: String
     let subtitle: String
+    
+    let cornerRadius: CGFloat = 12
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -47,10 +57,14 @@ struct AdminCurationCell: View {
     }
     
     var backgroundImage: some View {
-        Image(curationThumbnail)
-            .resizable()
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .opacity(0.7)
+        ZStack {
+            Image(curationThumbnail)
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .foregroundColor(.white)
+                .opacity(0.4)
+        }
     }
 }
 
