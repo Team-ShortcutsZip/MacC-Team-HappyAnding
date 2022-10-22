@@ -35,6 +35,7 @@ struct DownloadRankView: View {
                 }
             }
         }
+        .background(Color.Background)
     }
 }
 

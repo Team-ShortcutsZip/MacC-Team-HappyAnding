@@ -39,6 +39,7 @@ struct LovedShortcutView: View {
                 }
             }
         }
+        .background(Color.Background)
     }
 }
 

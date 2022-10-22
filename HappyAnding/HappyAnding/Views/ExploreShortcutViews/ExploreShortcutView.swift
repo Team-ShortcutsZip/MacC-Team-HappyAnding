@@ -13,11 +13,15 @@ struct ExploreShortcutView: View {
             
             ScrollView {
                 MyShortcutCardListView()
+                    .padding(.bottom, 32)
                 DownloadRankView()
+                    .padding(.bottom, 32)
                 CategoryView()
+                    .padding(.bottom, 32)
                 LovedShortcutView()
             }
             .navigationTitle("단축어 둘러보기")
+            .background(Color.Background)
         }
     }
 }
