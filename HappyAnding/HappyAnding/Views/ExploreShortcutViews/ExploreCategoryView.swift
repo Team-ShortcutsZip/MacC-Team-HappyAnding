@@ -13,73 +13,71 @@ struct ExploreCategoryView: View {
     let lovedShortcuts = Shortcut.fetchData(number: 10)
     let rankingShortcuts = Shortcut.fetchData(number: 10)
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    Text("카테고리에 대한 설명이 조금 들어가면 좋을 것 같아요 가나다라마바사")
-                        .foregroundColor(.Gray5)
-                        .Body2()
-                        .padding(16)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .background(Color.Gray1)
-                                .cornerRadius(12)
+        VStack {
+            List {
+                Text("카테고리에 대한 설명이 조금 들어가면 좋을 것 같아요 가나다라마바사")
+                    .foregroundColor(.Gray5)
+                    .Body2()
+                    .padding(16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .background(Color.Gray1)
+                            .cornerRadius(12)
+                    )
+                    .listRowInsets(
+                        EdgeInsets(
+                            top: 20,
+                            leading: 16,
+                            bottom: 0,
+                            trailing: 16
                         )
-                        .listRowInsets(
-                            EdgeInsets(
-                                top: 20,
-                                leading: 16,
-                                bottom: 0,
-                                trailing: 16
-                            )
-                        )
-                        .listRowSeparator(.hidden)
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.Background)
+                Section() {
+                    ListHeader(title: "다운로드 순위")
+                        .padding(.top, 20)
                         .listRowBackground(Color.Background)
-                    Section() {
-                        ListHeader(title: "다운로드 순위")
-                            .padding(.top, 20)
-                            .listRowBackground(Color.Background)
-                        ForEach(rankingShortcuts.indices, id: \.self) { index in
-                            if index < 3 {
-                                ShortcutCell(
-                                    color: rankingShortcuts[index].color,
-                                    sfSymbol: rankingShortcuts[index].sfSymbol,
-                                    name: rankingShortcuts[index].name,
-                                    description: rankingShortcuts[index].description,
-                                    numberOfDownload: rankingShortcuts[index].numberOfDownload,
-                                    downloadLink: rankingShortcuts[index].downloadLink
-                                )
-                            }
+                    ForEach(rankingShortcuts.indices, id: \.self) { index in
+                        if index < 3 {
+                            ShortcutCell(
+                                color: rankingShortcuts[index].color,
+                                sfSymbol: rankingShortcuts[index].sfSymbol,
+                                name: rankingShortcuts[index].name,
+                                description: rankingShortcuts[index].description,
+                                numberOfDownload: rankingShortcuts[index].numberOfDownload,
+                                downloadLink: rankingShortcuts[index].downloadLink
+                            )
                         }
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
                     }
-                    Section() {
-                        ListHeader(title: "사랑받는 단축어")
-                            .padding(.top, 20)
-                            .listRowBackground(Color.Background)
-                        ForEach(lovedShortcuts.indices, id: \.self) { index in
-                            if index < 3 {
-                                ShortcutCell(
-                                    color: lovedShortcuts[index].color,
-                                    sfSymbol: lovedShortcuts[index].sfSymbol,
-                                    name: lovedShortcuts[index].name,
-                                    description: lovedShortcuts[index].description,
-                                    numberOfDownload: lovedShortcuts[index].numberOfDownload,
-                                    downloadLink: lovedShortcuts[index].downloadLink
-                                )
-                            }
-                        }
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                    }
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
                 }
-                .listStyle(.plain)
-                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-                .scrollContentBackground(.hidden)
+                Section() {
+                    ListHeader(title: "사랑받는 단축어")
+                        .padding(.top, 20)
+                        .listRowBackground(Color.Background)
+                    ForEach(lovedShortcuts.indices, id: \.self) { index in
+                        if index < 3 {
+                            ShortcutCell(
+                                color: lovedShortcuts[index].color,
+                                sfSymbol: lovedShortcuts[index].sfSymbol,
+                                name: lovedShortcuts[index].name,
+                                description: lovedShortcuts[index].description,
+                                numberOfDownload: lovedShortcuts[index].numberOfDownload,
+                                downloadLink: lovedShortcuts[index].downloadLink
+                            )
+                        }
+                    }
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                }
             }
+            .listStyle(.plain)
+            .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+            .scrollContentBackground(.hidden)
         }
     }
 }
