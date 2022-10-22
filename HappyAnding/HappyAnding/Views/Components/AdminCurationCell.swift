@@ -38,6 +38,7 @@ struct AdminCurationCell: View {
                 .padding(.top, 184)
                 .background(backgroundImage)
         }
+        .padding(.trailing, 8.0)
     }
     
     var titleAndSubtitle: some View {
