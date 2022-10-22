@@ -8,60 +8,40 @@
 import SwiftUI
 
 struct UserCurationListView: View {
-    var numberOfList: Int
-    var userCurations = UserCuration.fetchData(number: 10)
+    
+    var userCurations: [UserCuration]
+    
     var body: some View {
-        NavigationView {
-            List {
-                ListHeader(title: "나의 큐레이션")
-                    .listRowInsets(
-                        EdgeInsets(
-                            top: 6,
-                            leading: 16,
-                            bottom: 6,
-                            trailing: 16)
-                    )
-                    .listRowBackground(Color.Background)
-                    .listRowSeparator(.hidden)
-                ZStack {
-                    NavigationLink(destination: WriteCurationInfoView()){}
-                        .opacity(0)
-                    HStack(spacing: 7) {
-                        Image(systemName: "plus")
-                        Text("나의 큐레이션 만들기")
-                    }
-                    .Headline()
-                    .foregroundColor(.Gray4)
+        VStack(spacing: 0) {
+            ListHeader(title: "나의 큐레이션")
+                .padding(.bottom, 12)
+                .padding(.horizontal, 16)
+            NavigationLink(destination: WriteCurationInfoView()){
+                HStack(spacing: 7) {
+                    Image(systemName: "plus")
+                    Text("나의 큐레이션 만들기")
                 }
-                .frame(height: 64)
+                .Headline()
+                .foregroundColor(.Gray4)
+                .frame(maxWidth: .infinity, maxHeight: 64)
                 .background(Color.Gray1)
                 .cornerRadius(12)
-                .listRowInsets(
-                    EdgeInsets(
-                        top: 6,
-                        leading: 16,
-                        bottom: 6,
-                        trailing: 16)
-                )
-                .listRowBackground(Color.Background)
-                
-                ForEach(userCurations.indices, id: \.self) { index in
-                    if index < numberOfList {
+                .padding(.bottom, 6)
+                .padding(.horizontal, 16)
+            }
+            ForEach(userCurations.indices, id: \.self) { index in
+                NavigationLink(destination: ReadCurationView()) {
+                    if index < 2 {
                         UserCurationCell(
                             title: userCurations[index].title,
                             subtitle: userCurations[index].subtitle,
                             shortcuts: userCurations[index].shortcuts
                         )
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.Background)
                     }
                 }
             }
-            .listStyle(.plain)
-            .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-            .scrollContentBackground(.hidden)
         }
+//        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
 }
 
@@ -73,11 +53,11 @@ struct ListHeader: View {
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
-            ZStack(alignment: .trailing) {
+            Spacer()
+            NavigationLink(destination: ListShortcutView()) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
-                NavigationLink(destination: ListShortcutView()){}.opacity(0)
             }
         }
     }
@@ -85,6 +65,6 @@ struct ListHeader: View {
 
 struct UserCurationListView_Previews: PreviewProvider {
     static var previews: some View {
-        UserCurationListView(numberOfList: 5)
+        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
     }
 }
