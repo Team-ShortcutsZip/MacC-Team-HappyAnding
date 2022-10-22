@@ -12,10 +12,10 @@ struct ValidationCheckTextField: View {
     // TODO: 설명이 옵셔널일 경우
     // TODO: 단축어 이름에 이모지 포함되면 에러처리
     
-    @State var isMultipleLines: Bool
-    @State var title: String
-    @State var placeholder: String
-    @State var lengthLimit: Int
+    let isMultipleLines: Bool
+    let title: String
+    let placeholder: String
+    let lengthLimit: Int
     @Binding var content: String
     
     @State private var strokeColor = Color.Gray2
@@ -24,8 +24,8 @@ struct ValidationCheckTextField: View {
     var body: some View {
         VStack {
             Text(title)
+                .Headline()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.headline)
                 .padding(.leading, 16)
             
             HStack {
@@ -58,11 +58,13 @@ struct ValidationCheckTextField: View {
             HStack {
                 if isExceeded {
                     Text("글자수를 초과하였습니다")
+                        .Body2()
                         .foregroundColor(.Error)
                         .padding(.leading)
                 }
                 Spacer()
                 Text("\(content.count)/\(lengthLimit)")
+                    .Body2()
                     .foregroundColor(isExceeded ? .Error : .Gray4)
                     .padding(.trailing, 16)
             }
@@ -107,7 +109,9 @@ struct ValidationCheckTextField: View {
             }
         }
     }
-    
+}
+
+extension ValidationCheckTextField {
     func changeStrokeColor(isDoneWriting: Bool) {
         if content.isEmpty {
             isExceeded = false
@@ -126,6 +130,6 @@ struct ValidationCheckTextField: View {
 
 struct ValidationCheckTextField_Previews: PreviewProvider {
     static var previews: some View {
-        ValidationCheckTextField(isMultipleLines: false, title: "설명", placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요", lengthLimit: 20, content: .constant(""))
+        ValidationCheckTextField(isMultipleLines: true, title: "설명", placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요", lengthLimit: 20, content: .constant(""))
     }
 }
