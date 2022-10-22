@@ -7,11 +7,22 @@
 
 import SwiftUI
 
+/**
+ ExploreCategoryView
+ #parameters
+ - lovedShortcuts: 사랑받는 단축어 목록
+ - rankingShortcuts: 다운로드 순위 단축어 목록
+ 
+ #description
+ - ShortcutTestModel 파일에서 생성한 Shortcut모델을 기준으로 데이터를 받아옵니다.
+ */
+
 struct ExploreCategoryView: View {
     
     //TODO: 단축어 목록 받아오기
     let lovedShortcuts = Shortcut.fetchData(number: 10)
     let rankingShortcuts = Shortcut.fetchData(number: 10)
+    
     var body: some View {
         VStack {
             List {
