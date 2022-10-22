@@ -12,7 +12,8 @@ import SwiftUI
  #parameters
  - lovedShortcuts: 사랑받는 단축어 목록
  - rankingShortcuts: 다운로드 순위 단축어 목록
- - categoryDescription: 카테고리 설명글
+ - 카테고리 선택할 때 이 뷰에 넘겨줘야하는 카테고리 이름입니다.
+ - categoryDescriptions: 카테고리 설명글
  
  #description
  - ShortcutTestModel 파일에서 생성한 Shortcut모델을 기준으로 데이터를 받아옵니다.
@@ -24,18 +25,26 @@ struct ExploreCategoryView: View {
     let lovedShortcuts = Shortcut.fetchData(number: 10)
     let rankingShortcuts = Shortcut.fetchData(number: 10)
     
-    let categoryDescription = [
+    let category: String
+    let categoryDescriptions = [
         "교육":"교육 카테고리에 대한 설명입니다.",
         "금융":"금융 카테고리에 대한 설명입니다.",
-        "
-        
+        "비즈니스":"비즈니스 카테고리에 대한 설명입니다.",
+        "건강 및 피트니스":"건강 및 피트니스 카테고리에 대한 설명입니다.",
+        "라이프스타일":"라이프스타일 카테고리에 대한 설명입니다.",
+        "날씨":"날씨 카테고리에 대한 설명입니다.",
+        "사진 및 비디오":"사진 및 비디오 카테고리에 대한 설명입니다.",
+        "꾸미기":"꾸미기 카테고리에 대한 설명입니다.",
+        "유틸리티":"유틸리티 카테고리에 대한 설명입니다.",
+        "소셜 네트워킹":"소셜 네트워킹 카테고리에 대한 설명입니다.",
+        "엔터테인먼트":"엔터테인먼트 카테고리에 대한 설명입니다.",
+        "여행":"여행 카테고리에 대한 설명입니다."
     ]
-    let cornerRadius = 12
     
     var body: some View {
         VStack {
             List {
-                Text(categoryDescription)
+                Text(categoryDescriptions[category] ?? "")
                     .foregroundColor(.Gray5)
                     .Body2()
                     .padding(16)
@@ -43,7 +52,7 @@ struct ExploreCategoryView: View {
                     .background(
                         Rectangle()
                             .foregroundColor(Color.Gray1)
-                            .cornerRadius(cornerRadius)
+                            .cornerRadius(12)
                     )
                     .listRowInsets(
                         EdgeInsets(
@@ -122,8 +131,6 @@ struct ListHeader: View {
 
 struct ExploreCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        ExploreCategoryView(
-            categoryDescription: "카테고리에 대한 설명이 조금 들어가면 좋을 것 같아요 가나다라마바사"
-        )
+        ExploreCategoryView(category: "교육")
     }
 }
