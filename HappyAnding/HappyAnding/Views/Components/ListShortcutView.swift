@@ -12,6 +12,8 @@ struct ListShortcutView: View {
     
     @ObservedObject var shortcutData = fetchData()
     
+    @State private var isLastItem = false
+    
     var categoryName: String?
     
     var body: some View {
@@ -34,13 +36,19 @@ struct ListShortcutView: View {
                 .listRowSeparator(.hidden)
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        if index == shortcutData.data.count - 1 && index < 99 {
+                        if index == shortcutData.data.count - 1 && index < 12 {
+                            isLastItem = true
                             self.shortcutData.updateData()
+                            isLastItem = false
                         }
                     }
                 }
-                
             }
+            Rectangle()
+                .fill(Color.Background)
+                .frame(height: 44)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
         }
         .listRowBackground(Color.Background)
         .listStyle(.plain)
