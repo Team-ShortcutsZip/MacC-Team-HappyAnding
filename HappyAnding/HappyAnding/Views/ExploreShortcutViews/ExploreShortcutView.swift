@@ -9,7 +9,16 @@ import SwiftUI
 
 struct ExploreShortcutView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            
+            ScrollView {
+                MyShortcutCardListView()
+                DownloadRankView()
+                CategoryView()
+                LovedShortcutView()
+            }
+            .navigationTitle("단축어 둘러보기")
+        }
     }
 }
 
