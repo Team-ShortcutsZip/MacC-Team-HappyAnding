@@ -78,15 +78,13 @@ struct ValidationCheckTextField: View {
         HStack {
             Text(title)
                 .Headline()
-                .frame(alignment: .leading)
                 .padding(.leading, 16)
             if textType == .optional {
                 Text("(선택입력)")
                     .Footnote()
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.Gray3)
             }
-        }
+        }.frame(maxWidth: .infinity, alignment: .leading)
     }
     
     var oneLineEditor: some View {
