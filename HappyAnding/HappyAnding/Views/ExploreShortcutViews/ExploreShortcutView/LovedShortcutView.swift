@@ -22,7 +22,7 @@ struct LovedShortcutView: View {
                 Text("사랑받는 단축어")
                     .Title2()
                     .foregroundColor(Color.Gray5)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
                 
@@ -35,7 +35,12 @@ struct LovedShortcutView: View {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    ShortcutCell(color: shortcut.color, sfSymbol: shortcut.sfSymbol, name: shortcut.name, description: shortcut.description, numberOfDownload: shortcut.numberOfDownload, downloadLink: shortcut.downloadLink)
+                    ShortcutCell(color: shortcut.color,
+                                 sfSymbol: shortcut.sfSymbol,
+                                 name: shortcut.name,
+                                 description: shortcut.description,
+                                 numberOfDownload: shortcut.numberOfDownload,
+                                 downloadLink: shortcut.downloadLink)
                 }
             }
         }

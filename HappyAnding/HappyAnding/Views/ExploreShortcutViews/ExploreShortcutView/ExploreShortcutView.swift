@@ -10,7 +10,6 @@ import SwiftUI
 struct ExploreShortcutView: View {
     var body: some View {
         NavigationView {
-            
             ScrollView {
                 MyShortcutCardListView()
                     .padding(.bottom, 32)
