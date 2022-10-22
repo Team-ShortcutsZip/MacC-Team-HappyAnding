@@ -113,11 +113,20 @@ struct MyShortcutCardListView: View {
     
     var body: some View {
         VStack {
-            Text("내 단축어")
-                .Title2()
-                .padding(.leading, 16)
-                .foregroundColor(Color.Gray5)
+            HStack {
+                Text("내 단축어")
+                    .Title2()
+                    .foregroundColor(Color.Gray5)
                 .frame(maxWidth: .infinity,alignment: .leading)
+                
+                Spacer()
+                
+                Text("더보기")
+                    .Footnote()
+                    .foregroundColor(Color.Gray4)
+                    .padding(.trailing, 16)
+            }
+            .padding(.leading, 16)
             
             ScrollView(.horizontal) {
                 HStack {
