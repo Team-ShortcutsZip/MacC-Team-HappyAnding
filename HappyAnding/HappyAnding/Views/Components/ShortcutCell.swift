@@ -52,6 +52,8 @@ struct ShortcutCell: View {
             }
             .opacity(0)
             
+            Color.Background
+            
             HStack {
                 icon
                 shortcutInfo
@@ -71,7 +73,7 @@ struct ShortcutCell: View {
             .padding(.horizontal, 16)
         }
         .padding(.top, 12)
-        .background(Color.white)
+        .background(Color.Background)
     }
     
     var icon: some View {
