@@ -17,7 +17,7 @@ struct ListShortcutView: View {
     @State private var isLastItem = false
     
     // TODO: let으로 변경필요, 현재 작업중인 코드들과 충돌될 가능성이 있어 우선 변수로 선언
-    var categoryName: String?
+    var categoryName: Category?
     var sectionType: SectionType?
     
     var body: some View {
@@ -68,7 +68,7 @@ struct ListShortcutView: View {
                 .padding(.horizontal, 16)
                 .foregroundColor(.Gray1)
             
-            Text("\(categoryName ?? "") 1위 ~ 100위")
+            Text("\(categoryName?.rawValue ?? "") 1위 ~ 100위")
                 .Body2()
                 .foregroundColor(.Gray5)
         }
