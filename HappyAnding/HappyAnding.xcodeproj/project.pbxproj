@@ -40,10 +40,11 @@
 		87E99CCF290145D5009B691F /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCE290145D5009B691F /* PaletteCell.swift */; };
 		87E99CD1290145DE009B691F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD0290145DE009B691F /* PaletteView.swift */; };
 		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
+		87E99CD929042536009B691F /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD829042536009B691F /* SectionType.swift */; };
 		A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0029027BDE004A85A6 /* TabRouter.swift */; };
-		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */; };
 		A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */; };
+		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -101,10 +102,11 @@
 		87E99CCE290145D5009B691F /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
 		87E99CD0290145DE009B691F /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
 		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
+		87E99CD829042536009B691F /* SectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		A04ACB0029027BDE004A85A6 /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
-		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardView.swift; sourceTree = "<group>"; };
 		A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardListView.swift; sourceTree = "<group>"; };
+		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +160,7 @@
 			children = (
 				87E99CC22901454D009B691F /* Extensions */,
 				87E99C9828FFF1D2009B691F /* Views */,
+				87E99CD729042503009B691F /* Model */,
 				87E99C7128F94EA8009B691F /* Assets.xcassets */,
 				87E99C7328F94EA8009B691F /* Preview Content */,
 			);
@@ -289,6 +292,14 @@
 				87E99CD22901465F009B691F /* ValidationCheckTextField.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		87E99CD729042503009B691F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				87E99CD829042536009B691F /* SectionType.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A04ACB0229027F4F004A85A6 /* TabView */ = {
@@ -433,6 +444,7 @@
 				87E99CAF28FFF26A009B691F /* EditShortcutView.swift in Sources */,
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87E99CB728FFF288009B691F /* WriteCurationColorView.swift in Sources */,
+				87E99CD929042536009B691F /* SectionType.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				87E99CD1290145DE009B691F /* PaletteView.swift in Sources */,
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
