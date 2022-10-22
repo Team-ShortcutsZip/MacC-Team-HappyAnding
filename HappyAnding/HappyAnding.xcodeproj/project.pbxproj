@@ -240,8 +240,6 @@
 			children = (
 				87E99CA828FFF24F009B691F /* ExploreShortcutView.swift */,
 				87E99CAA28FFF256009B691F /* ExploreCategoryView.swift */,
-				A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */,
-				A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */,
 			);
 			path = ExploreShortcutViews;
 			sourceTree = "<group>";
@@ -277,6 +275,8 @@
 		87E99CC52901457B009B691F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */,
+				A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */,
 				87E99CC6290145AD009B691F /* ShortcutCell.swift */,
 				87E99CC8290145B8009B691F /* ListShortcutView.swift */,
 				87E99CCA290145C4009B691F /* UserCurationCell.swift */,
