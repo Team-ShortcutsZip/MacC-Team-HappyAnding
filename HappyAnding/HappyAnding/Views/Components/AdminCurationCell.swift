@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/*
+/**
  어드민 큐레이션 썸네일입니다.
  
  #parameters
@@ -34,7 +34,7 @@ struct AdminCurationCell: View {
                 EmptyView()
             }
             titleAndSubtitle
-                .padding([.leading, .bottom, .trailing], 24.0)
+                .padding([.horizontal, .bottom], 24)
                 .padding(.top, 184)
                 .background(backgroundImage)
         }
