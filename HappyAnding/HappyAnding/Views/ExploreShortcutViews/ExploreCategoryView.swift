@@ -22,8 +22,7 @@ struct ExploreCategoryView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(
                         Rectangle()
-                            .foregroundColor(.clear)
-                            .background(Color.Gray1)
+                            .foregroundColor(Color.Gray1)
                             .cornerRadius(12)
                     )
                     .listRowInsets(
