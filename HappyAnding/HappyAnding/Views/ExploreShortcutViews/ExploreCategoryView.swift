@@ -12,6 +12,7 @@ import SwiftUI
  #parameters
  - lovedShortcuts: 사랑받는 단축어 목록
  - rankingShortcuts: 다운로드 순위 단축어 목록
+ - categoryDescription: 카테고리 설명글
  
  #description
  - ShortcutTestModel 파일에서 생성한 Shortcut모델을 기준으로 데이터를 받아옵니다.
@@ -23,10 +24,18 @@ struct ExploreCategoryView: View {
     let lovedShortcuts = Shortcut.fetchData(number: 10)
     let rankingShortcuts = Shortcut.fetchData(number: 10)
     
+    let categoryDescription = [
+        "교육":"교육 카테고리에 대한 설명입니다.",
+        "금융":"금융 카테고리에 대한 설명입니다.",
+        "
+        
+    ]
+    let cornerRadius = 12
+    
     var body: some View {
         VStack {
             List {
-                Text("카테고리에 대한 설명이 조금 들어가면 좋을 것 같아요 가나다라마바사")
+                Text(categoryDescription)
                     .foregroundColor(.Gray5)
                     .Body2()
                     .padding(16)
@@ -34,7 +43,7 @@ struct ExploreCategoryView: View {
                     .background(
                         Rectangle()
                             .foregroundColor(Color.Gray1)
-                            .cornerRadius(12)
+                            .cornerRadius(cornerRadius)
                     )
                     .listRowInsets(
                         EdgeInsets(
@@ -103,7 +112,7 @@ struct ListHeader: View {
             ZStack {
                 Text("더보기")
                     .Footnote()
-                    .foregroundColor(.Gray4 )
+                    .foregroundColor(.Gray4)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 NavigationLink(destination: ListShortcutView()){}.opacity(0)
             }
@@ -113,6 +122,8 @@ struct ListHeader: View {
 
 struct ExploreCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        ExploreCategoryView()
+        ExploreCategoryView(
+            categoryDescription: "카테고리에 대한 설명이 조금 들어가면 좋을 것 같아요 가나다라마바사"
+        )
     }
 }
