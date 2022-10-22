@@ -13,9 +13,6 @@ enum TextType {
 }
 
 struct ValidationCheckTextField: View {
-    
-    // TODO: 단축어 이름에 이모지 포함되면 에러처리
-    
     let textType: TextType
     let isMultipleLines: Bool
     let title: String
@@ -93,13 +90,13 @@ struct ValidationCheckTextField: View {
         })
         .padding(16)
         .onAppear {
-            checkValidation(isDoneWriting: false)
+            checkValidation()
         }
         .onSubmit {
-            checkValidation(isDoneWriting: true)
+            checkValidation()
         }
         .onChange(of: content, perform: {_ in
-            checkValidation(isDoneWriting: false)
+            checkValidation()
         })
     }
     
@@ -109,13 +106,13 @@ struct ValidationCheckTextField: View {
                 .frame(height: 206)
                 .padding(16)
                 .onAppear {
-                    checkValidation(isDoneWriting: false)
+                    checkValidation()
                 }
                 .onSubmit {
-                    checkValidation(isDoneWriting: true)
+                    checkValidation()
                 }
                 .onChange(of: content, perform: {_ in
-                    checkValidation(isDoneWriting: false)
+                    checkValidation()
                 })
             
             if content.isEmpty {
@@ -134,31 +131,32 @@ struct ValidationCheckTextField: View {
 }
 
 extension ValidationCheckTextField {
-    func checkValidation(isDoneWriting: Bool) {
-        if textType == .optional {
+    func checkValidation() {
+        if content.isEmpty {
+            isValid = textType == .optional ? true : false
+            isExceeded = false
+            self.strokeColor = Color.Gray2
+        } else if content.count <= lengthLimit {
             isValid = true
+            isExceeded = false
+            self.strokeColor = Color.Success
         } else {
-            if content.isEmpty {
-                isValid = false
-                isExceeded = false
-                self.strokeColor = isDoneWriting ? Color.Gray2 : Color.Gray5
-            }
-            else if content.count <= lengthLimit {
-                isValid = true
-                isExceeded = false
-                self.strokeColor = Color.Success
-            }
-            else {
-                isValid = false
-                isExceeded = true
-                self.strokeColor = Color.Error
-            }
+            isValid = textType == .optional ? true : false
+            isExceeded = true
+            self.strokeColor = Color.Error
         }
     }
 }
 
 struct ValidationCheckTextField_Previews: PreviewProvider {
     static var previews: some View {
-        ValidationCheckTextField(textType: .optional, isMultipleLines: true, title: "설명", placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요", lengthLimit: 20, content: .constant(""), isValid: .constant(true))
+        ValidationCheckTextField(textType: .optional,
+                                 isMultipleLines: true,
+                                 title: "설명",
+                                 placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
+                                 lengthLimit: 20,
+                                 content: .constant(""),
+                                 isValid: .constant(true)
+        )
     }
 }
