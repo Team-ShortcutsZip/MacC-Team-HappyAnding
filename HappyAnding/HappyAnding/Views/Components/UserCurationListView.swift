@@ -41,7 +41,7 @@ struct UserCurationListView: View {
                 }
             }
         }
-//        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
 }
 
