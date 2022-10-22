@@ -7,58 +7,13 @@
 
 import SwiftUI
 
-// TODO: 테스트를 위한 모델 구현 (추후 삭제 필요)
-
-struct EShortCurtaionModel {
-    var title: String
-    var subtitle: String
-    var shortcuts: [EShortcutModel]
-}
-extension EShortCurtaionModel {
-    static var userCurations = [
-        EShortCurtaionModel(
-            title: "워라벨 지키기. 단축어와 함께",
-            subtitle: "워라벨을 알차게 지키고 있는 에디터도 애용하고 있는 단축어 모음.",
-            shortcuts: EShortcutModel.shortcuts
-        ),
-        EShortCurtaionModel(
-            title: "시간 지키기. 단축어와 함께",
-            subtitle: "가나다라마바사아자차카타파하",
-            shortcuts: EShortcutModel.shortcuts
-        ),
-        EShortCurtaionModel(
-            title: "어쩌고 저쩌고. 단축어와 함께",
-            subtitle: "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하",
-            shortcuts: EShortcutModel.shortcuts
-        )
-    ]
-}
-struct EShortcutModel: Identifiable {
-    var id: UUID = UUID()
-    
-    var color: String
-    var symbol: String
-}
-extension EShortcutModel {
-    #if DEBUG
-    static var shortcuts = [
-        EShortcutModel(color: "Red", symbol: "books.vertical.fill"),
-        EShortcutModel(color: "Coral", symbol: "newspaper.fill"),
-        EShortcutModel(color: "Orange", symbol: "bus.fill"),
-        EShortcutModel(color: "Green", symbol: "alarm.fill"),
-        EShortcutModel(color: "Mint", symbol: "cloud.sun.fill"),
-        EShortcutModel(color: "Blue", symbol: "cloud.sun.fill"),
-    ]
-    #endif
-}
-
 //MARK: - UserCurationCell 구현 시작
 
 struct UserCurationCell: View {
     //title, subtitle, [단축어모델]을 가지는 객체를 받아옴
     let title: String
     let subtitle: String?
-    let shortcuts: [EShortcutModel]
+    let shortcuts: [Shortcut]
     
     var body: some View {
         ZStack {
@@ -79,7 +34,7 @@ struct UserCurationCell: View {
                                     )
                                     .cornerRadius(8)
                                     .frame(width: 36, height: 36)
-                                Image(systemName: shortcuts[index].symbol)
+                                Image(systemName: shortcuts[index].sfSymbol)
                                     .foregroundColor(Color.White)
                                     .Footnote()
                             }
@@ -139,7 +94,7 @@ struct UserCurationCell_Previews: PreviewProvider {
             UserCurationCell(
                 title: "워라벨 지키기. 단축어와 함께",
                 subtitle: nil,
-                shortcuts: EShortcutModel.shortcuts
+                shortcuts: Shortcut.fetchData(number: 5)
             )
         }
     }
