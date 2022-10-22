@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DownloadRankView: View {
     let shortcuts = Shortcut.fetchData(number: 5).sorted {
-        $0.numberOfDownload < $1.numberOfDownload
+        $0.numberOfDownload > $1.numberOfDownload
     }
     
     var body: some View {
