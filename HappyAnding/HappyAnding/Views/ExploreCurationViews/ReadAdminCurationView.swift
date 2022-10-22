@@ -16,7 +16,8 @@ import SwiftUI
  
  #description
  - 어드민 큐레이션 데이터가 만들어진 후 데이터 연결이 필요합니다.
- -
+ - 네비게이션 뷰 연결 및 설정이 필요합니다.
+ - 공유버튼 액션 연결이 필요합니다.
  */
 
 struct ReadCurationView: View {
@@ -27,17 +28,32 @@ struct ReadCurationView: View {
     let title: String = "워라벨 지키기, 단축어와 함께"
     let subtitle: String = "워라벨을 알차게 지키고 있는 에디터도 애용하고 있는 단축어 모음."
     let curationThumbnail: String = "adminCurationTestImage"
-
+    
     var body: some View {
-        ScrollView {
-            curationThumbnailImage
-                .padding(.bottom, 20)
-            titleAndSubtitle
-                .padding(.bottom, 20)
-            curationShortcutsListTest
+        NavigationView {
+            ScrollView {
+                curationThumbnailImage
+                    .padding(.bottom, 20)
+                titleAndSubtitle
+                    .padding(.bottom, 20)
+                curationShortcutsListTest
+            }
+            .ignoresSafeArea()
+            .background(Color.Background)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        //TODO: 네비게이션 연결 후 코드 지우기.
+                        //TODO: Share 버튼 눌렀을 때 Curation공유 링크 생성 및 actionSheet 나타내기
+                    }) {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundColor(.Gray4)
+                    }
+                }
+            }
+            
         }
-        .ignoresSafeArea()
-        .background(Color.Background)
     }
     
     ///최상단의 썸네일 이미지 영역입니다.
