@@ -41,6 +41,7 @@
 		87E99CD1290145DE009B691F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD0290145DE009B691F /* PaletteView.swift */; };
 		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
 		A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0029027BDE004A85A6 /* TabRouter.swift */; };
+		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */; };
 		A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
@@ -101,6 +102,7 @@
 		87E99CD0290145DE009B691F /* PaletteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
 		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
 		A04ACB0029027BDE004A85A6 /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
+		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardView.swift; sourceTree = "<group>"; };
 		A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardListView.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				87E99C9C28FFF1FE009B691F /* ExploreCurationViews */,
 				87E99C9928FFF1DE009B691F /* WriteCurationViews */,
 				87E99C9D28FFF207009B691F /* MyPageViews */,
+				F956C9F82903F87200C17621 /* ShortcutTestModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
 				87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */,
+				F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
 				87E99CA528FFF238009B691F /* ReadCurationView.swift in Sources */,
 			);
