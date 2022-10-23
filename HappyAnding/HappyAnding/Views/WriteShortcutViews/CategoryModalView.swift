@@ -20,15 +20,11 @@ enum Category: String, CaseIterable {
     case entertainment = "엔터테인먼트"
     case trip = "여행"
     case business = "비즈니스"
-    
-    var category: String {
-        String(describing: self)
-    }
 }
 
 struct CategoryModalView: View {
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
-    @State var selectedCategories = [String]()
+    @State var selectedCategories: [Category] = []
     
     var body: some View {
         VStack {
@@ -37,43 +33,48 @@ struct CategoryModalView: View {
             
             LazyVGrid(columns: gridLayout, spacing: 12) {
                 ForEach(Category.allCases, id: \.self) { item in
-                    Button(item.rawValue, action: {
-                        
-                        // TODO: 버튼색 변경 및 데이터 저장
-                        
-                        self.selectedCategories.append(item.category)
-                    }).buttonStyle(categoryButtonStyle())
+                    CategoryButton(item: item, items: $selectedCategories)
                 }
             }
             .padding(.horizontal, 16)
             
             Button(action: {
                 
-                // TODO: 모달 닫기 및 데이터 전달
+                // TODO: 모달 닫기
                 
-            }) {
+            }, label: {
                 Text("완료")
                     .Body1()
                     .frame(maxWidth: .infinity, minHeight: 52)
-            }
+            })
             .buttonStyle(.borderedProminent)
             .disabled(selectedCategories.isEmpty)
             .padding(.horizontal, 16)
-            
         }
     }
     
-    struct categoryButtonStyle: ButtonStyle {
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .Body2()
-                .frame(maxWidth: .infinity, minHeight: 48)
-                .foregroundColor(.Gray3)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.Gray3, lineWidth: 1)
-                )
-            
+    struct CategoryButton: View {
+        let item: Category
+        @Binding var items: [Category]
+        
+        var body: some View {
+            Button(action: {
+                if items.contains(item) {
+                    items.removeAll { $0 == item }
+                } else {
+                    items.append(item)
+                }
+            }, label: {
+                Text(item.rawValue)
+                    .Body2()
+                    .tag(item)
+                    .foregroundColor(items.contains(item) ? Color.Primary : Color.Gray3)
+                    .frame(maxWidth: .infinity, minHeight: 48)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(items.contains(item) ? Color.Primary : Color.Gray3, lineWidth: 1)
+                    )
+            })
         }
     }
 }
