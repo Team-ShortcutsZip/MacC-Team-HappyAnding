@@ -7,21 +7,6 @@
 
 import SwiftUI
 
-enum Category: String, CaseIterable {
-    case education = "교육"
-    case health = "건강 및 피트니스"
-    case finance = "금융"
-    case lifestyle = "라이프스타일"
-    case weather = "날씨"
-    case photo = "사진 및 비디오"
-    case decoration = "데코레이션/꾸미기"
-    case utility = "유틸리티"
-    case sns = "소셜 네트워킹"
-    case entertainment = "엔터테인먼트"
-    case trip = "여행"
-    case business = "비즈니스"
-}
-
 struct CategoryModalView: View {
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     @State var selectedCategories: [Category] = []
