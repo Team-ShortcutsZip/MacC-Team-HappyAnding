@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct ShortcutTabView: View {
+    
+    init() {
+        Theme.navigationBarColors()
+    }
+    
     var body: some View {
-        TabView {
-            ForEach(Tab.allCases, id: \.self) { tab in
-                tab.view
-                    .tabItem {
-                        Label(tab.tabName, systemImage: tab.systemImage)
-                    }
+        NavigationView {
+            TabView {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    tab.view
+                        .tabItem {
+                            Label(tab.tabName, systemImage: tab.systemImage)
+                        }
+                }
             }
         }
     }
