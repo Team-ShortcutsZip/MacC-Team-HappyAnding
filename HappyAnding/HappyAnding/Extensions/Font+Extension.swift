@@ -31,8 +31,8 @@ struct FontWithLineHeight: ViewModifier {
     }
 }
 
-extension Text {
-    //크기를 적용할 Text에 Text().LargeTitle()과 같은 형식으로 사용해주세요
+extension View {
+    //크기를 적용할 Text또는 Image에 Text().LargeTitle()과 같은 형식으로 사용해주세요
     func LargeTitle() -> some View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .LargeTitle, lineHeight: 38))
     }
