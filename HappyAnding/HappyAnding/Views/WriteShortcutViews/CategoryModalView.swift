@@ -47,6 +47,7 @@ struct CategoryModalView: View {
                     .Body1()
                     .frame(maxWidth: .infinity, minHeight: 52)
             })
+            .tint(.Primary)
             .buttonStyle(.borderedProminent)
             .disabled(selectedCategories.isEmpty)
             .padding(.horizontal, 16)
