@@ -29,13 +29,13 @@ struct UserCurationListView: View {
                 .padding(.bottom, 6)
                 .padding(.horizontal, 16)
             }
-            ForEach(userCurations.indices, id: \.self) { index in
+            ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                 NavigationLink(destination: ReadCurationView()) {
                     if index < 2 {
                         UserCurationCell(
-                            title: userCurations[index].title,
-                            subtitle: userCurations[index].subtitle,
-                            shortcuts: userCurations[index].shortcuts
+                            title: curation.title,
+                            subtitle: curation.subtitle,
+                            shortcuts: curation.shortcuts
                         )
                     }
                 }

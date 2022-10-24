@@ -54,15 +54,15 @@ struct ExploreCategoryView: View {
                     CategoryListHeader(title: SectionType.download.rawValue)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
-                    ForEach(rankingShortcuts.indices, id: \.self) { index in
+                    ForEach(Array(rankingShortcuts.enumerated()), id: \.offset) { index, shortcut in
                         if index < 3 {
                             ShortcutCell(
-                                color: rankingShortcuts[index].color,
-                                sfSymbol: rankingShortcuts[index].sfSymbol,
-                                name: rankingShortcuts[index].name,
-                                description: rankingShortcuts[index].description,
-                                numberOfDownload: rankingShortcuts[index].numberOfDownload,
-                                downloadLink: rankingShortcuts[index].downloadLink
+                                color: shortcut.color,
+                                sfSymbol: shortcut.sfSymbol,
+                                name: shortcut.name,
+                                description: shortcut.description,
+                                numberOfDownload: shortcut.numberOfDownload,
+                                downloadLink: shortcut.downloadLink
                             )
                         }
                     }
@@ -73,15 +73,15 @@ struct ExploreCategoryView: View {
                     CategoryListHeader(title: SectionType.popular.rawValue)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
-                    ForEach(lovedShortcuts.indices, id: \.self) { index in
+                    ForEach(Array(lovedShortcuts.enumerated()), id: \.offset) { index, shortcut in
                         if index < 3 {
                             ShortcutCell(
-                                color: lovedShortcuts[index].color,
-                                sfSymbol: lovedShortcuts[index].sfSymbol,
-                                name: lovedShortcuts[index].name,
-                                description: lovedShortcuts[index].description,
-                                numberOfDownload: lovedShortcuts[index].numberOfDownload,
-                                downloadLink: lovedShortcuts[index].downloadLink
+                                color: shortcut.color,
+                                sfSymbol: shortcut.sfSymbol,
+                                name: shortcut.name,
+                                description: shortcut.description,
+                                numberOfDownload: shortcut.numberOfDownload,
+                                downloadLink: shortcut.downloadLink
                             )
                         }
                     }

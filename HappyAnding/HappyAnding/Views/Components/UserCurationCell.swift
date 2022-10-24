@@ -25,16 +25,16 @@ struct UserCurationCell: View {
                 //MARK: - 단축어 아이콘 배열
                 
                 HStack {
-                    ForEach(shortcuts.indices, id: \.self) {index in
+                    ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                         if index < 4 {
                             ZStack {
                                 Rectangle()
                                     .fill(Color.fetchGradient(
-                                        color: shortcuts[index].color)
+                                        color: shortcut.color)
                                     )
                                     .cornerRadius(8)
                                     .frame(width: 36, height: 36)
-                                Image(systemName: shortcuts[index].sfSymbol)
+                                Image(systemName: shortcut.sfSymbol)
                                     .foregroundColor(Color.White)
                                     .Footnote()
                             }
