@@ -7,14 +7,18 @@
 
 import SwiftUI
 
-/// 카테고리에서 해당 뷰를 호출할 때에는 categoryName에 카테고리 이름을 넣어주세요
+/// - parameters:
+/// - categoryName: 카테고리에서 접근할 시, 해당 카테고리의 이름을 넣어주시고, 그렇지 않다면 nil을 넣어주세요
+/// sectionType: 다운로드 순위에서 접근할 시, .download를, 사랑받는 앱에서 접근시 .popular를 넣어주세요.
 struct ListShortcutView: View {
     
     @ObservedObject var shortcutData = fetchData()
     
     @State private var isLastItem = false
     
-    var categoryName: String?
+    // TODO: let으로 변경필요, 현재 작업중인 코드들과 충돌될 가능성이 있어 우선 변수로 선언
+    var categoryName: Category?
+    var sectionType: SectionType?
     
     var body: some View {
         
@@ -54,7 +58,7 @@ struct ListShortcutView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle("다운로드 순위")
+        .navigationBarTitle(sectionType?.rawValue ?? "")
     }
     
     var header: some View {
@@ -64,7 +68,7 @@ struct ListShortcutView: View {
                 .padding(.horizontal, 16)
                 .foregroundColor(.Gray1)
             
-            Text("\(categoryName ?? "") 1위 ~ 100위")
+            Text("\(categoryName?.rawValue ?? "") 1위 ~ 100위")
                 .Body2()
                 .foregroundColor(.Gray5)
         }
@@ -73,7 +77,7 @@ struct ListShortcutView: View {
 
 struct ListShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ListShortcutView()
+        ListShortcutView(sectionType: .popular)
     }
 }
 
