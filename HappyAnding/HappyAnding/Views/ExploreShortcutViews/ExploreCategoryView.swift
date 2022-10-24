@@ -51,7 +51,7 @@ struct ExploreCategoryView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.Background)
                 Section() {
-                    ListHeader(title: SectionType.download.rawValue)
+                    CategoryListHeader(title: SectionType.download.rawValue)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
                     ForEach(rankingShortcuts.indices, id: \.self) { index in
@@ -70,7 +70,7 @@ struct ExploreCategoryView: View {
                     .listRowSeparator(.hidden)
                 }
                 Section() {
-                    ListHeader(title: SectionType.popular.rawValue)
+                    CategoryListHeader(title: SectionType.popular.rawValue)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
                     ForEach(lovedShortcuts.indices, id: \.self) { index in
@@ -96,7 +96,7 @@ struct ExploreCategoryView: View {
     }
 }
 
-struct ListHeader: View {
+struct CategoryListHeader: View {
     var title: String
     var body: some View {
         HStack(alignment: .bottom) {

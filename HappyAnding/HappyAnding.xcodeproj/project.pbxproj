@@ -45,6 +45,7 @@
 		A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0029027BDE004A85A6 /* TabRouter.swift */; };
 		A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */; };
 		A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */; };
+		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -108,6 +109,7 @@
 		A04ACB0029027BDE004A85A6 /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
 		A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardView.swift; sourceTree = "<group>"; };
 		A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardListView.swift; sourceTree = "<group>"; };
+		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,6 +294,7 @@
 				87E99CCE290145D5009B691F /* PaletteCell.swift */,
 				87E99CD0290145DE009B691F /* PaletteView.swift */,
 				87E99CD22901465F009B691F /* ValidationCheckTextField.swift */,
+				F94B432D2907088400987819 /* UserCurationListView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F94B432E2907088400987819 /* UserCurationListView.swift in Sources */,
 				87E99CAF28FFF26A009B691F /* EditShortcutView.swift in Sources */,
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87E99CB728FFF288009B691F /* WriteCurationColorView.swift in Sources */,
