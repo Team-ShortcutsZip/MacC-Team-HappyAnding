@@ -10,6 +10,15 @@ import SwiftUI
 enum TextType {
     case optional
     case mandatory
+    
+    var isOptional: Bool {
+        switch self {
+        case .optional:
+            return true
+        case .mandatory:
+            return false
+        }
+    }
 }
 
 struct ValidationCheckTextField: View {
@@ -40,13 +49,13 @@ struct ValidationCheckTextField: View {
                         content.removeAll()
                     }) {
                         Image(systemName: "x.circle.fill")
-                            .font(.body)
+                            .Body2()
                             .foregroundColor(.Gray4)
                     }
                     .padding()
                 } else {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.body)
+                        .Body2()
                         .foregroundColor(.Success)
                         .padding()
                 }
@@ -78,7 +87,7 @@ struct ValidationCheckTextField: View {
             Text(title)
                 .Headline()
                 .padding(.leading, 16)
-            if textType == .optional {
+            if textType.isOptional {
                 Text("(선택입력)")
                     .Footnote()
                     .foregroundColor(.Gray3)
@@ -90,6 +99,7 @@ struct ValidationCheckTextField: View {
         TextField(placeholder, text: $content, onEditingChanged: { _ in
             self.strokeColor = Color.Gray5
         })
+        .Body2()
         .padding(16)
         .onAppear {
             checkValidation()
@@ -105,6 +115,7 @@ struct ValidationCheckTextField: View {
     var multiLineEditor: some View {
         ZStack(alignment: .leading) {
             TextEditor(text: $content)
+                .Body2()
                 .frame(height: 206)
                 .padding(16)
                 .onAppear {
@@ -120,6 +131,7 @@ struct ValidationCheckTextField: View {
             if content.isEmpty {
                 VStack {
                     Text(placeholder)
+                        .Body2()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 7)
                         .padding(.leading, 20)
@@ -135,7 +147,7 @@ struct ValidationCheckTextField: View {
 extension ValidationCheckTextField {
     func checkValidation() {
         if content.isEmpty {
-            isValid = textType == .optional ? true : false
+            isValid = textType.isOptional
             isExceeded = false
             self.strokeColor = Color.Gray2
         } else if content.count <= lengthLimit {
@@ -143,7 +155,7 @@ extension ValidationCheckTextField {
             isExceeded = false
             self.strokeColor = Color.Success
         } else {
-            isValid = textType == .optional ? true : false
+            isValid = textType.isOptional
             isExceeded = true
             self.strokeColor = Color.Error
         }
