@@ -13,15 +13,42 @@ struct WriteShortcutTagView: View {
     @State var requirements = ""
     
     @State var isShowingCategoryModal = false
+    @State var isRequirementValid = false
     
     var body: some View {
         VStack {
             ProgressView(value: 1, total: 1)
+            .padding(.bottom, 36)
+            
+            HStack {
+                Text("카테고리")
+                    .Headline()
+                    .padding(.leading, 16)
+                    .foregroundColor(.Gray5)
+                Text("최대 3개 선택")
+                    .Footnote()
+                    .foregroundColor(.Gray3)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
-                .padding(.top, 36)
+            
+            Text("단축어 사용에 필요한 앱")
+                .Headline()
+                .padding(.leading, 16)
+                .foregroundColor(.Gray5)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             relatedAppList(relatedApps: $relatedApps)
+            
+            ValidationCheckTextField(textType: .optional,
+                                     isMultipleLines: true,
+                                     title: "단축어 사용을 위한 요구사항",
+                                     placeholder: "단축어를 사용하기 위해서 필수적으로 요구되는 내용이 있다면, 작성해주세요",
+                                     lengthLimit: 100,
+                                     content: $requirements,
+                                     isValid: $isRequirementValid
+            )
             
             Spacer()
             
@@ -30,16 +57,17 @@ struct WriteShortcutTagView: View {
                 // TODO: 단축어 등록 완료 후 도착페이지로 이동
                 
             }, label: {
-                Text("다음")
+                Text("완료")
                     .Body1()
                     .frame(maxWidth: .infinity, maxHeight: 52)
             })
             
             // MARK: 완료 버튼의 조건 - 카테고리와 단축어사용에 필요한 앱을 필수로 할 것인가?
             
-            .disabled(selectedCategories.isEmpty || relatedApps.isEmpty)
+            .disabled(selectedCategories.isEmpty || relatedApps.isEmpty || !isRequirementValid)
             .tint(.Primary)
             .padding(.horizontal, 16)
+            .padding(.bottom, 24)
             .buttonStyle(.borderedProminent)
         }
     }
