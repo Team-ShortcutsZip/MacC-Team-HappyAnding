@@ -12,6 +12,7 @@ struct ExploreShortcutView: View {
         NavigationView {
             ScrollView {
                 MyShortcutCardListView()
+                    .padding(.top, 20)
                     .padding(.bottom, 32)
                 DownloadRankView()
                     .padding(.bottom, 32)
