@@ -11,7 +11,7 @@ struct IconModalView: View {
     
     // MARK: WriteShortcutTitleView에서의 확인을 위해 임시로 작성한 코드입니다.
     
-    @Binding var isShowing: Bool
+    @Binding var isShowingIconModal: Bool
     @Binding var iconColor: String
     @Binding var iconSymbol: String
     
@@ -19,7 +19,7 @@ struct IconModalView: View {
         TextField("컬러", text: $iconColor)
         TextField("심볼", text: $iconSymbol)
         Button(action: {
-            isShowing = false
+            isShowingIconModal = false
         }, label: {
             Text("완료")
         })
@@ -29,6 +29,6 @@ struct IconModalView: View {
 
 struct IconModalView_Previews: PreviewProvider {
     static var previews: some View {
-        IconModalView(isShowing: .constant(true), iconColor: .constant("LightPurple"), iconSymbol: .constant("bus.fill"))
+        IconModalView(isShowingIconModal: .constant(true), iconColor: .constant("LightPurple"), iconSymbol: .constant("bus.fill"))
     }
 }

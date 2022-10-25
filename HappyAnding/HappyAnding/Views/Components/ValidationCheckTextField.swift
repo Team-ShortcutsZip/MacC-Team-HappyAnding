@@ -73,7 +73,9 @@ struct ValidationCheckTextField: View {
                         .foregroundColor(.Error)
                         .padding(.leading)
                 }
+                
                 Spacer()
+                
                 Text("\(content.count)/\(lengthLimit)")
                     .Body2()
                     .foregroundColor(isExceeded ? .Error : .Gray4)
@@ -86,13 +88,16 @@ struct ValidationCheckTextField: View {
         HStack {
             Text(title)
                 .Headline()
+                .foregroundColor(.Gray5)
                 .padding(.leading, 16)
+            
             if textType.isOptional {
                 Text("(선택입력)")
                     .Footnote()
                     .foregroundColor(.Gray3)
             }
-        }.frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     var oneLineEditor: some View {

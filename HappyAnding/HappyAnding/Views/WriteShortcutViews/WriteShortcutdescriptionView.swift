@@ -17,6 +17,7 @@ struct WriteShortcutdescriptionView: View {
     var body: some View {
         VStack {
             ProgressView(value: 0.66, total: 1)
+                .padding(.bottom, 36)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
@@ -26,7 +27,6 @@ struct WriteShortcutdescriptionView: View {
                                      content: $oneLineDescription,
                                      isValid: $isOneLineValid
             )
-            .padding(.top, 36)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: true,
@@ -49,10 +49,10 @@ struct WriteShortcutdescriptionView: View {
             .disabled(!isOneLineValid || !isMultiLineValid)
             .tint(.Primary)
             .padding(.horizontal, 16)
+            .padding(.bottom, 24)
             .buttonStyle(.borderedProminent)
         }
         .ignoresSafeArea(.keyboard)
-        
     }
 }
 

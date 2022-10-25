@@ -70,6 +70,7 @@ struct WriteShortcutTagView: View {
             .padding(.bottom, 24)
             .buttonStyle(.borderedProminent)
         }
+        .ignoresSafeArea(.keyboard)
     }
     
     struct categoryList: View {
