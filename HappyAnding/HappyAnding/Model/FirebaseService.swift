@@ -14,7 +14,7 @@ class FirebaseService {
     static let share = FirebaseService()
     private let db = Firestore.firestore()
     
-    func fetchShortcut(model: String) async throws -> [Shortcuts] {
+    func fetchShortcut(model: String, completionHandler: @escaping ([Shortcuts])->()) {
         var shortcuts: [Shortcuts] = []
         
         db.collection(model).getDocuments() { (querySnapshot, error) in
@@ -32,14 +32,10 @@ class FirebaseService {
                     } catch let error {
                         print("error: \(error)")
                     }
-                    print(shortcuts)
-                    
-//                    print("***\(shortcuts[shortcuts.startIndex].title)")
-//                    print("\(document.documentID) => \(document.data())")
                 }
+                completionHandler(shortcuts)
             }
         }
-        return shortcuts
     }
 
     //TODO: Error 처리 필요
@@ -60,7 +56,7 @@ class FirebaseService {
     
     //TODO: Error 처리 필요
     
-    func createData(model: Any) {
+    func setData(model: Any) {
         switch model {
         case _ as Shortcuts:
             db.collection("Shortcut").document((model as! Shortcuts).id).setData((model as! Shortcuts).dictionary)
