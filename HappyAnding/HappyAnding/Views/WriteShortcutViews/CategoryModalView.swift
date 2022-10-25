@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct CategoryModalView: View {
+    @Binding var isShowingCategoryModal: Bool
+    @Binding var selectedCategories: [Category]
+    
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
-    @State var selectedCategories: [Category] = []
     
     var body: some View {
         VStack {
@@ -30,9 +32,7 @@ struct CategoryModalView: View {
                 .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
             
             Button(action: {
-                
-                // TODO: 모달 닫기
-                
+                isShowingCategoryModal = false
             }, label: {
                 Text("완료")
                     .Body1()
@@ -54,7 +54,9 @@ struct CategoryModalView: View {
                 if items.contains(item) {
                     items.removeAll { $0 == item }
                 } else {
-                    items.append(item)
+                    if items.count < 3 {
+                        items.append(item)
+                    }
                 }
             }, label: {
                 Text(item.rawValue)
@@ -73,6 +75,6 @@ struct CategoryModalView: View {
 
 struct CategoryModalView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryModalView()
+        CategoryModalView(isShowingCategoryModal: .constant(true), selectedCategories: .constant([Category.finance]))
     }
 }

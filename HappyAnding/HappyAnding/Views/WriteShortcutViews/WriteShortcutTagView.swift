@@ -8,35 +8,64 @@
 import SwiftUI
 
 struct WriteShortcutTagView: View {
+    @State var selectedCategories = [Category]()
+    @State var requiredApps = [String]()
+    @State var requirements = ""
+    
+    @State var isShowingCategoryModal = false
+    
     var body: some View {
         VStack {
-            categoryList()
+            ProgressView(value: 1, total: 1)
+            
+            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+                .padding(.top, 36)
+            
             relatedAppList()
+            
+            Spacer()
+            
+            Button(action: {
+                
+                // TODO: 단축어 등록 완료 후 도착페이지로 이동
+                
+            }, label: {
+                Text("다음")
+                    .Body1()
+                    .frame(maxWidth: .infinity, maxHeight: 52)
+            })
+            
+            // MARK: 완료 버튼의 조건 - 카테고리와 단축어사용에 필요한 앱을 필수로 할 것인가?
+            
+            .disabled(selectedCategories.isEmpty || requiredApps.isEmpty)
+            .tint(.Primary)
+            .padding(.horizontal, 16)
+            .buttonStyle(.borderedProminent)
         }
     }
     
     struct categoryList: View {
-        
-        //TODO: 카테고리는 최대 3개 선택 가능
-        
-        @State var categories: [Category] = [Category.lifestyle, Category.education, Category.finance]
+        @Binding var isShowingCategoryModal: Bool
+        @Binding var selectedCategories: [Category]
         
         var body: some View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
-                    ForEach(categories, id:\.self) { item in
-                        categoryCell(item: item.rawValue, items: $categories)
+                    ForEach(selectedCategories, id:\.self) { item in
+                        categoryCell(item: item.rawValue, items: $selectedCategories)
                     }
                     Button(action: {
-                        
-                        //TODO: CategoryModalView 열기
-                        
+                        isShowingCategoryModal = true
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
                             Text("카테고리 추가")
                         }
                     })
+                    .sheet(isPresented: $isShowingCategoryModal) {
+                        CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+                            .presentationDetents([.fraction(0.7)])
+                    }
                     .modifier(TagCell(color: .Gray3))
                 }
             }
