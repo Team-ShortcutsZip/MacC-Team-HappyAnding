@@ -67,7 +67,7 @@ struct WriteShortcutTitleView: View {
                                      content: $shortcutName,
                                      isValid: $isNameValid
             )
-            .keyboardType(.asciiCapable)
+            .keyboardType(.numbersAndPunctuation)
             .padding(.top, 30)
             
             ValidationCheckTextField(textType: .mandatory,
