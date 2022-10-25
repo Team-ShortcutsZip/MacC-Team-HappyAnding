@@ -37,13 +37,7 @@ struct WriteShortcutTagView: View {
                             Text("카테고리 추가")
                         }
                     })
-                    .Body2()
-                    .foregroundColor(.Gray3)
-                    .frame(height: 46)
-                    .padding(.horizontal)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(Color.Gray3, lineWidth: 1))
+                    .modifier(TagCell(color: .Gray3))
                 }
             }
             .padding(.leading, 16)
@@ -64,13 +58,7 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .Body2()
-            .foregroundColor(.Primary)
-            .frame(height: 46)
-            .padding(.horizontal)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.Primary, lineWidth: 1))
+            .modifier(TagCell(color: .Primary))
         }
     }
     
@@ -105,13 +93,7 @@ struct WriteShortcutTagView: View {
                                 }
                                 isTextFieldShowing = false
                             }
-                            .Body2()
-                            .foregroundColor(.Gray4)
-                            .frame(height: 46)
-                            .padding(.horizontal)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .strokeBorder(Color.Gray4, lineWidth: 1))
+                            .modifier(TagCell(color: .Gray4))
                     }
                     
                     Button(action: {
@@ -122,13 +104,7 @@ struct WriteShortcutTagView: View {
                             Text("앱 추가")
                         }
                     })
-                    .Body2()
-                    .foregroundColor(.Gray3)
-                    .frame(height: 46)
-                    .padding(.horizontal)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(Color.Gray3, lineWidth: 1))
+                    .modifier(TagCell(color: .Gray3))
                 }
             }
             .padding(.leading, 16)
@@ -149,13 +125,22 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .Body2()
-            .foregroundColor(.Primary)
-            .frame(height: 46)
-            .padding(.horizontal)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.Primary, lineWidth: 1))
+            .modifier(TagCell(color: .Primary))
+        }
+    }
+    
+    struct TagCell: ViewModifier {
+        @State var color: Color
+        
+        public func body(content: Content) -> some View {
+            content
+                .Body2()
+                .foregroundColor(color)
+                .frame(height: 46)
+                .padding(.horizontal)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .strokeBorder(color, lineWidth: 1))
         }
     }
     
