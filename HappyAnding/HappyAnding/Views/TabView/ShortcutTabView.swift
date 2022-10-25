@@ -15,14 +15,12 @@ struct ShortcutTabView: View {
     }
     
     var body: some View {
-        NavigationView {
-            TabView {
-                ForEach(Tab.allCases, id: \.self) { tab in
-                    tab.view
-                        .tabItem {
-                            Label(tab.tabName, systemImage: tab.systemImage)
-                        }
-                }
+        TabView {
+            ForEach(Tab.allCases, id: \.self) { tab in
+                tab.view
+                    .tabItem {
+                        Label(tab.tabName, systemImage: tab.systemImage)
+                    }
             }
         }
     }
