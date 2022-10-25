@@ -75,6 +75,12 @@ struct WriteShortcutTagView: View {
     }
     
     struct relatedAppList: View {
+        enum FocusField: Hashable {
+            case field
+        }
+        
+        @State var isTextFieldShowing = false
+        @FocusState private var focusedField: FocusField?
         @State var relatedApp = ""
         @State var relatedApps: [String] = ["지도", "인스타그램"]
         
@@ -85,21 +91,44 @@ struct WriteShortcutTagView: View {
                         relatedAppCell(item: item, items: $relatedApps)
                     }
                     
-                    TextField("앱 추가", text: $relatedApp)
-                        .modifier(ClearButton(text: $relatedApp))
-                        .onSubmit {
-                            if !relatedApp.isEmpty {
-                                relatedApps.append(relatedApp)
-                                relatedApp = ""
+                    if isTextFieldShowing {
+                        TextField("", text: $relatedApp)
+                            .modifier(ClearButton(text: $relatedApp))
+                            .focused($focusedField, equals: .field)
+                            .onAppear {
+                                self.focusedField = .field
                             }
+                            .onSubmit {
+                                if !relatedApp.isEmpty {
+                                    relatedApps.append(relatedApp)
+                                    relatedApp = ""
+                                }
+                                isTextFieldShowing = false
+                            }
+                            .Body2()
+                            .foregroundColor(.Gray4)
+                            .frame(height: 46)
+                            .padding(.horizontal)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .strokeBorder(Color.Gray4, lineWidth: 1))
+                    }
+                    
+                    Button(action: {
+                        isTextFieldShowing = true
+                    }, label: {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("앱 추가")
                         }
-                        .Body2()
-                        .foregroundColor(.Gray3)
-                        .frame(height: 46)
-                        .padding(.horizontal)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .strokeBorder(Color.Gray3, lineWidth: 1))
+                    })
+                    .Body2()
+                    .foregroundColor(.Gray3)
+                    .frame(height: 46)
+                    .padding(.horizontal)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(Color.Gray3, lineWidth: 1))
                 }
             }
             .padding(.leading, 16)
@@ -135,18 +164,13 @@ struct WriteShortcutTagView: View {
         
         public func body(content: Content) -> some View {
             HStack {
-                if text.isEmpty {
-                    Image(systemName: "plus")
-                }
                 content
-                if !text.isEmpty {
-                    Button(action: {
-                        self.text = ""
-                    }) {
-                        Image(systemName: "x.circle.fill")
-                            .Body2()
-                            .foregroundColor(.Gray4)
-                    }
+                Button(action: {
+                    self.text = ""
+                }) {
+                    Image(systemName: "x.circle.fill")
+                        .Body2()
+                        .foregroundColor(.Gray4)
                 }
             }
         }
