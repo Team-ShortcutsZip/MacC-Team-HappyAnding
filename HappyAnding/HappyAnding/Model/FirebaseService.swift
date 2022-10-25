@@ -26,13 +26,12 @@ class FirebaseService {
     }
     
     func createShortcut(shortcut: Shortcuts) {
-        
-        let refernece = db.collection("Shortcut")
-        do {
-            try refernece.addDocument(data: shortcut.dictionary)
-            print("stored with new docuent reference")
-        } catch {
-            print(error.localizedDescription)
+        db.collection("Shortcut").document(shortcut.id).setData(shortcut.dictionary) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
         }
     }
 }
