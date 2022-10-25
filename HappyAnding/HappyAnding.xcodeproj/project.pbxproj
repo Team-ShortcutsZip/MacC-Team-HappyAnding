@@ -332,6 +332,8 @@
 				A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */,
 			);
 			path = ReadShortcutView;
+            sourceTree = "<group>";
+        };
 		A04ACB0F29044E52004A85A6 /* ExploreShortcutView */ = {
 			isa = PBXGroup;
 			children = (
