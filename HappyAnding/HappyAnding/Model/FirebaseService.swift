@@ -37,6 +37,31 @@ class FirebaseService {
             }
         }
     }
+    
+    func fetchCuration(completionHandler: @escaping ([Curation])->()) {
+        var curations: [Curation] = []
+        
+        db.collection("Curation").getDocuments() { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Curation.self, from: jsonData)
+                        curations.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                print(curations)
+                completionHandler(curations)
+            }
+        }
+    }
 
     //TODO: Error 처리 필요
     

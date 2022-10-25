@@ -58,7 +58,7 @@ struct UserCurationCell: View {
     //title, subtitle, [단축어모델]을 가지는 객체를 받아옴
     let title: String
     let subtitle: String?
-    let shortcuts: [EShortcutModel]
+    let shortcuts: [ShortcutCellModel]
     
     var body: some View {
         ZStack {
@@ -79,7 +79,7 @@ struct UserCurationCell: View {
                                     )
                                     .cornerRadius(8)
                                     .frame(width: 36, height: 36)
-                                Image(systemName: shortcuts[index].symbol)
+                                Image(systemName: shortcuts[index].sfSymbol)
                                     .foregroundColor(Color.White)
                                     .Footnote()
                             }
@@ -139,7 +139,7 @@ struct UserCurationCell_Previews: PreviewProvider {
             UserCurationCell(
                 title: "워라벨 지키기. 단축어와 함께",
                 subtitle: nil,
-                shortcuts: EShortcutModel.shortcuts
+                shortcuts: [ShortcutCellModel(id: UUID().uuidString, sfSymbol: "bag.fill", color: "Red", title: "가방지키기", subtitle: "가방을 지켜보시던가")]
             )
         }
     }

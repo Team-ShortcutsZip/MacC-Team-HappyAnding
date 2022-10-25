@@ -12,7 +12,7 @@ struct Curation: Identifiable, Codable {
     var id = UUID().uuidString
     var title: String
     var subtitle: String?
-    var dateTime: Date
+    var dateTime: String
     var idAdmin: Bool
     var background: String
     var shortcuts: [ShortcutCellModel]
@@ -29,5 +29,5 @@ struct ShortcutCellModel: Identifiable, Codable {
     var sfSymbol: String
     var color: String
     var title: String
-    var subTitle: String
+    var subtitle: String
 }
