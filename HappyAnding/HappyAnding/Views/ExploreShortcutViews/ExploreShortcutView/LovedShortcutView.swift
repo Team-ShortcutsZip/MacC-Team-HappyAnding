@@ -35,12 +35,14 @@ struct LovedShortcutView: View {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    ShortcutCell(color: shortcut.color,
-                                 sfSymbol: shortcut.sfSymbol,
-                                 name: shortcut.name,
-                                 description: shortcut.description,
-                                 numberOfDownload: shortcut.numberOfDownload,
-                                 downloadLink: shortcut.downloadLink)
+                    NavigationLink(destination: Text("HI"), label: {
+                        ShortcutCell(color: shortcut.color,
+                                    sfSymbol: shortcut.sfSymbol,
+                                    name: shortcut.name,
+                                    description: shortcut.description,
+                                    numberOfDownload: shortcut.numberOfDownload,
+                                    downloadLink: shortcut.downloadLink)
+                    })
                 }
             }
         }
