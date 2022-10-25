@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct WriteShortcutTitleView: View {
-    @Binding var shortcutName: String
-    @Binding var shortcutLink: String
-    @Binding var iconColor: String
-    @Binding var iconSymbol: String
+    @State var shortcutName = ""
+    @State var shortcutLink = ""
+    @State var iconColor = ""
+    @State var iconSymbol = ""
     
     @State var isShowingIconModal = false
     @State var isNameValid = false
@@ -54,7 +54,10 @@ struct WriteShortcutTitleView: View {
                 })
                 .padding(36)
                 .sheet(isPresented: $isShowingIconModal) {
-                    IconModalView(isShowing: $isShowingIconModal, iconColor: $iconColor, iconSymbol: $iconSymbol)
+                    IconModalView(isShowing: $isShowingIconModal,
+                                  iconColor: $iconColor,
+                                  iconSymbol: $iconSymbol
+                    )
                 }
                 
                 ValidationCheckTextField(textType: .mandatory,
@@ -96,6 +99,6 @@ struct WriteShortcutTitleView: View {
 
 struct WriteShortcutTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTitleView(shortcutName: .constant(""), shortcutLink: .constant(""), iconColor: .constant("LightPurple"), iconSymbol: .constant("bus.fill"))
+        WriteShortcutTitleView()
     }
 }

@@ -137,7 +137,7 @@ struct ValidationCheckTextField: View {
                         .padding(.leading, 20)
                     Spacer()
                 }
-                .opacity(content.isEmpty ? 0.5 : 0)
+                .opacity(content.isEmpty ? 0.2 : 0)
                 .frame(height: 206)
             }
         }
