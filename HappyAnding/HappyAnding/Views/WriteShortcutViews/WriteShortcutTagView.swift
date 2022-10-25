@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WriteShortcutTagView: View {
     @State var selectedCategories = [Category]()
-    @State var requiredApps = [String]()
+    @State var relatedApps = [String]()
     @State var requirements = ""
     
     @State var isShowingCategoryModal = false
@@ -21,7 +21,7 @@ struct WriteShortcutTagView: View {
             categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
                 .padding(.top, 36)
             
-            relatedAppList()
+            relatedAppList(relatedApps: $relatedApps)
             
             Spacer()
             
@@ -37,7 +37,7 @@ struct WriteShortcutTagView: View {
             
             // MARK: 완료 버튼의 조건 - 카테고리와 단축어사용에 필요한 앱을 필수로 할 것인가?
             
-            .disabled(selectedCategories.isEmpty || requiredApps.isEmpty)
+            .disabled(selectedCategories.isEmpty || relatedApps.isEmpty)
             .tint(.Primary)
             .padding(.horizontal, 16)
             .buttonStyle(.borderedProminent)
@@ -92,14 +92,11 @@ struct WriteShortcutTagView: View {
     }
     
     struct relatedAppList: View {
-        enum FocusField: Hashable {
-            case field
-        }
+        @Binding var relatedApps: [String]
         
+        @FocusState private var isFocused: Bool
         @State var isTextFieldShowing = false
-        @FocusState private var focusedField: FocusField?
         @State var relatedApp = ""
-        @State var relatedApps: [String] = ["지도", "인스타그램"]
         
         var body: some View {
             ScrollView(.horizontal) {
@@ -111,9 +108,9 @@ struct WriteShortcutTagView: View {
                     if isTextFieldShowing {
                         TextField("", text: $relatedApp)
                             .modifier(ClearButton(text: $relatedApp))
-                            .focused($focusedField, equals: .field)
+                            .focused($isFocused)
                             .onAppear {
-                                self.focusedField = .field
+                                isFocused = true
                             }
                             .onSubmit {
                                 if !relatedApp.isEmpty {
@@ -127,6 +124,7 @@ struct WriteShortcutTagView: View {
                     
                     Button(action: {
                         isTextFieldShowing = true
+                        isFocused = true
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
