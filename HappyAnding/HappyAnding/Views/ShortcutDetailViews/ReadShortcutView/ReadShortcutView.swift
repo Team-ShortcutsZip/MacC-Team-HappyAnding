@@ -8,20 +8,35 @@
 import SwiftUI
 
 struct ReadShortcutView: View {
+    
     var body: some View {
         VStack {
             ReadShortcutHeaderView()
-            
-            ZStack(alignment: .bottom) {
-                ReadShortcutContentView()
-                Button(action: {
-                    //Place something action here
-                }) {
-                    //Button label
-                    Text("button")
-                }
+            ReadShortcutContentView()
+            Button(action: {
+        
+            }) {
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundColor(Color.Primary)
+                    .frame(height: 52)
+                    .padding(.horizontal, 16)
+                    .overlay {
+                        HStack {
+                            Text("다운로드 |")
+                            Image(systemName: "arrow.down.app")
+                            Text("45")
+                        }
+                        .Body1()
+                        .foregroundColor(Color.Background)
+                    }
             }
-        }.navigationBarItems(trailing: Text("trailing"))
+        }
+        .padding(.vertical, 20)
+        .background(Color.Background)
+        .navigationBarItems(trailing: Menu(content: {
+        }, label: {
+            Image(systemName: "ellipsis")
+        }))
     }
 }
 
