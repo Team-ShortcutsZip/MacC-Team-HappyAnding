@@ -13,7 +13,6 @@ import FirebaseAuth
 class FirebaseService {
     private let db = Firestore.firestore()
     
-    // 병원 이름으로 마음 카드를 가져오는 함수
     func fetchShortcut() {
         db.collection("Shortcut").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -23,6 +22,17 @@ class FirebaseService {
                     print("\(document.documentID) => \(document.data())")
                 }
             }
+        }
+    }
+    
+    func createShortcut(shortcut: Shortcuts) {
+        
+        let refernece = db.collection("Shortcut")
+        do {
+            try refernece.addDocument(data: shortcut.dictionary)
+            print("stored with new docuent reference")
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }
