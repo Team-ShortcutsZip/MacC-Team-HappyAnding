@@ -14,10 +14,11 @@ struct ExploreShortcutView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             .onAppear {
-                firebase.fetchShortcut()
+                firebase.fetchShortcut(model: "Shortcut")
             }
             .onTapGesture {
-                firebase.createShortcut(shortcut: testData)
+//                firebase.createShortcut(shortcut: testData)
+                firebase.createData(model: testData)
             }
     }
 }
