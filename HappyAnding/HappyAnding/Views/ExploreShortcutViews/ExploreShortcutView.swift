@@ -10,15 +10,20 @@ import SwiftUI
 struct ExploreShortcutView: View {
     
     let firebase = FirebaseService()
-    let testData = Shortcuts(sfSymbol: "bag", color: "Red", title: "titld", subtitle: "1", description: "2", category: ["3"], requiredApp: ["4"], date: Date(), numberOfLike: 1, numberOfDownload: 1, author: "dd", downloadLink: ["https://www.icloud.com/shortcuts/fef3df84c4ae4bea8a411c8566efe280"])
+    @State var shortcutsArray: [Shortcuts] = []
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             .onAppear {
-                firebase.fetchShortcut(model: "Shortcut")
+                firebase.fetchShortcut(model: "Shortcut") { shortcuts in
+                    shortcutsArray = shortcuts
+                }
             }
             .onTapGesture {
-//                firebase.createShortcut(shortcut: testData)
-                firebase.createData(model: testData)
+                firebase.fetchCategoryLikedList(category: "education") { shortcuts in
+                    shortcutsArray = shortcuts
+                    print(shortcutsArray)
+                }
             }
     }
 }

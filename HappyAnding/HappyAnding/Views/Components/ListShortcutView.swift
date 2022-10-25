@@ -61,6 +61,11 @@ struct ListShortcutView: View {
                              downloadLink: self.shortcutsArray[index].downloadLink[0])
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
+                .onTapGesture {
+                    firebase.fetchShortcutDetail(id: self.shortcutsArray[index].id) { shortcut in
+                        print("**\(shortcut)")
+                    }
+                }
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         if index == shortcutData.data.count - 1 && index < 12 {
