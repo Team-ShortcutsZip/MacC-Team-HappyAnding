@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReadShortcutView: View {
     
+    @Environment(\.openURL) private var openURL
     @State var isMyShortcut: Bool = true
     
     // TODO: 상위 뷰에서 유저데이터와 단축어데이터를 전달받은 변수 생성
@@ -23,7 +24,9 @@ struct ReadShortcutView: View {
             ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, numberOfLike: 99, name: shortcut.name, oneline: "한줄 설 명!")
             ReadShortcutContentView(writer: "romi", profileImage: "person.crop.circle", explain: shortcut.description, category: "여행", necessaryApps: "인스타그램", requirements: "불라불라")
             Button(action: {
-                //Place something action here
+                if let url = URL(string: shortcut.downloadLink) {
+                    openURL(url)
+                }
             }) {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(Color.Primary)
