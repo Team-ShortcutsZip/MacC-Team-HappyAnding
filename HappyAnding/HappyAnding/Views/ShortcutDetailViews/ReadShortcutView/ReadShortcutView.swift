@@ -33,11 +33,7 @@ struct ReadShortcutView: View {
                     .frame(height: 52)
                     .padding(.horizontal, 16)
                     .overlay {
-                        HStack {
-                            Text("다운로드 |")
-                            Image(systemName: "arrow.down.app")
-                            Text("\(shortcut.numberOfDownload)")
-                        }
+                        Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
                         .Body1()
                         .foregroundColor(Color.Background)
                     }

@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct ReadShortcutHeaderView: View {
-    //icon
-    //numberOfLike
-    //name
-    //한줄설명
     
     let icon: String
     let color: String
@@ -33,10 +29,7 @@ struct ReadShortcutHeaderView: View {
                 
                 Spacer()
                 
-                HStack {
-                    Image(systemName: "hand.thumbsup")
-                    Text("\(numberOfLike)")
-                }
+                Text("\(Image(systemName: "hand.thumbsup")) \(numberOfLike)")
                 .Body2()
                 .padding(10)
                 .foregroundColor(Color.Gray4)
