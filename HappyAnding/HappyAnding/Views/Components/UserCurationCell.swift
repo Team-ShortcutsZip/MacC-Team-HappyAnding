@@ -36,7 +36,7 @@ struct UserCurationCell: View {
                                     .frame(width: 36, height: 36)
                                 Image(systemName: shortcut.sfSymbol)
                                     .foregroundColor(Color.White)
-                                    .Footnote()
+                                    .font(.system(size: 15))
                             }
                         }
                     }
@@ -53,7 +53,7 @@ struct UserCurationCell: View {
                                 Text("\(shortcuts.count-4)")
                             }
                             .foregroundColor(.Gray5)
-                            .Subtitle()
+                            .Footnote()
                         }
                     }
                 }
