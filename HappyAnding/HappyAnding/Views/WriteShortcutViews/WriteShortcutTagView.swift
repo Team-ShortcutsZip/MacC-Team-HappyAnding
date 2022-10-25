@@ -83,6 +83,7 @@ struct WriteShortcutTagView: View {
                     ForEach(selectedCategories, id:\.self) { item in
                         categoryCell(item: item.rawValue, items: $selectedCategories)
                     }
+                    
                     Button(action: {
                         isShowingCategoryModal = true
                     }, label: {
@@ -91,11 +92,11 @@ struct WriteShortcutTagView: View {
                             Text("카테고리 추가")
                         }
                     })
+                    .modifier(TagCell(color: .Gray3))
                     .sheet(isPresented: $isShowingCategoryModal) {
                         CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
                             .presentationDetents([.fraction(0.7)])
                     }
-                    .modifier(TagCell(color: .Gray3))
                 }
             }
             .padding(.leading, 16)
