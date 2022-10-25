@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ReadShortcutView: View {
     
+    @State var isMyShortcut: Bool = true
+    
     var body: some View {
         VStack {
             ReadShortcutHeaderView()
@@ -34,9 +36,51 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .navigationBarItems(trailing: Menu(content: {
+            if isMyShortcut {
+                myShortcutMenuSection
+            } else {
+                otherShortcutMenuSection
+            }
         }, label: {
             Image(systemName: "ellipsis")
         }))
+    }
+}
+
+extension ReadShortcutView {
+    var myShortcutMenuSection: some View {
+        Section {
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("편집", systemImage: "square.and.pencil")
+            }
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("공유", systemImage: "square.and.arrow.up")
+            }
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("삭제", systemImage: "trash.fill")
+            }
+        }
+    }
+    
+    var otherShortcutMenuSection: some View {
+        Section {
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("공유", systemImage: "square.and.arrow.up")
+            }
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("신고", systemImage: "light.beacon.max.fill")
+            }
+        }
     }
 }
 
