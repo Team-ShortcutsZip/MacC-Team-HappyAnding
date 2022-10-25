@@ -11,18 +11,35 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class FirebaseService {
+    static let share = FirebaseService()
     private let db = Firestore.firestore()
     
-    func fetchShortcut(model: String) {
+    func fetchShortcut(model: String) async throws -> [Shortcuts] {
+        var shortcuts: [Shortcuts] = []
+        
         db.collection(model).getDocuments() { (querySnapshot, error) in
             if let error {
                 print("Error getting documents: \(error)")
             } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        shortcuts.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                    print(shortcuts)
+                    
+//                    print("***\(shortcuts[shortcuts.startIndex].title)")
+//                    print("\(document.documentID) => \(document.data())")
                 }
             }
         }
+        return shortcuts
     }
 
     //TODO: Error 처리 필요

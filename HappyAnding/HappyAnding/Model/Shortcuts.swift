@@ -18,11 +18,17 @@ struct Shortcuts: Identifiable, Codable {
     var description: String
     var category: [String]
     var requiredApp: [String]
-    var date: Date
+    var date: String
     var numberOfLike: Int
     var numberOfDownload: Int
     var author: String
     var downloadLink: [String]
+    
+    enum CodingKeys: String, CodingKey {
+        case id, sfSymbol, color, title, subtitle
+        case description = "description"
+        case category, requiredApp, date, numberOfLike, numberOfDownload, author, downloadLink
+    }
     
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()
