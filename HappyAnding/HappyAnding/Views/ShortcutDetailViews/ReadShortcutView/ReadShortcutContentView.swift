@@ -58,6 +58,8 @@ private struct ReusableTextView: View {
                 .Body2()
                 .foregroundColor(Color.Gray4)
             Text(contents)
+                .Body2()
+                .foregroundColor(Color.Gray5)
         }
     }
 }

@@ -24,6 +24,7 @@ struct ReadShortcutHeaderView: View {
             HStack {
                 VStack {
                     Image(systemName: icon)
+                        .Title2()
                         .foregroundColor(Color.White)
                 }
                 .frame(width: 52, height: 52)

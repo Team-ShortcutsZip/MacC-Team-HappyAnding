@@ -74,6 +74,7 @@ extension ReadShortcutView {
                 //Place something action here
             }) {
                 Label("삭제", systemImage: "trash.fill")
+                    .foregroundColor(Color.red)
             }
         }
     }
