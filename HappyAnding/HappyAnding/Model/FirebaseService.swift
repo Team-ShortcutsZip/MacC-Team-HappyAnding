@@ -12,7 +12,6 @@ import FirebaseAuth
 
 class FirebaseService {
     private let db = Firestore.firestore()
-    private let uid = FirebaseAuth.getuid()
     
     // 병원 이름으로 마음 카드를 가져오는 함수
     func fetchShortcut() {
