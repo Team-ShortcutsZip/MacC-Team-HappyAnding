@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct ReadShortcutContentView: View {
+    let writer: String
+    let profileImage: String
+    let explain: String
+    let category: String
+    let necessaryApps: String
+    let requirements: String
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -15,32 +22,17 @@ struct ReadShortcutContentView: View {
                     .Body2()
                     .foregroundColor(Color.Gray4)
                 HStack {
-                    Image(systemName: "leaf")
-                    Text("로미")
+                    Image(systemName: profileImage)
+                    Text(writer)
                 }
                 
-                Text("단축어 설명")
-                    .Body2()
-                    .foregroundColor(Color.Gray4)
-                Text("bu\naa\nkfj\nsaa\nu\naa\nkfj\nsaa\nu\naa\nkfj\nsaa\nu\naa\nkfj\nsaa\nbula")
+                ReusableTextView(title: "단축어 설명", contents: explain)
                     .padding(.bottom, 20)
-                
-                Text("카테고리")
-                    .Body2()
-                    .foregroundColor(Color.Gray4)
-                Text("bulabulabulabula")
+                ReusableTextView(title: "카테고리", contents: category)
                     .padding(.bottom, 20)
-                
-                Text("단축어 사용에 필요한 앱")
-                    .Body2()
-                    .foregroundColor(Color.Gray4)
-                Text("bulabulabulabula")
+                ReusableTextView(title: "단축어 사용에 필요한 앱", contents: necessaryApps)
                     .padding(.bottom, 20)
-                
-                Text("단축어 사용을 위한 요구사항")
-                    .Body2()
-                    .foregroundColor(Color.Gray4)
-                Text("bulabulabulabula")
+                ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: requirements)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)
@@ -55,8 +47,18 @@ struct ReadShortcutContentView: View {
     }
 }
 
-struct ReadShortcutContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadShortcutContentView()
+private struct ReusableTextView: View {
+    
+    let title: String
+    let contents: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .Body2()
+                .foregroundColor(Color.Gray4)
+            Text(contents)
+        }
     }
 }
+

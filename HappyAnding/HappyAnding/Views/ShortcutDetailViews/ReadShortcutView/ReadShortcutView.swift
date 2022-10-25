@@ -11,12 +11,19 @@ struct ReadShortcutView: View {
     
     @State var isMyShortcut: Bool = true
     
+    // TODO: 상위 뷰에서 유저데이터와 단축어데이터를 전달받은 변수 생성
+    // shortcuts -> 추후 지워질 변수
+    var shortcuts = Shortcut.fetchData(number: 3)
+    
     var body: some View {
-        VStack {
-            ReadShortcutHeaderView()
-            ReadShortcutContentView()
-            Button(action: {
         
+        let shortcut: Shortcut = shortcuts.first!
+        
+        VStack {
+            ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, numberOfLike: 99, name: shortcut.name, oneline: "한줄 설 명!")
+            ReadShortcutContentView(writer: "romi", profileImage: "person.crop.circle", explain: shortcut.description, category: "여행", necessaryApps: "인스타그램", requirements: "불라불라")
+            Button(action: {
+                //Place something action here
             }) {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(Color.Primary)
@@ -26,7 +33,7 @@ struct ReadShortcutView: View {
                         HStack {
                             Text("다운로드 |")
                             Image(systemName: "arrow.down.app")
-                            Text("45")
+                            Text("\(shortcut.numberOfDownload)")
                         }
                         .Body1()
                         .foregroundColor(Color.Background)
