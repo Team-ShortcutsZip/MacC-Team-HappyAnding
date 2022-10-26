@@ -51,7 +51,7 @@ struct ExploreCategoryView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.Background)
                 Section() {
-                    CategoryListHeader(title: SectionType.download.rawValue)
+                    CategoryListHeader(type: .download)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
                     ForEach(Array(rankingShortcuts.enumerated()), id: \.offset) { index, shortcut in
@@ -70,7 +70,7 @@ struct ExploreCategoryView: View {
                     .listRowSeparator(.hidden)
                 }
                 Section() {
-                    CategoryListHeader(title: SectionType.popular.rawValue)
+                    CategoryListHeader(type: .popular)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
                     ForEach(Array(lovedShortcuts.enumerated()), id: \.offset) { index, shortcut in
@@ -97,10 +97,10 @@ struct ExploreCategoryView: View {
 }
 
 struct CategoryListHeader: View {
-    var title: String
+    var type: SectionType
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(title)
+            Text(type.rawValue)
                 .Title2()
                 .foregroundColor(.Gray5)
             Spacer()
@@ -109,7 +109,7 @@ struct CategoryListHeader: View {
                     .Footnote()
                     .foregroundColor(.Gray4)
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                NavigationLink(destination: ListShortcutView()){}.opacity(0)
+                NavigationLink(destination: ListShortcutView(sectionType: type)){}.opacity(0)
             }
         }
     }
