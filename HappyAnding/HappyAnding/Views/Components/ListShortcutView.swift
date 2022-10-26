@@ -7,23 +7,29 @@
 
 import SwiftUI
 
-/// 카테고리에서 해당 뷰를 호출할 때에는 categoryName에 카테고리 이름을 넣어주세요
+/// - parameters:
+/// - categoryName: 카테고리에서 접근할 시, 해당 카테고리의 이름을 넣어주시고, 그렇지 않다면 nil을 넣어주세요
+/// sectionType: 다운로드 순위에서 접근할 시, .download를, 사랑받는 앱에서 접근시 .popular를 넣어주세요.
 struct ListShortcutView: View {
     
     @ObservedObject var shortcutData = fetchData()
     
     @State private var isLastItem = false
     
-    var categoryName: String?
+    // TODO: let으로 변경필요, 현재 작업중인 코드들과 충돌될 가능성이 있어 우선 변수로 선언
+    var categoryName: Category?
+    var sectionType: SectionType?
     
     var body: some View {
         
         List {
             
-            header
-                .listRowBackground(Color.Background)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets())
+            if sectionType != .myShortcut {
+                header
+                    .listRowBackground(Color.Background)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+            }
             
             ForEach(0..<shortcutData.data.count, id: \.self) { index in
                 ShortcutCell(color: self.shortcutData.data[index].color,
@@ -44,6 +50,7 @@ struct ListShortcutView: View {
                     }
                 }
             }
+            
             Rectangle()
                 .fill(Color.Background)
                 .frame(height: 44)
@@ -54,26 +61,57 @@ struct ListShortcutView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle("다운로드 순위")
+        .navigationBarTitle(getNavigationTitle(sectionType ?? .myShortcut))
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     var header: some View {
+        
+            // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
+        
         ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .frame(height: 40)
-                .padding(.horizontal, 16)
-                .foregroundColor(.Gray1)
-            
-            Text("\(categoryName ?? "") 1위 ~ 100위")
+            Text(getDescriptions(sectionType ?? .popular))
+                .padding(10)
                 .Body2()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundColor(.Gray5)
+        }
+        .padding(.vertical, 10)
+        .background(descriptionBackground)
+    }
+    
+    var descriptionBackground: some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(Color.Gray1)
+            .padding(16)
+    }
+    
+    private func getNavigationTitle(_ sectionType: SectionType) -> String {
+        switch sectionType {
+        case .download:
+            return sectionType.rawValue
+        case .popular:
+            return "사랑받는 단축어"
+        case .myShortcut:
+            return "내 단축어"
+        }
+    }
+    
+    private func getDescriptions(_ sectionType: SectionType) -> String {
+        switch sectionType {
+        case .download:
+            return self.categoryName?.fetchDescription() ?? "" + "1위 ~ 100위"
+        case .popular:
+            return "💡 최근 2주간 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
+        case .myShortcut:
+            return ""
         }
     }
 }
 
 struct ListShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ListShortcutView()
+        ListShortcutView(sectionType: .popular)
     }
 }
 

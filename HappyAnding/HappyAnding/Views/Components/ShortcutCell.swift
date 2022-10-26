@@ -33,6 +33,7 @@ import SwiftUI
 
 struct ShortcutCell: View {
     
+    @Environment(\.openURL) private var openURL
     
     // TODO: 단축어 구조체 모델 생성 후 객체로 변경하기
     // TODO: Color, Font extension 등록 후 색상 변경하기
@@ -64,6 +65,9 @@ struct ShortcutCell: View {
                 .onTapGesture {
                     
                     // TODO: 앱 여는 기능 추가
+                    if let url = URL(string: downloadLink) {
+                        openURL(url)
+                    }
                     
                     print("\(downloadLink)로 이동합니다.")
                 }
