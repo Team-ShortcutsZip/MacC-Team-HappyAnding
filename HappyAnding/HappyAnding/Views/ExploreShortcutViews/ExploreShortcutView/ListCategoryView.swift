@@ -21,7 +21,7 @@ struct ListCategoryView: View {
                 LazyVGrid(columns: gridLayout) {
                     ForEach(Category.allCases, id: \.self) { item in
                         
-                        NavigationLink(destination: ListShortcutView(categoryName: item)) {
+                        NavigationLink(destination: ExploreCategoryView(category: item)) {
                             
                             Text(item.rawValue)
                                 .Body2()
@@ -42,6 +42,8 @@ struct ListCategoryView: View {
             }
         }
         .frame(maxHeight: .infinity)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("카테고리")
     }
 }
 
