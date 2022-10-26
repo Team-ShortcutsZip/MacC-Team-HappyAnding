@@ -20,7 +20,7 @@ struct WriteCurationInfoView: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            ProgressView(value: 1, total: 1)
+            ProgressView(value: 2, total: 2)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
