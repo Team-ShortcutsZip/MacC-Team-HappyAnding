@@ -121,7 +121,7 @@ class fetchShortcuts: ObservableObject {
 struct UserCuration: Identifiable {
     var id: UUID = UUID()
     var title: String
-    var subtitle: String?
+    var subtitle: String
     var shortcuts: [Shortcut]
 }
 
@@ -148,7 +148,7 @@ extension UserCuration {
             data.append(
                 UserCuration(
                     title: title.randomElement() ?? "title",
-                    subtitle: subtitle.randomElement(),
+                    subtitle: subtitle.randomElement() ?? "subtitle",
                     shortcuts: fetchShortcuts().data
                 )
             )
