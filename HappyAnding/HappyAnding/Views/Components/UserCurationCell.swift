@@ -73,6 +73,7 @@ struct UserCurationCell: View {
                         .lineLimit(10)
                         .foregroundColor(Color.Gray5)
                         .padding(.bottom, 20)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .padding(.horizontal, 24)
