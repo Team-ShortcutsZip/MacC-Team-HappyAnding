@@ -11,10 +11,10 @@ struct ReadShortcutHeaderView: View {
     
     let icon: String
     let color: String
-    let numberOfLike: Int
     let name: String
     let oneline: String
     
+    @State var numberOfLike: Int
     @State var isMyLike: Bool = false
     
     var body: some View {
@@ -39,6 +39,11 @@ struct ReadShortcutHeaderView: View {
                 .cornerRadius(12)
                 .onTapGesture(perform: {
                     isMyLike.toggle()
+                    if isMyLike {
+                        self.numberOfLike += 1
+                    } else {
+                        self.numberOfLike -= 1
+                    }
                     // TODO: 추후 좋아요 데이터구조에 목록(?) 추가, 취소 기능 추가할 곳
                 })
             }
