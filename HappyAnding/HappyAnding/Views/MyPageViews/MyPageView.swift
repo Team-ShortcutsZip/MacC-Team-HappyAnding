@@ -61,11 +61,11 @@ struct MyPageView: View {
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
                         shortcuts: Shortcut.fetchData(number: 5),
-                        title: "좋아요한 단축어"
+                        type: .myLovingShortcut
                     )
                     MyPageShortcutList(
                         shortcuts: Shortcut.fetchData(number: 5),
-                        title: "다운로드한 단축어"
+                        type: .myDownloadShortcut
                     )
                     .padding(.bottom, 44)
                     
@@ -89,11 +89,13 @@ struct MyPageView: View {
 }
 
 struct MyPageShortcutList: View {
+    
     var shortcuts: [Shortcut]
-    var title: String
+    var type: SectionType
+    
     var body: some View {
         VStack(spacing: 0) {
-            MyPageListHeader(title: title)
+            MyPageListHeader(type: type)
                 .padding(.horizontal, 16)
             ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                 if index < 3 {
@@ -113,15 +115,17 @@ struct MyPageShortcutList: View {
 }
 
 struct MyPageListHeader: View {
-    var title: String
+    
+    var type: SectionType
+    
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(title)
+            Text(type.rawValue)
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView()) {
+            NavigationLink(destination: ListShortcutView(sectionType: type)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
