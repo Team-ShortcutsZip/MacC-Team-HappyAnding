@@ -8,8 +8,54 @@
 import SwiftUI
 
 struct WriteCurationInfoView: View {
+    
+    @State var title = ""
+    @State var description = ""
+    @State var isValidTitle = false
+    @State var isValidDescription = false
+    
+    private var isIncomplete: Bool {
+        !(isValidTitle && isValidDescription)
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 24) {
+            ProgressView(value: 1, total: 1)
+            
+            ValidationCheckTextField(textType: .mandatory,
+                                     isMultipleLines: false,
+                                     title: "큐레이션 이름",
+                                     placeholder: "큐레이션 이름을 작성해주세요",
+                                     lengthLimit: 20,
+                                     content: $title,
+                                     isValid: $isValidTitle)
+                .padding(.top, 36)
+            
+            ValidationCheckTextField(textType: .mandatory,
+                                     isMultipleLines: true,
+                                     title: "한 줄 설명",
+                                     placeholder: "나의 큐레이션을 설명할 수 있는 간단한 내용을 작성해주세요",
+                                     lengthLimit: 40,
+                                     content: $description,
+                                     isValid: $isValidDescription)
+            
+            Spacer()
+                .frame(maxHeight: .infinity)
+            
+            Button(action: {
+                print(title, description)
+            }, label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(isIncomplete ?.Gray1 : .Primary)
+                        .padding(.horizontal, 16)
+                        .frame(height: 52)
+                    Text("완료")
+                        .foregroundColor(isIncomplete ? .Gray3 : .Background)
+                }
+            })
+            .disabled(isIncomplete)
+        }
     }
 }
 
