@@ -2,19 +2,18 @@
 //  UserCurationListView.swift
 //  HappyAnding
 //
-//  Created by 전지민 on 2022/10/26.
+//  Created by 전지민 on 2022/10/25.
 //
 
 import SwiftUI
 
-/*
-struct TestUserCurationListView: View {
-    let firebase = FirebaseService()
-    @State var userCurations: [Curation] = []
+struct UserCurationListView: View {
+    
+    var userCurations: [UserCuration]
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurtaionListHeader(title: "나의 큐레이션")
+            UserCurationListHeader(title: "나의 큐레이션")
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             NavigationLink(destination: WriteCurationInfoView()){
@@ -24,34 +23,30 @@ struct TestUserCurationListView: View {
                 }
                 .Headline()
                 .foregroundColor(.Gray4)
-                .frame(maxWidth: .infinity, maxHeight: 64)
+                .frame(maxWidth: .infinity)
+                .frame(height: 64)
                 .background(Color.Gray1)
                 .cornerRadius(12)
-                .padding(.bottom, 6)
+                .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-            ForEach(userCurations.indices, id: \.self) { index in
-                NavigationLink(destination: ReadCurationView()) {
+            ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                NavigationLink(destination: ReadAdminCurationView()) {
                     if index < 2 {
                         UserCurationCell(
-                            title: userCurations[index].title,
-                            subtitle: userCurations[index].subtitle,
-                            shortcuts: userCurations[index].shortcuts
+                            title: curation.title,
+                            subtitle: curation.subtitle,
+                            shortcuts: curation.shortcuts
                         )
                     }
                 }
             }
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-        .onAppear() {
-            firebase.fetchCuration { curations in
-                userCurations = curations
-            }
-        }
     }
 }
 
-struct UserCurtaionListHeader: View {
+struct UserCurationListHeader: View {
     var title: String
     var body: some View {
         HStack(alignment: .bottom) {
@@ -60,7 +55,7 @@ struct UserCurtaionListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView()) {
+            NavigationLink(destination: ExploreCurationView()) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
@@ -69,9 +64,8 @@ struct UserCurtaionListHeader: View {
     }
 }
 
-//    struct UserCurationListView_Previews: PreviewProvider {
-//        static var previews: some View {
-//            UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
-//        }
-//    }
-*/
+struct UserCurationListView_Previews: PreviewProvider {
+    static var previews: some View {
+        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
+    }
+}
