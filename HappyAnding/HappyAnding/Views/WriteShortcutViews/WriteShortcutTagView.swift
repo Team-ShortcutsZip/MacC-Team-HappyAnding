@@ -8,83 +8,141 @@
 import SwiftUI
 
 struct WriteShortcutTagView: View {
+    
+    let firebase = FirebaseService()
+    
+    let iconColor: String
+    let iconSymbol: String
+    let shortcutName: String
+    let shortcutLink: String
+    let onelineDescription: String
+    let multiLineDescription: String
+    @Binding var isWriting: Bool
+    
+    @State var selectedCategories = [String]()
+    @State var relatedApps = [String]()
+    @State var requirements = ""
+    
+    @State var isShowingCategoryModal = false
+    @State var isRequirementValid = false
+    
     var body: some View {
         VStack {
-            categoryList()
-            relatedAppList()
+            ProgressView(value: 1, total: 1)
+            .padding(.bottom, 36)
+            
+            HStack {
+                Text("카테고리")
+                    .Headline()
+                    .padding(.leading, 16)
+                    .foregroundColor(.Gray5)
+                Text("최대 3개 선택")
+                    .Footnote()
+                    .foregroundColor(.Gray3)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+            
+            Text("단축어 사용에 필요한 앱")
+                .Headline()
+                .padding(.leading, 16)
+                .foregroundColor(.Gray5)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            relatedAppList(relatedApps: $relatedApps)
+            
+            ValidationCheckTextField(textType: .optional,
+                                     isMultipleLines: true,
+                                     title: "단축어 사용을 위한 요구사항",
+                                     placeholder: "단축어를 사용하기 위해서 필수적으로 요구되는 내용이 있다면, 작성해주세요",
+                                     lengthLimit: 100,
+                                     content: $requirements,
+                                     isValid: $isRequirementValid
+            )
+            
+            Spacer()
+            
+            Button(action: {
+                
+                // TODO: 새로운 단축어 생성 및 저장
+                
+                print(iconColor, iconSymbol, shortcutName, shortcutLink, onelineDescription, multiLineDescription, selectedCategories, relatedApps, requirements)
+                
+                let shortcut = Shortcuts(sfSymbol: iconSymbol, color: iconColor, title: shortcutName, subtitle: onelineDescription, description: multiLineDescription, category: selectedCategories, requiredApp: relatedApps, date: "", numberOfLike: 0, numberOfDownload: 0, author: "testUser", downloadLink: [shortcutLink])
+                
+                firebase.setData(model: shortcut)
+                
+                isWriting.toggle()
+            }, label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(!selectedCategories.isEmpty && !relatedApps.isEmpty && isRequirementValid ? .Primary : .Gray1 )
+                        .frame(maxWidth: .infinity, maxHeight: 52)
+                    
+                    Text("완료")
+                        .foregroundColor(!selectedCategories.isEmpty && !relatedApps.isEmpty && isRequirementValid ? .Background : .Gray3 )
+                        .Body1()
+                }
+            })
+            .disabled(selectedCategories.isEmpty || relatedApps.isEmpty || !isRequirementValid)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 24)
         }
+        .navigationTitle("단축어 등록")
+        .ignoresSafeArea(.keyboard)
     }
     
     struct categoryList: View {
-        
-        //TODO: 카테고리는 최대 3개 선택 가능
-        
-        @State var categories: [Category] = [Category.lifestyle, Category.education, Category.finance]
+        @Binding var isShowingCategoryModal: Bool
+        @Binding var selectedCategories: [String]
         
         var body: some View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
-                    ForEach(categories, id:\.self) { item in
-                        categoryCell(item: item.rawValue, items: $categories)
+                    ForEach(selectedCategories, id:\.self) { item in
+                        CategoryTag(item: item, items: $selectedCategories)
                     }
+                    
                     Button(action: {
-                        
-                        //TODO: CategoryModalView 열기
-                        
+                        isShowingCategoryModal = true
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
                             Text("카테고리 추가")
                         }
                     })
-                    .modifier(TagCell(color: .Gray3))
+                    .modifier(CellModifier(color: .Gray3))
+                    .sheet(isPresented: $isShowingCategoryModal) {
+                        CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+                            .presentationDetents([.fraction(0.7)])
+                    }
                 }
             }
             .padding(.leading, 16)
         }
     }
     
-    struct categoryCell: View {
-        var item: String
-        @Binding var items: [Category]
-        
-        var body: some View {
-            HStack {
-                Text(item)
-                
-                Button(action: {
-                    items.removeAll { $0.rawValue == item }
-                }, label: {
-                    Image(systemName: "xmark")
-                })
-            }
-            .modifier(TagCell(color: .Primary))
-        }
-    }
-    
     struct relatedAppList: View {
-        enum FocusField: Hashable {
-            case field
-        }
+        @Binding var relatedApps: [String]
         
+        @FocusState private var isFocused: Bool
         @State var isTextFieldShowing = false
-        @FocusState private var focusedField: FocusField?
         @State var relatedApp = ""
-        @State var relatedApps: [String] = ["지도", "인스타그램"]
         
         var body: some View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(relatedApps, id:\.self) { item in
-                        relatedAppCell(item: item, items: $relatedApps)
+                        TagCell(item: item, items: $relatedApps)
                     }
                     
                     if isTextFieldShowing {
                         TextField("", text: $relatedApp)
                             .modifier(ClearButton(text: $relatedApp))
-                            .focused($focusedField, equals: .field)
+                            .focused($isFocused)
                             .onAppear {
-                                self.focusedField = .field
+                                isFocused = true
                             }
                             .onSubmit {
                                 if !relatedApp.isEmpty {
@@ -93,25 +151,44 @@ struct WriteShortcutTagView: View {
                                 }
                                 isTextFieldShowing = false
                             }
-                            .modifier(TagCell(color: .Gray4))
+                            .modifier(CellModifier(color: .Gray4))
                     }
                     
                     Button(action: {
                         isTextFieldShowing = true
+                        isFocused = true
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
                             Text("앱 추가")
                         }
                     })
-                    .modifier(TagCell(color: .Gray3))
+                    .modifier(CellModifier(color: .Gray3))
                 }
             }
             .padding(.leading, 16)
         }
     }
     
-    struct relatedAppCell: View {
+    struct CategoryTag: View {
+        var item: String
+        @Binding var items: [String]
+        
+        var body: some View {
+            HStack {
+                Text(Category.withLabel(item)!.rawValue)
+                
+                Button(action: {
+                    items.removeAll { $0 == item }
+                }, label: {
+                    Image(systemName: "xmark")
+                })
+            }
+            .modifier(CellModifier(color: .Primary))
+        }
+    }
+    
+    struct TagCell: View {
         var item: String
         @Binding var items: [String]
         
@@ -125,11 +202,11 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .modifier(TagCell(color: .Primary))
+            .modifier(CellModifier(color: .Primary))
         }
     }
     
-    struct TagCell: ViewModifier {
+    struct CellModifier: ViewModifier {
         @State var color: Color
         
         public func body(content: Content) -> some View {
@@ -164,6 +241,13 @@ struct WriteShortcutTagView: View {
 
 struct WriteShortcutTagView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTagView()
+        WriteShortcutTagView(iconColor: "Purple",
+                             iconSymbol: "bus.fill",
+                             shortcutName: "단축어이름",
+                             shortcutLink: "단축어 링크",
+                             onelineDescription: "한줄 설명",
+                             multiLineDescription: "여러줄 설명",
+                             isWriting: .constant(true)
+        )
     }
 }

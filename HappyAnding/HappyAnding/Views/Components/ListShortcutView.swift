@@ -12,8 +12,11 @@ import SwiftUI
 /// sectionType: 다운로드 순위에서 접근할 시, .download를, 사랑받는 앱에서 접근시 .popular를 넣어주세요.
 struct ListShortcutView: View {
     
-    @ObservedObject var shortcutData = fetchData()
+    let firebase = FirebaseService()
+    @State var shortcuts:[Shortcuts]?
+    @State var shortcutsArray: [Shortcuts] = []
     
+    @ObservedObject var shortcutData = fetchData()
     @State private var isLastItem = false
     
     // TODO: let으로 변경필요, 현재 작업중인 코드들과 충돌될 가능성이 있어 우선 변수로 선언
@@ -31,25 +34,76 @@ struct ListShortcutView: View {
                     .listRowInsets(EdgeInsets())
             }
             
-            ForEach(0..<shortcutData.data.count, id: \.self) { index in
-                ShortcutCell(color: self.shortcutData.data[index].color,
-                             sfSymbol: self.shortcutData.data[index].sfSymbol,
-                             name: self.shortcutData.data[index].name,
-                             description: self.shortcutData.data[index].description,
-                             numberOfDownload: self.shortcutData.data[index].numberOfDownload,
-                             downloadLink: self.shortcutData.data[index].downloadLink)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        if index == shortcutData.data.count - 1 && index < 12 {
-                            isLastItem = true
-                            self.shortcutData.updateData()
-                            isLastItem = false
-                        }
-                    }
+            //TODO: 무한 스크롤을 위한 업데이트 함수 필요
+//            ForEach(0..<shortcutData.data.count, id: \.self) { index in
+//                ShortcutCell(color: self.shortcutData.data[index].color,
+//                             sfSymbol: self.shortcutData.data[index].sfSymbol,
+//                             name: self.shortcutData.data[index].name,
+//                             description: self.shortcutData.data[index].description,
+//                             numberOfDownload: self.shortcutData.data[index].numberOfDownload,
+//                             downloadLink: self.shortcutData.data[index].downloadLink)
+//                .listRowInsets(EdgeInsets())
+//                .listRowSeparator(.hidden)
+//                .onAppear {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        if index == shortcutData.data.count - 1 && index < 12 {
+//                            isLastItem = true
+//                            self.shortcutData.updateData()
+//                            isLastItem = false
+//                        }
+//                    }
+//                }
+//            }
+            
+//            ForEach(0..<shortcutsArray.count, id: \.self) { index in
+//                ShortcutCell(color: self.shortcutsArray[index].color,
+//                             sfSymbol: self.shortcutsArray[index].sfSymbol,
+//                             name: self.shortcutsArray[index].title,
+//                             description: self.shortcutsArray[index].description,
+//                             numberOfDownload: self.shortcutsArray[index].numberOfDownload,
+//                             downloadLink: self.shortcutsArray[index].downloadLink[0])
+//                .listRowInsets(EdgeInsets())
+//                .listRowSeparator(.hidden)
+//                .onTapGesture {
+//                    firebase.fetchShortcutDetail(id: self.shortcutsArray[index].id) { shortcut in
+//                        print("**\(shortcut)")
+//                    }
+//                }
+//                .onAppear {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        if index == shortcutData.data.count - 1 && index < 12 {
+//                            isLastItem = true
+//                            self.shortcutData.updateData()
+//                            isLastItem = false
+//                        }
+//                    }
+//                }
+//            }
+            if let shortcuts {
+                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+//                    ShortcutCell(color: shortcut.color,
+//                                 sfSymbol: shortcut.sfSymbol,
+//                                 name: shortcut.title,
+//                                 description: shortcut.description,
+//                                 numberOfDownload: shortcut.numberOfDownload,
+//                                 downloadLink: shortcut.downloadLink[0])
+                    ShortcutCell(shortcut: shortcut)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+//                    .onTapGesture {
+//                        firebase.fetchShortcutDetail(id: shortcut.id) { shortcut in
+//                            print("**\(shortcut)")
+//                        }
+//                    }
                 }
             }
+            
+            
+            Rectangle()
+                .fill(Color.Background)
+                .frame(height: 44)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
         }
         .listRowBackground(Color.Background)
         .listStyle(.plain)
@@ -57,6 +111,15 @@ struct ListShortcutView: View {
         .scrollContentBackground(.hidden)
         .navigationBarTitle(getNavigationTitle(sectionType ?? .myShortcut))
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear() {
+            if let categoryName {
+                let _ = print(categoryName.rawValue)
+                firebase.fetchCategoryShortcut(category: categoryName.rawValue) { shortcuts in
+                    self.shortcuts = shortcuts
+                    print(shortcuts)
+                }
+            }
+        }
     }
     
     var header: some View {
