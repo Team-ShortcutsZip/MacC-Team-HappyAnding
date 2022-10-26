@@ -18,7 +18,7 @@ class Theme {
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(.Background)
         appearance.shadowColor = .clear
-        
+        appearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.Gray5)]
         //back button color 지정
         let backItemAppearance = UIBarButtonItemAppearance()
         backItemAppearance.normal.titleTextAttributes = [
