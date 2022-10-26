@@ -12,7 +12,7 @@ import SwiftUI
 struct UserCurationCell: View {
     //title, subtitle, [단축어모델]을 가지는 객체를 받아옴
     let title: String
-    let subtitle: String?
+    let subtitle: String
     let shortcuts: [Shortcut]
     
     var body: some View {
@@ -66,13 +66,14 @@ struct UserCurationCell: View {
                     .Headline()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom, subtitle == nil ? 20 : 0)
                 if let subtitle {
                     Text(subtitle)
                         .Body2()
                         .multilineTextAlignment(.leading)
+                        .lineLimit(10)
                         .foregroundColor(Color.Gray5)
                         .padding(.bottom, 20)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .padding(.horizontal, 24)
@@ -94,7 +95,7 @@ struct UserCurationCell_Previews: PreviewProvider {
         VStack {
             UserCurationCell(
                 title: "워라벨 지키기. 단축어와 함께",
-                subtitle: nil,
+                subtitle: "nil",
                 shortcuts: Shortcut.fetchData(number: 5)
             )
         }
