@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ReadShortcutHeaderView: View {
     
-    let icon: String
-    let color: String
-    let name: String
-    let oneline: String
+    let shortcut: Shortcuts
+//    let icon: String
+//    let color: String
+//    let numberOfLike: Int
+//    let name: String
+//    let oneline: String
     
     @State var numberOfLike: Int
     @State var isMyLike: Bool = false
@@ -21,17 +23,18 @@ struct ReadShortcutHeaderView: View {
         VStack(alignment: .leading) {
             HStack {
                 VStack {
-                    Image(systemName: icon)
+                    Image(systemName: shortcut.sfSymbol)
                         .Title2()
                         .foregroundColor(Color.White)
                 }
                 .frame(width: 52, height: 52)
-                .background(Color.fetchGradient(color: color))
+                .background(Color.fetchGradient(color: shortcut.color))
                 .cornerRadius(8)
                 
                 Spacer()
                 
                 Text("\(isMyLike ? Image(systemName: "hand.thumbsup.fill") : Image(systemName: "hand.thumbsup")) \(numberOfLike)")
+
                 .Body2()
                 .padding(10)
                 .foregroundColor(isMyLike ? Color.White : Color.Gray4)
@@ -47,10 +50,10 @@ struct ReadShortcutHeaderView: View {
                     // TODO: 추후 좋아요 데이터구조에 목록(?) 추가, 취소 기능 추가할 곳
                 })
             }
-            Text("\(name)")
+            Text("\(shortcut.title)")
                 .Title1()
                 .foregroundColor(Color.Gray5)
-            Text("\(oneline)")
+            Text("\(shortcut.subtitle)")
                 .Body1()
                 .foregroundColor(Color.Gray3)
         }
@@ -59,8 +62,9 @@ struct ReadShortcutHeaderView: View {
     }
 }
 
-struct ReadShortcutHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadShortcutHeaderView(icon: "book", color: "Coral", name: "주변 커피집 걸어가기", oneline: "걸어가보자!!!", numberOfLike: 99)
-    }
-}
+
+//struct ReadShortcutHeaderView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReadShortcutHeaderView(icon: "book", color: "Coral", numberOfLike: 99, name: "주변 커피집 걸어가기", oneline: "걸어가보자!!!")
+//    }
+//}

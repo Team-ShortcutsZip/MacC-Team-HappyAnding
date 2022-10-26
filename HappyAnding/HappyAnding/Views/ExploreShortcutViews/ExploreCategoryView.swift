@@ -26,6 +26,7 @@ struct ExploreCategoryView: View {
     let rankingShortcuts = Shortcut.fetchData(number: 10)
     
     let category: Category
+    let shortcuts:[Shortcuts]?
     
     var body: some View {
         VStack {
@@ -51,42 +52,50 @@ struct ExploreCategoryView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.Background)
                 Section() {
-                    CategoryListHeader(title: SectionType.download.rawValue)
+                    CategoryListHeader(title: SectionType.download.rawValue, shortcuts: shortcuts)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
-                    ForEach(Array(rankingShortcuts.enumerated()), id: \.offset) { index, shortcut in
-                        if index < 3 {
-                            ShortcutCell(
-                                color: shortcut.color,
-                                sfSymbol: shortcut.sfSymbol,
-                                name: shortcut.name,
-                                description: shortcut.description,
-                                numberOfDownload: shortcut.numberOfDownload,
-                                downloadLink: shortcut.downloadLink
-                            )
+                    if let shortcuts {
+                        ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                            if index < 3 {
+    //                            ShortcutCell(
+    //                                color: shortcut.color,
+    //                                sfSymbol: shortcut.sfSymbol,
+    //                                name: shortcut.name,
+    //                                description: shortcut.description,
+    //                                numberOfDownload: shortcut.numberOfDownload,
+    //                                downloadLink: shortcut.downloadLink
+    //                            )
+                                ShortcutCell(shortcut: shortcut)
+                            }
                         }
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
                     }
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                    
                 }
                 Section() {
-                    CategoryListHeader(title: SectionType.popular.rawValue)
+                    CategoryListHeader(title: SectionType.popular.rawValue, shortcuts: shortcuts)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
-                    ForEach(Array(lovedShortcuts.enumerated()), id: \.offset) { index, shortcut in
-                        if index < 3 {
-                            ShortcutCell(
-                                color: shortcut.color,
-                                sfSymbol: shortcut.sfSymbol,
-                                name: shortcut.name,
-                                description: shortcut.description,
-                                numberOfDownload: shortcut.numberOfDownload,
-                                downloadLink: shortcut.downloadLink
-                            )
+                    if let shortcuts {
+                        ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                            if index < 3 {
+    //                            ShortcutCell(
+    //                                color: shortcut.color,
+    //                                sfSymbol: shortcut.sfSymbol,
+    //                                name: shortcut.name,
+    //                                description: shortcut.description,
+    //                                numberOfDownload: shortcut.numberOfDownload,
+    //                                downloadLink: shortcut.downloadLink
+    //                            )
+                                ShortcutCell(shortcut: shortcut)
+                            }
                         }
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
                     }
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                    
                 }
             }
             .listStyle(.plain)
@@ -98,6 +107,7 @@ struct ExploreCategoryView: View {
 
 struct CategoryListHeader: View {
     var title: String
+    var shortcuts: [Shortcuts]?
     var body: some View {
         HStack(alignment: .bottom) {
             Text(title)
@@ -109,14 +119,8 @@ struct CategoryListHeader: View {
                     .Footnote()
                     .foregroundColor(.Gray4)
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                NavigationLink(destination: ListShortcutView()){}.opacity(0)
+                NavigationLink(destination: ListShortcutView(shortcuts: shortcuts)){}.opacity(0)
             }
         }
-    }
-}
-
-struct ExploreCategoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExploreCategoryView(category: Category.business)
     }
 }

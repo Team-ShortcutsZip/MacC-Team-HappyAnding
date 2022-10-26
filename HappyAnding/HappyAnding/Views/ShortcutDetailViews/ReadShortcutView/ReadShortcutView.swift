@@ -14,17 +14,22 @@ struct ReadShortcutView: View {
     
     // TODO: 상위 뷰에서 유저데이터와 단축어데이터를 전달받은 변수 생성
     // shortcuts -> 추후 지워질 변수
-    var shortcuts = Shortcut.fetchData(number: 3)
+//    var shortcuts = Shortcut.fetchData(number: 3)
+    var shortcut: Shortcuts
     
     var body: some View {
         
-        let shortcut: Shortcut = shortcuts.first!
+//        let shortcut: Shortcut = shortcuts.first!
         
         VStack {
-            ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, name: shortcut.name, oneline: "한줄 설 명!", numberOfLike: 99)
-            ReadShortcutContentView(writer: "romi", profileImage: "person.crop.circle", explain: shortcut.description, category: "여행", necessaryApps: "인스타그램", requirements: "불라불라")
+
+//            ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, numberOfLike: 99, name: shortcut.name, oneline: "한줄 설 명!")
+            ReadShortcutHeaderView(shortcut: shortcut)
+//            ReadShortcutContentView(writer: "romi", profileImage: "person.crop.circle", explain: shortcut.description, category: "여행", necessaryApps: "인스타그램", requirements: "불라불라")
+            ReadShortcutContentView(shortcut: shortcut)
+
             Button(action: {
-                if let url = URL(string: shortcut.downloadLink) {
+                if let url = URL(string: shortcut.downloadLink[0]) {
                     openURL(url)
                 }
             }) {
@@ -96,8 +101,8 @@ extension ReadShortcutView {
     }
 }
 
-struct ReadShortcutView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadShortcutView()
-    }
-}
+//struct ReadShortcutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReadShortcutView()
+//    }
+//}

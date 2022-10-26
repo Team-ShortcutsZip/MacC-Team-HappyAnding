@@ -8,19 +8,26 @@
 import Foundation
 
 enum Category: String, CaseIterable {
-    case education = "교육"
-    case finance = "금융"
-    case business = "비즈니스"
-    case health = "건강"
-    case lifestyle = "라이프스타일"
-    case weather = "날씨"
-    case photo = "사진 및 비디오"
-    case decoration = "데코레이션 / 꾸미기"
-    case utility = "유틸리티"
-    case sns = "소셜 네트워킹"
-    case entertainment = "엔터테인먼트"
-    case trip = "여행"
+    case education = "education"
+    case finance = "finance"
+    case business = "business"
+    case health = "health"
+    case lifestyle = "lifestyle"
+    case weather = "weather"
+    case photo = "photo"
+    case decoration = "decoration"
+    case utility = "utility"
+    case sns = "sns"
+    case entertainment = "entertainment"
+    case trip = "trip"
     
+    var category: String {
+        String(describing: self)
+    }
+    
+    static func withLabel(_ label: String) -> Category? {
+        return self.allCases.first{ "\($0)" == label }
+    }
     
     // TODO: 설명 내용 수정하기
     
@@ -51,6 +58,36 @@ enum Category: String, CaseIterable {
             return "아이돌, 음악 등의 단축어들이 모여있어요"
         case .trip:
             return "번역기, 예매 등의 단축어들이 모여있어요"
+        }
+    }
+    
+    
+    func translateName() -> String {
+        switch self {
+        case .education:
+            return "교육"
+        case .finance:
+            return "금융"
+        case .business:
+            return "비즈니스"
+        case .health:
+            return "건강"
+        case .lifestyle:
+            return "라이프스타일"
+        case .weather:
+            return "날씨"
+        case .photo:
+            return "사진 및 비디오"
+        case .decoration:
+            return "데코레이션 / 꾸미기"
+        case .utility:
+            return "유틸리티"
+        case .sns:
+            return "소셜 네트워킹"
+        case .entertainment:
+            return "엔터테인먼트"
+        case .trip:
+            return "여행"
         }
     }
 }

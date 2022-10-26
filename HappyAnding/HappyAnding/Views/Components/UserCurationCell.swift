@@ -13,11 +13,11 @@ struct UserCurationCell: View {
     //title, subtitle, [단축어모델]을 가지는 객체를 받아옴
     let title: String
     let subtitle: String
-    let shortcuts: [Shortcut]
+    let shortcuts: [ShortcutCellModel]
     
     var body: some View {
         ZStack {
-            NavigationLink(destination: ReadCurationView()) {
+            NavigationLink(destination: ReadUserCurationView()) {
                 EmptyView()
             }.opacity(0)
             VStack (alignment: .leading, spacing: 0) {
@@ -90,14 +90,14 @@ struct UserCurationCell: View {
     }
 }
 
-struct UserCurationCell_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            UserCurationCell(
-                title: "워라벨 지키기. 단축어와 함께",
-                subtitle: "nil",
-                shortcuts: Shortcut.fetchData(number: 5)
-            )
-        }
-    }
-}
+//struct UserCurationCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            UserCurationCell(
+//                title: "워라벨 지키기. 단축어와 함께",
+//                subtitle: "nil",
+//                shortcuts: Shortcut.fetchData(number: 5)
+//            )
+//        }
+//    }
+//}
