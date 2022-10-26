@@ -19,19 +19,6 @@ struct MyPageView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 32) {
-                    HStack {
-                        Text("프로필")
-                            .LargeTitle()
-                        Spacer()
-                        NavigationLink(destination: SettingView()) {
-                            Image(systemName: "gearshape.fill")
-                                .Title2()
-                        }
-                    }
-                    .foregroundColor(.Gray5)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 46)
-                    .padding(.bottom, 3)
                     
                     //MARK: - 사용자 프로필
                     HStack(spacing: 16) {
@@ -58,6 +45,7 @@ struct MyPageView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 16)
+                    .padding(.top, 35)
                     
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
@@ -76,8 +64,19 @@ struct MyPageView: View {
                     
                 }
             }
+            .navigationTitle("프로필")
+            .toolbar {
+                ToolbarItem {
+                    //TODO: 스프린트 1에서 배제 추후 주석 삭제할 것
+//                    NavigationLink(destination: SettingView()) {
+//                        Image(systemName: "gearshape.fill")
+//                            .Headline()
+//                            .foregroundColor(.Gray5)
+//                    }
+                }
+            }
             .scrollIndicators(.hidden)
-        .background(Color.Background)
+            .background(Color.Background)
         }
     }
 }
