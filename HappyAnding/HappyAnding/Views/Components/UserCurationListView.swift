@@ -55,7 +55,7 @@ struct UserCurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ExploreCurationView()) {
+            NavigationLink(destination: ListCurationView(userCurations: UserCuration.fetchData(number: 10), type: CurationType.myCuration)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
