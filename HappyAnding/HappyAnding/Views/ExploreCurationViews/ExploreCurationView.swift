@@ -12,11 +12,17 @@ struct ExploreCurationView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 0) {
+                    //앱 큐레이션
                     adminCurations
                         .padding(.top, 20)
                         .padding(.bottom, 32)
+                    //나의 큐레이션
                     UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
+                        .padding(.bottom, 20)
+                    //추천 유저 큐레이션
+                    CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: UserCuration.fetchData(number: 5))
                 }
+                .padding(.bottom, 32)
             }
             .navigationTitle(Text("단축어 큐레이션"))
             .background(Color.Background)
