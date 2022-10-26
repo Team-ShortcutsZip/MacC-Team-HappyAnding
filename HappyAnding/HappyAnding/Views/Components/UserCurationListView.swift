@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserCurationListView: View {
     
-    var userCurations: [UserCuration]
+    var userCurations: [Curation]?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -30,14 +30,19 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-            ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                NavigationLink(destination: ReadAdminCurationView()) {
-                    if index < 2 {
-                        UserCurationCell(
-                            title: curation.title,
-                            subtitle: curation.subtitle,
-                            shortcuts: curation.shortcuts
-                        )
+            
+            if let userCurations {
+                ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    if let curation {
+                        NavigationLink(destination: ReadAdminCurationView()) {
+                            if index < 2 {
+                                UserCurationCell(
+                                    title: curation.title,
+                                    subtitle: curation.subtitle ?? "",
+                                    shortcuts: curation.shortcuts
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -64,8 +69,8 @@ struct UserCurationListHeader: View {
     }
 }
 
-struct UserCurationListView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
-    }
-}
+//struct UserCurationListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
+//    }
+//}
