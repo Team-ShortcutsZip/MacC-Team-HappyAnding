@@ -26,21 +26,28 @@ struct LovedShortcutView: View {
                 
                 Spacer()
                 
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(Color.Gray4)
-                    .padding(.trailing, 16)
+                NavigationLink(destination: {
+                    ListShortcutView(sectionType: SectionType.popular)
+                        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+                }, label: {
+                    Text("더보기")
+                        .Footnote()
+                        .foregroundColor(Color.Gray4)
+                        .padding(.trailing, 16)
+                })
             }
             .padding(.leading, 16)
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    ShortcutCell(color: shortcut.color,
-                                 sfSymbol: shortcut.sfSymbol,
-                                 name: shortcut.name,
-                                 description: shortcut.description,
-                                 numberOfDownload: shortcut.numberOfDownload,
-                                 downloadLink: shortcut.downloadLink)
+                    NavigationLink(destination: ReadShortcutView(), label: {
+                        ShortcutCell(color: shortcut.color,
+                                    sfSymbol: shortcut.sfSymbol,
+                                    name: shortcut.name,
+                                    description: shortcut.description,
+                                    numberOfDownload: shortcut.numberOfDownload,
+                                    downloadLink: shortcut.downloadLink)
+                    })
                 }
             }
         }

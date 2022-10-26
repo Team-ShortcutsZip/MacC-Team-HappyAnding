@@ -33,7 +33,7 @@ enum Tab: CaseIterable {
         switch self {
         case .exploreShortcut : ExploreShortcutView()
         case .collect: ExploreCurationView()
-        case .myPage: MyPageView()
+        case .myPage: MyPageView(userName: "롬희", userEmail: "appleid@pos.idserve.net")
         }
     }
 }

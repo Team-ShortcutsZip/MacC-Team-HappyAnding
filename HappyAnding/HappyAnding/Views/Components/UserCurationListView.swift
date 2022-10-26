@@ -23,14 +23,15 @@ struct UserCurationListView: View {
                 }
                 .Headline()
                 .foregroundColor(.Gray4)
-                .frame(maxWidth: .infinity, maxHeight: 64)
+                .frame(maxWidth: .infinity)
+                .frame(height: 64)
                 .background(Color.Gray1)
                 .cornerRadius(12)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                NavigationLink(destination: ReadCurationView()) {
+                NavigationLink(destination: ReadAdminCurationView()) {
                     if index < 2 {
                         UserCurationCell(
                             title: curation.title,
@@ -54,7 +55,7 @@ struct UserCurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView()) {
+            NavigationLink(destination: ExploreCurationView()) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
