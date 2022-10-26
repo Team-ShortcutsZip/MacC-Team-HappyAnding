@@ -59,7 +59,7 @@ struct IconModalView: View {
     var body: some View {
         VStack {
             Text("아이콘")
-                .font(.headline)
+                .Headline()
                 .padding(.top, 16)
                 .padding(.bottom, 24)
             
@@ -77,7 +77,7 @@ struct IconModalView: View {
                 Image(systemName: iconSymbol)
                     .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
-                    .foregroundColor(.White)
+                    .foregroundColor(.Background)
             }
             .padding(.bottom, 24)
             

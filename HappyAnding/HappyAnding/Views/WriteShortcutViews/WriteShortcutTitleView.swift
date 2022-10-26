@@ -70,7 +70,7 @@ struct WriteShortcutTitleView: View {
                             Image(systemName: iconSymbol)
                                 .font(.system(size: 32))
                                 .frame(width: 84, height: 84)
-                                .foregroundColor(.White)
+                                .foregroundColor(.Background)
                         }
                     }
                 })
