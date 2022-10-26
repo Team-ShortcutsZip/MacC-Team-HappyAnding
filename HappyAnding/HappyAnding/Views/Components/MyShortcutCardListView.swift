@@ -34,10 +34,18 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    AddMyShortcutCardView()
+                    NavigationLink(destination: {
+                        Text("임시")
+                    }, label: {
+                        AddMyShortcutCardView()
+                    })
                     
                     ForEach(shortcuts) { shortcut in
-                        MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.name, mySHortcutColor: shortcut.color)
+                        NavigationLink(destination: {
+                            Text("임시")
+                        }, label: {
+                            MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.name, mySHortcutColor: shortcut.color)
+                        })
                     }
                 }
                 .padding(.leading, 16)

@@ -32,7 +32,11 @@ struct CategoryView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
-                        CategoryCellView(categoryName: value.rawValue)
+                        NavigationLink(destination: {
+                            Text("카테고리 임시")
+                        }, label: {
+                            CategoryCellView(categoryName: value.rawValue)
+                        })
                     }
                 }
             }
