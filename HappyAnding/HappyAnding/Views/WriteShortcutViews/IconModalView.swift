@@ -66,16 +66,17 @@ struct IconModalView: View {
             ZStack(alignment: .center) {
                 Rectangle()
                     .fill(Color.Gray1)
-                    .cornerRadius(12)
+                    .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
                 
                 Rectangle()
                     .fill(Color.fetchGradient(color: iconColor))
-                    .cornerRadius(12)
+                    .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
                 
                 Image(systemName: iconSymbol)
                     .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
+                    .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
                     .foregroundColor(.White)
             }
             .padding(.bottom, 24)

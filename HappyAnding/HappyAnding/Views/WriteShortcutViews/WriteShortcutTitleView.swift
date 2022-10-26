@@ -55,8 +55,8 @@ struct WriteShortcutTitleView: View {
                                 .frame(width: 84, height: 84)
                             
                             Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 24, height: 24)
+                                .font(.system(size: 24))
+                                .frame(width: 84, height: 84)
                                 .foregroundColor(.Gray5)
                         }
                         
@@ -68,8 +68,8 @@ struct WriteShortcutTitleView: View {
                                 .frame(width: 84, height: 84)
                             
                             Image(systemName: iconSymbol)
-                                .resizable()
-                                .frame(width: 32, height: 32)
+                                .font(.system(size: 32))
+                                .frame(width: 84, height: 84)
                                 .foregroundColor(.White)
                         }
                     }
