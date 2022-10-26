@@ -95,7 +95,7 @@ struct MyPageShortcutList: View {
         VStack(spacing: 0) {
             MyPageListHeader(title: title)
                 .padding(.horizontal, 16)
-            ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
+            ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                 if index < 3 {
                     NavigationLink(destination: ReadShortcutView()) {
                         ShortcutCell(color: shortcut.color,
