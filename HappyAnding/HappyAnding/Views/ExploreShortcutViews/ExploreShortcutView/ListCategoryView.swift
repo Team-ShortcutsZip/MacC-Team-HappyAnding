@@ -13,28 +13,35 @@ struct ListCategoryView: View {
     
     var body: some View {
         
-        VStack {
-            LazyVGrid(columns: gridLayout, spacing: 12) {
-                ForEach(Category.allCases, id: \.self) { item in
-                    
-                    NavigationLink(destination: ListShortcutView(categoryName: item)) {
+        ZStack(alignment: .top) {
+            Color.Background
+                .ignoresSafeArea()
+            
+            VStack {
+                LazyVGrid(columns: gridLayout, spacing: 12) {
+                    ForEach(Category.allCases, id: \.self) { item in
                         
-                        Text(item.rawValue)
-                            .Body2()
-                            .tag(item)
-                            .foregroundColor(Color.Gray3)
-                            .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color.Gray3, lineWidth: 1)
-                            )
-                        
+                        NavigationLink(destination: ListShortcutView(categoryName: item)) {
+                            
+                            Text(item.rawValue)
+                                .Body2()
+                                .tag(item)
+                                .foregroundColor(Color.Gray3)
+                                .frame(maxWidth: UIScreen.main.bounds.size.width * 0.5,
+                                       minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.Gray3, lineWidth: 1)
+                                )
+                        }
+                        .padding(10)
                     }
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 6)
+                            Spacer().frame(maxWidth: .infinity)
             }
-            Spacer()
         }
+        .frame(maxHeight: .infinity)
     }
 }
 
