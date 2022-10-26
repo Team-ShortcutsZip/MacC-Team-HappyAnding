@@ -24,7 +24,9 @@ struct MyPageView: View {
                     //MARK: - 사용자 프로필
                     
                     HStack(spacing: 16) {
+
                         //TODO: 사용되는 임시 이미지 지정되면 변경 필요
+                        
                         Image(systemName: "person.fill")
                             .frame(width: 60, height: 60)
                             .foregroundColor(.White)
