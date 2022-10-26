@@ -26,7 +26,7 @@ struct UserCurationListView: View {
                 .frame(maxWidth: .infinity, maxHeight: 64)
                 .background(Color.Gray1)
                 .cornerRadius(12)
-                .padding(.bottom, 6)
+                .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in

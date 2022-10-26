@@ -85,7 +85,7 @@ struct UserCurationCell: View {
             .cornerRadius(12)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 6)
+        .padding(.bottom, 12)
     }
 }
 
