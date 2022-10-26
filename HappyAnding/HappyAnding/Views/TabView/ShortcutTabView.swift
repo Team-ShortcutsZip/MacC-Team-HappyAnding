@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ShortcutTabView: View {
+    
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(Color.White)
+        Theme.navigationBarColors()
+    }
+    
     var body: some View {
         TabView {
             ForEach(Tab.allCases, id: \.self) { tab in
