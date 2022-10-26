@@ -21,7 +21,8 @@ enum CurationType: String {
 
 struct ListCurationView: View {
     
-    var userCurations: [UserCuration]
+//    var userCurations: [UserCuration]
+    var userCurations: [Curation]
     var type: CurationType
     var title: String?
     
@@ -39,7 +40,7 @@ struct ListCurationView: View {
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                 UserCurationCell(
                     title: curation.title,
-                    subtitle: curation.subtitle,
+                    subtitle: curation.subtitle ?? "",
                     shortcuts: curation.shortcuts
                 )
                 .listRowInsets(EdgeInsets())
@@ -58,11 +59,11 @@ struct ListCurationView: View {
     }
 }
 
-struct ListCurationView_Previews: PreviewProvider {
-    static var previews: some View {
-        ListCurationView(
-            userCurations: UserCuration.fetchData(number: 10),
-            type: CurationType.userCuration
-        )
-    }
-}
+//struct ListCurationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ListCurationView(
+//            userCurations: UserCuration.fetchData(number: 10),
+//            type: CurationType.userCuration
+//        )
+//    }
+//}
