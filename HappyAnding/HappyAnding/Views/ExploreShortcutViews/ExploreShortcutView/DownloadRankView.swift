@@ -22,10 +22,14 @@ struct DownloadRankView: View {
                 
                 Spacer()
                 
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(Color.Gray4)
-                    .padding(.trailing, 16)
+                NavigationLink(destination: {
+                    Text("임시")
+                }, label: {
+                    Text("더보기")
+                        .Footnote()
+                        .foregroundColor(Color.Gray4)
+                        .padding(.trailing, 16)
+                })
             }
             .padding(.leading, 16)
             
