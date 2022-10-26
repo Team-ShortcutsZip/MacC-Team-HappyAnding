@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct WriteShortcutTagView: View {
+    let iconColor: String
+    let iconSymbol: String
+    let shortcutName: String
+    let shortcutLink: String
+    let onelineDescription: String
+    let multiLineDescription: String
     @Binding var isWriting: Bool
     
     @State var selectedCategories = [String]()
@@ -58,6 +64,7 @@ struct WriteShortcutTagView: View {
                 
                 // TODO: 새로운 단축어 생성 및 저장
                 
+                print(iconColor, iconSymbol, shortcutName, shortcutLink, onelineDescription, multiLineDescription, selectedCategories, relatedApps, requirements)
                 isWriting.toggle()
             }, label: {
                 ZStack {
@@ -226,6 +233,13 @@ struct WriteShortcutTagView: View {
 
 struct WriteShortcutTagView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTagView(isWriting: .constant(true))
+        WriteShortcutTagView(iconColor: "Purple",
+                             iconSymbol: "bus.fill",
+                             shortcutName: "단축어이름",
+                             shortcutLink: "단축어 링크",
+                             onelineDescription: "한줄 설명",
+                             multiLineDescription: "여러줄 설명",
+                             isWriting: .constant(true)
+        )
     }
 }

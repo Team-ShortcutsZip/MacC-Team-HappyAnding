@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct WriteShortcutdescriptionView: View {
+    let iconColor: String
+    let iconSymbol: String
+    let shortcutName: String
+    let shortcutLink: String
     @Binding var isWriting: Bool
     
     @State var oneLineDescription = ""
@@ -42,7 +46,14 @@ struct WriteShortcutdescriptionView: View {
             Spacer()
             
             NavigationLink {
-                WriteShortcutTagView(isWriting: $isWriting)
+                WriteShortcutTagView(iconColor: self.iconColor,
+                                     iconSymbol: self.iconSymbol,
+                                     shortcutName: self.shortcutName,
+                                     shortcutLink: self.shortcutLink,
+                                     onelineDescription: self.oneLineDescription,
+                                     multiLineDescription: self.multiLineDescription,
+                                     isWriting: $isWriting
+                )
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -65,6 +76,11 @@ struct WriteShortcutdescriptionView: View {
 
 struct WriteShortcutdescriptionView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutdescriptionView(isWriting: .constant(true))
+        WriteShortcutdescriptionView(iconColor: "Purple",
+                                     iconSymbol: "bus.fill",
+                                     shortcutName: "단축어이름",
+                                     shortcutLink: "단축어 링크",
+                                     isWriting: .constant(true)
+        )
     }
 }

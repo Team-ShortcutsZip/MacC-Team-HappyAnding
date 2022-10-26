@@ -103,7 +103,12 @@ struct WriteShortcutTitleView: View {
                 Spacer()
                 
                 NavigationLink {
-                    WriteShortcutdescriptionView(isWriting: $isWriting)
+                    WriteShortcutdescriptionView(iconColor: self.iconColor,
+                                                 iconSymbol: self.iconSymbol,
+                                                 shortcutName: self.shortcutName,
+                                                 shortcutLink: self.shortcutLink,
+                                                 isWriting: $isWriting
+                    )
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
