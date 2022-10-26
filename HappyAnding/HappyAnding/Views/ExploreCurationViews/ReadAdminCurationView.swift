@@ -24,6 +24,7 @@ struct ReadAdminCurationView: View {
     
     //TODO: 큐레이션 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
     @ObservedObject var shortcutData = fetchData()
+    var shortcuts: [Shortcuts]?
     
     let title: String = "워라벨 지키기, 단축어와 함께"
     let subtitle: String = "워라벨을 알차게 지키고 있는 에디터도 애용하고 있는 단축어 모음."
@@ -47,7 +48,11 @@ struct ReadAdminCurationView: View {
             titleAndSubtitle
                 .padding(.bottom, 8)
             
-            curationShortcutsListTest
+            if let shortcuts {
+                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                    ShortcutCell(shortcut: shortcut)
+                }
+            }
             
             Spacer()
                 .frame(height: 44)
@@ -95,20 +100,27 @@ struct ReadAdminCurationView: View {
     ///큐레이션된 단축어 리스트입니다.
     ///현재 랜덤한 7개의 단축어를 가져와서 뷰를 그리도록 되어있습니다.
     //TODO: 큐레이션 데이터 모델 제작 후 적용 필요.
-    var curationShortcutsListTest: some View {
-        ForEach(0..<7, id: \.self) { index in
-            ShortcutCell(color: self.shortcutData.data[index].color,
-                         sfSymbol: self.shortcutData.data[index].sfSymbol,
-                         name: self.shortcutData.data[index].name,
-                         description: self.shortcutData.data[index].description,
-                         numberOfDownload: self.shortcutData.data[index].numberOfDownload,
-                         downloadLink: self.shortcutData.data[index].downloadLink)
-        }
-    }
+//    var curationShortcutsListTest: some View {
+//        
+//        if let shortcuts {
+//            ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+//                ShortcutCell(shortcut: shortcut)
+//            }
+//        }
+        
+//        ForEach(0..<7, id: \.self) { index in
+//            ShortcutCell(color: self.shortcutData.data[index].color,
+//                         sfSymbol: self.shortcutData.data[index].sfSymbol,
+//                         name: self.shortcutData.data[index].name,
+//                         description: self.shortcutData.data[index].description,
+//                         numberOfDownload: self.shortcutData.data[index].numberOfDownload,
+//                         downloadLink: self.shortcutData.data[index].downloadLink)
+//        }
+//    }
 }
 
-struct ReadCurationView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadAdminCurationView()
-    }
-}
+//struct ReadCurationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReadAdminCurationView()
+//    }
+//}
