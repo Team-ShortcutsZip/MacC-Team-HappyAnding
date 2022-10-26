@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryModalView: View {
     @Binding var isShowingCategoryModal: Bool
-    @Binding var selectedCategories: [Category]
+    @Binding var selectedCategories: [String]
     
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -51,26 +51,26 @@ struct CategoryModalView: View {
     
     struct CategoryButton: View {
         let item: Category
-        @Binding var items: [Category]
+        @Binding var items: [String]
         
         var body: some View {
             Button(action: {
-                if items.contains(item) {
-                    items.removeAll { $0 == item }
+                if items.contains(item.category) {
+                    items.removeAll { $0 == item.category }
                 } else {
                     if items.count < 3 {
-                        items.append(item)
+                        items.append(item.category)
                     }
                 }
             }, label: {
                 Text(item.rawValue)
                     .Body2()
-                    .tag(item)
-                    .foregroundColor(items.contains(item) ? Color.Primary : Color.Gray3)
+                    .tag(item.category)
+                    .foregroundColor(items.contains(item.category) ? Color.Primary : Color.Gray3)
                     .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(items.contains(item) ? Color.Primary : Color.Gray3, lineWidth: 1)
+                            .stroke(items.contains(item.category) ? Color.Primary : Color.Gray3, lineWidth: 1)
                     )
             })
         }
@@ -79,6 +79,6 @@ struct CategoryModalView: View {
 
 struct CategoryModalView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryModalView(isShowingCategoryModal: .constant(true), selectedCategories: .constant([Category.finance]))
+        CategoryModalView(isShowingCategoryModal: .constant(true), selectedCategories: .constant(["finance"]))
     }
 }

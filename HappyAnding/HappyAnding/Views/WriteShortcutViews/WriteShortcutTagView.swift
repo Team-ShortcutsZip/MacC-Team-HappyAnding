@@ -10,7 +10,7 @@ import SwiftUI
 struct WriteShortcutTagView: View {
     @Binding var isWriting: Bool
     
-    @State var selectedCategories = [Category]()
+    @State var selectedCategories = [String]()
     @State var relatedApps = [String]()
     @State var requirements = ""
     
@@ -80,13 +80,13 @@ struct WriteShortcutTagView: View {
     
     struct categoryList: View {
         @Binding var isShowingCategoryModal: Bool
-        @Binding var selectedCategories: [Category]
+        @Binding var selectedCategories: [String]
         
         var body: some View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(selectedCategories, id:\.self) { item in
-                        categoryCell(item: item.rawValue, items: $selectedCategories)
+                        CategoryTag(item: item, items: $selectedCategories)
                     }
                     
                     Button(action: {
@@ -97,7 +97,7 @@ struct WriteShortcutTagView: View {
                             Text("카테고리 추가")
                         }
                     })
-                    .modifier(TagCell(color: .Gray3))
+                    .modifier(CellModifier(color: .Gray3))
                     .sheet(isPresented: $isShowingCategoryModal) {
                         CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
                             .presentationDetents([.fraction(0.7)])
@@ -105,24 +105,6 @@ struct WriteShortcutTagView: View {
                 }
             }
             .padding(.leading, 16)
-        }
-    }
-    
-    struct categoryCell: View {
-        var item: String
-        @Binding var items: [Category]
-        
-        var body: some View {
-            HStack {
-                Text(item)
-                
-                Button(action: {
-                    items.removeAll { $0.rawValue == item }
-                }, label: {
-                    Image(systemName: "xmark")
-                })
-            }
-            .modifier(TagCell(color: .Primary))
         }
     }
     
@@ -137,7 +119,7 @@ struct WriteShortcutTagView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(relatedApps, id:\.self) { item in
-                        relatedAppCell(item: item, items: $relatedApps)
+                        TagCell(item: item, items: $relatedApps)
                     }
                     
                     if isTextFieldShowing {
@@ -154,7 +136,7 @@ struct WriteShortcutTagView: View {
                                 }
                                 isTextFieldShowing = false
                             }
-                            .modifier(TagCell(color: .Gray4))
+                            .modifier(CellModifier(color: .Gray4))
                     }
                     
                     Button(action: {
@@ -166,14 +148,32 @@ struct WriteShortcutTagView: View {
                             Text("앱 추가")
                         }
                     })
-                    .modifier(TagCell(color: .Gray3))
+                    .modifier(CellModifier(color: .Gray3))
                 }
             }
             .padding(.leading, 16)
         }
     }
     
-    struct relatedAppCell: View {
+    struct CategoryTag: View {
+        var item: String
+        @Binding var items: [String]
+        
+        var body: some View {
+            HStack {
+                Text(Category.withLabel(item)!.rawValue)
+                
+                Button(action: {
+                    items.removeAll { $0 == item }
+                }, label: {
+                    Image(systemName: "xmark")
+                })
+            }
+            .modifier(CellModifier(color: .Primary))
+        }
+    }
+    
+    struct TagCell: View {
         var item: String
         @Binding var items: [String]
         
@@ -187,11 +187,11 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .modifier(TagCell(color: .Primary))
+            .modifier(CellModifier(color: .Primary))
         }
     }
     
-    struct TagCell: ViewModifier {
+    struct CellModifier: ViewModifier {
         @State var color: Color
         
         public func body(content: Content) -> some View {
