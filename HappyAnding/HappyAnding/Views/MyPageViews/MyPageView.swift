@@ -64,11 +64,13 @@ struct MyPageView: View {
                     UserCurationListView(userCurations: userInformation?.myCuration?.sorted(by: { $0.dateTime > $1.dateTime}) ?? nil)
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
-                        shortcuts: Shortcut.fetchData(number: 5),
+                        shortcuts: userInformation?.likeShortcuts,
+//                        shortcuts: Shortcut.fetchData(number: 5),
                         title: "좋아요한 단축어"
                     )
                     MyPageShortcutList(
-                        shortcuts: Shortcut.fetchData(number: 5),
+                        shortcuts: userInformation?.downloadedShortcut,
+//                        shortcuts: Shortcut.fetchData(number: 5),
                         title: "다운로드한 단축어"
                     )
                     .padding(.bottom, 44)
@@ -99,22 +101,24 @@ struct MyPageView: View {
 }
 
 struct MyPageShortcutList: View {
-    var shortcuts: [Shortcut]
+    var shortcuts: [Shortcuts]?
     var title: String
     var body: some View {
         VStack(spacing: 0) {
             MyPageListHeader(title: title)
                 .padding(.horizontal, 16)
-            ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                if index < 3 {
-                    NavigationLink(destination: ReadShortcutView()) {
-                        ShortcutCell(color: shortcut.color,
-                                     sfSymbol: shortcut.sfSymbol,
-                                     name: shortcut.name,
-                                     description: shortcut.description,
-                                     numberOfDownload: shortcut.numberOfDownload,
-                                     downloadLink: shortcut.downloadLink
-                        )
+            if let shortcuts {
+                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                    if index < 3 {
+                        NavigationLink(destination: ReadShortcutView()) {
+                            ShortcutCell(color: shortcut.color,
+                                         sfSymbol: shortcut.sfSymbol,
+                                         name: shortcut.title,
+                                         description: shortcut.description,
+                                         numberOfDownload: shortcut.numberOfDownload,
+                                         downloadLink: shortcut.downloadLink[shortcut.downloadLink.count - 1]
+                            )
+                        }
                     }
                 }
             }
