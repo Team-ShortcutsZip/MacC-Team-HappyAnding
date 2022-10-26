@@ -13,7 +13,7 @@ import SwiftUI
 struct ListShortcutView: View {
     
     let firebase = FirebaseService()
-    let shortcuts:[Shortcuts]?
+    @State var shortcuts:[Shortcuts]?
     @State var shortcutsArray: [Shortcuts] = []
     
     @ObservedObject var shortcutData = fetchData()
@@ -111,6 +111,15 @@ struct ListShortcutView: View {
         .scrollContentBackground(.hidden)
         .navigationBarTitle(getNavigationTitle(sectionType ?? .myShortcut))
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear() {
+            if let categoryName {
+                let _ = print(categoryName.rawValue)
+                firebase.fetchCategoryShortcut(category: categoryName.rawValue) { shortcuts in
+                    self.shortcuts = shortcuts
+                    print(shortcuts)
+                }
+            }
+        }
     }
     
     var header: some View {

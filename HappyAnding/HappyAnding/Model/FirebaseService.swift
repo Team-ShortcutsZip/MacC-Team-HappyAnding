@@ -175,6 +175,34 @@ class FirebaseService {
             }
     }
     
+    //카테고리에 해당하는 모든 단축어를 가져오는 함수
+    func fetchCategoryShortcut(category: String, completionHandler: @escaping ([Shortcuts])->()) {
+        var shortcuts: [Shortcuts] = []
+        
+        db.collection("Shortcut")
+            .whereField("category", arrayContains: category )
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            shortcuts.append(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(shortcuts)
+                    print(shortcuts)
+                }
+            }
+    }
+    
     // TODO: 단축어 다운로드 정보 저장
     // TODO: UserID의 경우, Userdefault에 저장된 값을 가져오는 것으로 대체
     
@@ -189,7 +217,7 @@ class FirebaseService {
             }
         }
     }
-
+    
     //TODO: Error 처리 필요
     
     func deleteData(model: Any) {
