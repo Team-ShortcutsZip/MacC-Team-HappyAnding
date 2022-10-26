@@ -15,7 +15,7 @@ enum Tab: CaseIterable {
     var tabName: String {
         switch self {
         case .exploreShortcut : return "단축어"
-        case .collect: return "모음"
+        case .collect: return "큐레이션"
         case .myPage: return "프로필"
         }
     }
