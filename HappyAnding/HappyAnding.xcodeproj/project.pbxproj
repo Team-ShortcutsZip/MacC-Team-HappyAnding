@@ -24,9 +24,7 @@
 		87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CAC28FFF261009B691F /* ReadShortcutView.swift */; };
 		87E99CAF28FFF26A009B691F /* EditShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CAE28FFF26A009B691F /* EditShortcutView.swift */; };
 		87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CB028FFF273009B691F /* WriteCurationSetView.swift */; };
-		87E99CB328FFF27C009B691F /* SelectShortcutModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CB228FFF27C009B691F /* SelectShortcutModalView.swift */; };
 		87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CB428FFF282009B691F /* WriteCurationInfoView.swift */; };
-		87E99CB728FFF288009B691F /* WriteCurationColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CB628FFF288009B691F /* WriteCurationColorView.swift */; };
 		87E99CB928FFF291009B691F /* WriteShortcutTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CB828FFF291009B691F /* WriteShortcutTitleView.swift */; };
 		87E99CBB28FFF298009B691F /* IconModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CBA28FFF298009B691F /* IconModalView.swift */; };
 		87E99CBD28FFF2A1009B691F /* WriteShortcutdescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CBC28FFF2A1009B691F /* WriteShortcutdescriptionView.swift */; };
@@ -45,11 +43,12 @@
 		A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0029027BDE004A85A6 /* TabRouter.swift */; };
 		A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */; };
 		A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */; };
-		A04ACB32290686AA004A85A6 /* ReadShortcutHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */; };
-		A04ACB34290686C7004A85A6 /* ReadShortcutContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */; };
 		A04ACB0A29041CD8004A85A6 /* DownloadRankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0929041CD8004A85A6 /* DownloadRankView.swift */; };
 		A04ACB0C29041CEE004A85A6 /* LovedShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0B29041CEE004A85A6 /* LovedShortcutView.swift */; };
 		A04ACB0E29041D61004A85A6 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0D29041D61004A85A6 /* CategoryView.swift */; };
+		A04ACB32290686AA004A85A6 /* ReadShortcutHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */; };
+		A04ACB34290686C7004A85A6 /* ReadShortcutContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */; };
+		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -92,9 +91,7 @@
 		87E99CAC28FFF261009B691F /* ReadShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutView.swift; sourceTree = "<group>"; };
 		87E99CAE28FFF26A009B691F /* EditShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShortcutView.swift; sourceTree = "<group>"; };
 		87E99CB028FFF273009B691F /* WriteCurationSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCurationSetView.swift; sourceTree = "<group>"; };
-		87E99CB228FFF27C009B691F /* SelectShortcutModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectShortcutModalView.swift; sourceTree = "<group>"; };
 		87E99CB428FFF282009B691F /* WriteCurationInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCurationInfoView.swift; sourceTree = "<group>"; };
-		87E99CB628FFF288009B691F /* WriteCurationColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCurationColorView.swift; sourceTree = "<group>"; };
 		87E99CB828FFF291009B691F /* WriteShortcutTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteShortcutTitleView.swift; sourceTree = "<group>"; };
 		87E99CBA28FFF298009B691F /* IconModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconModalView.swift; sourceTree = "<group>"; };
 		87E99CBC28FFF2A1009B691F /* WriteShortcutdescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteShortcutdescriptionView.swift; sourceTree = "<group>"; };
@@ -113,11 +110,12 @@
 		A04ACB0029027BDE004A85A6 /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
 		A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardView.swift; sourceTree = "<group>"; };
 		A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardListView.swift; sourceTree = "<group>"; };
-		A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutHeaderView.swift; sourceTree = "<group>"; };
-		A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutContentView.swift; sourceTree = "<group>"; };
 		A04ACB0929041CD8004A85A6 /* DownloadRankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRankView.swift; sourceTree = "<group>"; };
 		A04ACB0B29041CEE004A85A6 /* LovedShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LovedShortcutView.swift; sourceTree = "<group>"; };
 		A04ACB0D29041D61004A85A6 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutHeaderView.swift; sourceTree = "<group>"; };
+		A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutContentView.swift; sourceTree = "<group>"; };
+		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -237,9 +235,8 @@
 			isa = PBXGroup;
 			children = (
 				87E99CB028FFF273009B691F /* WriteCurationSetView.swift */,
-				87E99CB228FFF27C009B691F /* SelectShortcutModalView.swift */,
 				87E99CB428FFF282009B691F /* WriteCurationInfoView.swift */,
-				87E99CB628FFF288009B691F /* WriteCurationColorView.swift */,
+				A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */,
 			);
 			path = WriteCurationViews;
 			sourceTree = "<group>";
@@ -324,16 +321,6 @@
 			path = TabView;
 			sourceTree = "<group>";
 		};
-		A04ACB3029068688004A85A6 /* ReadShortcutView */ = {
-			isa = PBXGroup;
-			children = (
-				87E99CAC28FFF261009B691F /* ReadShortcutView.swift */,
-				A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */,
-				A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */,
-			);
-			path = ReadShortcutView;
-            sourceTree = "<group>";
-        };
 		A04ACB0F29044E52004A85A6 /* ExploreShortcutView */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,6 +330,16 @@
 				A04ACB0D29041D61004A85A6 /* CategoryView.swift */,
 			);
 			path = ExploreShortcutView;
+			sourceTree = "<group>";
+		};
+		A04ACB3029068688004A85A6 /* ReadShortcutView */ = {
+			isa = PBXGroup;
+			children = (
+				87E99CAC28FFF261009B691F /* ReadShortcutView.swift */,
+				A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */,
+				A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */,
+			);
+			path = ReadShortcutView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,7 +475,6 @@
 				A04ACB34290686C7004A85A6 /* ReadShortcutContentView.swift in Sources */,
 				87E99CAF28FFF26A009B691F /* EditShortcutView.swift in Sources */,
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
-				87E99CB728FFF288009B691F /* WriteCurationColorView.swift in Sources */,
 				87E99CD929042536009B691F /* SectionType.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				A04ACB0A29041CD8004A85A6 /* DownloadRankView.swift in Sources */,
@@ -500,7 +496,7 @@
 				87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */,
 				F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
-				87E99CB328FFF27C009B691F /* SelectShortcutModalView.swift in Sources */,
+				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				87E99CB928FFF291009B691F /* WriteShortcutTitleView.swift in Sources */,
 				87E99CCD290145CC009B691F /* AdminCurationCell.swift in Sources */,
