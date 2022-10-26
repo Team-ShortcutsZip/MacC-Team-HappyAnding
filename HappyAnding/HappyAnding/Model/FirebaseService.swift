@@ -145,6 +145,37 @@ class FirebaseService {
             }
         }
     }
+    
+    //MARK: Shortcut 다운로드 순위로 정렬하여 10개씩 받아오기
+    func shortcutDownloadRank(completionHandler: @escaping ([Shortcuts])->()) {
+        
+        var shortcutData:[Shortcuts] = []
+        
+        let data = db.collection("Shortcut")
+            .order(by: "numberOfDownload", descending: true)
+            .limit(to: 10)
+        
+        data.getDocuments { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        shortcutData.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                    print("\(document.documentID) => \(document.data())")
+                }
+                completionHandler(shortcutData)
+            }
+        }
+    }
 
     //TODO: Error 처리 필요
     
