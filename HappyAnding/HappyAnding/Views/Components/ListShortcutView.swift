@@ -50,6 +50,12 @@ struct ListShortcutView: View {
                     }
                 }
             }
+            
+            Rectangle()
+                .fill(Color.Background)
+                .frame(height: 44)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
         }
         .listRowBackground(Color.Background)
         .listStyle(.plain)
