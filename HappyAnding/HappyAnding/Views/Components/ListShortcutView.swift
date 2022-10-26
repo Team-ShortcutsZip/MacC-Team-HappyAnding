@@ -63,24 +63,24 @@ struct ListShortcutView: View {
         
             // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
         
-        ZStack {
+        VStack {
             Text(getDescriptions(sectionType ?? .popular))
-                .Body2()
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                .padding(.vertical, 10)
-                .padding(.horizontal, 26)
-                .background(Color.red)
                 .foregroundColor(.Gray5)
+                .Body2()
+                .padding(16)
+                .frame(maxWidth: .infinity, alignment: sectionType == .download ? .center : .leading)
+                .background(
+                    Rectangle()
+                        .foregroundColor(Color.Gray1)
+                        .cornerRadius(12)
+                )
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.Background)
         }
-        .padding(.vertical, 10)
-        .background(descriptionBackground)
+        .padding(.vertical, 20)
+        .padding(.horizontal, 16)
     }
     
-    var descriptionBackground: some View {
-        RoundedRectangle(cornerRadius: 12)
-            .fill(Color.Gray1)
-            .padding(16)
-    }
     
     private func getNavigationTitle(_ sectionType: SectionType) -> String {
         switch sectionType {
