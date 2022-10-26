@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MyShortcutCardListView: View {
-    
+    @State var isWriting = false
     let shortcuts = Shortcut.fetchData(number: 15)
     
     var body: some View {
@@ -32,10 +32,13 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    NavigationLink(destination: {
-                        WriteShortcutTitleView()
+                    Button(action: {
+                        isWriting.toggle()
                     }, label: {
                         AddMyShortcutCardView()
+                    })
+                    .fullScreenCover(isPresented: $isWriting, content: {
+                        WriteShortcutTitleView(isWriting: self.$isWriting)
                     })
                     
                     ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
