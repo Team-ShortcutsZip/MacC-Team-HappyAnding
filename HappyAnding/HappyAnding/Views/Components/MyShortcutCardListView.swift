@@ -33,7 +33,7 @@ struct MyShortcutCardListView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     NavigationLink(destination: {
-                         WriteShortcutTitleView()
+                        WriteShortcutTitleView()
                     }, label: {
                         AddMyShortcutCardView()
                     })
