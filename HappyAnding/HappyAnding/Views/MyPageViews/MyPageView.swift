@@ -61,7 +61,7 @@ struct MyPageView: View {
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
                     MyShortcutCardListView(shortcuts: userInformation?.myShortcuts?.sorted(by: { $0.date > $1.date }) ?? nil)
-                    UserCurationListView(userCurations: userCurations)
+                    UserCurationListView(userCurations: userInformation?.myCuration?.sorted(by: { $0.dateTime > $1.dateTime}) ?? nil)
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
                         shortcuts: Shortcut.fetchData(number: 5),
