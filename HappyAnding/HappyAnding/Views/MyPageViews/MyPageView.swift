@@ -33,9 +33,12 @@ struct MyPageView: View {
                                 Text(userName)
                                     .Title1()
                                     .foregroundColor(.Gray5)
+                                //TODO: 스프린트 1에서 배제 추후 주석 삭제 필요
+                                /*
                                 Image(systemName: "square.and.pencil")
                                     .Title2()
                                     .foregroundColor(.Gray4)
+                                 */
                             }
                             Text(userEmail)
                                 .Body2()
