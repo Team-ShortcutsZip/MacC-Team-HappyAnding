@@ -23,7 +23,8 @@ struct UserCurationListView: View {
                 }
                 .Headline()
                 .foregroundColor(.Gray4)
-                .frame(maxWidth: .infinity, maxHeight: 64)
+                .frame(maxWidth: .infinity)
+                .frame(height: 64)
                 .background(Color.Gray1)
                 .cornerRadius(12)
                 .padding(.bottom, 12)
@@ -54,7 +55,7 @@ struct UserCurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView()) {
+            NavigationLink(destination: ExploreCurationView()) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)

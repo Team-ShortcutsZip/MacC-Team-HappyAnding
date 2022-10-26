@@ -18,14 +18,12 @@ struct CategoryView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: {
-                    Text("임시")
-                }, label: {
+                NavigationLink(destination: ListCategoryView()) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
-                })
+                }
             }
             .padding(.leading, 16)
             
