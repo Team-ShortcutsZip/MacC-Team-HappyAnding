@@ -91,12 +91,15 @@ class FirebaseService {
         }
     }
     
-    //userID로 검색하는 함수
-    func fetchUserShortcut(userId: String, completionHandler: @escaping ([Shortcuts])->()) {
+    
+    // MARK: UserID를 이용해서 해당 유저 정보 리턴하는 함수
+    
+    func fetchUserShortcut(userID: String, completionHandler: @escaping (User)->()) {
         
-        var shortcutData:[Shortcuts] = []
-        db.collection("Shortcut").whereField("author", isEqualTo: userId).getDocuments { (querySnapshot, error) in
-            if let error {
+        db.collection("User")
+            .whereField("id", isEqualTo: userID)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
                 print("Error getting documents: \(error)")
             } else {
                 guard let documents = querySnapshot?.documents else { return }
@@ -106,14 +109,12 @@ class FirebaseService {
                     do {
                         let data = document.data()
                         let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
-                        shortcutData.append(shortcut)
+                        let shortcut = try decoder.decode(User.self, from: jsonData)
+                        completionHandler(shortcut)
                     } catch let error {
                         print("error: \(error)")
                     }
-                    print("\(document.documentID) => \(document.data())")
                 }
-                completionHandler(shortcutData)
             }
         }
     }
@@ -146,33 +147,18 @@ class FirebaseService {
         }
     }
     
-    //MARK: Shortcut 다운로드 순위로 정렬하여 10개씩 받아오기
-    func shortcutDownloadRank(completionHandler: @escaping ([Shortcuts])->()) {
-        
-        var shortcutData:[Shortcuts] = []
-        
-        let data = db.collection("Shortcut")
-            .order(by: "numberOfDownload", descending: true)
-            .limit(to: 10)
-        
-        data.getDocuments { (querySnapshot, error) in
+    
+    // TODO: 단축어 다운로드 정보 저장
+    // TODO: UserID의 경우, Userdefault에 저장된 값을 가져오는 것으로 대체
+    
+    /// id: 단축어 id
+    /// 단축어의 다운로드 수를 +1 하고, User의 다운로드 목록에 해당 단축어를 추가합니다.
+    func updateDownloadInformation(shortcut: Shortcuts) {
+        var shortcutInfo = shortcut
+        shortcutInfo.numberOfDownload += 1
+        db.collection("Shortcut").document(shortcut.id).setData(shortcutInfo.dictionary) { error in
             if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
-                        shortcutData.append(shortcut)
-                    } catch let error {
-                        print("error: \(error)")
-                    }
-                    print("\(document.documentID) => \(document.data())")
-                }
-                completionHandler(shortcutData)
+                print(error.localizedDescription)
             }
         }
     }
