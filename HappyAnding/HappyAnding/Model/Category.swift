@@ -21,6 +21,13 @@ enum Category: String, CaseIterable {
     case entertainment = "엔터테인먼트"
     case trip = "여행"
     
+    var category: String {
+        String(describing: self)
+    }
+    
+    static func withLabel(_ label: String) -> Category? {
+        return self.allCases.first{ "\($0)" == label }
+    }
     
     // TODO: 설명 내용 수정하기
     

@@ -30,7 +30,12 @@ struct CategoryView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
-                        CategoryCellView(categoryName: value.rawValue)
+                        NavigationLink(destination: {
+                            ListShortcutView(categoryName: value, sectionType: SectionType.download)
+                                .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+                        }, label: {
+                            CategoryCellView(categoryName: value.rawValue)
+                        })
                     }
                 }
             }
@@ -48,7 +53,7 @@ struct CategoryCellView: View {
             .stroke(Color.Gray1, lineWidth: 1)
             .background(Color.White)
             .cornerRadius(12)
-            .frame(width: .infinity, height: 48)
+            .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
             .overlay {
                 Text(categoryName)
                     .Body2()

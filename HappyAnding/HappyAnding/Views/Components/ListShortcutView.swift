@@ -24,10 +24,12 @@ struct ListShortcutView: View {
         
         List {
             
-            header
-                .listRowBackground(Color.Background)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets())
+            if sectionType != .myShortcut {
+                header
+                    .listRowBackground(Color.Background)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+            }
             
             ForEach(0..<shortcutData.data.count, id: \.self) { index in
                 ShortcutCell(color: self.shortcutData.data[index].color,
@@ -48,12 +50,19 @@ struct ListShortcutView: View {
                     }
                 }
             }
+            
+            Rectangle()
+                .fill(Color.Background)
+                .frame(height: 44)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
         }
         .listRowBackground(Color.Background)
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle(sectionType?.rawValue ?? "")
+        .navigationBarTitle(getNavigationTitle(sectionType ?? .myShortcut))
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     var header: some View {
@@ -83,6 +92,8 @@ struct ListShortcutView: View {
             return sectionType.rawValue
         case .popular:
             return "사랑받는 단축어"
+        case .myShortcut:
+            return "내 단축어"
         }
     }
     
@@ -92,6 +103,8 @@ struct ListShortcutView: View {
             return self.categoryName?.fetchDescription() ?? "" + "1위 ~ 100위"
         case .popular:
             return "💡 최근 2주간 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
+        case .myShortcut:
+            return ""
         }
     }
 }
