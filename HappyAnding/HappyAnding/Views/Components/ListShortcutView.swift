@@ -26,10 +26,12 @@ struct ListShortcutView: View {
         
         List {
             
-            header
-                .listRowBackground(Color.Background)
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets())
+            if sectionType != .myShortcut {
+                header
+                    .listRowBackground(Color.Background)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+            }
             
             //TODO: 무한 스크롤을 위한 업데이트 함수 필요
 //            ForEach(0..<shortcutData.data.count, id: \.self) { index in
@@ -76,6 +78,7 @@ struct ListShortcutView: View {
                     }
                 }
             }
+            
             Rectangle()
                 .fill(Color.Background)
                 .frame(height: 44)
@@ -86,24 +89,50 @@ struct ListShortcutView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle(sectionType?.rawValue ?? "")
-        .onAppear() {
-            firebase.fetchShortcut(model: "Shortcut") { shortcuts in
-                shortcutsArray = shortcuts
-            }
-        }
+        .navigationBarTitle(getNavigationTitle(sectionType ?? .myShortcut))
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     var header: some View {
+        
+            // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
+        
         ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .frame(height: 40)
-                .padding(.horizontal, 16)
-                .foregroundColor(.Gray1)
-            
-            Text("\(categoryName?.rawValue ?? "") 1위 ~ 100위")
+            Text(getDescriptions(sectionType ?? .popular))
+                .padding(10)
                 .Body2()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .foregroundColor(.Gray5)
+        }
+        .padding(.vertical, 10)
+        .background(descriptionBackground)
+    }
+    
+    var descriptionBackground: some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(Color.Gray1)
+            .padding(16)
+    }
+    
+    private func getNavigationTitle(_ sectionType: SectionType) -> String {
+        switch sectionType {
+        case .download:
+            return sectionType.rawValue
+        case .popular:
+            return "사랑받는 단축어"
+        case .myShortcut:
+            return "내 단축어"
+        }
+    }
+    
+    private func getDescriptions(_ sectionType: SectionType) -> String {
+        switch sectionType {
+        case .download:
+            return self.categoryName?.fetchDescription() ?? "" + "1위 ~ 100위"
+        case .popular:
+            return "💡 최근 2주간 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
+        case .myShortcut:
+            return ""
         }
     }
 }
