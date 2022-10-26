@@ -44,15 +44,19 @@ struct WriteShortcutdescriptionView: View {
             NavigationLink {
                 WriteShortcutTagView(isWriting: $isWriting)
             } label: {
-                Text("다음")
-                    .Body1()
-                    .frame(maxWidth: .infinity, maxHeight: 52)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(isOneLineValid && isMultiLineValid ? .Primary : .Gray1 )
+                        .frame(maxWidth: .infinity, maxHeight: 52)
+                    
+                    Text("다음")
+                        .foregroundColor(isOneLineValid && isMultiLineValid ? .Background : .Gray3 )
+                        .Body1()
+                }
             }
             .disabled(!isOneLineValid || !isMultiLineValid)
-            .tint(.Primary)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
-            .buttonStyle(.borderedProminent)
         }
         .navigationTitle("단축어 등록")
         .ignoresSafeArea(.keyboard)

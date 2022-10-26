@@ -34,12 +34,16 @@ struct CategoryModalView: View {
             Button(action: {
                 isShowingCategoryModal = false
             }, label: {
-                Text("완료")
-                    .Body1()
-                    .frame(maxWidth: .infinity, minHeight: 52)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(!selectedCategories.isEmpty ? .Primary : .Gray1 )
+                        .frame(maxWidth: .infinity, maxHeight: 52)
+                    
+                    Text("완료")
+                        .foregroundColor(!selectedCategories.isEmpty ? .Background : .Gray3 )
+                        .Body1()
+                }
             })
-            .tint(.Primary)
-            .buttonStyle(.borderedProminent)
             .disabled(selectedCategories.isEmpty)
             .padding(.horizontal, 16)
         }

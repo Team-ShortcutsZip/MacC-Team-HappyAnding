@@ -60,15 +60,19 @@ struct WriteShortcutTagView: View {
                 
                 isWriting.toggle()
             }, label: {
-                Text("완료")
-                    .Body1()
-                    .frame(maxWidth: .infinity, maxHeight: 52)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(!selectedCategories.isEmpty && !relatedApps.isEmpty && isRequirementValid ? .Primary : .Gray1 )
+                        .frame(maxWidth: .infinity, maxHeight: 52)
+                    
+                    Text("완료")
+                        .foregroundColor(!selectedCategories.isEmpty && !relatedApps.isEmpty && isRequirementValid ? .Background : .Gray3 )
+                        .Body1()
+                }
             })
             .disabled(selectedCategories.isEmpty || relatedApps.isEmpty || !isRequirementValid)
-            .tint(.Primary)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
-            .buttonStyle(.borderedProminent)
         }
         .navigationTitle("단축어 등록")
         .ignoresSafeArea(.keyboard)

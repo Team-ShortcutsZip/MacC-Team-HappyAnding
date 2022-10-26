@@ -106,15 +106,19 @@ struct WriteShortcutTitleView: View {
                 NavigationLink {
                     WriteShortcutdescriptionView(isWriting: $isWriting)
                 } label: {
-                    Text("다음")
-                        .Body1()
-                        .frame(maxWidth: .infinity, maxHeight: 52)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .foregroundColor(isNameValid && isLinkValid ? .Primary : .Gray1 )
+                            .frame(maxWidth: .infinity, maxHeight: 52)
+                        
+                        Text("다음")
+                            .foregroundColor(isNameValid && isLinkValid ? .Background : .Gray3 )
+                            .Body1()
+                    }
                 }
-                .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                 .disabled(iconColor.isEmpty || iconSymbol.isEmpty || !isNameValid || !isLinkValid)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
-                .buttonStyle(.borderedProminent)
             }
         }
         .navigationTitle("단축어 등록")
