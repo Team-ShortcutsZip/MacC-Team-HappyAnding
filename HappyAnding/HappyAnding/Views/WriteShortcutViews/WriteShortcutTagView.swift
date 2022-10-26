@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct WriteShortcutTagView: View {
+    @Binding var isWriting: Bool
+    
     @State var selectedCategories = [Category]()
     @State var relatedApps = [String]()
     @State var requirements = ""
@@ -54,22 +56,21 @@ struct WriteShortcutTagView: View {
             
             Button(action: {
                 
-                // TODO: 단축어 등록 완료 후 도착페이지로 이동
+                // TODO: 새로운 단축어 생성 및 저장
                 
+                isWriting.toggle()
             }, label: {
                 Text("완료")
                     .Body1()
                     .frame(maxWidth: .infinity, maxHeight: 52)
             })
-            
-            // MARK: 완료 버튼의 조건 - 카테고리와 단축어사용에 필요한 앱을 필수로 할 것인가?
-            
             .disabled(selectedCategories.isEmpty || relatedApps.isEmpty || !isRequirementValid)
             .tint(.Primary)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
             .buttonStyle(.borderedProminent)
         }
+        .navigationTitle("단축어 등록")
         .ignoresSafeArea(.keyboard)
     }
     
@@ -221,6 +222,6 @@ struct WriteShortcutTagView: View {
 
 struct WriteShortcutTagView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTagView()
+        WriteShortcutTagView(isWriting: .constant(true))
     }
 }

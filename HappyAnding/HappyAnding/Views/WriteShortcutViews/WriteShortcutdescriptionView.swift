@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct WriteShortcutdescriptionView: View {
+    @Binding var isWriting: Bool
+    
     @State var oneLineDescription = ""
     @State var multiLineDescription = ""
     
@@ -40,7 +42,7 @@ struct WriteShortcutdescriptionView: View {
             Spacer()
             
             NavigationLink {
-                WriteShortcutTagView()
+                WriteShortcutTagView(isWriting: $isWriting)
             } label: {
                 Text("다음")
                     .Body1()
@@ -52,12 +54,13 @@ struct WriteShortcutdescriptionView: View {
             .padding(.bottom, 24)
             .buttonStyle(.borderedProminent)
         }
+        .navigationTitle("단축어 등록")
         .ignoresSafeArea(.keyboard)
     }
 }
 
 struct WriteShortcutdescriptionView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutdescriptionView()
+        WriteShortcutdescriptionView(isWriting: .constant(true))
     }
 }
