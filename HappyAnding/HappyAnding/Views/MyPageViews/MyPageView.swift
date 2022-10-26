@@ -20,7 +20,9 @@ struct MyPageView: View {
             ScrollView {
                 VStack(spacing: 32) {
                     
+
                     //MARK: - 사용자 프로필
+                    
                     HStack(spacing: 16) {
                         //TODO: 사용되는 임시 이미지 지정되면 변경 필요
                         Image(systemName: "person.fill")
