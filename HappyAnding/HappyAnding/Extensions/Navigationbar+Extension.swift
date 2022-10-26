@@ -16,6 +16,7 @@ class Theme {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(.Background)
         appearance.shadowColor = .clear
         
         //back button color 지정
