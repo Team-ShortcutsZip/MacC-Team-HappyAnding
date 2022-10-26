@@ -18,7 +18,7 @@ struct ListCategoryView: View {
                 .ignoresSafeArea()
             
             VStack {
-                LazyVGrid(columns: gridLayout, spacing: 12) {
+                LazyVGrid(columns: gridLayout) {
                     ForEach(Category.allCases, id: \.self) { item in
                         
                         NavigationLink(destination: ListShortcutView(categoryName: item)) {
@@ -28,16 +28,16 @@ struct ListCategoryView: View {
                                 .tag(item)
                                 .foregroundColor(Color.Gray3)
                                 .frame(maxWidth: UIScreen.main.bounds.size.width * 0.5,
-                                       minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)
+                                       minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.09)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 12)
                                         .stroke(Color.Gray3, lineWidth: 1)
                                 )
                         }
-                        .padding(10)
+                        .padding(8)
                     }
                 }
-                .padding(.horizontal, 6)
+                .padding(.horizontal, 8)
                             Spacer().frame(maxWidth: .infinity)
             }
         }
