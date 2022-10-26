@@ -89,7 +89,6 @@ struct WriteShortcutTitleView: View {
                                          content: $shortcutName,
                                          isValid: $isNameValid
                 )
-                .keyboardType(.numbersAndPunctuation)
                 .padding(.top, 30)
                 
                 ValidationCheckTextField(textType: .mandatory,
@@ -108,11 +107,11 @@ struct WriteShortcutTitleView: View {
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(isNameValid && isLinkValid ? .Primary : .Gray1 )
+                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Gray1 )
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text("다음")
-                            .foregroundColor(isNameValid && isLinkValid ? .Background : .Gray3 )
+                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty && isNameValid && isLinkValid ? .Background : .Gray3 )
                             .Body1()
                     }
                 }
