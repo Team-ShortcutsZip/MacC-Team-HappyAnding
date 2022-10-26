@@ -21,7 +21,7 @@ struct ReadShortcutView: View {
         let shortcut: Shortcut = shortcuts.first!
         
         VStack {
-            ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, numberOfLike: 99, name: shortcut.name, oneline: "한줄 설 명!")
+            ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, name: shortcut.name, oneline: "한줄 설 명!", numberOfLike: 99)
             ReadShortcutContentView(writer: "romi", profileImage: "person.crop.circle", explain: shortcut.description, category: "여행", necessaryApps: "인스타그램", requirements: "불라불라")
             Button(action: {
                 if let url = URL(string: shortcut.downloadLink) {
