@@ -32,7 +32,7 @@ struct MyShortcutCardListView: View {
             }
             .padding(.leading, 16)
             
-            ScrollView(.horizontal) {
+            ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     NavigationLink(destination: {
                          WriteShortcutTitleView()
@@ -40,15 +40,17 @@ struct MyShortcutCardListView: View {
                         AddMyShortcutCardView()
                     })
                     
-                    ForEach(shortcuts) { shortcut in
-                        NavigationLink(destination: {
-                            ReadShortcutView()
-                        }, label: {
-                            MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.name, mySHortcutColor: shortcut.color)
-                        })
+                    ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                        if index < 7 {
+                            NavigationLink(destination: {
+                                ReadShortcutView()
+                            }, label: {
+                                MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.name, mySHortcutColor: shortcut.color)
+                            })
+                        }
                     }
                 }
-                .padding(.leading, 16)
+                .padding(.horizontal, 16)
             }
         }
     }

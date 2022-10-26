@@ -55,7 +55,7 @@ struct CategoryCellView: View {
             .stroke(Color.Gray1, lineWidth: 1)
             .background(Color.White)
             .cornerRadius(12)
-            .frame(width: .infinity, height: 48)
+            .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
             .overlay {
                 Text(categoryName)
                     .Body2()
