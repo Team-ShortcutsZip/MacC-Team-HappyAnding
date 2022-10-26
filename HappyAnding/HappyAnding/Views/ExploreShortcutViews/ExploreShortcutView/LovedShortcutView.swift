@@ -27,7 +27,8 @@ struct LovedShortcutView: View {
                 Spacer()
                 
                 NavigationLink(destination: {
-                    Text("임시")
+                    ListShortcutView(sectionType: SectionType.popular)
+                        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                 }, label: {
                     Text("더보기")
                         .Footnote()
@@ -39,7 +40,7 @@ struct LovedShortcutView: View {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    NavigationLink(destination: Text("HI"), label: {
+                    NavigationLink(destination: ReadShortcutView(), label: {
                         ShortcutCell(color: shortcut.color,
                                     sfSymbol: shortcut.sfSymbol,
                                     name: shortcut.name,

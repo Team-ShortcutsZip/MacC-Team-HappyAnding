@@ -33,7 +33,8 @@ struct CategoryView: View {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
                         NavigationLink(destination: {
-                            Text("카테고리 임시")
+                            ListShortcutView(categoryName: value, sectionType: SectionType.download)
+                                .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                         }, label: {
                             CategoryCellView(categoryName: value.rawValue)
                         })
