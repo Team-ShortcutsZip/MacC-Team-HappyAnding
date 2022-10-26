@@ -9,8 +9,47 @@ import SwiftUI
 
 struct ExploreCurationView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 0) {
+                    adminCurations
+                        .padding(.top, 20)
+                        .padding(.bottom, 32)
+                    UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
+                }
+            }
+            .navigationTitle(Text("단축어 큐레이션"))
+            .background(Color.Background)
+        }
     }
+    
+    var adminCurations: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .bottom) {
+                Text("숏컷집의 추천 큐레이션")
+                    .Title2()
+                    .foregroundColor(.Gray5)
+                    .onTapGesture { }
+                Spacer()
+                //추후에 어드민큐레이션에도 더보기 버튼 들어갈 수 있을 것 같아서 추가해놓은 코드입니다.
+//                NavigationLink(destination: 더보기 눌렀을 때 뷰이름 입력) {
+//                    Text("더보기")
+//                        .Footnote()
+//                        .foregroundColor(.Gray4)
+//                }
+            }
+            .padding(.horizontal, 16)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
+                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
+                }
+                .padding(.leading, 16)
+            }
+        }
+    }
+    
 }
 
 struct ExploreCurationView_Previews: PreviewProvider {
