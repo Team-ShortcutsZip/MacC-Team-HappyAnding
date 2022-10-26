@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct DownloadRankView: View {
-    let shortcuts = Shortcut.fetchData(number: 5).sorted {
-        $0.numberOfDownload > $1.numberOfDownload
-    }
+//    let shortcuts = Shortcut.fetchData(number: 5).sorted {
+//        $0.numberOfDownload > $1.numberOfDownload
+//    }
+    
+    let shortcuts: [Shortcuts]
     
     var body: some View {
         VStack {
@@ -23,7 +25,7 @@ struct DownloadRankView: View {
                 Spacer()
                 
                 NavigationLink(destination: {
-                    ListShortcutView(sectionType: SectionType.download)
+                    ListShortcutView(shortcuts: shortcuts, sectionType: SectionType.download)
                         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                 }, label: {
                     Text("더보기")
@@ -36,23 +38,19 @@ struct DownloadRankView: View {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    NavigationLink(destination: ReadShortcutView(), label: {
-                        ShortcutCell(color: shortcut.color,
-                                     sfSymbol: shortcut.sfSymbol,
-                                     name: shortcut.name,
-                                     description: shortcut.description,
-                                     numberOfDownload: shortcut.numberOfDownload,
-                                     downloadLink: shortcut.downloadLink)
+                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut), label: {
+                        //TODO: 추후 downloadLink 배열로 전달하도록 변경 필요
+//                        ShortcutCell(color: shortcut.color,
+//                                     sfSymbol: shortcut.sfSymbol,
+//                                     name: shortcut.title,
+//                                     description: shortcut.description,
+//                                     numberOfDownload: shortcut.numberOfDownload,
+//                                     downloadLink: shortcut.downloadLink[0])
+                        ShortcutCell(shortcut: shortcut)
                     })
                 }
             }
         }
         .background(Color.Background)
-    }
-}
-
-struct DownloadRankView_Previews: PreviewProvider {
-    static var previews: some View {
-        DownloadRankView()
     }
 }

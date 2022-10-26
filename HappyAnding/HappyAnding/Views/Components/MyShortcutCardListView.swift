@@ -21,7 +21,7 @@ struct MyShortcutCardListView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: ListShortcutView(sectionType: .myShortcut)) {
+                NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, sectionType: .myShortcut)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -45,7 +45,7 @@ struct MyShortcutCardListView: View {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
                             if index < 7 {
                                 NavigationLink(destination: {
-                                    ReadShortcutView()
+                                    ReadShortcutView(shortcut: shortcut)
                                 }, label: {
                                     MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.title, mySHortcutColor: shortcut.color)
                                 })

@@ -13,6 +13,7 @@ import SwiftUI
 struct ListShortcutView: View {
     
     let firebase = FirebaseService()
+    let shortcuts:[Shortcuts]?
     @State var shortcutsArray: [Shortcuts] = []
     
     @ObservedObject var shortcutData = fetchData()
@@ -54,30 +55,49 @@ struct ListShortcutView: View {
 //                }
 //            }
             
-            ForEach(0..<shortcutsArray.count, id: \.self) { index in
-                ShortcutCell(color: self.shortcutsArray[index].color,
-                             sfSymbol: self.shortcutsArray[index].sfSymbol,
-                             name: self.shortcutsArray[index].title,
-                             description: self.shortcutsArray[index].description,
-                             numberOfDownload: self.shortcutsArray[index].numberOfDownload,
-                             downloadLink: self.shortcutsArray[index].downloadLink[0])
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .onTapGesture {
-                    firebase.fetchShortcutDetail(id: self.shortcutsArray[index].id) { shortcut in
-                        print("**\(shortcut)")
-                    }
-                }
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        if index == shortcutData.data.count - 1 && index < 12 {
-                            isLastItem = true
-                            self.shortcutData.updateData()
-                            isLastItem = false
-                        }
-                    }
+//            ForEach(0..<shortcutsArray.count, id: \.self) { index in
+//                ShortcutCell(color: self.shortcutsArray[index].color,
+//                             sfSymbol: self.shortcutsArray[index].sfSymbol,
+//                             name: self.shortcutsArray[index].title,
+//                             description: self.shortcutsArray[index].description,
+//                             numberOfDownload: self.shortcutsArray[index].numberOfDownload,
+//                             downloadLink: self.shortcutsArray[index].downloadLink[0])
+//                .listRowInsets(EdgeInsets())
+//                .listRowSeparator(.hidden)
+//                .onTapGesture {
+//                    firebase.fetchShortcutDetail(id: self.shortcutsArray[index].id) { shortcut in
+//                        print("**\(shortcut)")
+//                    }
+//                }
+//                .onAppear {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        if index == shortcutData.data.count - 1 && index < 12 {
+//                            isLastItem = true
+//                            self.shortcutData.updateData()
+//                            isLastItem = false
+//                        }
+//                    }
+//                }
+//            }
+            if let shortcuts {
+                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+//                    ShortcutCell(color: shortcut.color,
+//                                 sfSymbol: shortcut.sfSymbol,
+//                                 name: shortcut.title,
+//                                 description: shortcut.description,
+//                                 numberOfDownload: shortcut.numberOfDownload,
+//                                 downloadLink: shortcut.downloadLink[0])
+                    ShortcutCell(shortcut: shortcut)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+//                    .onTapGesture {
+//                        firebase.fetchShortcutDetail(id: shortcut.id) { shortcut in
+//                            print("**\(shortcut)")
+//                        }
+//                    }
                 }
             }
+            
             
             Rectangle()
                 .fill(Color.Background)
@@ -136,13 +156,6 @@ struct ListShortcutView: View {
         }
     }
 }
-
-struct ListShortcutView_Previews: PreviewProvider {
-    static var previews: some View {
-        ListShortcutView(sectionType: .popular)
-    }
-}
-
 
 // TODO: 테스트 모델, 추후 삭제 예정
 

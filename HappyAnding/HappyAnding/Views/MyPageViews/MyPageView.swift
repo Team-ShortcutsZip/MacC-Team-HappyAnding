@@ -105,19 +105,20 @@ struct MyPageShortcutList: View {
     var title: String
     var body: some View {
         VStack(spacing: 0) {
-            MyPageListHeader(title: title)
+            MyPageListHeader(title: title, shortcuts: shortcuts)
                 .padding(.horizontal, 16)
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView()) {
-                            ShortcutCell(color: shortcut.color,
-                                         sfSymbol: shortcut.sfSymbol,
-                                         name: shortcut.title,
-                                         description: shortcut.description,
-                                         numberOfDownload: shortcut.numberOfDownload,
-                                         downloadLink: shortcut.downloadLink[shortcut.downloadLink.count - 1]
-                            )
+                        NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+//                            ShortcutCell(color: shortcut.color,
+//                                         sfSymbol: shortcut.sfSymbol,
+//                                         name: shortcut.title,
+//                                         description: shortcut.description,
+//                                         numberOfDownload: shortcut.numberOfDownload,
+//                                         downloadLink: shortcut.downloadLink[shortcut.downloadLink.count - 1]
+//                            )
+                            ShortcutCell(shortcut: shortcut)
                         }
                     }
                 }
@@ -128,6 +129,7 @@ struct MyPageShortcutList: View {
 
 struct MyPageListHeader: View {
     var title: String
+    let shortcuts: [Shortcuts]?
     var body: some View {
         HStack(alignment: .bottom) {
             Text(title)
@@ -135,7 +137,7 @@ struct MyPageListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView()) {
+            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)

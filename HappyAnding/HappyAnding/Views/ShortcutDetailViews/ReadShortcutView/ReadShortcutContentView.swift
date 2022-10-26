@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ReadShortcutContentView: View {
-    let writer: String
-    let profileImage: String
-    let explain: String
-    let category: String
-    let necessaryApps: String
-    let requirements: String
+    let shortcut: Shortcuts
+//    let writer: String
+    let profileImage: String = "person.crop.circle"
+//    let explain: String
+//    let category: String
+//    let necessaryApps: String
+//    let requirements: String
     
     var body: some View {
         ScrollView {
@@ -23,19 +24,19 @@ struct ReadShortcutContentView: View {
                     .foregroundColor(Color.Gray4)
                 HStack {
                     Image(systemName: profileImage)
-                    Text(writer)
+                    Text(shortcut.author)
                         .Body2()
                         .foregroundColor(Color.Gray5)
-                        
                 }
+                .padding(.bottom, 24)
                 
-                ReusableTextView(title: "단축어 설명", contents: explain)
+                ReusableTextView(title: "단축어 설명", contents: shortcut.description, contentsArray: nil)
                     .padding(.bottom, 20)
-                ReusableTextView(title: "카테고리", contents: category)
+                ReusableTextView(title: "카테고리", contents: nil, contentsArray: shortcut.category)
                     .padding(.bottom, 20)
-                ReusableTextView(title: "단축어 사용에 필요한 앱", contents: necessaryApps)
+                ReusableTextView(title: "단축어 사용에 필요한 앱", contents: nil, contentsArray: shortcut.requiredApp)
                     .padding(.bottom, 20)
-                ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: requirements)
+                ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: shortcut.description, contentsArray: nil)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)
@@ -53,16 +54,27 @@ struct ReadShortcutContentView: View {
 private struct ReusableTextView: View {
     
     let title: String
-    let contents: String
+    let contents: String?
+    let contentsArray: [String]?
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
                 .Body2()
                 .foregroundColor(Color.Gray4)
-            Text(contents)
-                .Body2()
-                .foregroundColor(Color.Gray5)
+            if let contents {
+                Text(contents)
+                    .Body2()
+                    .foregroundColor(Color.Gray5)
+            }
+            if let contentsArray {
+                ForEach(contentsArray, id: \.self) { content in
+                    Text(content)
+                        .Body2()
+                        .foregroundColor(Color.Gray5)
+                }
+            }
+            
         }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ListCategoryView: View {
     
+    var shortcuts: [Shortcuts]?
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -21,7 +22,7 @@ struct ListCategoryView: View {
                 LazyVGrid(columns: gridLayout) {
                     ForEach(Category.allCases, id: \.self) { item in
                         
-                        NavigationLink(destination: ExploreCategoryView(category: item)) {
+                        NavigationLink(destination: ExploreCategoryView(category: item, shortcuts: shortcuts)) {
                             
                             Text(item.rawValue)
                                 .Body2()
