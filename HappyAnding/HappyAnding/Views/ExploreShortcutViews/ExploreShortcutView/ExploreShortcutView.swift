@@ -19,8 +19,9 @@ struct ExploreShortcutView: View {
                 CategoryView()
                     .padding(.bottom, 32)
                 LovedShortcutView()
+                    .padding(.bottom, 44)
             }
-            .navigationTitle("단축어 둘러보기")
+            .navigationTitle(Text("단축어 둘러보기"))
             .background(Color.Background)
         }
     }

@@ -24,6 +24,9 @@ struct ReadShortcutContentView: View {
                 HStack {
                     Image(systemName: profileImage)
                     Text(writer)
+                        .Body2()
+                        .foregroundColor(Color.Gray5)
+                        
                 }
                 
                 ReusableTextView(title: "단축어 설명", contents: explain)
