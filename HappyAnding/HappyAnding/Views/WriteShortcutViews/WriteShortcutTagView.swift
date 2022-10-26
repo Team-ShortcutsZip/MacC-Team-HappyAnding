@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct WriteShortcutTagView: View {
+    
+    let firebase = FirebaseService()
+    
     let iconColor: String
     let iconSymbol: String
     let shortcutName: String
@@ -65,6 +68,11 @@ struct WriteShortcutTagView: View {
                 // TODO: 새로운 단축어 생성 및 저장
                 
                 print(iconColor, iconSymbol, shortcutName, shortcutLink, onelineDescription, multiLineDescription, selectedCategories, relatedApps, requirements)
+                
+                let shortcut = Shortcuts(sfSymbol: iconSymbol, color: iconColor, title: shortcutName, subtitle: onelineDescription, description: multiLineDescription, category: selectedCategories, requiredApp: relatedApps, date: "", numberOfLike: 0, numberOfDownload: 0, author: "testUser", downloadLink: [shortcutLink])
+                
+                firebase.setData(model: shortcut)
+                
                 isWriting.toggle()
             }, label: {
                 ZStack {

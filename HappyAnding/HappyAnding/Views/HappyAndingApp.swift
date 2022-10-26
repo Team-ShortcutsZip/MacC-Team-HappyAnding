@@ -7,8 +7,17 @@
 
 import SwiftUI
 
+import FirebaseCore
+import FirebaseFirestore
+
+
 @main
 struct HappyAndingApp: App {
+    init() {
+        FirebaseApp.configure()
+    }
+    
+    
     var body: some Scene {
         WindowGroup {
             ShortcutTabView()
