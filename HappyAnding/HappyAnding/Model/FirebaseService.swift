@@ -148,11 +148,11 @@ class FirebaseService {
     }
     
     //모든 단축어를 다운로드 수로 내림차순 정렬하여 가져오는 함수
-    func fetchAllDownloadShortcut(completionHandler: @escaping ([Shortcuts])->()) {
+    func fetchAllDownloadShortcut(orderBy: String, completionHandler: @escaping ([Shortcuts])->()) {
         var shortcuts: [Shortcuts] = []
         
         db.collection("Shortcut")
-            .order(by: "numberOfDownload", descending: true)
+            .order(by: orderBy, descending: true)
             .getDocuments() { (querySnapshot, error) in
                 if let error {
                     print("Error getting documents: \(error)")
