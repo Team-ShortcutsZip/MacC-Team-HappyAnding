@@ -23,7 +23,8 @@ struct UserCurationListView: View {
                 }
                 .Headline()
                 .foregroundColor(.Gray4)
-                .frame(maxWidth: .infinity, maxHeight: 64)
+                .frame(maxWidth: .infinity)
+                .frame(height: 64)
                 .background(Color.Gray1)
                 .cornerRadius(12)
                 .padding(.bottom, 12)
