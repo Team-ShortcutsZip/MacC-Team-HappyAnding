@@ -11,10 +11,12 @@ struct ExploreShortcutView: View {
     let firebase = FirebaseService()
     @State var shortcutsDownloadArray: [Shortcuts] = []
     @State var shortcutLikedArray: [Shortcuts] = []
+    @State var userInformation: User? = nil
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                MyShortcutCardListView()
+                MyShortcutCardListView(shortcuts: userInformation?.myShortcuts?.sorted(by: { $0.date > $1.date }) ?? nil)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
                 DownloadRankView(shortcuts: shortcutsDownloadArray)
@@ -33,6 +35,10 @@ struct ExploreShortcutView: View {
             }
             firebase.fetchAllDownloadShortcut(orderBy: "numberOfLike") { shortcuts in
                 shortcutLikedArray = shortcuts
+            }
+            firebase.fetchUserShortcut(userID: "6466A6C2-DB18-4274-B9C7-9F1EE0C79288") { user in
+                userInformation = user
+                print(user.myShortcuts?.sorted(by: { $0.date > $1.date }) as Any)
             }
         }
     }
