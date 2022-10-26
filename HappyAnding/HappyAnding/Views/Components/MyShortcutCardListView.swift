@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MyShortcutCardListView: View {
     @State var isWriting = false
-    let shortcuts = Shortcut.fetchData(number: 15)
-    
+//    let shortcuts = Shortcut.fetchData(number: 15)
+    var shortcuts: [Shortcuts]?
     var body: some View {
         VStack {
             HStack {
@@ -41,13 +41,15 @@ struct MyShortcutCardListView: View {
                         WriteShortcutTitleView(isWriting: self.$isWriting)
                     })
                     
-                    ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                        if index < 7 {
-                            NavigationLink(destination: {
-                                ReadShortcutView()
-                            }, label: {
-                                MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.name, mySHortcutColor: shortcut.color)
-                            })
+                    if let shortcuts {
+                        ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
+                            if index < 7 {
+                                NavigationLink(destination: {
+                                    ReadShortcutView()
+                                }, label: {
+                                    MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.title, mySHortcutColor: shortcut.color)
+                                })
+                            }
                         }
                     }
                 }

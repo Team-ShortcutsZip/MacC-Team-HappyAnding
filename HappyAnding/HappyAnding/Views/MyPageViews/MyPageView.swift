@@ -9,6 +9,10 @@ import SwiftUI
 
 struct MyPageView: View {
     
+    @State var userInformation: User? = nil
+
+    let firebase = FirebaseService()
+    
     var userName: String
     var userEmail: String
     
@@ -56,7 +60,7 @@ struct MyPageView: View {
                     
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
-                    MyShortcutCardListView()
+                    MyShortcutCardListView(shortcuts: userInformation?.myShortcuts?.sorted(by: { $0.date > $1.date }) ?? nil)
                     UserCurationListView(userCurations: userCurations)
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
@@ -84,6 +88,12 @@ struct MyPageView: View {
             }
             .scrollIndicators(.hidden)
             .background(Color.Background)
+        }
+        .onAppear {
+            firebase.fetchUserShortcut(userID: "6466A6C2-DB18-4274-B9C7-9F1EE0C79288") { user in
+                userInformation = user
+                print(user.myShortcuts?.sorted(by: { $0.date > $1.date }) as Any)
+            }
         }
     }
 }
