@@ -66,7 +66,6 @@ struct UserCurationCell: View {
                     .Headline()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom, subtitle == nil ? 20 : 0)
                 if let subtitle {
                     Text(subtitle)
                         .Body2()
