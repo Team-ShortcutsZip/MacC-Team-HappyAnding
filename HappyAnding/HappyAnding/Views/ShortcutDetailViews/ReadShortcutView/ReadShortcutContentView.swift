@@ -68,13 +68,45 @@ private struct ReusableTextView: View {
                     .foregroundColor(Color.Gray5)
             }
             if let contentsArray {
-                ForEach(contentsArray, id: \.self) { content in
-                    Text(content)
+                ForEach(contentsArray, id: \.self) {
+                    content in
+                    Text(title == "카테고리" ? translateName(content) : content)
                         .Body2()
                         .foregroundColor(Color.Gray5)
                 }
             }
             
+        }
+    }
+    
+    private func translateName(_ categoryName: String) -> String {
+        switch categoryName {
+        case "education":
+            return "교육"
+        case "finance":
+            return "금융"
+        case "business":
+            return "비즈니스"
+        case "health":
+            return "건강"
+        case "lifestyle":
+            return "라이프스타일"
+        case "weather":
+            return "날씨"
+        case "photo":
+            return "사진 및 비디오"
+        case "decoration":
+            return "데코레이션 / 꾸미기"
+        case "utility":
+            return "유틸리티"
+        case "sns":
+            return "소셜 네트워킹"
+        case "entertainment":
+            return "엔터테인먼트"
+        case "trip":
+            return "여행"
+        default:
+            return ""
         }
     }
 }
