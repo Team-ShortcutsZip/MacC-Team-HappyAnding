@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CheckBoxShortcutCell: View {
     
-    @State private var isTapped: Bool = false
+    @State var isShortcutTapped: Bool = false
     
     let color: String
     let sfSymbol: String
@@ -32,20 +32,20 @@ struct CheckBoxShortcutCell: View {
             .padding(.horizontal, 16)
         }
         .onTapGesture {
-            if isTapped {
-                isTapped = false
+            if isShortcutTapped {
+                isShortcutTapped = false
             }
             else {
-                isTapped = true
+                isShortcutTapped = true
             }
         }
-        .padding(.top, 12)
+        .padding(.top, 0)
         .background(Color.Background)
     }
     
     var toggle: some View {
-        Image(systemName: isTapped ? "checkmark.square.fill" : "square")
-            .foregroundColor(isTapped ? .Primary : .Gray3)
+        Image(systemName: isShortcutTapped ? "checkmark.square.fill" : "square")
+            .foregroundColor(isShortcutTapped ? .Primary : .Gray3)
             .padding(.leading, 20)
     }
     
@@ -85,7 +85,7 @@ struct CheckBoxShortcutCell: View {
             .fill(Color.White)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isTapped ? Color.Primary : Color.Gray1)
+                    .stroke(isShortcutTapped ? Color.Primary : Color.Gray1)
             )
     }}
 
