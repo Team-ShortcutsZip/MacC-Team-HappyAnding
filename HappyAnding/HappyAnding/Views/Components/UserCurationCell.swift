@@ -17,7 +17,7 @@ struct UserCurationCell: View {
     
     var body: some View {
         ZStack {
-            NavigationLink(destination: ReadCurationView()) {
+            NavigationLink(destination: ReadUserCurationView()) {
                 EmptyView()
             }.opacity(0)
             VStack (alignment: .leading, spacing: 0) {

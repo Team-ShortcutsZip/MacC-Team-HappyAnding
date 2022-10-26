@@ -30,7 +30,7 @@ struct AdminCurationCell: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            NavigationLink(destination: ReadCurationView()) {
+            NavigationLink(destination: ReadAdminCurationView()) {
                 EmptyView()
             }
             titleAndSubtitle

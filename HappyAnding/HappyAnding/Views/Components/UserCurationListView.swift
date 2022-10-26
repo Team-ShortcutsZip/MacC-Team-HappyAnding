@@ -31,7 +31,7 @@ struct UserCurationListView: View {
                 .padding(.horizontal, 16)
             }
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                NavigationLink(destination: ReadCurationView()) {
+                NavigationLink(destination: ReadAdminCurationView()) {
                     if index < 2 {
                         UserCurationCell(
                             title: curation.title,
