@@ -33,8 +33,8 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    NavigationLink(destination: {
-                        WriteShortcutTitleView(isWriting: $isWriting)
+                    Button(action: {
+                        isWriting.toggle()
                     }, label: {
                         AddMyShortcutCardView()
                     })
