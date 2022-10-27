@@ -29,7 +29,7 @@ struct ListCategoryView: View {
                                 .tag(item)
                                 .foregroundColor(Color.Gray3)
                                 .frame(maxWidth: UIScreen.main.bounds.size.width * 0.5,
-                                       minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.09)
+                                       minHeight: 48)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 12)
                                         .stroke(Color.Gray3, lineWidth: 1)
@@ -39,7 +39,8 @@ struct ListCategoryView: View {
                     }
                 }
                 .padding(.horizontal, 8)
-                            Spacer().frame(maxWidth: .infinity)
+                .padding(.top, 24)
+                Spacer().frame(maxWidth: .infinity)
             }
         }
         .frame(maxHeight: .infinity)

@@ -11,17 +11,19 @@ struct ExploreCurationView: View {
     
     let firebase = FirebaseService()
     @State var userCurations: [Curation] = []
+    @State var adminCurations: [Curation] = []
+    @State var myCurations: [Curation] = []
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 0) {
                     //앱 큐레이션
-                    adminCurations
+                    adminCurationsFrame
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
-                    UserCurationListView(userCurations: userCurations)
+                    UserCurationListView(userCurations: myCurations)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션
                     CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: userCurations)
@@ -31,9 +33,20 @@ struct ExploreCurationView: View {
             .navigationTitle(Text("단축어 큐레이션"))
             .background(Color.Background)
         }
+        .onAppear() {
+            firebase.fetchMyCuration(author: "testUser") { curations in
+                myCurations = curations
+            }
+            firebase.fetchCuration { curations in
+                userCurations = curations
+            }
+            firebase.fetchAdminCuration { curations in
+                adminCurations = curations
+            }
+        }
     }
     
-    var adminCurations: some View {
+    var adminCurationsFrame: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
                 Text("숏컷집의 추천 큐레이션")
@@ -52,8 +65,13 @@ struct ExploreCurationView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
-                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
-                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 ")
+                    ForEach(Array(adminCurations.enumerated()), id: \.offset) { index, curation in
+                        NavigationLink(destination: ReadAdminCurationView(curation: curation)) {
+                            AdminCurationCell(adminCuration: curation)
+                        }
+                    }
+//                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
+//                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 ")
                 }
                 .padding(.leading, 16)
                 .padding(.trailing, 8)
@@ -63,8 +81,8 @@ struct ExploreCurationView: View {
     
 }
 
-struct ExploreCurationView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExploreCurationView()
-    }
-}
+//struct ExploreCurationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExploreCurationView()
+//    }
+//}

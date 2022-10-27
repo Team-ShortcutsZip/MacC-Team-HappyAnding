@@ -22,15 +22,16 @@ import SwiftUI
 
 struct AdminCurationCell: View {
     
-    let curationThumbnail: String
-    let title: String
-    let subtitle: String
+    let adminCuration: Curation
+//    let curationThumbnail: String
+//    let title: String
+//    let subtitle: String
     
     let cornerRadius: CGFloat = 12
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink(destination: ReadAdminCurationView()) {
+            NavigationLink(destination: ReadAdminCurationView(curation: adminCuration)) {
                 EmptyView()
             }
             backgroundImage
@@ -45,11 +46,11 @@ struct AdminCurationCell: View {
     var titleAndSubtitle: some View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(title)
+                Text(adminCuration.title)
                     .Title1()
                     .foregroundColor(.Gray5)
                     .lineLimit(1)
-                Text(subtitle)
+                Text(adminCuration.subtitle ?? "")
                     .Body2()
                     .foregroundColor(.Gray5)
                     .lineLimit(2)
@@ -62,7 +63,7 @@ struct AdminCurationCell: View {
     ///백그라운드 이미지
     var backgroundImage: some View {
         ZStack {
-            Image(curationThumbnail)
+            Image(adminCuration.background)
                 .resizable()
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             RoundedRectangle(cornerRadius: cornerRadius)
@@ -73,11 +74,11 @@ struct AdminCurationCell: View {
     }
 }
 
-struct AdminCurationCell_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생ㅋ", subtitle: "워라밸도 중요해요")
-            AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
-        }
-    }
-}
+//struct AdminCurationCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생ㅋ", subtitle: "워라밸도 중요해요")
+//            AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
+//        }
+//    }
+//}

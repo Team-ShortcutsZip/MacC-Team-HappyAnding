@@ -57,20 +57,12 @@ struct ExploreCategoryView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.Background)
                 Section() {
-                    CategoryListHeader(type: .download, shortcuts: rankingShortcuts)
+                    CategoryListHeader(type: .download, category: category, shortcuts: rankingShortcuts)
                         .padding(.top, 20)
                         .listRowBackground(Color.Background)
                     if let rankingShortcuts {
                         ForEach(Array(rankingShortcuts.enumerated()), id: \.offset) { index, shortcut in
                             if index < 3 {
-                                //                            ShortcutCell(
-                                //                                color: shortcut.color,
-                                //                                sfSymbol: shortcut.sfSymbol,
-                                //                                name: shortcut.name,
-                                //                                description: shortcut.description,
-                                //                                numberOfDownload: shortcut.numberOfDownload,
-                                //                                downloadLink: shortcut.downloadLink
-                                //                            )
                                 ShortcutCell(shortcut: shortcut)
                             }
                         }
@@ -86,14 +78,6 @@ struct ExploreCategoryView: View {
                     if let lovedShortcuts {
                         ForEach(Array(lovedShortcuts.enumerated()), id: \.offset) { index, shortcut in
                             if index < 3 {
-                                //                            ShortcutCell(
-                                //                                color: shortcut.color,
-                                //                                sfSymbol: shortcut.sfSymbol,
-                                //                                name: shortcut.name,
-                                //                                description: shortcut.description,
-                                //                                numberOfDownload: shortcut.numberOfDownload,
-                                //                                downloadLink: shortcut.downloadLink
-                                //                            )
                                 ShortcutCell(shortcut: shortcut)
                             }
                         }
@@ -107,6 +91,7 @@ struct ExploreCategoryView: View {
             .background(Color.Background.ignoresSafeArea(.all, edges: .all))
             .scrollContentBackground(.hidden)
         }
+        .navigationBarTitle(category.translateName())
         .onAppear() {
             firebase.fetchCategoryOrderedShortcut(category: category.rawValue, orderBy: "numberOfLike") { shortcuts in
                 lovedShortcuts = shortcuts
@@ -120,6 +105,7 @@ struct ExploreCategoryView: View {
 
 struct CategoryListHeader: View {
     var type: SectionType
+    var category: Category?
     var shortcuts: [Shortcuts]?
     var body: some View {
         HStack(alignment: .bottom) {
@@ -132,7 +118,7 @@ struct CategoryListHeader: View {
                     .Footnote()
                     .foregroundColor(.Gray4)
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                NavigationLink(destination: ListShortcutView(shortcuts: shortcuts)){}.opacity(0)
+                NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: category, sectionType: type)){}.opacity(0)
             }
         }
     }

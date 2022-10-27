@@ -63,7 +63,7 @@ struct CategoryModalView: View {
                     }
                 }
             }, label: {
-                Text(item.rawValue)
+                Text(item.translateName())
                     .Body2()
                     .tag(item.category)
                     .foregroundColor(items.contains(item.category) ? Color.Primary : Color.Gray3)
