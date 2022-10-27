@@ -16,7 +16,8 @@ struct ExploreShortcutView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                MyShortcutCardListView(shortcuts: userInformation?.myShortcuts?.sorted(by: { $0.date > $1.date }) ?? nil)
+                MyShortcutCardListView(
+                    shortcuts: userInformation?.myShortcuts?.sorted(by: { $0.date > $1.date }) ?? nil)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
                 DownloadRankView(shortcuts: shortcutsDownloadArray)

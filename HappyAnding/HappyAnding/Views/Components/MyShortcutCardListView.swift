@@ -33,14 +33,23 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    NavigationLink(destination: {
-                        WriteShortcutTitleView(isWriting: $isWriting)
-                    }, label: {
+                    Button {
+                        isWriting.toggle()
+                    } label: {
                         AddMyShortcutCardView()
-                    })
+                    }
                     .fullScreenCover(isPresented: $isWriting, content: {
                         WriteShortcutTitleView(isWriting: self.$isWriting)
                     })
+
+//                    NavigationLink(destination: {
+//                        WriteShortcutTitleView(isWriting: $isWriting)
+//                    }, label: {
+//                        
+//                    })
+//                    .fullScreenCover(isPresented: $isWriting, content: {
+//                        WriteShortcutTitleView(isWriting: self.$isWriting)
+//                    })
                     
                     if let shortcuts {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
@@ -57,5 +66,6 @@ struct MyShortcutCardListView: View {
                 .padding(.horizontal, 16)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
