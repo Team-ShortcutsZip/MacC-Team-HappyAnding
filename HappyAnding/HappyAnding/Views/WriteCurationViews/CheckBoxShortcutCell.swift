@@ -10,6 +10,8 @@ import SwiftUI
 struct CheckBoxShortcutCell: View {
     
     @State var isShortcutTapped: Bool = false
+    @Binding var numberOfSelected: Int
+    @Binding var selectedShortcut: [String]
     
     let color: String
     let sfSymbol: String
@@ -34,9 +36,18 @@ struct CheckBoxShortcutCell: View {
         .onTapGesture {
             if isShortcutTapped {
                 isShortcutTapped = false
+                numberOfSelected -= 1
+                
+                // TODO: 현재는 name을 기준으로 검색중, id로 검색해서 삭제해야함 / Shortcuts 자체를 배열에 저장해야함
+                
+                if let index = selectedShortcut.firstIndex(of: name) {
+                    selectedShortcut.remove(at: index)
+                }
             }
             else {
                 isShortcutTapped = true
+                numberOfSelected += 1
+                selectedShortcut.append(name)
             }
         }
         .padding(.top, 0)
@@ -89,8 +100,8 @@ struct CheckBoxShortcutCell: View {
             )
     }}
 
-struct CheckBoxShortcutCell_Previews: PreviewProvider {
-    static var previews: some View {
-        CheckBoxShortcutCell(color: "Blue", sfSymbol: "books.vertical.fill", name: "ShortcutsTitle", description: "DescriptionDescription")
-    }
-}
+//struct CheckBoxShortcutCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CheckBoxShortcutCell(color: "Blue", sfSymbol: "books.vertical.fill", name: "ShortcutsTitle", description: "DescriptionDescription")
+//    }
+//}

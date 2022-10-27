@@ -13,10 +13,12 @@ struct WriteCurationSetView: View {
     @ObservedObject var shortcutData = fetchData()
     
     
-    @State var selectedShortcuts = [String]()
-    
     @State private var numberOfSelected: Int = 0
-    @State var isSelected: Bool = false
+    
+    // TODO: firebase 함수로 결괏값 가져오면, 그 배열의 길이를 넣어야함!
+    
+    @State var isSelected = [Bool](repeating: false, count: 10)
+    @State var selectedShortcut = [String]()
     
     var body: some View {
         VStack() {
@@ -52,7 +54,7 @@ struct WriteCurationSetView: View {
     ///내가 작성한, 좋아요를 누른 단축어 목록
     var shortcutList: some View {
         ForEach(0..<10, id: \.self) { index in
-            CheckBoxShortcutCell(isShortcutTapped: isSelected, color: self.shortcutData.data[index].color,
+            CheckBoxShortcutCell(isShortcutTapped: isSelected[index], numberOfSelected: $numberOfSelected, selectedShortcut: $selectedShortcut, color: self.shortcutData.data[index].color,
                          sfSymbol: self.shortcutData.data[index].sfSymbol,
                          name: self.shortcutData.data[index].name,
                          description: self.shortcutData.data[index].description)
@@ -63,18 +65,19 @@ struct WriteCurationSetView: View {
     var bottomButton: some View {
         Button(action: {
             //Action넣기
+            print(selectedShortcut)
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isSelected ? .Primary : .Gray1)
+                    .foregroundColor(numberOfSelected > 0 ? .Primary : .Gray1)
                     .padding(.horizontal, 16)
                     .frame(height: 52)
                 Text("완료")
-                    .foregroundColor(isSelected ? .Background : .Gray3)
+                    .foregroundColor(numberOfSelected > 0 ? .Background : .Gray3)
             }
         })
         .padding(.bottom, 24)
-        .disabled(!isSelected)
+        .disabled(numberOfSelected == 0)
     }
 }
 
