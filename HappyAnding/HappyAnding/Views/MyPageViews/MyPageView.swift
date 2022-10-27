@@ -66,12 +66,12 @@ struct MyPageView: View {
                     MyPageShortcutList(
                         shortcuts: userInformation?.likeShortcuts,
 //                        shortcuts: Shortcut.fetchData(number: 5),
-                        title: "좋아요한 단축어"
+                        type: .popular
                     )
                     MyPageShortcutList(
                         shortcuts: userInformation?.downloadedShortcut,
 //                        shortcuts: Shortcut.fetchData(number: 5),
-                        title: "다운로드한 단축어"
+                        type: .download
                     )
                     .padding(.bottom, 44)
                     
@@ -102,10 +102,10 @@ struct MyPageView: View {
 
 struct MyPageShortcutList: View {
     var shortcuts: [Shortcuts]?
-    var title: String
+    var type: SectionType
     var body: some View {
         VStack(spacing: 0) {
-            MyPageListHeader(title: title, shortcuts: shortcuts)
+            MyPageListHeader(type: type, shortcuts: shortcuts)
                 .padding(.horizontal, 16)
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
@@ -128,11 +128,11 @@ struct MyPageShortcutList: View {
 }
 
 struct MyPageListHeader: View {
-    var title: String
+    var type: SectionType
     let shortcuts: [Shortcuts]?
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(title)
+            Text(type.rawValue)
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }

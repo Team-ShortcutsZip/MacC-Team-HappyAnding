@@ -13,7 +13,7 @@ struct UserCurationListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(title: "나의 큐레이션")
+            UserCurationListHeader(title: "나의 큐레이션", userCurations: userCurations)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             NavigationLink(destination: WriteCurationInfoView()){
@@ -30,16 +30,17 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-            
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    //TODO: 데이터 변경 필요
                     if let curation {
-                        NavigationLink(destination: ReadAdminCurationView()) {
+                        NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
                             if index < 2 {
                                 UserCurationCell(
                                     title: curation.title,
                                     subtitle: curation.subtitle ?? "",
-                                    shortcuts: curation.shortcuts
+                                    shortcuts: curation.shortcuts,
+                                    curation: curation
                                 )
                             }
                         }
@@ -53,6 +54,7 @@ struct UserCurationListView: View {
 
 struct UserCurationListHeader: View {
     var title: String
+    var userCurations: [Curation]?
     var body: some View {
         HStack(alignment: .bottom) {
             Text(title)
@@ -60,10 +62,12 @@ struct UserCurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ExploreCurationView()) {
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+            if let userCurations {
+                NavigationLink(destination: ListCurationView(userCurations: userCurations, type: CurationType.myCuration)) {
+                    Text("더보기")
+                        .Footnote()
+                        .foregroundColor(.Gray4)
+                }
             }
         }
     }

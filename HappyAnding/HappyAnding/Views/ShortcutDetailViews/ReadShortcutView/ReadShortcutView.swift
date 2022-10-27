@@ -22,10 +22,12 @@ struct ReadShortcutView: View {
 //        let shortcut: Shortcut = shortcuts.first!
         
         VStack {
+
 //            ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, numberOfLike: 99, name: shortcut.name, oneline: "한줄 설 명!")
             ReadShortcutHeaderView(shortcut: shortcut)
 //            ReadShortcutContentView(writer: "romi", profileImage: "person.crop.circle", explain: shortcut.description, category: "여행", necessaryApps: "인스타그램", requirements: "불라불라")
             ReadShortcutContentView(shortcut: shortcut)
+
             Button(action: {
                 if let url = URL(string: shortcut.downloadLink[0]) {
                     openURL(url)
@@ -45,6 +47,9 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+        
+        // TODO: 테스트플라이트에서는 빠지는 내용이라 주석처리해둠
+        /*
         .navigationBarItems(trailing: Menu(content: {
             if isMyShortcut {
                 myShortcutMenuSection
@@ -54,6 +59,7 @@ struct ReadShortcutView: View {
         }, label: {
             Image(systemName: "ellipsis")
         }))
+         */
     }
 }
 
