@@ -90,6 +90,7 @@ struct WriteShortcutTitleView: View {
                                          content: $shortcutName,
                                          isValid: $isNameValid
                 )
+                .onAppear(perform : UIApplication.shared.hideKeyboard)
                 .padding(.top, 30)
                 
                 ValidationCheckTextField(textType: .mandatory,
