@@ -11,4 +11,6 @@ enum SectionType: String {
     case download = "다운로드 순위"
     case popular = "사랑받는 단축어"
     case myShortcut = "내 단축어"
+    case myLovingShortcut = "좋아요한 단축어"
+    case myDownloadShortcut = "다운로드한 단축어"
 }
