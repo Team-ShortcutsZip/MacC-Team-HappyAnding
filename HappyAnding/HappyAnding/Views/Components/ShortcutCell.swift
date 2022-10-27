@@ -87,7 +87,7 @@ struct ShortcutCell: View {
             Rectangle()
                 .fill(Color.fetchGradient(color: shortcut.color))
                 .cornerRadius(8)
-                .frame(width: 50, height: 50)
+                .frame(width: 52, height: 52)
             
             Image(systemName: shortcut.sfSymbol)
                 .foregroundColor(.white)

@@ -9,7 +9,7 @@ import Foundation
 
 // TODO: Shortcuts -> Shortcut으로 이름 변경 필요
 
-struct Shortcuts: Identifiable, Codable {
+struct Shortcuts: Identifiable, Codable, Equatable {
     var id = UUID().uuidString
     var sfSymbol: String
     var color: String
