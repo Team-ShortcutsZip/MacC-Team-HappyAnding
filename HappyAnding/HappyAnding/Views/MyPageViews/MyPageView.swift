@@ -9,6 +9,10 @@ import SwiftUI
 
 struct MyPageView: View {
     
+    @State var userInformation: User? = nil
+
+    let firebase = FirebaseService()
+    
     var userName: String
     var userEmail: String
     
@@ -56,16 +60,18 @@ struct MyPageView: View {
                     
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
-                    MyShortcutCardListView()
-                    UserCurationListView(userCurations: userCurations)
+                    MyShortcutCardListView(shortcuts: userInformation?.myShortcuts?.sorted(by: { $0.date > $1.date }) ?? nil)
+                    UserCurationListView(userCurations: userInformation?.myCuration?.sorted(by: { $0.dateTime > $1.dateTime}) ?? nil)
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
-                        shortcuts: Shortcut.fetchData(number: 5),
-                        title: "좋아요한 단축어"
+                        shortcuts: userInformation?.likeShortcuts,
+//                        shortcuts: Shortcut.fetchData(number: 5),
+                        type: .popular
                     )
                     MyPageShortcutList(
-                        shortcuts: Shortcut.fetchData(number: 5),
-                        title: "다운로드한 단축어"
+                        shortcuts: userInformation?.downloadedShortcut,
+//                        shortcuts: Shortcut.fetchData(number: 5),
+                        type: .download
                     )
                     .padding(.bottom, 44)
                     
@@ -85,26 +91,35 @@ struct MyPageView: View {
             .scrollIndicators(.hidden)
             .background(Color.Background)
         }
+        .onAppear {
+            firebase.fetchUserShortcut(userID: "6466A6C2-DB18-4274-B9C7-9F1EE0C79288") { user in
+                userInformation = user
+                print(user.myShortcuts?.sorted(by: { $0.date > $1.date }) as Any)
+            }
+        }
     }
 }
 
 struct MyPageShortcutList: View {
-    var shortcuts: [Shortcut]
-    var title: String
+    var shortcuts: [Shortcuts]?
+    var type: SectionType
     var body: some View {
         VStack(spacing: 0) {
-            MyPageListHeader(title: title)
+            MyPageListHeader(type: type, shortcuts: shortcuts)
                 .padding(.horizontal, 16)
-            ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                if index < 3 {
-                    NavigationLink(destination: ReadShortcutView()) {
-                        ShortcutCell(color: shortcut.color,
-                                     sfSymbol: shortcut.sfSymbol,
-                                     name: shortcut.name,
-                                     description: shortcut.description,
-                                     numberOfDownload: shortcut.numberOfDownload,
-                                     downloadLink: shortcut.downloadLink
-                        )
+            if let shortcuts {
+                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                    if index < 3 {
+                        NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+//                            ShortcutCell(color: shortcut.color,
+//                                         sfSymbol: shortcut.sfSymbol,
+//                                         name: shortcut.title,
+//                                         description: shortcut.description,
+//                                         numberOfDownload: shortcut.numberOfDownload,
+//                                         downloadLink: shortcut.downloadLink[shortcut.downloadLink.count - 1]
+//                            )
+                            ShortcutCell(shortcut: shortcut)
+                        }
                     }
                 }
             }
@@ -113,15 +128,16 @@ struct MyPageShortcutList: View {
 }
 
 struct MyPageListHeader: View {
-    var title: String
+    var type: SectionType
+    let shortcuts: [Shortcuts]?
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(title)
+            Text(type.rawValue)
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView()) {
+            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
