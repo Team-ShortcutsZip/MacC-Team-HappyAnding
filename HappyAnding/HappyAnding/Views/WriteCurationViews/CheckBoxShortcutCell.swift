@@ -11,12 +11,14 @@ struct CheckBoxShortcutCell: View {
     
     @State var isShortcutTapped: Bool = false
     @Binding var numberOfSelected: Int
-    @Binding var selectedShortcut: [String]
+    @Binding var selectedShortcut: [Shortcuts]
     
-    let color: String
-    let sfSymbol: String
-    let name: String
-    let description: String
+//    let color: String
+//    let sfSymbol: String
+//    let name: String
+//    let description: String
+    
+    let shortcut: Shortcuts
     
     var body: some View {
         
@@ -40,14 +42,14 @@ struct CheckBoxShortcutCell: View {
                 
                 // TODO: 현재는 name을 기준으로 검색중, id로 검색해서 삭제해야함 / Shortcuts 자체를 배열에 저장해야함
                 
-                if let index = selectedShortcut.firstIndex(of: name) {
+                if let index = selectedShortcut.firstIndex(of: shortcut) {
                     selectedShortcut.remove(at: index)
                 }
             }
             else {
                 isShortcutTapped = true
                 numberOfSelected += 1
-                selectedShortcut.append(name)
+                selectedShortcut.append(shortcut)
             }
         }
         .padding(.top, 0)
@@ -64,11 +66,11 @@ struct CheckBoxShortcutCell: View {
         
         ZStack(alignment: .center) {
             Rectangle()
-                .fill(Color.fetchGradient(color: color))
+                .fill(Color.fetchGradient(color: shortcut.color))
                 .cornerRadius(8)
                 .frame(width: 52, height: 52)
             
-            Image(systemName: sfSymbol)
+            Image(systemName: shortcut.sfSymbol)
                 .foregroundColor(.white)
         }
         .padding(.leading, 12)
@@ -77,11 +79,11 @@ struct CheckBoxShortcutCell: View {
     var shortcutInfo: some View {
         
         VStack(alignment: .leading, spacing: 4) {
-            Text(name)
+            Text(shortcut.title)
                 .Headline()
                 .foregroundColor(.Gray5)
                 .lineLimit(1)
-            Text(description)
+            Text(shortcut.description)
                 .Footnote()
                 .foregroundColor(.Gray3)
                 .lineLimit(2)

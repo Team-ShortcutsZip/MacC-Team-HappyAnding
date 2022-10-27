@@ -14,6 +14,11 @@ struct WriteCurationInfoView: View {
     @State var isValidTitle = false
     @State var isValidDescription = false
     
+    let firebase = FirebaseService()
+    var shortcuts: [Shortcuts]
+    
+    @Binding var isWriting: Bool
+    
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
     }
@@ -29,7 +34,7 @@ struct WriteCurationInfoView: View {
                                      lengthLimit: 20,
                                      content: $title,
                                      isValid: $isValidTitle)
-                .padding(.top, 36)
+                .padding(.top, 12)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: true,
@@ -43,7 +48,19 @@ struct WriteCurationInfoView: View {
                 .frame(maxHeight: .infinity)
             
             Button(action: {
-                print(title, description)
+                let curation = Curation(
+                    title: self.title,
+                    subtitle: self.description,
+                    dateTime: "",
+                    idAdmin: false,
+                    background: "White",
+                    author: "testUser",
+                    shortcuts: shortcuts
+                )
+                
+                firebase.setData(model: curation)
+                
+                isWriting.toggle()
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -59,8 +76,8 @@ struct WriteCurationInfoView: View {
     }
 }
 
-struct WriteCurationInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteCurationInfoView()
-    }
-}
+//struct WriteCurationInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WriteCurationInfoView()
+//    }
+//}
