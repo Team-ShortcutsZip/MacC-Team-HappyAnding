@@ -10,7 +10,7 @@ import SwiftUI
 struct CurationListView: View {
     
     var curationListTitle: String
-    var userCurations: [UserCuration]
+    var userCurations: [Curation]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -22,8 +22,9 @@ struct CurationListView: View {
                     if index < 2 {
                         UserCurationCell(
                             title: curation.title,
-                            subtitle: curation.subtitle,
-                            shortcuts: curation.shortcuts
+                            subtitle: curation.subtitle ?? "",
+                            shortcuts: curation.shortcuts,
+                            curation: curation
                         )
                     }
                 }
@@ -53,8 +54,8 @@ struct CurationListHeader: View {
 }
 
 
-struct CurationListView_Previews: PreviewProvider {
-    static var previews: some View {
-        CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: UserCuration.fetchData(number: 5))
-    }
-}
+//struct CurationListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: UserCuration.fetchData(number: 5))
+//    }
+//}

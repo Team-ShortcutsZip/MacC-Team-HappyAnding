@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ExploreCurationView: View {
+    
+    let firebase = FirebaseService()
+    @State var userCurations: [Curation] = []
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -17,10 +21,10 @@ struct ExploreCurationView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
-                    UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
+                    UserCurationListView(userCurations: userCurations)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션
-                    CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: UserCuration.fetchData(number: 5))
+                    CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: userCurations)
                 }
                 .padding(.bottom, 32)
             }
