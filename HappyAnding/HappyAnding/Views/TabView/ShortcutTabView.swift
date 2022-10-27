@@ -10,7 +10,10 @@ import SwiftUI
 struct ShortcutTabView: View {
     
     init() {
-        UITabBar.appearance().backgroundColor = UIColor(Color.White)
+        UITabBar.appearance().barTintColor = UIColor(Color.White)
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
+        UITabBar.appearance().layer.borderColor = UIColor(Color.Gray1).cgColor
+     //   UITabBar.appearance().clipsToBounds = true
         Theme.navigationBarColors()
     }
     

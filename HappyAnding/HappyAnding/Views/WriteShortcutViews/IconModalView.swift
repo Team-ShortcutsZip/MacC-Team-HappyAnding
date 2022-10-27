@@ -109,7 +109,7 @@ struct IconModalView: View {
             Spacer()
             
             Button(action: {
-                isShowingIconModal = false
+                isShowingIconModal = false 
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
