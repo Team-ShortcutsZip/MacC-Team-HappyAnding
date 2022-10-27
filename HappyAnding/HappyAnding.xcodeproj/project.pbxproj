@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
 		87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */; };
 		87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C6F28F94EA6009B691F /* ShortcutTabView.swift */; };
 		87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		3D41EE06290A458B008BE986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		87E99C6A28F94EA6009B691F /* HappyAnding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyAnding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyAndingApp.swift; sourceTree = "<group>"; };
 		87E99C6F28F94EA6009B691F /* ShortcutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTabView.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				87E99C9D28FFF207009B691F /* MyPageViews */,
 				F956C9F82903F87200C17621 /* ShortcutTestModel.swift */,
 				F9914527290850370046986E /* TestUserCurationListView.swift */,
+				3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 			files = (
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
 				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
+				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 				F94B43582907AE0400987819 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -743,6 +747,8 @@
 				INFOPLIST_FILE = HappyAnding/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -771,6 +777,8 @@
 				INFOPLIST_FILE = HappyAnding/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
