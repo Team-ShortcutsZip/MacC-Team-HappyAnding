@@ -101,19 +101,17 @@ struct ValidationCheckTextField: View {
     }
     
     var oneLineEditor: some View {
-        TextField(placeholder, text: $content, onEditingChanged: { _ in
-            self.strokeColor = Color.Gray5
-        })
-        .Body2()
-        .padding(16)
-        .onAppear {
-            checkValidation()
-        }
-        .onSubmit {
-            checkValidation()
-        }
-        .onChange(of: content, perform: {_ in
-            checkValidation()
+        TextField(placeholder, text: $content)
+            .Body2()
+            .padding(16)
+            .onAppear {
+                checkValidation()
+            }
+            .onSubmit {
+                checkValidation()
+            }
+            .onChange(of: content, perform: {_ in
+                checkValidation()
         })
     }
     

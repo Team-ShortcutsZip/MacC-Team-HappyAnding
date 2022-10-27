@@ -26,8 +26,9 @@ struct WriteShortcutTitleView: View {
                     Button(action: {
                         isWriting.toggle()
                     }, label: {
-                        Text("\(Image(systemName: "chevron.left")) Back")
-                            .font(.body)
+                        Image(systemName: "chevron.backward")
+                            .Title2()
+                            .foregroundColor(.Gray4)
                     })
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -89,6 +90,7 @@ struct WriteShortcutTitleView: View {
                                          content: $shortcutName,
                                          isValid: $isNameValid
                 )
+                .onAppear(perform : UIApplication.shared.hideKeyboard)
                 .padding(.top, 30)
                 
                 ValidationCheckTextField(textType: .mandatory,
@@ -124,9 +126,8 @@ struct WriteShortcutTitleView: View {
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
-        .navigationTitle("단축어 등록")
-        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
