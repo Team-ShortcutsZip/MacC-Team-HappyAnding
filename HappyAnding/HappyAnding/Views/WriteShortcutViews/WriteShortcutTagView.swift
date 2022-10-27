@@ -134,7 +134,7 @@ struct WriteShortcutTagView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(relatedApps, id:\.self) { item in
-                        TagCell(item: item, items: $relatedApps)
+                        RelatedAppTag(item: item, items: $relatedApps)
                     }
                     
                     if isTextFieldShowing {
@@ -188,7 +188,7 @@ struct WriteShortcutTagView: View {
         }
     }
     
-    struct TagCell: View {
+    struct RelatedAppTag: View {
         var item: String
         @Binding var items: [String]
         
