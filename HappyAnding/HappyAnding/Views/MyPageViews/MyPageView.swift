@@ -66,12 +66,12 @@ struct MyPageView: View {
                     MyPageShortcutList(
                         shortcuts: userInformation?.likeShortcuts,
 //                        shortcuts: Shortcut.fetchData(number: 5),
-                        type: .popular
+                        type: .myLovingShortcut
                     )
                     MyPageShortcutList(
                         shortcuts: userInformation?.downloadedShortcut,
 //                        shortcuts: Shortcut.fetchData(number: 5),
-                        type: .download
+                        type: .myDownloadShortcut
                     )
                     .padding(.bottom, 44)
                     
@@ -137,7 +137,7 @@ struct MyPageListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts)) {
+            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, sectionType: type)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)

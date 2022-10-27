@@ -24,18 +24,19 @@ struct ReadAdminCurationView: View {
     
     //TODO: 큐레이션 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
     @ObservedObject var shortcutData = fetchData()
-    var shortcuts: [Shortcuts]?
+    let curation: Curation
+//    var shortcuts: [Shortcuts]?
     
-    let title: String = "워라벨 지키기, 단축어와 함께"
-    let subtitle: String = "워라벨을 알차게 지키고 있는 에디터도 애용하고 있는 단축어 모음."
-    let curationThumbnail: String = "adminCurationTestImage"
+//    let title: String = "워라벨 지키기, 단축어와 함께"
+//    let subtitle: String = "워라벨을 알차게 지키고 있는 에디터도 애용하고 있는 단축어 모음."
+//    let curationThumbnail: String = "adminCurationTestImage"
     
     var body: some View {
         ScrollView {
             GeometryReader { geo in
                 let yOffset = geo.frame(in: .global).minY
                 
-                Image(curationThumbnail)
+                Image(curation.background)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: geo.size.width, height: 304 + (yOffset > 0 ? yOffset : 0))
@@ -48,8 +49,8 @@ struct ReadAdminCurationView: View {
             titleAndSubtitle
                 .padding(.bottom, 8)
             
-            if let shortcuts {
-                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+            ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
                     ShortcutCell(shortcut: shortcut)
                 }
             }
@@ -76,7 +77,7 @@ struct ReadAdminCurationView: View {
     
     ///최상단의 썸네일 이미지 영역입니다.
     var curationThumbnailImage: some View {
-        Image(curationThumbnail)
+        Image(curation.background)
             .resizable()
             .frame(height:304)
     }
@@ -85,10 +86,10 @@ struct ReadAdminCurationView: View {
     var titleAndSubtitle: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text(title)
+                Text(curation.title)
                     .Title2()
                     .foregroundColor(.Gray5)
-                Text(subtitle)
+                Text(curation.subtitle ?? "")
                     .Body2()
                     .foregroundColor(.Gray4)
             }

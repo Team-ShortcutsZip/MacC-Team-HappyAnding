@@ -14,11 +14,11 @@ struct CurationListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            CurationListHeader(title: curationListTitle)
+            CurationListHeader(userCurations: userCurations, type: .userCuration, title: curationListTitle)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                NavigationLink(destination: ReadAdminCurationView()) {
+                NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
                     if index < 2 {
                         UserCurationCell(
                             title: curation.title,
@@ -36,6 +36,8 @@ struct CurationListView: View {
 }
 
 struct CurationListHeader: View {
+    var userCurations: [Curation]
+    var type: CurationType
     var title: String
     var body: some View {
         HStack(alignment: .bottom) {
@@ -44,7 +46,7 @@ struct CurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ExploreCurationView()) {
+            NavigationLink(destination: ListCurationView(userCurations: userCurations, type: type, title: title)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)

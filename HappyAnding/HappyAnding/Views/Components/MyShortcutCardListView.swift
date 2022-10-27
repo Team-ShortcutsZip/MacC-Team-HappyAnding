@@ -45,7 +45,7 @@ struct MyShortcutCardListView: View {
 //                    NavigationLink(destination: {
 //                        WriteShortcutTitleView(isWriting: $isWriting)
 //                    }, label: {
-//                        
+//
 //                    })
 //                    .fullScreenCover(isPresented: $isWriting, content: {
 //                        WriteShortcutTitleView(isWriting: self.$isWriting)

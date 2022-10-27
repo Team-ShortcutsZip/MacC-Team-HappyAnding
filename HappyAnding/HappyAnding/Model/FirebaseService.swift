@@ -231,6 +231,60 @@ class FirebaseService {
             }
     }
     
+    //모든 admin 큐레이션을 가져오는 함수
+    func fetchAdminCuration(completionHandler: @escaping ([Curation])->()) {
+        var curations: [Curation] = []
+        
+        db.collection("Curation")
+            .whereField("idAdmin", isEqualTo: true )
+            .getDocuments() { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let curation = try decoder.decode(Curation.self, from: jsonData)
+                        curations.append(curation)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(curations)
+            }
+        }
+    }
+    
+    //내 큐레이션을 가져오는 함수 -> id 값 저장을 안해서 author를 기준으로 가져오기
+    func fetchMyCuration(author: String, completionHandler: @escaping ([Curation])->()) {
+        var curations: [Curation] = []
+        
+        db.collection("Curation")
+            .whereField("author", isEqualTo: author )
+            .getDocuments() { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let curation = try decoder.decode(Curation.self, from: jsonData)
+                        curations.append(curation)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(curations)
+            }
+        }
+    }
+    
     // TODO: 단축어 다운로드 정보 저장
     // TODO: UserID의 경우, Userdefault에 저장된 값을 가져오는 것으로 대체
     
