@@ -9,11 +9,11 @@ import SwiftUI
 
 struct UserCurationListView: View {
     
-    var userCurations: [UserCuration]
+    var userCurations: [Curation]?
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(title: "나의 큐레이션")
+            UserCurationListHeader(title: "나의 큐레이션", userCurations: userCurations)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             NavigationLink(destination: WriteCurationInfoView()){
@@ -49,6 +49,7 @@ struct UserCurationListView: View {
 
 struct UserCurationListHeader: View {
     var title: String
+    var userCurations: [Curation]?
     var body: some View {
         HStack(alignment: .bottom) {
             Text(title)
@@ -56,17 +57,19 @@ struct UserCurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ExploreCurationView()) {
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+            if let userCurations {
+                NavigationLink(destination: ListCurationView(userCurations: userCurations, type: CurationType.myCuration)) {
+                    Text("더보기")
+                        .Footnote()
+                        .foregroundColor(.Gray4)
+                }
             }
         }
     }
 }
 
-struct UserCurationListView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
-    }
-}
+//struct UserCurationListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
+//    }
+//}

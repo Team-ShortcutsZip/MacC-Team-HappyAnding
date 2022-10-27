@@ -49,7 +49,7 @@ extension View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Body1, lineHeight: 22))
     }
     func Body2() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Body2, lineHeight: 22))
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Body2, lineHeight: 20))
     }
     func Subtitle() -> some View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Subtitle, lineHeight: 20))
