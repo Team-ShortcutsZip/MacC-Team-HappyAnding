@@ -33,14 +33,23 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    Button(action: {
+                    Button {
                         isWriting.toggle()
-                    }, label: {
+                    } label: {
                         AddMyShortcutCardView()
                     }
                     .fullScreenCover(isPresented: $isWriting, content: {
                         WriteShortcutTitleView(isWriting: self.$isWriting)
                     })
+
+//                    Button(action: {
+//                        isWriting.toggle()
+//                    }, label: {
+//                        AddMyShortcutCardView()
+//                    }
+//                    .fullScreenCover(isPresented: $isWriting, content: {
+//                        WriteShortcutTitleView(isWriting: self.$isWriting)
+//                    })
 
 //                    NavigationLink(destination: {
 //                        WriteShortcutTitleView(isWriting: $isWriting)
