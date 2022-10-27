@@ -41,7 +41,8 @@ struct ListCurationView: View {
                 UserCurationCell(
                     title: curation.title,
                     subtitle: curation.subtitle ?? "",
-                    shortcuts: curation.shortcuts
+                    shortcuts: curation.shortcuts,
+                    curation: curation
                 )
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ReadUserCurationView: View {
-    var userCuration: UserCuration
-    let nickName: String
+    var userCuration: Curation
+//    let nickName: String
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -21,19 +21,20 @@ struct ReadUserCurationView: View {
                 VStack{
                     userInformation
                         .padding(.bottom, 22)
-                    UserCurationCell(title: userCuration.title, subtitle: userCuration.subtitle, shortcuts: userCuration.shortcuts)
+                    UserCurationCell(title: userCuration.title, subtitle: userCuration.subtitle ?? "", shortcuts: userCuration.shortcuts, curation: userCuration)
                         .padding(.bottom, 12)
                 }
             }
             ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView()) {
+                NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
                     ShortcutCell(
-                        color: shortcut.color,
-                        sfSymbol: shortcut.sfSymbol,
-                        name: shortcut.name,
-                        description: shortcut.description,
-                        numberOfDownload: shortcut.numberOfDownload,
-                        downloadLink: shortcut.downloadLink
+//                        color: shortcut.color,
+//                        sfSymbol: shortcut.sfSymbol,
+//                        name: shortcut.name,
+//                        description: shortcut.description,
+//                        numberOfDownload: shortcut.numberOfDownload,
+//                        downloadLink: shortcut.downloadLink
+                        shortcut: shortcut
                     )
                     .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
                 }
@@ -53,7 +54,7 @@ struct ReadUserCurationView: View {
                     .background(Color.Gray3)
                     .clipShape(Circle())
                 
-                Text(nickName)
+                Text(userCuration.author)
                     .Headline()
                     .foregroundColor(.Gray4)
                 
@@ -82,8 +83,8 @@ struct ReadUserCurationView: View {
     }
 }
 
-struct ReadUserCurationView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadUserCurationView(userCuration: UserCuration.fetchData(number: 1)[0], nickName: "test")
-    }
-}
+//struct ReadUserCurationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReadUserCurationView(userCuration: UserCuration.fetchData(number: 1)[0], nickName: "test")
+//    }
+//}

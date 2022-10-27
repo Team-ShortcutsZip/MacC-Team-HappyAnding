@@ -13,12 +13,13 @@ struct UserCurationCell: View {
     //title, subtitle, [단축어모델]을 가지는 객체를 받아옴
     let title: String
     let subtitle: String
-    let shortcuts: [ShortcutCellModel]
+    let shortcuts: [Shortcuts]
+    let curation: Curation
     
     var body: some View {
         ZStack {
             //TODO: userCuration 모델에 nickname 파라미터 통합 필요
-            NavigationLink(destination: ReadUserCurationView(userCuration: UserCuration.fetchData(number: 1)[0], nickName: "test")) {
+            NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
                 EmptyView()
             }.opacity(0)
             VStack (alignment: .leading, spacing: 0) {
