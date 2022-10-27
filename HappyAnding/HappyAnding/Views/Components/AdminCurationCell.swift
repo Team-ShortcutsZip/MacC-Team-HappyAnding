@@ -29,20 +29,21 @@ struct AdminCurationCell: View {
     let cornerRadius: CGFloat = 12
     
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack(alignment: .bottom) {
             NavigationLink(destination: ReadAdminCurationView()) {
                 EmptyView()
             }
+            backgroundImage
             titleAndSubtitle
                 .padding([.horizontal, .bottom], 24)
-                .padding(.top, 184)
-                .background(backgroundImage)
         }
+        .frame(width: UIScreen.main.bounds.width-32, height: 284)
         .padding(.trailing, 8.0)
     }
     
+    ///타이틀 및 설명
     var titleAndSubtitle: some View {
-        HStack {
+        HStack(alignment: .bottom) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .Title1()
@@ -57,6 +58,8 @@ struct AdminCurationCell: View {
         }
     }
     
+    
+    ///백그라운드 이미지
     var backgroundImage: some View {
         ZStack {
             Image(curationThumbnail)
@@ -66,6 +69,7 @@ struct AdminCurationCell: View {
                 .foregroundColor(.white)
                 .opacity(0.4)
         }
+        .frame(height: 284)
     }
 }
 
@@ -73,9 +77,7 @@ struct AdminCurationCell_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생ㅋ", subtitle: "워라밸도 중요해요")
-                .padding(.all, 16.0)
             AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
-                .padding(.all, 16.0)
         }
     }
 }
