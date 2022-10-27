@@ -30,16 +30,17 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-            
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    //TODO: 데이터 변경 필요
                     if let curation {
-                        NavigationLink(destination: ReadAdminCurationView()) {
+                        NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
                             if index < 2 {
                                 UserCurationCell(
                                     title: curation.title,
                                     subtitle: curation.subtitle ?? "",
-                                    shortcuts: curation.shortcuts
+                                    shortcuts: curation.shortcuts,
+                                    curation: curation
                                 )
                             }
                         }

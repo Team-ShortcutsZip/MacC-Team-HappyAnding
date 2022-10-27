@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyShortcutCardListView: View {
+    
     @State var isWriting = false
 //    let shortcuts = Shortcut.fetchData(number: 15)
     var shortcuts: [Shortcuts]?
@@ -32,8 +33,8 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    Button(action: {
-                        isWriting.toggle()
+                    NavigationLink(destination: {
+                        WriteShortcutTitleView(isWriting: $isWriting)
                     }, label: {
                         AddMyShortcutCardView()
                     })

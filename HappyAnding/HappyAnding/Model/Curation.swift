@@ -15,7 +15,9 @@ struct Curation: Identifiable, Codable {
     var dateTime: String
     var idAdmin: Bool
     var background: String
-    var shortcuts: [ShortcutCellModel]
+//    var shortcuts: [ShortcutCellModel]
+    var author: String
+    var shortcuts: [Shortcuts]
     
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()
