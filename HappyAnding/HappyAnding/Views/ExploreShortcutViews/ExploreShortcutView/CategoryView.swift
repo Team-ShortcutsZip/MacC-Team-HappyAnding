@@ -32,7 +32,7 @@ struct CategoryView: View {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
                         NavigationLink(destination: {
-                            ExploreCategoryView(category: value)
+                            ExploreCategoryView(category: value, shortcuts: shortcuts)
                                 .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                         }, label: {
                             CategoryCellView(categoryName: translateName(value.rawValue))
