@@ -26,8 +26,9 @@ struct WriteShortcutTitleView: View {
                     Button(action: {
                         isWriting.toggle()
                     }, label: {
-                        Text("\(Image(systemName: "chevron.left")) Back")
-                            .font(.body)
+                        Image(systemName: "chevron.backward")
+                            .Title2()
+                            .foregroundColor(.Gray4)
                     })
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
