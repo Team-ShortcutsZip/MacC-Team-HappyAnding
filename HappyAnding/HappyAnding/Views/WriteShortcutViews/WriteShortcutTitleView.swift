@@ -124,9 +124,8 @@ struct WriteShortcutTitleView: View {
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
-        .navigationTitle("단축어 등록")
-        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
