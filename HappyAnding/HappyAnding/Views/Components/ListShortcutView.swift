@@ -163,7 +163,8 @@ struct ListShortcutView: View {
     private func getDescriptions(_ sectionType: SectionType) -> String {
         switch sectionType {
         case .download:
-            return self.categoryName?.fetchDescription() ?? "" + "1위 ~ 100위"
+//            return self.categoryName?.translateName() ?? "" + "1위 ~ 100위"
+            return "\(self.categoryName?.translateName() ?? "") 1위 ~ 100위"
         case .popular:
             return "💡 최근 2주간 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
         case .myShortcut:

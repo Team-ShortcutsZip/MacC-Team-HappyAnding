@@ -69,7 +69,7 @@ struct WriteShortcutTagView: View {
                 
                 print(iconColor, iconSymbol, shortcutName, shortcutLink, onelineDescription, multiLineDescription, selectedCategories, relatedApps, requirements)
                 
-                let shortcut = Shortcuts(sfSymbol: iconSymbol, color: iconColor, title: shortcutName, subtitle: onelineDescription, description: multiLineDescription, category: selectedCategories, requiredApp: relatedApps, date: "", numberOfLike: 0, numberOfDownload: 0, author: "testUser", downloadLink: [shortcutLink])
+                let shortcut = Shortcuts(sfSymbol: iconSymbol, color: iconColor, title: shortcutName, subtitle: onelineDescription, description: multiLineDescription, category: selectedCategories, requiredApp: relatedApps, date: "", numberOfLike: 0, numberOfDownload: 0, author: "testUser", shortcutRequirements: requirements, downloadLink: [shortcutLink])
                 
                 firebase.setData(model: shortcut)
                 
@@ -176,7 +176,7 @@ struct WriteShortcutTagView: View {
         
         var body: some View {
             HStack {
-                Text(Category.withLabel(item)!.rawValue)
+                Text(Category.withLabel(item)!.translateName())
                 
                 Button(action: {
                     items.removeAll { $0 == item }

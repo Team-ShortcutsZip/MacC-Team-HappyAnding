@@ -92,12 +92,13 @@ class FirebaseService {
     }
     
     
-    // MARK: UserID를 이용해서 해당 유저 정보 리턴하는 함수
+    // MARK: author를 이용해서 해당 유저 정보 리턴하는 함수
+    // TODO: 추후 userID 를 이용하도록 변경 필요
     
     func fetchUserShortcut(userID: String, completionHandler: @escaping (User)->()) {
         
         db.collection("User")
-            .whereField("id", isEqualTo: userID)
+            .whereField("author", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
                 print("Error getting documents: \(error)")
@@ -115,6 +116,91 @@ class FirebaseService {
                         print("error: \(error)")
                     }
                 }
+            }
+        }
+    }
+    
+    //Shortcut 중에서 author가 testUser인 단축어만 가져오는 함수
+    func fetchShortcutByAuthor(author: String, completionHandler: @escaping ([Shortcuts])->()) {
+        
+        var shortcuts: [Shortcuts] = []
+        
+        db.collection("Shortcut")
+            .whereField("author", isEqualTo: author)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        shortcuts.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(shortcuts)
+            }
+        }
+    }
+    
+    func fetchUserShortcutByOrder(author: String, orderBy: String, completionHandler: @escaping ([Shortcuts])->()) {
+        var shortcuts: [Shortcuts] = []
+        
+        db.collection("Shortcut")
+            .whereField("author", isEqualTo: author)
+            .order(by: orderBy, descending: true)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            shortcuts.append(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(shortcuts)
+                    print(shortcuts)
+                }
+            }
+    }
+    
+    func fetchCurationByAuthor (author: String, completionHandler: @escaping ([Curation])->()) {
+        
+        var curations: [Curation] = []
+        
+        db.collection("Curation")
+            .whereField("author", isEqualTo: author)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let curation = try decoder.decode(Curation.self, from: jsonData)
+                        curations.append(curation)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(curations)
             }
         }
     }

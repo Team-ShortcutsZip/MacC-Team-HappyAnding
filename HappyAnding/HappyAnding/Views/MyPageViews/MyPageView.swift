@@ -16,8 +16,11 @@ struct MyPageView: View {
     var userName: String
     var userEmail: String
     
-    var userShortcuts = Shortcut.fetchData(number: 5)
-    var userCurations = UserCuration.fetchData(number: 10)
+//    var userShortcuts = Shortcut.fetchData(number: 5)
+//    var userCurations = UserCuration.fetchData(number: 10)
+    
+    @State var shortcutsByUser: [Shortcuts] = []
+    @State var curationsByUser: [Curation] = []
     
     var body: some View {
         NavigationView {
@@ -60,17 +63,15 @@ struct MyPageView: View {
                     
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
-                    MyShortcutCardListView(shortcuts: userInformation?.myShortcuts?.sorted(by: { $0.date > $1.date }) ?? nil)
-                    UserCurationListView(userCurations: userInformation?.myCuration?.sorted(by: { $0.dateTime > $1.dateTime}) ?? nil)
+                    MyShortcutCardListView(shortcuts: shortcutsByUser)
+                    UserCurationListView(userCurations: curationsByUser)
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
                         shortcuts: userInformation?.likeShortcuts,
-//                        shortcuts: Shortcut.fetchData(number: 5),
                         type: .myLovingShortcut
                     )
                     MyPageShortcutList(
                         shortcuts: userInformation?.downloadedShortcut,
-//                        shortcuts: Shortcut.fetchData(number: 5),
                         type: .myDownloadShortcut
                     )
                     .padding(.bottom, 44)
@@ -92,9 +93,11 @@ struct MyPageView: View {
             .background(Color.Background)
         }
         .onAppear {
-            firebase.fetchUserShortcut(userID: "6466A6C2-DB18-4274-B9C7-9F1EE0C79288") { user in
-                userInformation = user
-                print(user.myShortcuts?.sorted(by: { $0.date > $1.date }) as Any)
+            firebase.fetchShortcutByAuthor(author: "testUser") { shortcuts in
+                shortcutsByUser = shortcuts
+            }
+            firebase.fetchCurationByAuthor(author: "testUser") { curations in
+                curationsByUser = curations
             }
         }
     }

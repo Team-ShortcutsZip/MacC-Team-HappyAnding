@@ -34,7 +34,7 @@ struct ExploreCurationView: View {
             .background(Color.Background)
         }
         .onAppear() {
-            firebase.fetchMyCuration(author: "test") { curations in
+            firebase.fetchMyCuration(author: "testUser") { curations in
                 myCurations = curations
             }
             firebase.fetchCuration { curations in
