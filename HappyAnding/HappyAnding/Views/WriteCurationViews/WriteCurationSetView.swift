@@ -21,7 +21,7 @@ struct WriteCurationSetView: View {
     let firebase = FirebaseService()
     @State var shortcuts: [Shortcuts] = []
     
-    @State var isSelected = [Bool](repeating: false, count: 10)
+    @State var isSelected = false
     @State var selectedShortcut: [Shortcuts] = []
     
     var body: some View {
@@ -87,7 +87,7 @@ struct WriteCurationSetView: View {
     var shortcutList: some View {
         ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
             CheckBoxShortcutCell(
-                isShortcutTapped: isSelected[index],
+                isShortcutTapped: isSelected,
                 numberOfSelected: $numberOfSelected,
                 selectedShortcut: $selectedShortcut,
                 shortcut: shortcut

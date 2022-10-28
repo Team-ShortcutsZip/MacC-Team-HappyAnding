@@ -83,7 +83,7 @@ struct CheckBoxShortcutCell: View {
                 .Headline()
                 .foregroundColor(.Gray5)
                 .lineLimit(1)
-            Text(shortcut.description)
+            Text(shortcut.subtitle)
                 .Footnote()
                 .foregroundColor(.Gray3)
                 .lineLimit(2)
