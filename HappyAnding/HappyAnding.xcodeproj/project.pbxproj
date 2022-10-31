@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
 		4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D778A33290A53BA00C15AC4 /* Application+Extension.swift */; };
+		87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */; };
+		87E606B22910649B00C3DA13 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B12910649B00C3DA13 /* SignUpView.swift */; };
 		87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */; };
 		87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C6F28F94EA6009B691F /* ShortcutTabView.swift */; };
 		87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
@@ -91,6 +93,9 @@
 		3D41EE06290A458B008BE986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4D778A33290A53BA00C15AC4 /* Application+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Application+Extension.swift"; sourceTree = "<group>"; };
+		87E606AD2910623C00C3DA13 /* HappyAnding.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyAnding.entitlements; sourceTree = "<group>"; };
+		87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
+		87E606B12910649B00C3DA13 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		87E99C6A28F94EA6009B691F /* HappyAnding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyAnding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyAndingApp.swift; sourceTree = "<group>"; };
 		87E99C6F28F94EA6009B691F /* ShortcutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTabView.swift; sourceTree = "<group>"; };
@@ -180,6 +185,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		87E606AE291062D300C3DA13 /* SignInViews */ = {
+			isa = PBXGroup;
+			children = (
+				87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */,
+				87E606B12910649B00C3DA13 /* SignUpView.swift */,
+			);
+			path = SignInViews;
+			sourceTree = "<group>";
+		};
 		87E99C6128F94EA6009B691F = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +217,7 @@
 		87E99C6C28F94EA6009B691F /* HappyAnding */ = {
 			isa = PBXGroup;
 			children = (
+				87E606AD2910623C00C3DA13 /* HappyAnding.entitlements */,
 				3D41EE06290A458B008BE986 /* Info.plist */,
 				87E99CC22901454D009B691F /* Extensions */,
 				87E99C9828FFF1D2009B691F /* Views */,
@@ -263,6 +278,7 @@
 				87E99C9C28FFF1FE009B691F /* ExploreCurationViews */,
 				87E99C9928FFF1DE009B691F /* WriteCurationViews */,
 				87E99C9D28FFF207009B691F /* MyPageViews */,
+				87E606AE291062D300C3DA13 /* SignInViews */,
 				F956C9F82903F87200C17621 /* ShortcutTestModel.swift */,
 				F9914527290850370046986E /* TestUserCurationListView.swift */,
 				3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */,
@@ -541,6 +557,7 @@
 				4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
+				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
 				A04ACB0A29041CD8004A85A6 /* DownloadRankView.swift in Sources */,
 				87E99CD1290145DE009B691F /* PaletteView.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
@@ -565,6 +582,7 @@
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
 				F944DD442907B8C400B1AC5C /* FirebaseService.swift in Sources */,
+				87E606B22910649B00C3DA13 /* SignUpView.swift in Sources */,
 				87E99CEC29080C30009B691F /* Curation.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				87E99CEE29080D33009B691F /* User.swift in Sources */,
@@ -739,10 +757,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = HappyAnding/HappyAnding.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HappyAnding/Preview Content\"";
-				DEVELOPMENT_TEAM = HN3RL67C46;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HappyAnding/Info.plist;
@@ -775,10 +794,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = HappyAnding/HappyAnding.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HappyAnding/Preview Content\"";
-				DEVELOPMENT_TEAM = HN3RL67C46;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HappyAnding/Info.plist;
