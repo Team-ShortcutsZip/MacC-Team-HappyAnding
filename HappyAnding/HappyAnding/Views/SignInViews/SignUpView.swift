@@ -18,9 +18,8 @@ struct SignUpView: View {
             
             Spacer()
             
-            Image("AppIcon")
+            Image("logo")
                 .padding(.bottom, 28)
-                .frame(width: 128, height: 128)
             
             Text("ShortcutsZip")
                 .LargeTitle()
@@ -32,6 +31,9 @@ struct SignUpView: View {
             
             Spacer()
             
+            
+            // TODO: HiFi design 수정 시 색상 및 폰트 변경
+            
             Button(action: {
                 appleLogin()
             }, label: {
@@ -39,6 +41,7 @@ struct SignUpView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .padding(.horizontal, 16)
                         .frame(height: 52)
+                        .foregroundColor(.black)
                     
                     Text("\(Image(systemName: "applelogo")) 애플로 로그인")
                         .foregroundColor(.White)
