@@ -120,7 +120,7 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                     print(error.localizedDescription)
                     return
                 }
-                self.userAuth.login()
+                self.userAuth.signIn()
                 // User is signed in to Firebase with Apple.
                 // ...
             }

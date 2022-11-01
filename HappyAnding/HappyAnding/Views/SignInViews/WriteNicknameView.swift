@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct WriteNicknameView: View {
+    
+    
+    @EnvironmentObject var userAuth: UserAuth
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            .onTapGesture {
+                userAuth.signUp()
+            }
     }
 }
 

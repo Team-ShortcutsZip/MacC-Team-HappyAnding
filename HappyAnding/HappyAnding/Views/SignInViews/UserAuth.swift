@@ -14,14 +14,14 @@ class UserAuth: ObservableObject {
     
     static let shared = UserAuth()
     
-    func login() {
+    func signIn() {
         self.isLoggedIn = true
     }
     
     
     // TODO: Firebase로 user가 닉네임이 존재하는지 확인?
     
-    func verifyUser() {
+    func signUp() {
         self.isUser = true
     }
 }

@@ -21,7 +21,7 @@ struct ShortcutTabView: View {
     
     var body: some View {
         
-        if userAuth.isLoggedIn {
+        if userAuth.isUser {
             TabView {
                 ForEach(Tab.allCases, id: \.self) { tab in
                     tab.view
@@ -31,7 +31,11 @@ struct ShortcutTabView: View {
                 }
             }
         } else {
-            SignInWithAppleView()
+            if userAuth.isLoggedIn {
+                WriteNicknameView()
+            } else {
+                SignInWithAppleView()
+            }
         }
     }
 }
