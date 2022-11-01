@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ShortcutTabView: View {
     
+    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
+    
     init() {
         UITabBar.appearance().barTintColor = UIColor(Color.White)
         UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
@@ -24,6 +26,7 @@ struct ShortcutTabView: View {
                     .tabItem {
                         Label(tab.tabName, systemImage: tab.systemImage)
                     }
+                    .environmentObject(shortcutsZipViewModel)
             }
         }
     }

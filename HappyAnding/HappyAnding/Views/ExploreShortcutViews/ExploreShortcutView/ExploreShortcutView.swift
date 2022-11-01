@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ExploreShortcutView: View {
     let firebase = FirebaseService()
-    @State var shortcutsDownloadArray: [Shortcuts] = []
-    @State var shortcutLikedArray: [Shortcuts] = []
+  //  @State var shortcutsDownloadArray: [Shortcuts] = []
+  //  @State var shortcutLikedArray: [Shortcuts] = []
 //    @State var userInformation: User? = nil
     @State var shortcutByUser: [Shortcuts] = []
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     var body: some View {
         NavigationView {
@@ -21,23 +23,25 @@ struct ExploreShortcutView: View {
                     shortcuts: shortcutByUser)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
-                DownloadRankView(shortcuts: shortcutsDownloadArray)
+                DownloadRankView(shortcuts: shortcutsZipViewModel.sortedShortcutsByDownload())
                     .padding(.bottom, 32)
-                CategoryView(shortcuts: shortcutsDownloadArray)
+                CategoryView(shortcuts: shortcutsZipViewModel.sortedShortcutsByDownload())
                     .padding(.bottom, 32)
-                LovedShortcutView(shortcuts: shortcutLikedArray)
+                LovedShortcutView(shortcuts: shortcutsZipViewModel.sortedshortcutsByLike())
                     .padding(.bottom, 44)
             }
             .navigationTitle(Text("단축어 둘러보기"))
             .background(Color.Background)
         }
         .onAppear() {
+            /*
             firebase.fetchAllDownloadShortcut(orderBy: "numberOfDownload") { shortcuts in
                 shortcutsDownloadArray = shortcuts
             }
             firebase.fetchAllDownloadShortcut(orderBy: "numberOfLike") { shortcuts in
                 shortcutLikedArray = shortcuts
             }
+             */
             firebase.fetchShortcutByAuthor(author: "testUser") { user in
                 shortcutByUser = user
             }
