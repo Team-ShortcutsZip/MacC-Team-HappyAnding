@@ -9,11 +9,6 @@ import SwiftUI
 
 struct ExploreCurationView: View {
     
-    let firebase = FirebaseService()
-    //  @State var userCurations: [Curation] = []
-  //  @State var adminCurations: [Curation] = []
-    //  @State var myCurations: [Curation] = []
-    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     var body: some View {
@@ -76,8 +71,3 @@ struct adminCurationsFrameiew: View {
     }
 }
 
-//struct ExploreCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ExploreCurationView()
-//    }
-//}

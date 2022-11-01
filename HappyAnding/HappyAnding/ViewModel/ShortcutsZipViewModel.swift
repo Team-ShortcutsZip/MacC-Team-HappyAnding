@@ -11,13 +11,10 @@ import FirebaseFirestore
 import FirebaseAuth
 
 /*
- Curation View Model 작성
- Curation View Model 적용 (ExploreCurationView 위주)
- User View Model 작성
- User View Model 적용 (ExploreShortcutView, ExploreCurationView에서 필요한 뷰)
- ShortcutsZip View Mdoel 전체 적용 (MyPageView 위주)
- 
+    shortcutsZip 앱 내에서 각 뷰에 필요한 데이터를 전달하기위한 ViewModel Class 입니다.
+    * 해당 class 내부에 있는 함수의 자세한(?) 설명은 MARK를 참조해주세요 *
  */
+
 class ShortcutsZipViewModel: ObservableObject {
     
     @Published var shortcuts: [Shortcuts] = []
@@ -35,9 +32,9 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
-    //MARK: - 모든 Shortcut을 가져오는 함수
+    // MARK: - 파이어스토어에서 모든 Shortcut을 가져오는 함수
     
-    func fetchShortcut(model: String, completionHandler: @escaping ([Shortcuts])->()) {
+    private func fetchShortcut(model: String, completionHandler: @escaping ([Shortcuts])->()) {
         var shortcuts: [Shortcuts] = []
         
         db.collection(model).getDocuments() { (querySnapshot, error) in
@@ -77,9 +74,9 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
-    //MARK: - 모든 Curation을 가져오는 함수
+    //MARK: - 파이어스토어에서 모든 Curation을 가져오는 함수
     
-    func fetchCuration(completionHandler: @escaping ([Curation])->()) {
+    private func fetchCuration(completionHandler: @escaping ([Curation])->()) {
         var curations: [Curation] = []
         
         db.collection("Curation").getDocuments() { (querySnapshot, error) in
@@ -104,11 +101,15 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
+    // MARK: Curation 데이터에서 Admin Curation을 분류시키는 함수
+    
     func classifyAdminCuration() -> [Curation] {
         self.curations.filter {
             $0.isAdmin
         }
     }
+    
+    // MARK: Curation 데이터에서 User Curation을 분류시키는 함수
     
     func classifyUserCuration() -> [Curation] {
         self.curations.filter {

@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ExploreShortcutView: View {
+    
     let firebase = FirebaseService()
-  //  @State var shortcutsDownloadArray: [Shortcuts] = []
-  //  @State var shortcutLikedArray: [Shortcuts] = []
-//    @State var userInformation: User? = nil
+    
     @State var shortcutByUser: [Shortcuts] = []
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
@@ -34,14 +33,6 @@ struct ExploreShortcutView: View {
             .background(Color.Background)
         }
         .onAppear() {
-            /*
-            firebase.fetchAllDownloadShortcut(orderBy: "numberOfDownload") { shortcuts in
-                shortcutsDownloadArray = shortcuts
-            }
-            firebase.fetchAllDownloadShortcut(orderBy: "numberOfLike") { shortcuts in
-                shortcutLikedArray = shortcuts
-            }
-             */
             firebase.fetchShortcutByAuthor(author: "testUser") { user in
                 shortcutByUser = user
             }
