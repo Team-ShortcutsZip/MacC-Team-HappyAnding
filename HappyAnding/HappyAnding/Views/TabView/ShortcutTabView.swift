@@ -10,6 +10,7 @@ import SwiftUI
 struct ShortcutTabView: View {
     
     @EnvironmentObject var userAuth: UserAuth
+    @AppStorage("signInStatus") var signInStatus = false
     
     init() {
         UITabBar.appearance().barTintColor = UIColor(Color.White)
@@ -21,7 +22,7 @@ struct ShortcutTabView: View {
     
     var body: some View {
         
-        if userAuth.isUser {
+        if signInStatus {
             TabView {
                 ForEach(Tab.allCases, id: \.self) { tab in
                     tab.view
