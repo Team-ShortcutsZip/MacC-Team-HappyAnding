@@ -11,8 +11,10 @@ struct ReadShortcutView: View {
     
     @Environment(\.openURL) private var openURL
     @State var isMyShortcut: Bool = true
+    @State var isEdit = false
     
     // TODO: 상위 뷰에서 유저데이터와 단축어데이터를 전달받은 변수 생성
+    
     // shortcuts -> 추후 지워질 변수
 //    var shortcuts = Shortcut.fetchData(number: 3)
     var shortcut: Shortcuts
@@ -49,7 +51,7 @@ struct ReadShortcutView: View {
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         
         // TODO: 테스트플라이트에서는 빠지는 내용이라 주석처리해둠
-        /*
+        
         .navigationBarItems(trailing: Menu(content: {
             if isMyShortcut {
                 myShortcutMenuSection
@@ -59,18 +61,28 @@ struct ReadShortcutView: View {
         }, label: {
             Image(systemName: "ellipsis")
         }))
-         */
+        .fullScreenCover(isPresented: $isEdit) {
+            NavigationView {
+                WriteShortcutTitleView(isWriting: $isEdit, shortcut: shortcut, isEdit: true)
+            }
+        }
     }
 }
 
 extension ReadShortcutView {
     var myShortcutMenuSection: some View {
         Section {
+            
             Button(action: {
-                //Place something action here
+                isEdit.toggle()
             }) {
                 Label("편집", systemImage: "square.and.pencil")
             }
+            
+            
+            // TODO: 구현 필요
+            
+            /*
             Button(action: {
                 //Place something action here
             }) {
@@ -82,7 +94,9 @@ extension ReadShortcutView {
                 Label("삭제", systemImage: "trash.fill")
                     .foregroundColor(Color.red)
             }
+             */
         }
+        
     }
     
     var otherShortcutMenuSection: some View {

@@ -11,20 +11,13 @@ struct WriteShortcutTagView: View {
     
     let firebase = FirebaseService()
     
-    let iconColor: String
-    let iconSymbol: String
-    let shortcutName: String
-    let shortcutLink: String
-    let onelineDescription: String
-    let multiLineDescription: String
     @Binding var isWriting: Bool
-    
-    @State var selectedCategories = [String]()
-    @State var relatedApps = [String]()
-    @State var requirements = ""
     
     @State var isShowingCategoryModal = false
     @State var isRequirementValid = false
+    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [""], requiredApp: [""], date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    
+    let isEdit: Bool
     
     var body: some View {
         VStack {
@@ -42,7 +35,7 @@ struct WriteShortcutTagView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shortcut.category)
             
             Text("단축어 사용에 필요한 앱")
                 .Headline()
@@ -50,14 +43,14 @@ struct WriteShortcutTagView: View {
                 .foregroundColor(.Gray5)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            relatedAppList(relatedApps: $relatedApps)
+            relatedAppList(relatedApps: $shortcut.requiredApp)
             
             ValidationCheckTextField(textType: .optional,
                                      isMultipleLines: true,
                                      title: "단축어 사용을 위한 요구사항",
                                      placeholder: "단축어를 사용하기 위해서 필수적으로 요구되는 내용이 있다면, 작성해주세요",
                                      lengthLimit: 100,
-                                     content: $requirements,
+                                     content: $shortcut.shortcutRequirements,
                                      isValid: $isRequirementValid
             )
             
@@ -67,9 +60,7 @@ struct WriteShortcutTagView: View {
                 
                 // TODO: 새로운 단축어 생성 및 저장
                 
-                print(iconColor, iconSymbol, shortcutName, shortcutLink, onelineDescription, multiLineDescription, selectedCategories, relatedApps, requirements)
-                
-                let shortcut = Shortcuts(sfSymbol: iconSymbol, color: iconColor, title: shortcutName, subtitle: onelineDescription, description: multiLineDescription, category: selectedCategories, requiredApp: relatedApps, date: "", numberOfLike: 0, numberOfDownload: 0, author: "testUser", shortcutRequirements: requirements, downloadLink: [shortcutLink])
+                print(shortcut)
                 
                 firebase.setData(model: shortcut)
                 
@@ -77,19 +68,19 @@ struct WriteShortcutTagView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!selectedCategories.isEmpty && !relatedApps.isEmpty && isRequirementValid ? .Primary : .Gray1 )
+                        .foregroundColor(!shortcut.category.isEmpty && !shortcut.requiredApp.isEmpty && isRequirementValid ? .Primary : .Gray1 )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
-                        .foregroundColor(!selectedCategories.isEmpty && !relatedApps.isEmpty && isRequirementValid ? .Background : .Gray3 )
+                        .foregroundColor(!shortcut.category.isEmpty && !shortcut.requiredApp.isEmpty && isRequirementValid ? .Background : .Gray3 )
                         .Body1()
                 }
             })
-            .disabled(selectedCategories.isEmpty || relatedApps.isEmpty || !isRequirementValid)
+            .disabled(shortcut.category.isEmpty || shortcut.requiredApp.isEmpty || !isRequirementValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
-        .navigationTitle("단축어 등록")
+        .navigationTitle(isEdit ? "단축어 편집" :"단축어 등록")
         .ignoresSafeArea(.keyboard)
     }
     
@@ -241,13 +232,6 @@ struct WriteShortcutTagView: View {
 
 struct WriteShortcutTagView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTagView(iconColor: "Purple",
-                             iconSymbol: "bus.fill",
-                             shortcutName: "단축어이름",
-                             shortcutLink: "단축어 링크",
-                             onelineDescription: "한줄 설명",
-                             multiLineDescription: "여러줄 설명",
-                             isWriting: .constant(true)
-        )
+        WriteShortcutTagView(isWriting: .constant(true), isEdit: false)
     }
 }
