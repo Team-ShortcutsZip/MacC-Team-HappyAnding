@@ -10,43 +10,39 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     let firebase = FirebaseService()
-    @State var userCurations: [Curation] = []
-    @State var adminCurations: [Curation] = []
-    @State var myCurations: [Curation] = []
+    //  @State var userCurations: [Curation] = []
+  //  @State var adminCurations: [Curation] = []
+    //  @State var myCurations: [Curation] = []
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 0) {
                     //앱 큐레이션
-                    adminCurationsFrame
+                    adminCurationsFrameiew(adminCurations: shortcutsZipViewModel.classifyAdminCuration())
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
-                    UserCurationListView(userCurations: myCurations)
+                    UserCurationListView(userCurations: shortcutsZipViewModel.curations)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션
-                    CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: userCurations)
+                    CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: shortcutsZipViewModel.classifyUserCuration())
                 }
                 .padding(.bottom, 32)
             }
             .navigationTitle(Text("단축어 큐레이션"))
             .background(Color.Background)
         }
-        .onAppear() {
-            firebase.fetchMyCuration(author: "testUser") { curations in
-                myCurations = curations
-            }
-            firebase.fetchCuration { curations in
-                userCurations = curations
-            }
-            firebase.fetchAdminCuration { curations in
-                adminCurations = curations
-            }
-        }
     }
+}
+
+struct adminCurationsFrameiew: View {
     
-    var adminCurationsFrame: some View {
+    let adminCurations: [Curation]
+    
+    var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
                 Text("숏컷집의 추천 큐레이션")
@@ -65,7 +61,7 @@ struct ExploreCurationView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
-                    ForEach(Array(adminCurations.enumerated()), id: \.offset) { index, curation in
+                    ForEach(adminCurations, id: \.id) { curation in
                         NavigationLink(destination: ReadAdminCurationView(curation: curation)) {
                             AdminCurationCell(adminCuration: curation)
                         }
@@ -78,7 +74,6 @@ struct ExploreCurationView: View {
             }
         }
     }
-    
 }
 
 //struct ExploreCurationView_Previews: PreviewProvider {

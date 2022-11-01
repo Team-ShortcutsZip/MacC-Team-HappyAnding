@@ -11,9 +11,6 @@ import FirebaseFirestore
 import FirebaseAuth
 
 /*
- PR 단위 끊을 꺼
- shortcuts View Model 작성
- shortcuts View Model 적용 (ExploreShortcutView 위주)
  Curation View Model 작성
  Curation View Model 적용 (ExploreCurationView 위주)
  User View Model 작성
@@ -24,6 +21,7 @@ import FirebaseAuth
 class ShortcutsZipViewModel: ObservableObject {
     
     @Published var shortcuts: [Shortcuts] = []
+    @Published var curations: [Curation] = []
     
     static let share = FirebaseService()
     private let db = Firestore.firestore()
@@ -31,6 +29,9 @@ class ShortcutsZipViewModel: ObservableObject {
     init() {
         fetchShortcut(model: "Shortcut") { shortcuts in
             self.shortcuts = shortcuts
+        }
+        fetchCuration { curations in
+            self.curations = curations
         }
     }
     
@@ -75,4 +76,44 @@ class ShortcutsZipViewModel: ObservableObject {
             $0.numberOfLike > $1.numberOfLike
         }
     }
+    
+    //MARK: - 모든 Curation을 가져오는 함수
+    
+    func fetchCuration(completionHandler: @escaping ([Curation])->()) {
+        var curations: [Curation] = []
+        
+        db.collection("Curation").getDocuments() { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Curation.self, from: jsonData)
+                        curations.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                print(curations)
+                completionHandler(curations)
+            }
+        }
+    }
+    
+    func classifyAdminCuration() -> [Curation] {
+        self.curations.filter {
+            $0.isAdmin
+        }
+    }
+    
+    func classifyUserCuration() -> [Curation] {
+        self.curations.filter {
+            $0.isAdmin == false
+        }
+    }
+    
 }
