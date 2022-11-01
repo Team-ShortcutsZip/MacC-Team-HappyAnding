@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SignUpView: View {
+struct SignInWithAppleView: View {
     
     @Environment(\.window) var window: UIWindow?
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
@@ -60,7 +60,7 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignInWithAppleView()
     }
 }
 
