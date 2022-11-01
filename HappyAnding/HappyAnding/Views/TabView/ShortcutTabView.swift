@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ShortcutTabView: View {
     
+    @EnvironmentObject var userAuth: UserAuth
+    
     init() {
         UITabBar.appearance().barTintColor = UIColor(Color.White)
         UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
@@ -18,13 +20,18 @@ struct ShortcutTabView: View {
     }
     
     var body: some View {
-        TabView {
-            ForEach(Tab.allCases, id: \.self) { tab in
-                tab.view
-                    .tabItem {
-                        Label(tab.tabName, systemImage: tab.systemImage)
-                    }
+        
+        if userAuth.isLoggedIn {
+            TabView {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    tab.view
+                        .tabItem {
+                            Label(tab.tabName, systemImage: tab.systemImage)
+                        }
+                }
             }
+        } else {
+            SignInWithAppleView()
         }
     }
 }

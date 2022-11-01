@@ -13,6 +13,9 @@ import FirebaseFirestore
 
 @main
 struct HappyAndingApp: App {
+    
+    @StateObject var userAuth = UserAuth.shared
+    
     init() {
         FirebaseApp.configure()
     }
@@ -21,6 +24,7 @@ struct HappyAndingApp: App {
     var body: some Scene {
         WindowGroup {
             ShortcutTabView()
+                .environmentObject(userAuth)
         }
     }
 }

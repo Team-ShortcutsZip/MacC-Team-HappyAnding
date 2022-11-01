@@ -13,7 +13,9 @@ import CryptoKit
 
 
 /// Apple 로그인을 처리하는 클래스
-final class AppleAuthCoordinator: NSObject {
+class AppleAuthCoordinator: NSObject {
+    
+    var userAuth = UserAuth.shared
     var currentNonce: String?
     let window: UIWindow?
     
@@ -118,6 +120,7 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                     print(error.localizedDescription)
                     return
                 }
+                self.userAuth.login()
                 // User is signed in to Firebase with Apple.
                 // ...
             }
