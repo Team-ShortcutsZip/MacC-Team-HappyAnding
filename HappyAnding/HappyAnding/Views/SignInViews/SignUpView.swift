@@ -54,7 +54,7 @@ struct SignUpView: View {
     
     func appleLogin() {
         appleLoginCoordinator = AppleAuthCoordinator(window: window)
-        appleLoginCoordinator?.startAppleLogin()
+        appleLoginCoordinator?.startSignInWithAppleFlow()
     }
 }
 
@@ -65,7 +65,7 @@ struct SignUpView_Previews: PreviewProvider {
 }
 
 
-
+/// SwiftUI에 없는 window를 처리하는 구조체
 struct WindowKey: EnvironmentKey {
     struct Value {
         weak var value: UIWindow?
@@ -74,6 +74,7 @@ struct WindowKey: EnvironmentKey {
     static let defaultValue: Value = .init(value: nil)
 }
 
+/// UIWindow를 파악하여 넣어줄 수 있도록 설정
 extension EnvironmentValues {
     var window: UIWindow? {
         get {

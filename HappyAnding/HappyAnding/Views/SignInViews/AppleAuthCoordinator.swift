@@ -12,6 +12,7 @@ import AuthenticationServices
 import CryptoKit
 
 
+/// Apple 로그인을 처리하는 클래스
 final class AppleAuthCoordinator: NSObject {
     var currentNonce: String?
     let window: UIWindow?
@@ -20,7 +21,8 @@ final class AppleAuthCoordinator: NSObject {
         self.window = window
     }
     
-    func startAppleLogin() {
+    /// 요청에 nonce의 SHA256 해시를 처리하는 클래스를 포함하여 Apple 로그인 시작
+    func startSignInWithAppleFlow() {
         let nonce = randomNonceString()
         currentNonce = nonce
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -34,20 +36,22 @@ final class AppleAuthCoordinator: NSObject {
         authorizationController.performRequests()
     }
     
+    /// 단방향 암호화 함수 (SHA 256)
     private func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
-            return String(format: "%02x", $0)
+            String(format: "%02x", $0)
         }.joined()
         
         return hashString
     }
     
-    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
+    /// Apple 계정에 로그인 후, Apple 응답의 ID 토큰으로 AuthCredential 객체 만듦
+    /// 안전한 nonce를 생성함.
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
-        let charset: Array<Character> =
+        let charset: [Character] =
         Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         var result = ""
         var remainingLength = length
@@ -57,7 +61,9 @@ final class AppleAuthCoordinator: NSObject {
                 var random: UInt8 = 0
                 let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
                 if errorCode != errSecSuccess {
-                    fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+                    fatalError(
+                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                    )
                 }
                 return random
             }
@@ -78,8 +84,13 @@ final class AppleAuthCoordinator: NSObject {
     }
 }
 
+
+/// ASAuthorizationControllerDelegate 구현
+/// Apple의 응답을 처리하며, 로그인 성공 시 해싱되지 않는 nonce와 Apple 응답의 ID 토큰을 통해 Firebase에 인증
 extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithAuthorization authorization: ASAuthorization) {
+        
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
@@ -98,7 +109,7 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                                                       idToken: idTokenString,
                                                       rawNonce: nonce)
             
-            //Firebase 작업
+            // Sign in with Firebase.
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if let error {
                     // Error. If error.code == .MissingOrInvalidNonce, make sure
@@ -112,8 +123,15 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
             }
         }
     }
+    
+    func authorizationController(controller: ASAuthorizationController,
+                                 didCompleteWithError error: Error) {
+        // Handle error.
+        print("Sign in with Apple errored: \(error)")
+      }
 }
 
+/// init에서 설정한 UIWindow를 반환
 extension AppleAuthCoordinator: ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         window!
