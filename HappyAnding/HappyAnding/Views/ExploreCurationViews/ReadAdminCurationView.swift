@@ -28,12 +28,6 @@ struct ReadAdminCurationView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-//    var shortcuts: [Shortcuts]?
-    
-//    let title: String = "워라벨 지키기, 단축어와 함께"
-//    let subtitle: String = "워라벨을 알차게 지키고 있는 에디터도 애용하고 있는 단축어 모음."
-//    let curationThumbnail: String = "adminCurationTestImage"
-    
     var body: some View {
         ScrollView {
             GeometryReader { geo in
@@ -134,8 +128,3 @@ struct ReadAdminCurationView: View {
     }
 }
 
-//struct ReadCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadAdminCurationView()
-//    }
-//}
