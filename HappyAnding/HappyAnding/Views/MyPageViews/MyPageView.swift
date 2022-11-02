@@ -39,7 +39,6 @@ struct MyPageView: View {
                             .foregroundColor(.White)
                             .background(Color.Gray3)
                             .clipShape(Circle())
-                        VStack(alignment: .leading, spacing: 4) {
                             HStack {
                                 Text(userName)
                                     .Title1()
@@ -51,10 +50,6 @@ struct MyPageView: View {
                                     .foregroundColor(.Gray4)
                                  */
                             }
-                            Text(userEmail)
-                                .Body2()
-                                .foregroundColor(.Gray3)
-                        }
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)
