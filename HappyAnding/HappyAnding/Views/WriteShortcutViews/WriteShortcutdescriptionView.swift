@@ -27,6 +27,7 @@ struct WriteShortcutdescriptionView: View {
                                      title: "한줄 설명",
                                      placeholder: "간단하게 설명을 작성해주세요",
                                      lengthLimit: 20,
+                                     isDownloadLink: false,
                                      content: $shortcut.subtitle,
                                      isValid: $isOneLineValid
             )
@@ -36,6 +37,7 @@ struct WriteShortcutdescriptionView: View {
                                      title: "설명",
                                      placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
                                      lengthLimit: 500,
+                                     isDownloadLink: false,
                                      content: $shortcut.description,
                                      isValid: $isMultiLineValid
             )

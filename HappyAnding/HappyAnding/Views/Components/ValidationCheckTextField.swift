@@ -27,6 +27,8 @@ struct ValidationCheckTextField: View {
     let title: String
     let placeholder: String
     let lengthLimit: Int
+    let isDownloadLink: Bool
+    
     @Binding var content: String
     @Binding var isValid: Bool
     
@@ -68,7 +70,7 @@ struct ValidationCheckTextField: View {
             
             HStack {
                 if isExceeded {
-                    Text("글자수를 초과하였습니다")
+                    Text(isDownloadLink ? "유효하지 않은 링크입니다" : "글자수를 초과하였습니다")
                         .Body2()
                         .foregroundColor(.Error)
                         .padding(.leading)
@@ -154,9 +156,22 @@ extension ValidationCheckTextField {
             isExceeded = false
             self.strokeColor = Color.Gray2
         } else if content.count <= lengthLimit {
-            isValid = true
-            isExceeded = false
-            self.strokeColor = Color.Success
+            if isDownloadLink {
+                if content.hasPrefix("https://www.icloud.com/shortcuts") {
+                    isValid = true
+                    isExceeded = false
+                    self.strokeColor = Color.Success
+                } else {
+                    isValid = textType.isOptional
+                    isExceeded = true
+                    self.strokeColor = Color.Error
+                }
+            } else {
+                isValid = true
+                isExceeded = false
+                self.strokeColor = Color.Success
+            }
+            
         } else {
             isValid = textType.isOptional
             isExceeded = true
@@ -173,6 +188,7 @@ struct ValidationCheckTextField_Previews: PreviewProvider {
             title: "설명",
             placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
             lengthLimit: 20,
+            isDownloadLink: false,
             content: .constant(""),
             isValid: .constant(true)
         )

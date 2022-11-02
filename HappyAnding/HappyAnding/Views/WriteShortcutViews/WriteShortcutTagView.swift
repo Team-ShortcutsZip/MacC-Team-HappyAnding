@@ -50,6 +50,7 @@ struct WriteShortcutTagView: View {
                                      title: "단축어 사용을 위한 요구사항",
                                      placeholder: "단축어를 사용하기 위해서 필수적으로 요구되는 내용이 있다면, 작성해주세요",
                                      lengthLimit: 100,
+                                     isDownloadLink: false,
                                      content: $shortcut.shortcutRequirements,
                                      isValid: $isRequirementValid
             )
