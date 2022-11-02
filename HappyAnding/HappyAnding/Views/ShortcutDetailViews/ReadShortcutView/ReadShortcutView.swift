@@ -78,14 +78,16 @@ extension ReadShortcutView {
             }
             
             
-            // TODO: 구현 필요
             
-            /*
+            
             Button(action: {
-                //Place something action here
+                share()
             }) {
                 Label("공유", systemImage: "square.and.arrow.up")
             }
+            
+            // TODO: 구현 필요
+             /*
             Button(action: {
                 //Place something action here
             }) {
@@ -100,7 +102,7 @@ extension ReadShortcutView {
     var otherShortcutMenuSection: some View {
         Section {
             Button(action: {
-                //Place something action here
+                share()
             }) {
                 Label("공유", systemImage: "square.and.arrow.up")
             }
@@ -110,6 +112,12 @@ extension ReadShortcutView {
                 Label("신고", systemImage: "light.beacon.max.fill")
             }
         }
+    }
+    
+    func share() {
+        guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
+        let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
 }
 
