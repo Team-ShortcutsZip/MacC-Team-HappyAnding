@@ -45,7 +45,7 @@ struct SignInWithAppleView: View {
                         .frame(height: 52)
                         .foregroundColor(.black)
                     
-                    Text("\(Image(systemName: "applelogo")) 애플로 로그인")
+                    Text("\(Image(systemName: "applelogo")) Apple로 로그인")
                         .foregroundColor(.White)
                 }
                 .padding(.bottom, 88)
