@@ -9,8 +9,6 @@ import SwiftUI
 
 struct WriteCurationInfoView: View {
     
-//    @State var title = ""
-    @State var description = ""
     @State var isValidTitle = false
     @State var isValidDescription = false
     @State var curation = Curation(title: "",
