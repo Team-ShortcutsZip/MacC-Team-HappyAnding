@@ -10,6 +10,7 @@ import SwiftUI
 struct UserCurationListView: View {
     
     @State var isWriting = false
+    @State var isMyCuration: Bool = true
     
     var userCurations: [Curation]?
     
@@ -71,6 +72,15 @@ struct UserCurationListView: View {
             }
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .navigationBarItems(trailing: Menu(content: {
+            if isMyCuration {
+                myCurationMenuSection
+            } else {
+                otherCurationMenuSection
+            }
+        }, label: {
+            Image(systemName: isMyCuration ? "ellipsis" : "square.and.arrow.up")
+        }))
     }
 }
 
@@ -90,6 +100,45 @@ struct UserCurationListHeader: View {
                         .Footnote()
                         .foregroundColor(.Gray4)
                 }
+            }
+        }
+    }
+}
+
+
+extension UserCurationListView {
+    var myCurationMenuSection: some View {
+        Section {
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("편집", systemImage: "square.and.pencil")
+            }
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("공유", systemImage: "square.and.arrow.up")
+            }
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("삭제", systemImage: "trash.fill")
+                    .foregroundColor(Color.red)
+            }
+        }
+    }
+    
+    var otherCurationMenuSection: some View {
+        Section {
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("공유", systemImage: "square.and.arrow.up")
+            }
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("신고", systemImage: "light.beacon.max.fill")
             }
         }
     }
