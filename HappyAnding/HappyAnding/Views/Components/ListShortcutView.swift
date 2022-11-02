@@ -87,9 +87,16 @@ struct ListShortcutView: View {
 //                                 description: shortcut.description,
 //                                 numberOfDownload: shortcut.numberOfDownload,
 //                                 downloadLink: shortcut.downloadLink[0])
-                    ShortcutCell(shortcut: shortcut)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                    if sectionType == .download {
+                        ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                        
+                    } else {
+                        ShortcutCell(shortcut: shortcut)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                    }
 //                    .onTapGesture {
 //                        firebase.fetchShortcutDetail(id: shortcut.id) { shortcut in
 //                            print("**\(shortcut)")
