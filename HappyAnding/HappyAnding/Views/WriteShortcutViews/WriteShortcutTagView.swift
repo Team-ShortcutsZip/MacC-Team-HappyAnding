@@ -15,7 +15,7 @@ struct WriteShortcutTagView: View {
     
     @State var isShowingCategoryModal = false
     @State var isRequirementValid = false
-    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [""], requiredApp: [""], date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
     
     let isEdit: Bool
     
