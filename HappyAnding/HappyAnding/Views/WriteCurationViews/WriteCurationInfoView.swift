@@ -9,15 +9,20 @@ import SwiftUI
 
 struct WriteCurationInfoView: View {
     
-    @State var title = ""
-    @State var description = ""
     @State var isValidTitle = false
     @State var isValidDescription = false
+    @State var curation = Curation(title: "",
+                                   subtitle: "",
+                                   dateTime: "",
+                                   isAdmin: false,
+                                   background: "White",
+                                   author: "",
+                                   shortcuts: [Shortcuts]())
+    @Binding var isWriting: Bool
     
     let firebase = FirebaseService()
-    var shortcuts: [Shortcuts]
-    
-    @Binding var isWriting: Bool
+    let isEdit: Bool
+//    var shortcuts: [Shortcuts]
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
@@ -32,7 +37,7 @@ struct WriteCurationInfoView: View {
                                      title: "큐레이션 이름",
                                      placeholder: "큐레이션 이름을 작성해주세요",
                                      lengthLimit: 20,
-                                     content: $title,
+                                     content: $curation.title,
                                      isValid: $isValidTitle)
                 .padding(.top, 12)
             
@@ -41,22 +46,14 @@ struct WriteCurationInfoView: View {
                                      title: "한 줄 설명",
                                      placeholder: "나의 큐레이션을 설명할 수 있는 간단한 내용을 작성해주세요",
                                      lengthLimit: 40,
-                                     content: $description,
+                                     content: Binding(get: {curation.subtitle ?? ""},
+                                                      set: {curation.subtitle = $0}),
                                      isValid: $isValidDescription)
             
             Spacer()
                 .frame(maxHeight: .infinity)
             
             Button(action: {
-                let curation = Curation(
-                    title: self.title,
-                    subtitle: self.description,
-                    dateTime: "",
-                    isAdmin: false,
-                    background: "White",
-                    author: "testUser",
-                    shortcuts: shortcuts
-                )
                 
                 firebase.setData(model: curation)
                 
@@ -72,6 +69,10 @@ struct WriteCurationInfoView: View {
                 }
             })
             .disabled(isIncomplete)
+        }
+        .navigationBarTitle(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
+        .onAppear {
+            print("WriteCurationView \(curation)")
         }
     }
 }
