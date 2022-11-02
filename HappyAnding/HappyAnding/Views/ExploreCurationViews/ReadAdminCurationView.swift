@@ -25,12 +25,9 @@ struct ReadAdminCurationView: View {
     //TODO: 큐레이션 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
     @ObservedObject var shortcutData = fetchData()
     let curation: Curation
-//    var shortcuts: [Shortcuts]?
     
-//    let title: String = "워라벨 지키기, 단축어와 함께"
-//    let subtitle: String = "워라벨을 알차게 지키고 있는 에디터도 애용하고 있는 단축어 모음."
-//    let curationThumbnail: String = "adminCurationTestImage"
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     var body: some View {
         ScrollView {
             GeometryReader { geo in
@@ -58,6 +55,9 @@ struct ReadAdminCurationView: View {
             Spacer()
                 .frame(height: 44)
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: btnBack)
+        .toolbarBackground(Color.clear, for: .navigationBar)
         .edgesIgnoringSafeArea(.top)
         .background(Color.Background)
         
@@ -118,10 +118,13 @@ struct ReadAdminCurationView: View {
 //                         downloadLink: self.shortcutData.data[index].downloadLink)
 //        }
 //    }
+    var btnBack : some View { Button(action: {
+        self.presentationMode.wrappedValue.dismiss()
+        }) {
+            Image(systemName: "chevron.backward") // set image here
+                .foregroundColor(Color.Gray5)
+                .bold()
+        }
+    }
 }
 
-//struct ReadCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadAdminCurationView()
-//    }
-//}

@@ -39,7 +39,7 @@ struct MyShortcutCardListView: View {
                         AddMyShortcutCardView()
                     }
                     .fullScreenCover(isPresented: $isWriting, content: {
-                        WriteShortcutTitleView(isWriting: self.$isWriting)
+                        WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false)
                     })
 
 //                    Button(action: {
