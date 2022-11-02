@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct DownloadRankView: View {
-//    let shortcuts = Shortcut.fetchData(number: 5).sorted {
-//        $0.numberOfDownload > $1.numberOfDownload
-//    }
     
     let shortcuts: [Shortcuts]
     
@@ -39,14 +36,7 @@ struct DownloadRankView: View {
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
                     NavigationLink(destination: ReadShortcutView(shortcut: shortcut), label: {
-                        //TODO: 추후 downloadLink 배열로 전달하도록 변경 필요
-//                        ShortcutCell(color: shortcut.color,
-//                                     sfSymbol: shortcut.sfSymbol,
-//                                     name: shortcut.title,
-//                                     description: shortcut.description,
-//                                     numberOfDownload: shortcut.numberOfDownload,
-//                                     downloadLink: shortcut.downloadLink[0])
-                        ShortcutCell(shortcut: shortcut)
+                        ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
                     })
                 }
             }

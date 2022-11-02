@@ -33,7 +33,7 @@ struct ReadShortcutHeaderView: View {
                 
                 Spacer()
                 
-                Text("\(isMyLike ? Image(systemName: "hand.thumbsup.fill") : Image(systemName: "hand.thumbsup")) \(shortcut.numberOfLike)")
+                Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(shortcut.numberOfLike)")
 
                 .Body2()
                 .padding(10)
