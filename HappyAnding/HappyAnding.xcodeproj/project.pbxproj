@@ -54,6 +54,7 @@
 		A04ACB0E29041D61004A85A6 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0D29041D61004A85A6 /* CategoryView.swift */; };
 		A04ACB32290686AA004A85A6 /* ReadShortcutHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */; };
 		A04ACB34290686C7004A85A6 /* ReadShortcutContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */; };
+		A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */; };
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
@@ -139,6 +140,7 @@
 		A04ACB0D29041D61004A85A6 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutHeaderView.swift; sourceTree = "<group>"; };
 		A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutContentView.swift; sourceTree = "<group>"; };
+		A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipViewModel.swift; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3766B222904330300708F83 /* ReadUserCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserCurationView.swift; sourceTree = "<group>"; };
 		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				87E99CC22901454D009B691F /* Extensions */,
 				87E99C9828FFF1D2009B691F /* Views */,
 				87E99CD729042503009B691F /* Model */,
+				A0F822AA2910B8B900AF4448 /* ViewModel */,
 				87E99C7128F94EA8009B691F /* Assets.xcassets */,
 				F94B43572907AE0400987819 /* GoogleService-Info.plist */,
 				87E99C7328F94EA8009B691F /* Preview Content */,
@@ -391,6 +394,14 @@
 			path = ReadShortcutView;
 			sourceTree = "<group>";
 		};
+		A0F822AA2910B8B900AF4448 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -536,6 +547,7 @@
 				F94B432E2907088400987819 /* UserCurationListView.swift in Sources */,
 				A04ACB34290686C7004A85A6 /* ReadShortcutContentView.swift in Sources */,
 				87E99CAF28FFF26A009B691F /* EditShortcutView.swift in Sources */,
+				A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */,
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87E99CD929042536009B691F /* SectionType.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */,
