@@ -23,12 +23,15 @@ import FirebaseAuth
 
 struct WriteNicknameView: View {
     
+    @AppStorage("signInStatus") var signInStatus = false
     @EnvironmentObject var userAuth: UserAuth
     
     @State var nickname: String = ""
     @State var checkNicknameDuplicate: Bool = false
     @State var isDuplicatedNickname: Bool = false
     @State var isNicknameChecked: Bool = false
+    
+    let user = Auth.auth().currentUser
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -146,8 +149,15 @@ struct WriteNicknameView: View {
     var startButton: some View {
         Button(action: {
             
-            //TODO: 시작하기 버튼 동작 넣기
+            
             userAuth.signUp()
+            withAnimation(.easeInOut) {
+                self.signInStatus = true
+            }
+            // TODO: Firebase 회원가입 함수 (uid를 이용해 닉네임 같이 저장)
+            if let user {
+                print("Current User ID = \(user.uid)")
+            }
             
         }, label: {
             ZStack {
