@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct WriteShortcutdescriptionView: View {
-    let iconColor: String
-    let iconSymbol: String
-    let shortcutName: String
-    let shortcutLink: String
-    @Binding var isWriting: Bool
     
-    @State var oneLineDescription = ""
-    @State var multiLineDescription = ""
+    @Binding var isWriting: Bool
     
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
+    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    
+    let isEdit: Bool
     
     var body: some View {
         VStack {
@@ -30,7 +27,7 @@ struct WriteShortcutdescriptionView: View {
                                      title: "한줄 설명",
                                      placeholder: "간단하게 설명을 작성해주세요",
                                      lengthLimit: 20,
-                                     content: $oneLineDescription,
+                                     content: $shortcut.subtitle,
                                      isValid: $isOneLineValid
             )
             
@@ -39,21 +36,14 @@ struct WriteShortcutdescriptionView: View {
                                      title: "설명",
                                      placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
                                      lengthLimit: 500,
-                                     content: $multiLineDescription,
+                                     content: $shortcut.description,
                                      isValid: $isMultiLineValid
             )
             
             Spacer()
             
             NavigationLink {
-                WriteShortcutTagView(iconColor: self.iconColor,
-                                     iconSymbol: self.iconSymbol,
-                                     shortcutName: self.shortcutName,
-                                     shortcutLink: self.shortcutLink,
-                                     onelineDescription: self.oneLineDescription,
-                                     multiLineDescription: self.multiLineDescription,
-                                     isWriting: $isWriting
-                )
+                WriteShortcutTagView(isWriting: $isWriting, shortcut: shortcut, isEdit: isEdit)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -69,18 +59,13 @@ struct WriteShortcutdescriptionView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
-        .navigationTitle("단축어 등록")
+        .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .ignoresSafeArea(.keyboard)
     }
 }
 
 struct WriteShortcutdescriptionView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutdescriptionView(iconColor: "Purple",
-                                     iconSymbol: "bus.fill",
-                                     shortcutName: "단축어이름",
-                                     shortcutLink: "단축어 링크",
-                                     isWriting: .constant(true)
-        )
+        WriteShortcutdescriptionView(isWriting: .constant(true), isEdit: false)
     }
 }
