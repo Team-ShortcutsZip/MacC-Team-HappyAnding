@@ -66,7 +66,7 @@ struct MyShortcutCardListView: View {
                                 NavigationLink(destination: {
                                     ReadShortcutView(shortcut: shortcut)
                                 }, label: {
-                                    MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.title, mySHortcutColor: shortcut.color)
+                                    MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.title, myShortcutColor: shortcut.color)
                                 })
                             }
                         }
