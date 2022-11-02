@@ -25,7 +25,7 @@ struct WriteCurationSetView: View {
                                    author: "",
                                    shortcuts: [Shortcuts]())
     
-    let firebase = FirebaseService() 
+    let firebase = FirebaseService()
     let isEdit: Bool
     
     var body: some View {
@@ -35,8 +35,9 @@ struct WriteCurationSetView: View {
                     Button(action: {
                         isWriting.toggle()
                     }, label: {
-                        Text("\(Image(systemName: "chevron.left")) Back")
-                            .font(.body)
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.Gray4)
+                            .Title2()
                     })
                     .frame(alignment: .leading)
                     
@@ -109,7 +110,7 @@ struct WriteCurationSetView: View {
         NavigationLink {
             let _ = print(shortcuts)
             WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
-                .navigationBarBackButtonHidden()
+            
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
