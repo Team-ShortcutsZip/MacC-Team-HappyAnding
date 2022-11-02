@@ -127,11 +127,10 @@ extension ReadUserCurationView {
             }) {
                 Label("공유", systemImage: "square.and.arrow.up")
             }
-            Button(action: {
+            Button(role: .destructive, action: {
                 //Place something action here
             }) {
                 Label("삭제", systemImage: "trash.fill")
-                    .foregroundColor(Color.red)
             }
         }
     }

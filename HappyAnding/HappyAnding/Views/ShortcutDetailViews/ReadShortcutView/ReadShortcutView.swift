@@ -87,14 +87,12 @@ extension ReadShortcutView {
             }
             
             // TODO: 구현 필요
-             /*
-            Button(action: {
+            
+            Button(role: .destructive, action: {
                 //Place something action here
             }) {
                 Label("삭제", systemImage: "trash.fill")
-                    .foregroundColor(Color.red)
             }
-             */
         }
         
     }
