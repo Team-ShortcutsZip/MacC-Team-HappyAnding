@@ -20,6 +20,7 @@ struct ExploreCurationView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
+                    // FIXME: 모든 큐레이션 받아오는 부분 추후 수정해야 함
                     UserCurationListView(userCurations: shortcutsZipViewModel.curations)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션

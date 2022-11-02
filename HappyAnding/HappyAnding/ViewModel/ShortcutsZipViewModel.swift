@@ -59,6 +59,7 @@ class ShortcutsZipViewModel: ObservableObject {
     }
     
     // MARK: shortcuts을 Download 순으로 정렬하는 함수
+    // TODO: 서버 데이터 요청 방식에 따라 추후 변경될 부분
     
     func sortedShortcutsByDownload() -> [Shortcuts] {
         self.shortcuts.sorted {
@@ -67,6 +68,7 @@ class ShortcutsZipViewModel: ObservableObject {
     }
     
     // MARK: shortcuts을 Like 순으로 정렬하는 함수
+    // TODO: 서버 데이터 요청 방식에 따라 추후 변경될 부분
     
     func sortedshortcutsByLike() -> [Shortcuts] {
         self.shortcuts.sorted {
@@ -113,8 +115,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     func classifyUserCuration() -> [Curation] {
         self.curations.filter {
-            $0.isAdmin == false
+            !$0.isAdmin
         }
     }
-    
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExploreShortcutView: View {
     
+    // TODO: firebase는 UserInfo 관련 ViewModel 작성시 지워질 객체
     let firebase = FirebaseService()
     
     @State var shortcutByUser: [Shortcuts] = []
