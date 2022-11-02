@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ShortcutTabView: View {
     
+    @EnvironmentObject var userAuth: UserAuth
+    @AppStorage("signInStatus") var signInStatus = false
     @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
     
     init() {
@@ -20,13 +22,22 @@ struct ShortcutTabView: View {
     }
     
     var body: some View {
-        TabView {
-            ForEach(Tab.allCases, id: \.self) { tab in
-                tab.view
-                    .tabItem {
-                        Label(tab.tabName, systemImage: tab.systemImage)
-                    }
-                    .environmentObject(shortcutsZipViewModel)
+        
+        if signInStatus {
+            TabView {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    tab.view
+                        .tabItem {
+                            Label(tab.tabName, systemImage: tab.systemImage)
+                        }
+                        .environmentObject(shortcutsZipViewModel)
+                }
+            }
+        } else {
+            if userAuth.isLoggedIn {
+                WriteNicknameView()
+            } else {
+                SignInWithAppleView()
             }
         }
     }
