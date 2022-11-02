@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct ReadUserCurationView: View {
+    
+    @State var isMyCuration: Bool = true
+    @State var isWriting = false
+    @State var isTappedEditButton = false
+    @State var isTappedShareButton = false
+    @State var isTappedDeleteButton = false
+    
     var userCuration: Curation
 //    let nickName: String
     
@@ -21,7 +28,10 @@ struct ReadUserCurationView: View {
                 VStack{
                     userInformation
                         .padding(.bottom, 22)
-                    UserCurationCell(title: userCuration.title, subtitle: userCuration.subtitle ?? "", shortcuts: userCuration.shortcuts, curation: userCuration)
+                    UserCurationCell(title: userCuration.title,
+                                     subtitle: userCuration.subtitle ?? "",
+                                     shortcuts: userCuration.shortcuts,
+                                     curation: userCuration)
                         .padding(.bottom, 12)
                 }
             }
@@ -43,6 +53,21 @@ struct ReadUserCurationView: View {
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
+        .navigationBarItems(trailing: Menu(content: {
+            if isMyCuration {
+                myCurationMenuSection
+            } else {
+                otherCurationMenuSection
+            }
+        }, label: {
+            Image(systemName: isMyCuration ? "ellipsis" : "square.and.arrow.up")
+                .foregroundColor(.Gray4)
+        }))
+        .fullScreenCover(isPresented: $isTappedEditButton) {
+            NavigationView {
+                WriteCurationSetView(isWriting: $isTappedEditButton, curation: userCuration)
+            }
+        }
     }
     
     var userInformation: some View {
@@ -79,6 +104,42 @@ struct ReadUserCurationView: View {
                     .foregroundColor(.Gray1)
                     .padding(.horizontal, 16)
             )
+        }
+    }
+}
+
+
+extension ReadUserCurationView {
+    var myCurationMenuSection: some View {
+        Section {
+            Button(action: {
+                isTappedEditButton.toggle()
+                print("ReadUserCurationView \(userCuration)")
+            }) {
+                Label("편집", systemImage: "square.and.pencil")
+            }
+            
+            // TODO: 함수 구현 필요
+            
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("공유", systemImage: "square.and.arrow.up")
+            }
+            Button(action: {
+                //Place something action here
+            }) {
+                Label("삭제", systemImage: "trash.fill")
+                    .foregroundColor(Color.red)
+            }
+        }
+    }
+    
+    var otherCurationMenuSection: some View {
+        Button(action: {
+            //Place something action here
+        }) {
+            Label("공유", systemImage: "square.and.arrow.up")
         }
     }
 }

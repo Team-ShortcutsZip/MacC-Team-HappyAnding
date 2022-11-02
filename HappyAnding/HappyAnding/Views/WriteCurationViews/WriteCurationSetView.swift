@@ -14,15 +14,13 @@ struct WriteCurationSetView: View {
     //TODO: 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
     @ObservedObject var shortcutData = fetchData()
     
-    
-    @State private var numberOfSelected: Int = 0
+    @State var curation = Curation(title: "", dateTime: "", isAdmin: false, background: "White", author: "", shortcuts: [Shortcuts]())
     
     // TODO: firebase 함수로 결괏값 가져오면, 그 배열의 길이를 넣어야함!
     let firebase = FirebaseService()
     @State var shortcuts: [Shortcuts] = []
     
     @State var isSelected = false
-    @State var selectedShortcut: [Shortcuts] = []
     
     var body: some View {
         NavigationStack {
@@ -75,7 +73,7 @@ struct WriteCurationSetView: View {
                 .Footnote()
                 .foregroundColor(.Gray3)
             Spacer()
-            Text("\(numberOfSelected)개")
+            Text("\(curation.shortcuts.count)개")
                 .Body2()
                 .foregroundColor(.Primary)
         }
@@ -87,16 +85,9 @@ struct WriteCurationSetView: View {
     var shortcutList: some View {
         ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
             CheckBoxShortcutCell(
-                isShortcutTapped: isSelected,
-                numberOfSelected: $numberOfSelected,
-                selectedShortcut: $selectedShortcut,
-                shortcut: shortcut
-//                ,
-//                color: self.shortcutData.data[index].color,
-//                sfSymbol: self.shortcutData.data[index].sfSymbol,
-//                name: self.shortcutData.data[index].name,
-//                description: self.shortcutData.data[index].description
-            )
+                isShortcutTapped: curation.shortcuts.contains(shortcut),
+                selectedShortcut: $curation.shortcuts,
+                shortcut: shortcut)
         }
 //        ForEach(0..<10, id: \.self) { index in
 //            CheckBoxShortcutCell(isShortcutTapped: isSelected[index], numberOfSelected: $numberOfSelected, selectedShortcut: $selectedShortcut, color: self.shortcutData.data[index].color,
@@ -111,19 +102,19 @@ struct WriteCurationSetView: View {
         
         NavigationLink {
             let _ = print(shortcuts)
-            WriteCurationInfoView(shortcuts: selectedShortcut, isWriting: $isWriting)
+            WriteCurationInfoView(curation: curation, isWriting: $isWriting)
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(numberOfSelected > 0 ? .Primary : .Gray1)
+                    .foregroundColor(curation.shortcuts.count > 0 ? .Primary : .Gray1)
                     .padding(.horizontal, 16)
                     .frame(height: 52)
                 Text("다음")
-                    .foregroundColor(numberOfSelected > 0 ? .Background : .Gray3)
+                    .foregroundColor(curation.shortcuts.count > 0 ? .Background : .Gray3)
             }
         }
         .padding(.bottom, 24)
-        .disabled(numberOfSelected == 0)
+        .disabled(curation.shortcuts.count == 0)
         
 //        Button(action: {
 //            //Action넣기
