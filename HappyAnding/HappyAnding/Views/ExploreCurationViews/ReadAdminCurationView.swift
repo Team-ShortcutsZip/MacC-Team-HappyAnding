@@ -25,6 +25,9 @@ struct ReadAdminCurationView: View {
     //TODO: 큐레이션 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
     @ObservedObject var shortcutData = fetchData()
     let curation: Curation
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
 //    var shortcuts: [Shortcuts]?
     
 //    let title: String = "워라벨 지키기, 단축어와 함께"
@@ -58,6 +61,9 @@ struct ReadAdminCurationView: View {
             Spacer()
                 .frame(height: 44)
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: btnBack)
+        .toolbarBackground(Color.clear, for: .navigationBar)
         .edgesIgnoringSafeArea(.top)
         .background(Color.Background)
         
@@ -118,6 +124,14 @@ struct ReadAdminCurationView: View {
 //                         downloadLink: self.shortcutData.data[index].downloadLink)
 //        }
 //    }
+    var btnBack : some View { Button(action: {
+        self.presentationMode.wrappedValue.dismiss()
+        }) {
+            Image(systemName: "chevron.backward") // set image here
+                .foregroundColor(Color.Gray5)
+                .bold()
+        }
+    }
 }
 
 //struct ReadCurationView_Previews: PreviewProvider {

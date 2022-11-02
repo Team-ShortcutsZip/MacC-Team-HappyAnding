@@ -16,7 +16,7 @@ class Theme {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.clear
+     //   appearance.backgroundColor = UIColor.clear
         appearance.shadowColor = .clear
         appearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.Gray5)]
         //back button color 지정
