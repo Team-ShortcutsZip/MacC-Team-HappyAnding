@@ -49,9 +49,6 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-        
-        // TODO: 테스트플라이트에서는 빠지는 내용이라 주석처리해둠
-        
         .navigationBarItems(trailing: Menu(content: {
             if isMyShortcut {
                 myShortcutMenuSection
