@@ -25,7 +25,7 @@ struct WriteCurationSetView: View {
                                    author: "",
                                    shortcuts: [Shortcuts]())
     
-    let firebase = FirebaseService()
+    let firebase = FirebaseService() 
     let isEdit: Bool
     
     var body: some View {
@@ -109,6 +109,7 @@ struct WriteCurationSetView: View {
         NavigationLink {
             let _ = print(shortcuts)
             WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
+                .navigationBarBackButtonHidden()
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
