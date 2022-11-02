@@ -11,6 +11,7 @@ struct ShortcutTabView: View {
     
     @EnvironmentObject var userAuth: UserAuth
     @AppStorage("signInStatus") var signInStatus = false
+    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
     
     init() {
         UITabBar.appearance().barTintColor = UIColor(Color.White)
@@ -29,6 +30,7 @@ struct ShortcutTabView: View {
                         .tabItem {
                             Label(tab.tabName, systemImage: tab.systemImage)
                         }
+                        .environmentObject(shortcutsZipViewModel)
                 }
             }
         } else {

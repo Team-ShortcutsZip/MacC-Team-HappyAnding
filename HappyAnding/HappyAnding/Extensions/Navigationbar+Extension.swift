@@ -5,7 +5,7 @@
 //  Created by 전지민 on 2022/10/25.
 //
 
-import UIKit
+import SwiftUI
 
 /**
  맨 처음 뷰가 선언되는 시점에 Theme.navigationBarColors() 를 선언하여 사용해주세요.
@@ -16,7 +16,7 @@ class Theme {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.clear
+        appearance.backgroundColor = UIColor(Color.Background)
         appearance.shadowColor = .clear
         appearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.Gray5)]
         //back button color 지정

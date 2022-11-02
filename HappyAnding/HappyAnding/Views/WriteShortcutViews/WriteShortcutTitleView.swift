@@ -10,14 +10,12 @@ import SwiftUI
 struct WriteShortcutTitleView: View {
     @Binding var isWriting: Bool
     
-    @State var shortcutName = ""
-    @State var shortcutLink = ""
-    @State var iconColor = ""
-    @State var iconSymbol = ""
-    
     @State var isShowingIconModal = false
     @State var isNameValid = false
     @State var isLinkValid = false
+    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    
+    let isEdit: Bool
     
     var body: some View {
         NavigationStack {
@@ -32,7 +30,7 @@ struct WriteShortcutTitleView: View {
                     })
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Text("단축어 등록")
+                    Text(isEdit ? "단축어 편집" : "단축어 등록")
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .center)
                     
@@ -48,7 +46,7 @@ struct WriteShortcutTitleView: View {
                 Button(action: {
                     isShowingIconModal = true
                 }, label: {
-                    if iconSymbol.isEmpty {
+                    if shortcut.sfSymbol.isEmpty {
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Color.Gray1)
@@ -64,11 +62,11 @@ struct WriteShortcutTitleView: View {
                     } else {
                         ZStack(alignment: .center) {
                             Rectangle()
-                                .fill(Color.fetchGradient(color: iconColor))
+                                .fill(Color.fetchGradient(color: shortcut.color))
                                 .cornerRadius(12.35)
                                 .frame(width: 84, height: 84)
                             
-                            Image(systemName: iconSymbol)
+                            Image(systemName: shortcut.sfSymbol)
                                 .font(.system(size: 32))
                                 .frame(width: 84, height: 84)
                                 .foregroundColor(.Background)
@@ -77,8 +75,8 @@ struct WriteShortcutTitleView: View {
                 })
                 .sheet(isPresented: $isShowingIconModal) {
                     IconModalView(isShowingIconModal: $isShowingIconModal,
-                                  iconColor: $iconColor,
-                                  iconSymbol: $iconSymbol
+                                  iconColor: $shortcut.color,
+                                  iconSymbol: $shortcut.sfSymbol
                     )
                 }
                 
@@ -87,7 +85,7 @@ struct WriteShortcutTitleView: View {
                                          title: "단축어 이름",
                                          placeholder: "단축어 이름을 입력하세요",
                                          lengthLimit: 20,
-                                         content: $shortcutName,
+                                         content: $shortcut.title,
                                          isValid: $isNameValid
                 )
                 .onAppear(perform : UIApplication.shared.hideKeyboard)
@@ -98,31 +96,26 @@ struct WriteShortcutTitleView: View {
                                          title: "단축어 링크",
                                          placeholder: "단축어 링크를 추가하세요",
                                          lengthLimit: 100,
-                                         content: $shortcutLink,
+                                         content: $shortcut.downloadLink[0],
                                          isValid: $isLinkValid
                 )
                 
                 Spacer()
                 
                 NavigationLink {
-                    WriteShortcutdescriptionView(iconColor: self.iconColor,
-                                                 iconSymbol: self.iconSymbol,
-                                                 shortcutName: self.shortcutName,
-                                                 shortcutLink: self.shortcutLink,
-                                                 isWriting: $isWriting
-                    )
+                    WriteShortcutdescriptionView(isWriting: $isWriting, shortcut: shortcut, isEdit: isEdit)
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Gray1 )
+                            .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Gray1 )
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text("다음")
-                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty && isNameValid && isLinkValid ? .Background : .Gray3 )
+                            .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Background : .Gray3 )
                             .Body1()
                     }
                 }
-                .disabled(iconColor.isEmpty || iconSymbol.isEmpty || !isNameValid || !isLinkValid)
+                .disabled(shortcut.color.isEmpty || shortcut.sfSymbol.isEmpty || !isNameValid || !isLinkValid)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
             }
@@ -133,6 +126,6 @@ struct WriteShortcutTitleView: View {
 
 struct WriteShortcutTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTitleView(isWriting: .constant(true))
+        WriteShortcutTitleView(isWriting: .constant(true), isEdit: false)
     }
 }
