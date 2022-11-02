@@ -20,11 +20,11 @@ struct WriteCurationInfoView: View {
                                    background: "White",
                                    author: "",
                                    shortcuts: [Shortcuts]())
+    @Binding var isWriting: Bool
     
     let firebase = FirebaseService()
+    let isEdit: Bool
 //    var shortcuts: [Shortcuts]
-    
-    @Binding var isWriting: Bool
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
@@ -72,6 +72,7 @@ struct WriteCurationInfoView: View {
             })
             .disabled(isIncomplete)
         }
+        .navigationBarTitle(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
         .onAppear {
             print("WriteCurationView \(curation)")
         }

@@ -14,13 +14,19 @@ struct WriteCurationSetView: View {
     //TODO: 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
     @ObservedObject var shortcutData = fetchData()
     
-    @State var curation = Curation(title: "", dateTime: "", isAdmin: false, background: "White", author: "", shortcuts: [Shortcuts]())
     
     // TODO: firebase 함수로 결괏값 가져오면, 그 배열의 길이를 넣어야함!
-    let firebase = FirebaseService()
     @State var shortcuts: [Shortcuts] = []
-    
     @State var isSelected = false
+    @State var curation = Curation(title: "",
+                                   dateTime: "",
+                                   isAdmin: false,
+                                   background: "White",
+                                   author: "",
+                                   shortcuts: [Shortcuts]())
+    
+    let firebase = FirebaseService()
+    let isEdit: Bool
     
     var body: some View {
         NavigationStack {
@@ -34,7 +40,7 @@ struct WriteCurationSetView: View {
                     })
                     .frame(alignment: .leading)
                     
-                    Text("나의 큐레이션 만들기")
+                    Text(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .fixedSize(horizontal: false, vertical: true)
@@ -102,7 +108,7 @@ struct WriteCurationSetView: View {
         
         NavigationLink {
             let _ = print(shortcuts)
-            WriteCurationInfoView(curation: curation, isWriting: $isWriting)
+            WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
@@ -137,6 +143,6 @@ struct WriteCurationSetView: View {
 
 struct WriteCurationSetView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteCurationSetView(isWriting: .constant(false))
+        WriteCurationSetView(isWriting: .constant(false), isEdit: false)
     }
 }
