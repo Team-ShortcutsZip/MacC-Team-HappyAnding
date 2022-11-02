@@ -57,6 +57,7 @@ struct ReadShortcutView: View {
             }
         }, label: {
             Image(systemName: "ellipsis")
+                .foregroundColor(.Gray4)
         }))
         .fullScreenCover(isPresented: $isEdit) {
             NavigationView {
