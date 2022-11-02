@@ -50,6 +50,15 @@ struct WriteNicknameView: View {
             
             Spacer()
             
+            
+            // TODO: 중복확인 함수 설정 후 삭제필요
+            Button {
+                isNicknameChecked = true
+            } label: {
+                Text("임시 중복확인")
+            }
+
+            
             startButton
         }
         .padding(.horizontal, 16)
@@ -127,8 +136,9 @@ struct WriteNicknameView: View {
         .disabled(nickname.isEmpty)
         ///alert 띄우는 코드
         .alert(isPresented: $checkNicknameDuplicate){
-            Alert(title: Text("닉네임 중복 확인"), message: Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다"), dismissButton: .default(Text(isDuplicatedNickname ? "다시 입력하기" : "확인")))
-
+            Alert(title: Text("닉네임 중복 확인"),
+                  message: Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다"),
+                  dismissButton: .default(Text(isDuplicatedNickname ? "다시 입력하기" : "확인")))
         }
     }
     
