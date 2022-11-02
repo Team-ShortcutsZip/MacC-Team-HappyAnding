@@ -39,6 +39,8 @@ struct ShortcutCell: View {
     // TODO: Color, Font extension 등록 후 색상 변경하기
     let shortcut: Shortcuts
     
+    var rankNumber: Int = -1
+    
 //    let color: String
 //    let sfSymbol: String
 //    let name: String
@@ -60,18 +62,14 @@ struct ShortcutCell: View {
                 icon
                 shortcutInfo
                 Spacer()
-                VStack {
-                    downloadInfo
-                }
-                .onTapGesture {
-                    
-                    // TODO: 앱 여는 기능 추가
-                    if let url = URL(string: shortcut.downloadLink[0]) {
-                        openURL(url)
+                downloadInfo
+                    .onTapGesture {
+                        
+                        // TODO: 앱 여는 기능 추가
+                        if let url = URL(string: shortcut.downloadLink[0]) {
+                            openURL(url)
+                        }
                     }
-                    
-                    print("\(shortcut.downloadLink[0])로 이동합니다.")
-                }
             }
             .padding(.vertical, 20)
             .background( background )
@@ -98,6 +96,12 @@ struct ShortcutCell: View {
     var shortcutInfo: some View {
         
         VStack(alignment: .leading, spacing: 4) {
+            if rankNumber != -1 {
+                Text("\(rankNumber)")
+                    .Subtitle()
+                    .foregroundColor(.Gray4)
+                    .padding(0)
+            }
             Text(shortcut.title)
                 .Headline()
                 .foregroundColor(.Gray5)
@@ -117,11 +121,6 @@ struct ShortcutCell: View {
                 .foregroundColor(.Gray4)
                 .font(.system(size: 24, weight: .medium))
                 .frame(height: 32)
-            
-            Text(String(shortcut.numberOfDownload))
-                .Footnote()
-                .foregroundColor(.Gray4)
-                .font(.system(size: 13, weight: .regular))
         }
         .padding(.leading, 12)
         .padding(.trailing, 18)

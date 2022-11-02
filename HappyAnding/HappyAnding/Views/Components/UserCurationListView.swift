@@ -35,7 +35,7 @@ struct UserCurationListView: View {
                 .padding(.horizontal, 16)
             }
             .fullScreenCover(isPresented: $isWriting, content: {
-                WriteCurationSetView(isWriting: self.$isWriting)
+                WriteCurationSetView(isWriting: self.$isWriting, isEdit: false)
             })
 
 //            NavigationLink(destination: WriteCurationInfoView()){

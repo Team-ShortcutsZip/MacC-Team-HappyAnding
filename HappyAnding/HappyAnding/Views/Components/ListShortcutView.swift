@@ -87,9 +87,16 @@ struct ListShortcutView: View {
 //                                 description: shortcut.description,
 //                                 numberOfDownload: shortcut.numberOfDownload,
 //                                 downloadLink: shortcut.downloadLink[0])
-                    ShortcutCell(shortcut: shortcut)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                    if sectionType == .download {
+                        ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                        
+                    } else {
+                        ShortcutCell(shortcut: shortcut)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                    }
 //                    .onTapGesture {
 //                        firebase.fetchShortcutDetail(id: shortcut.id) { shortcut in
 //                            print("**\(shortcut)")
@@ -166,7 +173,7 @@ struct ListShortcutView: View {
 //            return self.categoryName?.translateName() ?? "" + "1위 ~ 100위"
             return "\(self.categoryName?.translateName() ?? "") 1위 ~ 100위"
         case .popular:
-            return "💡 최근 2주간 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
+            return "💡 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
         case .myShortcut:
             return ""
         case .myLovingShortcut:
