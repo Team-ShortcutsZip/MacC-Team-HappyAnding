@@ -13,7 +13,7 @@ struct Curation: Identifiable, Codable {
     var title: String
     var subtitle: String?
     var dateTime: String
-    var idAdmin: Bool
+    var isAdmin: Bool
     var background: String
 //    var shortcuts: [ShortcutCellModel]
     var author: String

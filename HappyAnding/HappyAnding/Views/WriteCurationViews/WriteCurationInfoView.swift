@@ -52,7 +52,7 @@ struct WriteCurationInfoView: View {
                     title: self.title,
                     subtitle: self.description,
                     dateTime: "",
-                    idAdmin: false,
+                    isAdmin: false,
                     background: "White",
                     author: "testUser",
                     shortcuts: shortcuts
