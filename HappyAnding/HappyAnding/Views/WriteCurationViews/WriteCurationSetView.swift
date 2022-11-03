@@ -16,14 +16,15 @@ struct WriteCurationSetView: View {
     
     
     // TODO: firebase 함수로 결괏값 가져오면, 그 배열의 길이를 넣어야함!
-    @State var shortcuts: [Shortcuts] = []
+    @State var shortcuts: [ShortcutCellModel] = []
     @State var isSelected = false
     @State var curation = Curation(title: "",
+                                   subtitle: "",
                                    dateTime: "",
                                    isAdmin: false,
                                    background: "White",
                                    author: "",
-                                   shortcuts: [Shortcuts]())
+                                   shortcuts: [ShortcutCellModel]())
     
     let firebase = FirebaseService()
     let isEdit: Bool
@@ -62,7 +63,7 @@ struct WriteCurationSetView: View {
             }
             .background(Color.Background)
             .onAppear() {
-                firebase.fetchShortcut(model: "Shortcut") { shortcuts in
+                firebase.fetchShortcutCell { shortcuts in
                     self.shortcuts = shortcuts
                 }
             }
@@ -107,7 +108,6 @@ struct WriteCurationSetView: View {
     var bottomButton: some View {
         
         NavigationLink {
-            let _ = print(shortcuts)
             WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
             
         } label: {
@@ -122,23 +122,6 @@ struct WriteCurationSetView: View {
         }
         .padding(.bottom, 24)
         .disabled(curation.shortcuts.count == 0)
-        
-//        Button(action: {
-//            //Action넣기
-//            print(selectedShortcut)
-//            
-//        }, label: {
-//            ZStack {
-//                RoundedRectangle(cornerRadius: 12)
-//                    .foregroundColor(numberOfSelected > 0 ? .Primary : .Gray1)
-//                    .padding(.horizontal, 16)
-//                    .frame(height: 52)
-//                Text("완료")
-//                    .foregroundColor(numberOfSelected > 0 ? .Background : .Gray3)
-//            }
-//        })
-//        .padding(.bottom, 24)
-//        .disabled(numberOfSelected == 0)
     }
 }
 

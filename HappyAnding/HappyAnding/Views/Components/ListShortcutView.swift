@@ -35,58 +35,8 @@ struct ListShortcutView: View {
             }
             
             //TODO: 무한 스크롤을 위한 업데이트 함수 필요
-//            ForEach(0..<shortcutData.data.count, id: \.self) { index in
-//                ShortcutCell(color: self.shortcutData.data[index].color,
-//                             sfSymbol: self.shortcutData.data[index].sfSymbol,
-//                             name: self.shortcutData.data[index].name,
-//                             description: self.shortcutData.data[index].description,
-//                             numberOfDownload: self.shortcutData.data[index].numberOfDownload,
-//                             downloadLink: self.shortcutData.data[index].downloadLink)
-//                .listRowInsets(EdgeInsets())
-//                .listRowSeparator(.hidden)
-//                .onAppear {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                        if index == shortcutData.data.count - 1 && index < 12 {
-//                            isLastItem = true
-//                            self.shortcutData.updateData()
-//                            isLastItem = false
-//                        }
-//                    }
-//                }
-//            }
-            
-//            ForEach(0..<shortcutsArray.count, id: \.self) { index in
-//                ShortcutCell(color: self.shortcutsArray[index].color,
-//                             sfSymbol: self.shortcutsArray[index].sfSymbol,
-//                             name: self.shortcutsArray[index].title,
-//                             description: self.shortcutsArray[index].description,
-//                             numberOfDownload: self.shortcutsArray[index].numberOfDownload,
-//                             downloadLink: self.shortcutsArray[index].downloadLink[0])
-//                .listRowInsets(EdgeInsets())
-//                .listRowSeparator(.hidden)
-//                .onTapGesture {
-//                    firebase.fetchShortcutDetail(id: self.shortcutsArray[index].id) { shortcut in
-//                        print("**\(shortcut)")
-//                    }
-//                }
-//                .onAppear {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                        if index == shortcutData.data.count - 1 && index < 12 {
-//                            isLastItem = true
-//                            self.shortcutData.updateData()
-//                            isLastItem = false
-//                        }
-//                    }
-//                }
-//            }
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-//                    ShortcutCell(color: shortcut.color,
-//                                 sfSymbol: shortcut.sfSymbol,
-//                                 name: shortcut.title,
-//                                 description: shortcut.description,
-//                                 numberOfDownload: shortcut.numberOfDownload,
-//                                 downloadLink: shortcut.downloadLink[0])
                     if sectionType == .download {
                         ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
                             .listRowInsets(EdgeInsets())
@@ -97,11 +47,6 @@ struct ListShortcutView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                     }
-//                    .onTapGesture {
-//                        firebase.fetchShortcutDetail(id: shortcut.id) { shortcut in
-//                            print("**\(shortcut)")
-//                        }
-//                    }
                 }
             }
             
@@ -120,10 +65,8 @@ struct ListShortcutView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {
             if let categoryName {
-                let _ = print(categoryName.rawValue)
                 firebase.fetchCategoryShortcut(category: categoryName.rawValue) { shortcuts in
                     self.shortcuts = shortcuts
-                    print(shortcuts)
                 }
             }
         }
@@ -170,7 +113,6 @@ struct ListShortcutView: View {
     private func getDescriptions(_ sectionType: SectionType) -> String {
         switch sectionType {
         case .download:
-//            return self.categoryName?.translateName() ?? "" + "1위 ~ 100위"
             return "\(self.categoryName?.translateName() ?? "") 1위 ~ 100위"
         case .popular:
             return "💡 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
