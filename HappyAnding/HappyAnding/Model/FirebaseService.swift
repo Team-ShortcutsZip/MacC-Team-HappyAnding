@@ -684,9 +684,7 @@ class FirebaseService {
         } else {
             self.fetchUser(userID: self.currentUser()) { data in
                 var user = data
-                if let index = user.likedShortcuts.firstIndex(of: shortcut.id) {
-                    user.likedShortcuts.remove(at: index)
-                }
+                user.likedShortcuts.removeAll(where: { $0 == shortcut.id })
                 
                 self.db.collection("User").document(user.id).setData(user.dictionary) { error in
                     if let error {
@@ -733,7 +731,64 @@ class FirebaseService {
         }
     }
     
+    //MARK: - 단축어 수정 시 해당 단축어가 포함된 큐레이션을 업데이트하는 함수 -> 단축어 정보 업데이트
     
+    func updateShortcutInCuration(shortcutCell: ShortcutCellModel, curationIDs: [String]) {
+        var curations: [Curation] = []
+        
+        for curationID in curationIDs {
+            db.collection("Curation")
+                .whereField("id", isEqualTo: curationID)
+                .getDocuments() { (querySnapshot, error) in
+                    if let error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        guard let documents = querySnapshot?.documents else { return }
+                        let decoder = JSONDecoder()
+                        for document in documents {
+                            do {
+                                let data = document.data()
+                                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                                var curation = try decoder.decode(Curation.self, from: jsonData)
+                                
+                                if let index = curation.shortcuts.firstIndex(where: { $0.id == shortcutCell.id }) {
+                                    curation.shortcuts[index] = shortcutCell
+                                }
+                                self.setData(model: curation)
+                                curations.append(curation)
+                                    
+                            } catch let error {
+                                print("error: \(error)")
+                            }
+                        }
+                    }
+                }
+        }
+        
+    }
+    
+    //MARK: - 큐레이션 생성 시 단축어 정보 (curationIDs) 업데이트하는 함수
+    
+    func updateCurationIDs(shortcuts: [Shortcuts], curationID: String) {
+        shortcuts.forEach { shortcut in
+            var data = shortcut
+            data.curationIDs.append(curationID)
+            
+            setData(model: data)
+        }
+    }
+    
+    //MARK: - 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
+    
+    func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String) {
+        shortcutCells.forEach { shortcutCell in
+            fetchShortcutDetail(id: shortcutCell.id) { data in
+                var shortcut = data
+                shortcut.curationIDs.append(curationID)
+                self.setData(model: shortcut)
+            }
+        }
+    }
     
     // TODO: 단축어 다운로드 정보 저장
     // TODO: UserID의 경우, Userdefault에 저장된 값을 가져오는 것으로 대체

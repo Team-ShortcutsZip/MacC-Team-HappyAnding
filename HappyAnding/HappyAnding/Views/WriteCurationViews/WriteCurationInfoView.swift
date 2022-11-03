@@ -48,7 +48,7 @@ struct WriteCurationInfoView: View {
                                      placeholder: "나의 큐레이션을 설명할 수 있는 간단한 내용을 작성해주세요",
                                      lengthLimit: 40,
                                      isDownloadLinkTextField: false,
-                                     content: Binding(get: {curation.subtitle ?? ""},
+                                     content: Binding(get: {curation.subtitle},
                                                       set: {curation.subtitle = $0}),
                                      isValid: $isValidDescription)
             
@@ -58,6 +58,10 @@ struct WriteCurationInfoView: View {
             Button(action: {
                 curation.author = firebase.currentUser()
                 firebase.setData(model: curation)
+                firebase.updateShortcutCurationID(
+                    shortcutCells: curation.shortcuts,
+                    curationID: curation.id
+                )
                 
                 isWriting.toggle()
             }, label: {
