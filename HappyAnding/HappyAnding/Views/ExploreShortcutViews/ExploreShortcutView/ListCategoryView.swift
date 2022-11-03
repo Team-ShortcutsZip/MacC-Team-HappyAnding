@@ -21,9 +21,9 @@ struct ListCategoryView: View {
             VStack {
                 LazyVGrid(columns: gridLayout) {
                     ForEach(Category.allCases, id: \.self) { item in
-                        
-                        NavigationLink(destination: ExploreCategoryView(category: item, shortcuts: shortcuts)) {
-                            
+                        NavigationLink(destination:
+                            ListShortcutView(shortcuts: shortcuts, categoryName: item)
+                        ) {
                             Text(translateName(item.rawValue))
                                 .Body2()
                                 .tag(item)

@@ -31,12 +31,11 @@ struct CategoryView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
-                        NavigationLink(destination: {
-                            ExploreCategoryView(category: value, shortcuts: shortcuts)
-                                .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-                        }, label: {
+                        NavigationLink(destination:
+                            ListShortcutView(shortcuts: shortcuts, categoryName: value)
+                        ) {
                             CategoryCellView(categoryName: translateName(value.rawValue))
-                        })
+                        }
                     }
                 }
             }
