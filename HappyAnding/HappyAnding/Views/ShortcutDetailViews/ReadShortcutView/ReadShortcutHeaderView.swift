@@ -10,14 +10,8 @@ import SwiftUI
 struct ReadShortcutHeaderView: View {
     
     @State var shortcut: Shortcuts
-//    let icon: String
-//    let color: String
-//    let numberOfLike: Int
-//    let name: String
-//    let oneline: String
-    
-//    @State var numberOfLike: Int
     @State var isMyLike: Bool = false
+    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -48,6 +42,7 @@ struct ReadShortcutHeaderView: View {
                         self.shortcut.numberOfLike -= 1
                     }
                     // TODO: 추후 좋아요 데이터구조에 목록(?) 추가, 취소 기능 추가할 곳
+                    firebase.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
                 })
             }
             Text("\(shortcut.title)")
@@ -59,6 +54,12 @@ struct ReadShortcutHeaderView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
+        .onAppear() {
+            firebase.checkLikedShortrcut(shortcutID: shortcut.id) { result in
+                isMyLike = result
+            }
+            print("**\(isMyLike)")
+        }
     }
 }
 

@@ -28,6 +28,7 @@ struct ReadShortcutView: View {
                 
                 Button(action: {
                     if let url = URL(string: shortcut.downloadLink[0]) {
+                        firebase.updateNumberOfDownload(shortcut: shortcut)
                         openURL(url)
                     }
                 }) {

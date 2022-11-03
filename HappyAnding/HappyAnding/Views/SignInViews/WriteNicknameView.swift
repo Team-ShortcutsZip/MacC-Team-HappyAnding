@@ -149,7 +149,7 @@ struct WriteNicknameView: View {
                 self.signInStatus = true
             }
             
-            firebase.setData(model: User(id: user?.uid ?? "", nickname: nickname))
+            firebase.setData(model: User(id: user?.uid ?? "", nickname: nickname, likedShortcuts: [String](), downloadedShortcuts: [String]()))
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)

@@ -666,20 +666,74 @@ class FirebaseService {
         }
     }
     
-    func updateData(shortcut: Shortcuts, user: User) {
-        var shortcutInfo = shortcut
-        var userInfo = user
+    //MARK: - 좋아요 수를 업데이트하는 함수
+    
+    func updateNumberOfLike(isMyLike: Bool, shortcut: Shortcuts) {
         
-        shortcutInfo.numberOfDownload += 1
-        userInfo.likedShortcuts
-        db.collection("Shortcut").document(shortcut.id).setData(shortcutInfo.dictionary) { error in
+        if isMyLike {
+            self.fetchUser(userID: self.currentUser()) { data in
+                var user = data
+                user.likedShortcuts.append(shortcut.id)
+                
+                self.db.collection("User").document(user.id).setData(user.dictionary) { error in
+                    if let error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        } else {
+            self.fetchUser(userID: self.currentUser()) { data in
+                var user = data
+                if let index = user.likedShortcuts.firstIndex(of: shortcut.id) {
+                    user.likedShortcuts.remove(at: index)
+                }
+                
+                self.db.collection("User").document(user.id).setData(user.dictionary) { error in
+                    if let error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+        
+        db.collection("Shortcut").document(shortcut.id).setData(shortcut.dictionary) { error in
             if let error {
                 print(error.localizedDescription)
             }
         }
-        
-        
     }
+    
+    //MARK: - ReadShortcutView에서 해당 단축어에 좋아요를 눌렀는지 확인하는 함수 completionHandler로 bool값을 전달
+    
+    func checkLikedShortrcut(shortcutID: String, completionHandler: @escaping (Bool)->()) {
+        var result = false
+        fetchUser(userID: currentUser()) { data in
+            result = data.likedShortcuts.contains(shortcutID)
+            completionHandler(result)
+        }
+    }
+    
+    //MARK: - 다운로드 수를 업데이트하는 함수
+    
+    func updateNumberOfDownload(shortcut: Shortcuts) {
+        var shortcutInfo = shortcut
+        
+        self.fetchUser(userID: currentUser()) { data in
+            var user = data
+            if !data.downloadedShortcuts.contains(shortcut.id) {
+                shortcutInfo.numberOfDownload += 1
+                self.db.collection("Shortcut").document(shortcut.id).setData(shortcutInfo.dictionary) { error in
+                    if let error {
+                        print(error.localizedDescription)
+                    }
+                }
+                user.downloadedShortcuts.append(shortcut.id)
+                self.setData(model: user)
+            }
+        }
+    }
+    
+    
     
     // TODO: 단축어 다운로드 정보 저장
     // TODO: UserID의 경우, Userdefault에 저장된 값을 가져오는 것으로 대체
