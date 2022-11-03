@@ -790,6 +790,118 @@ class FirebaseService {
         }
     }
     
+    //MARK: - 단축어 삭제 시 유저 정보에 포함된 id 삭제하는 함수
+    
+    func deleteShortcutIDInUser(shortcutID: String) {
+        
+        //좋아요한 목록에서 삭제
+        db.collection("User")
+            .whereField("likedShortcuts", arrayContains: shortcutID)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            var user = try decoder.decode(User.self, from: jsonData)
+                            
+                            user.likedShortcuts.removeAll(where: { $0 == shortcutID })
+                            self.setData(model: user)
+                            
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                }
+            }
+        
+        //다운로드한 목록에서 삭제
+        db.collection("User")
+            .whereField("downloadedShortcuts", arrayContains: shortcutID)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            var user = try decoder.decode(User.self, from: jsonData)
+                            
+                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
+                            self.setData(model: user)
+                            
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                }
+            }
+    }
+    
+    //MARK: - 단축어 삭제 시 해당 단축어를 포함하는 큐레이션에서 삭제하는 함수
+    
+    func deleteShortcutInCuration(curationsIDs: [String], shortcutID: String) {
+        curationsIDs.forEach { curationID in
+            db.collection("Curation")
+                .whereField("id", isEqualTo: curationID)
+                .getDocuments() { (querySnapshot, error) in
+                    if let error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        guard let documents = querySnapshot?.documents else { return }
+                        let decoder = JSONDecoder()
+                        for document in documents {
+                            do {
+                                let data = document.data()
+                                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                                var curation = try decoder.decode(Curation.self, from: jsonData)
+                                
+                                curation.shortcuts.removeAll(where: { $0.id == shortcutID })
+                                self.setData(model: curation)
+                                    
+                            } catch let error {
+                                print("error: \(error)")
+                            }
+                        }
+                    }
+                }
+        }
+    }
+    
+    //MARK: - 큐레이션 삭제 시 단축어의 curationIDs에서 id삭제하는 함수
+    func deleteCurationIDInShortcut(curationID: String) {
+        db.collection("Shortcut")
+            .whereField("curationIDs", arrayContains: curationID)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            var shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            
+                            shortcut.curationIDs.removeAll(where: {$0 == curationID})
+                            self.setData(model: shortcut)
+                            
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                }
+            }
+    }
+    
     // TODO: 단축어 다운로드 정보 저장
     // TODO: UserID의 경우, Userdefault에 저장된 값을 가져오는 것으로 대체
     
