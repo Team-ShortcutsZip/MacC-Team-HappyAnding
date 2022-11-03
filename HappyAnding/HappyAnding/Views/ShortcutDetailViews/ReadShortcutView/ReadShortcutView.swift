@@ -124,11 +124,13 @@ extension ReadShortcutView {
             }) {
                 Label("공유", systemImage: "square.and.arrow.up")
             }
-            Button(action: {
-                //Place something action here
-            }) {
-                Label("신고", systemImage: "light.beacon.max.fill")
-            }
+            
+            //TODO: 2차 스프린트 이후 신고 기능 추가 시 사용할 코드
+//            Button(action: {
+//                //Place something action here
+//            }) {
+//                Label("신고", systemImage: "light.beacon.max.fill")
+//            }
         }
     }
     
