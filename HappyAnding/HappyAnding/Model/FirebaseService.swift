@@ -123,6 +123,28 @@ class FirebaseService {
         }
     }
     
+    //MARK: - user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
+    
+    func checkNickNameDuplication(name: String, completionHandler: @escaping (Bool)->()) {
+        
+        var result = true
+        
+        db.collection("User")
+            .whereField("nickname", isEqualTo: name)
+            .limit(to: 1)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    if documents.count == 0 {
+                        result = false
+                    }
+                    completionHandler(result)
+                }
+            }
+    }
+    
     // MARK: - 현재 로그인한 아이디 리턴
     
     func currentUser() -> String {
