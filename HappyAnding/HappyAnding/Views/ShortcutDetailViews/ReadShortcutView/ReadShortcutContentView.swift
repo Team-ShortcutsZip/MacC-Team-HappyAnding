@@ -82,7 +82,7 @@ struct ReadShortcutContentView: View {
         case "business":
             return "비즈니스"
         case "health":
-            return "건강"
+            return "건강 및 피트니스"
         case "lifestyle":
             return "라이프스타일"
         case "weather":
@@ -90,7 +90,7 @@ struct ReadShortcutContentView: View {
         case "photo":
             return "사진 및 비디오"
         case "decoration":
-            return "데코레이션 / 꾸미기"
+            return "데코레이션/꾸미기"
         case "utility":
             return "유틸리티"
         case "sns":
