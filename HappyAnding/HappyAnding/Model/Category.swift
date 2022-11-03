@@ -8,16 +8,16 @@
 import Foundation
 
 enum Category: String, CaseIterable {
+    case lifestyle = "lifestyle"
+    case health = "health"
+    case sns = "sns"
+    case utility = "utility"
+    case business = "business"
+    case photo = "photo"
     case education = "education"
     case finance = "finance"
-    case business = "business"
-    case health = "health"
-    case lifestyle = "lifestyle"
     case weather = "weather"
-    case photo = "photo"
     case decoration = "decoration"
-    case utility = "utility"
-    case sns = "sns"
     case entertainment = "entertainment"
     case trip = "trip"
     
@@ -71,7 +71,7 @@ enum Category: String, CaseIterable {
         case .business:
             return "비즈니스"
         case .health:
-            return "건강"
+            return "건강 및 피트니스"
         case .lifestyle:
             return "라이프스타일"
         case .weather:
@@ -79,7 +79,7 @@ enum Category: String, CaseIterable {
         case .photo:
             return "사진 및 비디오"
         case .decoration:
-            return "데코레이션 / 꾸미기"
+            return "데코레이션/꾸미기"
         case .utility:
             return "유틸리티"
         case .sns:
