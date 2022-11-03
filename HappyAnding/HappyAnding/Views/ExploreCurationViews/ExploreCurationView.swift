@@ -29,6 +29,7 @@ struct ExploreCurationView: View {
             }
             .navigationBarTitle(Text("큐레이션 둘러보기"))
             .navigationBarTitleDisplayMode(.large)
+            .scrollIndicators(.hidden)
             .background(Color.Background)
         }
     }

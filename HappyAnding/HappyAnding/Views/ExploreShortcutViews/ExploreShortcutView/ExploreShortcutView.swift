@@ -27,6 +27,7 @@ struct ExploreShortcutView: View {
             }
             .navigationBarTitle(Text("단축어 둘러보기"))
             .navigationBarTitleDisplayMode(.large)
+            .scrollIndicators(.hidden)
             .background(Color.Background)
         }
     }
