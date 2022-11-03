@@ -97,7 +97,6 @@ class ShortcutsZipViewModel: ObservableObject {
                         print("error: \(error)")
                     }
                 }
-                print(curations)
                 completionHandler(curations)
             }
         }

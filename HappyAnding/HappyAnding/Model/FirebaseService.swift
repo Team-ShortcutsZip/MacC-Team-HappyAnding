@@ -132,7 +132,6 @@ class FirebaseService {
                         print("error: \(error)")
                     }
                 }
-                print(curations)
                 completionHandler(curations)
             }
         }
@@ -472,7 +471,6 @@ class FirebaseService {
                         }
                     }
                     completionHandler(shortcuts)
-                    print(shortcuts)
                 }
             }
     }
@@ -555,7 +553,6 @@ class FirebaseService {
                             print("error: \(error)")
                         }
                     }
-                    print(shortcuts)
                     completionHandler(shortcuts)
                 }
             }
@@ -584,7 +581,6 @@ class FirebaseService {
                         }
                     }
                     completionHandler(shortcuts)
-                    print(shortcuts)
                 }
             }
     }
@@ -612,7 +608,6 @@ class FirebaseService {
                         }
                     }
                     completionHandler(shortcuts)
-                    print(shortcuts)
                 }
             }
     }
@@ -669,6 +664,21 @@ class FirebaseService {
                 completionHandler(curations)
             }
         }
+    }
+    
+    func updateData(shortcut: Shortcuts, user: User) {
+        var shortcutInfo = shortcut
+        var userInfo = user
+        
+        shortcutInfo.numberOfDownload += 1
+        userInfo.likedShortcuts
+        db.collection("Shortcut").document(shortcut.id).setData(shortcutInfo.dictionary) { error in
+            if let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        
     }
     
     // TODO: 단축어 다운로드 정보 저장

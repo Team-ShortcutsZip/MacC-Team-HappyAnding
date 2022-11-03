@@ -10,10 +10,7 @@ import SwiftUI
 //MARK: - UserCurationCell 구현 시작
 
 struct UserCurationCell: View {
-    //title, subtitle, [단축어모델]을 가지는 객체를 받아옴
-//    let title: String
-//    let subtitle: String
-//    let shortcuts: [ShortcutCellModel]
+    
     let curation: Curation
     
     var body: some View {

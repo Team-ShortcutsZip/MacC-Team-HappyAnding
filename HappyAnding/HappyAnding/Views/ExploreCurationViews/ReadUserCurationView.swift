@@ -127,7 +127,6 @@ extension ReadUserCurationView {
         Section {
             Button(action: {
                 isTappedEditButton.toggle()
-                print("ReadUserCurationView \(userCuration)")
             }) {
                 Label("편집", systemImage: "square.and.pencil")
             }
