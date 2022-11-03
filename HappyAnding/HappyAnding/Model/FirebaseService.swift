@@ -771,17 +771,6 @@ class FirebaseService {
         
     }
     
-    //MARK: - 큐레이션 생성 시 단축어 정보 (curationIDs) 업데이트하는 함수
-    
-    func updateCurationIDs(shortcuts: [Shortcuts], curationID: String) {
-        shortcuts.forEach { shortcut in
-            var data = shortcut
-            data.curationIDs.append(curationID)
-            
-            setData(model: data)
-        }
-    }
-    
     //MARK: - 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
     
     func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String) {
