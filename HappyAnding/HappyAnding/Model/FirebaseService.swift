@@ -814,6 +814,7 @@ class FirebaseService {
                             var user = try decoder.decode(User.self, from: jsonData)
                             
                             user.likedShortcuts.removeAll(where: { $0 == shortcutID })
+                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
                             self.setData(model: user)
                             
                         } catch let error {
@@ -839,6 +840,7 @@ class FirebaseService {
                             var user = try decoder.decode(User.self, from: jsonData)
                             
                             user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
+                            user.likedShortcuts.removeAll(where: { $0 == shortcutID })
                             self.setData(model: user)
                             
                         } catch let error {
