@@ -125,6 +125,7 @@ struct IconModalView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
+        .background(Color.Background)
     }
     
     struct ColorCell: View {

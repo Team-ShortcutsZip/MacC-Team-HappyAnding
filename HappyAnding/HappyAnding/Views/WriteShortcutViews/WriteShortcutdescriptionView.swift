@@ -63,6 +63,7 @@ struct WriteShortcutdescriptionView: View {
         }
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .ignoresSafeArea(.keyboard)
+        .background(Color.Background)
     }
 }
 
