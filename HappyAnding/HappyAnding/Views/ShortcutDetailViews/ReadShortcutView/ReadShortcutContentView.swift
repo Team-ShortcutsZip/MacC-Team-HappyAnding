@@ -45,7 +45,7 @@ struct ReadShortcutContentView: View {
             .padding(20)
         }
         .onAppear {
-            firebase.fetchUser(userID: firebase.currentUser()) { user in
+            firebase.fetchUser(userID: shortcut.author) { user in
                 userInformation = user
             }
         }
