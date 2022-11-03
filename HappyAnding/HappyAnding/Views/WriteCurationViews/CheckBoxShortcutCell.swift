@@ -11,9 +11,9 @@ struct CheckBoxShortcutCell: View {
     
     @State var isShortcutTapped: Bool = false
     
-    @Binding var selectedShortcut: [Shortcuts]
+    @Binding var selectedShortcut: [ShortcutCellModel]
     
-    let shortcut: Shortcuts
+    let shortcut: ShortcutCellModel
     
     var body: some View {
         

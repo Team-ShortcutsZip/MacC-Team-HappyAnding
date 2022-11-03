@@ -14,6 +14,37 @@ class FirebaseService {
     static let share = FirebaseService()
     private let db = Firestore.firestore()
     
+    func fetchShortcutCell(completionHandler: @escaping ([ShortcutCellModel])->()) {
+        var shortcutCells: [ShortcutCellModel] = []
+        
+        db.collection("Shortcut").getDocuments() { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        let shortcutCell = ShortcutCellModel(
+                            id: shortcut.id,
+                            sfSymbol: shortcut.sfSymbol,
+                            color: shortcut.color,
+                            title: shortcut.title,
+                            subtitle: shortcut.subtitle,
+                            downloadLink: shortcut.downloadLink.last!
+                        )
+                        shortcutCells.append(shortcutCell)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(shortcutCells)
+            }
+        }
+    }
     //MARK: - 모든 Shortcut을 가져오는 함수
     
     func fetchShortcut(model: String, completionHandler: @escaping ([Shortcuts])->()) {

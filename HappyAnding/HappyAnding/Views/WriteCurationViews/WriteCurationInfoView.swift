@@ -17,7 +17,7 @@ struct WriteCurationInfoView: View {
                                    isAdmin: false,
                                    background: "White",
                                    author: "",
-                                   shortcuts: [Shortcuts]())
+                                   shortcuts: [ShortcutCellModel]())
     @Binding var isWriting: Bool
     
     let firebase = FirebaseService()

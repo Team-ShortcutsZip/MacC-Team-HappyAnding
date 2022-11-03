@@ -8,52 +8,55 @@
 import SwiftUI
 
 struct ReadShortcutView: View {
-    let firebase = FirebaseService()
     
     @Environment(\.openURL) private var openURL
-
+    @State var isMyShortcut: Bool = true
     @State var isEdit = false
-    @State var isTappedDeleteButton = false
     
-    // TODO: 상위 뷰에서 유저데이터와 단축어데이터를 전달받은 변수 생성
-    
-    // shortcuts -> 추후 지워질 변수
-//    var shortcuts = Shortcut.fetchData(number: 3)
-    var shortcut: Shortcuts
-//    let firebase = FirebaseService()
+    //TODO: id만 전달받기
+    @State var shortcut: Shortcuts?
+    var shortcutCell: ShortcutCellModel?
+    let firebase = FirebaseService()
     
     var body: some View {
         
-//        let shortcut: Shortcut = shortcuts.first!
-        
         VStack {
-
-//            ReadShortcutHeaderView(icon: shortcut.sfSymbol, color: shortcut.color, numberOfLike: 99, name: shortcut.name, oneline: "한줄 설 명!")
-            ReadShortcutHeaderView(shortcut: shortcut)
-//            ReadShortcutContentView(writer: "romi", profileImage: "person.crop.circle", explain: shortcut.description, category: "여행", necessaryApps: "인스타그램", requirements: "불라불라")
-            ReadShortcutContentView(shortcut: shortcut)
-
-            Button(action: {
-                if let url = URL(string: shortcut.downloadLink[0]) {
-                    openURL(url)
-                }
-            }) {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(Color.Primary)
-                    .frame(height: 52)
-                    .padding(.horizontal, 16)
-                    .overlay {
-                        Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
-                        .Body1()
-                        .foregroundColor(Color.Background)
+            
+            if let shortcut {
+                ReadShortcutHeaderView(shortcut: shortcut)
+                ReadShortcutContentView(shortcut: shortcut)
+                
+                Button(action: {
+                    if let url = URL(string: shortcut.downloadLink[0]) {
+                        openURL(url)
                     }
+                }) {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(Color.Primary)
+                        .frame(height: 52)
+                        .padding(.horizontal, 16)
+                        .overlay {
+                            Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
+                                .Body1()
+                                .foregroundColor(Color.Background)
+                        }
+                }
             }
         }
         .padding(.vertical, 20)
         .background(Color.Background)
+        .onAppear() {
+            if shortcut == nil {
+                if let shortcutCell {
+                    firebase.fetchShortcutDetail(id: shortcutCell.id) { data in
+                        self.shortcut = data
+                    }
+                }
+            }
+        }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if shortcut.author == firebase.currentUser() {
+            if isMyShortcut {
                 myShortcutMenuSection
             } else {
                 otherShortcutMenuSection
@@ -64,25 +67,10 @@ struct ReadShortcutView: View {
         }))
         .fullScreenCover(isPresented: $isEdit) {
             NavigationView {
-                WriteShortcutTitleView(isWriting: $isEdit, shortcut: shortcut, isEdit: true)
+                if let shortcut {
+                    WriteShortcutTitleView(isWriting: $isEdit, shortcut: shortcut, isEdit: true)
+                }
             }
-        }
-        .alert(isPresented: $isTappedDeleteButton) {
-            Alert(title: Text("글 삭제")
-                .foregroundColor(.Gray5),
-                  message: Text("글을 삭제하시겠습니까?")
-                .foregroundColor(.Gray5),
-                  primaryButton: .default(Text("닫기"),
-                  action: {
-                self.isTappedDeleteButton.toggle()
-            }),
-                  secondaryButton: .destructive(
-                    Text("삭제")
-                    , action: {
-                
-                // TODO: Delete function
-                
-            }))
         }
     }
 }
@@ -107,13 +95,14 @@ extension ReadShortcutView {
             }
             
             // TODO: 구현 필요
-            
-            Button(role: .destructive, action: {
-                //Place something action here
-                isTappedDeleteButton.toggle()
-            }) {
-                Label("삭제", systemImage: "trash.fill")
-            }
+            /*
+             Button(action: {
+             //Place something action here
+             }) {
+             Label("삭제", systemImage: "trash.fill")
+             .foregroundColor(Color.red)
+             }
+             */
         }
         
     }
@@ -134,9 +123,11 @@ extension ReadShortcutView {
     }
     
     func share() {
-        guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
-        let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
-        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+        if let shortcut {
+            guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
+            let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+        }
     }
 }
 

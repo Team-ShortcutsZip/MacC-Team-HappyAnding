@@ -11,9 +11,9 @@ import SwiftUI
 
 struct UserCurationCell: View {
     //title, subtitle, [단축어모델]을 가지는 객체를 받아옴
-    let title: String
-    let subtitle: String
-    let shortcuts: [Shortcuts]
+//    let title: String
+//    let subtitle: String
+//    let shortcuts: [ShortcutCellModel]
     let curation: Curation
     
     var body: some View {
@@ -27,7 +27,7 @@ struct UserCurationCell: View {
                 //MARK: - 단축어 아이콘 배열
                 
                 HStack {
-                    ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                    ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
                         if index < 4 {
                             ZStack {
                                 Rectangle()
@@ -44,7 +44,7 @@ struct UserCurationCell: View {
                     }
                     
                     //단축어가 4개 이상인 경우에만 그리는 아이콘
-                    if shortcuts.count > 4 {
+                    if curation.shortcuts.count > 4 {
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Color.Gray2)
@@ -52,7 +52,7 @@ struct UserCurationCell: View {
                                 .frame(width: 36, height: 36)
                             HStack(spacing: 0) {
                                 Image(systemName: "plus")
-                                Text("\(shortcuts.count-4)")
+                                Text("\(curation.shortcuts.count-4)")
                             }
                             .foregroundColor(.Gray5)
                             .Footnote()
@@ -64,19 +64,17 @@ struct UserCurationCell: View {
                 
                 //MARK: - curation title, subtitle
                 
-                Text(title)
+                Text(curation.title)
                     .Headline()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                if let subtitle {
-                    Text(subtitle)
-                        .Body2()
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(10)
-                        .foregroundColor(Color.Gray5)
-                        .padding(.bottom, 20)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
+                Text(curation.subtitle)
+                    .Body2()
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(10)
+                    .foregroundColor(Color.Gray5)
+                    .padding(.bottom, 20)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal, 24)
             .background(Color.White)

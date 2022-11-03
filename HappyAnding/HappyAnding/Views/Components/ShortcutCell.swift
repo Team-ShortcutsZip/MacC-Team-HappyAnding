@@ -37,16 +37,17 @@ struct ShortcutCell: View {
     
     // TODO: 단축어 구조체 모델 생성 후 객체로 변경하기
     // TODO: Color, Font extension 등록 후 색상 변경하기
-    let shortcut: Shortcuts
+    var shortcut: Shortcuts?
+    @State var shortcutCell = ShortcutCellModel(
+        id: "",
+        sfSymbol: "",
+        color: "",
+        title: "",
+        subtitle: "",
+        downloadLink: ""
+    )
     
     var rankNumber: Int = -1
-    
-//    let color: String
-//    let sfSymbol: String
-//    let name: String
-//    let description: String
-//    let numberOfDownload: Int
-//    let downloadLink: String
     
     var body: some View {
         
@@ -66,28 +67,40 @@ struct ShortcutCell: View {
                     .onTapGesture {
                         
                         // TODO: 앱 여는 기능 추가
-                        if let url = URL(string: shortcut.downloadLink[0]) {
+                        if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
                         }
                     }
             }
             .padding(.vertical, 20)
             .background( background )
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 16)
         }
         .padding(.top, 12)
         .background(Color.Background)
+        .onAppear() {
+            if let shortcut  {
+                self.shortcutCell = ShortcutCellModel(
+                    id: shortcut.id,
+                    sfSymbol: shortcut.sfSymbol,
+                    color: shortcut.color,
+                    title: shortcut.title,
+                    subtitle: shortcut.subtitle,
+                    downloadLink: shortcut.downloadLink.last!
+                )
+            }
+        }
     }
     
     var icon: some View {
         
         ZStack(alignment: .center) {
             Rectangle()
-                .fill(Color.fetchGradient(color: shortcut.color))
+                .fill(Color.fetchGradient(color: shortcutCell.color))
                 .cornerRadius(8)
                 .frame(width: 52, height: 52)
             
-            Image(systemName: shortcut.sfSymbol)
+            Image(systemName: shortcutCell.sfSymbol)
                 .foregroundColor(.white)
         }
         .padding(.leading, 20)
@@ -102,11 +115,11 @@ struct ShortcutCell: View {
                     .foregroundColor(.Gray4)
                     .padding(0)
             }
-            Text(shortcut.title)
+            Text(shortcutCell.title)
                 .Headline()
                 .foregroundColor(.Gray5)
                 .lineLimit(1)
-            Text(shortcut.subtitle)
+            Text(shortcutCell.subtitle)
                 .Footnote()
                 .foregroundColor(.Gray3)
                 .lineLimit(2)
@@ -116,7 +129,7 @@ struct ShortcutCell: View {
     
     var downloadInfo: some View {
         
-        VStack(alignment: shortcut.numberOfDownload > 999 ? .trailing : .center, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             Image(systemName: "arrow.down.app.fill")
                 .foregroundColor(.Gray4)
                 .font(.system(size: 24, weight: .medium))
