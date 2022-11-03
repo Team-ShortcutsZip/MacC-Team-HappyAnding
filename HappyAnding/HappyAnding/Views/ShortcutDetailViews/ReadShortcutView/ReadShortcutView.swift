@@ -10,7 +10,6 @@ import SwiftUI
 struct ReadShortcutView: View {
     
     @Environment(\.openURL) private var openURL
-    @State var isMyShortcut: Bool = true
     @State var isEdit = false
     
     //TODO: id만 전달받기
@@ -56,7 +55,7 @@ struct ReadShortcutView: View {
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if isMyShortcut {
+            if shortcut?.author == firebase.currentUser() {
                 myShortcutMenuSection
             } else {
                 otherShortcutMenuSection
@@ -95,14 +94,13 @@ extension ReadShortcutView {
             }
             
             // TODO: 구현 필요
-            /*
+            
              Button(action: {
              //Place something action here
              }) {
              Label("삭제", systemImage: "trash.fill")
              .foregroundColor(Color.red)
              }
-             */
         }
         
     }
