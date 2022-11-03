@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReadShortcutView: View {
     
+    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
     @State var isEdit = false
     @State var isTappedDeleteButton = false
@@ -87,6 +88,7 @@ struct ReadShortcutView: View {
                         // TODO: Delete function
                         if let shortcut {
                             firebase.deleteData(model: shortcut)
+                            presentation.wrappedValue.dismiss()
                         }
                     }))
         }

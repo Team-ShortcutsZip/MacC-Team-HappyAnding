@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ReadUserCurationView: View {
+    
+    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
+    
     let firebase = FirebaseService()
     @State var authorInformation: User? = nil
     
@@ -108,6 +111,7 @@ struct ReadUserCurationView: View {
                         Text("삭제")
                         , action: {
                             firebase.deleteData(model: userCuration)
+                            presentation.wrappedValue.dismiss()
                 }))
             }
         }
