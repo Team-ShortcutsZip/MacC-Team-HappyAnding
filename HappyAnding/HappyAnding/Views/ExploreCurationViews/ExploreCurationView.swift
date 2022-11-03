@@ -27,7 +27,8 @@ struct ExploreCurationView: View {
                 }
                 .padding(.bottom, 32)
             }
-            .navigationTitle(Text("단축어 큐레이션"))
+            .navigationBarTitle(Text("큐레이션 둘러보기"))
+            .navigationBarTitleDisplayMode(.large)
             .background(Color.Background)
         }
     }
@@ -40,7 +41,7 @@ struct adminCurationsFrameiew: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
-                Text("숏컷집의 추천 큐레이션")
+                Text("숏컷집 추천 큐레이션")
                     .Title2()
                     .foregroundColor(.Gray5)
                     .onTapGesture { }
