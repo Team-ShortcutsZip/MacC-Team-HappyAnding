@@ -17,6 +17,10 @@ import FirebaseAuth
 
 class ShortcutsZipViewModel: ObservableObject {
     
+    @Published var userInfo: User?
+    @Published var shortcutsUserLiked: [Shortcuts] = []
+    @Published var shortcutsUserDownloaded: [Shortcuts] = []
+    
     @Published var shortcutsMadeByUser: [Shortcuts] = []
     @Published var sortedShortcutsByDownload: [Shortcuts] = []
     @Published var curations: [Curation] = []
@@ -38,6 +42,40 @@ class ShortcutsZipViewModel: ObservableObject {
         }
         fetchCurationByAuthor(author: currentUser()) { curations in
             self.curationsMadeByUser = curations
+        }
+        fetchUser(userID: currentUser()) { user in
+            self.userInfo = user
+            self.fetchShortcutByIds(shortcutIds: user.downloadedShortcuts ?? []) { downloadedShortcuts in
+                self.shortcutsUserDownloaded = downloadedShortcuts
+            }
+            self.fetchShortcutByIds(shortcutIds: user.likedShortcuts ?? []) { likedShortcuts in
+                self.shortcutsUserLiked = likedShortcuts
+            }
+        }
+    }
+    
+    func fetchUser(userID: String, completionHandler: @escaping (User)->()) {
+        
+        db.collection("User")
+            .whereField("id", isEqualTo: userID)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(User.self, from: jsonData)
+                        completionHandler(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+            }
         }
     }
     
@@ -183,6 +221,38 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
                 completionHandler(curations)
             }
+        }
+    }
+    
+    // MARK: - shortcut Id 배열로 shortcut 배열 가져오는 함수
+    
+    func fetchShortcutByIds(shortcutIds: [String], completionHandler: @escaping ([Shortcuts])->()) {
+        
+        var shortcuts: [Shortcuts] = []
+        
+        for shortcutId in shortcutIds {
+            db.collection("Shortcut")
+                .whereField("id", isEqualTo: shortcutId)
+                .getDocuments { (querySnapshot, error) in
+                    if let error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        guard let documents = querySnapshot?.documents else { return }
+                        let decoder = JSONDecoder()
+                        
+                        for document in documents {
+                            do {
+                                let data = document.data()
+                                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                                let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                                shortcuts.append(shortcut)
+                            } catch let error {
+                                print("error: \(error)")
+                            }
+                        }
+                        completionHandler(shortcuts)
+                    }
+                }
         }
     }
     
