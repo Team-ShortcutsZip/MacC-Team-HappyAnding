@@ -46,9 +46,6 @@ struct WriteCurationSetView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .fixedSize(horizontal: false, vertical: true)
                     
-                    Text("\(Image(systemName: "chevron.left")) Back")
-                        .frame(alignment: .trailing)
-                        .foregroundColor(Color(UIColor.clear))
                 }
                 .padding(.top, 12)
                 .padding(.horizontal, 16)
