@@ -11,7 +11,6 @@ struct ReadUserCurationView: View {
     let firebase = FirebaseService()
     @State var authorInformation: User? = nil
     
-    @State var isMyCuration: Bool = true
     @State var isWriting = false
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
@@ -62,7 +61,7 @@ struct ReadUserCurationView: View {
                 otherCurationMenuSection
             }
         }, label: {
-            Image(systemName: isMyCuration ? "ellipsis" : "square.and.arrow.up")
+            Image(systemName: userCuration.author == firebase.currentUser() ? "ellipsis" : "square.and.arrow.up")
                 .foregroundColor(.Gray4)
         }))
         .fullScreenCover(isPresented: $isTappedEditButton) {
