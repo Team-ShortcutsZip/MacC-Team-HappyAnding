@@ -73,7 +73,7 @@ struct ShortcutCell: View {
             }
             .padding(.vertical, 20)
             .background( background )
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 20)
         }
         .padding(.top, 12)
         .background(Color.Background)
