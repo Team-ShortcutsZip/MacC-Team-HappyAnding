@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ReadUserCurationView: View {
+    let firebase = FirebaseService()
+    @State var authorInformation: User? = nil
     
-    @State var isMyCuration: Bool = true
     @State var isWriting = false
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
     
-    var userCuration: Curation
-//    let nickName: String
+    let userCuration: Curation
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -53,14 +53,15 @@ struct ReadUserCurationView: View {
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if isMyCuration {
+            if userCuration.author == firebase.currentUser() {
                 myCurationMenuSection
             } else {
                 otherCurationMenuSection
             }
         }, label: {
-            Image(systemName: isMyCuration ? "ellipsis" : "square.and.arrow.up")
+            Image(systemName: userCuration.author == firebase.currentUser() ? "ellipsis" : "square.and.arrow.up")
                 .foregroundColor(.Gray4)
         }))
         .fullScreenCover(isPresented: $isTappedEditButton) {
@@ -80,7 +81,7 @@ struct ReadUserCurationView: View {
                     .background(Color.Gray3)
                     .clipShape(Circle())
                 
-                Text(userCuration.author)
+                Text(authorInformation?.nickname ?? "닉네임")
                     .Headline()
                     .foregroundColor(.Gray4)
                 
@@ -121,6 +122,11 @@ struct ReadUserCurationView: View {
                     // TODO: Delete function
                     
                 }))
+            }
+        }
+        .onAppear {
+            firebase.fetchUser(userID: userCuration.author) { user in
+                authorInformation = user
             }
         }
     }

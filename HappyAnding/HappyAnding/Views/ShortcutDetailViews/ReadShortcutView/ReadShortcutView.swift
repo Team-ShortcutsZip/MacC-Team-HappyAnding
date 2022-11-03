@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct ReadShortcutView: View {
+    let firebase = FirebaseService()
     
     @Environment(\.openURL) private var openURL
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
-    @State var isMyShortcut: Bool = true
+
     @State var isEdit = false
     @State var isTappedDeleteButton = false
     
@@ -54,7 +53,7 @@ struct ReadShortcutView: View {
         .background(Color.Background)
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if isMyShortcut {
+            if shortcut.author == firebase.currentUser() {
                 myShortcutMenuSection
             } else {
                 otherShortcutMenuSection

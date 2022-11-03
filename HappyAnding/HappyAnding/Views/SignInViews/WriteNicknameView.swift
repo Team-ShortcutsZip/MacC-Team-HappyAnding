@@ -32,6 +32,7 @@ struct WriteNicknameView: View {
     @State var isNicknameChecked: Bool = false
     
     let user = Auth.auth().currentUser
+    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -52,15 +53,6 @@ struct WriteNicknameView: View {
                 .padding(.top, 4)
             
             Spacer()
-            
-            
-            // TODO: 중복확인 함수 설정 후 삭제필요
-            Button {
-                isNicknameChecked = true
-            } label: {
-                Text("임시 중복확인")
-            }
-
             
             startButton
         }
@@ -126,7 +118,10 @@ struct WriteNicknameView: View {
             //이거 바꿔서 alert 띄움
             checkNicknameDuplicate = true
             
-            //TODO: 중복 확인 버튼 동작 넣기
+            firebase.checkNickNameDuplication(name: nickname) { result in
+                isDuplicatedNickname = result
+                isNicknameChecked = !result
+            }
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
@@ -148,17 +143,13 @@ struct WriteNicknameView: View {
     ///시작하기 버튼
     var startButton: some View {
         Button(action: {
-            
-            
             userAuth.signUp()
+            
             withAnimation(.easeInOut) {
                 self.signInStatus = true
             }
-            // TODO: Firebase 회원가입 함수 (uid를 이용해 닉네임 같이 저장)
-            if let user {
-                print("Current User ID = \(user.uid)")
-            }
             
+            firebase.setData(model: User(id: user?.uid ?? "", nickname: nickname))
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
