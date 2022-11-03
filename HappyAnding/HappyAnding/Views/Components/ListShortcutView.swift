@@ -115,7 +115,7 @@ struct ListShortcutView: View {
         case .download:
             return "\(self.categoryName?.translateName() ?? "") 1위 ~ 100위"
         case .popular:
-            return "💡 좋아요를 많이 받은 단축어들로 구성 되어 있어요!"
+            return "💡 좋아요를 많이 받은 단축어들로 구성되어 있어요!"
         case .myShortcut:
             return ""
         case .myLovingShortcut:
