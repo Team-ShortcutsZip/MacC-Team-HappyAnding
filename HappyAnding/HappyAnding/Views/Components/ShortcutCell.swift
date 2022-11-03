@@ -13,12 +13,10 @@ import SwiftUI
  단축어 정보를 전달해주세요. 클릭시 단축어 상세 뷰로 이동합니다.
  
  - parameters:
- - color: 아이콘 색상
- - sfSymbol: 아이콘 이미지
- - name: 단축어 게시글 이름
- - description: 한 줄 설명
- - numberOfDownload: 다운로드 수
- - downloadLink: 다운로드 링크
+ - shortcut : 단축어 리스트에서 접근 시 Shortcuts  형태로 전달해주세요
+ - shortcutCell: 큐레이션에서 접근 시 ShortcutCellModel 형태로 전달해주세요
+ 
+ ShortcutCell에서는 Shortcuts의 형태로 데이터를 전달받아도 ShortcutCellModel의 형태로 변환하여 사용하며, 전달 시에만 shortcut을 전달합니다.
  
  - description:
  - 해당 뷰를 리스트로 사용할 때 다음과 같은 속성을 작성해주세요
@@ -34,10 +32,8 @@ import SwiftUI
 struct ShortcutCell: View {
     
     @Environment(\.openURL) private var openURL
-    
-    // TODO: 단축어 구조체 모델 생성 후 객체로 변경하기
-    // TODO: Color, Font extension 등록 후 색상 변경하기
     var shortcut: Shortcuts?
+    
     @State var shortcutCell = ShortcutCellModel(
         id: "",
         sfSymbol: "",
@@ -52,7 +48,7 @@ struct ShortcutCell: View {
     var body: some View {
         
         ZStack {
-            NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+            NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutCell: shortcutCell)) {
                 EmptyView()
             }
             .opacity(0)
@@ -74,7 +70,7 @@ struct ShortcutCell: View {
             }
             .padding(.vertical, 20)
             .background( background )
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 20)
         }
         .padding(.top, 12)
         .background(Color.Background)

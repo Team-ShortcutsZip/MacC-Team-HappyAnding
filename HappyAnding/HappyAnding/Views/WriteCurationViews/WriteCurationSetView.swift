@@ -108,7 +108,6 @@ struct WriteCurationSetView: View {
     var bottomButton: some View {
         
         NavigationLink {
-            let _ = print(shortcuts)
             WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
             
         } label: {
@@ -123,23 +122,6 @@ struct WriteCurationSetView: View {
         }
         .padding(.bottom, 24)
         .disabled(curation.shortcuts.count == 0)
-        
-//        Button(action: {
-//            //Action넣기
-//            print(selectedShortcut)
-//            
-//        }, label: {
-//            ZStack {
-//                RoundedRectangle(cornerRadius: 12)
-//                    .foregroundColor(numberOfSelected > 0 ? .Primary : .Gray1)
-//                    .padding(.horizontal, 16)
-//                    .frame(height: 52)
-//                Text("완료")
-//                    .foregroundColor(numberOfSelected > 0 ? .Background : .Gray3)
-//            }
-//        })
-//        .padding(.bottom, 24)
-//        .disabled(numberOfSelected == 0)
     }
 }
 

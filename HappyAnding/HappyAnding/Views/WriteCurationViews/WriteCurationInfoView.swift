@@ -74,7 +74,6 @@ struct WriteCurationInfoView: View {
         }
         .navigationBarTitle(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
         .onAppear {
-            print("WriteCurationView \(curation)")
         }
     }
 }
