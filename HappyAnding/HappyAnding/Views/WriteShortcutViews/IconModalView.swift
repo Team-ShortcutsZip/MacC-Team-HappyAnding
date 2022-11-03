@@ -15,27 +15,27 @@ struct IconModalView: View {
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     let symbols = [
-        "graduationcap.fill",
-        "books.vertical.fill",
-        "creditcard.fill",
-        "printer.fill",
-        "phone.fill",
-        "cross.fill",
-        "newspaper.fill",
+        "square.stack.3d.up.fill",
+        "house.fill",
+        "map.fill",
         "bus.fill",
         "alarm.fill",
         "calendar",
-        "cloud.sun.fill",
-        "camera.fill",
-        "paintpalette.fill",
-        "paintbrush.fill",
-        "hammer.fill",
-        "tray.fill",
-        "speaker.wave.2.fill",
-        "gearshape.fill",
-        "command.square.fill",
+        "magnifyingglass",
         "bubble.left.fill",
-        "headphones"
+        "phone.fill",
+        "speaker.wave.2.fill",
+        "music.note",
+        "photo.fill",
+        "doc.text.fill",
+        "keyboard.fill",
+        "mic.fill",
+        "creditcard.fill",
+        "paintpalette.fill",
+        "cloud.sun.fill",
+        "figure.walk",
+        "globe",
+        "gearshape.fill"
     ]
     
     let colors = [
