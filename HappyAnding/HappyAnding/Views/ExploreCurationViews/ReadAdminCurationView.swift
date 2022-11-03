@@ -29,7 +29,7 @@ struct ReadAdminCurationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             GeometryReader { geo in
                 let yOffset = geo.frame(in: .global).minY
                 
@@ -90,7 +90,7 @@ struct ReadAdminCurationView: View {
                 Text(curation.title)
                     .Title2()
                     .foregroundColor(.Gray5)
-                Text(curation.subtitle ?? "")
+                Text(curation.subtitle)
                     .Body2()
                     .foregroundColor(.Gray4)
             }
