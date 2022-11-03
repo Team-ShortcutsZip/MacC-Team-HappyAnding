@@ -32,6 +32,7 @@ struct WriteNicknameView: View {
     @State var isNicknameChecked: Bool = false
     
     let user = Auth.auth().currentUser
+    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -158,6 +159,8 @@ struct WriteNicknameView: View {
             if let user {
                 print("Current User ID = \(user.uid)")
             }
+            
+            firebase.setData(model: User(id: user?.uid ?? "", nickname: nickname))
             
         }, label: {
             ZStack {

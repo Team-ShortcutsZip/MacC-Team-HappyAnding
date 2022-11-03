@@ -21,6 +21,8 @@ struct MyPageView: View {
     
     @State var shortcutsByUser: [Shortcuts] = []
     @State var curationsByUser: [Curation] = []
+    @State var likedShortcuts: [Shortcuts] = []
+    @State var downloadedShortcuts: [Shortcuts] = []
     
     var body: some View {
         NavigationView {
@@ -41,7 +43,7 @@ struct MyPageView: View {
                             .clipShape(Circle())
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text(userName)
+                                Text(userInformation?.nickname ?? "사용자")
                                     .Title1()
                                     .foregroundColor(.Gray5)
                                 //TODO: 스프린트 1에서 배제 추후 주석 삭제 필요
@@ -67,11 +69,11 @@ struct MyPageView: View {
                     UserCurationListView(userCurations: curationsByUser)
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
-                        shortcuts: userInformation?.likeShortcuts,
+                        shortcuts: likedShortcuts,
                         type: .myLovingShortcut
                     )
                     MyPageShortcutList(
-                        shortcuts: userInformation?.downloadedShortcut,
+                        shortcuts: downloadedShortcuts,
                         type: .myDownloadShortcut
                     )
                     .padding(.bottom, 44)
@@ -93,10 +95,19 @@ struct MyPageView: View {
             .background(Color.Background)
         }
         .onAppear {
-            firebase.fetchShortcutByAuthor(author: "testUser") { shortcuts in
+            firebase.fetchUser(userID: firebase.currentUser()) { user in
+                userInformation = user
+            }
+            firebase.fetchShortcutByIds(shortcutIds: userInformation?.likedShortcuts ?? []) { shortcuts in
+                likedShortcuts = shortcuts
+            }
+            firebase.fetchShortcutByIds(shortcutIds: userInformation?.downloadedShortcuts ?? []) { shortcuts in
+                downloadedShortcuts = shortcuts
+            }
+            firebase.fetchShortcutByAuthor(author: firebase.currentUser()) { shortcuts in
                 shortcutsByUser = shortcuts
             }
-            firebase.fetchCurationByAuthor(author: "testUser") { curations in
+            firebase.fetchCurationByAuthor(author: firebase.currentUser()) { curations in
                 curationsByUser = curations
             }
         }
