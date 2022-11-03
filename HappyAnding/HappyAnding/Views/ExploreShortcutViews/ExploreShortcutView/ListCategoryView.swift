@@ -19,27 +19,26 @@ struct ListCategoryView: View {
                 .ignoresSafeArea()
             
             VStack {
-                LazyVGrid(columns: gridLayout) {
+                LazyVGrid(columns: gridLayout, spacing: 0) {
                     ForEach(Category.allCases, id: \.self) { item in
-                        NavigationLink(destination:
-                            ListShortcutView(shortcuts: shortcuts, categoryName: item)
-                        ) {
-                            Text(translateName(item.rawValue))
-                                .Body2()
-                                .tag(item)
-                                .foregroundColor(Color.Gray3)
-                                .frame(maxWidth: UIScreen.main.bounds.size.width * 0.5,
-                                       minHeight: 48)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(Color.Gray3, lineWidth: 1)
-                                )
+                        NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: item)) {
+                            RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
+                                .stroke(Color.Gray1, lineWidth: 1)
+                                .background(Color.White)
+                                .cornerRadius(12)
+                                .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
+                                .overlay {
+                                    Text(translateName(item.rawValue))
+                                        .Body2()
+                                        .foregroundColor(Color.Gray5)
+                                }
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 7)
                         }
-                        .padding(8)
                     }
                 }
-                .padding(.horizontal, 8)
-                .padding(.top, 24)
+                .padding(.horizontal, 16)
+                .padding(.top, 32)
                 Spacer().frame(maxWidth: .infinity)
             }
         }
@@ -58,7 +57,7 @@ struct ListCategoryView: View {
         case "business":
             return "비즈니스"
         case "health":
-            return "건강"
+            return "건강 및 피트니스"
         case "lifestyle":
             return "라이프스타일"
         case "weather":
@@ -66,7 +65,7 @@ struct ListCategoryView: View {
         case "photo":
             return "사진 및 비디오"
         case "decoration":
-            return "데코레이션 / 꾸미기"
+            return "데코레이션/꾸미기"
         case "utility":
             return "유틸리티"
         case "sns":

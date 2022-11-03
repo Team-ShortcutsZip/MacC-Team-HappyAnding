@@ -17,18 +17,65 @@ import FirebaseAuth
 
 class ShortcutsZipViewModel: ObservableObject {
     
-    @Published var shortcuts: [Shortcuts] = []
+    @Published var userInfo: User?
+    @Published var shortcutsUserLiked: [Shortcuts] = []
+    @Published var shortcutsUserDownloaded: [Shortcuts] = []
+    
+    @Published var shortcutsMadeByUser: [Shortcuts] = []
+    @Published var sortedShortcutsByDownload: [Shortcuts] = []
     @Published var curations: [Curation] = []
+    
+    @Published var curationsMadeByUser: [Curation] = []
     
     static let share = FirebaseService()
     private let db = Firestore.firestore()
     
     init() {
-        fetchShortcut(model: "Shortcut") { shortcuts in
-            self.shortcuts = shortcuts
+        fetchShortcutByAuthor(author: currentUser()) { shortcuts in
+            self.shortcutsMadeByUser = shortcuts
+        }
+        fetchAllDownloadShortcut(orderBy: "numberOfDownload") { shortcuts in
+            self.sortedShortcutsByDownload = shortcuts
         }
         fetchCuration { curations in
             self.curations = curations
+        }
+        fetchCurationByAuthor(author: currentUser()) { curations in
+            self.curationsMadeByUser = curations
+        }
+        fetchUser(userID: currentUser()) { user in
+            self.userInfo = user
+            self.fetchShortcutByIds(shortcutIds: user.downloadedShortcuts ?? []) { downloadedShortcuts in
+                self.shortcutsUserDownloaded = downloadedShortcuts
+            }
+            self.fetchShortcutByIds(shortcutIds: user.likedShortcuts ?? []) { likedShortcuts in
+                self.shortcutsUserLiked = likedShortcuts
+            }
+        }
+    }
+    
+    func fetchUser(userID: String, completionHandler: @escaping (User)->()) {
+        
+        db.collection("User")
+            .whereField("id", isEqualTo: userID)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(User.self, from: jsonData)
+                        completionHandler(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+            }
         }
     }
     
@@ -58,22 +105,67 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
-    // MARK: shortcuts을 Download 순으로 정렬하는 함수
-    // TODO: 서버 데이터 요청 방식에 따라 추후 변경될 부분
-    
-    func sortedShortcutsByDownload() -> [Shortcuts] {
-        self.shortcuts.sorted {
-            $0.numberOfDownload > $1.numberOfDownload
-        }
+    // MARK: 모든 단축어를 다운로드 수로 내림차순 정렬하여 가져오는 함수
+    func fetchAllDownloadShortcut(orderBy: String, completionHandler: @escaping ([Shortcuts])->()) {
+        var shortcuts: [Shortcuts] = []
+        
+        db.collection("Shortcut")
+            .order(by: orderBy, descending: true)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            shortcuts.append(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(shortcuts)
+                }
+            }
     }
     
-    // MARK: shortcuts을 Like 순으로 정렬하는 함수
-    // TODO: 서버 데이터 요청 방식에 따라 추후 변경될 부분
+    // MARK: - 현재 로그인한 아이디 리턴
     
-    func sortedshortcutsByLike() -> [Shortcuts] {
-        self.shortcuts.sorted {
-            $0.numberOfLike > $1.numberOfLike
-        }
+    func currentUser() -> String {
+        Auth.auth().currentUser?.uid ?? ""
+    }
+    
+    // MARK: 현재 user가 만들었던 shortcuts에 대한 배열을 return하는 함수
+    
+    func fetchShortcutByAuthor(author: String, completionHandler: @escaping ([Shortcuts])->()) {
+        
+        var shortcuts: [Shortcuts] = []
+        
+        db.collection("Shortcut")
+            .whereField("author", isEqualTo: author)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            shortcuts.append(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(shortcuts)
+                }
+            }
     }
     
     //MARK: - 파이어스토어에서 모든 Curation을 가져오는 함수
@@ -99,6 +191,68 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
                 completionHandler(curations)
             }
+        }
+    }
+    
+    // MARK: Author에 의한 큐레이션들 받아오는 함수
+    
+    func fetchCurationByAuthor (author: String, completionHandler: @escaping ([Curation])->()) {
+        
+        var curations: [Curation] = []
+        
+        db.collection("Curation")
+            .whereField("author", isEqualTo: author)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let curation = try decoder.decode(Curation.self, from: jsonData)
+                        curations.append(curation)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(curations)
+            }
+        }
+    }
+    
+    // MARK: - shortcut Id 배열로 shortcut 배열 가져오는 함수
+    
+    func fetchShortcutByIds(shortcutIds: [String], completionHandler: @escaping ([Shortcuts])->()) {
+        
+        var shortcuts: [Shortcuts] = []
+        
+        for shortcutId in shortcutIds {
+            db.collection("Shortcut")
+                .whereField("id", isEqualTo: shortcutId)
+                .getDocuments { (querySnapshot, error) in
+                    if let error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        guard let documents = querySnapshot?.documents else { return }
+                        let decoder = JSONDecoder()
+                        
+                        for document in documents {
+                            do {
+                                let data = document.data()
+                                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                                let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                                shortcuts.append(shortcut)
+                            } catch let error {
+                                print("error: \(error)")
+                            }
+                        }
+                        completionHandler(shortcuts)
+                    }
+                }
         }
     }
     
