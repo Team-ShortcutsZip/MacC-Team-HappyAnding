@@ -91,14 +91,72 @@ class FirebaseService {
         }
     }
     
+    // MARK: - shortcut Id 배열로 shortcut 배열 가져오는 함수
     
-    // MARK: author를 이용해서 해당 유저 정보 리턴하는 함수
-    // TODO: 추후 userID 를 이용하도록 변경 필요
+    func fetchShortcutByIds(shortcutIds: [String], completionHandler: @escaping ([Shortcuts])->()) {
+        
+        var shortcuts: [Shortcuts] = []
+        
+        for shortcutId in shortcutIds {
+            db.collection("Shortcut")
+                .whereField("id", isEqualTo: shortcutId)
+                .getDocuments { (querySnapshot, error) in
+                    if let error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        guard let documents = querySnapshot?.documents else { return }
+                        let decoder = JSONDecoder()
+                        
+                        for document in documents {
+                            do {
+                                let data = document.data()
+                                let jsonData = try JSONSerialization.data(withJSONObject: data)
+                                let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                                shortcuts.append(shortcut)
+                            } catch let error {
+                                print("error: \(error)")
+                            }
+                        }
+                        completionHandler(shortcuts)
+                    }
+                }
+        }
+    }
     
-    func fetchUserShortcut(userID: String, completionHandler: @escaping (User)->()) {
+    //MARK: - user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
+    
+    func checkNickNameDuplication(name: String, completionHandler: @escaping (Bool)->()) {
+        
+        var result = true
         
         db.collection("User")
-            .whereField("author", isEqualTo: userID)
+            .whereField("nickname", isEqualTo: name)
+            .limit(to: 1)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    if documents.count == 0 {
+                        result = false
+                    }
+                    completionHandler(result)
+                }
+            }
+    }
+    
+    // MARK: - 현재 로그인한 아이디 리턴
+    
+    func currentUser() -> String {
+        Auth.auth().currentUser?.uid ?? ""
+    }
+    
+    // MARK: - 로그인한 아이디로 User 가져오는 함수
+    
+    func fetchUser(userID: String, completionHandler: @escaping (User)->()) {
+        
+        db.collection("User")
+            .whereField("id", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
                 print("Error getting documents: \(error)")
