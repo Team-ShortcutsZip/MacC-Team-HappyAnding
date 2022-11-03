@@ -37,9 +37,14 @@ struct ReadShortcutContentView: View {
                     .padding(.bottom, 20)
                 categoryView
                     .padding(.bottom, 20)
-                ReusableTextView(title: "단축어 사용에 필요한 앱", contents: nil, contentsArray: shortcut.requiredApp)
-                    .padding(.bottom, 20)
-                ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: shortcut.shortcutRequirements, contentsArray: nil)
+                
+                if !shortcut.requiredApp.isEmpty {
+                    ReusableTextView(title: "단축어 사용에 필요한 앱", contents: nil, contentsArray: shortcut.requiredApp)
+                        .padding(.bottom, 20)
+                }
+                if !shortcut.shortcutRequirements.isEmpty {
+                    ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: shortcut.shortcutRequirements, contentsArray: nil)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)
