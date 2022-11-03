@@ -15,9 +15,12 @@ import CryptoKit
 /// Apple 로그인을 처리하는 클래스
 class AppleAuthCoordinator: NSObject {
     
+    @AppStorage("signInStatus") var signInStatus = false
+    
     var userAuth = UserAuth.shared
     var currentNonce: String?
     let window: UIWindow?
+    let firebase = FirebaseService()
     
     init(window: UIWindow?) {
         self.window = window
@@ -114,15 +117,19 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
             // Sign in with Firebase.
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if let error {
-                    // Error. If error.code == .MissingOrInvalidNonce, make sure
-                    // you're sending the SHA256-hashed nonce as a hex string with
-                    // your request to Apple.
                     print(error.localizedDescription)
                     return
                 }
-                self.userAuth.signIn()
-                // User is signed in to Firebase with Apple.
-                // ...
+                
+                self.firebase.checkMembership { result in
+                    if result {
+                        withAnimation(.easeInOut) {
+                            self.signInStatus = true
+                        }
+                    } else {
+                        self.userAuth.signIn()
+                    }
+                }
             }
         }
     }

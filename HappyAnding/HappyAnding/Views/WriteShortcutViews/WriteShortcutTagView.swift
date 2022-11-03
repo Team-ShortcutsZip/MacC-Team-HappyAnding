@@ -134,12 +134,12 @@ struct WriteShortcutTagView: View {
                             .onAppear {
                                 isFocused = true
                             }
-                            .onSubmit {
-                                if !relatedApp.isEmpty {
+                            .onChange(of: isFocused) { _ in
+                                if !isFocused && !relatedApp.isEmpty {
                                     relatedApps.append(relatedApp)
                                     relatedApp = ""
+                                    isTextFieldShowing = false
                                 }
-                                isTextFieldShowing = false
                             }
                             .modifier(CellModifier(color: .Gray4))
                     }
