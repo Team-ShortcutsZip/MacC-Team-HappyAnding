@@ -35,7 +35,7 @@ struct ReadShortcutContentView: View {
                 
                 ReusableTextView(title: "단축어 설명", contents: shortcut.description, contentsArray: nil)
                     .padding(.bottom, 20)
-                ReusableTextView(title: "카테고리", contents: nil, contentsArray: shortcut.category)
+                categoryView
                     .padding(.bottom, 20)
                 ReusableTextView(title: "단축어 사용에 필요한 앱", contents: nil, contentsArray: shortcut.requiredApp)
                     .padding(.bottom, 20)
@@ -57,36 +57,22 @@ struct ReadShortcutContentView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 20)
     }
-}
-
-private struct ReusableTextView: View {
     
-    let title: String
-    let contents: String?
-    let contentsArray: [String]?
-    
-    var body: some View {
+    var categoryView: some View {
         VStack(alignment: .leading) {
-            Text(title)
+            Text("카테고리")
                 .Body2()
-                .foregroundColor(Color.Gray4)
-            if let contents {
-                Text(contents)
-                    .Body2()
-                    .foregroundColor(Color.Gray5)
-            }
-            if let contentsArray {
-                ForEach(contentsArray, id: \.self) {
-                    content in
-                    Text(title == "카테고리" ? translateName(content) : content)
+                .foregroundColor(.Gray4)
+            
+            HStack(spacing: 8) {
+                ForEach(shortcut.category, id: \.self) { categoryName in
+                    Text(translateName(categoryName))
                         .Body2()
-                        .foregroundColor(Color.Gray5)
+                        .foregroundColor(.Gray5)
                 }
             }
-            
         }
     }
-    
     private func translateName(_ categoryName: String) -> String {
         switch categoryName {
         case "education":
@@ -115,6 +101,34 @@ private struct ReusableTextView: View {
             return "여행"
         default:
             return ""
+        }
+    }
+}
+
+private struct ReusableTextView: View {
+    
+    let title: String
+    let contents: String?
+    let contentsArray: [String]?
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .Body2()
+                .foregroundColor(Color.Gray4)
+            if let contents {
+                Text(contents)
+                    .Body2()
+                    .foregroundColor(Color.Gray5)
+            }
+            if let contentsArray {
+                ForEach(contentsArray, id: \.self) {
+                    content in
+                    Text(content)
+                        .Body2()
+                        .foregroundColor(Color.Gray5)
+                }
+            }
         }
     }
 }

@@ -37,11 +37,11 @@ struct MyPageView: View {
                         //TODO: 사용되는 임시 이미지 지정되면 변경 필요
                         
                         Image(systemName: "person.fill")
+                            .font(.title)
                             .frame(width: 60, height: 60)
                             .foregroundColor(.White)
                             .background(Color.Gray3)
                             .clipShape(Circle())
-                        VStack(alignment: .leading, spacing: 4) {
                             HStack {
                                 Text(userInformation?.nickname ?? "사용자")
                                     .Title1()
@@ -53,10 +53,6 @@ struct MyPageView: View {
                                     .foregroundColor(.Gray4)
                                  */
                             }
-                            Text(userEmail)
-                                .Body2()
-                                .foregroundColor(.Gray3)
-                        }
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)

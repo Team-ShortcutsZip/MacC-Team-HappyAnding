@@ -48,7 +48,7 @@ struct ValidationCheckTextField: View {
                     Button(action: {
                         content.removeAll()
                     }) {
-                        Image(systemName: "x.circle.fill")
+                        Image(systemName: "xmark.circle.fill")
                             .Body2()
                             .foregroundColor(.Gray4)
                     }

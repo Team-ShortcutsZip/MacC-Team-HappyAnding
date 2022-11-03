@@ -218,7 +218,7 @@ struct WriteShortcutTagView: View {
                 Button(action: {
                     self.text = ""
                 }) {
-                    Image(systemName: "x.circle.fill")
+                    Image(systemName: "xmark.circle.fill")
                         .Body2()
                         .foregroundColor(.Gray4)
                 }

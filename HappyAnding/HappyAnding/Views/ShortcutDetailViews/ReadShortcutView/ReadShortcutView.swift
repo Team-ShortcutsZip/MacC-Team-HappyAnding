@@ -11,13 +11,16 @@ struct ReadShortcutView: View {
     let firebase = FirebaseService()
     
     @Environment(\.openURL) private var openURL
+
     @State var isEdit = false
+    @State var isTappedDeleteButton = false
     
     // TODO: 상위 뷰에서 유저데이터와 단축어데이터를 전달받은 변수 생성
     
     // shortcuts -> 추후 지워질 변수
 //    var shortcuts = Shortcut.fetchData(number: 3)
     var shortcut: Shortcuts
+//    let firebase = FirebaseService()
     
     var body: some View {
         
@@ -64,6 +67,23 @@ struct ReadShortcutView: View {
                 WriteShortcutTitleView(isWriting: $isEdit, shortcut: shortcut, isEdit: true)
             }
         }
+        .alert(isPresented: $isTappedDeleteButton) {
+            Alert(title: Text("글 삭제")
+                .foregroundColor(.Gray5),
+                  message: Text("글을 삭제하시겠습니까?")
+                .foregroundColor(.Gray5),
+                  primaryButton: .default(Text("닫기"),
+                  action: {
+                self.isTappedDeleteButton.toggle()
+            }),
+                  secondaryButton: .destructive(
+                    Text("삭제")
+                    , action: {
+                
+                // TODO: Delete function
+                
+            }))
+        }
     }
 }
 
@@ -87,14 +107,13 @@ extension ReadShortcutView {
             }
             
             // TODO: 구현 필요
-             /*
-            Button(action: {
+            
+            Button(role: .destructive, action: {
                 //Place something action here
+                isTappedDeleteButton.toggle()
             }) {
                 Label("삭제", systemImage: "trash.fill")
-                    .foregroundColor(Color.red)
             }
-             */
         }
         
     }

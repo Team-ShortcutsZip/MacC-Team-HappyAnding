@@ -11,30 +11,24 @@ struct MyShortcutCardView: View {
     
     let myShortcutIcon: String
     let myShortcutName: String
-    let mySHortcutColor: String
+    let myShortcutColor: String
     
     var body: some View {
-        VStack(alignment: .trailing) {
+        VStack(alignment: .leading, spacing: 4) {
+            Image(systemName: myShortcutIcon)
+                .frame(width: 30.0, height: 30.0)
+                .font(.title2)
+                .foregroundColor(Color.Gray1)
+            Text(myShortcutName)
+                .Subtitle()
+                .multilineTextAlignment(.leading)
+                .foregroundColor(Color.Gray1)
+                .lineLimit(3)
             Spacer()
-            HStack {
-                Image(systemName: myShortcutIcon)
-                    .frame(alignment: .leading)
-                    .font(.title2)
-                    .foregroundColor(Color.Gray1)
-                    Spacer()
-            }.padding(.bottom, 3)
-            HStack {
-                Text(myShortcutName)
-                    .Subtitle()
-                    .frame(alignment: .leading)
-                    .foregroundColor(Color.Gray1)
-                    .lineLimit(3)
-                Spacer()
-            }
         }
-        .padding()
+        .padding(.all, 12)
         .frame(width: 107, height: 144, alignment: .leading)
-        .background(Color.fetchGradient(color: mySHortcutColor))
+        .background(Color.fetchGradient(color: myShortcutColor))
         .cornerRadius(12)
     }
 }
@@ -56,7 +50,7 @@ struct AddMyShortcutCardView: View {
 
 struct MyShortcutCardView_Previews: PreviewProvider {
     static var previews: some View {
-    //    MyShortcutCardView(myShortcutIcon: "book.fill", myShortcutName: "노는게 제일조아", mySHortcutColor: "Coral")
+        MyShortcutCardView(myShortcutIcon: "book.fill", myShortcutName: "택배     조회하기", myShortcutColor: "Coral")
         AddMyShortcutCardView()
     }
 }
