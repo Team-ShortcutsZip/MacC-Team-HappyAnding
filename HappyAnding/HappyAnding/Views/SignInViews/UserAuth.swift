@@ -10,7 +10,7 @@ import Foundation
 class UserAuth: ObservableObject {
     
     @Published var isLoggedIn = false
-    @Published var isUser = false
+//    @Published var isUser = false
     
     static let shared = UserAuth()
     
@@ -21,7 +21,7 @@ class UserAuth: ObservableObject {
     
     // TODO: Firebase로 user가 닉네임이 존재하는지 확인?
     
-    func signUp() {
-        self.isUser = true
-    }
+//    func signUp() {
+//        self.isUser = true
+//    }
 }

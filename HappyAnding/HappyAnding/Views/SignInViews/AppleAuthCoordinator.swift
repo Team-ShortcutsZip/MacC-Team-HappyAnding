@@ -15,9 +15,12 @@ import CryptoKit
 /// Apple 로그인을 처리하는 클래스
 class AppleAuthCoordinator: NSObject {
     
+    @AppStorage("signInStatus") var signInStatus = false
+    
     var userAuth = UserAuth.shared
     var currentNonce: String?
     let window: UIWindow?
+    let firebase = FirebaseService()
     
     init(window: UIWindow?) {
         self.window = window
@@ -120,7 +123,17 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                     print(error.localizedDescription)
                     return
                 }
-                self.userAuth.signIn()
+                
+                self.firebase.checkExistsUser { result in
+                    if result {
+                        withAnimation(.easeInOut) {
+                            self.signInStatus = true
+                        }
+                    } else {
+                        self.userAuth.signIn()
+                    }
+                }
+//                self.userAuth.signIn()
                 // User is signed in to Firebase with Apple.
                 // ...
             }

@@ -143,7 +143,7 @@ struct WriteNicknameView: View {
     ///시작하기 버튼
     var startButton: some View {
         Button(action: {
-            userAuth.signUp()
+//            userAuth.signUp()
             
             withAnimation(.easeInOut) {
                 self.signInStatus = true
