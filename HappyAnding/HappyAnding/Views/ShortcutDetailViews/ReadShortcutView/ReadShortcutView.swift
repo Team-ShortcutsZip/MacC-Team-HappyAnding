@@ -30,6 +30,7 @@ struct ReadShortcutView: View {
                     if let url = URL(string: shortcut.downloadLink[0]) {
                         firebase.updateNumberOfDownload(shortcut: shortcut)
                         openURL(url)
+                        //TODO: 화면 상의 다운로드 숫자 변경 기능 필요
                     }
                 }) {
                     RoundedRectangle(cornerRadius: 12)
@@ -84,9 +85,11 @@ struct ReadShortcutView: View {
                   secondaryButton: .destructive(
                     Text("삭제"),
                     action: {
-                        
-                        // TODO: Delete function
-                        
+                        if let shortcut {
+                            firebase.deleteShortcutIDInUser(shortcutID: shortcut.id)
+                            firebase.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
+                            firebase.deleteData(model: shortcut)
+                        }
                     }
                   )
             )

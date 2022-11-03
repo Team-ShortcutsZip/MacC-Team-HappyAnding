@@ -36,12 +36,13 @@ struct ReadShortcutHeaderView: View {
                 .cornerRadius(12)
                 .onTapGesture(perform: {
                     isMyLike.toggle()
+                    //화면 상의 좋아요 추가, 취소 기능 동작
                     if isMyLike {
                         self.shortcut.numberOfLike += 1
                     } else {
                         self.shortcut.numberOfLike -= 1
                     }
-                    // TODO: 추후 좋아요 데이터구조에 목록(?) 추가, 취소 기능 추가할 곳
+                    //데이터 상의 좋아요 추가, 취소 기능 동작
                     firebase.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
                 })
             }
@@ -58,7 +59,6 @@ struct ReadShortcutHeaderView: View {
             firebase.checkLikedShortrcut(shortcutID: shortcut.id) { result in
                 isMyLike = result
             }
-            print("**\(isMyLike)")
         }
     }
 }
