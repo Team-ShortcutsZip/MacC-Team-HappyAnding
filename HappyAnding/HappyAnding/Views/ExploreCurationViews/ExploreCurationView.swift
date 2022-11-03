@@ -10,9 +10,6 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @State var curationByMe: [Curation] = []
-    
-    let firebase = FirebaseService()
     
     var body: some View {
         NavigationView {
@@ -23,7 +20,7 @@ struct ExploreCurationView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
-                    UserCurationListView(userCurations: curationByMe)
+                    UserCurationListView(userCurations: shortcutsZipViewModel.curationsMadeByUser)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션
                     CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: shortcutsZipViewModel.classifyUserCuration())
@@ -32,11 +29,6 @@ struct ExploreCurationView: View {
             }
             .navigationTitle(Text("단축어 큐레이션"))
             .background(Color.Background)
-        }
-        .onAppear {
-            firebase.fetchCurationByAuthor(author: firebase.currentUser()) { curations in
-                curationByMe = curations
-            }
         }
     }
 }

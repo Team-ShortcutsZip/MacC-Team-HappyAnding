@@ -21,6 +21,8 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var sortedShortcutsByDownload: [Shortcuts] = []
     @Published var curations: [Curation] = []
     
+    @Published var curationsMadeByUser: [Curation] = []
+    
     static let share = FirebaseService()
     private let db = Firestore.firestore()
     
@@ -33,6 +35,9 @@ class ShortcutsZipViewModel: ObservableObject {
         }
         fetchCuration { curations in
             self.curations = curations
+        }
+        fetchCurationByAuthor(author: currentUser()) { curations in
+            self.curationsMadeByUser = curations
         }
     }
     
@@ -142,6 +147,36 @@ class ShortcutsZipViewModel: ObservableObject {
                         let jsonData = try JSONSerialization.data(withJSONObject: data)
                         let shortcut = try decoder.decode(Curation.self, from: jsonData)
                         curations.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(curations)
+            }
+        }
+    }
+    
+    // MARK: Author에 의한 큐레이션들 받아오는 함수
+    
+    func fetchCurationByAuthor (author: String, completionHandler: @escaping ([Curation])->()) {
+        
+        var curations: [Curation] = []
+        
+        db.collection("Curation")
+            .whereField("author", isEqualTo: author)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let curation = try decoder.decode(Curation.self, from: jsonData)
+                        curations.append(curation)
                     } catch let error {
                         print("error: \(error)")
                     }
