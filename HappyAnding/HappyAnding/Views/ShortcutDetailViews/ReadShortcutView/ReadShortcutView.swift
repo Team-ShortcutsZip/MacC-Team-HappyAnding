@@ -11,6 +11,7 @@ struct ReadShortcutView: View {
     
     @Environment(\.openURL) private var openURL
     @State var isEdit = false
+    @State var isTappedDeleteButton = false
     
     //TODO: id만 전달받기
     @State var shortcut: Shortcuts?
@@ -71,6 +72,23 @@ struct ReadShortcutView: View {
                 }
             }
         }
+        .alert(isPresented: $isTappedDeleteButton) {
+            Alert(title: Text("글 삭제")
+                .foregroundColor(.Gray5),
+                  message: Text("글을 삭제하시겠습니까?")
+                .foregroundColor(.Gray5),
+                  primaryButton: .default(Text("닫기"),
+                                          action: {
+                self.isTappedDeleteButton.toggle()
+            }),
+                  secondaryButton: .destructive(
+                    Text("삭제")
+                    , action: {
+                        
+                        // TODO: Delete function
+                        
+                    }))
+        }
     }
 }
 
@@ -84,22 +102,16 @@ extension ReadShortcutView {
                 Label("편집", systemImage: "square.and.pencil")
             }
             
-            
-            
-            
             Button(action: {
                 share()
             }) {
                 Label("공유", systemImage: "square.and.arrow.up")
             }
             
-            // TODO: 구현 필요
-            
-             Button(action: {
-             //Place something action here
+            Button(role: .destructive, action: {
+                isTappedDeleteButton.toggle()
              }) {
-             Label("삭제", systemImage: "trash.fill")
-             .foregroundColor(Color.red)
+                 Label("삭제", systemImage: "trash.fill")
              }
         }
         
@@ -129,8 +141,8 @@ extension ReadShortcutView {
     }
 }
 
-//struct ReadShortcutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadShortcutView()
-//    }
-//}
+struct ReadShortcutView_Previews: PreviewProvider {
+    static var previews: some View {
+        ReadShortcutView()
+    }
+}

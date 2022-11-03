@@ -61,8 +61,6 @@ struct ShortcutCell: View {
                 Spacer()
                 downloadInfo
                     .onTapGesture {
-                        
-                        // TODO: 앱 여는 기능 추가
                         if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
                         }
@@ -147,8 +145,8 @@ struct ShortcutCell: View {
 }
 
 
-//struct ShortcutCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ShortcutCell(color: "Red", sfSymbol: "books.vertical.fill", name: "Name", description: "Description", numberOfDownload: 102, downloadLink: "https")
-//    }
-//}
+struct ShortcutCell_Previews: PreviewProvider {
+    static var previews: some View {
+        ShortcutCell()
+    }
+}
