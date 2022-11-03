@@ -11,11 +11,14 @@ struct WriteShortcutTagView: View {
     
     let firebase = FirebaseService()
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @Binding var isWriting: Bool
     
     @State var isShowingCategoryModal = false
     @State var isRequirementValid = false
-    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    
+    @Binding var shortcut: Shortcuts
     
     let isEdit: Bool
     
@@ -59,6 +62,9 @@ struct WriteShortcutTagView: View {
             
             Button(action: {
                 //새로운 단축어 생성 및 저장
+                // 서버에 추가
+                // 뷰모델에 추가
+                shortcutsZipViewModel.shortcutsMadeByUser.append(shortcut)
                 shortcut.author = firebase.currentUser()
                 firebase.setData(model: shortcut)
                 
@@ -227,9 +233,10 @@ struct WriteShortcutTagView: View {
         }
     }
 }
-
+/*
 struct WriteShortcutTagView_Previews: PreviewProvider {
     static var previews: some View {
         WriteShortcutTagView(isWriting: .constant(true), isEdit: false)
     }
 }
+*/

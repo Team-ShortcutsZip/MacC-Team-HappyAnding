@@ -256,6 +256,21 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
+    //TODO: Error 처리 필요
+    
+    func setData(model: Any) {
+        switch model {
+        case _ as Shortcuts:
+            db.collection("Shortcut").document((model as! Shortcuts).id).setData((model as! Shortcuts).dictionary)
+        case _ as Curation:
+            db.collection("Curation").document((model as! Curation).id).setData((model as! Curation).dictionary)
+        case _ as User:
+            db.collection("User").document((model as! User).id).setData((model as! User).dictionary)
+        default:
+            print("this is not a model.")
+        }
+    }
+    
     // MARK: Curation 데이터에서 Admin Curation을 분류시키는 함수
     
     func classifyAdminCuration() -> [Curation] {

@@ -13,7 +13,8 @@ struct WriteShortcutdescriptionView: View {
     
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
-    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+   // @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    @Binding var shortcut: Shortcuts
     
     let isEdit: Bool
     
@@ -45,7 +46,7 @@ struct WriteShortcutdescriptionView: View {
             Spacer()
             
             NavigationLink {
-                WriteShortcutTagView(isWriting: $isWriting, shortcut: shortcut, isEdit: isEdit)
+                WriteShortcutTagView(isWriting: $isWriting, shortcut: $shortcut, isEdit: isEdit)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -65,9 +66,10 @@ struct WriteShortcutdescriptionView: View {
         .ignoresSafeArea(.keyboard)
     }
 }
-
+/*
 struct WriteShortcutdescriptionView_Previews: PreviewProvider {
     static var previews: some View {
         WriteShortcutdescriptionView(isWriting: .constant(true), isEdit: false)
     }
 }
+*/
