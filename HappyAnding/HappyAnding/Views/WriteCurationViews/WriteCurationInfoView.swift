@@ -56,7 +56,7 @@ struct WriteCurationInfoView: View {
                 .frame(maxHeight: .infinity)
             
             Button(action: {
-                
+                curation.author = firebase.currentUser()
                 firebase.setData(model: curation)
                 
                 isWriting.toggle()
