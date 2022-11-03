@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ReadUserCurationView: View {
+    let firebase = FirebaseService()
+    @State var authorInformation: User? = nil
     
     @State var isMyCuration: Bool = true
     @State var isWriting = false
@@ -15,8 +17,7 @@ struct ReadUserCurationView: View {
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
     
-    var userCuration: Curation
-//    let nickName: String
+    let userCuration: Curation
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -53,8 +54,9 @@ struct ReadUserCurationView: View {
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if isMyCuration {
+            if userCuration.author == firebase.currentUser() {
                 myCurationMenuSection
             } else {
                 otherCurationMenuSection
@@ -80,7 +82,7 @@ struct ReadUserCurationView: View {
                     .background(Color.Gray3)
                     .clipShape(Circle())
                 
-                Text(userCuration.author)
+                Text(authorInformation?.nickname ?? "닉네임")
                     .Headline()
                     .foregroundColor(.Gray4)
                 
@@ -105,6 +107,11 @@ struct ReadUserCurationView: View {
                     .foregroundColor(.Gray1)
                     .padding(.horizontal, 16)
             )
+        }
+        .onAppear {
+            firebase.fetchUser(userID: userCuration.author) { user in
+                authorInformation = user
+            }
         }
     }
 }
