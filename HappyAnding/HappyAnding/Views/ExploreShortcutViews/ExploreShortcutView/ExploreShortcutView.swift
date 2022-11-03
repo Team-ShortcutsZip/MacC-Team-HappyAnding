@@ -34,8 +34,8 @@ struct ExploreShortcutView: View {
             .background(Color.Background)
         }
         .onAppear() {
-            firebase.fetchShortcutByAuthor(author: "testUser") { user in
-                shortcutByUser = user
+            firebase.fetchShortcutByAuthor(author: firebase.currentUser()) { shortcuts in
+                shortcutByUser = shortcuts
             }
         }
     }

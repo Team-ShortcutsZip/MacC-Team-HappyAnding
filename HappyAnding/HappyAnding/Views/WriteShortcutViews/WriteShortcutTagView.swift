@@ -50,6 +50,7 @@ struct WriteShortcutTagView: View {
                                      title: "단축어 사용을 위한 요구사항",
                                      placeholder: "단축어를 사용하기 위해서 필수적으로 요구되는 내용이 있다면, 작성해주세요",
                                      lengthLimit: 100,
+                                     isDownloadLinkTextField: false,
                                      content: $shortcut.shortcutRequirements,
                                      isValid: $isRequirementValid
             )
@@ -57,11 +58,8 @@ struct WriteShortcutTagView: View {
             Spacer()
             
             Button(action: {
-                
-                // TODO: 새로운 단축어 생성 및 저장
-                
-                print(shortcut)
-                
+                //새로운 단축어 생성 및 저장
+                shortcut.author = firebase.currentUser()
                 firebase.setData(model: shortcut)
                 
                 isWriting.toggle()

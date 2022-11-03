@@ -35,8 +35,9 @@ struct WriteCurationSetView: View {
                     Button(action: {
                         isWriting.toggle()
                     }, label: {
-                        Text("\(Image(systemName: "chevron.left")) Back")
-                            .font(.body)
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.Gray4)
+                            .Title2()
                     })
                     .frame(alignment: .leading)
                     
@@ -44,10 +45,9 @@ struct WriteCurationSetView: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .fixedSize(horizontal: false, vertical: true)
-                    
-                    Text("\(Image(systemName: "chevron.left")) Back")
-                        .frame(alignment: .trailing)
+                    Image(systemName: "chevron.left")
                         .foregroundColor(Color(UIColor.clear))
+                        .Title2()
                 }
                 .padding(.top, 12)
                 .padding(.horizontal, 16)
@@ -109,6 +109,7 @@ struct WriteCurationSetView: View {
         NavigationLink {
             let _ = print(shortcuts)
             WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
+            
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
