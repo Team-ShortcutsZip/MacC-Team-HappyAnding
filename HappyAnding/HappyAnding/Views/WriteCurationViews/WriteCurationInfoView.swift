@@ -73,13 +73,12 @@ struct WriteCurationInfoView: View {
             .disabled(isIncomplete)
         }
         .navigationBarTitle(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
-        .onAppear {
-        }
+        .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }
 
-//struct WriteCurationInfoView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WriteCurationInfoView()
-//    }
-//}
+struct WriteCurationInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        WriteCurationInfoView(isWriting: .constant(true), isEdit: false)
+    }
+}
