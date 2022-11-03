@@ -71,6 +71,9 @@ struct WriteNicknameView: View {
                     .frame(height: 20)
                     .padding(.leading, 16)
                     .padding(.vertical, 12)
+                    .onChange(of: nickname) {_ in
+                        isNicknameChecked = false
+                    }
                 
                 if !nickname.isEmpty {
                     textFieldSFSymbol
@@ -143,7 +146,6 @@ struct WriteNicknameView: View {
     ///시작하기 버튼
     var startButton: some View {
         Button(action: {
-            userAuth.signUp()
             
             withAnimation(.easeInOut) {
                 self.signInStatus = true

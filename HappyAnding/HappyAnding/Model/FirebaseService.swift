@@ -947,4 +947,27 @@ class FirebaseService {
             print("this is not a model.")
         }
     }
+    
+    
+    // MARK: - 이미 회원가입한 User인지 확인하는 함수
+    
+    func checkMembership(completionHandler: @escaping (Bool) -> ()) {
+        
+        var result = true
+        
+        db.collection("User")
+            .whereField("id", isEqualTo: currentUser())
+            .limit(to: 1)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documnets: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    if documents.count == 0 {
+                        result = false
+                    }
+                    completionHandler(result)
+                }
+            }
+    }
 }
