@@ -57,11 +57,8 @@ struct WriteShortcutTagView: View {
             Spacer()
             
             Button(action: {
-                
-                // TODO: 새로운 단축어 생성 및 저장
-                
-                print(shortcut)
-                
+                //새로운 단축어 생성 및 저장
+                shortcut.author = firebase.currentUser()
                 firebase.setData(model: shortcut)
                 
                 isWriting.toggle()

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ReadShortcutContentView: View {
+    let firebase = FirebaseService()
+    @State var userInformation: User? = nil
+    
     let shortcut: Shortcuts
 //    let writer: String
     let profileImage: String = "person.crop.circle"
@@ -24,7 +27,7 @@ struct ReadShortcutContentView: View {
                     .foregroundColor(Color.Gray4)
                 HStack {
                     Image(systemName: profileImage)
-                    Text(shortcut.author)
+                    Text(userInformation?.nickname ?? "닉네임")
                         .Body2()
                         .foregroundColor(Color.Gray5)
                 }
@@ -40,6 +43,11 @@ struct ReadShortcutContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)
+        }
+        .onAppear {
+            firebase.fetchUser(userID: firebase.currentUser()) { user in
+                userInformation = user
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay {
