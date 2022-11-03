@@ -13,12 +13,10 @@ import SwiftUI
  단축어 정보를 전달해주세요. 클릭시 단축어 상세 뷰로 이동합니다.
  
  - parameters:
- - color: 아이콘 색상
- - sfSymbol: 아이콘 이미지
- - name: 단축어 게시글 이름
- - description: 한 줄 설명
- - numberOfDownload: 다운로드 수
- - downloadLink: 다운로드 링크
+ - shortcut : 단축어 리스트에서 접근 시 Shortcuts  형태로 전달해주세요
+ - shortcutCell: 큐레이션에서 접근 시 ShortcutCellModel 형태로 전달해주세요
+ 
+ ShortcutCell에서는 Shortcuts의 형태로 데이터를 전달받아도 ShortcutCellModel의 형태로 변환하여 사용하며, 전달 시에만 shortcut을 전달합니다.
  
  - description:
  - 해당 뷰를 리스트로 사용할 때 다음과 같은 속성을 작성해주세요
@@ -34,24 +32,23 @@ import SwiftUI
 struct ShortcutCell: View {
     
     @Environment(\.openURL) private var openURL
+    var shortcut: Shortcuts?
     
-    // TODO: 단축어 구조체 모델 생성 후 객체로 변경하기
-    // TODO: Color, Font extension 등록 후 색상 변경하기
-    let shortcut: Shortcuts
+    @State var shortcutCell = ShortcutCellModel(
+        id: "",
+        sfSymbol: "",
+        color: "",
+        title: "",
+        subtitle: "",
+        downloadLink: ""
+    )
     
     var rankNumber: Int = -1
-    
-//    let color: String
-//    let sfSymbol: String
-//    let name: String
-//    let description: String
-//    let numberOfDownload: Int
-//    let downloadLink: String
     
     var body: some View {
         
         ZStack {
-            NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+            NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutCell: shortcutCell)) {
                 EmptyView()
             }
             .opacity(0)
@@ -64,9 +61,7 @@ struct ShortcutCell: View {
                 Spacer()
                 downloadInfo
                     .onTapGesture {
-                        
-                        // TODO: 앱 여는 기능 추가
-                        if let url = URL(string: shortcut.downloadLink[0]) {
+                        if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
                         }
                     }
@@ -77,17 +72,29 @@ struct ShortcutCell: View {
         }
         .padding(.top, 12)
         .background(Color.Background)
+        .onAppear() {
+            if let shortcut  {
+                self.shortcutCell = ShortcutCellModel(
+                    id: shortcut.id,
+                    sfSymbol: shortcut.sfSymbol,
+                    color: shortcut.color,
+                    title: shortcut.title,
+                    subtitle: shortcut.subtitle,
+                    downloadLink: shortcut.downloadLink.last!
+                )
+            }
+        }
     }
     
     var icon: some View {
         
         ZStack(alignment: .center) {
             Rectangle()
-                .fill(Color.fetchGradient(color: shortcut.color))
+                .fill(Color.fetchGradient(color: shortcutCell.color))
                 .cornerRadius(8)
                 .frame(width: 52, height: 52)
             
-            Image(systemName: shortcut.sfSymbol)
+            Image(systemName: shortcutCell.sfSymbol)
                 .foregroundColor(.white)
         }
         .padding(.leading, 20)
@@ -102,11 +109,11 @@ struct ShortcutCell: View {
                     .foregroundColor(.Gray4)
                     .padding(0)
             }
-            Text(shortcut.title)
+            Text(shortcutCell.title)
                 .Headline()
                 .foregroundColor(.Gray5)
                 .lineLimit(1)
-            Text(shortcut.subtitle)
+            Text(shortcutCell.subtitle)
                 .Footnote()
                 .foregroundColor(.Gray3)
                 .lineLimit(2)
@@ -116,7 +123,7 @@ struct ShortcutCell: View {
     
     var downloadInfo: some View {
         
-        VStack(alignment: shortcut.numberOfDownload > 999 ? .trailing : .center, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             Image(systemName: "arrow.down.app.fill")
                 .foregroundColor(.Gray4)
                 .font(.system(size: 24, weight: .medium))
@@ -138,8 +145,8 @@ struct ShortcutCell: View {
 }
 
 
-//struct ShortcutCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ShortcutCell(color: "Red", sfSymbol: "books.vertical.fill", name: "Name", description: "Description", numberOfDownload: 102, downloadLink: "https")
-//    }
-//}
+struct ShortcutCell_Previews: PreviewProvider {
+    static var previews: some View {
+        ShortcutCell()
+    }
+}

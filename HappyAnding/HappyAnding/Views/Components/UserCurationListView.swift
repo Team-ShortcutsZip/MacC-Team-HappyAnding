@@ -58,12 +58,7 @@ struct UserCurationListView: View {
                     if let curation {
                         NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
                             if index < 2 {
-                                UserCurationCell(
-                                    title: curation.title,
-                                    subtitle: curation.subtitle ?? "",
-                                    shortcuts: curation.shortcuts,
-                                    curation: curation
-                                )
+                                UserCurationCell(curation: curation)
                             }
                         }
                     }

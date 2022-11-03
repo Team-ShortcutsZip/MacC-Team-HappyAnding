@@ -38,12 +38,7 @@ struct ListCurationView: View {
                     .padding(.horizontal, 16)
             }
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                UserCurationCell(
-                    title: curation.title,
-                    subtitle: curation.subtitle ?? "",
-                    shortcuts: curation.shortcuts,
-                    curation: curation
-                )
+                UserCurationCell(curation: curation)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.Background)

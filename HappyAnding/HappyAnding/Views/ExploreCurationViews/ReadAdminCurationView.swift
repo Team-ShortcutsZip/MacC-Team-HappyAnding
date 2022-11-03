@@ -47,8 +47,8 @@ struct ReadAdminCurationView: View {
                 .padding(.bottom, 8)
             
             ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
-                    ShortcutCell(shortcut: shortcut)
+                NavigationLink(destination: ReadShortcutView(shortcutCell: shortcut)) {
+                    ShortcutCell(shortcutCell: shortcut)
                 }
             }
             

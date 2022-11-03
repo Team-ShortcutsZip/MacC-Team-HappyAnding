@@ -11,13 +11,13 @@ struct Curation: Identifiable, Codable {
     
     var id = UUID().uuidString
     var title: String
-    var subtitle: String?
+    var subtitle: String
     var dateTime: String
     var isAdmin: Bool
     var background: String
-//    var shortcuts: [ShortcutCellModel]
     var author: String
-    var shortcuts: [Shortcuts]
+    var shortcuts: [ShortcutCellModel]
+//    var shortcuts: [Shortcuts]
     
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()
@@ -25,11 +25,12 @@ struct Curation: Identifiable, Codable {
     }
 }
 
-struct ShortcutCellModel: Identifiable, Codable {
+struct ShortcutCellModel: Identifiable, Codable, Equatable {
     
     var id: String // Shortcut의 UUID
     var sfSymbol: String
     var color: String
     var title: String
     var subtitle: String
+    var downloadLink: String
 }

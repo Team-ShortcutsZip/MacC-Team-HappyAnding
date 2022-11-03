@@ -28,24 +28,13 @@ struct ReadUserCurationView: View {
                 VStack{
                     userInformation
                         .padding(.bottom, 22)
-                    UserCurationCell(title: userCuration.title,
-                                     subtitle: userCuration.subtitle ?? "",
-                                     shortcuts: userCuration.shortcuts,
-                                     curation: userCuration)
+                    UserCurationCell(curation: userCuration)
                         .padding(.bottom, 12)
                 }
             }
             ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
-                    ShortcutCell(
-//                        color: shortcut.color,
-//                        sfSymbol: shortcut.sfSymbol,
-//                        name: shortcut.name,
-//                        description: shortcut.description,
-//                        numberOfDownload: shortcut.numberOfDownload,
-//                        downloadLink: shortcut.downloadLink
-                        shortcut: shortcut
-                    )
+                NavigationLink(destination: ReadShortcutView(shortcutCell: shortcut)) {
+                    ShortcutCell(shortcutCell: shortcut)
                     .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
                 }
             }
@@ -138,7 +127,6 @@ extension ReadUserCurationView {
         Section {
             Button(action: {
                 isTappedEditButton.toggle()
-                print("ReadUserCurationView \(userCuration)")
             }) {
                 Label("편집", systemImage: "square.and.pencil")
             }
