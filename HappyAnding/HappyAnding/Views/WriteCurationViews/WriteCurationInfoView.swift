@@ -37,6 +37,7 @@ struct WriteCurationInfoView: View {
                                      title: "큐레이션 이름",
                                      placeholder: "큐레이션 이름을 작성해주세요",
                                      lengthLimit: 20,
+                                     isDownloadLinkTextField: false,
                                      content: $curation.title,
                                      isValid: $isValidTitle)
                 .padding(.top, 12)
@@ -46,6 +47,7 @@ struct WriteCurationInfoView: View {
                                      title: "한 줄 설명",
                                      placeholder: "나의 큐레이션을 설명할 수 있는 간단한 내용을 작성해주세요",
                                      lengthLimit: 40,
+                                     isDownloadLinkTextField: false,
                                      content: Binding(get: {curation.subtitle ?? ""},
                                                       set: {curation.subtitle = $0}),
                                      isValid: $isValidDescription)
