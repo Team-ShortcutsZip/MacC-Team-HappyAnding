@@ -58,6 +58,7 @@ struct ReadAdminCurationView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: btnBack)
         .toolbarBackground(Color.clear, for: .navigationBar)
+        .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
         .background(Color.Background)
         
