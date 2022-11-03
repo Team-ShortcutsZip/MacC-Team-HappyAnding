@@ -121,7 +121,7 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                     return
                 }
                 
-                self.firebase.checkExistsUser { result in
+                self.firebase.checkMembership { result in
                     if result {
                         withAnimation(.easeInOut) {
                             self.signInStatus = true

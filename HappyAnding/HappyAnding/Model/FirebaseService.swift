@@ -730,7 +730,7 @@ class FirebaseService {
     
     // MARK: - 이미 회원가입한 User인지 확인하는 함수
     
-    func checkExistsUser(completionHandler: @escaping (Bool) -> ()) {
+    func checkMembership(completionHandler: @escaping (Bool) -> ()) {
         
         var result = true
         
