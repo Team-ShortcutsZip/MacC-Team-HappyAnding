@@ -117,9 +117,6 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
             // Sign in with Firebase.
             Auth.auth().signIn(with: credential) { (authResult, error) in
                 if let error {
-                    // Error. If error.code == .MissingOrInvalidNonce, make sure
-                    // you're sending the SHA256-hashed nonce as a hex string with
-                    // your request to Apple.
                     print(error.localizedDescription)
                     return
                 }
@@ -133,9 +130,6 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                         self.userAuth.signIn()
                     }
                 }
-//                self.userAuth.signIn()
-                // User is signed in to Firebase with Apple.
-                // ...
             }
         }
     }
