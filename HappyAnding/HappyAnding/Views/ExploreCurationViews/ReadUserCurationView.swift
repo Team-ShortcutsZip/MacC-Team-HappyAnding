@@ -105,6 +105,23 @@ struct ReadUserCurationView: View {
                     .foregroundColor(.Gray1)
                     .padding(.horizontal, 16)
             )
+            .alert(isPresented: $isTappedDeleteButton) {
+                Alert(title: Text("글 삭제")
+                    .foregroundColor(.Gray5),
+                      message: Text("글을 삭제하시겠습니까?")
+                    .foregroundColor(.Gray5),
+                      primaryButton: .default(Text("닫기"),
+                      action: {
+                    self.isTappedDeleteButton.toggle()
+                }),
+                      secondaryButton: .destructive(
+                        Text("삭제")
+                        , action: {
+                    
+                    // TODO: Delete function
+                    
+                }))
+            }
         }
     }
 }
@@ -127,11 +144,13 @@ extension ReadUserCurationView {
             }) {
                 Label("공유", systemImage: "square.and.arrow.up")
             }
-            Button(action: {
-                //Place something action here
+            Button(role: .destructive, action: {
+                isTappedDeleteButton.toggle()
+                
+                // TODO: firebase delete function
+                
             }) {
                 Label("삭제", systemImage: "trash.fill")
-                    .foregroundColor(Color.red)
             }
         }
     }
