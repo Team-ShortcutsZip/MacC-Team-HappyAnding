@@ -84,9 +84,10 @@ struct ReadShortcutView: View {
                   secondaryButton: .destructive(
                     Text("삭제")
                     , action: {
-                        
                         // TODO: Delete function
-                        
+                        if let shortcut {
+                            firebase.deleteData(model: shortcut)
+                        }
                     }))
         }
     }

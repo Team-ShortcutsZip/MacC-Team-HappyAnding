@@ -107,9 +107,7 @@ struct ReadUserCurationView: View {
                       secondaryButton: .destructive(
                         Text("삭제")
                         , action: {
-                    
-                    // TODO: Delete function
-                    
+                            firebase.deleteData(model: userCuration)=
                 }))
             }
         }
