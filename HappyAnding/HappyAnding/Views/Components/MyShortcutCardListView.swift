@@ -15,7 +15,7 @@ struct MyShortcutCardListView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("내 단축어")
+                Text("나의 단축어")
                     .Title2()
                     .foregroundColor(Color.Gray5)
                 .frame(maxWidth: .infinity, alignment: .leading)
