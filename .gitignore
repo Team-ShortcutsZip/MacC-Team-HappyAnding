@@ -49,6 +49,8 @@ xcuserdata
 DerivedData/
 *.xcodeproj
 
+### Firebase ###
+GoogleService-Info.plist
 
 ### Xcode ###
 ## User settings
