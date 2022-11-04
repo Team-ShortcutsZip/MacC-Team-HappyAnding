@@ -280,9 +280,9 @@
 		87E99C9828FFF1D2009B691F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */,
 				A04ACB0229027F4F004A85A6 /* TabView */,
 				87E99CC52901457B009B691F /* Components */,
-				87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */,
 				87E99C9B28FFF1F4009B691F /* ExploreShortcutViews */,
 				87E99C9728FFF1C0009B691F /* WriteShortcutViews */,
 				87E99C9A28FFF1E9009B691F /* ShortcutDetailViews */,

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WriteCurationInfoView: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var isValidTitle = false
     @State var isValidDescription = false
     @State var curation = Curation(title: "",
@@ -19,7 +21,6 @@ struct WriteCurationInfoView: View {
                                    shortcuts: [ShortcutCellModel]())
     @Binding var isWriting: Bool
     
-    let firebase = FirebaseService()
     let isEdit: Bool
 //    var shortcuts: [Shortcuts]
     
@@ -55,12 +56,13 @@ struct WriteCurationInfoView: View {
                 .frame(maxHeight: .infinity)
             
             Button(action: {
-                curation.author = firebase.currentUser()
-                firebase.setData(model: curation)
-                firebase.updateShortcutCurationID(
-                    shortcutCells: curation.shortcuts,
-                    curationID: curation.id
-                )
+                curation.author = shortcutsZipViewModel.currentUser()
+                shortcutsZipViewModel.curationsMadeByUser.append(curation)
+                shortcutsZipViewModel.setData(model: curation)
+       //         firebase.updateShortcutCurationID(
+      //              shortcutCells: curation.shortcuts,
+       //             curationID: curation.id
+       //         )
                 
                 isWriting.toggle()
             }, label: {
