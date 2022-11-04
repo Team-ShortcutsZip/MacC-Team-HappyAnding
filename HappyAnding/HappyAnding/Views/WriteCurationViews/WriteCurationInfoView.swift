@@ -57,6 +57,10 @@ struct WriteCurationInfoView: View {
             Button(action: {
                 curation.author = firebase.currentUser()
                 firebase.setData(model: curation)
+                firebase.updateShortcutCurationID(
+                    shortcutCells: curation.shortcuts,
+                    curationID: curation.id
+                )
                 
                 isWriting.toggle()
             }, label: {

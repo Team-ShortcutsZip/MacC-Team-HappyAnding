@@ -61,6 +61,19 @@ struct WriteShortcutTagView: View {
                 //새로운 단축어 생성 및 저장
                 shortcut.author = firebase.currentUser()
                 firebase.setData(model: shortcut)
+                if isEdit {
+                    firebase.updateShortcutInCuration(
+                        shortcutCell: ShortcutCellModel(
+                            id: shortcut.id,
+                            sfSymbol: shortcut.sfSymbol,
+                            color: shortcut.color,
+                            title: shortcut.title,
+                            subtitle: shortcut.subtitle,
+                            downloadLink: shortcut.downloadLink.last!
+                        ),
+                        curationIDs: shortcut.curationIDs
+                    )
+                }
                 
                 isWriting.toggle()
             }, label: {
