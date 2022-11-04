@@ -15,7 +15,7 @@ struct WriteShortcutTagView: View {
     
     @State var isShowingCategoryModal = false
     @State var isRequirementValid = false
-    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""], curationIDs: [String]())
     
     let isEdit: Bool
     
@@ -61,6 +61,19 @@ struct WriteShortcutTagView: View {
                 //새로운 단축어 생성 및 저장
                 shortcut.author = firebase.currentUser()
                 firebase.setData(model: shortcut)
+                if isEdit {
+                    firebase.updateShortcutInCuration(
+                        shortcutCell: ShortcutCellModel(
+                            id: shortcut.id,
+                            sfSymbol: shortcut.sfSymbol,
+                            color: shortcut.color,
+                            title: shortcut.title,
+                            subtitle: shortcut.subtitle,
+                            downloadLink: shortcut.downloadLink.last!
+                        ),
+                        curationIDs: shortcut.curationIDs
+                    )
+                }
                 
                 isWriting.toggle()
             }, label: {
@@ -80,6 +93,7 @@ struct WriteShortcutTagView: View {
         }
         .navigationTitle(isEdit ? "단축어 편집" :"단축어 등록")
         .ignoresSafeArea(.keyboard)
+        .background(Color.Background)
     }
     
     struct categoryList: View {

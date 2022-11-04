@@ -25,7 +25,7 @@ struct ValidationCheckTextField: View {
     let textType: TextType
     let isMultipleLines: Bool
     let title: String
-    let placeholder: String
+    @State var placeholder: String
     let lengthLimit: Int
     let isDownloadLinkTextField: Bool
     
@@ -39,7 +39,7 @@ struct ValidationCheckTextField: View {
         VStack {
             textFieldTitle
             
-            HStack {
+            HStack(alignment: .top) {
                 if isMultipleLines {
                     multiLineEditor
                 } else {
@@ -62,7 +62,7 @@ struct ValidationCheckTextField: View {
                         .padding()
                 }
             }
-            .overlay(
+            .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(lineWidth: 1)
                     .foregroundColor(strokeColor)
@@ -119,10 +119,24 @@ struct ValidationCheckTextField: View {
     
     var multiLineEditor: some View {
         ZStack(alignment: .leading) {
+            if content.isEmpty {
+                TextEditor(text: $placeholder)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.Background)
+                    .Body2()
+                    .foregroundColor(.Gray2)
+                    .frame(height: 206)
+                    .padding(16)
+                    .opacity(1)
+            }
+            
             TextEditor(text: $content)
+                .scrollContentBackground(.hidden)
+                .background(Color.Background)
                 .Body2()
                 .frame(height: 206)
                 .padding(16)
+                .opacity(self.content.isEmpty ? 0.25 : 1)
                 .onAppear {
                     checkValidation()
                 }
@@ -132,19 +146,6 @@ struct ValidationCheckTextField: View {
                 .onChange(of: content, perform: {_ in
                     checkValidation()
                 })
-            
-            if content.isEmpty {
-                VStack {
-                    Text(placeholder)
-                        .Body2()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 7)
-                        .padding(.leading, 20)
-                    Spacer()
-                }
-                .opacity(content.isEmpty ? 0.2 : 0)
-                .frame(height: 206)
-            }
         }
     }
 }
@@ -180,17 +181,17 @@ extension ValidationCheckTextField {
     }
 }
 
-struct ValidationCheckTextField_Previews: PreviewProvider {
-    static var previews: some View {
-        ValidationCheckTextField(
-            textType: .optional,
-            isMultipleLines: true,
-            title: "설명",
-            placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
-            lengthLimit: 20,
-            isDownloadLinkTextField: false,
-            content: .constant(""),
-            isValid: .constant(true)
-        )
-    }
-}
+//struct ValidationCheckTextField_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ValidationCheckTextField(
+//            textType: .optional,
+//            isMultipleLines: true,
+//            title: "설명",
+//            placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
+//            lengthLimit: 20,
+//            isDownloadLinkTextField: false,
+//            content: .constant(""),
+//            isValid: .constant(true)
+//        )
+//    }
+//}

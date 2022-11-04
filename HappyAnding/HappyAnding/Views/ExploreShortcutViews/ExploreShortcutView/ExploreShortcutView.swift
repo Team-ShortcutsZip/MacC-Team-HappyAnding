@@ -25,7 +25,9 @@ struct ExploreShortcutView: View {
                 LovedShortcutView(shortcuts: shortcutsZipViewModel.sortedShortcutsByDownload)
                     .padding(.bottom, 44)
             }
-            .navigationTitle(Text("단축어 둘러보기"))
+            .navigationBarTitle(Text("단축어 둘러보기"))
+            .navigationBarTitleDisplayMode(.large)
+            .scrollIndicators(.hidden)
             .background(Color.Background)
         }
     }
