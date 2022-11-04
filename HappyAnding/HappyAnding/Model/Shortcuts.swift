@@ -18,7 +18,7 @@ struct Shortcuts: Identifiable, Codable, Equatable {
     var description: String
     var category: [String]
     var requiredApp: [String]
-    var date: String
+    var date = Date().getDate()
     var numberOfLike: Int
     var numberOfDownload: Int
     var author: String

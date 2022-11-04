@@ -21,7 +21,6 @@ struct WriteCurationSetView: View {
     @State var isSelected = false
     @State var curation = Curation(title: "",
                                    subtitle: "",
-                                   dateTime: "",
                                    isAdmin: false,
                                    background: "White",
                                    author: "",

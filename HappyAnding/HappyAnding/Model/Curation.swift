@@ -12,7 +12,7 @@ struct Curation: Identifiable, Codable {
     var id = UUID().uuidString
     var title: String
     var subtitle: String
-    var dateTime: String
+    var dateTime = Date().getDate()
     var isAdmin: Bool
     var background: String
     var author: String
