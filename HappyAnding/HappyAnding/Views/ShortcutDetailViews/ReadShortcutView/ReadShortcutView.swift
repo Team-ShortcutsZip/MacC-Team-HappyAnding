@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReadShortcutView: View {
     
+    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
     @State var isEdit = false
     @State var isTappedDeleteButton = false
