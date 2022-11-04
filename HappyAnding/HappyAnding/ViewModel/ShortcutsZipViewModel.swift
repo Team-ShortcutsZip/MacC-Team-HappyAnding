@@ -43,12 +43,14 @@ class ShortcutsZipViewModel: ObservableObject {
         fetchCurationByAuthor(author: currentUser()) { curations in
             self.curationsMadeByUser = curations
         }
-        fetchUser(userID: currentUser()) { user in
+            print("\n\n\n\n\n\n\nWHAT\n\n\n\n\n")
+        fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
-            self.fetchShortcutByIds(shortcutIds: user.downloadedShortcuts ?? []) { downloadedShortcuts in
+            print("\n\n\n\n\n\n\nWHAT\n\n\n\n\n")
+            self.fetchShortcutByIds(shortcutIds: user.downloadedShortcuts) { downloadedShortcuts in
                 self.shortcutsUserDownloaded = downloadedShortcuts
             }
-            self.fetchShortcutByIds(shortcutIds: user.likedShortcuts ?? []) { likedShortcuts in
+            self.fetchShortcutByIds(shortcutIds: user.likedShortcuts) { likedShortcuts in
                 self.shortcutsUserLiked = likedShortcuts
             }
         }
