@@ -11,9 +11,7 @@ struct WriteCurationSetView: View {
     
     @Binding var isWriting: Bool
     
-    // TODO: firebase 함수로 결괏값 가져오면, 그 배열의 길이를 넣어야함!
-    @State var shortcutCells: [ShortcutCellModel] = []
-    
+    @State var shortcutCells = Set<ShortcutCellModel>()
     @State var isSelected = false
     @State var curation = Curation(title: "",
                                    subtitle: "",
@@ -60,10 +58,10 @@ struct WriteCurationSetView: View {
             .background(Color.Background)
             .onAppear() {
                 firebase.fetchMadeShortcutCell { shortcuts in
-                    self.shortcutCells += shortcuts
+                    self.shortcutCells = self.shortcutCells.union(shortcuts)
                 }
                 firebase.fetchLikedShortcutCell { shortcuts in
-                    self.shortcutCells += shortcuts
+                    self.shortcutCells = self.shortcutCells.union(shortcuts)
                 }
             }
         }
@@ -89,7 +87,7 @@ struct WriteCurationSetView: View {
     
     ///내가 작성한, 좋아요를 누른 단축어 목록
     var shortcutList: some View {
-        ForEach(Array(Set(shortcutCells))) { shortcut in
+        ForEach(Array(shortcutCells)) { shortcut in
             CheckBoxShortcutCell(
                 isShortcutTapped: curation.shortcuts.contains(shortcut),
                 selectedShortcutCells: $curation.shortcuts,
