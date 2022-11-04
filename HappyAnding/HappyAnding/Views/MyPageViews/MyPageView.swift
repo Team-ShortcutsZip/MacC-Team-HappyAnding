@@ -62,7 +62,8 @@ struct MyPageView: View {
                     
                 }
             }
-            .navigationTitle("프로필")
+            .navigationBarTitle("프로필")
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem {
                     //TODO: 스프린트 1에서 배제 추후 주석 삭제할 것

@@ -50,11 +50,16 @@ struct ReadUserCurationView: View {
             if userCuration.author == firebase.currentUser() {
                 myCurationMenuSection
             } else {
-                otherCurationMenuSection
+                //다른 사람 큐레이션 볼 때 공유버튼 동작(트레일링 아이템) 제거.
+                // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 복원
+//                otherCurationMenuSection
             }
         }, label: {
             Image(systemName: userCuration.author == firebase.currentUser() ? "ellipsis" : "square.and.arrow.up")
                 .foregroundColor(.Gray4)
+                //다른 사람 큐레이션 볼 때 공유버튼 (트레일링 아이템) opacity 0
+                // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 제거
+                .opacity(userCuration.author == firebase.currentUser() ? 1 : 0)
         }))
         .fullScreenCover(isPresented: $isTappedEditButton) {
             NavigationView {
@@ -134,12 +139,12 @@ extension ReadUserCurationView {
             }
             
             // TODO: 함수 구현 필요
-            
-            Button(action: {
-                //Place something action here
-            }) {
-                Label("공유", systemImage: "square.and.arrow.up")
-            }
+            // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 복원
+//            Button(action: {
+//                //Place something action here
+//            }) {
+//                Label("공유", systemImage: "square.and.arrow.up")
+//            }
             Button(role: .destructive, action: {
                 isTappedDeleteButton.toggle()
                 
