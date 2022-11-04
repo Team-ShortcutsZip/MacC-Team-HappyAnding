@@ -18,17 +18,19 @@ struct Shortcuts: Identifiable, Codable, Equatable {
     var description: String
     var category: [String]
     var requiredApp: [String]
-    var date: String
+    var date = Date().getDate()
     var numberOfLike: Int
     var numberOfDownload: Int
     var author: String
     var shortcutRequirements: String
     var downloadLink: [String]
+    var curationIDs: [String]
     
     enum CodingKeys: String, CodingKey {
         case id, sfSymbol, color, title, subtitle
         case description = "description"
         case category, requiredApp, date, numberOfLike, numberOfDownload, author, shortcutRequirements, downloadLink
+        case curationIDs
     }
     
     var dictionary: [String: Any] {

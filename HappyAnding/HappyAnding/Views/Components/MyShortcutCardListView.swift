@@ -75,6 +75,6 @@ struct MyShortcutCardListView: View {
                 .padding(.horizontal, 16)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.automatic)
     }
 }

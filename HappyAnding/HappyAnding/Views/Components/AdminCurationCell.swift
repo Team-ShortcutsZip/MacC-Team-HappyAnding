@@ -50,7 +50,7 @@ struct AdminCurationCell: View {
                     .Title1()
                     .foregroundColor(.Gray5)
                     .lineLimit(1)
-                Text(adminCuration.subtitle ?? "")
+                Text(adminCuration.subtitle)
                     .Body2()
                     .foregroundColor(.Gray5)
                     .lineLimit(2)
