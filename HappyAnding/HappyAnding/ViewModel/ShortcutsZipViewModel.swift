@@ -134,6 +134,55 @@ class ShortcutsZipViewModel: ObservableObject {
             }
     }
     
+    //MARK: - ReadShortcutView에서 해당 단축어에 좋아요를 눌렀는지 확인하는 함수 completionHandler로 bool값을 전달
+    
+    func checkLikedShortrcut(shortcutID: String, completionHandler: @escaping (Bool)->()) {
+        var result = false
+        fetchUser(userID: currentUser()) { data in
+            result = data.likedShortcuts.contains(shortcutID)
+            completionHandler(result)
+        }
+    }
+    
+    //MARK: - 좋아요 수를 업데이트하는 함수
+    
+    func updateNumberOfLike(isMyLike: Bool, shortcut: Shortcuts) {
+        var increment = 0
+        if isMyLike {
+            increment = 1
+            self.fetchUser(userID: self.currentUser()) { data in
+                var user = data
+                user.likedShortcuts.append(shortcut.id)
+                
+                self.db.collection("User").document(user.id).setData(user.dictionary) { error in
+                    if let error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        } else {
+            increment = -1
+            self.fetchUser(userID: self.currentUser()) { data in
+                var user = data
+                user.likedShortcuts.removeAll(where: { $0 == shortcut.id })
+                
+                self.db.collection("User").document(user.id).setData(user.dictionary) { error in
+                    if let error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+        db.collection("Shortcut").document(shortcut.id)
+            .updateData([
+                "numberOfLike" : FieldValue.increment(Int64(increment))
+            ]) { error in
+                if let error {
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    
     // MARK: - 현재 로그인한 아이디 리턴
     
     func currentUser() -> String {
