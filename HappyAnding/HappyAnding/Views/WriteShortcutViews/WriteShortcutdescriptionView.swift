@@ -13,7 +13,7 @@ struct WriteShortcutdescriptionView: View {
     
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
-   // @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    
     @Binding var shortcut: Shortcuts
     
     let isEdit: Bool
@@ -64,6 +64,7 @@ struct WriteShortcutdescriptionView: View {
         }
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .ignoresSafeArea(.keyboard)
+        .background(Color.Background)
     }
 }
 /*

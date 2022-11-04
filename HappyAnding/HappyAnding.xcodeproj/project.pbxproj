@@ -23,7 +23,6 @@
 		87E99C9F28FFF21B009B691F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C9E28FFF21B009B691F /* SettingView.swift */; };
 		87E99CA128FFF225009B691F /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA028FFF225009B691F /* MyPageView.swift */; };
 		87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA228FFF22E009B691F /* ExploreCurationView.swift */; };
-		87E99CA528FFF238009B691F /* ReadAdminCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */; };
 		87E99CA728FFF23E009B691F /* ListCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA628FFF23E009B691F /* ListCurationView.swift */; };
 		87E99CA928FFF24F009B691F /* ExploreShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA828FFF24F009B691F /* ExploreShortcutView.swift */; };
 		87E99CAB28FFF256009B691F /* ExploreCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CAA28FFF256009B691F /* ExploreCategoryView.swift */; };
@@ -72,6 +71,8 @@
 		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		F9914528290850370046986E /* TestUserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9914527290850370046986E /* TestUserCurationListView.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
+		F9CAEF832914855900224B0A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+Extension.swift */; };
+		F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */; };
 		F9F4D36A2906E0B000DC8546 /* Navigationbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -159,6 +160,7 @@
 		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		F9914527290850370046986E /* TestUserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserCurationListView.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		F9CAEF822914855900224B0A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigationbar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -350,6 +352,7 @@
 				F99569172901DC4D0060AAEF /* Font+Extension.swift */,
 				F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */,
 				4D778A33290A53BA00C15AC4 /* Application+Extension.swift */,
+				F9CAEF822914855900224B0A /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */,
 				87EDB96329082C7F009A750A /* ListCategoryView.swift in Sources */,
 				F94B432E2907088400987819 /* UserCurationListView.swift in Sources */,
 				A04ACB34290686C7004A85A6 /* ReadShortcutContentView.swift in Sources */,
@@ -582,6 +586,7 @@
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
 				F9914528290850370046986E /* TestUserCurationListView.swift in Sources */,
 				87E99CA728FFF23E009B691F /* ListCurationView.swift in Sources */,
+				F9CAEF832914855900224B0A /* Date+Extension.swift in Sources */,
 				87E606B629114F7D00C3DA13 /* WriteNicknameView.swift in Sources */,
 				F9F4D36A2906E0B000DC8546 /* Navigationbar+Extension.swift in Sources */,
 				A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */,
@@ -619,8 +624,6 @@
 				F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
 				87E99CE82907C6E6009B691F /* Shortcuts.swift in Sources */,
-				87E99CA528FFF238009B691F /* ReadAdminCurationView.swift in Sources */,
-				87E99CA528FFF238009B691F /* ReadAdminCurationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

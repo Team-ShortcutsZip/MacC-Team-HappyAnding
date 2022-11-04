@@ -13,7 +13,7 @@ struct WriteShortcutTitleView: View {
     @State var isShowingIconModal = false
     @State var isNameValid = false
     @State var isLinkValid = false
-    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), date: "", numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""])
+    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [String](), requiredApp: [String](), numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [""], curationIDs: [String]())
     
     let isEdit: Bool
     
@@ -123,6 +123,7 @@ struct WriteShortcutTitleView: View {
                 .padding(.bottom, 24)
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
+            .background(Color.Background)
         }
     }
 }

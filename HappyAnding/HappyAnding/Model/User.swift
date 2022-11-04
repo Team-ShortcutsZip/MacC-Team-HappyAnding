@@ -10,8 +10,8 @@ import Foundation
 struct User: Identifiable, Codable {
     var id: String
     var nickname: String
-    var likedShortcuts: [String]?
-    var downloadedShortcuts: [String]?
+    var likedShortcuts: [String]
+    var downloadedShortcuts: [String]
     
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()

@@ -67,6 +67,19 @@ struct WriteShortcutTagView: View {
                 shortcutsZipViewModel.shortcutsMadeByUser.append(shortcut)
                 shortcut.author = firebase.currentUser()
                 firebase.setData(model: shortcut)
+                if isEdit {
+                    firebase.updateShortcutInCuration(
+                        shortcutCell: ShortcutCellModel(
+                            id: shortcut.id,
+                            sfSymbol: shortcut.sfSymbol,
+                            color: shortcut.color,
+                            title: shortcut.title,
+                            subtitle: shortcut.subtitle,
+                            downloadLink: shortcut.downloadLink.last!
+                        ),
+                        curationIDs: shortcut.curationIDs
+                    )
+                }
                 
                 isWriting.toggle()
             }, label: {
@@ -86,6 +99,7 @@ struct WriteShortcutTagView: View {
         }
         .navigationTitle(isEdit ? "단축어 편집" :"단축어 등록")
         .ignoresSafeArea(.keyboard)
+        .background(Color.Background)
     }
     
     struct categoryList: View {

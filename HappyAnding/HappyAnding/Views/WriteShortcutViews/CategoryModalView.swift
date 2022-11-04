@@ -14,38 +14,42 @@ struct CategoryModalView: View {
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
-        VStack {
-            Text("카테고리")
-                .font(.headline)
-            
-            Spacer()
-                .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
-            
-            LazyVGrid(columns: gridLayout, spacing: 12) {
-                ForEach(Category.allCases, id: \.self) { item in
-                    CategoryButton(item: item, items: $selectedCategories)
+        ZStack {
+            Color.Background
+                .ignoresSafeArea()
+            VStack {
+                Text("카테고리")
+                    .font(.headline)
+                
+                Spacer()
+                    .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
+                
+                LazyVGrid(columns: gridLayout, spacing: 12) {
+                    ForEach(Category.allCases, id: \.self) { item in
+                        CategoryButton(item: item, items: $selectedCategories)
+                    }
                 }
+                .padding(.horizontal, 16)
+                
+                Spacer()
+                    .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
+                
+                Button(action: {
+                    isShowingCategoryModal = false
+                }, label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .foregroundColor(!selectedCategories.isEmpty ? .Primary : .Gray1 )
+                            .frame(maxWidth: .infinity, maxHeight: 52)
+                        
+                        Text("완료")
+                            .foregroundColor(!selectedCategories.isEmpty ? .Background : .Gray3 )
+                            .Body1()
+                    }
+                })
+                .disabled(selectedCategories.isEmpty)
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
-            
-            Spacer()
-                .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
-            
-            Button(action: {
-                isShowingCategoryModal = false
-            }, label: {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!selectedCategories.isEmpty ? .Primary : .Gray1 )
-                        .frame(maxWidth: .infinity, maxHeight: 52)
-                    
-                    Text("완료")
-                        .foregroundColor(!selectedCategories.isEmpty ? .Background : .Gray3 )
-                        .Body1()
-                }
-            })
-            .disabled(selectedCategories.isEmpty)
-            .padding(.horizontal, 16)
         }
     }
     
