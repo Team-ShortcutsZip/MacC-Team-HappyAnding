@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ReadShortcutView: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
     @State var isEdit = false
@@ -16,8 +17,6 @@ struct ReadShortcutView: View {
     
     @State var shortcut: Shortcuts?
     var shortcutCell: ShortcutCellModel?
-    
-    let firebase = FirebaseService()
     
     var body: some View {
         
@@ -29,7 +28,8 @@ struct ReadShortcutView: View {
                 
                 Button(action: {
                     if let url = URL(string: shortcut.downloadLink[0]) {
-                        firebase.updateNumberOfDownload(shortcut: shortcut)
+                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                        shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
                         openURL(url)
                         //TODO: 화면 상의 다운로드 숫자 변경 기능 필요
                     }
@@ -51,7 +51,7 @@ struct ReadShortcutView: View {
         .onAppear() {
             if shortcut == nil {
                 if let shortcutCell {
-                    firebase.fetchShortcutDetail(id: shortcutCell.id) { data in
+                    shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id) { data in
                         self.shortcut = data
                     }
                 }
@@ -59,7 +59,7 @@ struct ReadShortcutView: View {
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if shortcut?.author == firebase.currentUser() {
+            if shortcut?.author == shortcutsZipViewModel.currentUser() {
                 myShortcutMenuSection
             } else {
                 otherShortcutMenuSection
@@ -87,9 +87,10 @@ struct ReadShortcutView: View {
                     Text("삭제"),
                     action: {
                         if let shortcut {
-                            firebase.deleteShortcutIDInUser(shortcutID: shortcut.id)
-                            firebase.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
-                            firebase.deleteData(model: shortcut)
+                            shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
+                            shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
+                            shortcutsZipViewModel.deleteData(model: shortcut)
+                            shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
                         }
                     }
                   )
