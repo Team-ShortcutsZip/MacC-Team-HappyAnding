@@ -174,7 +174,7 @@ extension ValidationCheckTextField {
             }
             
         } else {
-            isValid = textType.isOptional
+            isValid = false
             isExceeded = true
             self.strokeColor = Color.Error
         }
