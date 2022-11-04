@@ -41,8 +41,10 @@ struct CheckBoxShortcutCell: View {
                 }
             }
             else {
-                isShortcutTapped = true
-                selectedShortcutCells.append(shortcutCell)
+                if selectedShortcutCells.count < 10 {
+                    isShortcutTapped = true
+                    selectedShortcutCells.append(shortcutCell)
+                }
             }
         }
         .padding(.top, 0)
