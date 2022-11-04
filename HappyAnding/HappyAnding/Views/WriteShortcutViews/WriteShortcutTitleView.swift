@@ -122,6 +122,7 @@ struct WriteShortcutTitleView: View {
                 .padding(.bottom, 24)
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
+            .background(Color.Background)
         }
     }
 }
