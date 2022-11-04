@@ -52,35 +52,81 @@ class FirebaseService {
         return index
     }
     
-    //MARK: - 모든 단축어를 Shortcuts -> ShortcutCellModel 형태로 변환하여 가져오는 함수
-    func fetchShortcutCell(completionHandler: @escaping ([ShortcutCellModel])->()) {
+    //MARK: - 현재 사용자가 작성한 Shortcuts -> ShortcutCellModel 형태로 변환하여 가져오는 함수
+    
+    func fetchMadeShortcutCell(completionHandler: @escaping ([ShortcutCellModel])->()) {
         var shortcutCells: [ShortcutCellModel] = []
         
-        db.collection("Shortcut").getDocuments() { (querySnapshot, error) in
-            if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
-                        let shortcutCell = ShortcutCellModel(
-                            id: shortcut.id,
-                            sfSymbol: shortcut.sfSymbol,
-                            color: shortcut.color,
-                            title: shortcut.title,
-                            subtitle: shortcut.subtitle,
-                            downloadLink: shortcut.downloadLink.last!
-                        )
-                        shortcutCells.append(shortcutCell)
-                    } catch let error {
-                        print("error: \(error)")
+        db.collection("Shortcut")
+            .whereField("author", isEqualTo: currentUser())
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            let shortcutCell = ShortcutCellModel(
+                                id: shortcut.id,
+                                sfSymbol: shortcut.sfSymbol,
+                                color: shortcut.color,
+                                title: shortcut.title,
+                                subtitle: shortcut.subtitle,
+                                downloadLink: shortcut.downloadLink.last!
+                            )
+                            shortcutCells.append(shortcutCell)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
                     }
+                    completionHandler(shortcutCells)
                 }
-                completionHandler(shortcutCells)
+            }
+    }
+    
+    // MARK: 현재 사용자가 좋아요한 Shortcuts -> ShortcutCellModel 형태로 변환
+    
+    func fetchLikedShortcutCell(completionHandler: @escaping ([ShortcutCellModel])->()) {
+        var shortcutCells: [ShortcutCellModel] = []
+        
+        self.fetchUser(userID: self.currentUser()) { user in
+            let shortcutIds = user.likedShortcuts
+            
+            for shortcutId in shortcutIds {
+                self.db.collection("Shortcut")
+                    .whereField("id", isEqualTo: shortcutId)
+                    .getDocuments { (querySnapshot, error) in
+                        if let error {
+                            print("Error getting documents: \(error)")
+                        } else {
+                            guard let documents = querySnapshot?.documents else { return }
+                            let decoder = JSONDecoder()
+                            
+                            for document in documents {
+                                do {
+                                    let data = document.data()
+                                    let jsonData = try JSONSerialization.data(withJSONObject: data)
+                                    let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                                    let shortcutCell = ShortcutCellModel(
+                                        id: shortcut.id,
+                                        sfSymbol: shortcut.sfSymbol,
+                                        color: shortcut.color,
+                                        title: shortcut.title,
+                                        subtitle: shortcut.subtitle,
+                                        downloadLink: shortcut.downloadLink.last!
+                                    )
+                                    shortcutCells.append(shortcutCell)
+                                } catch let error {
+                                    print("error: \(error)")
+                                }
+                            }
+                            completionHandler(shortcutCells)
+                        }
+                    }
             }
         }
     }

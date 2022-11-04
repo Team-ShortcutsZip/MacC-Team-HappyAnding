@@ -24,12 +24,19 @@ struct ReadUserCurationView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             ZStack(alignment: .bottom) {
-                Color.White
-                    .ignoresSafeArea(.all, edges: .all)
-                    .frame(height: 371)
+                
+                GeometryReader { geo in
+                    let yOffset = geo.frame(in: .global).minY
+                    
+                    Color.White
+                        .frame(width: geo.size.width, height: 371 + (yOffset > 0 ? yOffset : 0))
+                        .offset(y: yOffset > 0 ? -yOffset : 0)
+                }
+                .frame(minHeight: 371)
                 
                 VStack{
                     userInformation
+                        .padding(.top, 103)
                         .padding(.bottom, 22)
                     UserCurationCell(curation: userCuration)
                         .padding(.bottom, 12)
@@ -42,6 +49,9 @@ struct ReadUserCurationView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: BackButton)
+        .toolbarBackground(Color.clear, for: .navigationBar)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
@@ -125,6 +135,15 @@ struct ReadUserCurationView: View {
             shortcutsZipViewModel.fetchUser(userID: userCuration.author) { user in
                 authorInformation = user
             }
+        }
+    }
+    var BackButton: some View {
+        Button(action: {
+        self.presentation.wrappedValue.dismiss()
+        }) {
+            Image(systemName: "chevron.backward") // set image here
+                .foregroundColor(Color.Gray5)
+                .bold()
         }
     }
 }

@@ -23,7 +23,7 @@ struct ExploreCurationView: View {
                     UserCurationListView(userCurations: shortcutsZipViewModel.curationsMadeByUser)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션
-                    CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: shortcutsZipViewModel.classifyUserCuration())
+                    CurationListView(curationListTitle: "유저 큐레이션", userCurations: shortcutsZipViewModel.classifyUserCuration())
                 }
                 .padding(.bottom, 32)
             }
