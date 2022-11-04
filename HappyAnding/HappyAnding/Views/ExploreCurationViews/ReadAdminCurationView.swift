@@ -29,7 +29,7 @@ struct ReadAdminCurationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             GeometryReader { geo in
                 let yOffset = geo.frame(in: .global).minY
                 
@@ -58,6 +58,7 @@ struct ReadAdminCurationView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: btnBack)
         .toolbarBackground(Color.clear, for: .navigationBar)
+        .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
         .background(Color.Background)
         
