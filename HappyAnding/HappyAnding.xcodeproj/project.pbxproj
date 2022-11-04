@@ -71,6 +71,7 @@
 		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		F9914528290850370046986E /* TestUserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9914527290850370046986E /* TestUserCurationListView.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
+		F9CAEF8C2914916400224B0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9CAEF8B2914916400224B0A /* GoogleService-Info.plist */; };
 		F9F4D36A2906E0B000DC8546 /* Navigationbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +158,7 @@
 		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		F9914527290850370046986E /* TestUserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserCurationListView.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		F9CAEF8B2914916400224B0A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigationbar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +232,7 @@
 				87E99CD729042503009B691F /* Model */,
 				A0F822AA2910B8B900AF4448 /* ViewModel */,
 				87E99C7128F94EA8009B691F /* Assets.xcassets */,
+				F9CAEF8B2914916400224B0A /* GoogleService-Info.plist */,
 				87E99C7328F94EA8009B691F /* Preview Content */,
 			);
 			path = HappyAnding;
@@ -535,6 +538,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
+				F9CAEF8C2914916400224B0A /* GoogleService-Info.plist in Resources */,
 				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
 				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 			);
