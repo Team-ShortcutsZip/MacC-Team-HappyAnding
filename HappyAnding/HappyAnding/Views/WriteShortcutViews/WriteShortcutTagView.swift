@@ -79,15 +79,15 @@ struct WriteShortcutTagView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!shortcut.category.isEmpty && !shortcut.requiredApp.isEmpty && isRequirementValid ? .Primary : .Gray1 )
+                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Primary : .Gray1 )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
-                        .foregroundColor(!shortcut.category.isEmpty && !shortcut.requiredApp.isEmpty && isRequirementValid ? .Background : .Gray3 )
+                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Background : .Gray3 )
                         .Body1()
                 }
             })
-            .disabled(shortcut.category.isEmpty || shortcut.requiredApp.isEmpty || !isRequirementValid)
+            .disabled(shortcut.category.isEmpty || !isRequirementValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
