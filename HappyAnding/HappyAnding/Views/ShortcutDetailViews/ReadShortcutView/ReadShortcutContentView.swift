@@ -42,6 +42,7 @@ struct ReadShortcutContentView: View {
                     ReusableTextView(title: "단축어 사용에 필요한 앱", contents: nil, contentsArray: shortcut.requiredApp)
                         .padding(.bottom, 20)
                 }
+                
                 if !shortcut.shortcutRequirements.isEmpty {
                     ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: shortcut.shortcutRequirements, contentsArray: nil)
                 }

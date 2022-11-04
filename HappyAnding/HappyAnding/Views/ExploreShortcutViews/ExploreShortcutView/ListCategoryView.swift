@@ -21,10 +21,7 @@ struct ListCategoryView: View {
             VStack {
                 LazyVGrid(columns: gridLayout, spacing: 0) {
                     ForEach(Category.allCases, id: \.self) { item in
-                        
-                        NavigationLink(destination: ExploreCategoryView(category: item, shortcuts: shortcuts)) {
-                            
-                            
+                        NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: item)) {
                             RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
                                 .stroke(Color.Gray1, lineWidth: 1)
                                 .background(Color.White)
