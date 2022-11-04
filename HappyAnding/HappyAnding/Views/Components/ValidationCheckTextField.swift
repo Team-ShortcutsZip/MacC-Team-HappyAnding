@@ -39,34 +39,38 @@ struct ValidationCheckTextField: View {
         VStack {
             textFieldTitle
             
-            HStack(alignment: .top) {
+            ZStack {
                 if isMultipleLines {
                     multiLineEditor
                 } else {
-                    oneLineEditor
-                }
-                
-                if isExceeded || content.isEmpty {
-                    Button(action: {
-                        content.removeAll()
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .Body2()
-                            .foregroundColor(.Gray4)
+                    HStack(alignment: .center) {
+                        oneLineEditor
+                        
+                        if isExceeded {
+                            Button(action: {
+                                content.removeAll()
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .Body2()
+                                    .foregroundColor(.Gray4)
+                            }
+                            .padding()
+                        } else if !content.isEmpty {
+                            Image(systemName: "checkmark.circle.fill")
+                                .Body2()
+                                .foregroundColor(.Success)
+                                .padding()
+                        }
                     }
-                    .padding()
-                } else {
-                    Image(systemName: "checkmark.circle.fill")
-                        .Body2()
-                        .foregroundColor(.Success)
-                        .padding()
+                    
                 }
             }
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(lineWidth: 1)
                     .foregroundColor(strokeColor)
-            ).padding(.horizontal, 16)
+            )
+            .padding(.horizontal, 16)
             
             HStack {
                 if isExceeded {
@@ -105,6 +109,7 @@ struct ValidationCheckTextField: View {
     var oneLineEditor: some View {
         TextField(placeholder, text: $content)
             .Body2()
+            .frame(height: 20)
             .padding(16)
             .onAppear {
                 checkValidation()
@@ -118,7 +123,7 @@ struct ValidationCheckTextField: View {
     }
     
     var multiLineEditor: some View {
-        ZStack(alignment: .leading) {
+        ZStack(alignment: .top) {
             if content.isEmpty {
                 TextEditor(text: $placeholder)
                     .scrollContentBackground(.hidden)
