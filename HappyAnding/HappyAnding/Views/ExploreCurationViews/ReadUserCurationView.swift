@@ -11,7 +11,7 @@ struct ReadUserCurationView: View {
     
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     
-    let firebase = FirebaseService()
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var authorInformation: User? = nil
     
     @State var isWriting = false
@@ -47,7 +47,7 @@ struct ReadUserCurationView: View {
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if userCuration.author == firebase.currentUser() {
+            if userCuration.author == shortcutsZipViewModel.currentUser() {
                 myCurationMenuSection
             } else {
                 //다른 사람 큐레이션 볼 때 공유버튼 동작(트레일링 아이템) 제거.
@@ -55,11 +55,11 @@ struct ReadUserCurationView: View {
 //                otherCurationMenuSection
             }
         }, label: {
-            Image(systemName: userCuration.author == firebase.currentUser() ? "ellipsis" : "square.and.arrow.up")
+            Image(systemName: userCuration.author == shortcutsZipViewModel.currentUser() ? "ellipsis" : "square.and.arrow.up")
                 .foregroundColor(.Gray4)
                 //다른 사람 큐레이션 볼 때 공유버튼 (트레일링 아이템) opacity 0
                 // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 제거
-                .opacity(userCuration.author == firebase.currentUser() ? 1 : 0)
+                .opacity(userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
         }))
         .fullScreenCover(isPresented: $isTappedEditButton) {
             NavigationView {
@@ -115,13 +115,14 @@ struct ReadUserCurationView: View {
                       secondaryButton: .destructive(
                         Text("삭제")
                         , action: {
-                            firebase.deleteData(model: userCuration)
+                            shortcutsZipViewModel.deleteData(model: userCuration)
+                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != userCuration.id }
                             presentation.wrappedValue.dismiss()
                 }))
             }
         }
         .onAppear {
-            firebase.fetchUser(userID: userCuration.author) { user in
+            shortcutsZipViewModel.fetchUser(userID: userCuration.author) { user in
                 authorInformation = user
             }
         }
