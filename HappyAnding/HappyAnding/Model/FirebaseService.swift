@@ -916,7 +916,7 @@ class FirebaseService {
     
     func deleteData(model: Any) {
         switch model {
-        case _ as Shortcut:
+        case _ as Shortcuts:
             db.collection("Shortcut").document((model as! Shortcuts).id).delete()
         case _ as Curation:
             db.collection("Curation").document((model as! Curation).id).delete()
