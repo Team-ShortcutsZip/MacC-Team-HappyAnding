@@ -18,6 +18,7 @@ struct ListShortcutView: View {
     
     @ObservedObject var shortcutData = fetchData()
     @State private var isLastItem = false
+    @State var description: String = ""
     
     // TODO: let으로 변경필요, 현재 작업중인 코드들과 충돌될 가능성이 있어 우선 변수로 선언
     var categoryName: Category?
@@ -61,13 +62,16 @@ struct ListShortcutView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle(getNavigationTitle(sectionType ?? .myShortcut))
+        .navigationBarTitle((categoryName == nil ? getNavigationTitle(sectionType!) : categoryName?.translateName())!)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear() {
             if let categoryName {
+                description = categoryName.fetchDescription()
                 firebase.fetchCategoryShortcut(category: categoryName.rawValue) { shortcuts in
                     self.shortcuts = shortcuts
                 }
+            } else if let sectionType {
+                description = getDescriptions(sectionType)
             }
         }
     }
@@ -77,7 +81,7 @@ struct ListShortcutView: View {
             // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
         
         VStack {
-            Text(getDescriptions(sectionType ?? .popular))
+            Text(description)
                 .foregroundColor(.Gray5)
                 .Body2()
                 .padding(16)
