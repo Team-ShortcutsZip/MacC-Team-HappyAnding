@@ -32,8 +32,8 @@ import SwiftUI
 struct ShortcutCell: View {
     
     @Environment(\.openURL) private var openURL
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     var shortcut: Shortcuts?
-    let firebase = FirebaseService()
     
     @State var shortcutCell = ShortcutCellModel(
         id: "",
@@ -64,8 +64,8 @@ struct ShortcutCell: View {
                     .onTapGesture {
                         if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
-                            firebase.fetchShortcutDetail(id: shortcutCell.id) { shortcut in
-                                firebase.updateNumberOfDownload(shortcut: shortcut)
+                            shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id)  { shortcut in
+                                shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
                             }
                         }
                     }

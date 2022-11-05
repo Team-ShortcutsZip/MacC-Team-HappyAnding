@@ -11,13 +11,7 @@ struct WriteCurationSetView: View {
     
     @Binding var isWriting: Bool
     
-    //TODO: 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
-    @ObservedObject var shortcutData = fetchData()
-    
-    
-    // TODO: firebase 함수로 결괏값 가져오면, 그 배열의 길이를 넣어야함!
-    @State var shortcutCells: [ShortcutCellModel] = []
-    
+    @State var shortcutCells = Set<ShortcutCellModel>()
     @State var isSelected = false
     @State var curation = Curation(title: "",
                                    subtitle: "",
@@ -63,8 +57,11 @@ struct WriteCurationSetView: View {
             }
             .background(Color.Background)
             .onAppear() {
-                firebase.fetchShortcutCell { shortcuts in
-                    self.shortcutCells = shortcuts
+                firebase.fetchMadeShortcutCell { shortcuts in
+                    self.shortcutCells = self.shortcutCells.union(shortcuts)
+                }
+                firebase.fetchLikedShortcutCell { shortcuts in
+                    self.shortcutCells = self.shortcutCells.union(shortcuts)
                 }
             }
         }
@@ -90,19 +87,13 @@ struct WriteCurationSetView: View {
     
     ///내가 작성한, 좋아요를 누른 단축어 목록
     var shortcutList: some View {
-        ForEach(Array(shortcutCells.enumerated()), id: \.offset) { index, shortcut in
+        ForEach(Array(shortcutCells)) { shortcut in
             CheckBoxShortcutCell(
                 isShortcutTapped: curation.shortcuts.contains(shortcut),
                 selectedShortcutCells: $curation.shortcuts,
                 shortcutCell: shortcut
             )
         }
-//        ForEach(0..<10, id: \.self) { index in
-//            CheckBoxShortcutCell(isShortcutTapped: isSelected[index], numberOfSelected: $numberOfSelected, selectedShortcut: $selectedShortcut, color: self.shortcutData.data[index].color,
-//                         sfSymbol: self.shortcutData.data[index].sfSymbol,
-//                         name: self.shortcutData.data[index].name,
-//                         description: self.shortcutData.data[index].description)
-//        }
     }
     
     ///완료 버튼

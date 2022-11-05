@@ -55,6 +55,6 @@ struct CurationListHeader: View {
 
 //struct CurationListView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        CurationListView(curationListTitle: "스마트한 생활의 시작", userCurations: UserCuration.fetchData(number: 5))
+//        CurationListView(curationListTitle:유저 큐레이션", userCurations: UserCuration.fetchData(number: 5))
 //    }
 //}

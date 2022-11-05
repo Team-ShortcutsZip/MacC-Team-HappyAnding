@@ -25,7 +25,7 @@ struct Curation: Identifiable, Codable {
     }
 }
 
-struct ShortcutCellModel: Identifiable, Codable, Equatable {
+struct ShortcutCellModel: Identifiable, Codable, Equatable, Hashable {
     
     var id: String // Shortcut의 UUID
     var sfSymbol: String
