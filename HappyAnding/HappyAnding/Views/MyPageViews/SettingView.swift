@@ -44,7 +44,8 @@ struct SettingView: View {
                 }
                 //못 보내는 기기일 때 뜨는 것. 아예 지워도 될 것 같긴 한데 어떻게할까요. 못 보내는 기기의 기준이 확실치 않아서 일단 이렇게 둠.
                 else {
-                    SettingCell(title: "문의사항은 shortcutszip@gmail.com로 메일 주세요")
+                    SettingCell(title: "문의사항은 shortcutszip@gmail.com 으로 메일 주세요")
+                        .multilineTextAlignment(.leading)
                 }
                 
             }
