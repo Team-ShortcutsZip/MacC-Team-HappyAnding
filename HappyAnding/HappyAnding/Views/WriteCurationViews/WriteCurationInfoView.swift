@@ -59,10 +59,10 @@ struct WriteCurationInfoView: View {
                 curation.author = shortcutsZipViewModel.currentUser()
                 shortcutsZipViewModel.curationsMadeByUser.append(curation)
                 shortcutsZipViewModel.setData(model: curation)
-       //         firebase.updateShortcutCurationID(
-      //              shortcutCells: curation.shortcuts,
-       //             curationID: curation.id
-       //         )
+                shortcutsZipViewModel.updateShortcutCurationID(
+                    shortcutCells: curation.shortcuts,
+                    curationID: curation.id
+                )
                 
                 isWriting.toggle()
             }, label: {

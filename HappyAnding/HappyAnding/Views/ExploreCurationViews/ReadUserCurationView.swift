@@ -43,7 +43,7 @@ struct ReadUserCurationView: View {
                 }
             }
             ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcutCell: shortcut)) {
+                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
                     ShortcutCell(shortcutCell: shortcut)
                     .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
                 }

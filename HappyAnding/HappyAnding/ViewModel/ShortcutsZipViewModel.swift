@@ -23,6 +23,7 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var shortcutsUserDownloaded: [Shortcuts] = []
     @Published var shortcutsMadeByUser: [Shortcuts] = []
     @Published var sortedShortcutsByDownload: [Shortcuts] = []
+    @Published var sortedShortcutsByLike: [Shortcuts] = []
     
     @Published var curationsMadeByUser: [Curation] = []
     @Published var userCurations: [Curation] = []
@@ -52,6 +53,18 @@ class ShortcutsZipViewModel: ObservableObject {
             self.fetchShortcutByIds(shortcutIds: user.likedShortcuts) { likedShortcuts in
                 self.shortcutsUserLiked = likedShortcuts
             }
+        }
+        fetchShortcutLimit(orderBy: "numberOfDownload") { shortcuts in
+            self.sortedShortcutsByDownload = shortcuts
+        }
+        fetchShortcutLimit(orderBy: "numberOfLike") { shortcuts in
+            self.sortedShortcutsByLike = shortcuts
+        }
+        fetchCurationLimit(isAdmin: true) { curations in
+            self.adminCurations = curations
+        }
+        fetchCurationLimit(isAdmin: false) { curations in
+            self.userCurations = curations
         }
     }
     
@@ -107,11 +120,13 @@ class ShortcutsZipViewModel: ObservableObject {
             
             if let next = self.lastShortcutDocumentSnapshot[index] {
                 query  = db.collection("Shortcut")
+//                    .whereField(orderBy, isGreaterThan: 0)
                     .order(by: orderBy, descending: true)
                     .limit(to: numberOfPageLimit)
                     .start(afterDocument: next)
             } else {
                 query = db.collection("Shortcut")
+//                    .whereField(orderBy, isGreaterThan: 0)
                     .order(by: orderBy, descending: true)
                     .limit(to: numberOfPageLimit)
             }
@@ -267,7 +282,6 @@ class ShortcutsZipViewModel: ObservableObject {
                     } catch let error {
                         print("error: \(error)")
                     }
-                    print("\(document.documentID) => \(document.data())")
                 }
             }
         }
@@ -371,29 +385,70 @@ class ShortcutsZipViewModel: ObservableObject {
     func fetchCurationByAuthor (author: String, completionHandler: @escaping ([Curation])->()) {
         
         var curations: [Curation] = []
+        print("**\(curations)")
+//        db.collection("Curation")
+//            .whereField("author", isEqualTo: author)
+//            .getDocuments { (querySnapshot, error) in
+//                if let error {
+//                print("Error getting documents: \(error)")
+//            } else {
+//                guard let documents = querySnapshot?.documents else { return }
+//                let decoder = JSONDecoder()
+//
+//                for document in documents {
+//                    do {
+//                        let data = document.data()
+//                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+//                        let curation = try decoder.decode(Curation.self, from: jsonData)
+//                        curations.append(curation)
+//                    } catch let error {
+//                        print("error: \(error)")
+//                    }
+//                }
+//                completionHandler(curations)
+//            }
+//        }
         
         db.collection("Curation")
             .whereField("author", isEqualTo: author)
-            .getDocuments { (querySnapshot, error) in
-                if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let curation = try decoder.decode(Curation.self, from: jsonData)
-                        curations.append(curation)
-                    } catch let error {
-                        print("error: \(error)")
+            .addSnapshotListener { snapshot, error in
+                    guard let snapshot else {
+                        print("Error fetching snapshots: \(error!)")
+                        return
                     }
-                }
+                    snapshot.documentChanges.forEach { diff in
+                        if (diff.type == .added) {
+                            print("New city: \(diff.document.data())")
+                        }
+                        if (diff.type == .modified) {
+                            print("Modified city: \(diff.document.data())")
+                        }
+                        if (diff.type == .removed) {
+                            print("Removed city: \(diff.document.data())")
+                        }
+                        
+                        let decoder = JSONDecoder()
+                        
+                        do {
+                            let data = diff.document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let curation = try decoder.decode(Curation.self, from: jsonData)
+                            curations.removeAll(where: { $0.id == curation.id})
+                            if let index = curations.firstIndex(where: { $0.id == curation.id}) {
+                                print(index)
+                                curations[index] = curation
+                            }else {
+                                print(curation)
+                                curations.append(curation)
+                            }
+                            
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                        print("**curations\(curations.count)")
+                    }
                 completionHandler(curations)
             }
-        }
     }
     
     //MARK: Curation을 (admin, user) 구분하여 10개씩 가져오는 함수
@@ -437,10 +492,6 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
-
-
-    
-
     
     
 //MARK: - 저장, 편집 관련 함수

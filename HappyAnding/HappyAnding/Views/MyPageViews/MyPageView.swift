@@ -90,7 +90,7 @@ struct MyPageShortcutList: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
                             ShortcutCell(shortcut: shortcut)
                         }
                     }

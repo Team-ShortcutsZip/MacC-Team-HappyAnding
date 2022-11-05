@@ -35,7 +35,7 @@ struct DownloadRankView: View {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut), label: {
+                    NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id), label: {
                         ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
                     })
                 }

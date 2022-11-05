@@ -64,7 +64,7 @@ struct MyShortcutCardListView: View {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
                             if index < 7 {
                                 NavigationLink(destination: {
-                                    ReadShortcutView(shortcut: shortcut)
+                                    ReadShortcutView(shortcutID: shortcut.id)
                                 }, label: {
                                     MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.title, myShortcutColor: shortcut.color)
                                 })

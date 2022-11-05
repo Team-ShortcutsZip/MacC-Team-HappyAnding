@@ -22,7 +22,7 @@ struct ExploreShortcutView: View {
                     .padding(.bottom, 32)
                 CategoryView(shortcuts: shortcutsZipViewModel.sortedShortcutsByDownload)
                     .padding(.bottom, 32)
-                LovedShortcutView(shortcuts: shortcutsZipViewModel.sortedShortcutsByDownload)
+                LovedShortcutView(shortcuts: shortcutsZipViewModel.sortedShortcutsByLike)
                     .padding(.bottom, 44)
             }
             .navigationBarTitle(Text("단축어 둘러보기"))

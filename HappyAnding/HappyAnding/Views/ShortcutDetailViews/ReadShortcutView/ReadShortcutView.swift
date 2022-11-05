@@ -16,7 +16,9 @@ struct ReadShortcutView: View {
     @State var isTappedDeleteButton = false
     
     @State var shortcut: Shortcuts?
-    var shortcutCell: ShortcutCellModel?
+//    var shortcutCell: ShortcutCellModel?
+    let shortcutID: String
+//    @State var shortcutInfo: Shortcuts?
     
     var body: some View {
         
@@ -49,12 +51,8 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
-            if shortcut == nil {
-                if let shortcutCell {
-                    shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id) { data in
-                        self.shortcut = data
-                    }
-                }
+            shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
+                self.shortcut = shortcut
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -150,8 +148,8 @@ extension ReadShortcutView {
     }
 }
 
-struct ReadShortcutView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadShortcutView()
-    }
-}
+//struct ReadShortcutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReadShortcutView()
+//    }
+//}
