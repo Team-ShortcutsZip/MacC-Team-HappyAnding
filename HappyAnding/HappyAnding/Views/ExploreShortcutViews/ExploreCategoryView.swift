@@ -18,7 +18,7 @@ import SwiftUI
  #description
  - ShortcutTestModel 파일에서 생성한 Shortcut모델을 기준으로 데이터를 받아옵니다.
  */
-
+/*
 struct ExploreCategoryView: View {
     
     //TODO: 단축어 목록 받아오기
@@ -123,3 +123,4 @@ struct CategoryListHeader: View {
         }
     }
 }
+*/

@@ -20,7 +20,7 @@ class AppleAuthCoordinator: NSObject {
     var userAuth = UserAuth.shared
     var currentNonce: String?
     let window: UIWindow?
-    let firebase = FirebaseService()
+    let shortcutZipViewModel = ShortcutsZipViewModel()
     
     init(window: UIWindow?) {
         self.window = window
@@ -121,7 +121,7 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                     return
                 }
                 
-                self.firebase.checkMembership { result in
+                self.shortcutZipViewModel.checkMembership { result in
                     if result {
                         withAnimation(.easeInOut) {
                             self.signInStatus = true

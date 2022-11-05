@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WriteShortcutTagView: View {
     
-    let firebase = FirebaseService()
+//    let firebase = FirebaseService()
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
@@ -65,10 +65,10 @@ struct WriteShortcutTagView: View {
                 // 서버에 추가
                 // 뷰모델에 추가
                 shortcutsZipViewModel.shortcutsMadeByUser.append(shortcut)
-                shortcut.author = firebase.currentUser()
-                firebase.setData(model: shortcut)
+                shortcut.author = shortcutsZipViewModel.currentUser()
+                shortcutsZipViewModel.setData(model: shortcut)
                 if isEdit {
-                    firebase.updateShortcutInCuration(
+                    shortcutsZipViewModel.updateShortcutInCuration(
                         shortcutCell: ShortcutCellModel(
                             id: shortcut.id,
                             sfSymbol: shortcut.sfSymbol,
