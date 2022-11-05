@@ -16,9 +16,7 @@ struct ReadShortcutView: View {
     @State var isTappedDeleteButton = false
     
     @State var shortcut: Shortcuts?
-//    var shortcutCell: ShortcutCellModel?
     let shortcutID: String
-//    @State var shortcutInfo: Shortcuts?
     
     var body: some View {
         
