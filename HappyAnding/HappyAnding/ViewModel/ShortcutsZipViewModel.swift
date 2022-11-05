@@ -606,7 +606,7 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
-    //MARK: - 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
+    //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
     
     func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String) {
         shortcutCells.forEach { shortcutCell in
@@ -787,7 +787,7 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
-    //MARK: - user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
+    //MARK: user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
     
     func checkNickNameDuplication(name: String, completionHandler: @escaping (Bool)->()) {
         
@@ -809,7 +809,7 @@ class ShortcutsZipViewModel: ObservableObject {
             }
     }
     
-    // MARK: - 이미 회원가입한 User인지 확인하는 함수
+    // MARK: 이미 회원가입한 User인지 확인하는 함수
     
     func checkMembership(completionHandler: @escaping (Bool) -> ()) {
         
