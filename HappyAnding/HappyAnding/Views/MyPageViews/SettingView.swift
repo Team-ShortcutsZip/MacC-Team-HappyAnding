@@ -5,9 +5,14 @@
 //  Created by 이지원 on 2022/10/19.
 //
 
+import MessageUI
 import SwiftUI
 
 struct SettingView: View {
+    
+    @State var result: Result<MFMailComposeResult, Error>? = nil
+    @State var isShowingMailView = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             //            Text("알림 설정")
@@ -20,16 +25,33 @@ struct SettingView: View {
             //            }
             
             SettingCell(title: "버전정보", version: "1.0.0")
-            SettingCell(title: "개발자에게 연락하기")
-                .onTapGesture {
-                    //TODO: 클릭 시 이벤트 연결 필요
+            
+            Button(action : {
+                if MFMailComposeViewController.canSendMail() {
+                    self.isShowingMailView.toggle()
                     
                 }
-            SettingCell(title: "로그아웃")
-                .onTapGesture {
-                    //TODO: 클릭 시 이벤트 연결 필요
-                    print("로그아웃")
+            }) {
+                if MFMailComposeViewController.canSendMail() {
+                    SettingCell(title: "개발자에게 연락하기")
+                    
                 }
+                //못 보내는 기기일 때 뜨는 것. 아예 지워도 될 것 같긴 한데 어떻게할까요. 못 보내는 기기의 기준이 확실치 않아서 일단 이렇게 둠.
+                else {
+                    SettingCell(title: "문의사항은 shortcutszip@gmail.com로 메일 주세요")
+                }
+                
+            }
+            .sheet(isPresented: $isShowingMailView) {
+                MailView(isShowing: self.$isShowingMailView, result: self.$result)
+            }
+            
+            Button(action: {
+                //TODO: 로그아웃 로직 작성 필요
+                print("로그아웃")
+            }) {
+                SettingCell(title: "로그아웃")
+            }
             Spacer()
         }
         .padding(.horizontal, 16)
