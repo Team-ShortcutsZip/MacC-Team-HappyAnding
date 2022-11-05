@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ReadShortcutHeaderView: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var shortcut: Shortcuts
     @State var isMyLike: Bool = false
-    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -43,7 +44,7 @@ struct ReadShortcutHeaderView: View {
                         self.shortcut.numberOfLike -= 1
                     }
                     //데이터 상의 좋아요 추가, 취소 기능 동작
-                    firebase.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
                 })
             }
             Text("\(shortcut.title)")
@@ -56,7 +57,7 @@ struct ReadShortcutHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
         .onAppear() {
-            firebase.checkLikedShortrcut(shortcutID: shortcut.id) { result in
+            shortcutsZipViewModel.checkLikedShortrcut(shortcutID: shortcut.id) { result in
                 isMyLike = result
             }
         }

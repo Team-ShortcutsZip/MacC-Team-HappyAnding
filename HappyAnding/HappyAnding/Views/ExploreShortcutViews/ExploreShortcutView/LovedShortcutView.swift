@@ -15,7 +15,7 @@ struct LovedShortcutView: View {
 //    let shortcuts = Shortcut.fetchData(number: 5).sorted {
 //        $0.numberOfDownload > $1.numberOfDownload
 //    }
-    let shortcuts: [Shortcuts]?
+    let shortcuts: [Shortcuts]
     var body: some View {
         VStack {
             HStack {

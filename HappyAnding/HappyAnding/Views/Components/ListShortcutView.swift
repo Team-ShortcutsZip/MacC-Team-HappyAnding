@@ -12,11 +12,10 @@ import SwiftUI
 /// sectionType: 다운로드 순위에서 접근할 시, .download를, 사랑받는 앱에서 접근시 .popular를 넣어주세요.
 struct ListShortcutView: View {
     
-    let firebase = FirebaseService()
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var shortcuts:[Shortcuts]?
     @State var shortcutsArray: [Shortcuts] = []
-    
-    @ObservedObject var shortcutData = fetchData()
     @State private var isLastItem = false
     @State var description: String = ""
     
@@ -67,7 +66,7 @@ struct ListShortcutView: View {
         .onAppear() {
             if let categoryName {
                 description = categoryName.fetchDescription()
-                firebase.fetchCategoryShortcut(category: categoryName.rawValue) { shortcuts in
+                shortcutsZipViewModel.fetchCategoryShortcut(category: categoryName.rawValue) { shortcuts in
                     self.shortcuts = shortcuts
                 }
             } else if let sectionType {
