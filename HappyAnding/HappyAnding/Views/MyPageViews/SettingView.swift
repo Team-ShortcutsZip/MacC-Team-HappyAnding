@@ -8,10 +8,16 @@
 import MessageUI
 import SwiftUI
 
+import FirebaseAuth
+
 struct SettingView: View {
+    
+    @AppStorage("signInStatus") var signInStatus = false
+    @StateObject var userAuth = UserAuth.shared
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
+    @State var isTappedSignOutButton = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -47,16 +53,33 @@ struct SettingView: View {
             }
             
             Button(action: {
-                //TODO: 로그아웃 로직 작성 필요
-                print("로그아웃")
+                self.isTappedSignOutButton = true
             }) {
                 SettingCell(title: "로그아웃")
+            }
+            .alert(isPresented: $isTappedSignOutButton) {
+                Alert(title: Text("로그아웃"),
+                      message: Text("로그아웃 하시겠습니까?"),
+                      primaryButton: .default(Text("닫기")
+                                              ,action: { self.isTappedSignOutButton = false }),
+                      secondaryButton: .destructive( Text("로그아웃"), action: { signOut() }))
             }
             Spacer()
         }
         .padding(.horizontal, 16)
         .background(Color.Background)
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    
+    private func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            self.signInStatus = false
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 struct SettingCell: View {
