@@ -12,7 +12,10 @@ struct SignInWithAppleView: View {
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
     
+    @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+    
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
+    @State private var isTappedPrivacyButton = false
     
     var body: some View {
         
@@ -48,9 +51,27 @@ struct SignInWithAppleView: View {
                     Text("\(Image(systemName: "applelogo")) Apple로 로그인")
                         .foregroundColor(.White)
                 }
-                .padding(.bottom, 88)
+                .padding(.bottom, 37)
             })
             
+            // TODO: Design 적용 필요
+            Text("개인정보처리방침")
+                .Footnote()
+                .foregroundColor(Color.Gray3)
+                .padding(.bottom, 37)
+                .onTapGesture {
+                    self.isTappedPrivacyButton = true
+                }
+            
+        }
+        .sheet(isPresented: self.$isTappedPrivacyButton) {
+            ZStack {
+                PrivacyPolicyView(webViewModel: webViewModel)
+                    .environmentObject(webViewModel)
+                if webViewModel.isLoading {
+                    ProgressView()
+                }
+            }
         }
     }
     
