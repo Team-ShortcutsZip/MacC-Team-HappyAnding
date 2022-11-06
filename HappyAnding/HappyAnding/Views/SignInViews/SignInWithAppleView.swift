@@ -65,11 +65,13 @@ struct SignInWithAppleView: View {
             
         }
         .sheet(isPresented: self.$isTappedPrivacyButton) {
-            if webViewModel.isLoading {
-                ProgressView()
+            ZStack {
+                PrivacyPolicyView(webViewModel: webViewModel)
+                    .environmentObject(webViewModel)
+                if webViewModel.isLoading {
+                    ProgressView()
+                }
             }
-            PrivacyPolicyView(webViewModel: webViewModel)
-                .environmentObject(webViewModel)
         }
     }
     
