@@ -40,7 +40,8 @@ struct ShortcutsListView: View {
                                     shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfLike") { newShortcuts in
                                         shortcuts.append(contentsOf: newShortcuts)
                                     }
-                                default:
+                                case .myShortcut, .myLovingShortcut, .myDownloadShortcut: print("my goodgoodgood")
+                                default: // 카테고리일 경우
                                     shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
                                         shortcuts.append(contentsOf: newShortcuts)
                                     }
