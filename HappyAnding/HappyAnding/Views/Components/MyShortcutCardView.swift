@@ -43,7 +43,7 @@ struct AddMyShortcutCardView: View {
         }
         .padding()
         .frame(width: 107, height: 144)
-        .background(Color.Gray1)
+        .background(Color.Background_plus)
         .cornerRadius(12)
     }
 }
