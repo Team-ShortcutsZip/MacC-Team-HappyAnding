@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DownloadRankView: View {
     
-    let shortcuts: [Shortcuts]
+    @Binding var shortcuts: [Shortcuts]
     
     var body: some View {
         VStack {
@@ -22,7 +22,8 @@ struct DownloadRankView: View {
                 Spacer()
                 
                 NavigationLink(destination: {
-                    ListShortcutView(shortcuts: shortcuts, sectionType: SectionType.download)
+                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.download)
+          //          ListShortcutView(shortcuts: shortcuts, sectionType: SectionType.download)
                         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                 }, label: {
                     Text("더보기")

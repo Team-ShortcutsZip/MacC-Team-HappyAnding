@@ -9,7 +9,8 @@ import SwiftUI
 
 struct LovedShortcutView: View {
     
-    let shortcuts: [Shortcuts]
+    @Binding var shortcuts: [Shortcuts]
+    
     var body: some View {
         VStack {
             HStack {
@@ -21,7 +22,7 @@ struct LovedShortcutView: View {
                 Spacer()
                 
                 NavigationLink(destination: {
-                    ListShortcutView(shortcuts: shortcuts, sectionType: SectionType.popular)
+                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.popular)
                         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                 }, label: {
                     Text("더보기")
@@ -47,8 +48,3 @@ struct LovedShortcutView: View {
     }
 }
 
-//struct LovedShortcutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LovedShortcutView()
-//    }
-//}

@@ -17,15 +17,15 @@ import FirebaseAuth
 
 class ShortcutsZipViewModel: ObservableObject {
     
-    @Published var userInfo: User?
+    @Published var userInfo: User?                              // 유저정보
     
-    @Published var shortcutsUserLiked: [Shortcuts] = []
-    @Published var shortcutsUserDownloaded: [Shortcuts] = []
-    @Published var shortcutsMadeByUser: [Shortcuts] = []
-    @Published var sortedShortcutsByDownload: [Shortcuts] = []
-    @Published var sortedShortcutsByLike: [Shortcuts] = []
+    @Published var shortcutsUserLiked: [Shortcuts] = []         // 유저가 좋아요한 숏컷들
+    @Published var shortcutsUserDownloaded: [Shortcuts] = []    // 유저가 다운로드한 숏컷들
+    @Published var shortcutsMadeByUser: [Shortcuts] = []        // 유저가 만든 숏컷배열
+    @Published var sortedShortcutsByDownload: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
+    @Published var sortedShortcutsByLike: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
     
-    @Published var curationsMadeByUser: [Curation] = []
+    @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     @Published var userCurations: [Curation] = []
     @Published var adminCurations: [Curation] = []
     
@@ -34,6 +34,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     var lastShortcutDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
     var lastCurationDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
+    
     let numberOfPageLimit = 10
     let numberOfLike = 5
     
@@ -91,7 +92,6 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 큐레이션 정렬기준에 따라 마지막 데이터가 저장된 인덱스 값을 반환하는 함수
     
     func checkCurationIndex(isAdmin: Bool) -> Int {
-        
         var index = -1
         
         switch isAdmin {
