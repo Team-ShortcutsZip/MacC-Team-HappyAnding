@@ -37,7 +37,7 @@ extension Color {
 
 extension Color {
     // Semantic Color
-    static let Background_plus = Color(light: .Gray1, dark: .Primary)
+    static let Background_plus = Color(light: .Gray1, dark: .White)
     static let Background_tabbar = Color(light: .White, dark: .Gray3)
     
     static let Text_curation = Color(light: .Gray5, dark: .Background)
