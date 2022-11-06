@@ -17,36 +17,42 @@ import FirebaseAuth
 
 class ShortcutsZipViewModel: ObservableObject {
     
-    @Published var userInfo: User?
-    @Published var shortcutsUserLiked: [Shortcuts] = []
-    @Published var shortcutsUserDownloaded: [Shortcuts] = []
+    @Published var userInfo: User?                              // 유저정보
+    @Published var shortcutsUserLiked: [Shortcuts] = []         // 유저가 좋아요한 숏컷들
+    @Published var shortcutsUserDownloaded: [Shortcuts] = []    // 유저가 다운로드한 숏컷들
     
-    @Published var shortcutsMadeByUser: [Shortcuts] = []
-    @Published var sortedShortcutsByDownload: [Shortcuts] = []
-    @Published var curations: [Curation] = []
+    @Published var shortcutsMadeByUser: [Shortcuts] = []        // 유저가 만든 숏컷배열
+    @Published var sortedShortcutsByDownload: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
+    @Published var sortedShortcutsByLike: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
+    @Published var curations: [Curation] = []                   // 전체 큐레이션
     
-    @Published var curationsMadeByUser: [Curation] = []
+    @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     
     static let share = FirebaseService()
     private let db = Firestore.firestore()
+    
+    var lastShortcutDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
+    var lastCurationDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
+    let numberOfPageLimit = 10
     
     init() {
         fetchShortcutByAuthor(author: currentUser()) { shortcuts in
             self.shortcutsMadeByUser = shortcuts
         }
-        fetchAllDownloadShortcut(orderBy: "numberOfDownload") { shortcuts in
+        fetchShortcutLimit(orderBy: "numberOfDownload") { shortcuts in
             self.sortedShortcutsByDownload = shortcuts
         }
+        fetchShortcutLimit(orderBy: "numberOfLike") { shortcuts in
+            self.sortedShortcutsByLike = shortcuts
+        }
         fetchCuration { curations in
-            self.curations = curations
+            self.curations = curations // 10 개로 바꿔야함
         }
         fetchCurationByAuthor(author: currentUser()) { curations in
             self.curationsMadeByUser = curations
         }
-            print("\n\n\n\n\n\n\nWHAT\n\n\n\n\n")
         fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
-            print("\n\n\n\n\n\n\nWHAT\n\n\n\n\n")
             self.fetchShortcutByIds(shortcutIds: user.downloadedShortcuts) { downloadedShortcuts in
                 self.shortcutsUserDownloaded = downloadedShortcuts
             }
@@ -62,23 +68,23 @@ class ShortcutsZipViewModel: ObservableObject {
             .whereField("id", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(User.self, from: jsonData)
-                        completionHandler(shortcut)
-                    } catch let error {
-                        print("error: \(error)")
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(User.self, from: jsonData)
+                            completionHandler(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
                     }
                 }
             }
-        }
     }
     
     // MARK: - 파이어스토어에서 모든 Shortcut을 가져오는 함수
@@ -106,6 +112,67 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         }
     }
+    
+    //MARK: 단축어 정렬기준에 따라 마지막 데이터가 저장된 인덱스 값을 반환하는 함수
+    
+    func checkShortcutIndex(orderBy: String) -> Int {
+        
+        var index = -1
+        
+        switch orderBy {
+        case "numberOfDownload":
+            index = 0
+        case "numberOfLike":
+            index = 1
+        case "author":
+            index = 2
+        default:
+            index = 0
+        }
+        return index
+    }
+    
+    func fetchShortcutLimit(
+        orderBy: String,
+        completionHandler: @escaping ([Shortcuts])->()) {
+            
+            var shortcuts: [Shortcuts] = []
+            var query: Query!
+            let index = checkShortcutIndex(orderBy: orderBy)
+            
+            if let next = self.lastShortcutDocumentSnapshot[index] {
+                query  = db.collection("Shortcut")
+                    .order(by: orderBy, descending: true)
+                    .limit(to: numberOfPageLimit)
+                    .start(afterDocument: next)
+            } else {
+                query = db.collection("Shortcut")
+                    .order(by: orderBy, descending: true)
+                    .limit(to: numberOfPageLimit)
+            }
+            
+            query.getDocuments() { querySnapshot, error in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            shortcuts.append(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    self.lastShortcutDocumentSnapshot[index] = documents.last
+                    
+                    completionHandler(shortcuts)
+                }
+            }
+        }
     
     // MARK: 모든 단축어를 다운로드 수로 내림차순 정렬하여 가져오는 함수
     func fetchAllDownloadShortcut(orderBy: String, completionHandler: @escaping ([Shortcuts])->()) {
