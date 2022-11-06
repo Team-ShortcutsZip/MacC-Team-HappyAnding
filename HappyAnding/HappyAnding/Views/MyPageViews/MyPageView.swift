@@ -59,19 +59,17 @@ struct MyPageView: View {
                         type: .myDownloadShortcut
                     )
                     .padding(.bottom, 44)
-                    
                 }
             }
             .navigationBarTitle("프로필")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem {
-                    //TODO: 스프린트 1에서 배제 추후 주석 삭제할 것
-//                    NavigationLink(destination: SettingView()) {
-//                        Image(systemName: "gearshape.fill")
-//                            .Headline()
-//                            .foregroundColor(.Gray5)
-//                    }
+                    NavigationLink(destination: SettingView()) {
+                        Image(systemName: "gearshape.fill")
+                            .Headline()
+                            .foregroundColor(.Gray5)
+                    }
                 }
             }
             .scrollIndicators(.hidden)
