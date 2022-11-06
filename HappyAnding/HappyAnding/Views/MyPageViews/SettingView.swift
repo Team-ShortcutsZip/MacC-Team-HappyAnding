@@ -33,9 +33,7 @@ struct SettingView: View {
             SettingCell(title: "버전정보", version: "1.0.0")
             
             //오픈소스 라이선스 버튼
-            Button(action : {
-                //action
-            }) {
+            NavigationLink(destination: LicenseView()) {
                 SettingCell(title: "오픈소스 라이선스")
             }
             
@@ -46,7 +44,7 @@ struct SettingView: View {
                 SettingCell(title: "개인정보처리방침")
             }
             
-            //개인정보처리방침 버튼
+            //개발팀에 관하여 버튼
             Button(action : {
                 //action
             }) {

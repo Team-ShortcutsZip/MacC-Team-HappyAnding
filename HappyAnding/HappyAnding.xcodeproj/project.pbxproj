@@ -62,6 +62,8 @@
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
 		A3FF0183291648A300384211 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF0182291648A300384211 /* MailView.swift */; };
+		A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01852918552E00384211 /* AboutTeamView.swift */; };
+		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
 		F944DD442907B8C400B1AC5C /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F944DD432907B8C400B1AC5C /* FirebaseService.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B43582907AE0400987819 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F94B43572907AE0400987819 /* GoogleService-Info.plist */; };
@@ -156,6 +158,8 @@
 		A3766B222904330300708F83 /* ReadUserCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserCurationView.swift; sourceTree = "<group>"; };
 		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
+		A3FF01852918552E00384211 /* AboutTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamView.swift; sourceTree = "<group>"; };
+		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		F944DD432907B8C400B1AC5C /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F94B43572907AE0400987819 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 		87E99C9D28FFF207009B691F /* MyPageViews */ = {
 			isa = PBXGroup;
 			children = (
+				A3FF0184291854FA00384211 /* SettingViews */,
 				87E99C9E28FFF21B009B691F /* SettingView.swift */,
 				87E99CA028FFF225009B691F /* MyPageView.swift */,
 				A3FF0182291648A300384211 /* MailView.swift */,
@@ -428,6 +433,15 @@
 				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A3FF0184291854FA00384211 /* SettingViews */ = {
+			isa = PBXGroup;
+			children = (
+				A3FF01852918552E00384211 /* AboutTeamView.swift */,
+				A3FF01872918581E00384211 /* LicenseView.swift */,
+			);
+			path = SettingViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -620,8 +634,10 @@
 				87E99CBD28FFF2A1009B691F /* WriteShortcutdescriptionView.swift in Sources */,
 				A04ACB0E29041D61004A85A6 /* CategoryView.swift in Sources */,
 				87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */,
+				A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */,
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
 				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
+				A3FF01882918581E00384211 /* LicenseView.swift in Sources */,
 				A04ACB0C29041CEE004A85A6 /* LovedShortcutView.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
 				87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */,
