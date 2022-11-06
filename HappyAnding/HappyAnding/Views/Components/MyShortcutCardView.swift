@@ -18,11 +18,11 @@ struct MyShortcutCardView: View {
             Image(systemName: myShortcutIcon)
                 .frame(width: 30.0, height: 30.0)
                 .font(.title2)
-                .foregroundColor(Color.Gray1)
+                .foregroundColor(Color.Text_icon)
             Text(myShortcutName)
                 .Subtitle()
                 .multilineTextAlignment(.leading)
-                .foregroundColor(Color.Gray1)
+                .foregroundColor(Color.Text_icon)
                 .lineLimit(3)
             Spacer()
         }
