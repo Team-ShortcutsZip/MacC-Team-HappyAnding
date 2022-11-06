@@ -14,11 +14,13 @@ struct SettingView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
     @StateObject var userAuth = UserAuth.shared
-    
+    @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
     @State var isTappedSignOutButton = false
-    
+//    @State private var isTappedPrivacyButton = false
+
     var body: some View {
         VStack(alignment: .leading) {
             //            Text("알림 설정")
@@ -38,11 +40,24 @@ struct SettingView: View {
             }
             
             //개인정보처리방침 버튼
-            Button(action : {
-                //action
-            }) {
+            NavigationLink(destination:                    PrivacyPolicyView(webViewModel: webViewModel)) {
                 SettingCell(title: "개인정보처리방침")
             }
+            
+//            Button(action : {
+//                self.isTappedPrivacyButton = true
+//            }) {
+//                SettingCell(title: "개인정보처리방침")
+//            }
+//            .sheet(isPresented: self.$isTappedPrivacyButton) {
+//                ZStack {
+//                    PrivacyPolicyView(webViewModel: webViewModel)
+//                        .environmentObject(webViewModel)
+//                    if webViewModel.isLoading {
+//                        ProgressView()
+//                    }
+//                }
+//            }
             
             //개발팀에 관하여 버튼
             Button(action : {
