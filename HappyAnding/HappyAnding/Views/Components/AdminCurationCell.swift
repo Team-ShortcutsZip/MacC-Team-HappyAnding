@@ -48,11 +48,11 @@ struct AdminCurationCell: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(adminCuration.title)
                     .Title1()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.Text_curation)
                     .lineLimit(1)
                 Text(adminCuration.subtitle)
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.Text_curation)
                     .lineLimit(2)
             }
             Spacer()
