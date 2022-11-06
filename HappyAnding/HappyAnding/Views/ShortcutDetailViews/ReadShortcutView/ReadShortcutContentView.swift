@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReadShortcutContentView: View {
-    let firebase = FirebaseService()
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var userInformation: User? = nil
     
     let shortcut: Shortcuts
@@ -51,7 +51,7 @@ struct ReadShortcutContentView: View {
             .padding(20)
         }
         .onAppear {
-            firebase.fetchUser(userID: shortcut.author) { user in
+            shortcutsZipViewModel.fetchUser(userID: shortcut.author) { user in
                 userInformation = user
             }
         }

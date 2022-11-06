@@ -30,6 +30,7 @@ struct WriteNicknameView: View {
     @State var checkNicknameDuplicate: Bool = false
     @State var isDuplicatedNickname: Bool = false
     @State var isNicknameChecked: Bool = false
+    @State var isValidLength = false
     
     let user = Auth.auth().currentUser
     let firebase = FirebaseService()
@@ -46,6 +47,13 @@ struct WriteNicknameView: View {
                 nicknameCheckButton
             }
             .padding(.top, 16)
+            
+            if nickname.count > 8 {
+                Text("*닉네임은 최대 8글자까지 입력가능합니다.")
+                    .Body2()
+                    .foregroundColor(.red)
+                    .padding(.top, 4)
+            }
             
             Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
                 .Body2()
@@ -72,6 +80,7 @@ struct WriteNicknameView: View {
                     .padding(.leading, 16)
                     .padding(.vertical, 12)
                     .onChange(of: nickname) {_ in
+                        isValidLength = nickname.count <= 8 && !nickname.isEmpty
                         isNicknameChecked = false
                     }
                 
@@ -82,7 +91,7 @@ struct WriteNicknameView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(lineWidth: 1)
-                    .foregroundColor(isNicknameChecked ? .Success : .Gray3)
+                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
             )
         }
     }
@@ -128,13 +137,13 @@ struct WriteNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(isValidLength ? .Primary : .Gray1)
                     .frame(width: 80, height: 44)
                 Text("중복확인")
-                    .foregroundColor(.Background)
+                    .foregroundColor(isValidLength ? .Background : .Gray3)
             }
         })
-        .disabled(nickname.isEmpty)
+        .disabled(!isValidLength)
         ///alert 띄우는 코드
         .alert(isPresented: $checkNicknameDuplicate){
             Alert(title: Text("닉네임 중복 확인"),
