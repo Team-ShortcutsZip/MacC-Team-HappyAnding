@@ -12,6 +12,8 @@ struct SignInWithAppleView: View {
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
     
+    @ObservedObject var webViewModel = WebViewModel()
+    
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
     @State private var isTappedPrivacyButton = false
     
@@ -60,10 +62,14 @@ struct SignInWithAppleView: View {
                 .onTapGesture {
                     self.isTappedPrivacyButton = true
                 }
-         
+            
         }
         .sheet(isPresented: self.$isTappedPrivacyButton) {
-            PrivacyPolicyView()
+            if webViewModel.isLoading {
+                ProgressView()
+            }
+            PrivacyPolicyView(webViewModel: webViewModel)
+                .environmentObject(webViewModel)
         }
     }
     
