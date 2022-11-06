@@ -15,29 +15,29 @@ extension String {
 }
 
 extension UIColor {
-  convenience init(light: UIColor, dark: UIColor) {
-    self.init { traitCollection in
-      switch traitCollection.userInterfaceStyle {
-      case .light, .unspecified:
-        return light
-      case .dark:
-        return dark
-      @unknown default:
-        return light
-      }
+    convenience init(light: UIColor, dark: UIColor) {
+        self.init { traitCollection in
+            switch traitCollection.userInterfaceStyle {
+            case .light, .unspecified:
+                return light
+            case .dark:
+                return dark
+            @unknown default:
+                return light
+            }
+        }
     }
-  }
 }
 
 extension Color {
-  init(light: Color, dark: Color) {
-    self.init(UIColor(light: UIColor(light), dark: UIColor(dark)))
-  }
+    init(light: Color, dark: Color) {
+        self.init(UIColor(light: UIColor(light), dark: UIColor(dark)))
+    }
 }
 
 extension Color {
     // Semantic Color
-  static let Background_plus = Color(light: .Gray1, dark: .Primary)
+    static let Background_plus = Color(light: .Gray1, dark: .Primary)
     static let Background_tabbar = Color(light: .White, dark: .Gray3)
     
     static let Text_curation = Color(light: .Gray5, dark: .Background)
