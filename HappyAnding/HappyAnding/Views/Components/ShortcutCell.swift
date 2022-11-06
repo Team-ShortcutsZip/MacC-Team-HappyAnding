@@ -120,6 +120,7 @@ struct ShortcutCell: View {
             Text(shortcutCell.subtitle)
                 .Footnote()
                 .foregroundColor(.Gray3)
+                .multilineTextAlignment(.leading)
                 .lineLimit(2)
         }
         .padding(.horizontal, 12)
