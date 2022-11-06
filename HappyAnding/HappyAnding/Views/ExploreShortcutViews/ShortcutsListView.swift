@@ -31,8 +31,19 @@ struct ShortcutsListView: View {
                             print(shortcuts.count)
                             if shortcuts.last == shortcut && shortcuts.count % 10 == 0 {
                                 // TODO: sectionType에 따라서 요청함수 다르거 해줘야 함
-                                shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
-                                    shortcuts.append(contentsOf: newShortcuts)
+                                switch self.sectionType {
+                                case .download:
+                                    shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
+                                        shortcuts.append(contentsOf: newShortcuts)
+                                    }
+                                case .popular:
+                                    shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfLike") { newShortcuts in
+                                        shortcuts.append(contentsOf: newShortcuts)
+                                    }
+                                default:
+                                    shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
+                                        shortcuts.append(contentsOf: newShortcuts)
+                                    }
                                 }
                             }
                         }
