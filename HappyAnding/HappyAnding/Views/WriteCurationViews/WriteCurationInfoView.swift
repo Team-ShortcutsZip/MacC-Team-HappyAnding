@@ -57,7 +57,8 @@ struct WriteCurationInfoView: View {
             
             Button(action: {
                 curation.author = shortcutsZipViewModel.currentUser()
-                shortcutsZipViewModel.curationsMadeByUser.append(curation)
+                shortcutsZipViewModel.curationsMadeByUser.insert(curation, at: 0)
+                shortcutsZipViewModel.userCurations.insert(curation, at: 0)
                 shortcutsZipViewModel.setData(model: curation)
                 shortcutsZipViewModel.updateShortcutCurationID(
                     shortcutCells: curation.shortcuts,
