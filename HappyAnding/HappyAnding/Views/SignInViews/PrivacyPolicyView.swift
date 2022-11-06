@@ -12,6 +12,12 @@ import WebKit
 
 class WebViewModel: ObservableObject {
     @Published var isLoading = false
+    
+    var url: String
+    
+    init(url: String) {
+        self.url = url 
+    }
 }
 
 
@@ -19,7 +25,6 @@ struct PrivacyPolicyView: UIViewRepresentable {
     
     @ObservedObject var webViewModel: WebViewModel
     
-    let privacyPolicyURL = "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd"
     let webView = WKWebView()
     
     func makeCoordinator() -> PrivacyPolicyView.Coordinator {
@@ -28,7 +33,7 @@ struct PrivacyPolicyView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> WKWebView {
         
-        if let url = URL(string: self.privacyPolicyURL) {
+        if let url = URL(string: self.webViewModel.url) {
             webView.navigationDelegate = context.coordinator
             self.webView.load(URLRequest(url: url))
         }

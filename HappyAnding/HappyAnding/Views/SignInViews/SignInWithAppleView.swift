@@ -12,7 +12,7 @@ struct SignInWithAppleView: View {
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
     
-    @ObservedObject var webViewModel = WebViewModel()
+    @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
     
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
     @State private var isTappedPrivacyButton = false
