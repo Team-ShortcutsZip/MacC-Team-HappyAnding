@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CategoryView: View {
-    let shortcuts: [Shortcuts]?
+    @Binding var shortcuts: [Shortcuts]
     var body: some View {
         VStack {
             HStack {
@@ -32,7 +32,8 @@ struct CategoryView: View {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
                         NavigationLink(destination:
-                            ListShortcutView(shortcuts: shortcuts, categoryName: value)
+                                        ShortcutsListView(shortcuts: $shortcuts, categoryName: value, sectionType: SectionType.download)
+                        //    ListShortcutView(shortcuts: shortcuts, categoryName: value)
                         ) {
                             CategoryCellView(categoryName: translateName(value.rawValue))
                         }
