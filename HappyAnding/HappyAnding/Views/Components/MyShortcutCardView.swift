@@ -47,10 +47,10 @@ struct AddMyShortcutCardView: View {
         .cornerRadius(12)
     }
 }
-
-struct MyShortcutCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyShortcutCardView(myShortcutIcon: "book.fill", myShortcutName: "택배     조회하기", myShortcutColor: "Coral")
-        AddMyShortcutCardView()
-    }
-}
+//
+//struct MyShortcutCardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyShortcutCardView(myShortcutIcon: "book.fill", myShortcutName: "택배     조회하기", myShortcutColor: "Coral")
+//        AddMyShortcutCardView()
+//    }
+//}

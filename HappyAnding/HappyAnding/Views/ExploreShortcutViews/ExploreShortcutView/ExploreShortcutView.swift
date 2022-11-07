@@ -12,7 +12,7 @@ struct ExploreShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 MyShortcutCardListView(
                     shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)

@@ -10,7 +10,7 @@ import SwiftUI
 struct ShortcutsListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var shortcuts:[Shortcuts]
+    @Binding var shortcuts:[Shortcuts]?
     
     var categoryName: Category?
     var sectionType: SectionType?
@@ -22,7 +22,7 @@ struct ShortcutsListView: View {
             
             LazyVStack {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id)) {
+                    NavigationLink(value: shortcut.id) {
                         ShortcutCell(shortcut: shortcut,
                                      rankNumber: sectionType == .download ? index + 1 : -1)
                         .listRowInsets(EdgeInsets())
@@ -50,6 +50,9 @@ struct ShortcutsListView: View {
                         }
                     }
                 }
+            }
+            .navigationDestination(for: String.self) { shortcutID in
+                ReadShortcutView(shortcutID: shortcutID)
             }
         }.background(Color.Background)
     }

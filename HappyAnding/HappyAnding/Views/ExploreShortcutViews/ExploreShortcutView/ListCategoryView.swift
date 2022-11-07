@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListCategoryView: View {
     
-    var shortcuts: [Shortcuts]?
+    @Binding var shortcuts: [Shortcuts]?
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -21,6 +21,14 @@ struct ListCategoryView: View {
             VStack {
                 LazyVGrid(columns: gridLayout, spacing: 0) {
                     ForEach(Category.allCases, id: \.self) { item in
+                        NavigationLink(value: shortcuts) {
+                            NavigationLink(value: shortcuts) {
+                                CategoryCellView(categoryName: item.translateName())
+                            }
+                            .navigationDestination(for: [Shortcuts].self, destination: { shortcuts in
+                                ShortcutsListView(shortcuts: $shortcuts, categoryName: item, sectionType: SectionType.download)
+                            })
+                        }
                         NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: item)) {
                             RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
                                 .stroke(Color.Gray1, lineWidth: 1)
@@ -48,9 +56,9 @@ struct ListCategoryView: View {
     }
 }
 
-
-struct ListCategoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        ListCategoryView()
-    }
-}
+//
+//struct ListCategoryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ListCategoryView()
+//    }
+//}

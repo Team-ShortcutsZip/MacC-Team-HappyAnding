@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CategoryView: View {
-    @Binding var shortcuts: [Shortcuts]
+    @Binding var shortcuts: [Shortcuts]?
     var body: some View {
         VStack {
             HStack {
@@ -19,27 +19,34 @@ struct CategoryView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: ListCategoryView()) {
+                NavigationLink(value: 0, label: {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
-                }
+                })
+                .navigationDestination(for: Int.self, destination: { id in
+                    ListCategoryView(shortcuts: $shortcuts)
+                })
             }
+                
             .padding(.leading, 16)
             
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
-                        NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcuts, categoryName: value, sectionType: SectionType.download)
-                        //    ListShortcutView(shortcuts: shortcuts, categoryName: value)
-                        ) {
+                        NavigationLink(value: shortcuts) {
                             CategoryCellView(categoryName: value.translateName())
                         }
+                        .navigationDestination(for: [Shortcuts].self, destination: { shortcuts in
+                            ShortcutsListView(shortcuts: $shortcuts, categoryName: value, sectionType: SectionType.download)
+                        })
+                        
                     }
                 }
+                
             }
+            
             .padding(.horizontal, 16)
         }
     }
