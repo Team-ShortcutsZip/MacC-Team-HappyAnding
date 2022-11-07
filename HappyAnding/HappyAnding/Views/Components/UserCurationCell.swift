@@ -74,10 +74,10 @@ struct UserCurationCell: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal, 24)
-            .background(Color.White)
+            .background(Color.Background_list)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.Gray1, lineWidth: 1)
+                    .stroke(Color.Background_list_border, lineWidth: 1)
             )
             .frame(maxWidth: .infinity)
             .cornerRadius(12)
