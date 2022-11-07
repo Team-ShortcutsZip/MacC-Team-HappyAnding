@@ -114,7 +114,7 @@ struct WriteShortcutTitleView: View {
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text("다음")
-                            .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Background : .Gray3 )
+                            .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Text_Button : .Text_Button_Disable )
                             .Body1()
                     }
                 }
