@@ -43,7 +43,7 @@ struct SignInWithAppleView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .padding(.horizontal, 16)
                         .frame(height: 52)
-                        .foregroundColor(.black)
+                        .foregroundColor(.Gray5)
                     
                     Text("\(Image(systemName: "applelogo")) Apple로 로그인")
                         .foregroundColor(.White)
@@ -51,6 +51,7 @@ struct SignInWithAppleView: View {
                 .padding(.bottom, 37)
             })
         }
+        .background(Color.Background)
     }
     
     func appleLogin() {

@@ -161,7 +161,7 @@ struct WriteNicknameView: View {
                     .foregroundColor(isValidLength ? .Primary : .Gray1)
                     .frame(width: 80, height: 44)
                 Text("중복확인")
-                    .foregroundColor(isValidLength ? .Background : .Gray3)
+                    .foregroundColor(isValidLength ? .Text_icon : .Gray3)
             }
         })
         .disabled(!isValidLength)
@@ -188,7 +188,7 @@ struct WriteNicknameView: View {
                     .foregroundColor(isNicknameChecked ? .Primary : .Gray1)
                     .frame(height: 52)
                 Text("시작하기")
-                    .foregroundColor(isNicknameChecked ? .Background : .Gray3)
+                    .foregroundColor(isNicknameChecked ? .Text_icon : .Gray3)
             }
         })
         .disabled(!isNicknameChecked)
