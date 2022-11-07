@@ -25,12 +25,14 @@ struct WriteNicknameView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
     @EnvironmentObject var userAuth: UserAuth
+    @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
     
     @State var nickname: String = ""
     @State var checkNicknameDuplicate: Bool = false
     @State var isDuplicatedNickname: Bool = false
     @State var isNicknameChecked: Bool = false
     @State var isValidLength = false
+    @State private var isTappedPrivacyButton = false
     
     let user = Auth.auth().currentUser
     let firebase = FirebaseService()
@@ -62,11 +64,29 @@ struct WriteNicknameView: View {
             
             Spacer()
             
+            Text("개인정보처리방침")
+                .Body2()
+                .foregroundColor(Color.Gray2)
+                .padding(.bottom, 12)
+                .frame(maxWidth: .infinity)
+                .onTapGesture {
+                    self.isTappedPrivacyButton = true
+                }
+            
             startButton
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
         .background(.background)
+        .sheet(isPresented: self.$isTappedPrivacyButton) {
+            ZStack {
+                PrivacyPolicyView(webViewModel: webViewModel)
+                    .environmentObject(webViewModel)
+                if webViewModel.isLoading {
+                    ProgressView()
+                }
+            }
+        }
     }
     
     ///닉네임 입력 텍스트필드
