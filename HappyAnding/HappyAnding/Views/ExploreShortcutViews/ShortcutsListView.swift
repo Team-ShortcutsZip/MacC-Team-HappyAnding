@@ -22,7 +22,7 @@ struct ShortcutsListView: View {
             
             LazyVStack {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id)) {
                         ShortcutCell(shortcut: shortcut,
                                      rankNumber: sectionType == .download ? index + 1 : -1)
                         .listRowInsets(EdgeInsets())
