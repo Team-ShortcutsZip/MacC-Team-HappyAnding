@@ -40,24 +40,9 @@ struct SettingView: View {
             }
             
             //개인정보처리방침 버튼
-            NavigationLink(destination:                    PrivacyPolicyView(webViewModel: webViewModel)) {
+            NavigationLink(destination: PrivacyPolicyView(webViewModel: webViewModel)) {
                 SettingCell(title: "개인정보처리방침")
             }
-            
-//            Button(action : {
-//                self.isTappedPrivacyButton = true
-//            }) {
-//                SettingCell(title: "개인정보처리방침")
-//            }
-//            .sheet(isPresented: self.$isTappedPrivacyButton) {
-//                ZStack {
-//                    PrivacyPolicyView(webViewModel: webViewModel)
-//                        .environmentObject(webViewModel)
-//                    if webViewModel.isLoading {
-//                        ProgressView()
-//                    }
-//                }
-//            }
             
             //개발팀에 관하여 버튼
             //TODO: Halogen의 꿈. 추후 스프린트 시 완성되면 적용 예정
