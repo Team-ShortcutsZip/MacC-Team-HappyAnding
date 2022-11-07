@@ -16,7 +16,7 @@ import SwiftUI
  - shortcut : 단축어 리스트에서 접근 시 Shortcuts  형태로 전달해주세요
  - shortcutCell: 큐레이션에서 접근 시 ShortcutCellModel 형태로 전달해주세요
  
- ShortcutCell에서는 Shortcuts의 형태로 데이터를 전달받아도 ShortcutCellModel의 형태로 변환하여 사용하며, 전달 시에만 shortcut을 전달합니다.
+ ShortcutCell에서는 Shortcuts의 형태로 데이터를 전달받아도 ShortcutCellModel의 형태로 변환하여 사용합니다.
  
  - description:
  - 해당 뷰를 리스트로 사용할 때 다음과 같은 속성을 작성해주세요
@@ -49,7 +49,7 @@ struct ShortcutCell: View {
     var body: some View {
         
         ZStack {
-            NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutCell: shortcutCell)) {
+            NavigationLink(destination: ReadShortcutView(shortcutID: shortcutCell.id)) {
                 EmptyView()
             }
             .opacity(0)
