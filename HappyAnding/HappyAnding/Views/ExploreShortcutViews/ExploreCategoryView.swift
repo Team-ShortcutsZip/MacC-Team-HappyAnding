@@ -19,10 +19,6 @@ import SwiftUI
  - ShortcutTestModel 파일에서 생성한 Shortcut모델을 기준으로 데이터를 받아옵니다.
  */
 /*
-<<<<<<< HEAD
-=======
-
->>>>>>> 921d9600b92f12b0832275415f08118fb711463f
 struct ExploreCategoryView: View {
     
     //TODO: 단축어 목록 받아오기

@@ -10,7 +10,7 @@ import SwiftUI
 struct ShortcutsListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var shortcuts:[Shortcuts]?
+    @Binding var shortcuts:[Shortcuts]
     
     var categoryName: Category?
     var sectionType: SectionType?

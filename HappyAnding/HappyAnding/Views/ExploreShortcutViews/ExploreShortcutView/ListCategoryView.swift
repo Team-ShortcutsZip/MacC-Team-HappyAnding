@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListCategoryView: View {
     
-    @Binding var shortcuts: [Shortcuts]?
+    @Binding var shortcuts: [Shortcuts]
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -22,27 +22,11 @@ struct ListCategoryView: View {
                 LazyVGrid(columns: gridLayout, spacing: 0) {
                     ForEach(Category.allCases, id: \.self) { item in
                         NavigationLink(value: shortcuts) {
-                            NavigationLink(value: shortcuts) {
-                                CategoryCellView(categoryName: item.translateName())
-                            }
-                            .navigationDestination(for: [Shortcuts].self, destination: { shortcuts in
-                                ShortcutsListView(shortcuts: $shortcuts, categoryName: item, sectionType: SectionType.download)
-                            })
+                            CategoryCellView(categoryName: item.translateName())
                         }
-                        NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: item)) {
-                            RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
-                                .stroke(Color.Gray1, lineWidth: 1)
-                                .background(Color.White)
-                                .cornerRadius(12)
-                                .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
-                                .overlay {
-                                    Text(item.translateName())
-                                        .Body2()
-                                        .foregroundColor(Color.Gray5)
-                                }
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 7)
-                        }
+                        .navigationDestination(for: [Shortcuts].self, destination: { shortcuts in
+                            ShortcutsListView(shortcuts: $shortcuts, categoryName: item, sectionType: SectionType.download)
+                        })
                     }
                 }
                 .padding(.horizontal, 16)

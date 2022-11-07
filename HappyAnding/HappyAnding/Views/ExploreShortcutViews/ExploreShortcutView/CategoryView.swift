@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CategoryView: View {
-    @Binding var shortcuts: [Shortcuts]?
+    
+    @Binding var shortcuts: [Shortcuts]
+    
     var body: some View {
         VStack {
             HStack {
