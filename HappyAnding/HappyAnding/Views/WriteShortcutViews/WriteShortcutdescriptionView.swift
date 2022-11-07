@@ -27,7 +27,7 @@ struct WriteShortcutdescriptionView: View {
                                      isMultipleLines: false,
                                      title: "한줄 설명",
                                      placeholder: "간단하게 설명을 작성해주세요",
-                                     lengthLimit: 20,
+                                     lengthLimit: 35,
                                      isDownloadLinkTextField: false,
                                      content: $shortcut.subtitle,
                                      isValid: $isOneLineValid
