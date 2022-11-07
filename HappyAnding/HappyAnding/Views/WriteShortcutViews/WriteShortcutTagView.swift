@@ -25,7 +25,7 @@ struct WriteShortcutTagView: View {
     var body: some View {
         VStack {
             ProgressView(value: 1, total: 1)
-            .padding(.bottom, 36)
+                .padding(.bottom, 36)
             
             HStack {
                 Text("카테고리")
@@ -121,7 +121,7 @@ struct WriteShortcutTagView: View {
                             Text("카테고리 추가")
                         }
                     })
-                    .modifier(CellModifier(color: .Gray3))
+                    .modifier(CellModifier(foregroundColor: Color.Gray3))
                     .sheet(isPresented: $isShowingCategoryModal) {
                         CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
                             .presentationDetents([.fraction(0.7)])
@@ -160,7 +160,7 @@ struct WriteShortcutTagView: View {
                                     isTextFieldShowing = false
                                 }
                             }
-                            .modifier(CellModifier(color: .Gray4))
+                            .modifier(CellModifier(foregroundColor: Color.Gray4))
                     }
                     
                     Button(action: {
@@ -172,7 +172,7 @@ struct WriteShortcutTagView: View {
                             Text("앱 추가")
                         }
                     })
-                    .modifier(CellModifier(color: .Gray3))
+                    .modifier(CellModifier(foregroundColor: Color.Gray3))
                 }
             }
             .padding(.leading, 16)
@@ -193,7 +193,9 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .modifier(CellModifier(color: .Primary))
+            .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
+                                   backgroundColor: Color.Category_Pick_Fill,
+                                   strokeColor: Color.Category_Pick_Fill))
         }
     }
     
@@ -211,22 +213,31 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .modifier(CellModifier(color: .Primary))
+            //            .modifier(CellModifier(color: .Primary))
+            .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
+                                   backgroundColor: Color.Category_Pick_Fill,
+                                   strokeColor: Color.Category_Pick_Fill))
         }
     }
     
     struct CellModifier: ViewModifier {
-        @State var color: Color
+        @State var foregroundColor: Color
+        @State var backgroundColor = Color.clear
+        @State var strokeColor = Color.Gray4
         
         public func body(content: Content) -> some View {
             content
                 .Body2()
-                .foregroundColor(color)
+                .foregroundColor(foregroundColor)
                 .frame(height: 46)
                 .padding(.horizontal)
-                .overlay(
+                .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .strokeBorder(color, lineWidth: 1))
+                        .fill( backgroundColor )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .strokeBorder(strokeColor, lineWidth: 1))
+                )
         }
     }
     
