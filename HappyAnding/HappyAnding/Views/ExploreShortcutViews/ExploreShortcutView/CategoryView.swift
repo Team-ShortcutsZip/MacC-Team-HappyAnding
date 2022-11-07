@@ -10,6 +10,16 @@ import SwiftUI
 struct CategoryView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @State var categoryIndex = 6
+    @State var isTappedPlutButton = true {
+        didSet {
+            if isTappedPlutButton {
+                categoryIndex = 6
+            } else {
+                categoryIndex = 12
+            }
+        }
+    }
     
     var body: some View {
         VStack {
@@ -22,17 +32,19 @@ struct CategoryView: View {
                 Spacer()
                 
                 NavigationLink(destination: ListCategoryView()) {
-                    Text("더보기")
+                    Text(isTappedPlutButton ? "펼치기" : "접기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
+                        .onTapGesture {
+                            self.isTappedPlutButton.toggle()
+                        }
                 }
             }
             .padding(.leading, 16)
-            
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
-                    if index < 6 {
+                    if index < categoryIndex {
                         NavigationLink(destination:
                                         ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index], categoryName: value)
                         ) {
