@@ -66,6 +66,7 @@
 		A3FF0183291648A300384211 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF0182291648A300384211 /* MailView.swift */; };
 		A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01852918552E00384211 /* AboutTeamView.swift */; };
 		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
+		A3FF018A2918F8EF00384211 /* apache.txt in Resources */ = {isa = PBXBuildFile; fileRef = A3FF01892918F8EF00384211 /* apache.txt */; };
 		F944DD442907B8C400B1AC5C /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F944DD432907B8C400B1AC5C /* FirebaseService.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B43582907AE0400987819 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F94B43572907AE0400987819 /* GoogleService-Info.plist */; };
@@ -164,6 +165,7 @@
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		A3FF01852918552E00384211 /* AboutTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamView.swift; sourceTree = "<group>"; };
 		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
+		A3FF01892918F8EF00384211 /* apache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = apache.txt; sourceTree = "<group>"; };
 		F944DD432907B8C400B1AC5C /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F94B43572907AE0400987819 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 			children = (
 				A3FF01852918552E00384211 /* AboutTeamView.swift */,
 				A3FF01872918581E00384211 /* LicenseView.swift */,
+				A3FF01892918F8EF00384211 /* apache.txt */,
 			);
 			path = SettingViews;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
+				A3FF018A2918F8EF00384211 /* apache.txt in Resources */,
 				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
 				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 				F94B43582907AE0400987819 /* GoogleService-Info.plist in Resources */,
