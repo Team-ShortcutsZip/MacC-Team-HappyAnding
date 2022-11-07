@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct CategoryView: View {
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var shortcuts: [Shortcuts]
+    
     var body: some View {
         VStack {
             HStack {
@@ -19,7 +22,7 @@ struct CategoryView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: ListCategoryView()) {
+                NavigationLink(destination: ListCategoryView(shortcuts: $shortcuts)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -32,11 +35,18 @@ struct CategoryView: View {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
                         NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcuts, categoryName: value, sectionType: SectionType.download)
+                                        ShortcutsListView(shortcuts: $shortcuts, categoryName: value)
                         //    ListShortcutView(shortcuts: shortcuts, categoryName: value)
                         ) {
                             CategoryCellView(categoryName: value.translateName())
                         }
+                        .simultaneousGesture(TapGesture().onEnded {
+                            shortcutsZipViewModel.fetchCategoryShortcutLimit(category: value.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                                shortcuts.removeAll()
+                                shortcuts.append(contentsOf: newShortcuts)
+                            }
+                            
+                        })
                     }
                 }
             }

@@ -24,6 +24,7 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var shortcutsMadeByUser: [Shortcuts] = []        // 유저가 만든 숏컷배열
     @Published var sortedShortcutsByDownload: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
     @Published var sortedShortcutsByLike: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
+    @Published var shortcutsInCategory: [Shortcuts] = [] // Category에서 사용할 숏컷 배열
     
     @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     @Published var userCurations: [Curation] = []
