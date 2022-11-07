@@ -117,7 +117,7 @@ struct IconModalView: View {
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Background : .Gray3 )
+                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Text_Button : .Text_Button_Disable )
                         .Body1()
                 }
             })
