@@ -9,7 +9,48 @@ import SwiftUI
 
 struct AboutTeamView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            
+            VStack {
+                Text("Team Happy ANDing")
+                    .Title1()
+                    .foregroundColor(Color.Gray5)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal, 16)
+                Text("안녕하세요. ShortcutsZip의 개발팀 Team Happy ANDing입니다. ")
+                    .Body2()
+                    .foregroundColor(Color.Gray3)
+                    .multilineTextAlignment(.leading)
+                    .padding(.bottom, 16)
+            }
+            .padding(.horizontal, 16)
+            
+            HStack(spacing: 12) {
+                devCard
+                devCard
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+        }
+        .frame(maxWidth: .infinity, maxHeight: . infinity)
+        .background(Color.Background)
+        .scrollIndicators(.hidden)
+        .navigationTitle("개발팀에 관하여")
+    }
+    
+    var devCard: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .frame(height: 200)
+                .foregroundColor(Color.Gray2)
+                .contextMenu{
+                    Button {
+                        // Add this item to a list of favorites.
+                    } label: {
+                        Label("개발자 Github 둘러보기", systemImage: "person.fill")
+                    }
+                }
+        }
     }
 }
 

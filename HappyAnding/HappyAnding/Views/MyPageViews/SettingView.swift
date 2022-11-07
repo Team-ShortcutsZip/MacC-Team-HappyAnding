@@ -60,9 +60,7 @@ struct SettingView: View {
 //            }
             
             //개발팀에 관하여 버튼
-            Button(action : {
-                //action
-            }) {
+            NavigationLink(destination: AboutTeamView()) {
                 SettingCell(title: "개발팀에 관하여")
             }
             
