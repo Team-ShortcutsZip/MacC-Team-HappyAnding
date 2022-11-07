@@ -54,7 +54,7 @@ struct WriteShortcutdescriptionView: View {
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("다음")
-                        .foregroundColor(isOneLineValid && isMultiLineValid ? .Background : .Gray3 )
+                        .foregroundColor(isOneLineValid && isMultiLineValid ? .Text_icon : .Text_Button_Disable )
                         .Body1()
                 }
             }
