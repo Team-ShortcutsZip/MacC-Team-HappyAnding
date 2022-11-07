@@ -14,6 +14,9 @@ struct ShortcutTabView: View {
     @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
     
     init() {
+        let transparentAppearence = UITabBarAppearance()
+        transparentAppearence.configureWithTransparentBackground()
+        UITabBar.appearance().standardAppearance = transparentAppearence
         UITabBar.appearance().barTintColor = UIColor(Color.White)
         UITabBar.appearance().backgroundColor = UIColor(Color.White)
         UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
