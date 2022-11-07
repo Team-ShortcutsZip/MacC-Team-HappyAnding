@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "testImage 1.png",
+      "filename" : "CurationThumbnailIphone.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "testImage.png",
+      "filename" : "CurationThumbnailIphone 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "testImage 2.png",
+      "filename" : "CurationThumbnailIphone 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
