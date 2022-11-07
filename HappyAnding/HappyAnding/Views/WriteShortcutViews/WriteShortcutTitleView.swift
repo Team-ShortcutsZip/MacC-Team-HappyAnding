@@ -69,7 +69,7 @@ struct WriteShortcutTitleView: View {
                             Image(systemName: shortcut.sfSymbol)
                                 .font(.system(size: 32))
                                 .frame(width: 84, height: 84)
-                                .foregroundColor(.Background)
+                                .foregroundColor(.Text_icon)
                         }
                     }
                 })
