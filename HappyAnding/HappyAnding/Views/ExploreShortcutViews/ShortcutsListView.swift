@@ -53,16 +53,16 @@ struct ShortcutsListView: View {
                     }
                 }
             }
+        }.background(Color.Background)
             .onAppear {
-                if shortcuts.count == 0 {
+                if self.shortcuts.count == 0 {
                     if let categoryName {
-                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
-                            shortcuts.append(contentsOf: newShortcuts)
+                        self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                            self.shortcuts.append(contentsOf: newShortcuts)
                         }
                     }
                 }
             }
-        }.background(Color.Background)
     }
     
     var scrollHeader: some View {

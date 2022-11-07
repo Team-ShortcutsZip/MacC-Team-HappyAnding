@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryView: View {
     
-    @Binding var shortcuts: [[Shortcuts]]
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     var body: some View {
         VStack {
@@ -21,7 +21,7 @@ struct CategoryView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: ListCategoryView(shortcuts: $shortcuts)) {
+                NavigationLink(destination: ListCategoryView()) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -34,7 +34,7 @@ struct CategoryView: View {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
                         NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcuts[value.index], categoryName: value)
+                                        ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index], categoryName: value)
                         ) {
                             CategoryCellView(categoryName: value.translateName())
                         }
