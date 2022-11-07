@@ -99,7 +99,7 @@ struct ShortcutCell: View {
                 .frame(width: 52, height: 52)
             
             Image(systemName: shortcutCell.sfSymbol)
-                .foregroundColor(.white)
+                .foregroundColor(.Text_icon)
         }
         .padding(.leading, 20)
     }
@@ -141,10 +141,10 @@ struct ShortcutCell: View {
     var background: some View {
         
         RoundedRectangle(cornerRadius: 12)
-            .fill(Color.White)
+            .fill(Color.Background_list)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.Gray1)
+                    .stroke(Color.Background_list_border)
             )
     }
 }

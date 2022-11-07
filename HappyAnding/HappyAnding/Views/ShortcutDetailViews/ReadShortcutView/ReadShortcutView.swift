@@ -41,7 +41,7 @@ struct ReadShortcutView: View {
                         .overlay {
                             Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
                                 .Body1()
-                                .foregroundColor(Color.Background)
+                                .foregroundColor(Color.Text_icon)
                         }
                 }
             }

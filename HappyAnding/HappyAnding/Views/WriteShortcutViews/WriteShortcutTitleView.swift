@@ -69,7 +69,7 @@ struct WriteShortcutTitleView: View {
                             Image(systemName: shortcut.sfSymbol)
                                 .font(.system(size: 32))
                                 .frame(width: 84, height: 84)
-                                .foregroundColor(.Background)
+                                .foregroundColor(.Text_icon)
                         }
                     }
                 })
@@ -113,7 +113,7 @@ struct WriteShortcutTitleView: View {
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text("다음")
-                            .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Background : .Gray3 )
+                            .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Text_Button : .Text_Button_Disable )
                             .Body1()
                     }
                 }
