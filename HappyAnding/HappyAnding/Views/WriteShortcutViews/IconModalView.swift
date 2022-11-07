@@ -77,7 +77,7 @@ struct IconModalView: View {
                 Image(systemName: iconSymbol)
                     .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
-                    .foregroundColor(.Background)
+                    .foregroundColor(.Text_icon)
             }
             .padding(.bottom, 24)
             
@@ -117,7 +117,7 @@ struct IconModalView: View {
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Background : .Gray3 )
+                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Text_Button : .Text_Button_Disable )
                         .Body1()
                 }
             })
@@ -144,7 +144,7 @@ struct IconModalView: View {
                     
                     if paletteColor == iconColor {
                         Image(systemName: "checkmark")
-                            .foregroundColor(.Gray1)
+                            .foregroundColor(.Text_icon)
                     }
                 }
             })

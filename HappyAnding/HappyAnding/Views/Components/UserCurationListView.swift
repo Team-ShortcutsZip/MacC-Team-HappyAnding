@@ -29,7 +29,7 @@ struct UserCurationListView: View {
                 .foregroundColor(.Gray4)
                 .frame(maxWidth: .infinity)
                 .frame(height: 64)
-                .background(Color.Gray1)
+                .background(Color.Background_plus)
                 .cornerRadius(12)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)

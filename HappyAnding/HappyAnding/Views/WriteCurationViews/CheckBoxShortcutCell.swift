@@ -90,10 +90,10 @@ struct CheckBoxShortcutCell: View {
     var background: some View {
         
         RoundedRectangle(cornerRadius: 12)
-            .fill(Color.White)
+            .fill(isShortcutTapped ? Color.White : Color.Background_list)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isShortcutTapped ? Color.Primary : Color.Gray1)
+                    .stroke(isShortcutTapped ? Color.Primary : Color.Background_list_border)
             )
     }}
 

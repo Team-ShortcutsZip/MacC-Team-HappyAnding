@@ -37,14 +37,19 @@ extension Color {
 
 extension Color {
     // Semantic Color
-    static let Background_plus = Color(light: .Gray1, dark: .Primary)
-    static let Background_tabbar = Color(light: .White, dark: .Gray3)
+    static let Background_plus = Color(light: .Gray1, dark: .White)
+    static let Background_tabbar = Color(light: .White, dark: Color("Grey005"))
+    static let Background_list = Color(light:.White, dark:.Background)
+    static let Background_list_border = Color(light:.Gray1, dark:.White)
     
     static let Text_curation = Color(light: .Gray5, dark: .Background)
     static let Text_icon = Color(light: .White, dark: .Gray6)
     
     static let Text_Button = Color(light: .Background, dark: .Gray6)
     static let Text_Button_Disable = Color(light: .Gray3, dark: .Gray2)
+    
+    static let Category_Pick_Fill = Color(light:.White, dark:.Primary)
+    static let Category_Pick_Text = Color(light:.Primary, dark:.Gray6)
 }
 
 extension Color {

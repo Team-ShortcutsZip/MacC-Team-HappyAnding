@@ -20,7 +20,7 @@ struct ReadShortcutHeaderView: View {
                 VStack {
                     Image(systemName: shortcut.sfSymbol)
                         .Title2()
-                        .foregroundColor(Color.White)
+                        .foregroundColor(Color.Text_icon)
                 }
                 .frame(width: 52, height: 52)
                 .background(Color.fetchGradient(color: shortcut.color))
@@ -32,7 +32,7 @@ struct ReadShortcutHeaderView: View {
 
                 .Body2()
                 .padding(10)
-                .foregroundColor(isMyLike ? Color.White : Color.Gray4)
+                .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
                 .background(isMyLike ? Color.Primary : Color.Gray1)
                 .cornerRadius(12)
                 .onTapGesture(perform: {
