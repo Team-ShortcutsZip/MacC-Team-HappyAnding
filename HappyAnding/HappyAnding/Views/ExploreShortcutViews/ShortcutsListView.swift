@@ -53,6 +53,15 @@ struct ShortcutsListView: View {
                     }
                 }
             }
+            .onAppear {
+                if shortcuts.count == 0 {
+                    if let categoryName {
+                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                            shortcuts.append(contentsOf: newShortcuts)
+                        }
+                    }
+                }
+            }
         }.background(Color.Background)
     }
     

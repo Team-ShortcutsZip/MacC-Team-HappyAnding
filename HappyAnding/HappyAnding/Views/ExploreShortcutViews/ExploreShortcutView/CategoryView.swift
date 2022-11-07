@@ -9,8 +9,7 @@ import SwiftUI
 
 struct CategoryView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var shortcuts: [Shortcuts]
+    @Binding var shortcuts: [[Shortcuts]]
     
     var body: some View {
         VStack {
@@ -35,18 +34,10 @@ struct CategoryView: View {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
                         NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcuts, categoryName: value)
-                        //    ListShortcutView(shortcuts: shortcuts, categoryName: value)
+                                        ShortcutsListView(shortcuts: $shortcuts[value.index], categoryName: value)
                         ) {
                             CategoryCellView(categoryName: value.translateName())
                         }
-                        .simultaneousGesture(TapGesture().onEnded {
-                            shortcutsZipViewModel.fetchCategoryShortcutLimit(category: value.rawValue, orderBy: "numberOfDownload") { newShortcuts in
-                                shortcuts.removeAll()
-                                shortcuts.append(contentsOf: newShortcuts)
-                            }
-                            
-                        })
                     }
                 }
             }
