@@ -16,13 +16,14 @@ struct LicenseView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Firebase")
+            Text("[Firebase](https://github.com/firebase)")
                 .Title2()
                 .foregroundColor(Color.Gray5)
                 .padding(.top, 36)
-                .onTapGesture {
+                .tint(.Gray5)
+                /*.onTapGesture {
                     self.isTappedFirebaseButton = true
-                }
+                }*/
             
             Text("License\nThe contents of this repository are licensed under the Apache License, version 2.0.\nYour use of Firebase is governed by the Terms of Service for Firebase Services.")
                 .Body2()
