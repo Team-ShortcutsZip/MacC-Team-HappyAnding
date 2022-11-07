@@ -426,6 +426,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     func fetchCurationByAuthor (author: String, completionHandler: @escaping ([Curation])->()) {
         
+        let index = 2
         var curations: [Curation] = []
         
         db.collection("Curation")
@@ -448,6 +449,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             print("error: \(error)")
                         }
                     }
+                    self.lastCurationDocumentSnapshot[index] = documents.last
                     completionHandler(curations)
                 }
             }
@@ -504,6 +506,7 @@ class ShortcutsZipViewModel: ObservableObject {
                     if (diff.type == .removed) {
                         curations.removeAll(where: { $0.id == curation.id})
                     }
+                    self.lastCurationDocumentSnapshot[index] = diff.document
                 } catch let error {
                     print("error: \(error)")
                 }
