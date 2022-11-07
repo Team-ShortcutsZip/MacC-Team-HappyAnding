@@ -43,11 +43,14 @@ struct ReadUserCurationView: View {
                 }
             }
             ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
+                NavigationLink(value: shortcut.id) {
                     ShortcutCell(shortcutCell: shortcut)
                     .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
                 }
             }
+            .navigationDestination(for: String.self, destination: { shortcutID in
+                ReadShortcutView(shortcutID: shortcutID)
+            })
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: BackButton)

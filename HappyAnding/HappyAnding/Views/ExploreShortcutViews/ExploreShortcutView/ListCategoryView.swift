@@ -23,6 +23,8 @@ struct ListCategoryView: View {
                     ForEach(Category.allCases, id: \.self) { item in
                         NavigationLink(value: shortcuts) {
                             CategoryCellView(categoryName: item.translateName())
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 7)
                         }
                         .navigationDestination(for: [Shortcuts].self, destination: { shortcuts in
                             ShortcutsListView(shortcuts: $shortcuts, categoryName: item, sectionType: SectionType.download)
