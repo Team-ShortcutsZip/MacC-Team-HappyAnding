@@ -42,8 +42,10 @@ struct ShortcutsListView: View {
                                     }
                                 case .myShortcut, .myLovingShortcut, .myDownloadShortcut: print("my goodgoodgood")
                                 default: // 카테고리일 경우
-                                    shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
-                                        shortcuts.append(contentsOf: newShortcuts)
+                                    if let categoryName {
+                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                                            shortcuts.append(contentsOf: newShortcuts)
+                                        }
                                     }
                                 }
                             }
@@ -52,6 +54,15 @@ struct ShortcutsListView: View {
                 }
             }
         }.background(Color.Background)
+            .onAppear {
+                if self.shortcuts.count == 0 {
+                    if let categoryName {
+                        self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                            self.shortcuts.append(contentsOf: newShortcuts)
+                        }
+                    }
+                }
+            }
     }
     
     var scrollHeader: some View {

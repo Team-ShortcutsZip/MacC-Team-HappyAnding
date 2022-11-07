@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CategoryView: View {
-    @Binding var shortcuts: [Shortcuts]
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     var body: some View {
         VStack {
             HStack {
@@ -31,7 +33,8 @@ struct CategoryView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
-                        NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: value)
+                        NavigationLink(destination:
+                                        ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index], categoryName: value)
                         ) {
                             CategoryCellView(categoryName: value.translateName())
                         }

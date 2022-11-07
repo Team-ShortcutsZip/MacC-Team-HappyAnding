@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Curation: Identifiable, Codable {
+struct Curation: Identifiable, Equatable, Codable {
     
     var id = UUID().uuidString
     var title: String

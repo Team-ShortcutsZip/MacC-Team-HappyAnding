@@ -29,6 +29,23 @@ enum Category: String, CaseIterable {
         return self.allCases.first{ "\($0)" == label }
     }
     
+    var index: Int {
+        switch self {
+        case .lifestyle: return 0
+        case .health: return 1
+        case .sns: return 2
+        case .utility: return 3
+        case .business: return 4
+        case .photo: return 5
+        case .education: return 6
+        case .finance: return 7
+        case .weather: return 8
+        case .decoration: return 9
+        case .entertainment: return 10
+        case .trip: return 11
+        }
+    }
+    
     // TODO: 설명 내용 수정하기
     
     /// 카테고리에 대한 짧은 소개를 반환하는 함수
