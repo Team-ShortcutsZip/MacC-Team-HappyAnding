@@ -11,11 +11,11 @@ struct UserCurationListView: View {
     
     @State var isWriting = false
     
-    var userCurations: [Curation]?
+    @Binding var userCurations: [Curation]
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(title: "나의 큐레이션", userCurations: userCurations)
+            UserCurationListHeader(title: "나의 큐레이션", userCurations: $userCurations)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             Button {
@@ -71,7 +71,7 @@ struct UserCurationListView: View {
 
 struct UserCurationListHeader: View {
     var title: String
-    var userCurations: [Curation]?
+    @Binding var userCurations: [Curation]
     var body: some View {
         HStack(alignment: .bottom) {
             Text(title)
@@ -80,7 +80,7 @@ struct UserCurationListHeader: View {
                 .onTapGesture { }
             Spacer()
             if let userCurations {
-                NavigationLink(destination: ListCurationView(userCurations: userCurations, type: CurationType.myCuration)) {
+                NavigationLink(destination: ListCurationView(userCurations: $userCurations, type: CurationType.myCuration)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(.Gray4)

@@ -11,6 +11,7 @@ struct ShortcutsListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var shortcuts:[Shortcuts]
+    @State var navigationTitle = ""
     
     var categoryName: Category?
     var sectionType: SectionType?
@@ -22,7 +23,7 @@ struct ShortcutsListView: View {
             
             LazyVStack {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id)) {
                         ShortcutCell(shortcut: shortcut,
                                      rankNumber: sectionType == .download ? index + 1 : -1)
                         .listRowInsets(EdgeInsets())
@@ -42,8 +43,10 @@ struct ShortcutsListView: View {
                                     }
                                 case .myShortcut, .myLovingShortcut, .myDownloadShortcut: print("my goodgoodgood")
                                 default: // 카테고리일 경우
-                                    shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
-                                        shortcuts.append(contentsOf: newShortcuts)
+                                    if let categoryName {
+                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                                            shortcuts.append(contentsOf: newShortcuts)
+                                        }
                                     }
                                 }
                             }
@@ -51,7 +54,19 @@ struct ShortcutsListView: View {
                     }
                 }
             }
-        }.background(Color.Background)
+        }
+        .navigationBarTitle((categoryName == nil ? "" : categoryName?.translateName())!)
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.Background)
+            .onAppear {
+                if self.shortcuts.count == 0 {
+                    if let categoryName {
+                        self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                            self.shortcuts.append(contentsOf: newShortcuts)
+                        }
+                    }
+                }
+            }
     }
     
     var scrollHeader: some View {

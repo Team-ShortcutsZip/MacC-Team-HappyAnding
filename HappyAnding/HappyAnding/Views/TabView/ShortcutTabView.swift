@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ShortcutTabView: View {
     
+    // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @EnvironmentObject var userAuth: UserAuth
     @AppStorage("signInStatus") var signInStatus = false
-    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
     
     init() {
         let transparentAppearence = UITabBarAppearance()
@@ -34,9 +34,10 @@ struct ShortcutTabView: View {
                         .tabItem {
                             Label(tab.tabName, systemImage: tab.systemImage)
                         }
-                        .environmentObject(shortcutsZipViewModel)
                 }
             }
+            .environmentObject(ShortcutsZipViewModel())
+            
         } else {
             if userAuth.isLoggedIn {
                 WriteNicknameView()

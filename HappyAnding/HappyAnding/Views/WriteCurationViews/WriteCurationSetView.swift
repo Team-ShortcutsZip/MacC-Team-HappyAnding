@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WriteCurationSetView: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @Binding var isWriting: Bool
     
     @State var shortcutCells = Set<ShortcutCellModel>()
@@ -20,7 +22,7 @@ struct WriteCurationSetView: View {
                                    author: "",
                                    shortcuts: [ShortcutCellModel]())
     
-    let firebase = FirebaseService()
+//    let firebase = FirebaseService()
     let isEdit: Bool
     
     var body: some View {
@@ -57,10 +59,10 @@ struct WriteCurationSetView: View {
             }
             .background(Color.Background)
             .onAppear() {
-                firebase.fetchMadeShortcutCell { shortcuts in
+                shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
                     self.shortcutCells = self.shortcutCells.union(shortcuts)
                 }
-                firebase.fetchLikedShortcutCell { shortcuts in
+                shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
                     self.shortcutCells = self.shortcutCells.union(shortcuts)
                 }
             }

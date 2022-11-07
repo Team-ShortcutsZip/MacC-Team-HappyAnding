@@ -11,7 +11,7 @@ struct SignInWithAppleView: View {
     
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
-    
+        
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
     
     var body: some View {
@@ -48,9 +48,8 @@ struct SignInWithAppleView: View {
                     Text("\(Image(systemName: "applelogo")) Apple로 로그인")
                         .foregroundColor(.White)
                 }
-                .padding(.bottom, 88)
+                .padding(.bottom, 37)
             })
-            
         }
     }
     
