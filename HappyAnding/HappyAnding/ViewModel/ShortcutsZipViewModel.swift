@@ -53,6 +53,7 @@ class ShortcutsZipViewModel: ObservableObject {
         fetchCurationLimit(isAdmin: false) { curations in
             self.userCurations = curations
         }
+        initUserInfo()
     }
     
     func initUserInfo() {
