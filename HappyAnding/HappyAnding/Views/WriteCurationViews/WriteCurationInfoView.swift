@@ -72,7 +72,7 @@ struct WriteCurationInfoView: View {
                         .padding(.horizontal, 16)
                         .frame(height: 52)
                     Text("완료")
-                        .foregroundColor(isIncomplete ? .Gray3 : .Background)
+                        .foregroundColor(isIncomplete ? .Text_Button_Disable : .Text_Button)
                 }
             })
             .disabled(isIncomplete)
