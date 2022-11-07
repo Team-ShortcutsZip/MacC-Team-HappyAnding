@@ -191,8 +191,8 @@ struct WriteShortcutTagView: View {
                 })
             }
             .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
-                                   backgroundColor: Color.Category_Pick_Fill,
-                                   strokeColor: Color.Category_Pick_Fill))
+                                   backgroundColor: Color.Tag_Pick_Background,
+                                   strokeColor: Color.Primary))
         }
     }
     
@@ -212,8 +212,8 @@ struct WriteShortcutTagView: View {
             }
             //            .modifier(CellModifier(color: .Primary))
             .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
-                                   backgroundColor: Color.Category_Pick_Fill,
-                                   strokeColor: Color.Category_Pick_Fill))
+                                   backgroundColor: Color.Tag_Pick_Background,
+                                   strokeColor: Color.Primary))
         }
     }
     
