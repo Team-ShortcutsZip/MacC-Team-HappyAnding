@@ -60,9 +60,10 @@ struct SettingView: View {
 //            }
             
             //개발팀에 관하여 버튼
-            NavigationLink(destination: AboutTeamView()) {
-                SettingCell(title: "개발팀에 관하여")
-            }
+            //TODO: Halogen의 꿈. 추후 스프린트 시 완성되면 적용 예정
+//            NavigationLink(destination: AboutTeamView()) {
+//                SettingCell(title: "개발팀에 관하여")
+//            }
             
             //개발자에게 연락하기 버튼
             Button(action : {
