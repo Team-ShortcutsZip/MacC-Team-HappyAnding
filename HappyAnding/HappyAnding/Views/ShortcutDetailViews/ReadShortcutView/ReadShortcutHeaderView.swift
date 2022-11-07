@@ -32,7 +32,7 @@ struct ReadShortcutHeaderView: View {
 
                 .Body2()
                 .padding(10)
-                .foregroundColor(isMyLike ? Color.White : Color.Gray4)
+                .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
                 .background(isMyLike ? Color.Primary : Color.Gray1)
                 .cornerRadius(12)
                 .onTapGesture(perform: {
