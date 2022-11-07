@@ -31,9 +31,7 @@ struct CategoryView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
-                        NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcuts, categoryName: value, sectionType: SectionType.download)
-                        //    ListShortcutView(shortcuts: shortcuts, categoryName: value)
+                        NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: value)
                         ) {
                             CategoryCellView(categoryName: value.translateName())
                         }
