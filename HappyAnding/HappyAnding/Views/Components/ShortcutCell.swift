@@ -99,7 +99,7 @@ struct ShortcutCell: View {
                 .frame(width: 52, height: 52)
             
             Image(systemName: shortcutCell.sfSymbol)
-                .foregroundColor(.white)
+                .foregroundColor(.Text_icon)
         }
         .padding(.leading, 20)
     }
