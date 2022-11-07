@@ -109,7 +109,7 @@ struct WriteCurationSetView: View {
                     .padding(.horizontal, 16)
                     .frame(height: 52)
                 Text("다음")
-                    .foregroundColor(curation.shortcuts.count > 0 ? .Background : .Gray3)
+                    .foregroundColor(curation.shortcuts.count > 0 ? .Text_Button : .Text_Button_Disable)
             }
         }
         .padding(.bottom, 24)
