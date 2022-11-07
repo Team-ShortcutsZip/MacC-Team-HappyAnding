@@ -89,7 +89,7 @@ struct WriteShortcutTagView: View {
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
-                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Background : .Gray3 )
+                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Text_Button : .Text_Button_Disable )
                         .Body1()
                 }
             })
