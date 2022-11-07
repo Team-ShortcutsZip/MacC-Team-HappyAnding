@@ -15,6 +15,7 @@ import FirebaseFirestore
 struct HappyAndingApp: App {
     
     @StateObject var userAuth = UserAuth.shared
+    @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
     
     init() {
         FirebaseApp.configure()
@@ -25,6 +26,7 @@ struct HappyAndingApp: App {
         WindowGroup {
             ShortcutTabView()
                 .environmentObject(userAuth)
+                .environmentObject(shorcutsZipViewModel)
         }
     }
 }

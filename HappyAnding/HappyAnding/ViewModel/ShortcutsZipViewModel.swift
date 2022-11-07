@@ -40,6 +40,22 @@ class ShortcutsZipViewModel: ObservableObject {
     let numberOfLike = 5
     
     init() {
+        
+        fetchShortcutLimit(orderBy: "numberOfDownload") { shortcuts in
+            self.sortedShortcutsByDownload = shortcuts
+        }
+        fetchShortcutLimitByLiked { shortcuts in
+            self.sortedShortcutsByLike = shortcuts
+        }
+        fetchCurationLimit(isAdmin: true) { curations in
+            self.adminCurations = curations
+        }
+        fetchCurationLimit(isAdmin: false) { curations in
+            self.userCurations = curations
+        }
+    }
+    
+    func initUserInfo() {
         fetchShortcutByAuthor(author: currentUser()) { shortcuts in
             self.shortcutsMadeByUser = shortcuts
         }
@@ -56,18 +72,6 @@ class ShortcutsZipViewModel: ObservableObject {
             self.fetchShortcutByIds(shortcutIds: user.likedShortcuts) { likedShortcuts in
                 self.shortcutsUserLiked = likedShortcuts
             }
-        }
-        fetchShortcutLimit(orderBy: "numberOfDownload") { shortcuts in
-            self.sortedShortcutsByDownload = shortcuts
-        }
-        fetchShortcutLimitByLiked { shortcuts in
-            self.sortedShortcutsByLike = shortcuts
-        }
-        fetchCurationLimit(isAdmin: true) { curations in
-            self.adminCurations = curations
-        }
-        fetchCurationLimit(isAdmin: false) { curations in
-            self.userCurations = curations
         }
     }
     
