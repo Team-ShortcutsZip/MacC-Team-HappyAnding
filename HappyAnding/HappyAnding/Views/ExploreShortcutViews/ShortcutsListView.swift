@@ -11,6 +11,7 @@ struct ShortcutsListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var shortcuts:[Shortcuts]
+    @State var navigationTitle = ""
     
     var categoryName: Category?
     var sectionType: SectionType?
@@ -53,7 +54,10 @@ struct ShortcutsListView: View {
                     }
                 }
             }
-        }.background(Color.Background)
+        }
+        .navigationBarTitle((categoryName == nil ? "" : categoryName?.translateName())!)
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.Background)
             .onAppear {
                 if self.shortcuts.count == 0 {
                     if let categoryName {
