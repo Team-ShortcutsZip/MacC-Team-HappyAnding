@@ -36,14 +36,21 @@ struct WriteShortcutTagView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shortcut.category)
+                .padding(.bottom, 32)
             
-            Text("단축어 사용에 필요한 앱")
-                .Headline()
-                .padding(.leading, 16)
-                .foregroundColor(.Gray5)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                Text("단축어 사용에 필요한 앱")
+                    .Headline()
+                    .padding(.leading, 16)
+                    .foregroundColor(.Gray5)
+                Text("(선택입력)")
+                    .Footnote()
+                    .foregroundColor(.Gray3)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             relatedAppList(relatedApps: $shortcut.requiredApp)
+                .padding(.bottom, 32)
             
             ValidationCheckTextField(textType: .optional,
                                      isMultipleLines: true,
