@@ -16,14 +16,14 @@ struct ExploreCurationView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     //앱 큐레이션
-                    adminCurationsFrameiew(adminCurations: shortcutsZipViewModel.classifyAdminCuration())
+                    adminCurationsFrameiew(adminCurations: shortcutsZipViewModel.adminCurations)
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
-                    UserCurationListView(userCurations: shortcutsZipViewModel.curationsMadeByUser)
+                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션
-                    CurationListView(curationListTitle: "유저 큐레이션", userCurations: shortcutsZipViewModel.classifyUserCuration())
+                    CurationListView(curationListTitle: "유저 큐레이션", userCurations: $shortcutsZipViewModel.userCurations)
                 }
                 .padding(.bottom, 32)
             }
@@ -63,8 +63,6 @@ struct adminCurationsFrameiew: View {
                             AdminCurationCell(adminCuration: curation)
                         }
                     }
-//                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 당신을 위해 알람, 타이머, 투두리스트 등의 단축어를 모아봤어요!")
-//                    AdminCurationCell(curationThumbnail: "adminCurationTestImage", title: "갓생, 시작해보고 싶다면", subtitle: "갓생을 살고 싶은 ")
                 }
                 .padding(.leading, 16)
                 .padding(.trailing, 8)

@@ -26,6 +26,7 @@ struct WriteNicknameView: View {
     @AppStorage("signInStatus") var signInStatus = false
     @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+    @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
     
     @State var nickname: String = ""
     @State var checkNicknameDuplicate: Bool = false
@@ -35,7 +36,7 @@ struct WriteNicknameView: View {
     @State private var isTappedPrivacyButton = false
     
     let user = Auth.auth().currentUser
-    let firebase = FirebaseService()
+//    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -150,7 +151,7 @@ struct WriteNicknameView: View {
             //이거 바꿔서 alert 띄움
             checkNicknameDuplicate = true
             
-            firebase.checkNickNameDuplication(name: nickname) { result in
+            shortcutszipViewModel.checkNickNameDuplication(name: nickname) { result in
                 isDuplicatedNickname = result
                 isNicknameChecked = !result
             }
@@ -180,7 +181,7 @@ struct WriteNicknameView: View {
                 self.signInStatus = true
             }
             
-            firebase.setData(model: User(id: user?.uid ?? "", nickname: nickname, likedShortcuts: [String](), downloadedShortcuts: [String]()))
+            shortcutszipViewModel.setData(model: User(id: user?.uid ?? "", nickname: nickname, likedShortcuts: [String](), downloadedShortcuts: [String]()))
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)

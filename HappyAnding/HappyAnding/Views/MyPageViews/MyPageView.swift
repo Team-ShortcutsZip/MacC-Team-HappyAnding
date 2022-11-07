@@ -48,7 +48,7 @@ struct MyPageView: View {
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
                     MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
-                    UserCurationListView(userCurations: shortcutsZipViewModel.curationsMadeByUser)
+                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
                         .frame(maxWidth: .infinity)
                     MyPageShortcutList(
                         shortcuts: shortcutsZipViewModel.shortcutsUserLiked,
@@ -88,7 +88,7 @@ struct MyPageShortcutList: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcut: shortcut)) {
+                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
                             ShortcutCell(shortcut: shortcut)
                         }
                     }

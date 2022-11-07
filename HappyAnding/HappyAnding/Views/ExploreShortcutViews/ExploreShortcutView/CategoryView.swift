@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CategoryView: View {
-    @Binding var shortcuts: [Shortcuts]
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     var body: some View {
         VStack {
             HStack {
@@ -32,8 +34,7 @@ struct CategoryView: View {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < 6 {
                         NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcuts, categoryName: value, sectionType: SectionType.download)
-                        //    ListShortcutView(shortcuts: shortcuts, categoryName: value)
+                                        ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index], categoryName: value)
                         ) {
                             CategoryCellView(categoryName: value.translateName())
                         }

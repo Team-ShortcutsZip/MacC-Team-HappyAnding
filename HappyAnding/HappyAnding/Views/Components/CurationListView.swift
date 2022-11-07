@@ -10,11 +10,11 @@ import SwiftUI
 struct CurationListView: View {
     
     var curationListTitle: String
-    var userCurations: [Curation]
+    @Binding var userCurations: [Curation]
     
     var body: some View {
         VStack(spacing: 0) {
-            CurationListHeader(userCurations: userCurations, type: .userCuration, title: curationListTitle)
+            CurationListHeader(userCurations: $userCurations, type: .userCuration, title: curationListTitle)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
@@ -33,7 +33,7 @@ struct CurationListView: View {
 }
 
 struct CurationListHeader: View {
-    var userCurations: [Curation]
+    @Binding var userCurations: [Curation]
     var type: CurationType
     var title: String
     var body: some View {
@@ -43,7 +43,7 @@ struct CurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListCurationView(userCurations: userCurations, type: type, title: title)) {
+            NavigationLink(destination: ListCurationView(userCurations: $userCurations, type: type, title: title, isAllUser: true)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
