@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/swiftpackagemanager,xcode,macos,cocoapods
 # Edit at https://www.toptal.com/developers/gitignore?templates=swiftpackagemanager,xcode,macos,cocoapods
 
+### Firebase ###
+GoogleService-Info.plist
+
 ### CocoaPods ###
 ## CocoaPods GitIgnore Template
 
