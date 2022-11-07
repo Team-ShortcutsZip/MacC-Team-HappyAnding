@@ -20,7 +20,7 @@ struct ReadShortcutHeaderView: View {
                 VStack {
                     Image(systemName: shortcut.sfSymbol)
                         .Title2()
-                        .foregroundColor(Color.White)
+                        .foregroundColor(Color.Text_icon)
                 }
                 .frame(width: 52, height: 52)
                 .background(Color.fetchGradient(color: shortcut.color))
