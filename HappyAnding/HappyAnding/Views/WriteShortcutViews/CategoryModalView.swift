@@ -70,12 +70,17 @@ struct CategoryModalView: View {
                 Text(item.translateName())
                     .Body2()
                     .tag(item.category)
-                    .foregroundColor(items.contains(item.category) ? Color.Primary : Color.Gray3)
+                    .foregroundColor(items.contains(item.category) ? Color.Category_Pick_Text : Color.Gray3)
                     .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)
-                    .overlay(
+                    .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(items.contains(item.category) ? Color.Primary : Color.Gray3, lineWidth: 1)
+                            .fill(items.contains(item.category) ? Color.Category_Pick_Fill : .clear)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .strokeBorder(items.contains(item.category) ? Color.Primary : Color.Gray3, lineWidth: 1)
+                            )
                     )
+                
             })
         }
     }
