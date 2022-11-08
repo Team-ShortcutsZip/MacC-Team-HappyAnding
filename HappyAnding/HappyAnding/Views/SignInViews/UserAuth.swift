@@ -16,4 +16,7 @@ class UserAuth: ObservableObject {
     func signIn() {
         self.isLoggedIn = true
     }
+    func signOut() {
+        self.isLoggedIn = false
+    }
 }
