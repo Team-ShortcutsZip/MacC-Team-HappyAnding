@@ -20,7 +20,6 @@ struct SettingView: View {
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
     @State var isTappedLogOutButton = false
-    @State var isTappedSignOutButton = false
 //    @State private var isTappedPrivacyButton = false
 
     var body: some View {
@@ -85,17 +84,8 @@ struct SettingView: View {
                       secondaryButton: .destructive( Text("로그아웃"), action: { logOut() }))
             }
             //회원탈퇴 버튼
-            Button(action: {
-                self.isTappedSignOutButton = true
-            }) {
-                SettingCell(title: "회원탈퇴")
-            }
-            .alert(isPresented: $isTappedSignOutButton) {
-                Alert(title: Text("회원탈퇴"),
-                      message: Text("회원탈퇴 하시겠습니까?"),
-                      primaryButton: .default(Text("닫기")
-                                              ,action: { self.isTappedSignOutButton = false }),
-                      secondaryButton: .destructive( Text("회원탈퇴"), action: { signOut() }))
+            NavigationLink(destination: WithdrawalView()) {
+                SettingCell(title: "탈퇴하기")
             }
             Spacer()
         }
@@ -110,28 +100,6 @@ struct SettingView: View {
         do {
             try firebaseAuth.signOut()
             userAuth.signOut()
-            self.signInStatus = false
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    private func signOut() {
-        let firebaseAuth = Auth.auth()
-        do {
-            let currentUser = firebaseAuth.currentUser
-            if let user = shortcutsZipViewModel.userInfo {
-                shortcutsZipViewModel.deleteData(model: user)
-                userAuth.signOut()
-                
-                currentUser?.delete { error in
-                  if let error {
-                      print(error.localizedDescription)
-                  } else {
-                      print("success delete user auth")
-                  }
-                }
-            }
-            try firebaseAuth.signOut()
             self.signInStatus = false
         } catch {
             print(error.localizedDescription)

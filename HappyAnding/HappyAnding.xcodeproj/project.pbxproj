@@ -68,6 +68,7 @@
 		A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01852918552E00384211 /* AboutTeamView.swift */; };
 		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
 		A3FF018A2918F8EF00384211 /* apache.txt in Resources */ = {isa = PBXBuildFile; fileRef = A3FF01892918F8EF00384211 /* apache.txt */; };
+		A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF018D291ACFA500384211 /* WithdrawalView.swift */; };
 		F944DD442907B8C400B1AC5C /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F944DD432907B8C400B1AC5C /* FirebaseService.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435C2907B19A00987819 /* FirebaseAnalytics */; };
@@ -168,6 +169,7 @@
 		A3FF01852918552E00384211 /* AboutTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamView.swift; sourceTree = "<group>"; };
 		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		A3FF01892918F8EF00384211 /* apache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = apache.txt; sourceTree = "<group>"; };
+		A3FF018D291ACFA500384211 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
 		F944DD432907B8C400B1AC5C /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				A3FF01852918552E00384211 /* AboutTeamView.swift */,
 				A3FF01872918581E00384211 /* LicenseView.swift */,
 				A3FF01892918F8EF00384211 /* apache.txt */,
+				A3FF018D291ACFA500384211 /* WithdrawalView.swift */,
 			);
 			path = SettingViews;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87E99CD929042536009B691F /* SectionType.swift in Sources */,
 				872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */,
+				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
