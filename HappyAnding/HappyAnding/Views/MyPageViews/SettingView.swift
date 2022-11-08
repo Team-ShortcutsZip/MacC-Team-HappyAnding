@@ -118,12 +118,21 @@ struct SettingView: View {
     private func signOut() {
         let firebaseAuth = Auth.auth()
         do {
-            try firebaseAuth.signOut()
-            self.signInStatus = false
+            let currentUser = firebaseAuth.currentUser
             if let user = shortcutsZipViewModel.userInfo {
                 shortcutsZipViewModel.deleteData(model: user)
                 userAuth.signOut()
+                
+                currentUser?.delete { error in
+                  if let error {
+                      print(error.localizedDescription)
+                  } else {
+                      print("success delete user auth")
+                  }
+                }
             }
+            try firebaseAuth.signOut()
+            self.signInStatus = false
         } catch {
             print(error.localizedDescription)
         }
