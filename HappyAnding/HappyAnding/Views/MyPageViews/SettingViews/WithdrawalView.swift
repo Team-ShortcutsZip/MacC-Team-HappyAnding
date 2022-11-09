@@ -96,24 +96,19 @@ struct WithdrawalView: View {
     
     private func signOut() {
         let firebaseAuth = Auth.auth()
-        do {
-            let currentUser = firebaseAuth.currentUser
-            if let user = shortcutsZipViewModel.userInfo {
-                shortcutsZipViewModel.deleteData(model: user)
-                userAuth.signOut()
-                
-                currentUser?.delete { error in
-                    if let error {
-                        print(error.localizedDescription)
-                    } else {
-                        print("success delete user auth")
+        let currentUser = firebaseAuth.currentUser
+        currentUser?.delete { error in
+            if let error {
+                print(error.localizedDescription)
+            } else {
+                if let user = shortcutsZipViewModel.userInfo {
+                    shortcutsZipViewModel.deleteData(model: user)
+                    withAnimation(.easeInOut) {
+                        self.signInStatus = false
+                        userAuth.signOut()
                     }
                 }
             }
-            //            try firebaseAuth.signOut( )
-            self.signInStatus = false
-        } catch {
-            print(error.localizedDescription)
         }
     }
     
