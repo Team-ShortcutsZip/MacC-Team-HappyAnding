@@ -35,6 +35,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     var lastShortcutDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
     var lastCurationDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
+    var lastCategoryDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 12)
     
     let numberOfPageLimit = 10
     let numberOfLike = 5
@@ -107,7 +108,6 @@ class ShortcutsZipViewModel: ObservableObject {
         return index
     }
     
-
     
 //MARK: - 데이터를 받아오는 함수들
     
@@ -200,7 +200,7 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 선택한 카테고리에 해당하는 단축어를 정렬하여 10개씩 가져오는 함수 (카테고리 단축어)
     
     func fetchCategoryShortcutLimit(
-        category: String,
+        category: Category,
         orderBy: String,
         completionHandler: @escaping ([Shortcuts])->()) {
             
@@ -211,13 +211,13 @@ class ShortcutsZipViewModel: ObservableObject {
             
             if let next = self.lastShortcutDocumentSnapshot[index] {
                 query  = db.collection("Shortcut")
-                    .whereField("category", arrayContains: category)
+                    .whereField("category", arrayContains: category.rawValue)
                     .order(by: orderBy, descending: true)
                     .limit(to: numberOfPageLimit)
                     .start(afterDocument: next)
             } else {
                 query = db.collection("Shortcut")
-                    .whereField("category", arrayContains: category)
+                    .whereField("category", arrayContains: category.rawValue)
                     .order(by: orderBy, descending: true)
                     .limit(to: numberOfPageLimit)
             }
@@ -238,7 +238,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             print("error: \(error)")
                         }
                     }
-                    self.lastShortcutDocumentSnapshot[index] = documents.last
+                    self.lastCategoryDocumentSnapshot[category.index] = documents.last
                     completionHandler(shortcuts)
                 }
             }

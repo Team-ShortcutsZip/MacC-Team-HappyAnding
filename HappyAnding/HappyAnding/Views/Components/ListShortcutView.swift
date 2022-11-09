@@ -66,7 +66,7 @@ struct ListShortcutView: View {
         .onAppear() {
             if let categoryName {
                 description = categoryName.fetchDescription()
-                shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "date") { shortcuts in
+                shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { shortcuts in
                     self.shortcuts = shortcuts
                 }
             } else if let sectionType {

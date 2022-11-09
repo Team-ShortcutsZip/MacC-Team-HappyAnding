@@ -44,7 +44,7 @@ struct ShortcutsListView: View {
                                 case .myShortcut, .myLovingShortcut, .myDownloadShortcut: print("my goodgoodgood")
                                 default: // 카테고리일 경우
                                     if let categoryName {
-                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "numberOfDownload") { newShortcuts in
                                             shortcuts.append(contentsOf: newShortcuts)
                                         }
                                     }
@@ -61,7 +61,7 @@ struct ShortcutsListView: View {
             .onAppear {
                 if self.shortcuts.count == 0 {
                     if let categoryName {
-                        self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName.rawValue, orderBy: "numberOfDownload") { newShortcuts in
+                        self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "numberOfDownload") { newShortcuts in
                             self.shortcuts.append(contentsOf: newShortcuts)
                         }
                     }
