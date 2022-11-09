@@ -203,13 +203,14 @@ class ShortcutsZipViewModel: ObservableObject {
         category: Category,
         orderBy: String,
         completionHandler: @escaping ([Shortcuts])->()) {
+            print(category.rawValue)
             
             var shortcuts: [Shortcuts] = []
             
             var query: Query!
-            let index = checkShortcutIndex(orderBy: orderBy)
+            let index = category.index
             
-            if let next = self.lastShortcutDocumentSnapshot[index] {
+            if let next = self.lastCategoryDocumentSnapshot[index] {
                 query  = db.collection("Shortcut")
                     .whereField("category", arrayContains: category.rawValue)
                     .order(by: orderBy, descending: true)

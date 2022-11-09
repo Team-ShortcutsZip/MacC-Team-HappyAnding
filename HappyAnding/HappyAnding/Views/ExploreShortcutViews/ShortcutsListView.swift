@@ -23,13 +23,14 @@ struct ShortcutsListView: View {
             
             LazyVStack {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id)) {
+                    NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
                         ShortcutCell(shortcut: shortcut,
                                      rankNumber: sectionType == .download ? index + 1 : -1)
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .onAppear {
                             print(shortcuts.count)
+                            print("** \(sectionType)")
                             if shortcuts.last == shortcut && shortcuts.count % 10 == 0 {
                                 // TODO: sectionType에 따라서 요청함수 다르거 해줘야 함
                                 switch self.sectionType {
@@ -41,10 +42,22 @@ struct ShortcutsListView: View {
                                     shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfLike") { newShortcuts in
                                         shortcuts.append(contentsOf: newShortcuts)
                                     }
-                                case .myShortcut, .myLovingShortcut, .myDownloadShortcut: print("my goodgoodgood")
+                                case .myShortcut, .myLovingShortcut, .myDownloadShortcut:
+                                    print("my goodgoodgood")
                                 default: // 카테고리일 경우
-                                    if let categoryName {
-                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "numberOfDownload") { newShortcuts in
+                                    print("** section nil")
+                                    if let categoryName = self.categoryName {
+                                        print("** category \(categoryName)")
+                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
+                                            shortcuts.append(contentsOf: newShortcuts)
+                                        }
+                                    }
+                                }
+                                if self.sectionType == nil {
+                                    print("** section nil")
+                                    if let categoryName = self.categoryName {
+                                        print("** category \(categoryName)")
+                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
                                             shortcuts.append(contentsOf: newShortcuts)
                                         }
                                     }

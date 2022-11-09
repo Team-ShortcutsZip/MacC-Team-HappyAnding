@@ -15,7 +15,7 @@ struct ListShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var shortcuts:[Shortcuts]?
-    @State var shortcutsArray: [Shortcuts] = []
+//    @State var shortcutsArray: [Shortcuts] = []
     @State private var isLastItem = false
     @State var description: String = ""
     
