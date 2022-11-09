@@ -36,7 +36,7 @@ struct LovedShortcutView: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id), label: {
+                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id), label: {
                             ShortcutCell(shortcut: shortcut)
                         })
                     }
