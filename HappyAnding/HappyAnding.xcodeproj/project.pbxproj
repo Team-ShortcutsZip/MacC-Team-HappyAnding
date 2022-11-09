@@ -11,6 +11,7 @@
 		4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D778A33290A53BA00C15AC4 /* Application+Extension.swift */; };
 		872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */; };
 		8792478D2918CE450040D5C3 /* UINavigationContoller+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792478C2918CE450040D5C3 /* UINavigationContoller+Extension.swift */; };
+		8792479B291BDF820040D5C3 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792479A291BDF820040D5C3 /* SearchView.swift */; };
 		87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */; };
 		87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B12910649B00C3DA13 /* SignInWithAppleView.swift */; };
 		87E606B629114F7D00C3DA13 /* WriteNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B529114F7D00C3DA13 /* WriteNicknameView.swift */; };
@@ -106,6 +107,7 @@
 		4D778A33290A53BA00C15AC4 /* Application+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Application+Extension.swift"; sourceTree = "<group>"; };
 		872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		8792478C2918CE450040D5C3 /* UINavigationContoller+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationContoller+Extension.swift"; sourceTree = "<group>"; };
+		8792479A291BDF820040D5C3 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		87E606AD2910623C00C3DA13 /* HappyAnding.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyAnding.entitlements; sourceTree = "<group>"; };
 		87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
 		87E606B12910649B00C3DA13 /* SignInWithAppleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				87E606AE291062D300C3DA13 /* SignInViews */,
 				F956C9F82903F87200C17621 /* ShortcutTestModel.swift */,
 				F9914527290850370046986E /* TestUserCurationListView.swift */,
+				8792479A291BDF820040D5C3 /* SearchView.swift */,
 				3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */,
 			);
 			path = Views;
@@ -608,6 +611,7 @@
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87E99CD929042536009B691F /* SectionType.swift in Sources */,
 				872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */,
+				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
