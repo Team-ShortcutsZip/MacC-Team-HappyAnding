@@ -79,6 +79,7 @@ struct WithdrawalView: View {
                         .Body1()
                 }
             }
+            .disabled(!isTappedCheckToggle)
             .padding(.bottom, 44)
             .alert(isPresented: $isTappedSignOutButton) {
                 Alert(title: Text("탈퇴하기"),
