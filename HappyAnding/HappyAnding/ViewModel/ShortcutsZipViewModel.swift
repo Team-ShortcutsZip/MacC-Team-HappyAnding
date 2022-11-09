@@ -25,6 +25,8 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var sortedShortcutsByDownload: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
     @Published var sortedShortcutsByLike: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
     @Published var shortcutsInCategory: [[Shortcuts]] = [[Shortcuts]].init(repeating: [], count: Category.allCases.count) // Category에서 사용할 숏컷 배열
+    @Published var isFirstFetchInCategory = [Bool] (repeating: true, count: Category.allCases.count) //카테고리를 리스트 첫 fetch여부
+    @Published var isLastFetchInCategory = [Bool] (repeating: false, count: Category.allCases.count) //카테고리를 리스트 마지막 fetch여부
     
     @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     @Published var userCurations: [Curation] = []
@@ -211,6 +213,7 @@ class ShortcutsZipViewModel: ObservableObject {
             let index = category.index
             
             if let next = self.lastCategoryDocumentSnapshot[index] {
+                print("**\(next.data().map(String.init(describing:)) )")
                 query  = db.collection("Shortcut")
                     .whereField("category", arrayContains: category.rawValue)
                     .order(by: orderBy, descending: true)
@@ -245,7 +248,7 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         }
     
-    // MARK: 현재 user가 만들었던 shortcuts을 받아오는 함수 (나의 단축어)
+    // MARK: 현재 user가 만들었던 shortcuts을 10개씩 받아오는 함수 (나의 단축어)
     
     func fetchShortcutByAuthor(author: String, completionHandler: @escaping ([Shortcuts])->()) {
         

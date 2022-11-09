@@ -13,6 +13,8 @@ struct ShortcutsListView: View {
     @Binding var shortcuts:[Shortcuts]
     @State var navigationTitle = ""
     
+    @State var isLastShortcut: Bool = false
+    
     var categoryName: Category?
     var sectionType: SectionType?
     
@@ -29,38 +31,38 @@ struct ShortcutsListView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .onAppear {
-                            print(shortcuts.count)
-                            print("** \(sectionType)")
-                            if shortcuts.last == shortcut && shortcuts.count % 10 == 0 {
+                            if shortcuts.count-1 == index && !isLastShortcut {
+                                if let categoryName = self.categoryName {
+                                    self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
+                                        if Set(newShortcuts).intersection(Set(shortcuts)) == [] {
+                                            self.shortcuts.append(contentsOf: newShortcuts)
+                                        }
+                                        else {
+                                            isLastShortcut = true
+                                        }
+                                    }
+                                }
                                 // TODO: sectionType에 따라서 요청함수 다르거 해줘야 함
                                 switch self.sectionType {
                                 case .download:
                                     shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
-                                        shortcuts.append(contentsOf: newShortcuts)
+                                        if Set(newShortcuts).intersection(Set(shortcuts)) == [] {
+                                            self.shortcuts.append(contentsOf: newShortcuts)
+                                        }
+                                        else {
+                                            isLastShortcut = true
+                                        }
                                     }
                                 case .popular:
                                     shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfLike") { newShortcuts in
-                                        shortcuts.append(contentsOf: newShortcuts)
-                                    }
-                                case .myShortcut, .myLovingShortcut, .myDownloadShortcut:
-                                    print("my goodgoodgood")
-                                default: // 카테고리일 경우
-                                    print("** section nil")
-                                    if let categoryName = self.categoryName {
-                                        print("** category \(categoryName)")
-                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
-                                            shortcuts.append(contentsOf: newShortcuts)
+                                        if Set(newShortcuts).intersection(Set(shortcuts)) == [] {
+                                            self.shortcuts.append(contentsOf: newShortcuts)
+                                        }
+                                        else {
+                                            isLastShortcut = true
                                         }
                                     }
-                                }
-                                if self.sectionType == nil {
-                                    print("** section nil")
-                                    if let categoryName = self.categoryName {
-                                        print("** category \(categoryName)")
-                                        shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
-                                            shortcuts.append(contentsOf: newShortcuts)
-                                        }
-                                    }
+                                default: break
                                 }
                             }
                         }
@@ -71,15 +73,16 @@ struct ShortcutsListView: View {
         .navigationBarTitle((categoryName == nil ? "" : categoryName?.translateName())!)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)
-            .onAppear {
-                if self.shortcuts.count == 0 {
-                    if let categoryName {
-                        self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "numberOfDownload") { newShortcuts in
-                            self.shortcuts.append(contentsOf: newShortcuts)
-                        }
+        .onAppear {
+            if let categoryName = self.categoryName {
+                if shortcutsZipViewModel.isFirstFetchInCategory[categoryName.index] {
+                    self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
+                        self.shortcuts.append(contentsOf: newShortcuts)
                     }
+                    shortcutsZipViewModel.isFirstFetchInCategory[categoryName.index] = false
                 }
             }
+        }
     }
     
     var scrollHeader: some View {

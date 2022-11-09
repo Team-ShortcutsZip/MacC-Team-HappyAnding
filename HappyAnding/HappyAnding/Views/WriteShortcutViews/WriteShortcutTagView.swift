@@ -124,11 +124,12 @@ struct WriteShortcutTagView: View {
                 } else {
                     //새로운 단축어 생성 및 저장
                     // 뷰모델에 추가
-                    print("**\(shortcut.category)")
                     shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
                     shortcutsZipViewModel.sortedShortcutsByDownload.append(shortcut)
                     shortcut.category.forEach { category in
-                        shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].append(shortcut)
+                        if !shortcutsZipViewModel.isFirstFetchInCategory[Category(rawValue: category)!.index] {
+                            shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
+                        }
                     }
                     
                     // 서버에 추가
