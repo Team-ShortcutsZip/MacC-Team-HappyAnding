@@ -150,20 +150,17 @@ struct WriteCurationSetView: View {
     
     //안내문구 팝업
     var infomation: some View {
-        HStack {
+        HStack (alignment: .top) {
             Text("나의 큐레이션은 ‘내가 업로드한 단축어’와 ‘좋아요를 누른 단축어’로 구성할 수 있습니다.")
                 .Body2()
                 .foregroundColor(.Gray5)
             Spacer()
-            VStack {
-                Image(systemName: "xmark")
-                    .foregroundColor(.Gray5)
-                    .frame(width: 16, height: 16)
-                    .onTapGesture {
-                        isTappedQuestionMark = false
+            Image(systemName: "xmark")
+                .foregroundColor(.Gray5)
+                .frame(width: 16, height: 16)
+                .onTapGesture {
+                    isTappedQuestionMark = false
                 }
-                Spacer()
-            }
         }
         .padding(.all, 16)
         .background(Color.Gray1)
