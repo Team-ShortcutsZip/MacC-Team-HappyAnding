@@ -51,12 +51,7 @@ struct WithdrawalView: View {
                     .Title2()
                     .foregroundColor(isTappedCheckToggle ? .Primary : .Gray4)
                     .onTapGesture {
-                        if isTappedCheckToggle {
-                            isTappedCheckToggle = false
-                        }
-                        else {
-                            isTappedCheckToggle = true
-                        }
+                        isTappedCheckToggle.toggle()
                     }
                 Text("위 내용을 확인했으며 데이터 처리방법에 동의합니다.")
                     .Body2()
