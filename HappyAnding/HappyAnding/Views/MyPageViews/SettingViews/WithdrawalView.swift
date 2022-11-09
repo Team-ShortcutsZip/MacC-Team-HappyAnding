@@ -89,7 +89,7 @@ struct WithdrawalView: View {
                       message: Text("ShortcutsZip에서 탈퇴하시겠습니까?"),
                       primaryButton: .default(Text("취소")
                                               ,action: { self.isTappedSignOutButton = false }),
-                      secondaryButton: .destructive( Text("탈퇴"), action: { signOut() }))
+                      secondaryButton: .destructive(Text("탈퇴"), action: { signOut() }))
             }
         }
         .padding(.horizontal, 16)
