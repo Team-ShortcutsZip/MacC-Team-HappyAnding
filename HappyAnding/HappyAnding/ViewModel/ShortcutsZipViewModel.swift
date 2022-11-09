@@ -205,15 +205,12 @@ class ShortcutsZipViewModel: ObservableObject {
         category: Category,
         orderBy: String,
         completionHandler: @escaping ([Shortcuts])->()) {
-            print(category.rawValue)
-            
             var shortcuts: [Shortcuts] = []
             
             var query: Query!
             let index = category.index
             
             if let next = self.lastCategoryDocumentSnapshot[index] {
-                print("**\(next.data().map(String.init(describing:)) )")
                 query  = db.collection("Shortcut")
                     .whereField("category", arrayContains: category.rawValue)
                     .order(by: orderBy, descending: true)
@@ -257,7 +254,7 @@ class ShortcutsZipViewModel: ObservableObject {
         db.collection("Shortcut")
             .whereField("author", isEqualTo: author)
             .order(by: "date", descending: true)
-            .limit(to: numberOfPageLimit)
+//            .limit(to: numberOfPageLimit)
             .getDocuments { (querySnapshot, error) in
                 if let error {
                     print("Error getting documents: \(error)")
