@@ -23,7 +23,6 @@ struct DownloadRankView: View {
                 
                 NavigationLink(destination: {
                     ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.download)
-          //          ListShortcutView(shortcuts: shortcuts, sectionType: SectionType.download)
                         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
                 }, label: {
                     Text("더보기")

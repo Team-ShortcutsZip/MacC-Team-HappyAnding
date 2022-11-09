@@ -22,7 +22,6 @@ struct WriteCurationInfoView: View {
     @Binding var isWriting: Bool
     
     let isEdit: Bool
-//    var shortcuts: [Shortcuts]
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)

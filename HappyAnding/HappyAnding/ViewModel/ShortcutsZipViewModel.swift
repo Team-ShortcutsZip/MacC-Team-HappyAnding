@@ -873,4 +873,11 @@ class ShortcutsZipViewModel: ObservableObject {
             }
     }
     
+// MARK: - 검색 관련 함수
+    
+    //단축어 검색
+    func searchShortcutLimit(completionHandler: @escaping ([Shortcuts]) -> ()) {
+        
+    }
+    
 }

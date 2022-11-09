@@ -36,7 +36,6 @@ struct WriteNicknameView: View {
     @State private var isTappedPrivacyButton = false
     
     let user = Auth.auth().currentUser
-//    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {

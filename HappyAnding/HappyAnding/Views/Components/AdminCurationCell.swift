@@ -23,10 +23,6 @@ import SwiftUI
 struct AdminCurationCell: View {
     
     let adminCuration: Curation
-//    let curationThumbnail: String
-//    let title: String
-//    let subtitle: String
-    
     let cornerRadius: CGFloat = 12
     
     var body: some View {

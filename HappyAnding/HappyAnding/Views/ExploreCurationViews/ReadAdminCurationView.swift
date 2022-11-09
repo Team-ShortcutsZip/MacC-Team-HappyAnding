@@ -22,8 +22,6 @@ import SwiftUI
 
 struct ReadAdminCurationView: View {
     
-    //TODO: 큐레이션 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
-    @ObservedObject var shortcutData = fetchData()
     let curation: Curation
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
