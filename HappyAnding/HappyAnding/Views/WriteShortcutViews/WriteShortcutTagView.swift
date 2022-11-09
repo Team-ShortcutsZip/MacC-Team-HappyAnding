@@ -104,7 +104,9 @@ struct WriteShortcutTagView: View {
                         }
                     }
                     newCategory.forEach { category in
-                        shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
+                        if !shortcutsZipViewModel.isFirstFetchInCategory[Category(rawValue: category)!.index] {
+                            shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
+                        }
                     }
                     
                     //서버 데이터 변경
