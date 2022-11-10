@@ -15,6 +15,7 @@ struct SearchView: View {
     let result = ["result1", "result2", "ressult3"]
     
     @State var shortcutResults = Set<Shortcuts>()
+    @State var results = [Shortcuts]()
     
     var body: some View {
         VStack {
@@ -32,16 +33,13 @@ struct SearchView: View {
             
             TextField("단축어 이름, 앱 이름으로 검색해보세요", text: $searchText)
                 .onSubmit {
-                    
                     // TODO: Firebase 함수 연결
-                    shortcutResults = []
-                    print("Firebase 함수 호출 \(searchText)")
+                    shortcutResults.removeAll()
                     self.shorcutsZipViewModel.searchShortcutByRequiredAppLimit(word: searchText) { shortcuts in
                         shortcuts.forEach { shortcut in
                             shortcutResults.insert(shortcut)
                         }
                     }
-                    
                     self.shorcutsZipViewModel.searchShortcutByTitleLimit(keyword: searchText) { shortcuts in
                         shortcuts.forEach { shortcut in
                             shortcutResults.insert(shortcut)
