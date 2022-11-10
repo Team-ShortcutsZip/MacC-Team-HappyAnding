@@ -69,6 +69,7 @@ struct ShortcutsListView: View {
                     }
                 }
             }
+            .padding(.bottom, 44)
         }
         .navigationBarTitle((categoryName == nil ? "" : categoryName?.translateName())!)
         .navigationBarTitleDisplayMode(.inline)
