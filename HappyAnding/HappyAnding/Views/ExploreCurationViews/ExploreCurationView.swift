@@ -20,8 +20,8 @@ struct ExploreCurationView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
-                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
-                        .padding(.bottom, 20)
+//                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+//                        .padding(.bottom, 20)
                     //추천 유저 큐레이션
                     CurationListView(curationListTitle: "유저 큐레이션", userCurations: $shortcutsZipViewModel.userCurations)
                 }

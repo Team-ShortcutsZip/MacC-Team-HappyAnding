@@ -14,11 +14,12 @@ struct ExploreShortcutView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                MyShortcutCardListView(
-                    shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
-                    .padding(.top, 20)
-                    .padding(.bottom, 32)
+//                MyShortcutCardListView(
+//                    shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
+//                    .padding(.top, 20)
+//                    .padding(.bottom, 32)
                 DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload)
+                    .padding(.top, 20)
                     .padding(.bottom, 32)
                 CategoryView()
                     .padding(.bottom, 32)
