@@ -15,10 +15,11 @@ struct SettingView: View {
     @AppStorage("signInStatus") var signInStatus = false
     @StateObject var userAuth = UserAuth.shared
     @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
 
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
-    @State var isTappedSignOutButton = false
+    @State var isTappedLogOutButton = false
 //    @State private var isTappedPrivacyButton = false
 
     var body: some View {
@@ -71,16 +72,20 @@ struct SettingView: View {
             
             //로그아웃 버튼
             Button(action: {
-                self.isTappedSignOutButton = true
+                self.isTappedLogOutButton = true
             }) {
                 SettingCell(title: "로그아웃")
             }
-            .alert(isPresented: $isTappedSignOutButton) {
+            .alert(isPresented: $isTappedLogOutButton) {
                 Alert(title: Text("로그아웃"),
                       message: Text("로그아웃 하시겠습니까?"),
                       primaryButton: .default(Text("닫기")
-                                              ,action: { self.isTappedSignOutButton = false }),
-                      secondaryButton: .destructive( Text("로그아웃"), action: { signOut() }))
+                                              ,action: { self.isTappedLogOutButton = false }),
+                      secondaryButton: .destructive( Text("로그아웃"), action: { logOut() }))
+            }
+            //회원탈퇴 버튼
+            NavigationLink(destination: WithdrawalView()) {
+                SettingCell(title: "탈퇴하기")
             }
             Spacer()
         }
@@ -90,10 +95,11 @@ struct SettingView: View {
     }
     
     
-    private func signOut() {
+    private func logOut() {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            userAuth.signOut()
             self.signInStatus = false
         } catch {
             print(error.localizedDescription)
