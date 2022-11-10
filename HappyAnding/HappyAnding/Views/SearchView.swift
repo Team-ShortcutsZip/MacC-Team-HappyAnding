@@ -9,9 +9,12 @@ import SwiftUI
 
 struct SearchView: View {
     
+    @EnvironmentObject var shorcutsZipViewModel: ShortcutsZipViewModel
     @State var searchText: String = ""
     
     let result = ["result1", "result2", "ressult3"]
+    
+    @State var shortcutResults = Set<Shortcuts>()
     
     var body: some View {
         VStack {
@@ -31,8 +34,19 @@ struct SearchView: View {
                 .onSubmit {
                     
                     // TODO: Firebase 함수 연결
+                    shortcutResults = []
+                    print("Firebase 함수 호출 \(searchText)")
+                    self.shorcutsZipViewModel.searchShortcutByRequiredAppLimit(word: searchText) { shortcuts in
+                        shortcuts.forEach { shortcut in
+                            shortcutResults.insert(shortcut)
+                        }
+                    }
                     
-                    print("Firebase 함수 호출")
+                    self.shorcutsZipViewModel.searchShortcutByTitleLimit(keyword: searchText) { shortcuts in
+                        shortcuts.forEach { shortcut in
+                            shortcutResults.insert(shortcut)
+                        }
+                    }
                 }
             
             if !searchText.isEmpty {
@@ -51,11 +65,10 @@ struct SearchView: View {
     
     // MARK: - 검색 결과
     var searchResultList: some View {
+        
         List {
-            ForEach(result, id: \.self) { shortcut in
-                
-                Text(shortcut)
-                
+            ForEach( shortcutResults.sorted(by: { $0.title < $1.title}), id: \.self) { shortcut in
+                ShortcutCell(shortcut: shortcut)
             }
         }
     }

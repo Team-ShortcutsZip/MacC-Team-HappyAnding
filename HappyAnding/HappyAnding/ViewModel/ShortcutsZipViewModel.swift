@@ -882,18 +882,22 @@ class ShortcutsZipViewModel: ObservableObject {
         
         var query: Query!
         
-        if let next = self.lastSearchShortcutDocumentSnapshot {
-            query = db.collection("Shortcut")
-                .whereField("requiredApp", isGreaterThanOrEqualTo: currentUser())
-                .order(by: "requiredApp", descending: true)
-                .limit(to: numberOfPageLimit)
-                .start(afterDocument: next)
-        } else {
-            query = db.collection("Shortcut")
-                .whereField("requiredApp", isGreaterThanOrEqualTo: currentUser())
-                .order(by: "requiredApp", descending: true)
-                .limit(to: numberOfPageLimit)
-        }
+        query = db.collection("Shortcut")
+            .whereField("requiredApp", arrayContains: word)
+            .order(by: "requiredApp", descending: true)
+        
+        //pagination
+//        if let next = self.lastSearchShortcutDocumentSnapshot {
+//            query = db.collection("Shortcut")
+//                .whereField("requiredApp", arrayContains: word)
+//                .limit(to: numberOfPageLimit)
+//                .start(afterDocument: next)
+//        } else {
+//            query = db.collection("Shortcut")
+//                .whereField("requiredApp", arrayContains: word)
+//                .order(by: "requiredApp", descending: true)
+//                .limit(to: numberOfPageLimit)
+//        }
         
         query.getDocuments { (querySnapshot, error) in
             if let error {
@@ -919,23 +923,15 @@ class ShortcutsZipViewModel: ObservableObject {
     }
     
     //MARK: 제목으로 단축어 검색
-    func searchShortcutByTitleLimit(word: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+    ///prefix기준으로만 검색이 가능
+    func searchShortcutByTitleLimit(keyword: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
         var shortcuts: [Shortcuts] = []
         
         var query: Query!
         
-        if let next = self.lastSearchShortcutDocumentSnapshot {
-            query = db.collection("Shortcut")
-                .whereField("title", isGreaterThanOrEqualTo: currentUser())
-                .order(by: "title", descending: true)
-                .limit(to: numberOfPageLimit)
-                .start(afterDocument: next)
-        } else {
-            query = db.collection("Shortcut")
-                .whereField("title", isGreaterThanOrEqualTo: currentUser())
-                .order(by: "title", descending: true)
-                .limit(to: numberOfPageLimit)
-        }
+        query = db.collection("Shortcut")
+            .whereField("title", isGreaterThanOrEqualTo: keyword)
+            .whereField("title", isLessThanOrEqualTo: keyword + "\u{f8ff}")
         
         query.getDocuments { (querySnapshot, error) in
             if let error {
