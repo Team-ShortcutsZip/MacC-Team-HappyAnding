@@ -10,9 +10,10 @@ import SwiftUI
 struct MyPageView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var navigation = ProfileNavigation()
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigation.navigationPath) {
             ScrollView {
                 VStack(spacing: 32) {
                     
@@ -47,13 +48,24 @@ struct MyPageView: View {
                     
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
+                    // MARK: - 나의 단축어
+                    
                     MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
+                    
+                    // MARK: - 나의 큐레이션
+                    
                     UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
                         .frame(maxWidth: .infinity)
+                    
+                    // MARK: - 좋아요한 단축어
+                    
                     MyPageShortcutList(
                         shortcuts: shortcutsZipViewModel.shortcutsUserLiked,
                         type: .myLovingShortcut
                     )
+                    
+                    // MARK: -다운로드한 단축어
+                    
                     MyPageShortcutList(
                         shortcuts: shortcutsZipViewModel.shortcutsUserDownloaded,
                         type: .myDownloadShortcut
@@ -65,7 +77,7 @@ struct MyPageView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem {
-                    NavigationLink(destination: SettingView()) {
+                    NavigationLink(value: 0) {
                         Image(systemName: "gearshape.fill")
                             .Headline()
                             .foregroundColor(.Gray5)
@@ -74,6 +86,9 @@ struct MyPageView: View {
             }
             .scrollIndicators(.hidden)
             .background(Color.Background)
+            .navigationDestination(for: Int.self) { _ in
+                SettingView()
+            }
         }
     }
 }
@@ -88,12 +103,15 @@ struct MyPageShortcutList: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
+                        NavigationLink(value: shortcut) {
                             ShortcutCell(shortcut: shortcut)
                         }
                     }
                 }
             }
+        }
+        .navigationDestination(for: Shortcuts.self) { shortcut in
+            ReadShortcutView(shortcutID: shortcut.id)
         }
     }
 }
@@ -108,10 +126,16 @@ struct MyPageListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, sectionType: type)) {
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+            
+            if let shortcuts {
+                NavigationLink(value: shortcuts) {
+                    Text("더보기")
+                        .Footnote()
+                        .foregroundColor(.Gray4)
+                }
+                .navigationDestination(for: [Shortcuts].self) { shortcuts in
+                    ListShortcutView(shortcuts: shortcuts, sectionType: type)
+                }
             }
         }
     }

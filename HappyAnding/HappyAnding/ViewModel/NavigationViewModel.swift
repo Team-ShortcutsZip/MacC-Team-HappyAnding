@@ -14,3 +14,12 @@ class ShortcutNavigation: ObservableObject {
         self.shortcutPath = NavigationPath()
     }
 }
+
+
+class ProfileNavigation: ObservableObject {
+    @Published var navigationPath: NavigationPath
+    
+    init() {
+        self.navigationPath = NavigationPath()
+    }
+}

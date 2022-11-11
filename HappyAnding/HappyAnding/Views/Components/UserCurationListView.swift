@@ -55,15 +55,16 @@ struct UserCurationListView: View {
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                     //TODO: 데이터 변경 필요
-                    if let curation {
-                        NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
-                            if index < 2 {
-                                UserCurationCell(curation: curation)
-                            }
+                    if index < 2 {
+                        NavigationLink(value: curation) {
+                            UserCurationCell(curation: curation)
                         }
                     }
                 }
             }
+        }
+        .navigationDestination(for: Curation.self) { curation in
+            ReadUserCurationView(userCuration: curation)
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
