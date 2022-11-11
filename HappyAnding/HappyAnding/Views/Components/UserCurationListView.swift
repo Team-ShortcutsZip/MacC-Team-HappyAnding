@@ -81,12 +81,15 @@ struct UserCurationListHeader: View {
                 .onTapGesture { }
             Spacer()
             if let userCurations {
-                NavigationLink(destination: ListCurationView(userCurations: $userCurations, type: CurationType.myCuration)) {
+                NavigationLink(value: CurationType.myCuration) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(.Gray4)
                 }
             }
+        }
+        .navigationDestination(for: CurationType.self) { curationType in
+            ListCurationView(userCurations: $userCurations, type: curationType)
         }
     }
 }
