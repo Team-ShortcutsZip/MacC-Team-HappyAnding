@@ -94,7 +94,6 @@ struct WriteShortcutTagView: View {
                     existingCategory.forEach { category in
                         if !shortcut.category.contains(category) {
                             newCategory.removeAll(where: { $0 == category })
-                            //해당하는 카테고리의 인덱스를 받아와서 해당 배열에서 단축어 제거
                             shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].removeAll(where: { $0.id == shortcut.id })
                         } else {
                             newCategory.removeAll(where: { $0 == category })
@@ -111,6 +110,7 @@ struct WriteShortcutTagView: View {
                     
                     //서버 데이터 변경
                     shortcutsZipViewModel.setData(model: shortcut)
+                    //TODO: 셀정보에 변경사항이 있을 경우에만 함수를 호출하도록 변경 필요
                     shortcutsZipViewModel.updateShortcutInCuration(
                         shortcutCell: ShortcutCellModel(
                             id: shortcut.id,
@@ -133,7 +133,6 @@ struct WriteShortcutTagView: View {
                             shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
                         }
                     }
-                    
                     // 서버에 추가
                     shortcutsZipViewModel.setData(model: shortcut)
                 }
@@ -273,7 +272,6 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            //            .modifier(CellModifier(color: .Primary))
             .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
                                    backgroundColor: Color.Tag_Pick_Background,
                                    strokeColor: Color.Primary))

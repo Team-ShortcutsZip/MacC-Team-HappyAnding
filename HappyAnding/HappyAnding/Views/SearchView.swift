@@ -35,12 +35,12 @@ struct SearchView: View {
                 .onSubmit {
                     // TODO: Firebase 함수 연결
                     shortcutResults.removeAll()
-                    self.shorcutsZipViewModel.searchShortcutByRequiredAppLimit(word: searchText) { shortcuts in
+                    self.shorcutsZipViewModel.searchShortcutByRequiredApp(word: searchText) { shortcuts in
                         shortcuts.forEach { shortcut in
                             shortcutResults.insert(shortcut)
                         }
                     }
-                    self.shorcutsZipViewModel.searchShortcutByTitleLimit(keyword: searchText) { shortcuts in
+                    self.shorcutsZipViewModel.searchShortcutByTitlePrefix(keyword: searchText) { shortcuts in
                         shortcuts.forEach { shortcut in
                             shortcutResults.insert(shortcut)
                         }

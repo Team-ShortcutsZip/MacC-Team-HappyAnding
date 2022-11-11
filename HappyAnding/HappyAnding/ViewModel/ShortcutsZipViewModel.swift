@@ -877,7 +877,7 @@ class ShortcutsZipViewModel: ObservableObject {
 // MARK: - 검색 관련 함수
     
     //MARK: 연관 앱으로 단축어 검색
-    func searchShortcutByRequiredAppLimit(word: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+    func searchShortcutByRequiredApp(word: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
         var shortcuts: [Shortcuts] = []
         
         var query: Query!
@@ -924,7 +924,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 제목으로 단축어 검색
     ///prefix기준으로만 검색이 가능
-    func searchShortcutByTitleLimit(keyword: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+    func searchShortcutByTitlePrefix(keyword: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
         var shortcuts: [Shortcuts] = []
         
         var query: Query!
