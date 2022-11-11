@@ -10,10 +10,6 @@ import SwiftUI
 
 struct SearchView: View {
     
-    @State var result: Result<MFMailComposeResult, Error>? = nil
-    @State var isShowingMailView = false
-    @State var isTappedLogOutButton = false
-    
     @State var isSearched: Bool = false
     @State var searchText: String = ""
     @State var searchResults: [Shortcuts] = []
@@ -24,14 +20,16 @@ struct SearchView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            
+            VStack {
                 if !isSearched {
                     recommendKeword
+                    Spacer()
                 } else {
                     if searchResults.count == 0 {
                         proposeView
                     } else {
-                        VStack {
+                        ScrollView {
                             ForEach(searchResults, id: \.self) { result in
                                 ShortcutCell(shortcut: result)
                                     .listRowInsets(EdgeInsets())
@@ -51,7 +49,7 @@ struct SearchView: View {
     private func runSearch() {
         Task {
             isSearched = true
-       //     searchResults.append(test)
+            // firebase 검색 기능 추가해서 searchResults에 넣기
         }
     }
     
@@ -95,69 +93,8 @@ struct SearchView: View {
                     .padding(.vertical, 8)
             }.buttonStyle(.borderedProminent)
                 .padding(16)
-            /*
-            Button(action : {
-                if MFMailComposeViewController.canSendMail() {
-                    self.isShowingMailView.toggle()
-                }
-            }) {
-                if MFMailComposeViewController.canSendMail() {
-                    SettingCell(title: "개발자에게 연락하기")
-                }
-                else {
-                    SettingCell(title: "문의사항은 shortcutszip@gmail.com 으로 메일 주세요")
-                        .multilineTextAlignment(.leading)
-                }
-            }
-            .sheet(isPresented: $isShowingMailView) {
-                MailView(isShowing: self.$isShowingMailView, result: self.$result)
-            }*/
-            
         }
     }
-    
-    /*
-    // MARK: - 검색 바
-    
-    var searchBar: some View {
-        
-        HStack {
-            Image(systemName: "magnifyingglass")
-            
-            TextField("단축어 이름, 앱 이름으로 검색해보세요", text: $searchText)
-                .onSubmit {
-                    
-                    // TODO: Firebase 함수 연결
-                    
-                    print("Firebase 함수 호출")
-                }
-            
-            if !searchText.isEmpty {
-                Image(systemName: "xmark.circle.fill")
-                    .onTapGesture {
-                        withAnimation {
-                            self.searchText = ""
-                        }
-                    }
-            }
-            
-        }
-        .padding(.horizontal, 16)
-    }
-    
-    
-    // MARK: - 검색 결과
-    var searchResultList: some View {
-        List {
-            ForEach(result, id: \.self) { shortcut in
-                
-                Text(shortcut)
-                
-            }
-        }
-    }
-         */
-    
 }
 
 struct SearchView_Previews: PreviewProvider {
