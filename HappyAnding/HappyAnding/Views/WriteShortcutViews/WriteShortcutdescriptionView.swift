@@ -14,7 +14,7 @@ struct WriteShortcutdescriptionView: View {
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
     
-    @Binding var shortcut: Shortcuts
+    @Binding var shortcut: Shortcut
     
     let isEdit: Bool
     

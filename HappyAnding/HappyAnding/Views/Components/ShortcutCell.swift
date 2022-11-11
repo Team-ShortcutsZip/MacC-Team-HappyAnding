@@ -33,7 +33,7 @@ struct ShortcutCell: View {
     
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    var shortcut: Shortcuts?
+    var shortcut: Shortcut?
     
     @State var shortcutCell = ShortcutCellModel(
         id: "",

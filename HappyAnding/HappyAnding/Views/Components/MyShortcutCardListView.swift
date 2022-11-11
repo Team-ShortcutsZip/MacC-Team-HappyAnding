@@ -11,7 +11,7 @@ struct MyShortcutCardListView: View {
     
     @State var isWriting = false
     
-    var shortcuts: [Shortcuts]?
+    var shortcuts: [Shortcut]?
     var body: some View {
         VStack {
             HStack {

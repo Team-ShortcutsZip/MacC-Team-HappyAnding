@@ -79,7 +79,7 @@ struct MyPageView: View {
 }
 
 struct MyPageShortcutList: View {
-    var shortcuts: [Shortcuts]?
+    var shortcuts: [Shortcut]?
     var type: SectionType
     var body: some View {
         VStack(spacing: 0) {
@@ -100,7 +100,7 @@ struct MyPageShortcutList: View {
 
 struct MyPageListHeader: View {
     var type: SectionType
-    let shortcuts: [Shortcuts]?
+    let shortcuts: [Shortcut]?
     var body: some View {
         HStack(alignment: .bottom) {
             Text(type.rawValue)

@@ -12,7 +12,7 @@ struct WriteShortcutTagView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var isWriting: Bool
-    @Binding var shortcut: Shortcuts
+    @Binding var shortcut: Shortcut
     
     @State var isShowingCategoryModal = false
     @State var isRequirementValid = false

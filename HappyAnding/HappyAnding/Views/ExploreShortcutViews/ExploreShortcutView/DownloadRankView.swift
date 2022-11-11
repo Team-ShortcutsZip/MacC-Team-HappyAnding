@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DownloadRankView: View {
     
-    @Binding var shortcuts: [Shortcuts]
+    @Binding var shortcuts: [Shortcut]
     
     var body: some View {
         VStack {

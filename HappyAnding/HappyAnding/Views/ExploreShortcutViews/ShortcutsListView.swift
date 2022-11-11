@@ -10,7 +10,7 @@ import SwiftUI
 struct ShortcutsListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var shortcuts:[Shortcuts]
+    @Binding var shortcuts:[Shortcut]
     @State var navigationTitle = ""
     
     @State var isLastShortcut: Bool = false

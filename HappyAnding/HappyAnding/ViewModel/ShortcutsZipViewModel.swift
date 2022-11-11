@@ -19,12 +19,12 @@ class ShortcutsZipViewModel: ObservableObject {
     
     @Published var userInfo: User?                              // 유저정보
     
-    @Published var shortcutsUserLiked: [Shortcuts] = []         // 유저가 좋아요한 숏컷들
-    @Published var shortcutsUserDownloaded: [Shortcuts] = []    // 유저가 다운로드한 숏컷들
-    @Published var shortcutsMadeByUser: [Shortcuts] = []        // 유저가 만든 숏컷배열
-    @Published var sortedShortcutsByDownload: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
-    @Published var sortedShortcutsByLike: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
-    @Published var shortcutsInCategory: [[Shortcuts]] = [[Shortcuts]].init(repeating: [], count: Category.allCases.count) // Category에서 사용할 숏컷 배열
+    @Published var shortcutsUserLiked: [Shortcut] = []         // 유저가 좋아요한 숏컷들
+    @Published var shortcutsUserDownloaded: [Shortcut] = []    // 유저가 다운로드한 숏컷들
+    @Published var shortcutsMadeByUser: [Shortcut] = []        // 유저가 만든 숏컷배열
+    @Published var sortedShortcutsByDownload: [Shortcut] = []  // 다운로드 수에 의해 정렬된 숏컷
+    @Published var sortedShortcutsByLike: [Shortcut] = []  // 다운로드 수에 의해 정렬된 숏컷
+    @Published var shortcutsInCategory: [[Shortcut]] = [[Shortcut]].init(repeating: [], count: Category.allCases.count) // Category에서 사용할 숏컷 배열
     @Published var isFirstFetchInCategory = [Bool] (repeating: true, count: Category.allCases.count) //카테고리를 리스트 첫 fetch여부
     @Published var isLastFetchInCategory = [Bool] (repeating: false, count: Category.allCases.count) //카테고리를 리스트 마지막 fetch여부
     
@@ -119,9 +119,9 @@ class ShortcutsZipViewModel: ObservableObject {
     
     func fetchShortcutLimit(
         orderBy: String,
-        completionHandler: @escaping ([Shortcuts])->()) {
+        completionHandler: @escaping ([Shortcut])->()) {
             
-            var shortcuts: [Shortcuts] = []
+            var shortcuts: [Shortcut] = []
             var query: Query!
             let index = checkShortcutIndex(orderBy: orderBy)
             
@@ -146,7 +146,7 @@ class ShortcutsZipViewModel: ObservableObject {
                         do {
                             let data = document.data()
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                             shortcuts.append(shortcut)
                         } catch let error {
                             print("error: \(error)")
@@ -160,9 +160,9 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 좋아요가 numberOfLike보다 크거나 같은 단축어를 10개씩 가져오는 함수 (단축어 둘러보기)
     
-    func fetchShortcutLimitByLiked(completionHandler: @escaping ([Shortcuts])->()) {
+    func fetchShortcutLimitByLiked(completionHandler: @escaping ([Shortcut])->()) {
             
-            var shortcuts: [Shortcuts] = []
+            var shortcuts: [Shortcut] = []
             var query: Query!
             let index = 1
             
@@ -187,7 +187,7 @@ class ShortcutsZipViewModel: ObservableObject {
                         do {
                             let data = document.data()
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                             shortcuts.append(shortcut)
                         } catch let error {
                             print("error: \(error)")
@@ -204,8 +204,8 @@ class ShortcutsZipViewModel: ObservableObject {
     func fetchCategoryShortcutLimit(
         category: Category,
         orderBy: String,
-        completionHandler: @escaping ([Shortcuts])->()) {
-            var shortcuts: [Shortcuts] = []
+        completionHandler: @escaping ([Shortcut])->()) {
+            var shortcuts: [Shortcut] = []
             
             var query: Query!
             let index = category.index
@@ -233,7 +233,7 @@ class ShortcutsZipViewModel: ObservableObject {
                         do {
                             let data = document.data()
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                             shortcuts.append(shortcut)
                         } catch let error {
                             print("error: \(error)")
@@ -247,9 +247,9 @@ class ShortcutsZipViewModel: ObservableObject {
     
     // MARK: 현재 user가 만들었던 shortcuts을 10개씩 받아오는 함수 (나의 단축어)
     
-    func fetchShortcutByAuthor(author: String, completionHandler: @escaping ([Shortcuts])->()) {
+    func fetchShortcutByAuthor(author: String, completionHandler: @escaping ([Shortcut])->()) {
         
-        var shortcuts: [Shortcuts] = []
+        var shortcuts: [Shortcut] = []
         
         db.collection("Shortcut")
             .whereField("author", isEqualTo: author)
@@ -266,7 +266,7 @@ class ShortcutsZipViewModel: ObservableObject {
                         do {
                             let data = document.data()
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                             shortcuts.append(shortcut)
                         } catch let error {
                             print("error: \(error)")
@@ -279,9 +279,9 @@ class ShortcutsZipViewModel: ObservableObject {
     
     // MARK: shortcut Id 배열로 shortcut 배열 가져오는 함수
     
-    func fetchShortcutByIds(shortcutIds: [String], completionHandler: @escaping ([Shortcuts])->()) {
+    func fetchShortcutByIds(shortcutIds: [String], completionHandler: @escaping ([Shortcut])->()) {
         
-        var shortcuts: [Shortcuts] = []
+        var shortcuts: [Shortcut] = []
         
         for shortcutId in shortcutIds {
             db.collection("Shortcut")
@@ -297,7 +297,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             do {
                                 let data = document.data()
                                 let jsonData = try JSONSerialization.data(withJSONObject: data)
-                                let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                                let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                                 shortcuts.append(shortcut)
                             } catch let error {
                                 print("error: \(error)")
@@ -311,7 +311,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: Curation -> ShortcutDetail로 이동 시 Shortcut의 세부 정보를 가져오는 함수
     
-    func fetchShortcutDetail(id: String, completionHandler: @escaping (Shortcuts)->()) {
+    func fetchShortcutDetail(id: String, completionHandler: @escaping (Shortcut)->()) {
         db.collection("Shortcut").whereField("id", isEqualTo: id).getDocuments { (querySnapshot, error) in
             if let error {
                 print("Error getting documents: \(error)")
@@ -323,7 +323,7 @@ class ShortcutsZipViewModel: ObservableObject {
                     do {
                         let data = document.data()
                         let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                         completionHandler(shortcut)
                     } catch let error {
                         print("error: \(error)")
@@ -360,7 +360,7 @@ class ShortcutsZipViewModel: ObservableObject {
                         do {
                             let data = document.data()
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                             let shortcutCell = ShortcutCellModel(
                                 id: shortcut.id,
                                 sfSymbol: shortcut.sfSymbol,
@@ -401,7 +401,7 @@ class ShortcutsZipViewModel: ObservableObject {
                                 do {
                                     let data = document.data()
                                     let jsonData = try JSONSerialization.data(withJSONObject: data)
-                                    let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                                    let shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                                     let shortcutCell = ShortcutCellModel(
                                         id: shortcut.id,
                                         sfSymbol: shortcut.sfSymbol,
@@ -527,8 +527,8 @@ class ShortcutsZipViewModel: ObservableObject {
     
     func setData(model: Any) {
         switch model {
-        case _ as Shortcuts:
-            db.collection("Shortcut").document((model as! Shortcuts).id).setData((model as! Shortcuts).dictionary)
+        case _ as Shortcut:
+            db.collection("Shortcut").document((model as! Shortcut).id).setData((model as! Shortcut).dictionary)
         case _ as Curation:
             db.collection("Curation").document((model as! Curation).id).setData((model as! Curation).dictionary)
         case _ as User:
@@ -577,7 +577,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 좋아요 수를 업데이트하는 함수
     
-    func updateNumberOfLike(isMyLike: Bool, shortcut: Shortcuts) {
+    func updateNumberOfLike(isMyLike: Bool, shortcut: Shortcut) {
         var increment = 0
         if isMyLike {
             increment = 1
@@ -616,7 +616,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 다운로드 수를 업데이트하는 함수
     
-    func updateNumberOfDownload(shortcut: Shortcuts) {
+    func updateNumberOfDownload(shortcut: Shortcut) {
         self.fetchUser(userID: currentUser()) { data in
             var user = data
             if !data.downloadedShortcuts.contains(shortcut.id) {
@@ -653,8 +653,8 @@ class ShortcutsZipViewModel: ObservableObject {
     
     func deleteData(model: Any) {
         switch model {
-        case _ as Shortcuts:
-            db.collection("Shortcut").document((model as! Shortcuts).id).delete()
+        case _ as Shortcut:
+            db.collection("Shortcut").document((model as! Shortcut).id).delete()
         case _ as Curation:
             db.collection("Curation").document((model as! Curation).id).delete()
         case _ as User:
@@ -766,7 +766,7 @@ class ShortcutsZipViewModel: ObservableObject {
                         do {
                             let data = document.data()
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            var shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            var shortcut = try decoder.decode(Shortcut.self, from: jsonData)
                             
                             shortcut.curationIDs.removeAll(where: {$0 == curationID})
                             self.setData(model: shortcut)
