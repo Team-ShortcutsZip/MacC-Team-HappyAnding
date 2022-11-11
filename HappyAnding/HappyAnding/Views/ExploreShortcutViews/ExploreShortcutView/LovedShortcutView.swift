@@ -21,14 +21,15 @@ struct LovedShortcutView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: {
-                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.popular)
-                        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-                }, label: {
+                NavigationLink(value: SectionType.popular) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
+                }
+                .navigationDestination(for: SectionType.self, destination: { _ in
+                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.popular)
+                        .navigationBarTitleDisplayMode(.inline)
                 })
             }
             .padding(.leading, 16)
@@ -36,8 +37,11 @@ struct LovedShortcutView: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id), label: {
+                        NavigationLink(value: shortcut.id) {
                             ShortcutCell(shortcut: shortcut)
+                        }
+                        .navigationDestination(for: String.self, destination: { shortcutID in
+                            ReadShortcutView(shortcutID: shortcut.id)
                         })
                     }
                 }

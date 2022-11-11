@@ -10,12 +10,12 @@ import SwiftUI
 struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var navigation = NavigationModel()
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigation.shortcutPath) {
             ScrollView {
-                MyShortcutCardListView(
-                    shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
+                MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
                 DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload)

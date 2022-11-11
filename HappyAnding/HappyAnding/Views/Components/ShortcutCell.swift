@@ -49,7 +49,7 @@ struct ShortcutCell: View {
     var body: some View {
         
         ZStack {
-            NavigationLink(destination: ReadShortcutView(shortcutID: shortcutCell.id)) {
+            NavigationLink(value: shortcutCell.id) {
                 EmptyView()
             }
             .opacity(0)
@@ -74,6 +74,9 @@ struct ShortcutCell: View {
             .background( background )
             .padding(.horizontal, 20)
         }
+        .navigationDestination(for: String.self, destination: { shortcutID in
+            ReadShortcutView(shortcutID: shortcutID)
+        })
         .padding(.top, 12)
         .background(Color.Background)
         .onAppear() {
