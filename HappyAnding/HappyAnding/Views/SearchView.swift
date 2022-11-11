@@ -11,19 +11,33 @@ struct SearchView: View {
     
     @State var searchText: String = ""
     
-    let result = ["result1", "result2", "ressult3"]
-    
     var body: some View {
-        VStack {
-            searchBar
-            searchResultList
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    
+                }
+            }
+            .searchable(text: $searchText) {
+                
+            }
+            .onSubmit(of: .search, runSearch)
+            
+     //       searchBar
+      //      searchResultList
         }
     }
     
+    private func runSearch() {
+        Task {
+        }
+    }
     
+    /*
     // MARK: - 검색 바
     
     var searchBar: some View {
+        
         HStack {
             Image(systemName: "magnifyingglass")
             
@@ -59,6 +73,7 @@ struct SearchView: View {
             }
         }
     }
+         */
     
 }
 
