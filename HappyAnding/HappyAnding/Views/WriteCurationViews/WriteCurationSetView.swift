@@ -23,70 +23,58 @@ struct WriteCurationSetView: View {
                                    shortcuts: [ShortcutCellModel]())
     @State var isTappedQuestionMark: Bool = false
     
-    //    let firebase = FirebaseService()
     let isEdit: Bool
+    let isAccessCuration: Bool
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                VStack() {
-                    HStack {
-                        Button(action: {
-                            isWriting.toggle()
-                        }, label: {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.Gray4)
-                                .Title2()
-                        })
-                        .frame(alignment: .leading)
-                        
-                        Text(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .fixedSize(horizontal: false, vertical: true)
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(Color(UIColor.clear))
-                            .Title2()
-                    }
-                    .padding(.top, 12)
-                    .padding(.horizontal, 16)
-                    ProgressView(value: 1, total: 2)
-                        .padding(.bottom, 36)
-                    listHeader
-                    if shortcutCells.isEmpty {
-                        VStack {
-                            Spacer()
-                            Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
-                                .Body2()
-                                .foregroundColor(.Gray4)
-                                .multilineTextAlignment(.center)
-                            Spacer()
-                            
-                        }
-                    } else {
-                        ScrollView {
-                            shortcutList
-                        }
-                    }
+        
+        VStack {
+            ProgressView(value: 1, total: 2)
+                .padding(.bottom, 36)
+            
+            listHeader
+            
+            if shortcutCells.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
+                        .Body2()
+                        .foregroundColor(.Gray4)
+                        .multilineTextAlignment(.center)
+                    Spacer()
                     
-                    bottomButton
                 }
-                .background(Color.Background)
-                .onAppear() {
-                    shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
-                        self.shortcutCells = self.shortcutCells.union(shortcuts)
-                    }
-                    shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
-                        self.shortcutCells = self.shortcutCells.union(shortcuts)
-                    }
+            } else {
+                ScrollView {
+                    shortcutList
                 }
-                if isTappedQuestionMark {
-                    VStack {
-                        infomation
-                            .padding(.top, 124)
-                        Spacer()
-                    }
-                }
+            }
+            
+            bottomButton
+        }
+        .background(Color.Background)
+        .navigationTitle(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: Float.self) { isEdit in
+            WriteCurationInfoView(curation: curation,
+                                  isWriting: $isWriting,
+                                  isEdit: self.isEdit,
+                                  isAccessCuration: self.isAccessCuration)
+        }
+        .onAppear {
+            shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
+                self.shortcutCells = self.shortcutCells.union(shortcuts)
+            }
+            shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
+                self.shortcutCells = self.shortcutCells.union(shortcuts)
+            }
+        }
+        
+        if isTappedQuestionMark {
+            VStack {
+                infomation
+                    .padding(.top, 124)
+                Spacer()
             }
         }
     }
@@ -131,10 +119,7 @@ struct WriteCurationSetView: View {
     ///완료 버튼
     var bottomButton: some View {
         
-        NavigationLink {
-            WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
-            
-        } label: {
+        NavigationLink(value: Float(0.0)) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(curation.shortcuts.count > 0 ? .Primary : .Gray1)
@@ -172,6 +157,6 @@ struct WriteCurationSetView: View {
 
 struct WriteCurationSetView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteCurationSetView(isWriting: .constant(false), isEdit: false)
+        WriteCurationSetView(isWriting: .constant(false), isEdit: false, isAccessCuration: true)
     }
 }

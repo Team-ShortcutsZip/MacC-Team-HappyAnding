@@ -13,14 +13,17 @@ struct UserCurationListView: View {
     
     @Binding var userCurations: [Curation]
     
+    let isAccessCuration: Bool
+    
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(title: "내가 등록한 큐레이션", userCurations: $userCurations)
+            UserCurationListHeader(title: "내가 등록한 큐레이션",
+                                   userCurations: $userCurations,
+                                   isAccessCuration: self.isAccessCuration)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
-            Button {
-                isWriting.toggle()
-            } label: {
+
+            NavigationLink(value: UInt(0)) {
                 HStack(spacing: 7) {
                     Image(systemName: "plus")
                     Text("나의 큐레이션 만들기")
@@ -34,22 +37,26 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-            .fullScreenCover(isPresented: $isWriting, content: {
-                WriteCurationSetView(isWriting: self.$isWriting, isEdit: false)
-            })
+
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                     //TODO: 데이터 변경 필요
                     if index < 2 {
                         NavigationLink(value: curation) {
-                            UserCurationCell(curation: curation)
+                            UserCurationCell(curation: curation,
+                                             isAccessCuration: self.isAccessCuration)
                         }
                     }
                 }
             }
         }
         .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation)
+            ReadUserCurationView(userCuration: curation, isAccessCuration: self.isAccessCuration)
+        }
+        .navigationDestination(for: UInt.self) { isEdit in
+            WriteCurationSetView(isWriting: self.$isWriting,
+                                 isEdit: false,
+                                 isAccessCuration: self.isAccessCuration )
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
@@ -58,6 +65,9 @@ struct UserCurationListView: View {
 struct UserCurationListHeader: View {
     var title: String
     @Binding var userCurations: [Curation]
+    
+    let isAccessCuration: Bool
+    
     var body: some View {
         HStack(alignment: .bottom) {
             Text(title)
@@ -74,7 +84,9 @@ struct UserCurationListHeader: View {
             }
         }
         .navigationDestination(for: CurationType.self) { curationType in
-            ListCurationView(userCurations: $userCurations, type: curationType)
+            ListCurationView(userCurations: $userCurations,
+                             type: curationType,
+                             isAccessCuration: self.isAccessCuration)
         }
     }
 }

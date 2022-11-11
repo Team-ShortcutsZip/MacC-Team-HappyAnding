@@ -28,6 +28,8 @@ struct ListCurationView: View {
     var title: String?
     var isAllUser: Bool = false
     
+    let isAccessCuration: Bool
+    
     var body: some View {
         List {
             if let title {
@@ -40,7 +42,8 @@ struct ListCurationView: View {
                     .padding(.horizontal, 16)
             }
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                UserCurationCell(curation: curation)
+                UserCurationCell(curation: curation,
+                                 isAccessCuration: self.isAccessCuration)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.Background)

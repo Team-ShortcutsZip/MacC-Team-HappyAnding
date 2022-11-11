@@ -10,9 +10,10 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var navigation = CurationNavigation()
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigation.navigationPath) {
             ScrollView {
                 VStack(spacing: 0) {
                     //앱 큐레이션
@@ -20,10 +21,12 @@ struct ExploreCurationView: View {
                         .padding(.top, 20)
                         .padding(.bottom, 32)
                     //나의 큐레이션
-                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser,
+                                         isAccessCuration: true)
                         .padding(.bottom, 20)
                     //추천 유저 큐레이션
-                    CurationListView(curationListTitle: "유저 큐레이션", userCurations: $shortcutsZipViewModel.userCurations)
+                    CurationListView(curationListTitle: "유저 큐레이션", userCurations: $shortcutsZipViewModel.userCurations,
+                                     isAccessCuration: true)
                 }
                 .padding(.bottom, 32)
             }
@@ -32,6 +35,7 @@ struct ExploreCurationView: View {
             .scrollIndicators(.hidden)
             .background(Color.Background)
         }
+        .environmentObject(navigation)
     }
 }
 
