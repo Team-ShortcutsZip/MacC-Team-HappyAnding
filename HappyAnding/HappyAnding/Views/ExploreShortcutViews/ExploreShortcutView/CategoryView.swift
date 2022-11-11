@@ -30,25 +30,25 @@ struct CategoryView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
-                
-                NavigationLink(destination: ListCategoryView()) {
+                                
+                Button(action: {
+                    self.isTappedPlutButton.toggle()
+                }, label: {
                     Text(isTappedPlutButton ? "펼치기" : "접기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
-                        .onTapGesture {
-                            self.isTappedPlutButton.toggle()
-                        }
-                }
+                })
             }
             .padding(.leading, 16)
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < categoryIndex {
-                        NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index], categoryName: value)
-                        ) {
+                        NavigationLink(value: value, label: {
                             CategoryCellView(categoryName: value.translateName())
+                        })
+                        .navigationDestination(for: Category.self) { value in
+                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index], categoryName: value)
                         }
                     }
                 }

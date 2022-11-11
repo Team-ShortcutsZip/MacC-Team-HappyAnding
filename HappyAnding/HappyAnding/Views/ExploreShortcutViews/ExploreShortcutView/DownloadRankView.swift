@@ -21,23 +21,26 @@ struct DownloadRankView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: {
-                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.download)
-          //          ListShortcutView(shortcuts: shortcuts, sectionType: SectionType.download)
-                        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-                }, label: {
+                NavigationLink(value: SectionType.download) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
+                }
+                .navigationDestination(for: SectionType.self, destination: { _ in
+                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.download)
+                        .navigationBarTitleDisplayMode(.inline)
                 })
             }
             .padding(.leading, 16)
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id), label: {
+                    NavigationLink(value: shortcut.id) {
                         ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
+                    }
+                    .navigationDestination(for: String.self, destination: { shortcutID in
+                        ReadShortcutView(shortcutID: shortcut.id)
                     })
                 }
             }
