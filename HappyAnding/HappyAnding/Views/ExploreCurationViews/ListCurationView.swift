@@ -66,12 +66,3 @@ struct ListCurationView: View {
         
     }
 }
-
-//struct ListCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ListCurationView(
-//            userCurations: UserCuration.fetchData(number: 10),
-//            type: CurationType.userCuration
-//        )
-//    }
-//}

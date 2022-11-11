@@ -38,20 +38,6 @@ struct UserCurationListView: View {
                 WriteCurationSetView(isWriting: self.$isWriting, isEdit: false)
             })
 
-//            NavigationLink(destination: WriteCurationInfoView()){
-//                HStack(spacing: 7) {
-//                    Image(systemName: "plus")
-//                    Text("나의 큐레이션 만들기")
-//                }
-//                .Headline()
-//                .foregroundColor(.Gray4)
-//                .frame(maxWidth: .infinity)
-//                .frame(height: 64)
-//                .background(Color.Gray1)
-//                .cornerRadius(12)
-//                .padding(.bottom, 12)
-//                .padding(.horizontal, 16)
-//            }
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                     //TODO: 데이터 변경 필요
@@ -89,9 +75,3 @@ struct UserCurationListHeader: View {
         }
     }
 }
-
-//struct UserCurationListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
-//    }
-//}

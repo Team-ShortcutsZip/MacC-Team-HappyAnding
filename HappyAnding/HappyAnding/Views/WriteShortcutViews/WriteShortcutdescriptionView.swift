@@ -67,10 +67,3 @@ struct WriteShortcutdescriptionView: View {
         .background(Color.Background)
     }
 }
-/*
-struct WriteShortcutdescriptionView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteShortcutdescriptionView(isWriting: .constant(true), isEdit: false)
-    }
-}
-*/

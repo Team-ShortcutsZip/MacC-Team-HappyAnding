@@ -15,13 +15,11 @@ struct ListShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var shortcuts:[Shortcuts]?
-//    @State var shortcutsArray: [Shortcuts] = []
     @State private var isLastItem = false
     @State var description: String = ""
     
-    // TODO: let으로 변경필요, 현재 작업중인 코드들과 충돌될 가능성이 있어 우선 변수로 선언
-    var categoryName: Category?
-    var sectionType: SectionType?
+    let categoryName: Category?
+    let sectionType: SectionType?
     
     var body: some View {
         
@@ -76,9 +74,6 @@ struct ListShortcutView: View {
     }
     
     var header: some View {
-        
-            // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
-        
         VStack {
             Text(description)
                 .foregroundColor(.Gray5)
@@ -131,6 +126,9 @@ struct ListShortcutView: View {
 
 struct ListShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ListShortcutView(sectionType: .myLovingShortcut)
+        ListShortcutView(
+            categoryName: nil,
+            sectionType: .myLovingShortcut
+        )
     }
 }

@@ -87,14 +87,28 @@ struct UserCurationCell: View {
     }
 }
 
-//struct UserCurationCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VStack {
-//            UserCurationCell(
-//                title: "워라벨 지키기. 단축어와 함께",
-//                subtitle: "nil",
-//                shortcuts: Shortcut.fetchData(number: 5)
-//            )
-//        }
-//    }
-//}
+struct UserCurationCell_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Color.Background
+            UserCurationCell(
+                curation: Curation(
+                    title: "title",
+                    subtitle: "subtitle",
+                    isAdmin: false,
+                    background: "",
+                    author: "author",
+                    shortcuts: [
+                        ShortcutCellModel(
+                            id: "id",
+                            sfSymbol: "bus.fill",
+                            color: "Red",
+                            title: "title",
+                            subtitle: "subtitle",
+                            downloadLink: "downloadLink"
+                        )
+                    ])
+            )
+        }
+    }
+}

@@ -12,12 +12,7 @@ struct ReadShortcutContentView: View {
     @State var userInformation: User? = nil
     
     let shortcut: Shortcuts
-//    let writer: String
     let profileImage: String = "person.crop.circle"
-//    let explain: String
-//    let category: String
-//    let necessaryApps: String
-//    let requirements: String
     
     var body: some View {
         ScrollView {

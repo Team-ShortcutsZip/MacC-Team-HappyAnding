@@ -51,10 +51,3 @@ struct CurationListHeader: View {
         }
     }
 }
-
-
-//struct CurationListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CurationListView(curationListTitle:유저 큐레이션", userCurations: UserCuration.fetchData(number: 5))
-//    }
-//}

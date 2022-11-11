@@ -33,9 +33,6 @@ struct SignInWithAppleView: View {
             
             Spacer()
             
-            
-            // TODO: HiFi design 수정 시 색상 및 폰트 변경
-            
             Button(action: {
                 appleLogin()
             }, label: {

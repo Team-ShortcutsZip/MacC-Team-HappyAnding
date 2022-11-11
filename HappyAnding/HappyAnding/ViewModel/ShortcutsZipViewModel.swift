@@ -575,20 +575,6 @@ class ShortcutsZipViewModel: ObservableObject {
         
     }
     
-//    func updateShortcutInCurationUI(curation: Curation, curationIDs: [String]) {
-//        curationIDs.forEach { curationID in
-//            if let userCurationsIndex = self.userCurations.firstIndex(where: { $0.id == curationID }) {
-//                self.userCurations[userCurationsIndex] = curation
-//            }
-//            if let adminCurationsIndex = self.adminCurations.firstIndex(where: { $0.id == curationID }) {
-//                self.adminCurations[adminCurationsIndex] = curation
-//            }
-//            if let curationsMadeByUserIndex = self.curationsMadeByUser.firstIndex(where: { $0.id == curationID }) {
-//                self.curationsMadeByUser[curationsMadeByUserIndex] = curation
-//            }
-//        }
-//    }
-    
     //MARK: 좋아요 수를 업데이트하는 함수
     
     func updateNumberOfLike(isMyLike: Bool, shortcut: Shortcuts) {

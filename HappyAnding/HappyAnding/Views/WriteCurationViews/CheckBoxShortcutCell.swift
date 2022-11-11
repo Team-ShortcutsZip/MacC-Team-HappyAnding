@@ -96,9 +96,3 @@ struct CheckBoxShortcutCell: View {
                     .stroke(isShortcutTapped ? Color.Primary : Color.Background_list_border)
             )
     }}
-
-//struct CheckBoxShortcutCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CheckBoxShortcutCell(color: "Blue", sfSymbol: "books.vertical.fill", name: "ShortcutsTitle", description: "DescriptionDescription")
-//    }
-//}

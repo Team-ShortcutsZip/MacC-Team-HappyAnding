@@ -22,7 +22,7 @@ struct MyShortcutCardListView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, sectionType: .myShortcut)) {
+                NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: nil, sectionType: .myShortcut)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -58,5 +58,11 @@ struct MyShortcutCardListView: View {
             }
         }
         .navigationBarTitleDisplayMode(.automatic)
+    }
+}
+
+struct MyShortcutCardListView_Previews: PreviewProvider {
+    static var previews: some View {
+        MyShortcutCardListView()
     }
 }

@@ -50,7 +50,11 @@ struct AddMyShortcutCardView: View {
 
 struct MyShortcutCardView_Previews: PreviewProvider {
     static var previews: some View {
-        MyShortcutCardView(myShortcutIcon: "book.fill", myShortcutName: "택배     조회하기", myShortcutColor: "Coral")
+        MyShortcutCardView(
+            myShortcutIcon: "book.fill",
+            myShortcutName: "택배 조회하기",
+            myShortcutColor: "Coral"
+        )
         AddMyShortcutCardView()
     }
 }

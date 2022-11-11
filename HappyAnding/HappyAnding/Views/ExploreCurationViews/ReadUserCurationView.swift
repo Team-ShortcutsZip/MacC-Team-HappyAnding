@@ -184,9 +184,3 @@ extension ReadUserCurationView {
         }
     }
 }
-
-//struct ReadUserCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadUserCurationView(userCuration: UserCuration.fetchData(number: 1)[0], nickName: "test")
-//    }
-//}

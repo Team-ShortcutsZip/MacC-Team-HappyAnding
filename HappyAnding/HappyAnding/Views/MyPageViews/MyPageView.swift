@@ -108,7 +108,7 @@ struct MyPageListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, sectionType: type)) {
+            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, categoryName: nil, sectionType: type)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)

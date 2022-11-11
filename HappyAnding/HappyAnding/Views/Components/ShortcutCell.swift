@@ -149,7 +149,6 @@ struct ShortcutCell: View {
     }
 }
 
-
 struct ShortcutCell_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutCell()

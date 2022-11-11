@@ -145,9 +145,3 @@ extension ReadShortcutView {
         }
     }
 }
-
-//struct ReadShortcutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadShortcutView()
-//    }
-//}

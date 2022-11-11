@@ -12,7 +12,7 @@ struct WriteCurationSetView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var isWriting: Bool
-    
+
     @State var shortcutCells = Set<ShortcutCellModel>()
     @State var isSelected = false
     @State var curation = Curation(title: "",
@@ -23,7 +23,6 @@ struct WriteCurationSetView: View {
                                    shortcuts: [ShortcutCellModel]())
     @State var isTappedQuestionMark: Bool = false
     
-    //    let firebase = FirebaseService()
     let isEdit: Bool
     
     var body: some View {

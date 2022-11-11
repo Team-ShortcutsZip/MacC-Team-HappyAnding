@@ -63,10 +63,3 @@ struct ReadShortcutHeaderView: View {
         }
     }
 }
-
-
-//struct ReadShortcutHeaderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadShortcutHeaderView(icon: "book", color: "Coral", numberOfLike: 99, name: "주변 커피집 걸어가기", oneline: "걸어가보자!!!")
-//    }
-//}

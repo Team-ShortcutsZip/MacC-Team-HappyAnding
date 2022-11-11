@@ -273,7 +273,6 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            //            .modifier(CellModifier(color: .Primary))
             .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
                                    backgroundColor: Color.Tag_Pick_Background,
                                    strokeColor: Color.Primary))
@@ -318,10 +317,3 @@ struct WriteShortcutTagView: View {
         }
     }
 }
-/*
-struct WriteShortcutTagView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteShortcutTagView(isWriting: .constant(true), isEdit: false)
-    }
-}
-*/
