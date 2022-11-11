@@ -33,7 +33,7 @@ struct SettingView: View {
             //                SettingCell(title: "알림 및 소리")
             //            }
             
-            SettingCell(title: "버전정보", version: "1.0.0")
+            SettingCell(title: "버전정보", version: "1.0.2(TestFlight)")
             
             //오픈소스 라이선스 버튼
             NavigationLink(destination: LicenseView()) {
