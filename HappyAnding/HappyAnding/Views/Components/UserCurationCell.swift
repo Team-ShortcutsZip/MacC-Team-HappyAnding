@@ -16,9 +16,11 @@ struct UserCurationCell: View {
     var body: some View {
         ZStack {
             //TODO: userCuration 모델에 nickname 파라미터 통합 필요
-            NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
+            
+            NavigationLink(value: curation) {
                 EmptyView()
             }.opacity(0)
+            
             VStack (alignment: .leading, spacing: 0) {
                 
                 //MARK: - 단축어 아이콘 배열
@@ -81,6 +83,9 @@ struct UserCurationCell: View {
             )
             .frame(maxWidth: .infinity)
             .cornerRadius(12)
+        }
+        .navigationDestination(for: Curation.self) { curation in
+            ReadUserCurationView(userCuration: curation)
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 12)
