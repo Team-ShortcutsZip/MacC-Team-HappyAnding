@@ -50,7 +50,8 @@ struct MyPageView: View {
                     
                     // MARK: - 나의 단축어
                     
-                    MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
+                    MyShortcutCardListView(isAccessExploreShortcut: false,
+                                           shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
                     
                     // MARK: - 나의 큐레이션
                     
@@ -90,6 +91,7 @@ struct MyPageView: View {
                 SettingView()
             }
         }
+        .environmentObject(navigation)
     }
 }
 

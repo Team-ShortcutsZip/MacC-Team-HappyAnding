@@ -10,14 +10,16 @@ import SwiftUI
 struct WriteShortcutTagView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
+    @EnvironmentObject var profileNavigation: ProfileNavigation
     
-    @Binding var isWriting: Bool
     @Binding var shortcut: Shortcuts
     
     @State var isShowingCategoryModal = false
     @State var isRequirementValid = false
     
     let isEdit: Bool
+    let isAccessExploreShortcut: Bool
     
     var body: some View {
         VStack {
@@ -85,7 +87,11 @@ struct WriteShortcutTagView: View {
                     )
                 }
                 
-                isWriting.toggle()
+                if isAccessExploreShortcut {
+                    shortcutNavigation.shortcutPath.removeLast()
+                } else {
+                    profileNavigation.navigationPath.removeLast()
+                }
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
