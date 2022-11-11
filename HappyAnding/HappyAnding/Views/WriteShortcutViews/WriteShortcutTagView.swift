@@ -10,7 +10,6 @@ import SwiftUI
 struct WriteShortcutTagView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var navigation: NavigationModel
     
     @Binding var isWriting: Bool
     @Binding var shortcut: Shortcuts

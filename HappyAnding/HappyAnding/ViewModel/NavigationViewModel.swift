@@ -7,14 +7,10 @@
 
 import SwiftUI
 
-class NavigationModel: ObservableObject {
+class ShortcutNavigation: ObservableObject {
     @Published var shortcutPath: NavigationPath
-    @Published var curationPath: NavigationPath
-    @Published var profilePath: NavigationPath
     
     init() {
         self.shortcutPath = NavigationPath()
-        self.curationPath = NavigationPath()
-        self.profilePath = NavigationPath()
     }
 }

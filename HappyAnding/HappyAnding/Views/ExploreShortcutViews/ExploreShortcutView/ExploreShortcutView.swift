@@ -10,7 +10,7 @@ import SwiftUI
 struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @StateObject var navigation = NavigationModel()
+    @StateObject var navigation = ShortcutNavigation()
     
     var body: some View {
         NavigationStack(path: $navigation.shortcutPath) {
@@ -39,6 +39,7 @@ struct ExploreShortcutView: View {
                 }
             }
         }
+        .environmentObject(navigation)
     }
 }
 /*
