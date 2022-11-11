@@ -15,7 +15,8 @@ struct ExploreShortcutView: View {
     var body: some View {
         NavigationStack(path: $navigation.shortcutPath) {
             ScrollView {
-                MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
+                MyShortcutCardListView(isAccessExploreShortcut: true,
+                                       shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
                 DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload)

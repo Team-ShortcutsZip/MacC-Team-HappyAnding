@@ -9,7 +9,10 @@ import SwiftUI
 
 struct MyShortcutCardListView: View {
     
-    @State var isWriting = false
+    @EnvironmentObject var profileNavigation: ProfileNavigation
+    @EnvironmentObject var shortcutsNavigation: ShortcutNavigation
+    
+    let isAccessExploreShortcut: Bool
     
     var shortcuts: [Shortcuts]?
     
@@ -37,24 +40,25 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    Button {
-                        isWriting.toggle()
-                    } label: {
+                    NavigationLink(value: false) {
                         AddMyShortcutCardView()
                     }
-                    .fullScreenCover(isPresented: $isWriting, content: {
-                        WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false)
-                    })
                     
                     if let shortcuts {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
                             if index < 7 {
                                 NavigationLink(value: shortcut.id) {
-                                    MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol, myShortcutName: shortcut.title, myShortcutColor: shortcut.color)
+                                    MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol,
+                                                       myShortcutName: shortcut.title,
+                                                       myShortcutColor: shortcut.color)
                                 }
                             }
                         }
                     }
+                }
+                .navigationDestination(for: Bool.self) { isEdit in
+                    WriteShortcutTitleView(isEdit: isEdit,
+                                           isAccessExploreShortcut: self.isAccessExploreShortcut)
                 }
                 .navigationDestination(for: String.self) { shortcutID in
                     ReadShortcutView(shortcutID: shortcutID)

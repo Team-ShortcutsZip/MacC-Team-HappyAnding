@@ -9,14 +9,13 @@ import SwiftUI
 
 struct WriteShortcutdescriptionView: View {
     
-    @Binding var isWriting: Bool
-    
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
     
     @Binding var shortcut: Shortcuts
     
     let isEdit: Bool
+    let isAccessExploreShortcut: Bool
     
     var body: some View {
         VStack {
@@ -46,7 +45,9 @@ struct WriteShortcutdescriptionView: View {
             Spacer()
             
             NavigationLink {
-                WriteShortcutTagView(isWriting: $isWriting, shortcut: $shortcut, isEdit: isEdit)
+                WriteShortcutTagView(shortcut: $shortcut,
+                                     isEdit: isEdit,
+                                     isAccessExploreShortcut: self.isAccessExploreShortcut)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
