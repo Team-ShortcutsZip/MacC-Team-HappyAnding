@@ -16,6 +16,14 @@ class ShortcutNavigation: ObservableObject {
 }
 
 
+class CurationNavigation: ObservableObject {
+    @Published var navigationPath: NavigationPath
+    
+    init() {
+        self.navigationPath = NavigationPath()
+    }
+}
+
 class ProfileNavigation: ObservableObject {
     @Published var navigationPath: NavigationPath
     

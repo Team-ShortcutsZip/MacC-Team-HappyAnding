@@ -12,16 +12,23 @@ struct CurationListView: View {
     var curationListTitle: String
     @Binding var userCurations: [Curation]
     
+    let isAccessCuration: Bool
+    
     var body: some View {
         VStack(spacing: 0) {
-            CurationListHeader(userCurations: $userCurations, type: .userCuration, title: curationListTitle)
+            CurationListHeader(userCurations: $userCurations,
+                               type: .userCuration,
+                               title: curationListTitle,
+                               isAccessCuration: self.isAccessCuration)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
+                NavigationLink(destination: ReadUserCurationView(userCuration: curation,
+                                                                 isAccessCuration: self.isAccessCuration)) {
                     if index < 2 {
                         UserCurationCell(
-                            curation: curation
+                            curation: curation,
+                            isAccessCuration: true
                         )
                     }
                 }
@@ -36,6 +43,9 @@ struct CurationListHeader: View {
     @Binding var userCurations: [Curation]
     var type: CurationType
     var title: String
+    
+    let isAccessCuration: Bool
+    
     var body: some View {
         HStack(alignment: .bottom) {
             Text(title)
@@ -43,7 +53,11 @@ struct CurationListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListCurationView(userCurations: $userCurations, type: type, title: title, isAllUser: true)) {
+            NavigationLink(destination: ListCurationView(userCurations: $userCurations,
+                                                         type: type,
+                                                         title: title,
+                                                         isAllUser: true,
+                                                         isAccessCuration: self.isAccessCuration)) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)

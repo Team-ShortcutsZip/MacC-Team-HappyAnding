@@ -22,49 +22,38 @@ struct WriteCurationSetView: View {
                                    author: "",
                                    shortcuts: [ShortcutCellModel]())
     
-//    let firebase = FirebaseService()
     let isEdit: Bool
+    let isAccessCuration: Bool
     
     var body: some View {
-        NavigationStack {
-            VStack() {
-                HStack {
-                    Button(action: {
-                        isWriting.toggle()
-                    }, label: {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.Gray4)
-                            .Title2()
-                    })
-                    .frame(alignment: .leading)
-                    
-                    Text(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(Color(UIColor.clear))
-                        .Title2()
-                }
-                .padding(.top, 12)
-                .padding(.horizontal, 16)
-                ProgressView(value: 1, total: 2)
-                    .padding(.bottom, 36)
-                listHeader
-                ScrollView {
-                    shortcutList
-                }
-                
-                bottomButton
+        VStack() {
+            
+            ProgressView(value: 1, total: 2)
+                .padding(.bottom, 36)
+            
+            listHeader
+            
+            ScrollView {
+                shortcutList
             }
-            .background(Color.Background)
-            .onAppear() {
-                shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
-                    self.shortcutCells = self.shortcutCells.union(shortcuts)
-                }
-                shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
-                    self.shortcutCells = self.shortcutCells.union(shortcuts)
-                }
+            
+            bottomButton
+        }
+        .background(Color.Background)
+        .navigationTitle(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: Float.self) { isEdit in
+            WriteCurationInfoView(curation: curation,
+                                  isWriting: $isWriting,
+                                  isEdit: self.isEdit,
+                                  isAccessCuration: self.isAccessCuration)
+        }
+        .onAppear() {
+            shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
+                self.shortcutCells = self.shortcutCells.union(shortcuts)
+            }
+            shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
+                self.shortcutCells = self.shortcutCells.union(shortcuts)
             }
         }
     }
@@ -101,10 +90,7 @@ struct WriteCurationSetView: View {
     ///완료 버튼
     var bottomButton: some View {
         
-        NavigationLink {
-            WriteCurationInfoView(curation: curation, isWriting: $isWriting, isEdit: isEdit)
-            
-        } label: {
+        NavigationLink(value: Float(0.0)) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(curation.shortcuts.count > 0 ? .Primary : .Gray1)
@@ -121,6 +107,6 @@ struct WriteCurationSetView: View {
 
 struct WriteCurationSetView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteCurationSetView(isWriting: .constant(false), isEdit: false)
+        WriteCurationSetView(isWriting: .constant(false), isEdit: false, isAccessCuration: true)
     }
 }

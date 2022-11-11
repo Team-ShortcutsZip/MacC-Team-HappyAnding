@@ -20,6 +20,7 @@ struct ReadUserCurationView: View {
     @State var isTappedDeleteButton = false
     
     let userCuration: Curation
+    let isAccessCuration: Bool
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -38,8 +39,10 @@ struct ReadUserCurationView: View {
                     userInformation
                         .padding(.top, 103)
                         .padding(.bottom, 22)
-                    UserCurationCell(curation: userCuration)
-                        .padding(.bottom, 12)
+                    
+                    UserCurationCell(curation: userCuration,
+                                     isAccessCuration: self.isAccessCuration)
+                    .padding(.bottom, 12)
                 }
             }
             ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
@@ -74,7 +77,9 @@ struct ReadUserCurationView: View {
         .fullScreenCover(isPresented: $isTappedEditButton) {
             NavigationView {
                 WriteCurationSetView(isWriting: $isTappedEditButton,
-                                     curation: userCuration, isEdit: true)
+                                     curation: userCuration,
+                                     isEdit: true,
+                                     isAccessCuration: self.isAccessCuration)
             }
         }
     }

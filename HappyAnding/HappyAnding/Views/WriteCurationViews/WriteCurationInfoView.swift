@@ -10,6 +10,8 @@ import SwiftUI
 struct WriteCurationInfoView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var curationNavigation: CurationNavigation
+    @EnvironmentObject var profileNavigation: ProfileNavigation
     
     @State var isValidTitle = false
     @State var isValidDescription = false
@@ -22,7 +24,7 @@ struct WriteCurationInfoView: View {
     @Binding var isWriting: Bool
     
     let isEdit: Bool
-//    var shortcuts: [Shortcuts]
+    let isAccessCuration: Bool
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
@@ -73,6 +75,12 @@ struct WriteCurationInfoView: View {
                 )
                 
                 isWriting.toggle()
+                
+                if isAccessCuration {
+                    curationNavigation.navigationPath = .init()
+                } else {
+                    profileNavigation.navigationPath = .init()
+                }
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -93,6 +101,6 @@ struct WriteCurationInfoView: View {
 
 struct WriteCurationInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteCurationInfoView(isWriting: .constant(true), isEdit: false)
+        WriteCurationInfoView(isWriting: .constant(true), isEdit: false, isAccessCuration: true)
     }
 }
