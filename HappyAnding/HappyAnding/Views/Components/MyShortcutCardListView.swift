@@ -10,7 +10,7 @@ import SwiftUI
 struct MyShortcutCardListView: View {
     
     @State var isWriting = false
-//    let shortcuts = Shortcut.fetchData(number: 15)
+    
     var shortcuts: [Shortcuts]?
     var body: some View {
         VStack {
@@ -41,24 +41,6 @@ struct MyShortcutCardListView: View {
                     .fullScreenCover(isPresented: $isWriting, content: {
                         WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false)
                     })
-
-//                    Button(action: {
-//                        isWriting.toggle()
-//                    }, label: {
-//                        AddMyShortcutCardView()
-//                    }
-//                    .fullScreenCover(isPresented: $isWriting, content: {
-//                        WriteShortcutTitleView(isWriting: self.$isWriting)
-//                    })
-
-//                    NavigationLink(destination: {
-//                        WriteShortcutTitleView(isWriting: $isWriting)
-//                    }, label: {
-//
-//                    })
-//                    .fullScreenCover(isPresented: $isWriting, content: {
-//                        WriteShortcutTitleView(isWriting: self.$isWriting)
-//                    })
                     
                     if let shortcuts {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
