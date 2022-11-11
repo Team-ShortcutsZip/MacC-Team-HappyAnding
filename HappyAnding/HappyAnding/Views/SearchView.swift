@@ -9,24 +9,31 @@ import SwiftUI
 
 struct SearchView: View {
     
+    @State var isSearched: Bool = false
     @State var searchText: String = ""
-    @State var searchResult: [Shortcuts]  = []
+    @State var searchResults: [Shortcuts] = []
+    
+    let test = Shortcuts(sfSymbol: "leaf", color: "Blue", title: "hihi", subtitle: "hihi", description: "hihi", category: ["lifestyle"], requiredApp: [], numberOfLike: 10, numberOfDownload: 10, author: "hongki", shortcutRequirements: "", downloadLink: ["lasdkfjl"], curationIDs: ["aslkfjaklsdjfk"])
     
     let keywords: [String] = ["단축어", "갓생", "포항꿀주먹"]
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                if searchText == "" && searchResult.count == 0 {
+                if !isSearched {
                     recommendKeword
                 } else {
                     VStack {
-                        Text("hi")
+                        ForEach(searchResults, id: \.self) { result in
+                            ShortcutCell(shortcut: result)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                        }
                     }
                 }
             }
             .searchable(text: $searchText) {
-                
+                recommendKeword
             }
             .onSubmit(of: .search, runSearch)
         }
@@ -34,6 +41,8 @@ struct SearchView: View {
     
     private func runSearch() {
         Task {
+            isSearched = true
+            searchResults.append(test)
         }
     }
     
