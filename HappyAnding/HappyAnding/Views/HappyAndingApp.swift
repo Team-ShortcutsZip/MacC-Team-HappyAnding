@@ -16,7 +16,6 @@ struct HappyAndingApp: App {
     
     @StateObject var userAuth = UserAuth.shared
     @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
-    @StateObject var navigationModel = NavigationModel()
     
     init() {
         FirebaseApp.configure()
@@ -28,7 +27,6 @@ struct HappyAndingApp: App {
             ShortcutTabView()
                 .environmentObject(userAuth)
                 .environmentObject(shorcutsZipViewModel)
-                .environmentObject(navigationModel)
         }
     }
 }
