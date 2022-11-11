@@ -5,9 +5,14 @@
 //  Created by 이지원 on 2022/11/09.
 //
 
+import MessageUI
 import SwiftUI
 
 struct SearchView: View {
+    
+    @State var result: Result<MFMailComposeResult, Error>? = nil
+    @State var isShowingMailView = false
+    @State var isTappedLogOutButton = false
     
     @State var isSearched: Bool = false
     @State var searchText: String = ""
@@ -23,11 +28,15 @@ struct SearchView: View {
                 if !isSearched {
                     recommendKeword
                 } else {
-                    VStack {
-                        ForEach(searchResults, id: \.self) { result in
-                            ShortcutCell(shortcut: result)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
+                    if searchResults.count == 0 {
+                        proposeView
+                    } else {
+                        VStack {
+                            ForEach(searchResults, id: \.self) { result in
+                                ShortcutCell(shortcut: result)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                            }
                         }
                     }
                 }
@@ -42,7 +51,7 @@ struct SearchView: View {
     private func runSearch() {
         Task {
             isSearched = true
-            searchResults.append(test)
+       //     searchResults.append(test)
         }
     }
     
@@ -67,6 +76,43 @@ struct SearchView: View {
                 }
                 .padding(.leading, 16)
             }
+        }
+    }
+    
+    
+    
+    var proposeView: some View {
+        VStack(alignment: .center) {
+            Text("\(searchText)의 결과가 없어요.\n원하는 단축어를 제안해보는건 어떠세요?").multilineTextAlignment(.center)
+                .Body1()
+                .foregroundColor(Color.Gray4)
+            
+            Button {
+                
+            } label: {
+                Text("단축어 제안하기")
+                    .padding(.horizontal, 30)
+                    .padding(.vertical, 8)
+            }.buttonStyle(.borderedProminent)
+                .padding(16)
+            /*
+            Button(action : {
+                if MFMailComposeViewController.canSendMail() {
+                    self.isShowingMailView.toggle()
+                }
+            }) {
+                if MFMailComposeViewController.canSendMail() {
+                    SettingCell(title: "개발자에게 연락하기")
+                }
+                else {
+                    SettingCell(title: "문의사항은 shortcutszip@gmail.com 으로 메일 주세요")
+                        .multilineTextAlignment(.leading)
+                }
+            }
+            .sheet(isPresented: $isShowingMailView) {
+                MailView(isShowing: self.$isShowingMailView, result: self.$result)
+            }*/
+            
         }
     }
     
