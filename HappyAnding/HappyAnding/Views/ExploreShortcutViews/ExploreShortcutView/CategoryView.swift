@@ -31,7 +31,7 @@ struct CategoryView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: ListCategoryView()) {
+//                NavigationLink(destination: ListCategoryView()) {
                     Text(isTappedPlutButton ? "펼치기" : "접기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -39,7 +39,7 @@ struct CategoryView: View {
                         .onTapGesture {
                             self.isTappedPlutButton.toggle()
                         }
-                }
+//                }
             }
             .padding(.leading, 16)
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
