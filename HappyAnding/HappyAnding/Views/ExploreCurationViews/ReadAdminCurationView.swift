@@ -45,7 +45,8 @@ struct ReadAdminCurationView: View {
             
             ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
                 NavigationLink(value: shortcut.id) {
-                    ShortcutCell(shortcutCell: shortcut)
+                    ShortcutCell(shortcutCell: shortcut,
+                                 navigationParentView: .curations)
                 }
             }
             
@@ -53,7 +54,8 @@ struct ReadAdminCurationView: View {
                 .frame(height: 44)
         }
         .navigationDestination(for: String.self) { shortcutID in
-            ReadShortcutView(shortcutID: shortcutID)
+            ReadShortcutView(shortcutID: shortcutID,
+                             navigationParentView: .curations)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: btnBack)

@@ -14,9 +14,13 @@ struct UserCurationListView: View {
     
     @Binding var userCurations: [Curation]
     
+    let navigationParentView: NavigationParentView
+    
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(userCurations: $userCurations, data: data)
+            UserCurationListHeader(userCurations: $userCurations,
+                                   data: data,
+                                   navigationParentView: self.navigationParentView)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             
@@ -41,7 +45,7 @@ struct UserCurationListView: View {
                     if index < 2 {
                         NavigationLink(value: curation) {
                             UserCurationCell(curation: curation,
-                                             isAccessCuration: data.isAccessCuration)
+                                             navigationParentView: self.navigationParentView)
                         }
                     }
                 }
@@ -49,12 +53,12 @@ struct UserCurationListView: View {
         }
         .navigationDestination(for: Curation.self) { curation in
             ReadUserCurationView(userCuration: curation,
-                                 isAccessCuration: data.isAccessCuration)
+                                 navigationParentView: self.navigationParentView)
         }
         .navigationDestination(for: UInt.self) { isEdit in
             WriteCurationSetView(isWriting: self.$isWriting,
                                  isEdit: false,
-                                 isAccessCuration: data.isAccessCuration )
+                                 navigationParentView: self.navigationParentView)
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
@@ -64,6 +68,8 @@ struct UserCurationListHeader: View {
     @Binding var userCurations: [Curation]
     
     @State var data: NavigationCurationType
+    
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         HStack(alignment: .bottom) {
@@ -80,7 +86,11 @@ struct UserCurationListHeader: View {
             }
         }
         .navigationDestination(for: NavigationCurationType.self) { type in
-            ListCurationView(userCurations: $userCurations, type: data.type, isAllUser: true, isAccessCuration: data.isAccessCuration)
+            ListCurationView(userCurations: $userCurations,
+                             type: data.type,
+                             isAllUser: true,
+                             navigationParentView: self.navigationParentView)
+            
         }
     }
 }

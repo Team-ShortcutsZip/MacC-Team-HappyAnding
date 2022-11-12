@@ -29,7 +29,7 @@ struct WriteShortcutTitleView: View {
                                     curationIDs: [String]())
     
     let isEdit: Bool
-    let isAccessExploreShortcut: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -101,7 +101,7 @@ struct WriteShortcutTitleView: View {
             NavigationLink {
                 WriteShortcutdescriptionView(shortcut: $shortcut,
                                              isEdit: isEdit,
-                                             isAccessExploreShortcut: self.isAccessExploreShortcut)
+                                             navigationParentView: self.navigationParentView)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -121,11 +121,14 @@ struct WriteShortcutTitleView: View {
         .background(Color.Background)
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            print("Shortcut \(shortcut)")
+        }
     }
 }
 
 struct WriteShortcutTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTitleView(isEdit: false, isAccessExploreShortcut: true)
+        WriteShortcutTitleView(isEdit: false, navigationParentView: .shortcuts)
     }
 }

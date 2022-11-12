@@ -15,7 +15,7 @@ struct WriteShortcutdescriptionView: View {
     @Binding var shortcut: Shortcuts
     
     let isEdit: Bool
-    let isAccessExploreShortcut: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -47,7 +47,7 @@ struct WriteShortcutdescriptionView: View {
             NavigationLink {
                 WriteShortcutTagView(shortcut: $shortcut,
                                      isEdit: isEdit,
-                                     isAccessExploreShortcut: self.isAccessExploreShortcut)
+                                     navigationParentView: self.navigationParentView)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
