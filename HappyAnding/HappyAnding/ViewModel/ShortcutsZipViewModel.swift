@@ -68,8 +68,10 @@ class ShortcutsZipViewModel: ObservableObject {
         }
         fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
-            self.fetchShortcutByIds(shortcutIds: user.downloadedShortcuts) { downloadedShortcuts in
-                self.shortcutsUserDownloaded = downloadedShortcuts
+            user.downloadedShortcuts.forEach { downloadedShortcut in
+                self.fetchShortcutDetail(id: downloadedShortcut.id) { shortcut in
+                    self.shortcutsUserDownloaded.append(shortcut)
+                }
             }
             self.fetchShortcutByIds(shortcutIds: user.likedShortcuts) { likedShortcuts in
                 self.shortcutsUserLiked = likedShortcuts
@@ -541,8 +543,6 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 단축어 수정 시 해당 단축어가 포함된 큐레이션 서버 데이터를 업데이트하는 함수 -> 단축어 정보 업데이트
     
     func updateShortcutInCuration(shortcutCell: ShortcutCellModel, curationIDs: [String]) {
-        var curations: [Curation] = []
-        
         for curationID in curationIDs {
             db.collection("Curation")
                 .whereField("id", isEqualTo: curationID)
@@ -560,10 +560,8 @@ class ShortcutsZipViewModel: ObservableObject {
                                 
                                 if let index = curation.shortcuts.firstIndex(where: { $0.id == shortcutCell.id }) {
                                     curation.shortcuts[index] = shortcutCell
-                                    print(curation)
                                 }
                                 self.setData(model: curation)
-                                curations.append(curation)
                                     
                             } catch let error {
                                 print("error: \(error)")
@@ -631,21 +629,53 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 다운로드 수를 업데이트하는 함수
     
     func updateNumberOfDownload(shortcut: Shortcuts) {
-        self.fetchUser(userID: currentUser()) { data in
-            var user = data
-            if !data.downloadedShortcuts.contains(shortcut.id) {
-                self.db.collection("Shortcut").document(shortcut.id)
-                    .updateData([
-                        "numberOfDownload" : FieldValue.increment(Int64(1))
-                    ]) { error in
-                        if let error {
-                            print(error.localizedDescription)
-                        }
+        if let index = userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id}) {
+            if userInfo?.downloadedShortcuts[index].downloadLink != shortcut.downloadLink[0] {
+                self.userInfo!.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0]
+                if let userInfo = self.userInfo {
+                    self.setData(model: userInfo)
+                }
+            }
+        } else {
+            self.db.collection("Shortcut").document(shortcut.id)
+                .updateData([
+                    "numberOfDownload" : FieldValue.increment(Int64(1))
+                ]) { error in
+                    if let error {
+                        print(error.localizedDescription)
                     }
-                user.downloadedShortcuts.append(shortcut.id)
-                self.setData(model: user)
+                }
+            let downloadShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+            userInfo?.downloadedShortcuts.insert(downloadShortcut, at: 0)
+            if let userInfo = self.userInfo {
+                self.setData(model: userInfo)
             }
         }
+    }
+    
+    //MARK: 단축어 버전 업데이트하는 함수
+    
+    func updateShortcutVersion(shortcut: Shortcuts, updateDescription: String, updateLink: String) {
+        var data = shortcut
+        
+        //서버 - 단축어 업데이트
+        data.downloadLink.insert(updateLink, at: 0)
+        data.updateDescription.insert(updateDescription, at: 0)
+        setData(model: data)
+        
+        //서버 - 큐레이션 업데이트
+        let shortcutCell = ShortcutCellModel(
+            id: data.id,
+            sfSymbol: data.sfSymbol,
+            color: data.color,
+            title: data.title,
+            subtitle: data.subtitle,
+            downloadLink: data.downloadLink[0]
+        )
+        updateShortcutInCuration(shortcutCell: shortcutCell, curationIDs: data.curationIDs)
+        
+        //뷰모델 - 단축어 업데이트
+        
     }
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
@@ -698,7 +728,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             var user = try decoder.decode(User.self, from: jsonData)
                             
                             user.likedShortcuts.removeAll(where: { $0 == shortcutID })
-                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
+                            user.downloadedShortcuts.removeAll(where: { $0.id == shortcutID })
                             self.setData(model: user)
                             
                         } catch let error {
@@ -723,7 +753,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
                             var user = try decoder.decode(User.self, from: jsonData)
                             
-                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
+                            user.downloadedShortcuts.removeAll(where: { $0.id == shortcutID })
                             user.likedShortcuts.removeAll(where: { $0 == shortcutID })
                             self.setData(model: user)
                             
