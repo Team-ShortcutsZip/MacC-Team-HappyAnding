@@ -8,7 +8,6 @@
 import SwiftUI
 
 /// - parameters:
-/// - categoryName: 카테고리에서 접근할 시, 해당 카테고리의 이름을 넣어주시고, 그렇지 않다면 nil을 넣어주세요
 /// sectionType: 다운로드 순위에서 접근할 시, .download를, 사랑받는 앱에서 접근시 .popular를 넣어주세요.
 struct ListShortcutView: View {
     
@@ -17,11 +16,8 @@ struct ListShortcutView: View {
     @State var shortcuts:[Shortcuts]?
 //    @State var shortcutsArray: [Shortcuts] = []
     @State private var isLastItem = false
-    @State var description: String = ""
     
-    // TODO: let으로 변경필요, 현재 작업중인 코드들과 충돌될 가능성이 있어 우선 변수로 선언
-    var categoryName: Category?
-    var sectionType: SectionType?
+    let sectionType: SectionType
     
     var body: some View {
         
@@ -61,18 +57,8 @@ struct ListShortcutView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle((categoryName == nil ? getNavigationTitle(sectionType!) : categoryName?.translateName())!)
+        .navigationTitle(getNavigationTitle(sectionType))
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear() {
-            if let categoryName {
-                description = categoryName.fetchDescription()
-                shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { shortcuts in
-                    self.shortcuts = shortcuts
-                }
-            } else if let sectionType {
-                description = getDescriptions(sectionType)
-            }
-        }
     }
     
     var header: some View {
@@ -80,7 +66,7 @@ struct ListShortcutView: View {
             // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
         
         VStack {
-            Text(description)
+            Text(getDescriptions(sectionType))
                 .foregroundColor(.Gray5)
                 .Body2()
                 .padding(16)
@@ -101,7 +87,7 @@ struct ListShortcutView: View {
     private func getNavigationTitle(_ sectionType: SectionType) -> String {
         switch sectionType {
         case .download:
-            return sectionType.rawValue
+            return "다운로드 순위"
         case .popular:
             return "사랑받는 단축어"
         case .myShortcut:
@@ -116,7 +102,7 @@ struct ListShortcutView: View {
     private func getDescriptions(_ sectionType: SectionType) -> String {
         switch sectionType {
         case .download:
-            return "\(self.categoryName?.translateName() ?? "") 1위 ~ 100위"
+            return "1위 ~ 100위"
         case .popular:
             return "💡 좋아요를 많이 받은 단축어들로 구성되어 있어요!"
         case .myShortcut:
