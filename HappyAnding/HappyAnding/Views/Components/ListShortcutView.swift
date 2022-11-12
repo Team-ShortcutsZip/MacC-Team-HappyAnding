@@ -13,17 +13,15 @@ struct ListShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @State var shortcuts:[Shortcuts]?
-//    @State var shortcutsArray: [Shortcuts] = []
+    @State var data: NavigationListShortcutType
+    @State var shortcutsArray: [Shortcuts] = []
     @State private var isLastItem = false
-    
-    let sectionType: SectionType
     
     var body: some View {
         
         List {
             
-            if sectionType != .myShortcut {
+            if data.sectionType != .myShortcut {
                 header
                     .listRowBackground(Color.Background)
                     .listRowSeparator(.hidden)
@@ -31,9 +29,9 @@ struct ListShortcutView: View {
             }
             
             //TODO: 무한 스크롤을 위한 업데이트 함수 필요
-            if let shortcuts {
+            if let shortcuts = data.shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    if sectionType == .download {
+                    if data.sectionType == .download {
                         ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
@@ -57,7 +55,7 @@ struct ListShortcutView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationTitle(getNavigationTitle(sectionType))
+        .navigationTitle(getNavigationTitle(data.sectionType))
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -66,11 +64,12 @@ struct ListShortcutView: View {
             // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
         
         VStack {
-            Text(getDescriptions(sectionType))
+            Text(getDescriptions(data.sectionType))
                 .foregroundColor(.Gray5)
                 .Body2()
                 .padding(16)
-                .frame(maxWidth: .infinity, alignment: sectionType == .download ? .center : .leading)
+                .frame(maxWidth: .infinity,
+                       alignment: data.sectionType == .download ? .center : .leading)
                 .background(
                     Rectangle()
                         .foregroundColor(Color.Gray1)
@@ -91,7 +90,7 @@ struct ListShortcutView: View {
         case .popular:
             return "사랑받는 단축어"
         case .myShortcut:
-            return "나의 단축어"
+            return "내가 등록한 단축어"
         case .myLovingShortcut:
             return "좋아요한 단축어"
         case .myDownloadShortcut:
@@ -112,11 +111,5 @@ struct ListShortcutView: View {
         case .myDownloadShortcut:
             return "💫 내가 다운로드한 단축어를 모아볼 수 있어요"
         }
-    }
-}
-
-struct ListShortcutView_Previews: PreviewProvider {
-    static var previews: some View {
-        ListShortcutView(sectionType: .myLovingShortcut)
     }
 }
