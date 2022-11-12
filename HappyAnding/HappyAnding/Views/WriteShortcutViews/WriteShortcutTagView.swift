@@ -11,6 +11,7 @@ struct WriteShortcutTagView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var shortcutNavigation: ShortcutNavigation
+    @EnvironmentObject var curationNavigation: CurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
     
     @Binding var shortcut: Shortcuts
@@ -19,7 +20,7 @@ struct WriteShortcutTagView: View {
     @State var isRequirementValid = false
     
     let isEdit: Bool
-    let isAccessExploreShortcut: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -87,10 +88,13 @@ struct WriteShortcutTagView: View {
                     )
                 }
                 
-                if isAccessExploreShortcut {
-                    shortcutNavigation.shortcutPath.removeLast()
-                } else {
-                    profileNavigation.navigationPath.removeLast()
+                switch navigationParentView {
+                case .shortcuts:
+                    shortcutNavigation.shortcutPath = .init()
+                case .curations:
+                    curationNavigation.navigationPath = .init()
+                case .myPage:
+                    profileNavigation.navigationPath = .init()
                 }
             }, label: {
                 ZStack {

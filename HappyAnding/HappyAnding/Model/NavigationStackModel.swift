@@ -22,3 +22,22 @@ struct NavigationCurationType: Identifiable, Hashable {
     var isAllUser: Bool?
     let isAccessCuration: Bool
 }
+
+struct NavigationEditShortcutType: Identifiable, Hashable {
+    var id = UUID().uuidString
+    
+    var shortcut: Shortcuts
+}
+
+
+struct NavigationEditCurationType: Identifiable, Hashable {
+    var id = UUID().uuidString
+    
+    var curation: Curation
+}
+
+enum NavigationParentView: Int {
+    case shortcuts
+    case curations
+    case myPage
+}
