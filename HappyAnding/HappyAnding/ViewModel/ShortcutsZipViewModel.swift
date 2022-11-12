@@ -586,11 +586,12 @@ class ShortcutsZipViewModel: ObservableObject {
                                 let jsonData = try JSONSerialization.data(withJSONObject: data)
                                 var curation = try decoder.decode(Curation.self, from: jsonData)
                                 
+                                //서버 데이터 업데이트
                                 if let index = curation.shortcuts.firstIndex(where: { $0.id == shortcutCell.id }) {
                                     curation.shortcuts[index] = shortcutCell
                                 }
                                 self.setData(model: curation)
-                                    
+                                //뷰모델 업데이트
                             } catch let error {
                                 print("error: \(error)")
                             }
@@ -704,6 +705,32 @@ class ShortcutsZipViewModel: ObservableObject {
         
         //뷰모델 - 단축어 업데이트
         
+        //다운로드순 정렬 단축어
+        if let index = sortedShortcutsByDownload.firstIndex(where: { $0.id == shortcut.id}) {
+            sortedShortcutsByDownload[index] = shortcut
+        }
+        // 좋아요 정렬 단축어
+        if let index = sortedShortcutsByLike.firstIndex(where: { $0.id == shortcut.id}) {
+            sortedShortcutsByLike[index] = shortcut
+        }
+        //내가 다운로드 한
+        if let index = shortcutsUserDownloaded.firstIndex(where: { $0.id == shortcut.id}) {
+            shortcutsUserDownloaded[index] = shortcut
+        }
+        //내가 좋아요 한
+        if let index = shortcutsUserLiked.firstIndex(where: { $0.id == shortcut.id}) {
+            shortcutsUserLiked[index] = shortcut
+        }
+        //내가 작성한
+        if let index = shortcutsMadeByUser.firstIndex(where: { $0.id == shortcut.id}) {
+            shortcutsMadeByUser[index] = shortcut
+        }
+        //카테고리별 단축어
+        shortcut.category.forEach { category in
+            if let index = shortcutsInCategory[Category(rawValue: category)!.index].firstIndex(where: { $0.id == shortcut.id}) {
+                shortcutsInCategory[Category(rawValue: category)!.index][index] = shortcut
+            }
+        }
     }
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
