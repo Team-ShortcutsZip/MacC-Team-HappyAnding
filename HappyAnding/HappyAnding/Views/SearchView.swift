@@ -9,41 +9,44 @@ import MessageUI
 import SwiftUI
 
 struct SearchView: View {
+    @Environment(\.isSearching) private var isSearching: Bool
+    @Environment(\.dismissSearch) private var dismissSearch
     
     @State var isSearched: Bool = false
     @State var searchText: String = ""
     @State var searchResults: [Shortcuts] = []
     
-    let test = Shortcuts(sfSymbol: "leaf", color: "Blue", title: "hihi", subtitle: "hihi", description: "hihi", category: ["lifestyle"], requiredApp: [], numberOfLike: 10, numberOfDownload: 10, author: "hongki", shortcutRequirements: "", downloadLink: ["lasdkfjl"], curationIDs: ["aslkfjaklsdjfk"])
-    
     let keywords: [String] = ["단축어", "갓생", "포항꿀주먹"]
     
     var body: some View {
-        NavigationStack {
-            
-            VStack {
-                if !isSearched {
-                    recommendKeword
-                    Spacer()
+        VStack {
+            if !isSearched {
+                recommendKeword
+                Spacer()
+            } else {
+                if searchResults.count == 0 {
+                    proposeView
                 } else {
-                    if searchResults.count == 0 {
-                        proposeView
-                    } else {
-                        ScrollView {
-                            ForEach(searchResults, id: \.self) { result in
-                                ShortcutCell(shortcut: result)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowSeparator(.hidden)
-                            }
+                    ScrollView {
+                        ForEach(searchResults, id: \.self) { result in
+                            ShortcutCell(shortcut: result)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
                         }
                     }
-                }
+               }
             }
-            .searchable(text: $searchText) {
-                recommendKeword
-            }
-            .onSubmit(of: .search, runSearch)
         }
+        .searchable(text: $searchText)
+        .onSubmit(of: .search, runSearch)
+        .onChange(of: searchText) { value in
+            if searchText.isEmpty && !isSearching {
+                // Search cancelled here
+                print("canceled")
+                searchResults.removeAll()
+                isSearched = false
+            }
+        }        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func runSearch() {
@@ -94,6 +97,19 @@ struct SearchView: View {
             }.buttonStyle(.borderedProminent)
                 .padding(16)
         }
+    }
+}
+
+struct CheckSearchView<Content: View>: View {
+    @Environment(\.isSearching) var isSearching
+    let content: (Bool) -> Content
+
+    var body: some View {
+        content(isSearching)
+    }
+
+    init(@ViewBuilder content: @escaping (Bool) -> Content) {
+        self.content = content
     }
 }
 
