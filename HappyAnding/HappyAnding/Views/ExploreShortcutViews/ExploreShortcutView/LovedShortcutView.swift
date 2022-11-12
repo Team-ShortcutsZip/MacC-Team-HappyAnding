@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LovedShortcutView: View {
     
+    @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
     var body: some View {
@@ -27,9 +28,8 @@ struct LovedShortcutView: View {
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 }
-                .navigationDestination(for: SectionType.self, destination: { _ in
-                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.popular)
-                        .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: SectionType.self, destination: { type in
+                    ShortcutsListView(shortcuts: $shortcuts, sectionType: type)
                 })
             }
             .padding(.leading, 16)
@@ -41,13 +41,14 @@ struct LovedShortcutView: View {
                             ShortcutCell(shortcut: shortcut)
                         }
                         .navigationDestination(for: String.self, destination: { shortcutID in
-                            ReadShortcutView(shortcutID: shortcut.id)
+                            ReadShortcutView(shortcutID: shortcutID)
                         })
                     }
                 }
             }
             
         }
+        .environmentObject(navigation)
         .background(Color.Background)
     }
 }

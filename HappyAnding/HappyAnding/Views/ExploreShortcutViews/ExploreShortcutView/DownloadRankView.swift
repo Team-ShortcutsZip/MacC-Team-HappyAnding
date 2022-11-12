@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DownloadRankView: View {
     
+    @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
     var body: some View {
@@ -27,9 +28,8 @@ struct DownloadRankView: View {
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 }
-                .navigationDestination(for: SectionType.self, destination: { _ in
-                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.download)
-                        .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: SectionType.self, destination: { type in
+                    ShortcutsListView(shortcuts: $shortcuts, sectionType: type)
                 })
             }
             .padding(.leading, 16)
@@ -40,11 +40,12 @@ struct DownloadRankView: View {
                         ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
                     }
                     .navigationDestination(for: String.self, destination: { shortcutID in
-                        ReadShortcutView(shortcutID: shortcut.id)
+                        ReadShortcutView(shortcutID: shortcutID)
                     })
                 }
             }
         }
+        .environmentObject(navigation)
         .background(Color.Background)
     }
 }

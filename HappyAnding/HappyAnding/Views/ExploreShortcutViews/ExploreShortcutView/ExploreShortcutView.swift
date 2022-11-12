@@ -19,10 +19,13 @@ struct ExploreShortcutView: View {
                                        shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
+                
                 DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload)
                     .padding(.bottom, 32)
+                
                 CategoryView()
                     .padding(.bottom, 32)
+                
                 LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
                     .padding(.bottom, 44)
             }
