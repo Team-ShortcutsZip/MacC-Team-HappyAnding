@@ -15,6 +15,10 @@ struct MyShortcutCardListView: View {
     let isAccessExploreShortcut: Bool
     
     var shortcuts: [Shortcuts]?
+    var data: NavigationListShortcutType {
+        NavigationListShortcutType(sectionType: .myShortcut,
+                                   shortcuts: self.shortcuts)
+    }
     
     var body: some View {
         VStack {
@@ -26,14 +30,14 @@ struct MyShortcutCardListView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: shortcuts) {
+                NavigationLink(value: data) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 }
-                .navigationDestination(for: [Shortcuts].self) { shortcuts in
-                    ListShortcutView(shortcuts: shortcuts, sectionType: .myShortcut)
+                .navigationDestination(for: NavigationListShortcutType.self) { data in
+                    ListShortcutView(data: data)
                 }
             }
             .padding(.leading, 16)

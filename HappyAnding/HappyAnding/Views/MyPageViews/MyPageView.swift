@@ -119,7 +119,8 @@ struct MyPageShortcutList: View {
             ReadShortcutView(shortcutID: shortcut.id)
         }
         .navigationDestination(for: SectionType.self) { type in
-            ListShortcutView(shortcuts: self.shortcuts, sectionType: type)
+            ListShortcutView(data: NavigationListShortcutType(sectionType: type,
+                                                              shortcuts: self.shortcuts))
         }
         .environmentObject(navigation)
     }
@@ -130,6 +131,10 @@ struct MyPageListHeader: View {
 
     var type: SectionType
     let shortcuts: [Shortcuts]?
+    var data: NavigationListShortcutType {
+        NavigationListShortcutType(sectionType: self.type,
+                                   shortcuts: self.shortcuts)
+    }
     var body: some View {
         HStack(alignment: .bottom) {
             Text(type.rawValue)
@@ -137,17 +142,15 @@ struct MyPageListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-
-            if let shortcuts {
-                NavigationLink(value: type) {
-                    Text("더보기")
-                        .Footnote()
-                        .foregroundColor(.Gray4)
-                }
-                .navigationDestination(for: SectionType.self) { type in
-                    ListShortcutView(shortcuts: shortcuts, sectionType: type)
-                }
+            
+            NavigationLink(value: data) {
+                Text("더보기")
+                    .Footnote()
+                    .foregroundColor(.Gray4)
             }
+        }
+        .navigationDestination(for: NavigationListShortcutType.self) { data in
+            ListShortcutView(data: data)
         }
         .environmentObject(navigation)
     }
