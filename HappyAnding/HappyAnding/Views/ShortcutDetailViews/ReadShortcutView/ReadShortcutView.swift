@@ -17,7 +17,6 @@ struct ReadShortcutView: View {
     @State var shortcut: Shortcuts?
     
     let shortcutID: String
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         
@@ -88,8 +87,7 @@ struct ReadShortcutView: View {
         }
         .navigationDestination(for: NavigationEditShortcutType.self) { data in
             WriteShortcutTitleView(shortcut: data.shortcut,
-                                   isEdit: true,
-                                   navigationParentView: self.navigationParentView)
+                                   isEdit: true)
         }
     }
 }

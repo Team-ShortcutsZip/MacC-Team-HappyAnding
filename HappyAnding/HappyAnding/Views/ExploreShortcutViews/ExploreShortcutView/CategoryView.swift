@@ -50,8 +50,7 @@ struct CategoryView: View {
                         })
                         .navigationDestination(for: Category.self) { category in
                             ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
-                                              categoryName: category,
-                                              navigationParentView: .shortcuts)
+                                              categoryName: category)
                         }
                     }
                 }

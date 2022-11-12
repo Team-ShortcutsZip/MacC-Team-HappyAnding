@@ -12,8 +12,6 @@ struct LovedShortcutView: View {
     @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
-    let navigationParentView: NavigationParentView
-    
     var body: some View {
         VStack {
             HStack {
@@ -32,8 +30,7 @@ struct LovedShortcutView: View {
                 }
                 .navigationDestination(for: SectionType.self, destination: { type in
                     ShortcutsListView(shortcuts: $shortcuts,
-                                      sectionType: type,
-                                      navigationParentView: self.navigationParentView)
+                                      sectionType: type)
                 })
             }
             .padding(.leading, 16)
@@ -42,11 +39,9 @@ struct LovedShortcutView: View {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
                         NavigationLink(value: shortcut.id) {
-                            ShortcutCell(shortcut: shortcut,
-                                         navigationParentView: self.navigationParentView)
+                            ShortcutCell(shortcut: shortcut)
                             .navigationDestination(for: String.self, destination: { shortcutID in
-                                ReadShortcutView(shortcutID: shortcutID,
-                                                 navigationParentView: self.navigationParentView)
+                                ReadShortcutView(shortcutID: shortcutID)
                             })
                         }
                     }

@@ -16,8 +16,6 @@ struct ShortcutsListView: View {
     var categoryName: Category?
     var sectionType: SectionType?
     
-    let navigationParentView: NavigationParentView
-    
     var body: some View {
         ScrollView {
             
@@ -27,7 +25,6 @@ struct ShortcutsListView: View {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     NavigationLink(value: shortcut.id) {
                         ShortcutCell(shortcut: shortcut,
-                                     navigationParentView: self.navigationParentView,
                                      rankNumber: sectionType == .download ? index + 1 : -1)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
@@ -57,8 +54,7 @@ struct ShortcutsListView: View {
                     }
                     .navigationDestination(for: String.self) { shortcutID in
                         ReadShortcutView(shortcut: shortcut,
-                                         shortcutID: shortcutID,
-                                         navigationParentView: self.navigationParentView)
+                                         shortcutID: shortcutID)
                     }
                 }
             }

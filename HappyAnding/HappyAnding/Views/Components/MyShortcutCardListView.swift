@@ -12,8 +12,6 @@ struct MyShortcutCardListView: View {
     @EnvironmentObject var profileNavigation: ProfileNavigation
     @EnvironmentObject var shortcutsNavigation: ShortcutNavigation
     
-    let navigationParentView: NavigationParentView
-    
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
         NavigationListShortcutType(sectionType: .myShortcut,
@@ -37,8 +35,7 @@ struct MyShortcutCardListView: View {
                         .padding(.trailing, 16)
                 }
                 .navigationDestination(for: NavigationListShortcutType.self) { data in
-                    ListShortcutView(data: data,
-                                     navigationParentView: self.navigationParentView)
+                    ListShortcutView(data: data)
                 }
             }
             .padding(.leading, 16)
@@ -62,12 +59,10 @@ struct MyShortcutCardListView: View {
                     }
                 }
                 .navigationDestination(for: Bool.self) { isEdit in
-                    WriteShortcutTitleView(isEdit: isEdit,
-                                           navigationParentView: self.navigationParentView)
+                    WriteShortcutTitleView(isEdit: isEdit)
                 }
                 .navigationDestination(for: String.self) { shortcutID in
-                    ReadShortcutView(shortcutID: shortcutID,
-                                     navigationParentView: self.navigationParentView)
+                    ReadShortcutView(shortcutID: shortcutID)
                 }
                 .padding(.horizontal, 16)
             }

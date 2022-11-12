@@ -12,7 +12,6 @@ import SwiftUI
 struct UserCurationCell: View {
     
     let curation: Curation
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         ZStack {
@@ -86,8 +85,7 @@ struct UserCurationCell: View {
             .cornerRadius(12)
         }
         .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation,
-                                 navigationParentView: self.navigationParentView)
+            ReadUserCurationView(userCuration: curation)
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 12)
