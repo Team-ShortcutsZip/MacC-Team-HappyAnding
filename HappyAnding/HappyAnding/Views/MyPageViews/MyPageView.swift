@@ -55,8 +55,10 @@ struct MyPageView: View {
                     
                     // MARK: - 나의 큐레이션
                     
-                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser,
-                                         isAccessCuration: false)
+                    UserCurationListView(data: NavigationCurationType(type: .userCuration,
+                                                                      title: "나의 큐레이션",
+                                                                      isAccessCuration: true),
+                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser)
                         .frame(maxWidth: .infinity)
                     
                     // MARK: - 좋아요한 단축어

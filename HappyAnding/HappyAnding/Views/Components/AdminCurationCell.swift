@@ -23,20 +23,19 @@ import SwiftUI
 struct AdminCurationCell: View {
     
     let adminCuration: Curation
-//    let curationThumbnail: String
-//    let title: String
-//    let subtitle: String
-    
     let cornerRadius: CGFloat = 12
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink(destination: ReadAdminCurationView(curation: adminCuration)) {
+            NavigationLink(value: true) {
                 EmptyView()
             }
             backgroundImage
             titleAndSubtitle
                 .padding([.horizontal, .bottom], 24)
+        }
+        .navigationDestination(for: Bool.self) { _ in
+            ReadAdminCurationView(curation: adminCuration)
         }
         .frame(width: UIScreen.main.bounds.width-32, height: 284)
         .padding(.trailing, 8.0)

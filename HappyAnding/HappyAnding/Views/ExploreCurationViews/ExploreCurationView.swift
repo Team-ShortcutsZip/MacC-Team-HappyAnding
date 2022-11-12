@@ -16,17 +16,24 @@ struct ExploreCurationView: View {
         NavigationStack(path: $navigation.navigationPath) {
             ScrollView {
                 VStack(spacing: 0) {
+                    
                     //앱 큐레이션
                     adminCurationsFrameiew(adminCurations: shortcutsZipViewModel.adminCurations)
                         .padding(.top, 20)
                         .padding(.bottom, 32)
+                    
                     //나의 큐레이션
-                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser,
-                                         isAccessCuration: true)
+                    UserCurationListView(data: NavigationCurationType(type: .myCuration,
+                                                                      title: "나의 큐레이션",
+                                                                      isAccessCuration: true),
+                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser)
                         .padding(.bottom, 20)
+                    
                     //추천 유저 큐레이션
-                    CurationListView(curationListTitle: "유저 큐레이션", userCurations: $shortcutsZipViewModel.userCurations,
-                                     isAccessCuration: true)
+                    CurationListView(data: NavigationCurationType(type: .userCuration,
+                                                                  title: "유저 큐레이션",
+                                                                  isAccessCuration: true),
+                                     userCurations: $shortcutsZipViewModel.userCurations)
                 }
                 .padding(.bottom, 32)
             }
@@ -63,10 +70,10 @@ struct adminCurationsFrameiew: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(adminCurations, id: \.id) { curation in
-                        NavigationLink(value: curation) {
+                        NavigationLink(value: false) {
                             AdminCurationCell(adminCuration: curation)
                         }
-                        .navigationDestination(for: Curation.self) { curation in
+                        .navigationDestination(for: Bool.self) { _ in
                             ReadAdminCurationView(curation: curation)
                         }
                     }

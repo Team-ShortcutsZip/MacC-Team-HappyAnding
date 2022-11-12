@@ -19,8 +19,16 @@ struct SettingView: View {
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
     @State var isTappedSignOutButton = false
-//    @State private var isTappedPrivacyButton = false
-
+    
+    // Navigation Stack을 위한 자료형
+    enum NavigationPrivacyPolicy: Hashable, Equatable {
+        case first
+    }
+    
+    enum NavigationLisence: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             //            Text("알림 설정")
@@ -35,12 +43,12 @@ struct SettingView: View {
             SettingCell(title: "버전정보", version: "1.0.0")
             
             //오픈소스 라이선스 버튼
-            NavigationLink(destination: LicenseView()) {
+            NavigationLink(value: NavigationLisence.first) {
                 SettingCell(title: "오픈소스 라이선스")
             }
             
             //개인정보처리방침 버튼
-            NavigationLink(destination: PrivacyPolicyView(webViewModel: webViewModel)) {
+            NavigationLink(value: NavigationPrivacyPolicy.first) {
                 SettingCell(title: "개인정보처리방침")
             }
             
@@ -83,6 +91,12 @@ struct SettingView: View {
                       secondaryButton: .destructive( Text("로그아웃"), action: { signOut() }))
             }
             Spacer()
+        }
+        .navigationDestination(for: NavigationPrivacyPolicy.self) { value in
+            PrivacyPolicyView(webViewModel: webViewModel)
+        }
+        .navigationDestination(for: NavigationLisence.self) { value in
+            LicenseView()
         }
         .padding(.horizontal, 16)
         .background(Color.Background)
