@@ -12,7 +12,7 @@ import SwiftUI
 struct UserCurationCell: View {
     
     let curation: Curation
-    let isAccessCuration: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         ZStack {
@@ -87,7 +87,7 @@ struct UserCurationCell: View {
         }
         .navigationDestination(for: Curation.self) { curation in
             ReadUserCurationView(userCuration: curation,
-                                 isAccessCuration: self.isAccessCuration)
+                                 navigationParentView: self.navigationParentView)
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 12)

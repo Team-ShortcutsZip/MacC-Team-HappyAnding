@@ -50,7 +50,7 @@ struct MyPageView: View {
                     
                     // MARK: - 나의 단축어
                     
-                    MyShortcutCardListView(isAccessExploreShortcut: false,
+                    MyShortcutCardListView(navigationParentView: .myPage,
                                            shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
                     
                     // MARK: - 나의 큐레이션
@@ -58,7 +58,8 @@ struct MyPageView: View {
                     UserCurationListView(data: NavigationCurationType(type: .userCuration,
                                                                       title: "내가 작성한 큐레이션",
                                                                       isAccessCuration: true),
-                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser,
+                                         navigationParentView: .myPage)
                         .frame(maxWidth: .infinity)
                     
                     // MARK: - 좋아요한 단축어
@@ -111,18 +112,19 @@ struct MyPageShortcutList: View {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if index < 3 {
                         NavigationLink(value: shortcut) {
-                            ShortcutCell(shortcut: shortcut)
+                            ShortcutCell(shortcut: shortcut, navigationParentView: .myPage)
                         }
                     }
                 }
             }
         }
         .navigationDestination(for: Shortcuts.self) { shortcut in
-            ReadShortcutView(shortcutID: shortcut.id)
+            ReadShortcutView(shortcutID: shortcut.id, navigationParentView: .myPage)
         }
         .navigationDestination(for: SectionType.self) { type in
             ListShortcutView(data: NavigationListShortcutType(sectionType: type,
-                                                              shortcuts: self.shortcuts))
+                                                              shortcuts: self.shortcuts),
+                             navigationParentView: .myPage)
         }
         .environmentObject(navigation)
     }
@@ -152,7 +154,7 @@ struct MyPageListHeader: View {
             }
         }
         .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
+            ListShortcutView(data: data, navigationParentView: .myPage)
         }
         .environmentObject(navigation)
     }

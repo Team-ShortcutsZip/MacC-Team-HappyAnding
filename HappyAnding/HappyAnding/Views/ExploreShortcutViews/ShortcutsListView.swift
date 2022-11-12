@@ -18,6 +18,8 @@ struct ShortcutsListView: View {
     var categoryName: Category?
     var sectionType: SectionType?
     
+    let navigationParentView: NavigationParentView
+    
     var body: some View {
         ScrollView {
             
@@ -25,9 +27,13 @@ struct ShortcutsListView: View {
             
             LazyVStack {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(value: shortcut.id) {
+                    NavigationLink(destination: ReadShortcutView(shortcut: shortcut,
+                                                                 shortcutID: shortcut.id,
+                                                                 navigationParentView: self.navigationParentView)) {
                         ShortcutCell(shortcut: shortcut,
+                                     navigationParentView: self.navigationParentView,
                                      rankNumber: sectionType == .download ? index + 1 : -1)
+                        
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .onAppear {
@@ -68,7 +74,7 @@ struct ShortcutsListView: View {
                         }
                     }
                     .navigationDestination(for: String.self) { _ in
-                        ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id)
+                        ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id, navigationParentView: self.navigationParentView)
                     }
                 }
             }

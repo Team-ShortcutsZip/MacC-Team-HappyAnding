@@ -12,11 +12,12 @@ struct ReadShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
-    @State var isEdit = false
-    @State var isTappedDeleteButton = false
     
+    @State var isTappedDeleteButton = false
     @State var shortcut: Shortcuts?
+    
     let shortcutID: String
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         
@@ -64,15 +65,6 @@ struct ReadShortcutView: View {
             Image(systemName: "ellipsis")
                 .foregroundColor(.Gray4)
         }))
-        .fullScreenCover(isPresented: $isEdit) {
-            NavigationView {
-                if let shortcut {
-                    WriteShortcutTitleView(shortcut: shortcut,
-                                           isEdit: true,
-                                           isAccessExploreShortcut: false)
-                }
-            }
-        }
         .alert(isPresented: $isTappedDeleteButton) {
             Alert(title: Text("글 삭제").foregroundColor(.Gray5),
                   message: Text("글을 삭제하시겠습니까?").foregroundColor(.Gray5),
@@ -95,19 +87,26 @@ struct ReadShortcutView: View {
                   )
             )
         }
+        .navigationDestination(for: NavigationEditShortcutType.self) { data in
+            WriteShortcutTitleView(shortcut: data.shortcut,
+                                   isEdit: true,
+                                   navigationParentView: self.navigationParentView)
+        }
     }
 }
 
 extension ReadShortcutView {
+    
     var myShortcutMenuSection: some View {
+        
         Section {
             
-            Button(action: {
-                isEdit.toggle()
-            }) {
-                Label("편집", systemImage: "square.and.pencil")
+            if let shortcut {
+                let data = NavigationEditShortcutType(shortcut: shortcut)
+                NavigationLink(value: data) {
+                    Label("편집", systemImage: "square.and.pencil")
+                }
             }
-            
             Button(action: {
                 share()
             }) {

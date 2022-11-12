@@ -24,7 +24,7 @@ struct WriteCurationSetView: View {
     @State var isTappedQuestionMark: Bool = false
     
     let isEdit: Bool
-    let isAccessCuration: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         
@@ -59,7 +59,7 @@ struct WriteCurationSetView: View {
             WriteCurationInfoView(curation: curation,
                                   isWriting: $isWriting,
                                   isEdit: self.isEdit,
-                                  isAccessCuration: self.isAccessCuration)
+                                  navigationParentView: self.navigationParentView)
         }
         .onAppear {
             shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
@@ -157,6 +157,8 @@ struct WriteCurationSetView: View {
 
 struct WriteCurationSetView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteCurationSetView(isWriting: .constant(false), isEdit: false, isAccessCuration: true)
+        WriteCurationSetView(isWriting: .constant(false),
+                             isEdit: false,
+                             navigationParentView: .curations)
     }
 }

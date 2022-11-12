@@ -44,6 +44,8 @@ struct ShortcutCell: View {
         downloadLink: ""
     )
     
+    let navigationParentView: NavigationParentView
+    
     var rankNumber: Int = -1
     
     var body: some View {
@@ -75,7 +77,8 @@ struct ShortcutCell: View {
             .padding(.horizontal, 20)
         }
         .navigationDestination(for: String.self, destination: { shortcutID in
-            ReadShortcutView(shortcutID: shortcutID)
+            ReadShortcutView(shortcutID: shortcutID,
+                             navigationParentView: self.navigationParentView)
         })
         .padding(.top, 12)
         .background(Color.Background)
@@ -155,6 +158,6 @@ struct ShortcutCell: View {
 
 struct ShortcutCell_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutCell()
+        ShortcutCell(navigationParentView: .shortcuts)
     }
 }

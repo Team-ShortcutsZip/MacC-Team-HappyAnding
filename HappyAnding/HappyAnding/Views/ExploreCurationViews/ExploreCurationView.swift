@@ -26,14 +26,14 @@ struct ExploreCurationView: View {
                     UserCurationListView(data: NavigationCurationType(type: .myCuration,
                                                                       title: "내가 작성한 큐레이션",
                                                                       isAccessCuration: true),
-                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser, navigationParentView: .curations)
                         .padding(.bottom, 20)
                     
                     //추천 유저 큐레이션
                     CurationListView(data: NavigationCurationType(type: .userCuration,
                                                                   title: "큐레이션 모아보기",
                                                                   isAccessCuration: true),
-                                     userCurations: $shortcutsZipViewModel.userCurations)
+                                     userCurations: $shortcutsZipViewModel.userCurations, navigationParentView: .curations)
                 }
                 .padding(.bottom, 32)
             }

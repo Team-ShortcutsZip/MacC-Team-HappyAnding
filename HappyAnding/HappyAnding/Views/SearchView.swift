@@ -29,8 +29,9 @@ struct SearchView: View {
                 } else {
                     ScrollView {
                         ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { result in
-                            NavigationLink(destination: ReadShortcutView(shortcutID: result.id)) {
-                                ShortcutCell(shortcut: result)
+                            NavigationLink(destination: ReadShortcutView(shortcutID: result.id, navigationParentView: NavigationParentView.shortcuts)) {
+                                ShortcutCell(shortcut: result,
+                                             navigationParentView: NavigationParentView.shortcuts)
                                     .listRowInsets(EdgeInsets())
                                     .listRowSeparator(.hidden)
                             }
