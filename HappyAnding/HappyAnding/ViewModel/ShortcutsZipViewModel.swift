@@ -886,19 +886,6 @@ class ShortcutsZipViewModel: ObservableObject {
             .whereField("requiredApp", arrayContains: word)
             .order(by: "requiredApp", descending: true)
         
-        //pagination
-//        if let next = self.lastSearchShortcutDocumentSnapshot {
-//            query = db.collection("Shortcut")
-//                .whereField("requiredApp", arrayContains: word)
-//                .limit(to: numberOfPageLimit)
-//                .start(afterDocument: next)
-//        } else {
-//            query = db.collection("Shortcut")
-//                .whereField("requiredApp", arrayContains: word)
-//                .order(by: "requiredApp", descending: true)
-//                .limit(to: numberOfPageLimit)
-//        }
-        
         query.getDocuments { (querySnapshot, error) in
             if let error {
                 print("Error getting documents: \(error)")

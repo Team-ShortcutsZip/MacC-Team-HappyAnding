@@ -75,7 +75,6 @@ struct SearchView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    // TODO: 선택된 텍스트 검색하는 기능
                     ForEach(keywords, id: \.self) { keyword in
                         Text(keyword)
                             .Body2()
