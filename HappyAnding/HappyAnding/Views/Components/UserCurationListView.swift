@@ -22,7 +22,7 @@ struct UserCurationListView: View {
                                    isAccessCuration: self.isAccessCuration)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
-
+            
             NavigationLink(value: UInt(0)) {
                 HStack(spacing: 7) {
                     Image(systemName: "plus")

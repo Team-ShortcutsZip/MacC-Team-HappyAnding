@@ -63,8 +63,11 @@ struct adminCurationsFrameiew: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(adminCurations, id: \.id) { curation in
-                        NavigationLink(destination: ReadAdminCurationView(curation: curation)) {
+                        NavigationLink(value: curation) {
                             AdminCurationCell(adminCuration: curation)
+                        }
+                        .navigationDestination(for: Curation.self) { curation in
+                            ReadAdminCurationView(curation: curation)
                         }
                     }
                 }
