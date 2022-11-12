@@ -29,9 +29,11 @@ struct SearchView: View {
                 } else {
                     ScrollView {
                         ForEach(searchResults, id: \.self) { result in
-                            ShortcutCell(shortcut: result)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
+                            NavigationLink(destination: ReadShortcutView(shortcutID: result.id)) {
+                                ShortcutCell(shortcut: result)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                            }
                         }
                     }
                }
