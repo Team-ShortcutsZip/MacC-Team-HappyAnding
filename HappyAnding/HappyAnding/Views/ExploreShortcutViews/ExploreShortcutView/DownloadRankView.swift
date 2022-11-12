@@ -34,6 +34,7 @@ struct DownloadRankView: View {
                     ShortcutsListView(shortcuts: $shortcuts,
                                       sectionType: SectionType.download,
                                       navigationParentView: self.navigationParentView)
+                        .navigationBarTitleDisplayMode(.inline)
                 })
             }
             .padding(.leading, 16)
@@ -52,8 +53,8 @@ struct DownloadRankView: View {
                     })
                 }
             }
-            .environmentObject(navigation)
-            .background(Color.Background)
         }
+        .environmentObject(navigation)
+        .background(Color.Background)
     }
 }
