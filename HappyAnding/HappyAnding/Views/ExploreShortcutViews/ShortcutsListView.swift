@@ -25,7 +25,7 @@ struct ShortcutsListView: View {
             
             LazyVStack {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
+                    NavigationLink(value: shortcut.id) {
                         ShortcutCell(shortcut: shortcut,
                                      rankNumber: sectionType == .download ? index + 1 : -1)
                         .listRowInsets(EdgeInsets())
@@ -67,10 +67,13 @@ struct ShortcutsListView: View {
                             }
                         }
                     }
+                    .navigationDestination(for: String.self) { _ in
+                        ReadShortcutView(shortcut: shortcut, shortcutID: shortcut.id)
+                    }
                 }
             }
         }
-        .navigationBarTitle((categoryName == nil ? "" : categoryName?.translateName())!)
+        .navigationBarTitle((categoryName == nil ? sectionType?.rawValue : categoryName?.translateName())!)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)
         .onAppear {
