@@ -48,10 +48,9 @@ struct CategoryView: View {
                         NavigationLink(value: value, label: {
                             CategoryCellView(categoryName: value.translateName())
                         })
-                        .navigationDestination(for: Category.self) { value in
-                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index],
-                                              categoryName: value,
-                                              navigationParentView: .shortcuts)
+                        .navigationDestination(for: Category.self) { category in
+                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
+                                              categoryName: category)
                         }
                     }
                 }

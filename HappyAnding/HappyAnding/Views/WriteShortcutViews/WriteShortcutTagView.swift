@@ -23,7 +23,6 @@ struct WriteShortcutTagView: View {
     @State var newCategory: [String] = []
     
     let isEdit: Bool
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -140,14 +139,14 @@ struct WriteShortcutTagView: View {
                     shortcutsZipViewModel.setData(model: shortcut)
                 }
                 
-                switch navigationParentView {
-                case .shortcuts:
-                    shortcutNavigation.shortcutPath = .init()
-                case .curations:
-                    curationNavigation.navigationPath = .init()
-                case .myPage:
-                    profileNavigation.navigationPath = .init()
-                }
+//                switch navigationParentView {
+//                case .shortcuts:
+//                    shortcutNavigation.shortcutPath = .init()
+//                case .curations:
+//                    curationNavigation.navigationPath = .init()
+//                case .myPage:
+//                    profileNavigation.navigationPath = .init()
+//                }
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)

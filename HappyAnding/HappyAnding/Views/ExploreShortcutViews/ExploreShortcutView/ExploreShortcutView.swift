@@ -15,18 +15,15 @@ struct ExploreShortcutView: View {
     var body: some View {
         NavigationStack(path: $navigation.shortcutPath) {
             ScrollView {
-                MyShortcutCardListView(navigationParentView: .shortcuts,
-                                       shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
+                MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
-                DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
-                                 navigationParentView: .shortcuts)
+                DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload)
                     .padding(.bottom, 32)
                 
                 CategoryView()
                     .padding(.bottom, 32)
-                LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike,
-                                  navigationParentView: .shortcuts)
+                LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
                     .padding(.bottom, 44)
             }
             .navigationBarTitle(Text("단축어 둘러보기"))

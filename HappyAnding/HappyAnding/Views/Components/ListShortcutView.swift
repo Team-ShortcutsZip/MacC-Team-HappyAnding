@@ -17,8 +17,6 @@ struct ListShortcutView: View {
     @State var shortcutsArray: [Shortcuts] = []
     @State private var isLastItem = false
     
-    let navigationParentView: NavigationParentView
-    
     var body: some View {
         
         List {
@@ -35,14 +33,12 @@ struct ListShortcutView: View {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if data.sectionType == .download {
                         ShortcutCell(shortcut: shortcut,
-                                     navigationParentView: self.navigationParentView,
                                      rankNumber: index + 1)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                         
                     } else {
-                        ShortcutCell(shortcut: shortcut,
-                                     navigationParentView: self.navigationParentView)
+                        ShortcutCell(shortcut: shortcut)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                     }

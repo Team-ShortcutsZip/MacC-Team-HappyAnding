@@ -12,8 +12,6 @@ struct LovedShortcutView: View {
     @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
-    let navigationParentView: NavigationParentView
-    
     var body: some View {
         VStack {
             HStack {
@@ -30,11 +28,9 @@ struct LovedShortcutView: View {
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 }
-                .navigationDestination(for: SectionType.self, destination: { _ in
+                .navigationDestination(for: SectionType.self, destination: { type in
                     ShortcutsListView(shortcuts: $shortcuts,
-                                      sectionType: SectionType.popular,
-                                      navigationParentView: self.navigationParentView)
-                        .navigationBarTitleDisplayMode(.inline)
+                                      sectionType: type)
                 })
             }
             .padding(.leading, 16)
@@ -43,13 +39,12 @@ struct LovedShortcutView: View {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
                         NavigationLink(value: shortcut.id) {
-                            ShortcutCell(shortcut: shortcut,
-                                         navigationParentView: self.navigationParentView)
+                            ShortcutCell(shortcut: shortcut)
                         }
-                        .navigationDestination(for: String.self, destination: { shortcutID in
-                            ReadShortcutView(shortcutID: shortcut.id,
-                                             navigationParentView: self.navigationParentView)
-                        })
+                        .navigationDestination(for: String.self) { shortcutID in
+                            ReadShortcutView(shortcutID: shortcutID)
+                        }
+                       
                     }
                 }
             }

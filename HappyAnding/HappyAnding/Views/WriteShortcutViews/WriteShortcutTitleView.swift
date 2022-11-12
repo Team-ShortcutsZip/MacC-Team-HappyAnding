@@ -29,7 +29,6 @@ struct WriteShortcutTitleView: View {
                                     curationIDs: [String]())
     
     let isEdit: Bool
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -100,8 +99,7 @@ struct WriteShortcutTitleView: View {
             
             NavigationLink {
                 WriteShortcutdescriptionView(shortcut: $shortcut,
-                                             isEdit: isEdit,
-                                             navigationParentView: self.navigationParentView)
+                                             isEdit: isEdit)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -129,6 +127,6 @@ struct WriteShortcutTitleView: View {
 
 struct WriteShortcutTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteShortcutTitleView(isEdit: false, navigationParentView: .shortcuts)
+        WriteShortcutTitleView(isEdit: false)
     }
 }

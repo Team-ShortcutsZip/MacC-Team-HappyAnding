@@ -14,13 +14,10 @@ struct UserCurationListView: View {
     
     @Binding var userCurations: [Curation]
     
-    let navigationParentView: NavigationParentView
-    
     var body: some View {
         VStack(spacing: 0) {
             UserCurationListHeader(userCurations: $userCurations,
-                                   data: data,
-                                   navigationParentView: self.navigationParentView)
+                                   data: data)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             
@@ -44,21 +41,18 @@ struct UserCurationListView: View {
                     //TODO: 데이터 변경 필요
                     if index < 2 {
                         NavigationLink(value: curation) {
-                            UserCurationCell(curation: curation,
-                                             navigationParentView: self.navigationParentView)
+                            UserCurationCell(curation: curation)
                         }
                     }
                 }
             }
         }
         .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation,
-                                 navigationParentView: self.navigationParentView)
+            ReadUserCurationView(userCuration: curation)
         }
         .navigationDestination(for: UInt.self) { isEdit in
             WriteCurationSetView(isWriting: self.$isWriting,
-                                 isEdit: false,
-                                 navigationParentView: self.navigationParentView)
+                                 isEdit: false)
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
@@ -68,8 +62,6 @@ struct UserCurationListHeader: View {
     @Binding var userCurations: [Curation]
     
     @State var data: NavigationCurationType
-    
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         HStack(alignment: .bottom) {
@@ -88,8 +80,7 @@ struct UserCurationListHeader: View {
         .navigationDestination(for: NavigationCurationType.self) { type in
             ListCurationView(userCurations: $userCurations,
                              type: data.type,
-                             isAllUser: true,
-                             navigationParentView: self.navigationParentView)
+                             isAllUser: true)
             
         }
     }

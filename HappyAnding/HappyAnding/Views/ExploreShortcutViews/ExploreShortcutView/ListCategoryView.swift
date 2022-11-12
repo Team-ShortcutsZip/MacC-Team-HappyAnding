@@ -22,8 +22,7 @@ struct ListCategoryView: View {
                 LazyVGrid(columns: gridLayout, spacing: 0) {
                     ForEach(Category.allCases, id: \.self) { item in
                         NavigationLink(destination: ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[item.index],
-                                                                      categoryName: item,
-                                                                      navigationParentView: .shortcuts)) {
+                                                                      categoryName: item)) {
                             RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
                                 .strokeBorder(Color.Gray1, lineWidth: 1)
                                 .background(Color.White)
