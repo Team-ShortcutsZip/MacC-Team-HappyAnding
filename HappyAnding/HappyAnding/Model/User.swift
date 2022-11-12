@@ -11,10 +11,15 @@ struct User: Identifiable, Codable {
     var id: String
     var nickname: String
     var likedShortcuts: [String]
-    var downloadedShortcuts: [String]
+    var downloadedShortcuts: [DownloadedShortcut]
     
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()
         return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
     }
+}
+
+struct DownloadedShortcut: Identifiable, Codable {
+    var id: String
+    var downloadLink: String
 }
