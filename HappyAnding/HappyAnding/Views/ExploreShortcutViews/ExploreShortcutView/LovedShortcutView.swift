@@ -45,11 +45,11 @@ struct LovedShortcutView: View {
                         NavigationLink(value: shortcut.id) {
                             ShortcutCell(shortcut: shortcut,
                                          navigationParentView: self.navigationParentView)
+                            .navigationDestination(for: String.self, destination: { shortcutID in
+                                ReadShortcutView(shortcutID: shortcutID,
+                                                 navigationParentView: self.navigationParentView)
+                            })
                         }
-                        .navigationDestination(for: String.self, destination: { shortcutID in
-                            ReadShortcutView(shortcutID: shortcut.id,
-                                             navigationParentView: self.navigationParentView)
-                        })
                     }
                 }
             }
@@ -59,4 +59,3 @@ struct LovedShortcutView: View {
         .background(Color.Background)
     }
 }
-
