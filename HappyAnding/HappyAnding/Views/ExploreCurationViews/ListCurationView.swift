@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum CurationType: String {
-    case myCuration = "나의 큐레이션"
+    case myCuration = "내가 작성한 큐레이션"
     case userCuration = ""
 }
 

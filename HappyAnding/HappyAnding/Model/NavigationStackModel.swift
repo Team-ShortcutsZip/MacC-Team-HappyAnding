@@ -13,3 +13,12 @@ struct NavigationListShortcutType: Identifiable, Hashable {
     var sectionType: SectionType
     var shortcuts: [Shortcuts]?
 }
+
+struct NavigationCurationType: Identifiable, Hashable {
+    var id = UUID().uuidString
+    
+    var type: CurationType
+    var title: String
+    var isAllUser: Bool?
+    let isAccessCuration: Bool
+}
