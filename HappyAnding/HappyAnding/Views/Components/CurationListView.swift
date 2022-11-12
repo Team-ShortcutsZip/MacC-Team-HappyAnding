@@ -23,13 +23,14 @@ struct CurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                NavigationLink(destination: ReadUserCurationView(userCuration: curation,
-                                                                 isAccessCuration: self.isAccessCuration)) {
-                    if index < 2 {
-                        UserCurationCell(
-                            curation: curation,
-                            isAccessCuration: true
-                        )
+                if index < 2 {
+                    NavigationLink(value: userCurations) {
+                        UserCurationCell(curation: curation, isAccessCuration: true)
+                    }
+                    
+                    .navigationDestination(for: Curation.self) { _ in
+                        ReadUserCurationView(userCuration: curation,
+                                             isAccessCuration: self.isAccessCuration)
                     }
                 }
             }

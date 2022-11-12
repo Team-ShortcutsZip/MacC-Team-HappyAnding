@@ -97,6 +97,8 @@ struct MyPageView: View {
 }
 
 struct MyPageShortcutList: View {
+    @EnvironmentObject var navigation: ProfileNavigation
+    
     var shortcuts: [Shortcuts]?
     var type: SectionType
     var body: some View {
@@ -116,10 +118,16 @@ struct MyPageShortcutList: View {
         .navigationDestination(for: Shortcuts.self) { shortcut in
             ReadShortcutView(shortcutID: shortcut.id)
         }
+        .navigationDestination(for: SectionType.self) { type in
+            ListShortcutView(shortcuts: self.shortcuts, sectionType: type)
+        }
+        .environmentObject(navigation)
     }
 }
 
 struct MyPageListHeader: View {
+    @EnvironmentObject var navigation: ProfileNavigation
+
     var type: SectionType
     let shortcuts: [Shortcuts]?
     var body: some View {
@@ -129,18 +137,19 @@ struct MyPageListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            
+
             if let shortcuts {
-                NavigationLink(value: shortcuts) {
+                NavigationLink(value: type) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(.Gray4)
                 }
-                .navigationDestination(for: [Shortcuts].self) { shortcuts in
+                .navigationDestination(for: SectionType.self) { type in
                     ListShortcutView(shortcuts: shortcuts, sectionType: type)
                 }
             }
         }
+        .environmentObject(navigation)
     }
 }
 
