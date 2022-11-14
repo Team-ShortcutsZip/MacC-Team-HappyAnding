@@ -11,10 +11,11 @@ import SwiftUI
 struct SearchView: View {
     @Environment(\.isSearching) private var isSearching: Bool
     @Environment(\.dismissSearch) private var dismissSearch
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var isSearched: Bool = false
     @State var searchText: String = ""
-    @State var searchResults: [Shortcuts] = []
+    @State var shortcutResults = Set<Shortcuts>()
     
     let keywords: [String] = ["단축어", "갓생", "포항꿀주먹"]
     
@@ -24,11 +25,11 @@ struct SearchView: View {
                 recommendKeword
                 Spacer()
             } else {
-                if searchResults.count == 0 {
+                if shortcutResults.count == 0 {
                     proposeView
                 } else {
                     ScrollView {
-                        ForEach(searchResults, id: \.self) { result in
+                        ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { result in
                             NavigationLink(destination: ReadShortcutView(shortcutID: result.id)) {
                                 ShortcutCell(shortcut: result)
                                     .listRowInsets(EdgeInsets())
@@ -45,7 +46,7 @@ struct SearchView: View {
             if searchText.isEmpty && !isSearching {
                 // Search cancelled here
                 print("canceled")
-                searchResults.removeAll()
+                shortcutResults.removeAll()
                 isSearched = false
             }
         }        .navigationBarTitleDisplayMode(.inline)
@@ -55,7 +56,16 @@ struct SearchView: View {
     private func runSearch() {
         Task {
             isSearched = true
-            // firebase 검색 기능 추가해서 searchResults에 넣기
+            shortcutsZipViewModel.searchShortcutByRequiredApp(word: searchText) { shortcuts in
+                shortcuts.forEach { shortcut in
+                    shortcutResults.insert(shortcut)
+                }
+            }
+            shortcutsZipViewModel.searchShortcutByTitlePrefix(keyword: searchText) { shortcuts in
+                shortcuts.forEach { shortcut in
+                    shortcutResults.insert(shortcut)
+                }
+            }
         }
     }
     
@@ -66,16 +76,20 @@ struct SearchView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    // TODO: 선택된 텍스트 검색하는 기능
                     ForEach(keywords, id: \.self) { keyword in
                         Text(keyword)
                             .Body2()
                             .foregroundColor(Color.Gray4)
-                            .padding(10)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(Color.Gray4, lineWidth: 1)
                             )
+                            .onTapGesture {
+                                searchText = keyword
+                                runSearch()
+                            }
                     }
                 }
                 .padding(.leading, 12)

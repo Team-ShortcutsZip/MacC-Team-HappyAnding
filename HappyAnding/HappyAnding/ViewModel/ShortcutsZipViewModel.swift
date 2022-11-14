@@ -38,6 +38,7 @@ class ShortcutsZipViewModel: ObservableObject {
     var lastShortcutDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
     var lastCurationDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
     var lastCategoryDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 12)
+    var lastSearchShortcutDocumentSnapshot: QueryDocumentSnapshot?
     
     let numberOfPageLimit = 10
     let numberOfLike = 5
@@ -873,4 +874,72 @@ class ShortcutsZipViewModel: ObservableObject {
             }
     }
     
+// MARK: - 검색 관련 함수
+    
+    //MARK: 연관 앱으로 단축어 검색
+    func searchShortcutByRequiredApp(word: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+        var shortcuts: [Shortcuts] = []
+        
+        var query: Query!
+        
+        query = db.collection("Shortcut")
+            .whereField("requiredApp", arrayContains: word)
+            .order(by: "requiredApp", descending: true)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        shortcuts.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                self.lastSearchShortcutDocumentSnapshot = documents.last
+                completionHandler(shortcuts)
+            }
+        }
+    }
+    
+    //MARK: 제목으로 단축어 검색
+    ///prefix기준으로만 검색이 가능
+    func searchShortcutByTitlePrefix(keyword: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+        var shortcuts: [Shortcuts] = []
+        
+        var query: Query!
+        
+        query = db.collection("Shortcut")
+            .whereField("title", isGreaterThanOrEqualTo: keyword)
+            .whereField("title", isLessThanOrEqualTo: keyword + "\u{f8ff}")
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        shortcuts.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                self.lastSearchShortcutDocumentSnapshot = documents.last
+                completionHandler(shortcuts)
+            }
+        }
+    }
 }
