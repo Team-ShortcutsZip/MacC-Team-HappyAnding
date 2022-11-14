@@ -102,7 +102,6 @@ class ShortcutsZipViewModel: ObservableObject {
                         print("error: \(error)")
                     }
                 }
-                
             }
         }
     }
