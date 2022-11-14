@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WriteCurationSetView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var isWriting: Bool
@@ -51,6 +52,7 @@ struct WriteCurationSetView: View {
             }
             
             bottomButton
+            
         }
         .background(Color.Background)
         .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
@@ -67,6 +69,17 @@ struct WriteCurationSetView: View {
             }
             shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
                 self.shortcutCells = self.shortcutCells.union(shortcuts)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if isEdit {
+                    Button {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("닫기")
+                    }
+                }
             }
         }
         

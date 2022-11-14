@@ -39,3 +39,11 @@ class EditShortcutNavigation: ObservableObject {
         self.navigationPath = NavigationPath()
     }
 }
+
+class EditCurationNavigation: ObservableObject {
+    @Published var navigationPath: NavigationPath
+    
+    init() {
+        self.navigationPath = NavigationPath()
+    }
+}
