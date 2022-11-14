@@ -54,7 +54,7 @@ struct ReadShortcutContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay {
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.Gray2,lineWidth: 1)
+                .strokeBorder(Color.Gray2,lineWidth: 1)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 20)

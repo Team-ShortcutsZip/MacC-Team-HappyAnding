@@ -110,7 +110,7 @@ struct WriteNicknameView: View {
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(lineWidth: 1)
+                    .strokeBorder(lineWidth: 1)
                     .foregroundColor(isNicknameChecked ? .Success : (isValidLength ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
             )
         }

@@ -67,7 +67,7 @@ struct ValidationCheckTextField: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(lineWidth: 1)
+                    .strokeBorder(lineWidth: 1)
                     .foregroundColor(strokeColor)
             )
             .padding(.horizontal, 16)
