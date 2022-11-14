@@ -52,6 +52,10 @@ struct adminCurationsFrameiew: View {
     
     let adminCurations: [Curation]
     
+    enum NavigationCuration: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
@@ -72,10 +76,10 @@ struct adminCurationsFrameiew: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(adminCurations, id: \.id) { curation in
-                        NavigationLink(value: false) {
+                        NavigationLink(value: NavigationCuration.first) {
                             AdminCurationCell(adminCuration: curation)
                         }
-                        .navigationDestination(for: Bool.self) { _ in
+                        .navigationDestination(for: NavigationCuration.self) { _ in
                             ReadAdminCurationView(curation: curation)
                         }
                     }

@@ -13,6 +13,10 @@ struct CurationListView: View {
     @Binding var userCurations: [Curation]
     let navigationParentView: NavigationParentView
     
+    enum NavigationUserCuration: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             CurationListHeader(userCurations: $userCurations,
@@ -23,17 +27,18 @@ struct CurationListView: View {
             
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                 if index < 2 {
-                    NavigationLink(value: curation) {
+                    NavigationLink(value: NavigationUserCuration.first) {
                         UserCurationCell(curation: curation,
                                          navigationParentView: self.navigationParentView)
+                    }
+                    .navigationDestination(for: NavigationUserCuration.self) { _ in
+                        ReadUserCurationView(userCuration: curation,
+                                             navigationParentView: self.navigationParentView)
                     }
                 }
             }
         }
-        .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation,
-                                 navigationParentView: self.navigationParentView)
-        }
+        
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         
     }
