@@ -34,6 +34,7 @@ struct WriteNicknameView: View {
     @State var isNicknameChecked: Bool = false
     @State var isValidLength = false
     @State private var isTappedPrivacyButton = false
+    @State var isNormalString = true
     
     let user = Auth.auth().currentUser
 //    let firebase = FirebaseService()
@@ -58,10 +59,17 @@ struct WriteNicknameView: View {
                     .padding(.top, 4)
             }
             
-            Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
-                .Body2()
-                .foregroundColor(nickname.isEmpty ? .Gray2 : .Gray4)
-                .padding(.top, 4)
+            if isNormalString {
+                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
+                    .Body2()
+                    .foregroundColor(nickname.isEmpty ? .Gray2 : .Gray4)
+                    .padding(.top, 4)
+            } else {
+                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
+                    .Body2()
+                    .foregroundColor(.Error)
+                    .padding(.top, 4)
+            }
             
             Spacer()
             
@@ -103,6 +111,7 @@ struct WriteNicknameView: View {
                     .onChange(of: nickname) {_ in
                         isValidLength = nickname.count <= 8 && !nickname.isEmpty
                         isNicknameChecked = false
+                        isNormalString = nickname.isNormalString()
                     }
                 
                 if !nickname.isEmpty {
@@ -185,13 +194,13 @@ struct WriteNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isNicknameChecked ? .Primary : .Gray1)
+                    .foregroundColor(isNicknameChecked && isNormalString ? .Primary : .Gray1)
                     .frame(height: 52)
                 Text("시작하기")
-                    .foregroundColor(isNicknameChecked ? .Text_icon : .Gray3)
+                    .foregroundColor(isNicknameChecked && isNormalString ? .Text_icon : .Gray3)
             }
         })
-        .disabled(!isNicknameChecked)
+        .disabled(!isNicknameChecked || !isNormalString)
     }
 }
 
