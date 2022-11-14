@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import FirebaseAuth
 
 /*
@@ -40,15 +41,14 @@ class ShortcutsZipViewModel: ObservableObject {
     var lastCategoryDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 12)
     
     let numberOfPageLimit = 10
-    let numberOfLike = 5
+    let minimumOfLike = 5
     
+    var allShortcuts: [Shortcuts] = []
+
     init() {
-        
-        fetchShortcutLimit(orderBy: "numberOfDownload") { shortcuts in
-            self.sortedShortcutsByDownload = shortcuts
-        }
-        fetchShortcutLimitByLiked { shortcuts in
-            self.sortedShortcutsByLike = shortcuts
+        fetchShortcutAll { shortcuts in
+            self.allShortcuts = shortcuts
+            self.initShortcut()
         }
         fetchCurationLimit(isAdmin: true) { curations in
             self.adminCurations = curations
@@ -56,13 +56,30 @@ class ShortcutsZipViewModel: ObservableObject {
         fetchCurationLimit(isAdmin: false) { curations in
             self.userCurations = curations
         }
-        initUserInfo()
+    }
+    func initShortcut() {
+        sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
+        sortedShortcutsByLike = allShortcuts.filter({$0.numberOfLike > minimumOfLike})
+        for category in Category.allCases {
+            shortcutsInCategory[category.index] = allShortcuts.filter({$0.category.contains(category.rawValue)})
+        }
+        fetchUser(userID: self.currentUser()) { user in
+            self.userInfo = user
+        }
+        shortcutsMadeByUser = allShortcuts.filter({$0.id == userInfo?.id})
+        userInfo?.downloadedShortcuts.forEach({ shortcutID in
+            if let index = allShortcuts.firstIndex(where: {$0.id == shortcutID}) {
+                shortcutsUserDownloaded.append(allShortcuts[index])
+            }
+        })
+        userInfo?.likedShortcuts.forEach({ shortcutID in
+            if let index = allShortcuts.firstIndex(where: {$0.id == shortcutID}) {
+                shortcutsUserLiked.append(allShortcuts[index])
+            }
+        })
     }
     
     func initUserInfo() {
-        fetchShortcutByAuthor(author: currentUser()) { shortcuts in
-            self.shortcutsMadeByUser = shortcuts
-        }
         fetchCurationByAuthor(author: currentUser()) { curations in
             self.curationsMadeByUser = curations
         }
@@ -76,6 +93,56 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         }
     }
+    
+    func fetchShortcutAll(
+        completionHandler: @escaping ([Shortcuts])->()) {
+            
+            var shortcuts: [Shortcuts] = []
+            var query: Query!
+            
+            query = db.collection("Shortcut")
+            
+            query.addSnapshotListener { snapshot, error in
+                guard let snapshot else {
+                    print("Error fetching snapshots: \(error!)")
+                    return
+                }
+                snapshot.documentChanges.forEach { diff in
+                    let decoder = JSONDecoder()
+                    
+                    do {
+                        let data = diff.document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        
+                        if (diff.type == .added) {
+                            shortcuts.insert(shortcut, at: 0)
+                            //다른 리스트들에도 추가
+                            self.sortedShortcutsByDownload.append(shortcut)
+                            shortcut.category.forEach { category in
+                                self.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
+                            }
+                        }
+                        if (diff.type == .modified) {
+                            if let index = shortcuts.firstIndex(where: {$0.id == shortcut.id}) {
+                                shortcuts[index] = shortcut
+                            }
+                            if shortcut.numberOfLike >= 5 {
+                                self.sortedShortcutsByLike.append(shortcut)
+                            }
+                            //다른 리스트들에서도 변경
+                        }
+                        if (diff.type == .removed) {
+                            shortcuts.removeAll(where: {$0.id == shortcut.id})
+                            //다른 리스트들에서도 삭제
+                        }
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                completionHandler(shortcuts)
+            }
+        }
     
     //MARK: 단축어 정렬기준에 따라 마지막 데이터가 저장된 인덱스 값을 반환하는 함수
     
@@ -110,7 +177,7 @@ class ShortcutsZipViewModel: ObservableObject {
         return index
     }
     
-    
+    /*
 //MARK: - 데이터를 받아오는 함수들
     
     //MARK: - 단축어
@@ -168,12 +235,12 @@ class ShortcutsZipViewModel: ObservableObject {
             
             if let next = self.lastShortcutDocumentSnapshot[index] {
                 query  = db.collection("Shortcut")
-                    .whereField("numberOfLike", isGreaterThan: numberOfLike)
+                    .whereField("numberOfLike", isGreaterThan: minimumOfLike)
                     .limit(to: numberOfPageLimit)
                     .start(afterDocument: next)
             } else {
                 query = db.collection("Shortcut")
-                    .whereField("numberOfLike", isGreaterThan: numberOfLike)
+                    .whereField("numberOfLike", isGreaterThan: minimumOfLike)
                     .limit(to: numberOfPageLimit)
             }
             
@@ -276,7 +343,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
     }
-    
+    */
     // MARK: shortcut Id 배열로 shortcut 배열 가져오는 함수
     
     func fetchShortcutByIds(shortcutIds: [String], completionHandler: @escaping ([Shortcuts])->()) {
@@ -458,7 +525,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
     }
-    
+     
     //MARK: Curation을 (admin, user) 구분하여 10개씩 가져오는 함수
     
     func fetchCurationLimit(isAdmin: Bool, completionHandler: @escaping ([Curation])->()) {
