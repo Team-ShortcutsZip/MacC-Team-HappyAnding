@@ -32,6 +32,8 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var userCurations: [Curation] = []
     @Published var adminCurations: [Curation] = []
     
+    @Published var keywords: Keyword = Keyword(keyword: [String]())
+    
     static let share = ShortcutsZipViewModel()
     private let db = Firestore.firestore()
     
@@ -58,6 +60,9 @@ class ShortcutsZipViewModel: ObservableObject {
             self.userCurations = curations
         }
         initUserInfo()
+        fetchKeyword { keywords in
+            self.keywords = keywords
+        }
     }
     
     func initUserInfo() {
@@ -78,6 +83,29 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
+    //MARK: 키워드 받아오는 함수
+    func fetchKeyword(completionHandler: @escaping (Keyword)->()) {
+        var _: [String] = []
+        db.collection("Keyword").getDocuments { querySnapshot, error in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let keyword = try decoder.decode(Keyword.self, from: jsonData)
+                        completionHandler(keyword)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                
+            }
+        }
+    }
     //MARK: 단축어 정렬기준에 따라 마지막 데이터가 저장된 인덱스 값을 반환하는 함수
     
     func checkShortcutIndex(orderBy: String) -> Int {

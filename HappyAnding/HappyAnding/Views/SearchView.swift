@@ -13,11 +13,10 @@ struct SearchView: View {
     @Environment(\.dismissSearch) private var dismissSearch
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @State var keywords: Keyword = Keyword(keyword: [String]())
     @State var isSearched: Bool = false
     @State var searchText: String = ""
     @State var shortcutResults = Set<Shortcuts>()
-    
-    let keywords: [String] = ["단축어", "갓생", "포항꿀주먹"]
     
     var body: some View {
         VStack {
@@ -39,6 +38,9 @@ struct SearchView: View {
                     }
                }
             }
+        }
+        .onAppear() {
+            self.keywords = shortcutsZipViewModel.keywords
         }
         .searchable(text: $searchText)
         .onSubmit(of: .search, runSearch)
@@ -76,7 +78,7 @@ struct SearchView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(keywords, id: \.self) { keyword in
+                    ForEach(keywords.keyword, id: \.self) { keyword in
                         Text(keyword)
                             .Body2()
                             .foregroundColor(Color.Gray4)
