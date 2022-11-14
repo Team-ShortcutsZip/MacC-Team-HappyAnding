@@ -59,7 +59,7 @@ struct MyShortcutCardListView: View {
                     }
                 }
                 .navigationDestination(for: Bool.self) { isEdit in
-                    WriteShortcutTitleView(isEdit: isEdit)
+                    WriteShortcutTitleView(isWriting: .constant(true), isEdit: false)
                 }
                 .navigationDestination(for: String.self) { shortcutID in
                     ReadShortcutView(shortcutID: shortcutID)
