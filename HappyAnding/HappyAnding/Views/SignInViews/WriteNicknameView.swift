@@ -167,13 +167,13 @@ struct WriteNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValidLength ? .Primary : .Gray1)
+                    .foregroundColor(isValidLength && isNormalString ? .Primary : .Gray1)
                     .frame(width: 80, height: 44)
                 Text("중복확인")
-                    .foregroundColor(isValidLength ? .Text_icon : .Gray3)
+                    .foregroundColor(isValidLength && isNormalString ? .Text_icon : .Gray3)
             }
         })
-        .disabled(!isValidLength)
+        .disabled(!isValidLength || !isNormalString)
         ///alert 띄우는 코드
         .alert(isPresented: $checkNicknameDuplicate){
             Alert(title: Text("닉네임 중복 확인"),
