@@ -71,6 +71,10 @@ struct UserCurationListHeader: View {
     
     let navigationParentView: NavigationParentView
     
+    enum NavigationExtraCurationView: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         HStack(alignment: .bottom) {
             Text(data.title)
@@ -79,13 +83,13 @@ struct UserCurationListHeader: View {
                 .onTapGesture { }
             Spacer()
             
-            NavigationLink(value: data) {
+            NavigationLink(value: NavigationExtraCurationView.first) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
             }
         }
-        .navigationDestination(for: NavigationCurationType.self) { type in
+        .navigationDestination(for: NavigationExtraCurationView.self) { _ in
             ListCurationView(userCurations: $userCurations,
                              type: data.type,
                              isAllUser: true,
