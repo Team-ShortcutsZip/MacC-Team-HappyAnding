@@ -38,3 +38,9 @@ struct Shortcuts: Identifiable, Codable, Equatable, Hashable {
         return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
     }
 }
+
+extension Shortcuts {
+    func getNull() -> Shortcuts {
+        return Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [], requiredApp: [], numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [], curationIDs: [])
+    }
+}

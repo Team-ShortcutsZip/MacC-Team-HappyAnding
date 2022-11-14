@@ -15,7 +15,7 @@ struct ReadShortcutView: View {
     @State var isEdit = false
     @State var isTappedDeleteButton = false
     
-    @State var shortcut: Shortcuts?
+    @State var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [], requiredApp: [], numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [], curationIDs: [])
     @State var isMyLike: Bool = false
     @State var isFirstMyLike = false
     @State var isClickDownload = false
@@ -26,7 +26,7 @@ struct ReadShortcutView: View {
         VStack {
             
             if let shortcut {
-                ReadShortcutHeaderView(shortcut: .constant(shortcut), isMyLike: $isMyLike)
+                ReadShortcutHeaderView(shortcut: $shortcut, isMyLike: $isMyLike)
                 ReadShortcutContentView(shortcut: shortcut)
                 
                 Button(action: {
@@ -34,7 +34,7 @@ struct ReadShortcutView: View {
                         openURL(url)
                         //UI 업데이트
                         if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(of: shortcut.id)) == nil {
-                            self.shortcut?.numberOfDownload += 1
+                            self.shortcut.numberOfDownload += 1
                         }
                         isClickDownload = true
                     }
@@ -54,39 +54,34 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
-            self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID)
+            self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) ?? shortcut.getNull()
             isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: shortcutID)
             isFirstMyLike = isMyLike
         }
         .onDisappear() {
             let isAlreadyContained = (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(of: shortcutID)) == nil
+            
             if (isClickDownload && isAlreadyContained) || isMyLike != isFirstMyLike {
-                //서버 데이터 업데이트
-                
-                
-            }
-            if let shortcut {
-                //서버, 뷰모델 데이터 업데이트
-                if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(of: shortcut.id)) == nil {
+                if isClickDownload && isAlreadyContained {
                     shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                    shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
+                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
+                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(shortcutID, at: 0)
                 }
-            }
-            if isMyLike {
-                if (shortcutsZipViewModel.userInfo?.likedShortcuts.firstIndex(of: shortcutID)) == nil {
-                    shortcutsZipViewModel.userInfo?.likedShortcuts.append(shortcutID)
+                if isMyLike != isFirstMyLike {
+                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+                    if isMyLike {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.insert(shortcutID, at: 0)
+                        shortcutsZipViewModel.shortcutsUserLiked.insert(shortcut, at: 0)
+                    } else {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.removeAll(where: { $0 == shortcutID })
+                        shortcutsZipViewModel.shortcutsUserLiked.removeAll(where: { $0.id == shortcutID })
+                    }
                 }
-            } else {
-                shortcutsZipViewModel.userInfo?.likedShortcuts.removeAll(where: { $0 == shortcutID })
-            }
-            if isFirstMyLike != isMyLike {
-                //데이터 상의 좋아요 추가, 취소 기능 동작
-                shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut!)
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if shortcut?.author == shortcutsZipViewModel.currentUser() {
+            if shortcut.author == shortcutsZipViewModel.currentUser() {
                 myShortcutMenuSection
             } else {
                 otherShortcutMenuSection
@@ -113,12 +108,10 @@ struct ReadShortcutView: View {
                   secondaryButton: .destructive(
                     Text("삭제"),
                     action: {
-                        if let shortcut {
-                            shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
-                            shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
-                            shortcutsZipViewModel.deleteData(model: shortcut)
-                            shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
-                        }
+                        shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
+                        shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
+                        shortcutsZipViewModel.deleteData(model: shortcut)
+                        shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
                     }
                   )
             )
@@ -169,16 +162,8 @@ extension ReadShortcutView {
     }
     
     func share() {
-        if let shortcut {
-            guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
-            let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-        }
+        guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
+        let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
 }
-
-//struct ReadShortcutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadShortcutView()
-//    }
-//}
