@@ -29,12 +29,22 @@ struct ExploreShortcutView: View {
             .navigationBarTitleDisplayMode(.large)
             .scrollIndicators(.hidden)
             .background(Color.Background)
+            .toolbar {
+                ToolbarItem {
+                    NavigationLink(destination: SearchView()) {
+                        Image(systemName: "magnifyingglass")
+                            .Headline()
+                            .foregroundColor(.Gray5)
+                    }
+                }
+            }
         }
     }
 }
-
+/*
 struct ExploreShortcutView_Previews: PreviewProvider {
     static var previews: some View {
         ExploreShortcutView()
     }
 }
+*/
