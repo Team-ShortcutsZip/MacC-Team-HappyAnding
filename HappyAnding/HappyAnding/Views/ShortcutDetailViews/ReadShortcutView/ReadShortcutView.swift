@@ -49,9 +49,7 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
-            shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
-                self.shortcut = shortcut
-            }
+            self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID)
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
