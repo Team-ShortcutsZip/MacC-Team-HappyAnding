@@ -12,6 +12,7 @@ struct ReadUserCurationView: View {
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var editNavigation = EditCurationNavigation()
     @State var authorInformation: User? = nil
     
     @State var isWriting = false
@@ -76,11 +77,14 @@ struct ReadUserCurationView: View {
                 // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 제거
                 .opacity(userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
         }))
-        .navigationDestination(for: NavigationEditCurationType.self) { data in
-            WriteCurationSetView(isWriting: $isTappedEditButton,
-                                 curation: data.curation,
-                                 isEdit: true,
-                                 navigationParentView: self.navigationParentView)
+        .fullScreenCover(isPresented: $isWriting) {
+            NavigationStack(path: $editNavigation.navigationPath) {
+                WriteCurationSetView(isWriting: $isTappedEditButton,
+                                     curation: self.userCuration,
+                                     isEdit: true,
+                                     navigationParentView: self.navigationParentView)
+            }
+            .environmentObject(editNavigation)
         }
     }
     
@@ -159,9 +163,9 @@ extension ReadUserCurationView {
     var myCurationMenuSection: some View {
         
         Section {
-            let data = NavigationEditCurationType(curation: userCuration)
-            
-            NavigationLink(value: data) {
+            Button {
+                self.isWriting.toggle()
+            } label: {
                 Label("편집", systemImage: "square.and.pencil")
             }
             
