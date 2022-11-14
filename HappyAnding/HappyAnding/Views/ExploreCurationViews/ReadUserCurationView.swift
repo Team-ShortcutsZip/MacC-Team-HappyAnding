@@ -79,7 +79,8 @@ struct ReadUserCurationView: View {
         .navigationDestination(for: NavigationEditCurationType.self) { data in
             WriteCurationSetView(isWriting: $isTappedEditButton,
                                  curation: data.curation,
-                                 isEdit: true)
+                                 isEdit: true,
+                                 navigationParentView: self.navigationParentView)
         }
     }
     

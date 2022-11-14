@@ -23,6 +23,7 @@ struct WriteCurationSetView: View {
                                    shortcuts: [ShortcutCellModel]())
     
     let isEdit: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack() {
@@ -44,7 +45,8 @@ struct WriteCurationSetView: View {
         .navigationDestination(for: Float.self) { isEdit in
             WriteCurationInfoView(curation: curation,
                                   isWriting: $isWriting,
-                                  isEdit: self.isEdit)
+                                  isEdit: self.isEdit,
+                                  navigationParentView: self.navigationParentView)
         }
         .onAppear() {
             shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
@@ -106,6 +108,7 @@ struct WriteCurationSetView: View {
 struct WriteCurationSetView_Previews: PreviewProvider {
     static var previews: some View {
         WriteCurationSetView(isWriting: .constant(false),
-                             isEdit: false)
+                             isEdit: false,
+                             navigationParentView: .curations)
     }
 }
