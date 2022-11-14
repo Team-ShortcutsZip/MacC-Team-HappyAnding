@@ -49,6 +49,7 @@ struct SearchView: View {
                 isSearched = false
             }
         }        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.Background)
     }
     
     private func runSearch() {
@@ -77,12 +78,10 @@ struct SearchView: View {
                             )
                     }
                 }
-                .padding(.leading, 16)
+                .padding(.leading, 12)
             }
         }
     }
-    
-    
     
     var proposeView: some View {
         VStack(alignment: .center) {
@@ -94,24 +93,13 @@ struct SearchView: View {
                 
             } label: {
                 Text("단축어 제안하기")
-                    .padding(.horizontal, 30)
+                    .padding(.horizontal, 28)
                     .padding(.vertical, 8)
             }.buttonStyle(.borderedProminent)
                 .padding(16)
         }
-    }
-}
-
-struct CheckSearchView<Content: View>: View {
-    @Environment(\.isSearching) var isSearching
-    let content: (Bool) -> Content
-
-    var body: some View {
-        content(isSearching)
-    }
-
-    init(@ViewBuilder content: @escaping (Bool) -> Content) {
-        self.content = content
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.Background)
     }
 }
 
