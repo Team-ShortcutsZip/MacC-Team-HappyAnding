@@ -13,7 +13,7 @@ struct WriteShortcutTagView: View {
     @EnvironmentObject var shortcutNavigation: ShortcutNavigation
     @EnvironmentObject var curationNavigation: CurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
-    
+    @Binding var isWriting: Bool
     @Binding var shortcut: Shortcuts
     
     @State var isShowingCategoryModal = false
@@ -86,6 +86,7 @@ struct WriteShortcutTagView: View {
                         curationIDs: shortcut.curationIDs
                     )
                 }
+                isWriting.toggle()
                 
 //                switch navigationParentView {
 //                case .shortcuts:

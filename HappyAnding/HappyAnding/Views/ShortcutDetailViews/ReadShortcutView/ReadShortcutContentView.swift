@@ -11,13 +11,8 @@ struct ReadShortcutContentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var userInformation: User? = nil
     
-    let shortcut: Shortcuts
-//    let writer: String
+    @Binding var shortcut: Shortcuts
     let profileImage: String = "person.crop.circle"
-//    let explain: String
-//    let category: String
-//    let necessaryApps: String
-//    let requirements: String
     
     var body: some View {
         ScrollView {

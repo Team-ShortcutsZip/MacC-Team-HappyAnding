@@ -11,6 +11,10 @@ struct WriteShortcutTitleView: View {
     
     @EnvironmentObject var shortcutNavigation: ShortcutNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
+    @Environment(\.presentationMode) var presentationMode
+    
+    @Binding var isWriting: Bool
+    
     @State var isShowingIconModal = false
     @State var isNameValid = false
     @State var isLinkValid = false
@@ -97,10 +101,7 @@ struct WriteShortcutTitleView: View {
             
             Spacer()
             
-            NavigationLink {
-                WriteShortcutdescriptionView(shortcut: $shortcut,
-                                             isEdit: isEdit)
-            } label: {
+            NavigationLink(value: 1) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Gray1 )
@@ -122,11 +123,21 @@ struct WriteShortcutTitleView: View {
         .onAppear {
             print("Shortcut \(shortcut)")
         }
-    }
-}
-
-struct WriteShortcutTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteShortcutTitleView(isEdit: false)
+        .navigationDestination(for: Int.self) { value in
+            WriteShortcutdescriptionView(shortcut: $shortcut,
+                                         isWriting: $isWriting,
+                                         isEdit: isEdit)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if isEdit {
+                    Button {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("닫기")
+                    }
+                }
+            }
+        }
     }
 }

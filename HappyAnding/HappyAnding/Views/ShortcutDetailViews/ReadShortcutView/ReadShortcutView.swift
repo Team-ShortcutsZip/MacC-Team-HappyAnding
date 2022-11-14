@@ -15,6 +15,7 @@ struct ReadShortcutView: View {
     
     @State var isTappedDeleteButton = false
     @State var shortcut: Shortcuts?
+    @State var isEdit = false
     
     let shortcutID: String
     
@@ -23,8 +24,8 @@ struct ReadShortcutView: View {
         VStack {
             
             if let shortcut {
-                ReadShortcutHeaderView(shortcut: shortcut)
-                ReadShortcutContentView(shortcut: shortcut)
+                ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
+                ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
                 
                 Button(action: {
                     if let url = URL(string: shortcut.downloadLink[0]) {
@@ -51,6 +52,15 @@ struct ReadShortcutView: View {
         .onAppear() {
             shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
                 self.shortcut = shortcut
+                print("hellohello \(self.$shortcut.unwrap()!)")
+            }
+        }
+        .onChange(of: isEdit) { _ in
+            if !isEdit {
+                shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
+                    self.shortcut = shortcut
+                    print(shortcut)
+                }
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -86,8 +96,16 @@ struct ReadShortcutView: View {
             )
         }
         .navigationDestination(for: NavigationEditShortcutType.self) { data in
-            WriteShortcutTitleView(shortcut: data.shortcut,
-                                   isEdit: true)
+            if let shortcut {
+                WriteShortcutTitleView(isWriting: .constant(true), shortcut: shortcut, isEdit: true)
+            }
+        }
+        .fullScreenCover(isPresented: $isEdit) {
+            NavigationView {
+                if let shortcut {
+                    WriteShortcutTitleView(isWriting: $isEdit, shortcut: shortcut, isEdit: true)
+                }
+            }
         }
     }
 }
@@ -98,12 +116,12 @@ extension ReadShortcutView {
         
         Section {
             
-            if let shortcut {
-                let data = NavigationEditShortcutType(shortcut: shortcut)
-                NavigationLink(value: data) {
-                    Label("편집", systemImage: "square.and.pencil")
-                }
+            Button {
+                isEdit.toggle()
+            } label: {
+                Label("편집", systemImage: "square.and.pencil")
             }
+            
             Button(action: {
                 share()
             }) {

@@ -9,10 +9,11 @@ import SwiftUI
 
 struct WriteShortcutdescriptionView: View {
     
+    @Binding var shortcut: Shortcuts
+    @Binding var isWriting: Bool
+    
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
-    
-    @Binding var shortcut: Shortcuts
     
     let isEdit: Bool
     
@@ -43,10 +44,7 @@ struct WriteShortcutdescriptionView: View {
             
             Spacer()
             
-            NavigationLink {
-                WriteShortcutTagView(shortcut: $shortcut,
-                                     isEdit: isEdit)
-            } label: {
+            NavigationLink(value: UInt(3)) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(isOneLineValid && isMultiLineValid ? .Primary : .Gray1 )
@@ -57,9 +55,15 @@ struct WriteShortcutdescriptionView: View {
                         .Body1()
                 }
             }
+            
             .disabled(!isOneLineValid || !isMultiLineValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
+        }
+        .navigationDestination(for: UInt.self) { value in
+            WriteShortcutTagView(isWriting: $isWriting,
+                                 shortcut: $shortcut,
+                                 isEdit: isEdit)
         }
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .ignoresSafeArea(.keyboard)
