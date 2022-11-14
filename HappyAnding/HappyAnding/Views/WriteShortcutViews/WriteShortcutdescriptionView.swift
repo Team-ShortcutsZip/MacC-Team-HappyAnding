@@ -18,6 +18,10 @@ struct WriteShortcutdescriptionView: View {
     let isEdit: Bool
     let navigationParentView: NavigationParentView
     
+    enum NavigationWriteTagView: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         VStack {
             ProgressView(value: 0.66, total: 1)
@@ -45,7 +49,7 @@ struct WriteShortcutdescriptionView: View {
             
             Spacer()
             
-            NavigationLink(value: UInt(3)) {
+            NavigationLink(value: NavigationWriteTagView.first) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(isOneLineValid && isMultiLineValid ? .Primary : .Gray1 )
@@ -61,7 +65,7 @@ struct WriteShortcutdescriptionView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
-        .navigationDestination(for: UInt.self) { value in
+        .navigationDestination(for: NavigationWriteTagView.self) { value in
             WriteShortcutTagView(isWriting: $isWriting,
                                  shortcut: $shortcut,
                                  isEdit: isEdit,

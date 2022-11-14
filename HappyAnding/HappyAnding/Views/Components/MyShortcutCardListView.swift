@@ -20,6 +20,10 @@ struct MyShortcutCardListView: View {
     
     let navigationParentView: NavigationParentView
     
+    enum NavigationShortcutTitleView: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -45,7 +49,7 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    NavigationLink(value: false) {
+                    NavigationLink(value: NavigationShortcutTitleView.first) {
                         AddMyShortcutCardView()
                     }
                     
@@ -61,7 +65,7 @@ struct MyShortcutCardListView: View {
                         }
                     }
                 }
-                .navigationDestination(for: Bool.self) { isEdit in
+                .navigationDestination(for: NavigationShortcutTitleView.self) { _ in
                     WriteShortcutTitleView(isWriting: .constant(true),
                                            isEdit: false,
                                            navigationParentView: self.navigationParentView)

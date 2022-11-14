@@ -33,7 +33,7 @@ struct DownloadRankView: View {
                 .navigationDestination(for: SectionType.self, destination: { type in
                     ShortcutsListView(shortcuts: $shortcuts,
                                       sectionType: type,
-                                      navigationParentView: self.navigation)
+                                      navigationParentView: self.navigationParentView)
                 })
             }
             .padding(.leading, 16)
