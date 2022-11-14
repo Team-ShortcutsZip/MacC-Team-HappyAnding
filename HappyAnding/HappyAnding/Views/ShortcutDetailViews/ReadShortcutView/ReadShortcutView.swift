@@ -93,6 +93,7 @@ struct ReadShortcutView: View {
                             shortcutsZipViewModel.deleteData(model: shortcut)
                             //FIXME: 뷰모델에서 실제 데이터를 삭제하도록 변경 필요
                             shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
+                            self.presentation.wrappedValue.dismiss()
                         }
                     }
                   )
