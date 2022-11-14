@@ -92,6 +92,7 @@ struct ReadShortcutView: View {
                             shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
                             shortcutsZipViewModel.deleteData(model: shortcut)
                             shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
+                            self.presentation.wrappedValue.dismiss()
                         }
                     }
                   )
