@@ -12,6 +12,10 @@ struct MyPageView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var navigation = ProfileNavigation()
     
+    enum NavigationSettingView: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         NavigationStack(path: $navigation.navigationPath) {
             ScrollView {
@@ -82,7 +86,7 @@ struct MyPageView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem {
-                    NavigationLink(value: 0) {
+                    NavigationLink(value: NavigationSettingView.first) {
                         Image(systemName: "gearshape.fill")
                             .Headline()
                             .foregroundColor(.Gray5)
@@ -91,7 +95,7 @@ struct MyPageView: View {
             }
             .scrollIndicators(.hidden)
             .background(Color.Background)
-            .navigationDestination(for: Int.self) { _ in
+            .navigationDestination(for: NavigationSettingView.self) { _ in
                 SettingView()
             }
         }
