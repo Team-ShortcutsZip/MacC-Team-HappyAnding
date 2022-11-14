@@ -80,7 +80,8 @@ struct SearchView: View {
                         Text(keyword)
                             .Body2()
                             .foregroundColor(Color.Gray4)
-                            .padding(10)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(Color.Gray4, lineWidth: 1)
