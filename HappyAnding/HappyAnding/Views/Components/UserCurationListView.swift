@@ -57,7 +57,8 @@ struct UserCurationListView: View {
         }
         .navigationDestination(for: UInt.self) { isEdit in
             WriteCurationSetView(isWriting: self.$isWriting,
-                                 isEdit: false)
+                                 isEdit: false,
+                                 navigationParentView: self.navigationParentView)
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
