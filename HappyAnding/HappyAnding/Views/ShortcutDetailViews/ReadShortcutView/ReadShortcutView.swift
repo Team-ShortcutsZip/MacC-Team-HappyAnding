@@ -16,6 +16,9 @@ struct ReadShortcutView: View {
     @State var isTappedDeleteButton = false
     
     @State var shortcut: Shortcuts?
+    @State var isMyLike: Bool = false
+    @State var isFirstMyLike = false
+    @State var isClickDownload = false
     let shortcutID: String
     
     var body: some View {
@@ -23,15 +26,17 @@ struct ReadShortcutView: View {
         VStack {
             
             if let shortcut {
-                ReadShortcutHeaderView(shortcut: shortcut)
+                ReadShortcutHeaderView(shortcut: .constant(shortcut), isMyLike: $isMyLike)
                 ReadShortcutContentView(shortcut: shortcut)
                 
                 Button(action: {
                     if let url = URL(string: shortcut.downloadLink[0]) {
-                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                        shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
                         openURL(url)
-                        //TODO: 화면 상의 다운로드 숫자 변경 기능 필요
+                        //UI 업데이트
+                        if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(of: shortcut.id)) == nil {
+                            self.shortcut?.numberOfDownload += 1
+                        }
+                        isClickDownload = true
                     }
                 }) {
                     RoundedRectangle(cornerRadius: 12)
@@ -50,6 +55,34 @@ struct ReadShortcutView: View {
         .background(Color.Background)
         .onAppear() {
             self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID)
+            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: shortcutID)
+            isFirstMyLike = isMyLike
+        }
+        .onDisappear() {
+            let isAlreadyContained = (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(of: shortcutID)) == nil
+            if (isClickDownload && isAlreadyContained) || isMyLike != isFirstMyLike {
+                //서버 데이터 업데이트
+                
+                
+            }
+            if let shortcut {
+                //서버, 뷰모델 데이터 업데이트
+                if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(of: shortcut.id)) == nil {
+                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                    shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
+                }
+            }
+            if isMyLike {
+                if (shortcutsZipViewModel.userInfo?.likedShortcuts.firstIndex(of: shortcutID)) == nil {
+                    shortcutsZipViewModel.userInfo?.likedShortcuts.append(shortcutID)
+                }
+            } else {
+                shortcutsZipViewModel.userInfo?.likedShortcuts.removeAll(where: { $0 == shortcutID })
+            }
+            if isFirstMyLike != isMyLike {
+                //데이터 상의 좋아요 추가, 취소 기능 동작
+                shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut!)
+            }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {

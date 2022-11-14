@@ -43,8 +43,10 @@ class ShortcutsZipViewModel: ObservableObject {
 //    @FirestoreQuery(collectionPath: "Shortcut") var allShortcuts: [Shortcuts]
 
     init() {
+        print("**init")
         fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
+            self.initUserShortcut(user: user)
         }
         fetchShortcutAll { shortcuts in
             self.allShortcuts = shortcuts
@@ -58,23 +60,25 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
+    func initUserShortcut(user: User) {
+        shortcutsMadeByUser = allShortcuts.filter { $0.author == user.id }
+        user.downloadedShortcuts.forEach({ shortcutID in
+            if let index = allShortcuts.firstIndex(where: {$0.id == shortcutID}) {
+                shortcutsUserDownloaded.append(allShortcuts[index])
+            }
+        })
+        user.likedShortcuts.forEach({ shortcutID in
+            if let index = allShortcuts.firstIndex(where: {$0.id == shortcutID}) {
+                shortcutsUserLiked.append(allShortcuts[index])
+            }
+        })
+    }
     func initShortcut() {
         sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
         sortedShortcutsByLike = allShortcuts.filter { $0.numberOfLike > minimumOfLike }
         for category in Category.allCases {
             shortcutsInCategory[category.index] = allShortcuts.filter { $0.category.contains(category.rawValue) }
         }
-        shortcutsMadeByUser = allShortcuts.filter { $0.id == userInfo?.id }
-        userInfo?.downloadedShortcuts.forEach({ shortcutID in
-            if let index = allShortcuts.firstIndex(where: {$0.id == shortcutID}) {
-                shortcutsUserDownloaded.append(allShortcuts[index])
-            }
-        })
-        userInfo?.likedShortcuts.forEach({ shortcutID in
-            if let index = allShortcuts.firstIndex(where: {$0.id == shortcutID}) {
-                shortcutsUserLiked.append(allShortcuts[index])
-            }
-        })
     }
     
     
@@ -112,6 +116,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             }
                         }
                         if (diff.type == .modified) {
+                            print("**modified \(shortcut) \(shortcut.numberOfLike)")
                             if let index = shortcuts.firstIndex(where: {$0.id == shortcut.id}) {
                                 shortcuts[index] = shortcut
                             }
@@ -164,12 +169,8 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: ReadShortcutView에서 해당 단축어에 좋아요를 눌렀는지 확인하는 함수 completionHandler로 bool값을 전달
     
-    func checkLikedShortrcut(shortcutID: String, completionHandler: @escaping (Bool)->()) {
-        var result = false
-        fetchUser(userID: currentUser()) { data in
-            result = data.likedShortcuts.contains(shortcutID)
-            completionHandler(result)
-        }
+    func checkLikedShortrcut(shortcutID: String) -> Bool {
+        userInfo?.likedShortcuts.contains(shortcutID) ?? false
     }
     
     //MARK: 현재 사용자가 작성한 Shortcuts -> ShortcutCellModel 형태로 변환하여 가져오는 함수 -> 큐레이션 작성
