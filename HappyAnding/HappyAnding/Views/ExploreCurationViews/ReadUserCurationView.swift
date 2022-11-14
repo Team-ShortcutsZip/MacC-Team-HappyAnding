@@ -20,6 +20,7 @@ struct ReadUserCurationView: View {
     @State var isTappedDeleteButton = false
     
     let userCuration: Curation
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -39,13 +40,16 @@ struct ReadUserCurationView: View {
                         .padding(.top, 103)
                         .padding(.bottom, 22)
                     
-                    UserCurationCell(curation: userCuration)
+                    UserCurationCell(curation: userCuration,
+                                     navigationParentView: self.navigationParentView)
                     .padding(.bottom, 12)
                 }
             }
             ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
-                    ShortcutCell(shortcutCell: shortcut)
+                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id,
+                                                             navigationParentView: self.navigationParentView)) {
+                    ShortcutCell(shortcutCell: shortcut,
+                                 navigationParentView: self.navigationParentView)
                     .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
                 }
             }

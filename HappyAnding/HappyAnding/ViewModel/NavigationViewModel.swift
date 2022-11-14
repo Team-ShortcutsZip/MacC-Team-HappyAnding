@@ -31,3 +31,11 @@ class ProfileNavigation: ObservableObject {
         self.navigationPath = NavigationPath()
     }
 }
+
+class EditShortcutNavigation: ObservableObject {
+    @Published var navigationPath: NavigationPath
+    
+    init() {
+        self.navigationPath = NavigationPath()
+    }
+}

@@ -11,24 +11,28 @@ struct CurationListView: View {
     
     @State var data: NavigationCurationType
     @Binding var userCurations: [Curation]
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack(spacing: 0) {
             CurationListHeader(userCurations: $userCurations,
-                               data: data)
+                               data: data,
+                               navigationParentView: self.navigationParentView)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                 if index < 2 {
                     NavigationLink(value: curation) {
-                        UserCurationCell(curation: curation)
+                        UserCurationCell(curation: curation,
+                                         navigationParentView: self.navigationParentView)
                     }
                 }
             }
         }
         .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation)
+            ReadUserCurationView(userCuration: curation,
+                                 navigationParentView: self.navigationParentView)
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         
@@ -39,6 +43,7 @@ struct CurationListHeader: View {
     @Binding var userCurations: [Curation]
     
     @State var data: NavigationCurationType
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         HStack(alignment: .bottom) {
@@ -56,7 +61,8 @@ struct CurationListHeader: View {
             .navigationDestination(for: NavigationCurationType.self) { type in
                 ListCurationView(userCurations: $userCurations,
                                  type: data.type,
-                                 isAllUser: true)
+                                 isAllUser: true,
+                                 navigationParentView: self.navigationParentView)
             }
         }
     }

@@ -30,7 +30,8 @@ struct LovedShortcutView: View {
                 }
                 .navigationDestination(for: SectionType.self, destination: { type in
                     ShortcutsListView(shortcuts: $shortcuts,
-                                      sectionType: type)
+                                      sectionType: type,
+                                      navigationParentView: .shortcuts)
                 })
             }
             .padding(.leading, 16)
@@ -39,12 +40,13 @@ struct LovedShortcutView: View {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
                         NavigationLink(value: shortcut.id) {
-                            ShortcutCell(shortcut: shortcut)
+                            ShortcutCell(shortcut: shortcut,
+                                         navigationParentView: .shortcuts)
+                            .navigationDestination(for: String.self, destination: { shortcutID in
+                                ReadShortcutView(shortcutID: shortcutID,
+                                                 navigationParentView: .shortcuts)
+                            })
                         }
-                        .navigationDestination(for: String.self) { shortcutID in
-                            ReadShortcutView(shortcutID: shortcutID)
-                        }
-                       
                     }
                 }
             }
