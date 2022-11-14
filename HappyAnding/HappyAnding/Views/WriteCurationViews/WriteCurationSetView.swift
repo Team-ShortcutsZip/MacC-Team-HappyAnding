@@ -13,7 +13,7 @@ struct WriteCurationSetView: View {
     
     @Binding var isWriting: Bool
     
-    @State var shortcutCells = Set<ShortcutCellModel>()
+    @State var shortcutCells: [ShortcutCellModel] = []
     @State var isSelected = false
     @State var curation = Curation(title: "",
                                    subtitle: "",
@@ -73,12 +73,7 @@ struct WriteCurationSetView: View {
                 }
                 .background(Color.Background)
                 .onAppear() {
-                    shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
-                        self.shortcutCells = self.shortcutCells.union(shortcuts)
-                    }
-                    shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
-                        self.shortcutCells = self.shortcutCells.union(shortcuts)
-                    }
+                    shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration()
                 }
                 if isTappedQuestionMark {
                     VStack {
@@ -119,7 +114,7 @@ struct WriteCurationSetView: View {
     
     ///내가 작성한, 좋아요를 누른 단축어 목록
     var shortcutList: some View {
-        ForEach(Array(shortcutCells)) { shortcut in
+        ForEach(shortcutCells) { shortcut in
             CheckBoxShortcutCell(
                 isShortcutTapped: curation.shortcuts.contains(shortcut),
                 selectedShortcutCells: $curation.shortcuts,

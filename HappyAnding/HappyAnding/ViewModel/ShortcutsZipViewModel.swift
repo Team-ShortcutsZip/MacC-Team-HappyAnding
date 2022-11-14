@@ -40,7 +40,6 @@ class ShortcutsZipViewModel: ObservableObject {
     let minimumOfLike = 5
     
     var allShortcuts: [Shortcuts] = []
-//    @FirestoreQuery(collectionPath: "Shortcut") var allShortcuts: [Shortcuts]
 
     init() {
         print("**init")
@@ -137,29 +136,8 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         }
     
-    //MARK: Curation -> ShortcutDetail로 이동 시 Shortcut의 세부 정보를 가져오는 함수
+    //MARK: Shortcut의 세부 정보를 가져오는 함수
     
-//    func fetchShortcutDetail(id: String, completionHandler: @escaping (Shortcuts)->()) {
-//        db.collection("Shortcut").whereField("id", isEqualTo: id).getDocuments { (querySnapshot, error) in
-//            if let error {
-//                print("Error getting documents: \(error)")
-//            } else {
-//                guard let documents = querySnapshot?.documents else { return }
-//                let decoder = JSONDecoder()
-//
-//                for document in documents {
-//                    do {
-//                        let data = document.data()
-//                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-//                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
-//                        completionHandler(shortcut)
-//                    } catch let error {
-//                        print("error: \(error)")
-//                    }
-//                }
-//            }
-//        }
-//    }
     func fetchShortcutDetail(id: String) -> Shortcuts? {
         if let index = allShortcuts.firstIndex(where: {$0.id == id}) {
             return allShortcuts[index]
@@ -175,81 +153,70 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 현재 사용자가 작성한 Shortcuts -> ShortcutCellModel 형태로 변환하여 가져오는 함수 -> 큐레이션 작성
     
-    func fetchMadeShortcutCell(completionHandler: @escaping ([ShortcutCellModel])->()) {
+    func fetchMadeShortcutCell() -> [ShortcutCellModel] {
         var shortcutCells: [ShortcutCellModel] = []
         
-        db.collection("Shortcut")
-            .whereField("author", isEqualTo: currentUser())
-            .getDocuments() { (querySnapshot, error) in
-                if let error {
-                    print("Error getting documents: \(error)")
-                } else {
-                    guard let documents = querySnapshot?.documents else { return }
-                    let decoder = JSONDecoder()
-                    for document in documents {
-                        do {
-                            let data = document.data()
-                            let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
-                            let shortcutCell = ShortcutCellModel(
-                                id: shortcut.id,
-                                sfSymbol: shortcut.sfSymbol,
-                                color: shortcut.color,
-                                title: shortcut.title,
-                                subtitle: shortcut.subtitle,
-                                downloadLink: shortcut.downloadLink.last!
-                            )
-                            shortcutCells.append(shortcutCell)
-                        } catch let error {
-                            print("error: \(error)")
-                        }
-                    }
-                    completionHandler(shortcutCells)
-                }
-            }
+        for shortcut in shortcutsMadeByUser {
+            let shortcutCell = ShortcutCellModel(
+                id: shortcut.id,
+                sfSymbol: shortcut.sfSymbol,
+                color: shortcut.color,
+                title: shortcut.title,
+                subtitle: shortcut.subtitle,
+                downloadLink: shortcut.downloadLink[0]
+            )
+            shortcutCells.append(shortcutCell)
+        }
+        return shortcutCells
     }
     
     // MARK: 현재 사용자가 좋아요한 Shortcuts -> ShortcutCellModel 형태로 변환 -> 큐레이션 작성
     
-    func fetchLikedShortcutCell(completionHandler: @escaping ([ShortcutCellModel])->()) {
+    func fetchLikedShortcutCell() -> [ShortcutCellModel] {
         var shortcutCells: [ShortcutCellModel] = []
         
-        self.fetchUser(userID: self.currentUser()) { user in
-            let shortcutIds = user.likedShortcuts
-            
-            for shortcutId in shortcutIds {
-                self.db.collection("Shortcut")
-                    .whereField("id", isEqualTo: shortcutId)
-                    .getDocuments { (querySnapshot, error) in
-                        if let error {
-                            print("Error getting documents: \(error)")
-                        } else {
-                            guard let documents = querySnapshot?.documents else { return }
-                            let decoder = JSONDecoder()
-                            
-                            for document in documents {
-                                do {
-                                    let data = document.data()
-                                    let jsonData = try JSONSerialization.data(withJSONObject: data)
-                                    let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
-                                    let shortcutCell = ShortcutCellModel(
-                                        id: shortcut.id,
-                                        sfSymbol: shortcut.sfSymbol,
-                                        color: shortcut.color,
-                                        title: shortcut.title,
-                                        subtitle: shortcut.subtitle,
-                                        downloadLink: shortcut.downloadLink.last!
-                                    )
-                                    shortcutCells.append(shortcutCell)
-                                } catch let error {
-                                    print("error: \(error)")
-                                }
-                            }
-                            completionHandler(shortcutCells)
-                        }
-                    }
-            }
+        for shortcut in shortcutsUserLiked {
+            let shortcutCell = ShortcutCellModel(
+                id: shortcut.id,
+                sfSymbol: shortcut.sfSymbol,
+                color: shortcut.color,
+                title: shortcut.title,
+                subtitle: shortcut.subtitle,
+                downloadLink: shortcut.downloadLink[0]
+            )
+            shortcutCells.append(shortcutCell)
         }
+        return shortcutCells
+    }
+    
+    func fetchShortcutMakeCuration() -> [ShortcutCellModel] {
+        var shortcutCells: [ShortcutCellModel] = []
+        
+        for shortcut in shortcutsUserLiked {
+            let shortcutCell = ShortcutCellModel(
+                id: shortcut.id,
+                sfSymbol: shortcut.sfSymbol,
+                color: shortcut.color,
+                title: shortcut.title,
+                subtitle: shortcut.subtitle,
+                downloadLink: shortcut.downloadLink[0]
+            )
+            shortcutCells.append(shortcutCell)
+        }
+        
+        for shortcut in shortcutsMadeByUser {
+            let shortcutCell = ShortcutCellModel(
+                id: shortcut.id,
+                sfSymbol: shortcut.sfSymbol,
+                color: shortcut.color,
+                title: shortcut.title,
+                subtitle: shortcut.subtitle,
+                downloadLink: shortcut.downloadLink[0]
+            )
+            shortcutCells.append(shortcutCell)
+        }
+        
+        return shortcutCells
     }
     
     
