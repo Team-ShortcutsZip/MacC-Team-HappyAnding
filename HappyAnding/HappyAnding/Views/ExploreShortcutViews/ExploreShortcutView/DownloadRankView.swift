@@ -12,6 +12,8 @@ struct DownloadRankView: View {
     @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
+    let navigationParentView: NavigationParentView
+    
     var body: some View {
         VStack {
             HStack {
@@ -30,7 +32,8 @@ struct DownloadRankView: View {
                 }
                 .navigationDestination(for: SectionType.self, destination: { type in
                     ShortcutsListView(shortcuts: $shortcuts,
-                                      sectionType: type)
+                                      sectionType: type,
+                                      navigationParentView: self.navigation)
                 })
             }
             .padding(.leading, 16)
@@ -39,10 +42,12 @@ struct DownloadRankView: View {
                 if index < 3 {
                     NavigationLink(value: shortcut.id) {
                         ShortcutCell(shortcut: shortcut,
-                                     rankNumber: index + 1)
+                                     rankNumber: index + 1,
+                                     navigationParentView: self.navigationParentView)
                     }
                     .navigationDestination(for: String.self, destination: { shortcutID in
-                        ReadShortcutView(shortcutID: shortcutID)
+                        ReadShortcutView(shortcutID: shortcutID,
+                                         navigationParentView: self.navigationParentView)
                     })
                 }
             }

@@ -33,6 +33,7 @@ struct WriteShortcutTitleView: View {
                                     curationIDs: [String]())
     
     let isEdit: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -126,7 +127,8 @@ struct WriteShortcutTitleView: View {
         .navigationDestination(for: Int.self) { value in
             WriteShortcutdescriptionView(shortcut: $shortcut,
                                          isWriting: $isWriting,
-                                         isEdit: isEdit)
+                                         isEdit: isEdit,
+                                         navigationParentView: self.navigationParentView)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

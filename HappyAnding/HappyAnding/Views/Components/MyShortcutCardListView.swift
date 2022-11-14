@@ -18,6 +18,8 @@ struct MyShortcutCardListView: View {
                                    shortcuts: self.shortcuts)
     }
     
+    let navigationParentView: NavigationParentView
+    
     var body: some View {
         VStack {
             HStack {
@@ -35,7 +37,8 @@ struct MyShortcutCardListView: View {
                         .padding(.trailing, 16)
                 }
                 .navigationDestination(for: NavigationListShortcutType.self) { data in
-                    ListShortcutView(data: data)
+                    ListShortcutView(data: data,
+                                     navigationParentView: self.navigationParentView)
                 }
             }
             .padding(.leading, 16)
@@ -59,10 +62,13 @@ struct MyShortcutCardListView: View {
                     }
                 }
                 .navigationDestination(for: Bool.self) { isEdit in
-                    WriteShortcutTitleView(isWriting: .constant(true), isEdit: false)
+                    WriteShortcutTitleView(isWriting: .constant(true),
+                                           isEdit: false,
+                                           navigationParentView: self.navigationParentView)
                 }
                 .navigationDestination(for: String.self) { shortcutID in
-                    ReadShortcutView(shortcutID: shortcutID)
+                    ReadShortcutView(shortcutID: shortcutID,
+                                     navigationParentView: self.navigationParentView)
                 }
                 .padding(.horizontal, 16)
             }

@@ -16,6 +16,7 @@ struct WriteShortcutdescriptionView: View {
     @State var isMultiLineValid = false
     
     let isEdit: Bool
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -63,7 +64,8 @@ struct WriteShortcutdescriptionView: View {
         .navigationDestination(for: UInt.self) { value in
             WriteShortcutTagView(isWriting: $isWriting,
                                  shortcut: $shortcut,
-                                 isEdit: isEdit)
+                                 isEdit: isEdit,
+                                 navigationParentView: self.navigationParentView)
         }
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .ignoresSafeArea(.keyboard)
