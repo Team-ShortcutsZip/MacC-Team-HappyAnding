@@ -15,7 +15,7 @@ struct UserCurationListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(title: "나의 큐레이션", userCurations: $userCurations)
+            UserCurationListHeader(title: "내가 등록한 큐레이션", userCurations: $userCurations)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             Button {
