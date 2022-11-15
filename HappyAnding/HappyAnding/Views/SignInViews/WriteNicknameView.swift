@@ -111,7 +111,8 @@ struct WriteNicknameView: View {
                     .onChange(of: nickname) {_ in
                         isValidLength = nickname.count <= 8 && !nickname.isEmpty
                         isNicknameChecked = false
-                        isNormalString = nickname.isNormalString()
+                        //isNormalString = nickname.isNormalString()
+                        isNormalString = nickname.checkCorrectNickname()
                     }
                 
                 if !nickname.isEmpty {
