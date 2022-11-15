@@ -46,16 +46,6 @@ struct ListCurationView: View {
                 .listRowBackground(Color.Background)
                 .padding(.top, index == 0 ? 20 : 0 )
                 .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
-                .onAppear {
-                    if userCurations.last == curation && userCurations.count % 10 == 0 {
-                        print(userCurations.count)
-                        if isAllUser {
-                            shortcutsZipViewModel.fetchCurationLimit(isAdmin: false) { curations in
-                                userCurations.append(contentsOf: curations)
-                            }
-                        }
-                    }
-                }
             }
         }
         .listStyle(.plain)

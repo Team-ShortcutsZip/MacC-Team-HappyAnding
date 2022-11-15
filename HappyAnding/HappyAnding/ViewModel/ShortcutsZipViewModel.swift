@@ -51,11 +51,12 @@ class ShortcutsZipViewModel: ObservableObject {
             self.allShortcuts = shortcuts
             self.initShortcut()
         }
-        fetchCurationLimit(isAdmin: true) { curations in
+        fetchCuration(isAdmin: true) { curations in
             self.adminCurations = curations
         }
-        fetchCurationLimit(isAdmin: false) { curations in
+        fetchCuration(isAdmin: false) { curations in
             self.userCurations = curations
+            self.curationsMadeByUser = self.fetchCurationByAuthor(author: self.currentUser())
         }
     }
     
@@ -190,7 +191,7 @@ class ShortcutsZipViewModel: ObservableObject {
     }
     
     func fetchShortcutMakeCuration() -> [ShortcutCellModel] {
-        var shortcutCells: [ShortcutCellModel] = []
+        var shortcutCells = Set<ShortcutCellModel>()
         
         for shortcut in shortcutsUserLiked {
             let shortcutCell = ShortcutCellModel(
@@ -201,7 +202,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 subtitle: shortcut.subtitle,
                 downloadLink: shortcut.downloadLink[0]
             )
-            shortcutCells.append(shortcutCell)
+            shortcutCells.insert(shortcutCell)
         }
         
         for shortcut in shortcutsMadeByUser {
@@ -213,10 +214,10 @@ class ShortcutsZipViewModel: ObservableObject {
                 subtitle: shortcut.subtitle,
                 downloadLink: shortcut.downloadLink[0]
             )
-            shortcutCells.append(shortcutCell)
+            shortcutCells.insert(shortcutCell)
         }
         
-        return shortcutCells
+        return Array(shortcutCells)
     }
     
     
@@ -225,6 +226,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     // MARK: Author에 의한 큐레이션들 받아오는 함수 (나의 큐레이션)
     
+    /*
     func fetchCurationByAuthor (author: String, completionHandler: @escaping ([Curation])->()) {
         
         let index = 2
@@ -253,11 +255,15 @@ class ShortcutsZipViewModel: ObservableObject {
                     completionHandler(curations)
                 }
             }
+    }*/
+    
+    func fetchCurationByAuthor(author: String) -> [Curation] {
+        userCurations.filter { $0.author == author }
     }
      
-    //MARK: Curation을 (admin, user) 구분하여 10개씩 가져오는 함수
+    //MARK: Curation을 (admin, user) 구분하여 가져오는 함수
     
-    func fetchCurationLimit(isAdmin: Bool, completionHandler: @escaping ([Curation])->()) {
+    func fetchCuration(isAdmin: Bool, completionHandler: @escaping ([Curation])->()) {
         var curations: [Curation] = []
         
         var query: Query!
@@ -437,11 +443,6 @@ class ShortcutsZipViewModel: ObservableObject {
     
     func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String) {
         shortcutCells.forEach { shortcutCell in
-//            fetchShortcutDetail(id: shortcutCell.id) { data in
-//                var shortcut = data
-//                shortcut.curationIDs.append(curationID)
-//                self.setData(model: shortcut)
-//            }
             var shortcut = fetchShortcutDetail(id: shortcutCell.id)
             shortcut!.curationIDs.append(curationID)
             self.setData(model: shortcut!)
@@ -660,5 +661,4 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
     }
-    
 }
