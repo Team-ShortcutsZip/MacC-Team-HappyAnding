@@ -45,18 +45,18 @@ struct CategoryView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < categoryIndex {
-                        NavigationLink(value: value, label: {
+                        NavigationLink(value: value) {
                             CategoryCellView(categoryName: value.translateName())
-                        })
-                        .navigationDestination(for: Category.self) { category in
-                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
-                                              categoryName: category,
-                                              navigationParentView: .shortcuts)
                         }
                     }
                 }
             }
             .padding(.horizontal, 16)
+            .navigationDestination(for: Category.self) { category in
+                ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
+                                  categoryName: category,
+                                  navigationParentView: .shortcuts)
+            }
         }
         .environmentObject(navigation)
     }
