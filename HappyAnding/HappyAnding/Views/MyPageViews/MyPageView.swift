@@ -60,7 +60,7 @@ struct MyPageView: View {
                     // MARK: - 나의 큐레이션
                     
                     UserCurationListView(data: NavigationCurationType(type: .userCuration,
-                                                                      title: "나의 큐레이션",
+                                                                      title: "내가 등록한 큐레이션",
                                                                       isAccessCuration: true),
                                          userCurations: $shortcutsZipViewModel.curationsMadeByUser,
                                          navigationParentView: .myPage)

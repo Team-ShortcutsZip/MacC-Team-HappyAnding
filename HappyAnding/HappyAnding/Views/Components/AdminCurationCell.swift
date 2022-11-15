@@ -64,12 +64,13 @@ struct AdminCurationCell: View {
         ZStack {
             Image(adminCuration.background)
                 .resizable()
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            RoundedRectangle(cornerRadius: cornerRadius)
+                .aspectRatio(contentMode: .fill)
+            Rectangle()
                 .foregroundColor(.white)
                 .opacity(0.4)
         }
         .frame(height: 284)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
 }
 

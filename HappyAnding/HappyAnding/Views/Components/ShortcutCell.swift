@@ -149,7 +149,7 @@ struct ShortcutCell: View {
             .fill(Color.Background_list)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.Background_list_border)
+                    .strokeBorder(Color.Background_list_border)
             )
     }
 }

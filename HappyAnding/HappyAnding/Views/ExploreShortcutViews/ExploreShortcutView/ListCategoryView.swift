@@ -25,7 +25,7 @@ struct ListCategoryView: View {
                                                                       categoryName: item,
                                                                       navigationParentView: .shortcuts)) {
                             RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
-                                .stroke(Color.Gray1, lineWidth: 1)
+                                .strokeBorder(Color.Gray1, lineWidth: 1)
                                 .background(Color.White)
                                 .cornerRadius(12)
                                 .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
