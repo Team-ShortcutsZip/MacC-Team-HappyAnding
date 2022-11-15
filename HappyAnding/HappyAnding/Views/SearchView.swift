@@ -75,6 +75,8 @@ struct SearchView: View {
         VStack(alignment: .leading) {
             Text("추천 검색어")
                 .padding(.leading, 16)
+                .padding(.top, 12)
+                .Headline()
             
             ScrollView(.horizontal) {
                 HStack {
@@ -94,7 +96,8 @@ struct SearchView: View {
                             }
                     }
                 }
-                .padding(.leading, 12)
+                .padding(.leading, 16)
+                .padding(.top, 8)
             }
         }
     }
