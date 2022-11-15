@@ -88,7 +88,7 @@ struct SearchView: View {
                             .padding(.vertical, 8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color.Gray4, lineWidth: 1)
+                                    .strokeBorder(Color.Gray4, lineWidth: 1)
                             )
                             .onTapGesture {
                                 searchText = keyword
