@@ -42,10 +42,8 @@ struct ListCurationView: View {
             }
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                 
-                NavigationLink(value: curation) {
-                    UserCurationCell(curation: curation,
-                                     navigationParentView: self.navigationParentView)
-                }
+                UserCurationCell(curation: curation,
+                                 navigationParentView: self.navigationParentView)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.Background)
@@ -62,10 +60,6 @@ struct ListCurationView: View {
                     }
                 }
             }
-        }
-        .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation,
-                                 navigationParentView: self.navigationParentView)
         }
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
