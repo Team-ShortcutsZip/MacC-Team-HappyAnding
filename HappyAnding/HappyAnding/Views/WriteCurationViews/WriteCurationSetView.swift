@@ -31,68 +31,69 @@ struct WriteCurationSetView: View {
     let navigationParentView: NavigationParentView
     
     var body: some View {
-        
-        VStack {
-            ProgressView(value: 1, total: 2)
-                .padding(.bottom, 36)
-            
-            listHeader
-            
-            if shortcutCells.isEmpty {
-                VStack {
-                    Spacer()
-                    Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
-                        .Body2()
-                        .foregroundColor(.Gray4)
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                    
+        ZStack {
+            VStack {
+                ProgressView(value: 1, total: 2)
+                    .padding(.bottom, 36)
+                
+                listHeader
+                
+                if shortcutCells.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
+                            .Body2()
+                            .foregroundColor(.Gray4)
+                            .multilineTextAlignment(.center)
+                        Spacer()
+                        
+                    }
+                } else {
+                    ScrollView {
+                        shortcutList
+                    }
                 }
-            } else {
-                ScrollView {
-                    shortcutList
+                
+                bottomButton
+                
+            }
+            .background(Color.Background)
+            .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: Float.self) { isEdit in
+                WriteCurationInfoView(curation: curation,
+                                      isWriting: $isWriting,
+                                      isEdit: self.isEdit,
+                                      navigationParentView: self.navigationParentView)
+            }
+            .onAppear {
+                shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
+                    self.shortcutCells = self.shortcutCells.union(shortcuts)
+                }
+                shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
+                    self.shortcutCells = self.shortcutCells.union(shortcuts)
                 }
             }
-            
-            bottomButton
-            
-        }
-        .background(Color.Background)
-        .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Float.self) { isEdit in
-            WriteCurationInfoView(curation: curation,
-                                  isWriting: $isWriting,
-                                  isEdit: self.isEdit,
-                                  navigationParentView: self.navigationParentView)
-        }
-        .onAppear {
-            shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
-                self.shortcutCells = self.shortcutCells.union(shortcuts)
-            }
-            shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
-                self.shortcutCells = self.shortcutCells.union(shortcuts)
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                if isEdit {
-                    Button {
-//                        self.presentationMode.wrappedValue.dismiss()
-                        self.isWriting.toggle()
-                    } label: {
-                        Text("닫기")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if isEdit {
+                        Button {
+                            self.isWriting.toggle()
+                        } label: {
+                            Text("닫기")
+                        }
                     }
                 }
             }
-        }
-        
-        if isTappedQuestionMark {
-            VStack {
-                infomation
-                    .padding(.top, 124)
-                Spacer()
+            
+            if isTappedQuestionMark {
+                VStack {
+                    infomation
+                        .padding(.top, 76)
+                    Spacer()
+                }
             }
+            
         }
     }
     
