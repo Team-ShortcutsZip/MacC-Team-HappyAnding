@@ -95,7 +95,7 @@ struct ListShortcutView: View {
         case .popular:
             return "사랑받는 단축어"
         case .myShortcut:
-            return "내가 등록한 단축어"
+            return "내가 작성한 단축어"
         case .myLovingShortcut:
             return "좋아요한 단축어"
         case .myDownloadShortcut:
