@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct UserCurationListView: View {
+    @EnvironmentObject var curationNavigation: CurationNavigation
+    @EnvironmentObject var profileNavigation: ProfileNavigation
     
     @State var isWriting = false
     @State var data: NavigationCurationType

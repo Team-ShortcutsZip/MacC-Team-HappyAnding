@@ -76,7 +76,7 @@ struct WriteCurationInfoView: View {
                     curationID: curation.id
                 )
                 
-                isWriting.toggle()
+                self.isWriting.toggle()
                 
                 switch navigationParentView {
                 case .shortcuts:
@@ -101,7 +101,7 @@ struct WriteCurationInfoView: View {
             .disabled(isIncomplete)
         }
         .background(Color.Background)
-        .navigationBarTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
+        .navigationBarTitle(isEdit ? "나의 큐레이션 편집" : "큐레이션 만들기")
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }

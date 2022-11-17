@@ -79,7 +79,7 @@ struct ReadUserCurationView: View {
         }))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $editNavigation.navigationPath) {
-                WriteCurationSetView(isWriting: $isTappedEditButton,
+                WriteCurationSetView(isWriting: $isWriting,
                                      curation: self.userCuration,
                                      isEdit: true,
                                      navigationParentView: self.navigationParentView)

@@ -9,8 +9,11 @@ import SwiftUI
 
 struct WriteCurationSetView: View {
     
-    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
+    @EnvironmentObject var curationNavigation: CurationNavigation
+    @EnvironmentObject var profileNavigation: ProfileNavigation
+    @EnvironmentObject var editShortcutNavigation: EditShortcutNavigation
     
     @Binding var isWriting: Bool
     
@@ -75,7 +78,8 @@ struct WriteCurationSetView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 if isEdit {
                     Button {
-                        self.presentationMode.wrappedValue.dismiss()
+//                        self.presentationMode.wrappedValue.dismiss()
+                        self.isWriting.toggle()
                     } label: {
                         Text("닫기")
                     }

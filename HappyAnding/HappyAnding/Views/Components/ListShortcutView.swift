@@ -66,8 +66,6 @@ struct ListShortcutView: View {
     
     var header: some View {
         
-            // TODO: 추후 옵셔널 타입 삭제 (무조건 타입이 존재하기 때문)
-        
         VStack {
             Text(getDescriptions(data.sectionType))
                 .foregroundColor(.Gray5)
