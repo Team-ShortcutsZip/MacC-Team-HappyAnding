@@ -9,24 +9,36 @@ import SwiftUI
 
 struct CurationListView: View {
     
-    var curationListTitle: String
+    @State var data: NavigationCurationType
     @Binding var userCurations: [Curation]
+    let navigationParentView: NavigationParentView
+    
+    enum NavigationUserCuration: Hashable, Equatable {
+        case first
+    }
     
     var body: some View {
         VStack(spacing: 0) {
-            CurationListHeader(userCurations: $userCurations, type: .userCuration, title: curationListTitle)
+            CurationListHeader(userCurations: $userCurations,
+                               data: data,
+                               navigationParentView: self.navigationParentView)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
+            
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
-                    if index < 2 {
-                        UserCurationCell(
-                            curation: curation
-                        )
+                if index < 2 {
+                    NavigationLink(value: NavigationUserCuration.first) {
+                        UserCurationCell(curation: curation,
+                                         navigationParentView: self.navigationParentView)
+                    }
+                    .navigationDestination(for: NavigationUserCuration.self) { _ in
+                        ReadUserCurationView(userCuration: curation,
+                                             navigationParentView: self.navigationParentView)
                     }
                 }
             }
         }
+        
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         
     }
@@ -34,19 +46,28 @@ struct CurationListView: View {
 
 struct CurationListHeader: View {
     @Binding var userCurations: [Curation]
-    var type: CurationType
-    var title: String
+    
+    @State var data: NavigationCurationType
+    let navigationParentView: NavigationParentView
+    
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(title)
+            Text(data.title)
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListCurationView(userCurations: $userCurations, type: type, title: title, isAllUser: true)) {
+            
+            NavigationLink(value: data) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
+            }
+            .navigationDestination(for: NavigationCurationType.self) { type in
+                ListCurationView(userCurations: $userCurations,
+                                 type: data.type,
+                                 isAllUser: true,
+                                 navigationParentView: self.navigationParentView)
             }
         }
     }

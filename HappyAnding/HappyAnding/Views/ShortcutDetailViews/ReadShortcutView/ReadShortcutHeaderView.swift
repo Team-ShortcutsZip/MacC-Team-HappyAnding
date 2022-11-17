@@ -11,7 +11,7 @@ struct ReadShortcutHeaderView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @State var shortcut: Shortcuts
+    @Binding var shortcut: Shortcuts
     @State var isMyLike: Bool = false
     
     var body: some View {

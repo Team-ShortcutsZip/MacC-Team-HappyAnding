@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CategoryView: View {
     
+    @EnvironmentObject var navigation: ShortcutNavigation
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var categoryIndex = 6
     @State var isTappedPlutButton = true {
@@ -30,31 +31,34 @@ struct CategoryView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
-                
-                NavigationLink(destination: ListCategoryView()) {
+                                
+                Button(action: {
+                    self.isTappedPlutButton.toggle()
+                }, label: {
                     Text(isTappedPlutButton ? "펼치기" : "접기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
-                        .onTapGesture {
-                            self.isTappedPlutButton.toggle()
-                        }
-                }
+                })
             }
             .padding(.leading, 16)
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < categoryIndex {
-                        NavigationLink(destination:
-                                        ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[value.index], categoryName: value)
-                        ) {
+                        NavigationLink(value: value) {
                             CategoryCellView(categoryName: value.translateName())
                         }
                     }
                 }
             }
             .padding(.horizontal, 16)
+            .navigationDestination(for: Category.self) { category in
+                ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
+                                  categoryName: category,
+                                  navigationParentView: .shortcuts)
+            }
         }
+        .environmentObject(navigation)
     }
 }
 

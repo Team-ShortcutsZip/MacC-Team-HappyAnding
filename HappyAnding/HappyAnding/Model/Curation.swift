@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Curation: Identifiable, Equatable, Codable {
+struct Curation: Identifiable, Equatable, Codable, Hashable {
     
     var id = UUID().uuidString
     var title: String
@@ -17,6 +17,7 @@ struct Curation: Identifiable, Equatable, Codable {
     var background: String
     var author: String
     var shortcuts: [ShortcutCellModel]
+//    var shortcuts: [Shortcuts]
     
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()

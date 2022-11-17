@@ -10,6 +10,10 @@ import SwiftUI
 struct WriteCurationInfoView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
+    @EnvironmentObject var curationNavigation: CurationNavigation
+    @EnvironmentObject var profileNavigation: ProfileNavigation
+    @EnvironmentObject var editShortcutNavigation: EditShortcutNavigation
     
     @State var isValidTitle = false
     @State var isValidDescription = false
@@ -22,6 +26,7 @@ struct WriteCurationInfoView: View {
     @Binding var isWriting: Bool
     
     let isEdit: Bool
+    let navigationParentView: NavigationParentView
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
@@ -72,6 +77,17 @@ struct WriteCurationInfoView: View {
                 )
                 
                 isWriting.toggle()
+                
+                switch navigationParentView {
+                case .shortcuts:
+                    shortcutNavigation.shortcutPath = .init()
+                case .curations:
+                    curationNavigation.navigationPath = .init()
+                case .myPage:
+                    profileNavigation.navigationPath = .init()
+                case .editShortcut:
+                    editShortcutNavigation.navigationPath = .init()
+                }
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -92,6 +108,7 @@ struct WriteCurationInfoView: View {
 
 struct WriteCurationInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteCurationInfoView(isWriting: .constant(true), isEdit: false)
+        WriteCurationInfoView(isWriting: .constant(true),
+                              isEdit: false, navigationParentView: .curations)
     }
 }

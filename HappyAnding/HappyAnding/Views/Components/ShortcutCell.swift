@@ -45,11 +45,12 @@ struct ShortcutCell: View {
     )
     
     var rankNumber: Int = -1
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         
         ZStack {
-            NavigationLink(destination: ReadShortcutView(shortcutID: shortcutCell.id)) {
+            NavigationLink(value: shortcutCell.id) {
                 EmptyView()
             }
             .opacity(0)
@@ -74,6 +75,10 @@ struct ShortcutCell: View {
             .background( background )
             .padding(.horizontal, 20)
         }
+        .navigationDestination(for: String.self, destination: { shortcutID in
+            ReadShortcutView(shortcutID: shortcutID,
+                             navigationParentView: self.navigationParentView)
+        })
         .padding(.top, 12)
         .background(Color.Background)
         .onAppear() {
@@ -152,6 +157,6 @@ struct ShortcutCell: View {
 
 struct ShortcutCell_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutCell()
+        ShortcutCell(navigationParentView: .curations)
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LovedShortcutView: View {
     
+    @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
     var body: some View {
@@ -21,14 +22,16 @@ struct LovedShortcutView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: {
-                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.popular)
-                        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-                }, label: {
+                NavigationLink(value: SectionType.popular) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
+                }
+                .navigationDestination(for: SectionType.self, destination: { type in
+                    ShortcutsListView(shortcuts: $shortcuts,
+                                      sectionType: type,
+                                      navigationParentView: .shortcuts)
                 })
             }
             .padding(.leading, 16)
@@ -36,15 +39,19 @@ struct LovedShortcutView: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id), label: {
-                            ShortcutCell(shortcut: shortcut)
-                        })
+                        NavigationLink(value: shortcut.id) {
+                            ShortcutCell(shortcut: shortcut,
+                                         navigationParentView: .shortcuts)
+                            .navigationDestination(for: String.self, destination: { shortcutID in
+                                ReadShortcutView(shortcutID: shortcutID,
+                                                 navigationParentView: .shortcuts)
+                            })
+                        }
                     }
                 }
             }
-            
         }
+        .environmentObject(navigation)
         .background(Color.Background)
     }
 }
-

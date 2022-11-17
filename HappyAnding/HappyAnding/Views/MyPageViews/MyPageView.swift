@@ -10,9 +10,14 @@ import SwiftUI
 struct MyPageView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var navigation = ProfileNavigation()
+    
+    enum NavigationSettingView: Hashable, Equatable {
+        case first
+    }
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigation.navigationPath) {
             ScrollView {
                 VStack(spacing: 32) {
                     
@@ -47,13 +52,29 @@ struct MyPageView: View {
                     
                     //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                     
-                    MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
-                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+                    // MARK: - 나의 단축어
+                    
+                    MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser,
+                                           navigationParentView: .myPage)
+                    
+                    // MARK: - 나의 큐레이션
+                    
+                    UserCurationListView(data: NavigationCurationType(type: .userCuration,
+                                                                      title: "내가 등록한 큐레이션",
+                                                                      isAccessCuration: true),
+                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser,
+                                         navigationParentView: .myPage)
                         .frame(maxWidth: .infinity)
+                    
+                    // MARK: - 좋아요한 단축어
+                    
                     MyPageShortcutList(
                         shortcuts: shortcutsZipViewModel.shortcutsUserLiked,
                         type: .myLovingShortcut
                     )
+                    
+                    // MARK: -다운로드한 단축어
+                    
                     MyPageShortcutList(
                         shortcuts: shortcutsZipViewModel.shortcutsUserDownloaded,
                         type: .myDownloadShortcut
@@ -65,7 +86,7 @@ struct MyPageView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem {
-                    NavigationLink(destination: SettingView()) {
+                    NavigationLink(value: NavigationSettingView.first) {
                         Image(systemName: "gearshape.fill")
                             .Headline()
                             .foregroundColor(.Gray5)
@@ -74,11 +95,17 @@ struct MyPageView: View {
             }
             .scrollIndicators(.hidden)
             .background(Color.Background)
+            .navigationDestination(for: NavigationSettingView.self) { _ in
+                SettingView()
+            }
         }
+        .environmentObject(navigation)
     }
 }
 
 struct MyPageShortcutList: View {
+    @EnvironmentObject var navigation: ProfileNavigation
+    
     var shortcuts: [Shortcuts]?
     var type: SectionType
     var body: some View {
@@ -88,19 +115,35 @@ struct MyPageShortcutList: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
-                            ShortcutCell(shortcut: shortcut)
+                        NavigationLink(value: shortcut) {
+                            ShortcutCell(shortcut: shortcut, navigationParentView: .myPage)
                         }
                     }
                 }
             }
         }
+        .navigationDestination(for: Shortcuts.self) { shortcut in
+            ReadShortcutView(shortcutID: shortcut.id,
+                             navigationParentView: .myPage)
+        }
+        .navigationDestination(for: SectionType.self) { type in
+            ListShortcutView(data: NavigationListShortcutType(sectionType: type,
+                                                              shortcuts: self.shortcuts),
+                             navigationParentView: .myPage)
+        }
+        .environmentObject(navigation)
     }
 }
 
 struct MyPageListHeader: View {
+    @EnvironmentObject var navigation: ProfileNavigation
+
     var type: SectionType
     let shortcuts: [Shortcuts]?
+    var data: NavigationListShortcutType {
+        NavigationListShortcutType(sectionType: self.type,
+                                   shortcuts: self.shortcuts)
+    }
     var body: some View {
         HStack(alignment: .bottom) {
             Text(type.rawValue)
@@ -108,12 +151,17 @@ struct MyPageListHeader: View {
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            NavigationLink(destination: ListShortcutView(shortcuts: shortcuts, sectionType: type)) {
+            
+            NavigationLink(value: data) {
                 Text("더보기")
                     .Footnote()
                     .foregroundColor(.Gray4)
             }
         }
+        .navigationDestination(for: NavigationListShortcutType.self) { data in
+            ListShortcutView(data: data, navigationParentView: .myPage)
+        }
+        .environmentObject(navigation)
     }
 }
 

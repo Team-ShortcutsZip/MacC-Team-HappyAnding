@@ -22,9 +22,8 @@ import SwiftUI
 
 struct ReadAdminCurationView: View {
     
-    let curation: Curation
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let curation: Curation
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -45,13 +44,18 @@ struct ReadAdminCurationView: View {
                 .padding(.bottom, 8)
             
             ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
-                    ShortcutCell(shortcutCell: shortcut)
+                NavigationLink(value: shortcut.id) {
+                    ShortcutCell(shortcutCell: shortcut,
+                                 navigationParentView: .curations)
                 }
             }
             
             Spacer()
                 .frame(height: 44)
+        }
+        .navigationDestination(for: String.self) { shortcutID in
+            ReadShortcutView(shortcutID: shortcutID,
+                             navigationParentView: .curations)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: btnBack)

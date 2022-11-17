@@ -9,14 +9,18 @@ import SwiftUI
 
 struct WriteShortcutdescriptionView: View {
     
+    @Binding var shortcut: Shortcuts
     @Binding var isWriting: Bool
     
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
     
-    @Binding var shortcut: Shortcuts
-    
     let isEdit: Bool
+    let navigationParentView: NavigationParentView
+    
+    enum NavigationWriteTagView: Hashable, Equatable {
+        case first
+    }
     
     var body: some View {
         VStack {
@@ -45,9 +49,7 @@ struct WriteShortcutdescriptionView: View {
             
             Spacer()
             
-            NavigationLink {
-                WriteShortcutTagView(isWriting: $isWriting, shortcut: $shortcut, isEdit: isEdit)
-            } label: {
+            NavigationLink(value: NavigationWriteTagView.first) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(isOneLineValid && isMultiLineValid ? .Primary : .Gray1 )
@@ -58,9 +60,16 @@ struct WriteShortcutdescriptionView: View {
                         .Body1()
                 }
             }
+            
             .disabled(!isOneLineValid || !isMultiLineValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
+        }
+        .navigationDestination(for: NavigationWriteTagView.self) { value in
+            WriteShortcutTagView(isWriting: $isWriting,
+                                 shortcut: $shortcut,
+                                 isEdit: isEdit,
+                                 navigationParentView: self.navigationParentView)
         }
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .ignoresSafeArea(.keyboard)
