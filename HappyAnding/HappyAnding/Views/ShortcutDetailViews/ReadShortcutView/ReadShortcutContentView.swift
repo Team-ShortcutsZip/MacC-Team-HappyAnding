@@ -11,7 +11,8 @@ struct ReadShortcutContentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var userInformation: User? = nil
     
-    @Binding var shortcut: Shortcuts
+    let shortcut: Shortcuts
+//    let writer: String
     let profileImage: String = "person.crop.circle"
     
     var body: some View {

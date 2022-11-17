@@ -10,19 +10,16 @@ import SwiftUI
 struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @StateObject var navigation = ShortcutNavigation()
     
     var body: some View {
-        NavigationStack(path: $navigation.shortcutPath) {
+        NavigationView {
             ScrollView {
-                MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser,
-                                       navigationParentView: .shortcuts)
+                MyShortcutCardListView(
+                    shortcuts: shortcutsZipViewModel.shortcutsMadeByUser)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
-                DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
-                                 navigationParentView: .shortcuts)
+                DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload)
                     .padding(.bottom, 32)
-                
                 CategoryView()
                     .padding(.bottom, 32)
                 LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
@@ -32,14 +29,22 @@ struct ExploreShortcutView: View {
             .navigationBarTitleDisplayMode(.large)
             .scrollIndicators(.hidden)
             .background(Color.Background)
+            .toolbar {
+                ToolbarItem {
+                    NavigationLink(destination: SearchView()) {
+                        Image(systemName: "magnifyingglass")
+                            .Headline()
+                            .foregroundColor(.Gray5)
+                    }
+                }
+            }
         }
-        .environmentObject(navigation)
     }
 }
-
+/*
 struct ExploreShortcutView_Previews: PreviewProvider {
     static var previews: some View {
         ExploreShortcutView()
     }
 }
-
+*/

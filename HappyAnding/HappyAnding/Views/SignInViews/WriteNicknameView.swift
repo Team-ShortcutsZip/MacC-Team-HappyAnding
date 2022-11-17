@@ -37,7 +37,6 @@ struct WriteNicknameView: View {
     @State var isNormalString = true
     
     let user = Auth.auth().currentUser
-//    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {

@@ -27,7 +27,6 @@ struct ListCurationView: View {
     var type: CurationType
     var title: String?
     var isAllUser: Bool = false
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         List {
@@ -41,9 +40,7 @@ struct ListCurationView: View {
                     .padding(.horizontal, 16)
             }
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                
-                UserCurationCell(curation: curation,
-                                 navigationParentView: self.navigationParentView)
+                UserCurationCell(curation: curation)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.Background)
@@ -66,6 +63,7 @@ struct ListCurationView: View {
         .scrollContentBackground(.hidden)
         .navigationBarTitle(type.rawValue)
         .navigationBarTitleDisplayMode(.inline)
+        
     }
 }
 

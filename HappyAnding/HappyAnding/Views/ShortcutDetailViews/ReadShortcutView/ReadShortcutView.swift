@@ -12,22 +12,19 @@ struct ReadShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
-    
-    @StateObject var editNavigation = EditShortcutNavigation()
-    @State var isTappedDeleteButton = false
-    @State var shortcut: Shortcuts?
     @State var isEdit = false
+    @State var isTappedDeleteButton = false
     
+    @State var shortcut: Shortcuts?
     let shortcutID: String
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         
         VStack {
             
             if let shortcut {
-                ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
-                ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
+                ReadShortcutHeaderView(shortcut: shortcut)
+                ReadShortcutContentView(shortcut: shortcut)
                 
                 Button(action: {
                     if let url = URL(string: shortcut.downloadLink[0]) {
@@ -54,15 +51,6 @@ struct ReadShortcutView: View {
         .onAppear() {
             shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
                 self.shortcut = shortcut
-                print("hellohello \(self.$shortcut.unwrap()!)")
-            }
-        }
-        .onChange(of: isEdit) { _ in
-            if !isEdit {
-                shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
-                    self.shortcut = shortcut
-                    print(shortcut)
-                }
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -76,6 +64,13 @@ struct ReadShortcutView: View {
             Image(systemName: "ellipsis")
                 .foregroundColor(.Gray4)
         }))
+        .fullScreenCover(isPresented: $isEdit) {
+            NavigationView {
+                if let shortcut {
+                    WriteShortcutTitleView(isWriting: $isEdit, shortcut: shortcut, isEdit: true)
+                }
+            }
+        }
         .alert(isPresented: $isTappedDeleteButton) {
             Alert(title: Text("글 삭제").foregroundColor(.Gray5),
                   message: Text("글을 삭제하시겠습니까?").foregroundColor(.Gray5),
@@ -91,44 +86,23 @@ struct ReadShortcutView: View {
                             shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
                             shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
                             shortcutsZipViewModel.deleteData(model: shortcut)
+                            //FIXME: 뷰모델에서 실제 데이터를 삭제하도록 변경 필요
                             shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
-                            self.presentation.wrappedValue.dismiss()
                         }
                     }
                   )
             )
         }
-        .navigationDestination(for: NavigationEditShortcutType.self) { data in
-            if let shortcut {
-                WriteShortcutTitleView(isWriting: .constant(true),
-                                       shortcut: shortcut,
-                                       isEdit: true,
-                                       navigationParentView: self.navigationParentView)
-            }
-        }
-        .fullScreenCover(isPresented: $isEdit) {
-            NavigationStack(path: $editNavigation.navigationPath) {
-                if let shortcut {
-                    WriteShortcutTitleView(isWriting: $isEdit,
-                                           shortcut: shortcut,
-                                           isEdit: true,
-                                           navigationParentView: .editShortcut)
-                }
-            }
-            .environmentObject(editNavigation)
-        }
     }
 }
 
 extension ReadShortcutView {
-    
     var myShortcutMenuSection: some View {
-        
         Section {
             
-            Button {
+            Button(action: {
                 isEdit.toggle()
-            } label: {
+            }) {
                 Label("편집", systemImage: "square.and.pencil")
             }
             

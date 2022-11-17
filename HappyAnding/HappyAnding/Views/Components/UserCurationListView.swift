@@ -10,21 +10,17 @@ import SwiftUI
 struct UserCurationListView: View {
     
     @State var isWriting = false
-    @State var data: NavigationCurationType
     
     @Binding var userCurations: [Curation]
     
-    let navigationParentView: NavigationParentView
-    
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(userCurations: $userCurations,
-                                   data: data,
-                                   navigationParentView: self.navigationParentView)
+            UserCurationListHeader(title: "내가 등록한 큐레이션", userCurations: $userCurations)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
-            
-            NavigationLink(value: UInt(0)) {
+            Button {
+                isWriting.toggle()
+            } label: {
                 HStack(spacing: 7) {
                     Image(systemName: "plus")
                     Text("나의 큐레이션 만들기")
@@ -38,63 +34,43 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-
+            .fullScreenCover(isPresented: $isWriting, content: {
+                WriteCurationSetView(isWriting: self.$isWriting, isEdit: false)
+            })
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                     //TODO: 데이터 변경 필요
-                    if index < 2 {
-                        NavigationLink(value: curation) {
-                            UserCurationCell(curation: curation,
-                                             navigationParentView: self.navigationParentView)
+                    if let curation {
+                        NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
+                            if index < 2 {
+                                UserCurationCell(curation: curation)
+                            }
                         }
                     }
                 }
             }
-        }
-        .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation,
-                                 navigationParentView: self.navigationParentView)
-        }
-        .navigationDestination(for: UInt.self) { isEdit in
-            WriteCurationSetView(isWriting: self.$isWriting,
-                                 isEdit: false,
-                                 navigationParentView: self.navigationParentView)
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
     }
 }
 
 struct UserCurationListHeader: View {
+    var title: String
     @Binding var userCurations: [Curation]
-    
-    @State var data: NavigationCurationType
-    
-    let navigationParentView: NavigationParentView
-    
-    enum NavigationExtraCurationView: Hashable, Equatable {
-        case first
-    }
-    
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(data.title)
+            Text(title)
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            
-            NavigationLink(value: NavigationExtraCurationView.first) {
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+            if let userCurations {
+                NavigationLink(destination: ListCurationView(userCurations: $userCurations, type: CurationType.myCuration)) {
+                    Text("더보기")
+                        .Footnote()
+                        .foregroundColor(.Gray4)
+                }
             }
-        }
-        .navigationDestination(for: NavigationExtraCurationView.self) { _ in
-            ListCurationView(userCurations: $userCurations,
-                             type: data.type,
-                             isAllUser: true,
-                             navigationParentView: self.navigationParentView)
-            
         }
     }
 }
