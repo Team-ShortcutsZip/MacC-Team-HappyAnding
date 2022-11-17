@@ -82,7 +82,7 @@ struct ReadUserCurationView: View {
                 WriteCurationSetView(isWriting: $isWriting,
                                      curation: self.userCuration,
                                      isEdit: true,
-                                     navigationParentView: self.navigationParentView)
+                                     navigationParentView: .editCuration)
             }
             .environmentObject(editNavigation)
         }

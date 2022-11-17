@@ -121,9 +121,6 @@ struct WriteShortcutTitleView: View {
         .background(Color.Background)
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            print("Shortcut \(shortcut)")
-        }
         .navigationDestination(for: Int.self) { value in
             WriteShortcutdescriptionView(shortcut: $shortcut,
                                          isWriting: $isWriting,

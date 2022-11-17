@@ -10,10 +10,9 @@ import SwiftUI
 struct WriteCurationSetView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
     @EnvironmentObject var curationNavigation: CurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
-    @EnvironmentObject var editShortcutNavigation: EditShortcutNavigation
+    @EnvironmentObject var editCurationNavigation: EditCurationNavigation
     
     @Binding var isWriting: Bool
     
@@ -62,7 +61,7 @@ struct WriteCurationSetView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Float.self) { isEdit in
                 WriteCurationInfoView(curation: curation,
-                                      isWriting: $isWriting,
+                                      isWriting: self.$isWriting,
                                       isEdit: self.isEdit,
                                       navigationParentView: self.navigationParentView)
             }

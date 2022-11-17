@@ -14,6 +14,7 @@ struct WriteShortcutTagView: View {
     @EnvironmentObject var curationNavigation: CurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
     @EnvironmentObject var editShortcutNavigation: EditShortcutNavigation
+    @EnvironmentObject var editCurationNavigation: EditCurationNavigation
     
     @Binding var isWriting: Bool
     @Binding var shortcut: Shortcuts
@@ -152,6 +153,8 @@ struct WriteShortcutTagView: View {
                     profileNavigation.navigationPath = .init()
                 case .editShortcut:
                     editShortcutNavigation.navigationPath = .init()
+                case .editCuration:
+                    editCurationNavigation.navigationPath = .init()
                 }
             }, label: {
                 ZStack {

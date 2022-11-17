@@ -14,6 +14,7 @@ struct WriteCurationInfoView: View {
     @EnvironmentObject var curationNavigation: CurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
     @EnvironmentObject var editShortcutNavigation: EditShortcutNavigation
+    @EnvironmentObject var editCurationNavigation: EditCurationNavigation
     
     @State var isValidTitle = false
     @State var isValidDescription = false
@@ -59,7 +60,7 @@ struct WriteCurationInfoView: View {
             Spacer()
                 .frame(maxHeight: .infinity)
             
-            Button(action: {
+            Button {
                 curation.author = shortcutsZipViewModel.currentUser()
                 
                 if isEdit {
@@ -87,8 +88,10 @@ struct WriteCurationInfoView: View {
                     profileNavigation.navigationPath = .init()
                 case .editShortcut:
                     editShortcutNavigation.navigationPath = .init()
+                case .editCuration:
+                    editCurationNavigation.navigationPath = .init()
                 }
-            }, label: {
+            } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(isIncomplete ?.Gray1 : .Primary)
@@ -96,8 +99,9 @@ struct WriteCurationInfoView: View {
                         .frame(height: 52)
                     Text("완료")
                         .foregroundColor(isIncomplete ? .Text_Button_Disable : .Text_Button)
+                        .Body1()
                 }
-            })
+            }
             .disabled(isIncomplete)
         }
         .background(Color.Background)

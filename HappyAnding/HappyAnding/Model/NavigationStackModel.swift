@@ -34,4 +34,5 @@ enum NavigationParentView: Int {
     case curations
     case myPage
     case editShortcut
+    case editCuration
 }
