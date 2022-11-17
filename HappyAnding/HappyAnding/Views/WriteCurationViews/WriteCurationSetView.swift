@@ -60,7 +60,7 @@ struct WriteCurationSetView: View {
             .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Float.self) { isEdit in
-                WriteCurationInfoView(curation: curation,
+                WriteCurationInfoView(curation: $curation,
                                       isWriting: self.$isWriting,
                                       isEdit: self.isEdit,
                                       navigationParentView: self.navigationParentView)

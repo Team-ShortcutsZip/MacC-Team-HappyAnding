@@ -18,12 +18,8 @@ struct WriteCurationInfoView: View {
     
     @State var isValidTitle = false
     @State var isValidDescription = false
-    @State var curation = Curation(title: "",
-                                   subtitle: "",
-                                   isAdmin: false,
-                                   background: "White",
-                                   author: "",
-                                   shortcuts: [ShortcutCellModel]())
+    
+    @Binding var curation: Curation
     @Binding var isWriting: Bool
     
     let isEdit: Bool
@@ -61,6 +57,8 @@ struct WriteCurationInfoView: View {
                 .frame(maxHeight: .infinity)
             
             Button {
+                
+                print(" tapped \(curation)")
                 curation.author = shortcutsZipViewModel.currentUser()
                 
                 if isEdit {
@@ -110,9 +108,9 @@ struct WriteCurationInfoView: View {
     }
 }
 
-struct WriteCurationInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteCurationInfoView(isWriting: .constant(true),
-                              isEdit: false, navigationParentView: .curations)
-    }
-}
+//struct WriteCurationInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WriteCurationInfoView(isWriting: .constant(true),
+//                              isEdit: false, navigationParentView: .curations)
+//    }
+//}

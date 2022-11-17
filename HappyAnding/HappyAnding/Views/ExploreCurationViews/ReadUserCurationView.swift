@@ -19,8 +19,8 @@ struct ReadUserCurationView: View {
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
+    @State var userCuration: Curation
     
-    let userCuration: Curation
     let navigationParentView: NavigationParentView
     
     var body: some View {
@@ -53,6 +53,12 @@ struct ReadUserCurationView: View {
                                  navigationParentView: self.navigationParentView)
                     .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
                 }
+            }
+        }
+        .onChange(of: isWriting) { _ in
+            if !isWriting {
+                // TODO: - Curation update 함수 적용
+                print("update curation")
             }
         }
         .navigationBarBackButtonHidden(true)

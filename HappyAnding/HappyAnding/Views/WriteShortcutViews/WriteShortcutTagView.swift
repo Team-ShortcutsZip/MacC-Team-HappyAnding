@@ -75,7 +75,7 @@ struct WriteShortcutTagView: View {
             
             Button(action: {
                 shortcut.author = shortcutsZipViewModel.currentUser()
-                print(shortcut.category)
+                
                 if isEdit {
                     
                     newCategory = shortcut.category
