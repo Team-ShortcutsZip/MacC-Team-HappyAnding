@@ -27,15 +27,12 @@ struct AdminCurationCell: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink(value: true) {
+            NavigationLink(destination: ReadAdminCurationView(curation: adminCuration)) {
                 EmptyView()
             }
             backgroundImage
             titleAndSubtitle
                 .padding([.horizontal, .bottom], 24)
-        }
-        .navigationDestination(for: Bool.self) { _ in
-            ReadAdminCurationView(curation: adminCuration)
         }
         .frame(width: UIScreen.main.bounds.width-32, height: 284)
         .padding(.trailing, 8.0)

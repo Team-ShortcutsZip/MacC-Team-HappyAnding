@@ -10,10 +10,6 @@ import SwiftUI
 struct WriteShortcutTagView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
-    @EnvironmentObject var curationNavigation: CurationNavigation
-    @EnvironmentObject var profileNavigation: ProfileNavigation
-    @EnvironmentObject var editShortcutNavigation: EditShortcutNavigation
     
     @Binding var isWriting: Bool
     @Binding var shortcut: Shortcuts
@@ -21,8 +17,10 @@ struct WriteShortcutTagView: View {
     @State var isShowingCategoryModal = false
     @State var isRequirementValid = false
     
+    @State var existingCategory: [String] = []
+    @State var newCategory: [String] = []
+    
     let isEdit: Bool
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -70,13 +68,49 @@ struct WriteShortcutTagView: View {
             Spacer()
             
             Button(action: {
-                //새로운 단축어 생성 및 저장
-                // 뷰모델에 추가
-                shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
                 shortcut.author = shortcutsZipViewModel.currentUser()
-                // 서버에 추가
-                shortcutsZipViewModel.setData(model: shortcut)
+                print(shortcut.category)
                 if isEdit {
+                    
+                    newCategory = shortcut.category
+                    
+                    //뷰모델에서 변경
+                    if let index = shortcutsZipViewModel.shortcutsUserLiked.firstIndex(where: { $0.id == shortcut.id}) {
+                        shortcutsZipViewModel.shortcutsUserLiked[index] = shortcut
+                    }
+                    if let index = shortcutsZipViewModel.shortcutsUserDownloaded.firstIndex(where: { $0.id == shortcut.id}) {
+                        shortcutsZipViewModel.shortcutsUserDownloaded[index] = shortcut
+                    }
+                    if let index = shortcutsZipViewModel.shortcutsMadeByUser.firstIndex(where: { $0.id == shortcut.id}) {
+                        shortcutsZipViewModel.shortcutsMadeByUser[index] = shortcut
+                    }
+                    if let index = shortcutsZipViewModel.sortedShortcutsByDownload.firstIndex(where: { $0.id == shortcut.id}) {
+                        shortcutsZipViewModel.sortedShortcutsByDownload[index] = shortcut
+                    }
+                    if let index = shortcutsZipViewModel.sortedShortcutsByLike.firstIndex(where: { $0.id == shortcut.id}) {
+                        shortcutsZipViewModel.sortedShortcutsByLike[index] = shortcut
+                    }
+                    //뷰모델의 카테고리별 단축어 목록에서 정보 수정
+                    existingCategory.forEach { category in
+                        if !shortcut.category.contains(category) {
+                            newCategory.removeAll(where: { $0 == category })
+                            shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].removeAll(where: { $0.id == shortcut.id })
+                        } else {
+                            newCategory.removeAll(where: { $0 == category })
+                            if let index = shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].firstIndex(where: { $0.id == shortcut.id}) {
+                                shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index][index] = shortcut
+                            }
+                        }
+                    }
+                    newCategory.forEach { category in
+                        if !shortcutsZipViewModel.isFirstFetchInCategory[Category(rawValue: category)!.index] {
+                            shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
+                        }
+                    }
+                    
+                    //서버 데이터 변경
+                    shortcutsZipViewModel.setData(model: shortcut)
+                    //TODO: 셀정보에 변경사항이 있을 경우에만 함수를 호출하도록 변경 필요
                     shortcutsZipViewModel.updateShortcutInCuration(
                         shortcutCell: ShortcutCellModel(
                             id: shortcut.id,
@@ -88,19 +122,22 @@ struct WriteShortcutTagView: View {
                         ),
                         curationIDs: shortcut.curationIDs
                     )
+                    
+                } else {
+                    //새로운 단축어 생성 및 저장
+                    // 뷰모델에 추가
+                    shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
+                    shortcutsZipViewModel.sortedShortcutsByDownload.append(shortcut)
+                    shortcut.category.forEach { category in
+                        if !shortcutsZipViewModel.isFirstFetchInCategory[Category(rawValue: category)!.index] {
+                            shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
+                        }
+                    }
+                    // 서버에 추가
+                    shortcutsZipViewModel.setData(model: shortcut)
                 }
-                isWriting.toggle()
                 
-                switch navigationParentView {
-                case .shortcuts:
-                    shortcutNavigation.shortcutPath = .init()
-                case .curations:
-                    curationNavigation.navigationPath = .init()
-                case .myPage:
-                    profileNavigation.navigationPath = .init()
-                case .editShortcut:
-                    editShortcutNavigation.navigationPath = .init()
-                }
+                isWriting.toggle()
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -115,6 +152,9 @@ struct WriteShortcutTagView: View {
             .disabled(shortcut.category.isEmpty || !isRequirementValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
+        }
+        .onAppear() {
+            existingCategory = shortcut.category
         }
         .navigationTitle(isEdit ? "단축어 편집" :"단축어 등록")
         .ignoresSafeArea(.keyboard)
@@ -232,7 +272,6 @@ struct WriteShortcutTagView: View {
                     Image(systemName: "xmark")
                 })
             }
-            //            .modifier(CellModifier(color: .Primary))
             .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
                                    backgroundColor: Color.Tag_Pick_Background,
                                    strokeColor: Color.Primary))

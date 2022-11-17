@@ -9,10 +9,7 @@ import SwiftUI
 
 struct DownloadRankView: View {
     
-    @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
-    
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -24,35 +21,26 @@ struct DownloadRankView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: SectionType.download) {
+                NavigationLink(destination: {
+                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.download)
+                        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+                }, label: {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
-                }
-                .navigationDestination(for: SectionType.self, destination: { type in
-                    ShortcutsListView(shortcuts: $shortcuts,
-                                      sectionType: type,
-                                      navigationParentView: self.navigationParentView)
                 })
             }
             .padding(.leading, 16)
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    NavigationLink(value: shortcut.id) {
-                        ShortcutCell(shortcut: shortcut,
-                                     rankNumber: index + 1,
-                                     navigationParentView: self.navigationParentView)
-                    }
-                    .navigationDestination(for: String.self, destination: { shortcutID in
-                        ReadShortcutView(shortcutID: shortcutID,
-                                         navigationParentView: self.navigationParentView)
+                    NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id), label: {
+                        ShortcutCell(shortcut: shortcut, rankNumber: index + 1)
                     })
                 }
             }
-            .environmentObject(navigation)
-            .background(Color.Background)
         }
+        .background(Color.Background)
     }
 }

@@ -25,6 +25,8 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var sortedShortcutsByDownload: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
     @Published var sortedShortcutsByLike: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
     @Published var shortcutsInCategory: [[Shortcuts]] = [[Shortcuts]].init(repeating: [], count: Category.allCases.count) // Category에서 사용할 숏컷 배열
+    @Published var isFirstFetchInCategory = [Bool] (repeating: true, count: Category.allCases.count) //카테고리를 리스트 첫 fetch여부
+    @Published var isLastFetchInCategory = [Bool] (repeating: false, count: Category.allCases.count) //카테고리를 리스트 마지막 fetch여부
     
     @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     @Published var userCurations: [Curation] = []
@@ -37,6 +39,8 @@ class ShortcutsZipViewModel: ObservableObject {
     
     var lastShortcutDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
     var lastCurationDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 3)
+    var lastCategoryDocumentSnapshot = [QueryDocumentSnapshot?] (repeating: nil, count: 12)
+    var lastSearchShortcutDocumentSnapshot: QueryDocumentSnapshot?
     
     let numberOfPageLimit = 10
     let numberOfLike = 5
@@ -134,7 +138,6 @@ class ShortcutsZipViewModel: ObservableObject {
         return index
     }
     
-
     
 //MARK: - 데이터를 받아오는 함수들
     
@@ -227,24 +230,23 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 선택한 카테고리에 해당하는 단축어를 정렬하여 10개씩 가져오는 함수 (카테고리 단축어)
     
     func fetchCategoryShortcutLimit(
-        category: String,
+        category: Category,
         orderBy: String,
         completionHandler: @escaping ([Shortcuts])->()) {
-            
             var shortcuts: [Shortcuts] = []
             
             var query: Query!
-            let index = checkShortcutIndex(orderBy: orderBy)
+            let index = category.index
             
-            if let next = self.lastShortcutDocumentSnapshot[index] {
+            if let next = self.lastCategoryDocumentSnapshot[index] {
                 query  = db.collection("Shortcut")
-                    .whereField("category", arrayContains: category)
+                    .whereField("category", arrayContains: category.rawValue)
                     .order(by: orderBy, descending: true)
                     .limit(to: numberOfPageLimit)
                     .start(afterDocument: next)
             } else {
                 query = db.collection("Shortcut")
-                    .whereField("category", arrayContains: category)
+                    .whereField("category", arrayContains: category.rawValue)
                     .order(by: orderBy, descending: true)
                     .limit(to: numberOfPageLimit)
             }
@@ -265,13 +267,13 @@ class ShortcutsZipViewModel: ObservableObject {
                             print("error: \(error)")
                         }
                     }
-                    self.lastShortcutDocumentSnapshot[index] = documents.last
+                    self.lastCategoryDocumentSnapshot[category.index] = documents.last
                     completionHandler(shortcuts)
                 }
             }
         }
     
-    // MARK: 현재 user가 만들었던 shortcuts을 받아오는 함수 (나의 단축어)
+    // MARK: 현재 user가 만들었던 shortcuts을 10개씩 받아오는 함수 (나의 단축어)
     
     func fetchShortcutByAuthor(author: String, completionHandler: @escaping ([Shortcuts])->()) {
         
@@ -280,7 +282,7 @@ class ShortcutsZipViewModel: ObservableObject {
         db.collection("Shortcut")
             .whereField("author", isEqualTo: author)
             .order(by: "date", descending: true)
-            .limit(to: numberOfPageLimit)
+//            .limit(to: numberOfPageLimit)
             .getDocuments { (querySnapshot, error) in
                 if let error {
                     print("Error getting documents: \(error)")
@@ -899,4 +901,72 @@ class ShortcutsZipViewModel: ObservableObject {
             }
     }
     
+// MARK: - 검색 관련 함수
+    
+    //MARK: 연관 앱으로 단축어 검색
+    func searchShortcutByRequiredApp(word: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+        var shortcuts: [Shortcuts] = []
+        
+        var query: Query!
+        
+        query = db.collection("Shortcut")
+            .whereField("requiredApp", arrayContains: word)
+            .order(by: "requiredApp", descending: true)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        shortcuts.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                self.lastSearchShortcutDocumentSnapshot = documents.last
+                completionHandler(shortcuts)
+            }
+        }
+    }
+    
+    //MARK: 제목으로 단축어 검색
+    ///prefix기준으로만 검색이 가능
+    func searchShortcutByTitlePrefix(keyword: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+        var shortcuts: [Shortcuts] = []
+        
+        var query: Query!
+        
+        query = db.collection("Shortcut")
+            .whereField("title", isGreaterThanOrEqualTo: keyword)
+            .whereField("title", isLessThanOrEqualTo: keyword + "\u{f8ff}")
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error {
+                print("Error getting documents: \(error)")
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                let decoder = JSONDecoder()
+                
+                for document in documents {
+                    do {
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                        shortcuts.append(shortcut)
+                    } catch let error {
+                        print("error: \(error)")
+                    }
+                }
+                self.lastSearchShortcutDocumentSnapshot = documents.last
+                completionHandler(shortcuts)
+            }
+        }
+    }
 }

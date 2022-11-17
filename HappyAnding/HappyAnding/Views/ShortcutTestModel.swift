@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+/*
 // TODO: 테스트 모델, 추후 삭제 예정
 
 struct Shortcut: Identifiable {
@@ -157,3 +157,4 @@ extension UserCuration {
         
     }
 }
+*/
