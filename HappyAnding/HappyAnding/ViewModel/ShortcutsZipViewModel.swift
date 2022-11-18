@@ -895,23 +895,23 @@ class ShortcutsZipViewModel: ObservableObject {
             .whereField("id", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(User.self, from: jsonData)
-                        completionHandler(shortcut)
-                    } catch let error {
-                        print("error: \(error)")
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(User.self, from: jsonData)
+                            completionHandler(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
                     }
                 }
             }
-        }
     }
     
     //MARK: user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
@@ -1025,5 +1025,28 @@ class ShortcutsZipViewModel: ObservableObject {
                 completionHandler(shortcuts)
             }
         }
+    }
+    func fetchComment(shortcutID: String, completionHandler: @escaping (Comments) -> ()) {
+        db.collection("Comment")
+            .whereField("id", isEqualTo: shortcutID)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let comments = try decoder.decode(Comments.self, from: jsonData)
+                            completionHandler(comments)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                }
+            }
     }
 }
