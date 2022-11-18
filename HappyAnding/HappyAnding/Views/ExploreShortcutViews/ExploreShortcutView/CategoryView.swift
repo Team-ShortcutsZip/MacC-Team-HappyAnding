@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CategoryView: View {
     
-    @EnvironmentObject var navigation: ShortcutNavigation
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var categoryIndex = 6
     @State var isTappedPlutButton = true {
@@ -45,9 +44,9 @@ struct CategoryView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < categoryIndex {
-                        NavigationLink(value: value, label: {
+                        NavigationLink(value: value) {
                             CategoryCellView(categoryName: value.translateName())
-                        })
+                        }
                     }
                 }
             }
@@ -58,7 +57,6 @@ struct CategoryView: View {
                                   navigationParentView: .shortcuts)
             }
         }
-        .environmentObject(navigation)
     }
 }
 

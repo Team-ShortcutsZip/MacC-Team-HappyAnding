@@ -9,9 +9,6 @@ import SwiftUI
 
 struct WriteShortcutdescriptionView: View {
     
-    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
-    @EnvironmentObject var profileNavigation: ProfileNavigation
-    
     @Binding var shortcut: Shortcuts
     @Binding var isWriting: Bool
     

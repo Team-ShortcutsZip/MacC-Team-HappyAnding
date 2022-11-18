@@ -104,7 +104,7 @@ struct MyPageView: View {
 }
 
 struct MyPageShortcutList: View {
-    @EnvironmentObject var navigation: ProfileNavigation
+//    @EnvironmentObject var navigation: ProfileNavigation
     
     var shortcuts: [Shortcuts]?
     var type: SectionType
@@ -131,12 +131,12 @@ struct MyPageShortcutList: View {
                                                               shortcuts: self.shortcuts),
                              navigationParentView: .myPage)
         }
-        .environmentObject(navigation)
+//        .environmentObject(navigation)
     }
 }
 
 struct MyPageListHeader: View {
-    @EnvironmentObject var navigation: ProfileNavigation
+//    @EnvironmentObject var navigation: ProfileNavigation
 
     var type: SectionType
     let shortcuts: [Shortcuts]?
@@ -161,7 +161,7 @@ struct MyPageListHeader: View {
         .navigationDestination(for: NavigationListShortcutType.self) { data in
             ListShortcutView(data: data, navigationParentView: .myPage)
         }
-        .environmentObject(navigation)
+//        .environmentObject(navigation)
     }
 }
 

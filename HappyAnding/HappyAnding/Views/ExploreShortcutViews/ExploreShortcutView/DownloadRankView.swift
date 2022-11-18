@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DownloadRankView: View {
     
-    @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
     let navigationParentView: NavigationParentView
@@ -51,8 +50,7 @@ struct DownloadRankView: View {
                     })
                 }
             }
+            .background(Color.Background)
         }
-        .environmentObject(navigation)
-        .background(Color.Background)
     }
 }

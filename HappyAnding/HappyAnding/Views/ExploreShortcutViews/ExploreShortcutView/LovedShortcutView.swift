@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LovedShortcutView: View {
     
-    @EnvironmentObject var navigation: ShortcutNavigation
     @Binding var shortcuts: [Shortcuts]
     
     var body: some View {
@@ -52,7 +51,7 @@ struct LovedShortcutView: View {
             }
             
         }
-        .environmentObject(navigation)
+//        .environmentObject(navigation)
         .background(Color.Background)
     }
 }

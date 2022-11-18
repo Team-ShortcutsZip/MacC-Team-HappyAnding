@@ -9,8 +9,6 @@ import SwiftUI
 
 struct WriteShortcutTitleView: View {
     
-    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
-    @EnvironmentObject var profileNavigation: ProfileNavigation
     @Environment(\.presentationMode) var presentationMode
     
     @Binding var isWriting: Bool

@@ -9,9 +9,6 @@ import SwiftUI
 
 struct MyShortcutCardListView: View {
     
-    @EnvironmentObject var profileNavigation: ProfileNavigation
-    @EnvironmentObject var shortcutsNavigation: ShortcutNavigation
-    
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
         NavigationListShortcutType(sectionType: .myShortcut,

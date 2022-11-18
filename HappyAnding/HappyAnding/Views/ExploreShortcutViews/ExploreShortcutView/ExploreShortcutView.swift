@@ -45,10 +45,10 @@ struct ExploreShortcutView: View {
         .environmentObject(navigation)
     }
 }
-/*
+
 struct ExploreShortcutView_Previews: PreviewProvider {
     static var previews: some View {
         ExploreShortcutView()
     }
 }
-*/
+

@@ -10,9 +10,6 @@ import SwiftUI
 struct WriteCurationSetView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var curationNavigation: CurationNavigation
-    @EnvironmentObject var profileNavigation: ProfileNavigation
-    @EnvironmentObject var editCurationNavigation: EditCurationNavigation
     
     @Binding var isWriting: Bool
     
@@ -59,29 +56,12 @@ struct WriteCurationSetView: View {
             .background(Color.Background)
             .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Float.self) { isEdit in
-                WriteCurationInfoView(curation: $curation,
-                                      isWriting: self.$isWriting,
-                                      isEdit: self.isEdit,
-                                      navigationParentView: self.navigationParentView)
-            }
             .onAppear {
                 shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
                     self.shortcutCells = self.shortcutCells.union(shortcuts)
                 }
                 shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
                     self.shortcutCells = self.shortcutCells.union(shortcuts)
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    if isEdit {
-                        Button {
-                            self.isWriting.toggle()
-                        } label: {
-                            Text("닫기")
-                        }
-                    }
                 }
             }
             
@@ -92,7 +72,24 @@ struct WriteCurationSetView: View {
                     Spacer()
                 }
             }
-            
+        }
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if isEdit {
+                    Button {
+                        self.isWriting.toggle()
+                    } label: {
+                        Text("닫기")
+                    }
+                }
+            }
+        }
+        .navigationDestination(for: Float.self) { isEdit in
+            WriteCurationInfoView(curation: $curation,
+                                  isWriting: self.$isWriting,
+                                  isEdit: self.isEdit,
+                                  navigationParentView: self.navigationParentView)
         }
     }
     
