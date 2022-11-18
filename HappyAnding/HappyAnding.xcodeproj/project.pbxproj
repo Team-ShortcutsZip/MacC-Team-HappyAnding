@@ -76,6 +76,10 @@
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
+		A3A6AD0F29276285004C49DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3A6AD0E29276285004C49DC /* GoogleService-Info.plist */; };
+		A3A6AD17292763E2004C49DC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A6AD16292763E2004C49DC /* ShareViewController.swift */; };
+		A3A6AD1A292763E2004C49DC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3A6AD18292763E2004C49DC /* MainInterface.storyboard */; };
+		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
 		A3C55771292D1C0B003907DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3C55770292D1C0A003907DC /* GoogleService-Info.plist */; };
 		A3FF0183291648A300384211 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF0182291648A300384211 /* MailView.swift */; };
@@ -111,7 +115,28 @@
 			remoteGlobalIDString = 87E99C6928F94EA6009B691F;
 			remoteInfo = HappyAnding;
 		};
+		A3A6AD1C292763E2004C49DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87E99C6228F94EA6009B691F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A3A6AD13292763E2004C49DC;
+			remoteInfo = ShareExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A3A6AD22292763E2004C49DC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3D41EE06290A458B008BE986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -189,6 +214,11 @@
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3766B222904330300708F83 /* ReadUserCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserCurationView.swift; sourceTree = "<group>"; };
 		A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCardCell.swift; sourceTree = "<group>"; };
+		A3A6AD0E29276285004C49DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A3A6AD14292763E2004C49DC /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3A6AD16292763E2004C49DC /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		A3A6AD19292763E2004C49DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		A3A6AD1B292763E2004C49DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
 		A3C55770292D1C0A003907DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
@@ -230,6 +260,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A3A6AD11292763E2004C49DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -249,9 +286,12 @@
 			isa = PBXGroup;
 			children = (
 				A3C55770292D1C0A003907DC /* GoogleService-Info.plist */,
+				3D6C61CE292A8CF2005F8483 /* GoogleService-Info.plist */,
+				A3A6AD0E29276285004C49DC /* GoogleService-Info.plist */,
 				87E99C6C28F94EA6009B691F /* HappyAnding */,
 				87E99C7D28F94EA8009B691F /* HappyAndingTests */,
 				87E99C8728F94EA8009B691F /* HappyAndingUITests */,
+				A3A6AD15292763E2004C49DC /* ShareExtension */,
 				87E99C6B28F94EA6009B691F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -262,6 +302,7 @@
 				87E99C6A28F94EA6009B691F /* HappyAnding.app */,
 				87E99C7A28F94EA8009B691F /* HappyAndingTests.xctest */,
 				87E99C8428F94EA8009B691F /* HappyAndingUITests.xctest */,
+				A3A6AD14292763E2004C49DC /* ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -484,6 +525,16 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		A3A6AD15292763E2004C49DC /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				A3A6AD16292763E2004C49DC /* ShareViewController.swift */,
+				A3A6AD18292763E2004C49DC /* MainInterface.storyboard */,
+				A3A6AD1B292763E2004C49DC /* Info.plist */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
 		A3FF0184291854FA00384211 /* SettingViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,10 +556,12 @@
 				87E99C6628F94EA6009B691F /* Sources */,
 				87E99C6728F94EA6009B691F /* Frameworks */,
 				87E99C6828F94EA6009B691F /* Resources */,
+				A3A6AD22292763E2004C49DC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A3A6AD1D292763E2004C49DC /* PBXTargetDependency */,
 			);
 			name = HappyAnding;
 			packageProductDependencies = (
@@ -557,6 +610,23 @@
 			productReference = 87E99C8428F94EA8009B691F /* HappyAndingUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		A3A6AD13292763E2004C49DC /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A3A6AD1F292763E2004C49DC /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				A3A6AD10292763E2004C49DC /* Sources */,
+				A3A6AD11292763E2004C49DC /* Frameworks */,
+				A3A6AD12292763E2004C49DC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = A3A6AD14292763E2004C49DC /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -577,6 +647,9 @@
 					87E99C8328F94EA8009B691F = {
 						CreatedOnToolsVersion = 14.0.1;
 						TestTargetID = 87E99C6928F94EA6009B691F;
+					};
+					A3A6AD13292763E2004C49DC = {
+						CreatedOnToolsVersion = 14.0;
 					};
 				};
 			};
@@ -599,6 +672,7 @@
 				87E99C6928F94EA6009B691F /* HappyAnding */,
 				87E99C7928F94EA8009B691F /* HappyAndingTests */,
 				87E99C8328F94EA8009B691F /* HappyAndingUITests */,
+				A3A6AD13292763E2004C49DC /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -615,6 +689,8 @@
 				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
 				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 				A3C55771292D1C0B003907DC /* GoogleService-Info.plist in Resources */,
+				3D6C61CF292A8CF2005F8483 /* GoogleService-Info.plist in Resources */,
+				A3A6AD0F29276285004C49DC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +705,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3A6AD12292763E2004C49DC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3A6AD1A292763E2004C49DC /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +819,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A3A6AD10292763E2004C49DC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3A6AD17292763E2004C49DC /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -748,7 +840,23 @@
 			target = 87E99C6928F94EA6009B691F /* HappyAnding */;
 			targetProxy = 87E99C8528F94EA8009B691F /* PBXContainerItemProxy */;
 		};
+		A3A6AD1D292763E2004C49DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A3A6AD13292763E2004C49DC /* ShareExtension */;
+			targetProxy = A3A6AD1C292763E2004C49DC /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A3A6AD18292763E2004C49DC /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A3A6AD19292763E2004C49DC /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		87E99C8C28F94EA8009B691F /* Debug */ = {
@@ -868,6 +976,7 @@
 		87E99C8F28F94EA8009B691F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
@@ -909,6 +1018,7 @@
 		87E99C9028F94EA8009B691F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
@@ -1023,6 +1133,64 @@
 			};
 			name = Release;
 		};
+		A3A6AD20292763E2004C49DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HN3RL67C46;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtensionForDev;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A3A6AD21292763E2004C49DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HN3RL67C46;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtensionForDev;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1058,6 +1226,15 @@
 			buildConfigurations = (
 				87E99C9528F94EA8009B691F /* Debug */,
 				87E99C9628F94EA8009B691F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3A6AD1F292763E2004C49DC /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3A6AD20292763E2004C49DC /* Debug */,
+				A3A6AD21292763E2004C49DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
