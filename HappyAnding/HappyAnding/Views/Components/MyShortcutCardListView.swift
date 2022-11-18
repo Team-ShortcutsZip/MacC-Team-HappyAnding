@@ -11,9 +11,11 @@ struct MyShortcutCardListView: View {
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
-        NavigationListShortcutType(sectionType: .myShortcut,
-                                   shortcuts: self.shortcuts)
-    }
+            NavigationListShortcutType(sectionType: .myShortcut,
+                                       shortcuts: self.shortcuts,
+                                       navigationParentView: self.navigationParentView)
+        }
+
     
     let navigationParentView: NavigationParentView
     
@@ -62,8 +64,7 @@ struct MyShortcutCardListView: View {
             }
         }
         .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data,
-                             navigationParentView: self.navigationParentView)
+            ListShortcutView(data: data)
         }
         .navigationDestination(for: NavigationShortcutTitleView.self) { _ in
             WriteShortcutTitleView(isWriting: .constant(true),

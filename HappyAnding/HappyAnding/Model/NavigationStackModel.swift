@@ -12,7 +12,15 @@ struct NavigationListShortcutType: Identifiable, Hashable {
     
     var sectionType: SectionType
     var shortcuts: [Shortcuts]?
+    let navigationParentView: NavigationParentView
 }
+//
+//struct NavigationReadShortcutType: Identifiable, Hashable {
+//    var id = UUID().uuidString
+//    
+//    let shortcutID: String
+//    let navigationParentView: NavigationParentView
+//}
 
 struct NavigationCurationType: Identifiable, Hashable {
     var id = UUID().uuidString

@@ -128,8 +128,8 @@ struct MyPageShortcutList: View {
         }
         .navigationDestination(for: SectionType.self) { type in
             ListShortcutView(data: NavigationListShortcutType(sectionType: type,
-                                                              shortcuts: self.shortcuts),
-                             navigationParentView: .myPage)
+                                                              shortcuts: self.shortcuts,
+                                                              navigationParentView: .myPage))
         }
 //        .environmentObject(navigation)
     }
@@ -142,7 +142,8 @@ struct MyPageListHeader: View {
     let shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
         NavigationListShortcutType(sectionType: self.type,
-                                   shortcuts: self.shortcuts)
+                                   shortcuts: self.shortcuts,
+                                   navigationParentView: .myPage)
     }
     var body: some View {
         HStack(alignment: .bottom) {
@@ -159,7 +160,7 @@ struct MyPageListHeader: View {
             }
         }
         .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data, navigationParentView: .myPage)
+            ListShortcutView(data: data)
         }
 //        .environmentObject(navigation)
     }
