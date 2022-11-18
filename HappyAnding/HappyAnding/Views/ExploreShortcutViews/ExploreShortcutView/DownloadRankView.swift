@@ -29,11 +29,6 @@ struct DownloadRankView: View {
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 }
-                .navigationDestination(for: SectionType.self, destination: { type in
-                    ShortcutsListView(shortcuts: $shortcuts,
-                                      sectionType: type,
-                                      navigationParentView: self.navigationParentView)
-                })
             }
             .padding(.leading, 16)
             
@@ -51,6 +46,11 @@ struct DownloadRankView: View {
                 }
             }
             .background(Color.Background)
+        }
+        .navigationDestination(for: SectionType.self) { type in
+            ShortcutsListView(shortcuts: $shortcuts,
+                              sectionType: type,
+                              navigationParentView: self.navigationParentView)
         }
     }
 }

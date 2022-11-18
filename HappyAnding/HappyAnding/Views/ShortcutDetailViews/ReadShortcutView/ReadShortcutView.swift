@@ -99,19 +99,11 @@ struct ReadShortcutView: View {
                   )
             )
         }
-        .navigationDestination(for: NavigationEditShortcutType.self) { data in
-            if let shortcut {
-                WriteShortcutTitleView(isWriting: .constant(true),
-//                                       shortcut: shortcut,
-                                       isEdit: true,
-                                       navigationParentView: self.navigationParentView)
-            }
-        }
         .fullScreenCover(isPresented: $isEdit) {
             NavigationStack(path: $editNavigation.navigationPath) {
                 if let shortcut {
                     WriteShortcutTitleView(isWriting: $isEdit,
-//                                           shortcut: shortcut,
+                                           shortcut: shortcut,
                                            isEdit: true,
                                            navigationParentView: .editShortcut)
                 }

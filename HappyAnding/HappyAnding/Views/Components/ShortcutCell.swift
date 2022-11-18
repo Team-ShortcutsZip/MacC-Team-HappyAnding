@@ -75,10 +75,6 @@ struct ShortcutCell: View {
             .background( background )
             .padding(.horizontal, 20)
         }
-        .navigationDestination(for: String.self, destination: { shortcutID in
-            ReadShortcutView(shortcutID: shortcutID,
-                             navigationParentView: self.navigationParentView)
-        })
         .padding(.top, 12)
         .background(Color.Background)
         .onAppear() {
@@ -92,6 +88,10 @@ struct ShortcutCell: View {
                     downloadLink: shortcut.downloadLink.last!
                 )
             }
+        }
+        .navigationDestination(for: String.self) { shortcutID in
+            ReadShortcutView(shortcutID: shortcutID,
+                             navigationParentView: self.navigationParentView)
         }
     }
     

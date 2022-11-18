@@ -27,11 +27,6 @@ struct LovedShortcutView: View {
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 }
-                .navigationDestination(for: SectionType.self, destination: { type in
-                    ShortcutsListView(shortcuts: $shortcuts,
-                                      sectionType: type,
-                                      navigationParentView: .shortcuts)
-                })
             }
             .padding(.leading, 16)
             
@@ -51,7 +46,11 @@ struct LovedShortcutView: View {
             }
             
         }
-//        .environmentObject(navigation)
+        .navigationDestination(for: SectionType.self) { type in
+            ShortcutsListView(shortcuts: $shortcuts,
+                              sectionType: type,
+                              navigationParentView: .shortcuts)
+        }
         .background(Color.Background)
     }
 }

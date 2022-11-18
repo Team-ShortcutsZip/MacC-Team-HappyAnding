@@ -63,12 +63,12 @@ struct CurationListHeader: View {
                     .Footnote()
                     .foregroundColor(.Gray4)
             }
-            .navigationDestination(for: NavigationCurationType.self) { type in
-                ListCurationView(userCurations: $userCurations,
-                                 type: data.type,
-                                 isAllUser: true,
-                                 navigationParentView: self.navigationParentView)
-            }
+        }
+        .navigationDestination(for: NavigationCurationType.self) { type in
+            ListCurationView(userCurations: $userCurations,
+                             type: data.type,
+                             isAllUser: true,
+                             navigationParentView: self.navigationParentView)
         }
     }
 }

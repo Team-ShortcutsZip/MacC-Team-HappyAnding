@@ -37,10 +37,6 @@ struct MyShortcutCardListView: View {
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 }
-                .navigationDestination(for: NavigationListShortcutType.self) { data in
-                    ListShortcutView(data: data,
-                                     navigationParentView: self.navigationParentView)
-                }
             }
             .padding(.leading, 16)
             
@@ -62,17 +58,21 @@ struct MyShortcutCardListView: View {
                         }
                     }
                 }
-                .navigationDestination(for: NavigationShortcutTitleView.self) { _ in
-                    WriteShortcutTitleView(isWriting: .constant(true),
-                                           isEdit: false,
-                                           navigationParentView: self.navigationParentView)
-                }
-                .navigationDestination(for: String.self) { shortcutID in
-                    ReadShortcutView(shortcutID: shortcutID,
-                                     navigationParentView: self.navigationParentView)
-                }
                 .padding(.horizontal, 16)
             }
+        }
+        .navigationDestination(for: NavigationListShortcutType.self) { data in
+            ListShortcutView(data: data,
+                             navigationParentView: self.navigationParentView)
+        }
+        .navigationDestination(for: NavigationShortcutTitleView.self) { _ in
+            WriteShortcutTitleView(isWriting: .constant(true),
+                                   isEdit: false,
+                                   navigationParentView: self.navigationParentView)
+        }
+        .navigationDestination(for: String.self) { shortcutID in
+            ReadShortcutView(shortcutID: shortcutID,
+                             navigationParentView: self.navigationParentView)
         }
         .navigationBarTitleDisplayMode(.automatic)
     }
