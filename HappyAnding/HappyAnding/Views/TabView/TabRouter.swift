@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Tab: CaseIterable {
+enum Tab: CaseIterable, Hashable {
     case exploreShortcut
     case collect
     case myPage
