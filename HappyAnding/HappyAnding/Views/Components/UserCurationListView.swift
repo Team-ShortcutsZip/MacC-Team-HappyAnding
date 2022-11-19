@@ -41,9 +41,12 @@ struct UserCurationListView: View {
 
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    
+                    let data = NavigationReadUserCurationType(userCuration: curation,
+                                                              navigationParentView: self.navigationParentView)
                     //TODO: 데이터 변경 필요
                     if index < 2 {
-                        NavigationLink(value: curation) {
+                        NavigationLink(value: data) {
                             UserCurationCell(curation: curation,
                                              navigationParentView: self.navigationParentView)
                         }
@@ -51,9 +54,8 @@ struct UserCurationListView: View {
                 }
             }
         }
-        .navigationDestination(for: Curation.self) { curation in
-            ReadUserCurationView(userCuration: curation,
-                                 navigationParentView: self.navigationParentView)
+        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+            ReadUserCurationView(data: data)
         }
         .navigationDestination(for: UInt.self) { isEdit in
             WriteCurationSetView(isWriting: self.$isWriting,

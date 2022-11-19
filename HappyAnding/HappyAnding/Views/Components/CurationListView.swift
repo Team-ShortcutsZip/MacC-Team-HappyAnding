@@ -27,18 +27,19 @@ struct CurationListView: View {
             
             ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                 if index < 2 {
-                    NavigationLink(value: NavigationUserCuration.first) {
+                    
+                    let data = NavigationReadUserCurationType(userCuration: curation,
+                                                              navigationParentView: self.navigationParentView)
+                    NavigationLink(value: data) {
                         UserCurationCell(curation: curation,
                                          navigationParentView: self.navigationParentView)
-                    }
-                    .navigationDestination(for: NavigationUserCuration.self) { _ in
-                        ReadUserCurationView(userCuration: curation,
-                                             navigationParentView: self.navigationParentView)
                     }
                 }
             }
         }
-        
+        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+            ReadUserCurationView(data: data)
+        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         
     }

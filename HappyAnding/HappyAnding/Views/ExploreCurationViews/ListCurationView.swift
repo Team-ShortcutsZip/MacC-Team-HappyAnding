@@ -20,7 +20,6 @@ enum CurationType: String {
 
 struct ListCurationView: View {
     
-//    var userCurations: [UserCuration]
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var userCurations: [Curation]
     var type: CurationType
@@ -29,36 +28,48 @@ struct ListCurationView: View {
     let navigationParentView: NavigationParentView
     
     var body: some View {
-        List {
-            if let title {
-                Text(title)
-                    .Title1()
-                    .foregroundColor(.Gray5)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.Background)
-                    .padding(.horizontal, 16)
-            }
-            ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+        ScrollView {
+            LazyVStack {
+                if let title {
+                    Text(title)
+                        .Title1()
+                        .foregroundColor(.Gray5)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.Background)
+                        .padding(.horizontal, 16)
+                }
                 
-                UserCurationCell(curation: curation,
-                                 navigationParentView: self.navigationParentView)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.Background)
-                .padding(.top, index == 0 ? 20 : 0 )
-                .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
-                .onAppear {
-                    if userCurations.last == curation && userCurations.count % 10 == 0 {
-                        print(userCurations.count)
-                        if isAllUser {
-                            shortcutsZipViewModel.fetchCurationLimit(isAdmin: false) { curations in
-                                userCurations.append(contentsOf: curations)
+                ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    
+                    let data = NavigationReadUserCurationType(userCuration: curation,
+                                                              navigationParentView: self.navigationParentView)
+                    
+                    NavigationLink(value: data) {
+                        UserCurationCell(curation: curation,
+                                         navigationParentView: self.navigationParentView)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.Background)
+                        .padding(.top, index == 0 ? 20 : 0 )
+                        .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
+                        
+                        .onAppear {
+                            if userCurations.last == curation && userCurations.count % 10 == 0 {
+                                print(userCurations.count)
+                                if isAllUser {
+                                    shortcutsZipViewModel.fetchCurationLimit(isAdmin: false) { curations in
+                                        userCurations.append(contentsOf: curations)
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+            ReadUserCurationView(data: data)
         }
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))

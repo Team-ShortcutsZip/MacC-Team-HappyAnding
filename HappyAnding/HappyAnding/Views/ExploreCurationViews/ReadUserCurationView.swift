@@ -19,9 +19,7 @@ struct ReadUserCurationView: View {
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
-    @State var userCuration: Curation
-    
-    let navigationParentView: NavigationParentView
+    @State var data: NavigationReadUserCurationType
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -41,18 +39,19 @@ struct ReadUserCurationView: View {
                         .padding(.top, 103)
                         .padding(.bottom, 22)
                     
-                    UserCurationCell(curation: userCuration,
-                                     navigationParentView: self.navigationParentView)
+                    UserCurationCell(curation: data.userCuration,
+                                     navigationParentView: data.navigationParentView)
                     .padding(.bottom, 12)
                 }
             }
-            ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
+            ForEach(Array(self.data.userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
                 let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                      navigationParentView: self.navigationParentView)
+                                                      navigationParentView: self.data.navigationParentView)
+                
                 NavigationLink(value: data) {
                     ShortcutCell(shortcutCell: shortcut,
-                                 navigationParentView: self.navigationParentView)
-                    .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
+                                 navigationParentView: self.data.navigationParentView)
+                    .padding(.bottom, index == self.data.userCuration.shortcuts.count - 1 ? 44 : 0)
                 }
             }
         }
@@ -73,7 +72,7 @@ struct ReadUserCurationView: View {
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if userCuration.author == shortcutsZipViewModel.currentUser() {
+            if self.data.userCuration.author == shortcutsZipViewModel.currentUser() {
                 myCurationMenuSection
             } else {
                 //다른 사람 큐레이션 볼 때 공유버튼 동작(트레일링 아이템) 제거.
@@ -81,16 +80,16 @@ struct ReadUserCurationView: View {
 //                otherCurationMenuSection
             }
         }, label: {
-            Image(systemName: userCuration.author == shortcutsZipViewModel.currentUser() ? "ellipsis" : "square.and.arrow.up")
+            Image(systemName: self.data.userCuration.author == shortcutsZipViewModel.currentUser() ? "ellipsis" : "square.and.arrow.up")
                 .foregroundColor(.Gray4)
                 //다른 사람 큐레이션 볼 때 공유버튼 (트레일링 아이템) opacity 0
                 // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 제거
-                .opacity(userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
+                .opacity(self.data.userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
         }))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $editNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting,
-                                     curation: self.userCuration,
+                                     curation: self.data.userCuration,
                                      isEdit: true,
                                      navigationParentView: .editCuration)
             }
@@ -144,14 +143,14 @@ struct ReadUserCurationView: View {
                       secondaryButton: .destructive(
                         Text("삭제")
                         , action: {
-                            shortcutsZipViewModel.deleteData(model: userCuration)
-                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != userCuration.id }
+                            shortcutsZipViewModel.deleteData(model: self.data.userCuration)
+                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
                             presentation.wrappedValue.dismiss()
                 }))
             }
         }
         .onAppear {
-            shortcutsZipViewModel.fetchUser(userID: userCuration.author) { user in
+            shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author) { user in
                 authorInformation = user
             }
         }

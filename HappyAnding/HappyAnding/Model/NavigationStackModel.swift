@@ -23,6 +23,13 @@ struct NavigationReadShortcutType: Identifiable, Hashable {
     let navigationParentView: NavigationParentView
 }
 
+struct NavigationReadUserCurationType: Identifiable, Hashable {
+    var id = UUID().uuidString
+    
+    var userCuration: Curation
+    let navigationParentView: NavigationParentView
+}
+
 struct NavigationCurationType: Identifiable, Hashable {
     var id = UUID().uuidString
     
