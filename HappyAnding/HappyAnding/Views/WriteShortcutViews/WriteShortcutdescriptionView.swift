@@ -15,6 +15,10 @@ struct WriteShortcutdescriptionView: View {
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
     
+    // TODO: Refactor 필요, iOS16.0에서 Binding이 안 되는 문제 해결
+    @State var subtitle = ""
+    @State var description = ""
+    
     let isEdit: Bool
     let navigationParentView: NavigationParentView
     
@@ -33,7 +37,7 @@ struct WriteShortcutdescriptionView: View {
                                      placeholder: "간단하게 설명을 작성해주세요",
                                      lengthLimit: 35,
                                      isDownloadLinkTextField: false,
-                                     content: $shortcut.subtitle,
+                                     content: $subtitle,
                                      isValid: $isOneLineValid
             )
             
@@ -43,7 +47,7 @@ struct WriteShortcutdescriptionView: View {
                                      placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
                                      lengthLimit: 500,
                                      isDownloadLinkTextField: false,
-                                     content: $shortcut.description,
+                                     content: $description,
                                      isValid: $isMultiLineValid
             )
             
@@ -64,6 +68,14 @@ struct WriteShortcutdescriptionView: View {
             .disabled(!isOneLineValid || !isMultiLineValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
+        }
+        .onAppear {
+            self.subtitle = shortcut.subtitle
+            self.description = shortcut.description
+        }
+        .onDisappear {
+            shortcut.subtitle = self.subtitle
+            shortcut.description = self.description
         }
         .navigationDestination(for: NavigationWriteTagView.self) { value in
             WriteShortcutTagView(isWriting: $isWriting,

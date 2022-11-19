@@ -25,6 +25,12 @@ struct WriteShortcutTagView: View {
     @State var existingCategory: [String] = []
     @State var newCategory: [String] = []
     
+    
+    // TODO: Refactor 필요, iOS16.0에서 Binding이 안 되는 문제 해결
+    @State var category = [String]()
+    @State var requiredApp = [String]()
+    @State var shortcutRequirements = ""
+    
     let isEdit: Bool
     let navigationParentView: NavigationParentView
     
@@ -44,7 +50,7 @@ struct WriteShortcutTagView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shortcut.category)
+            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $category)
                 .padding(.bottom, 32)
             
             HStack {
@@ -58,7 +64,7 @@ struct WriteShortcutTagView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            relatedAppList(relatedApps: $shortcut.requiredApp)
+            relatedAppList(relatedApps: $requiredApp)
                 .padding(.bottom, 32)
             
             ValidationCheckTextField(textType: .optional,
@@ -67,13 +73,21 @@ struct WriteShortcutTagView: View {
                                      placeholder: "단축어를 사용하기 위해서 필수적으로 요구되는 내용이 있다면, 작성해주세요",
                                      lengthLimit: 100,
                                      isDownloadLinkTextField: false,
-                                     content: $shortcut.shortcutRequirements,
+                                     content: $shortcutRequirements,
                                      isValid: $isRequirementValid
             )
+            .onChange(of: shortcutRequirements) { newValue in
+                shortcut.shortcutRequirements = newValue
+            }
             
             Spacer()
             
             Button(action: {
+                
+                shortcut.category = self.category
+                shortcut.requiredApp = self.requiredApp
+                shortcut.shortcutRequirements = self.shortcutRequirements
+                
                 shortcut.author = shortcutsZipViewModel.currentUser()
                 
                 if isEdit {
@@ -129,6 +143,7 @@ struct WriteShortcutTagView: View {
                         curationIDs: shortcut.curationIDs
                     )
                     
+                    isWriting.toggle()
                 } else {
                     //새로운 단축어 생성 및 저장
                     // 뷰모델에 추가
@@ -142,7 +157,6 @@ struct WriteShortcutTagView: View {
                     // 서버에 추가
                     shortcutsZipViewModel.setData(model: shortcut)
                 }
-                isWriting.toggle()
                 
                 switch navigationParentView {
                 case .shortcuts:
@@ -159,7 +173,7 @@ struct WriteShortcutTagView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Primary : .Gray1 )
+                        .foregroundColor(!category.isEmpty && isRequirementValid ? .Primary : .Gray1 )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
@@ -167,12 +181,16 @@ struct WriteShortcutTagView: View {
                         .Body1()
                 }
             })
-            .disabled(shortcut.category.isEmpty || !isRequirementValid)
+            .disabled(category.isEmpty || !isRequirementValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
         .onAppear() {
             existingCategory = shortcut.category
+            
+            self.category = shortcut.category
+            self.requiredApp = shortcut.requiredApp
+            self.shortcutRequirements = shortcut.shortcutRequirements
         }
         .navigationTitle(isEdit ? "단축어 편집" :"단축어 등록")
         .ignoresSafeArea(.keyboard)
