@@ -33,7 +33,6 @@ struct ShortcutCell: View {
     
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    var shortcut: Shortcuts?
     
     @State var shortcutCell = ShortcutCellModel(
         id: "",
@@ -43,17 +42,13 @@ struct ShortcutCell: View {
         subtitle: "",
         downloadLink: ""
     )
-    
+    var shortcut: Shortcuts?
     var rankNumber: Int = -1
     let navigationParentView: NavigationParentView
     
     var body: some View {
         
         ZStack {
-            NavigationLink(value: shortcutCell.id) {
-                EmptyView()
-            }
-            .opacity(0)
             
             Color.Background
             
@@ -88,10 +83,6 @@ struct ShortcutCell: View {
                     downloadLink: shortcut.downloadLink.last!
                 )
             }
-        }
-        .navigationDestination(for: String.self) { shortcutID in
-            ReadShortcutView(shortcutID: shortcutID,
-                             navigationParentView: self.navigationParentView)
         }
     }
     

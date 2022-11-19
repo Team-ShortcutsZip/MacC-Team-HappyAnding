@@ -18,8 +18,7 @@ struct ReadShortcutView: View {
     @State var shortcut: Shortcuts?
     @State var isEdit = false
     
-    let shortcutID: String
-    let navigationParentView: NavigationParentView
+    @State var data: NavigationReadShortcutType
     
     var body: some View {
         
@@ -52,14 +51,14 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
-            shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
+            shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
                 self.shortcut = shortcut
                 print("hellohello \(self.$shortcut.unwrap()!)")
             }
         }
         .onChange(of: isEdit) { _ in
             if !isEdit {
-                shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
+                shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
                     self.shortcut = shortcut
                     print(shortcut)
                 }

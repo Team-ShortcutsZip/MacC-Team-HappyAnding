@@ -12,6 +12,10 @@ struct ExploreShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var navigation = ShortcutNavigation()
     
+    enum NavigationSearch: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         NavigationStack(path: $navigation.shortcutPath) {
             ScrollView {
@@ -34,10 +38,13 @@ struct ExploreShortcutView: View {
             .background(Color.Background)
             .toolbar {
                 ToolbarItem {
-                    NavigationLink(destination: SearchView()) {
+                    NavigationLink(value: NavigationSearch.first) {
                         Image(systemName: "magnifyingglass")
                             .Headline()
                             .foregroundColor(.Gray5)
+                    }
+                    .navigationDestination(for: NavigationSearch.self) { _ in
+                        SearchView()
                     }
                 }
             }

@@ -47,8 +47,9 @@ struct ReadUserCurationView: View {
                 }
             }
             ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id,
-                                                             navigationParentView: self.navigationParentView)) {
+                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                      navigationParentView: self.navigationParentView)
+                NavigationLink(value: data) {
                     ShortcutCell(shortcutCell: shortcut,
                                  navigationParentView: self.navigationParentView)
                     .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
@@ -60,6 +61,9 @@ struct ReadUserCurationView: View {
                 // TODO: - Curation update 함수 적용
                 print("update curation")
             }
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: BackButton)

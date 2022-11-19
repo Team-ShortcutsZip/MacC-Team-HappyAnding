@@ -34,18 +34,19 @@ struct DownloadRankView: View {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    NavigationLink(value: shortcut.id) {
+                    let data = NavigationReadShortcutType(shortcutID:shortcut.id,
+                                                          navigationParentView: self.navigationParentView)
+                    NavigationLink(value: data) {
                         ShortcutCell(shortcut: shortcut,
                                      rankNumber: index + 1,
                                      navigationParentView: self.navigationParentView)
                     }
-                    .navigationDestination(for: String.self, destination: { shortcutID in
-                        ReadShortcutView(shortcutID: shortcutID,
-                                         navigationParentView: self.navigationParentView)
-                    })
                 }
             }
             .background(Color.Background)
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .navigationDestination(for: SectionType.self) { type in
             ShortcutsListView(shortcuts: $shortcuts,

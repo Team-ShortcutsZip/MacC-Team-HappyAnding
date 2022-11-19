@@ -33,13 +33,12 @@ struct LovedShortcutView: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(value: shortcut.id) {
+                        let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                              navigationParentView: .shortcuts)
+                        
+                        NavigationLink(value: data) {
                             ShortcutCell(shortcut: shortcut,
                                          navigationParentView: .shortcuts)
-                            .navigationDestination(for: String.self, destination: { shortcutID in
-                                ReadShortcutView(shortcutID: shortcutID,
-                                                 navigationParentView: .shortcuts)
-                            })
                         }
                     }
                 }
@@ -50,6 +49,9 @@ struct LovedShortcutView: View {
             ShortcutsListView(shortcuts: $shortcuts,
                               sectionType: type,
                               navigationParentView: .shortcuts)
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .background(Color.Background)
     }

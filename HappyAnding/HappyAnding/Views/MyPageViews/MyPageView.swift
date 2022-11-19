@@ -104,7 +104,6 @@ struct MyPageView: View {
 }
 
 struct MyPageShortcutList: View {
-//    @EnvironmentObject var navigation: ProfileNavigation
     
     var shortcuts: [Shortcuts]?
     var type: SectionType
@@ -115,28 +114,27 @@ struct MyPageShortcutList: View {
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(value: shortcut) {
+                        let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                              navigationParentView: .myPage)
+                        NavigationLink(value: data) {
                             ShortcutCell(shortcut: shortcut, navigationParentView: .myPage)
                         }
                     }
                 }
             }
         }
-        .navigationDestination(for: Shortcuts.self) { shortcut in
-            ReadShortcutView(shortcutID: shortcut.id,
-                             navigationParentView: .myPage)
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .navigationDestination(for: SectionType.self) { type in
             ListShortcutView(data: NavigationListShortcutType(sectionType: type,
                                                               shortcuts: self.shortcuts,
                                                               navigationParentView: .myPage))
         }
-//        .environmentObject(navigation)
     }
 }
 
 struct MyPageListHeader: View {
-//    @EnvironmentObject var navigation: ProfileNavigation
 
     var type: SectionType
     let shortcuts: [Shortcuts]?
@@ -162,7 +160,6 @@ struct MyPageListHeader: View {
         .navigationDestination(for: NavigationListShortcutType.self) { data in
             ListShortcutView(data: data)
         }
-//        .environmentObject(navigation)
     }
 }
 

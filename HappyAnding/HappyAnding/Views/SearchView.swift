@@ -28,18 +28,23 @@ struct SearchView: View {
                     proposeView
                 } else {
                     ScrollView {
-                        ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { result in
-                            NavigationLink(destination: ReadShortcutView(shortcutID: result.id,
-                                                                         navigationParentView: NavigationParentView.shortcuts)) {
-                                ShortcutCell(shortcut: result,
+                        ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
+                            
+                            let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                                  navigationParentView: .shortcuts)
+                            NavigationLink(value: data) {
+                                ShortcutCell(shortcut: shortcut,
                                              navigationParentView: NavigationParentView.shortcuts)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
                             }
                         }
                     }
                }
             }
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .onAppear() {
             self.keywords = shortcutsZipViewModel.keywords

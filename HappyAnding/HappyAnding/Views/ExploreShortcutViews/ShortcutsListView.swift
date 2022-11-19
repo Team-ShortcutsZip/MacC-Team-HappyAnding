@@ -26,7 +26,10 @@ struct ShortcutsListView: View {
             
             LazyVStack {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(value: shortcut.id) {
+                    let data = NavigationReadShortcutType(shortcut: shortcut,
+                                                          shortcutID: shortcut.id,
+                                                          navigationParentView: self.navigationParentView)
+                    NavigationLink(value: data) {
                         ShortcutCell(shortcut: shortcut,
                                      rankNumber: sectionType == .download ? index + 1 : -1,
                                      navigationParentView: self.navigationParentView)
@@ -70,13 +73,11 @@ struct ShortcutsListView: View {
                             }
                         }
                     }
-                    .navigationDestination(for: String.self) { shortcutID in
-                        ReadShortcutView(shortcut: shortcut,
-                                         shortcutID: shortcutID,
-                                         navigationParentView: self.navigationParentView)
-                    }
                 }
             }
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .navigationBarTitle((categoryName == nil ? sectionType?.rawValue : categoryName?.translateName())!)
         .navigationBarTitleDisplayMode(.inline)
