@@ -7,8 +7,8 @@
 import SwiftUI
 
 enum CurationType: String {
-    case myCuration = "나의 큐레이션"
-    case userCuration = ""
+    case myCuration = "내가 작성한 큐레이션"
+    case userCuration = "큐레이션 모아보기"
 }
 
 /**
@@ -22,32 +22,20 @@ struct ListCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var userCurations: [Curation]
-    var type: CurationType
-    var title: String?
-    var isAllUser: Bool = false
-    let navigationParentView: NavigationParentView
+    let data: NavigationListCurationType
     
     var body: some View {
         ScrollView {
             LazyVStack {
-                if let title {
-                    Text(title)
-                        .Title1()
-                        .foregroundColor(.Gray5)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.Background)
-                        .padding(.horizontal, 16)
-                }
                 
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                     
                     let data = NavigationReadUserCurationType(userCuration: curation,
-                                                              navigationParentView: self.navigationParentView)
+                                                              navigationParentView: self.data.navigationParentView)
                     
                     NavigationLink(value: data) {
                         UserCurationCell(curation: curation,
-                                         navigationParentView: self.navigationParentView)
+                                         navigationParentView: self.data.navigationParentView)
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.Background)
@@ -57,7 +45,7 @@ struct ListCurationView: View {
                         .onAppear {
                             if userCurations.last == curation && userCurations.count % 10 == 0 {
                                 print(userCurations.count)
-                                if isAllUser {
+                                if self.data.isAllUser {
                                     shortcutsZipViewModel.fetchCurationLimit(isAdmin: false) { curations in
                                         userCurations.append(contentsOf: curations)
                                     }
@@ -74,7 +62,7 @@ struct ListCurationView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle(type.rawValue)
+        .navigationBarTitle(self.data.type.rawValue)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

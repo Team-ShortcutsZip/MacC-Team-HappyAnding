@@ -9,10 +9,8 @@ import SwiftUI
 
 struct CurationListView: View {
     
-    @State var data: NavigationCurationType
+    @State var data: NavigationListCurationType
     @Binding var userCurations: [Curation]
-    let navigationParentView: NavigationParentView
-    
     enum NavigationUserCuration: Hashable, Equatable {
         case first
     }
@@ -21,7 +19,7 @@ struct CurationListView: View {
         VStack(spacing: 0) {
             CurationListHeader(userCurations: $userCurations,
                                data: data,
-                               navigationParentView: self.navigationParentView)
+                               navigationParentView: self.data.navigationParentView)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             
@@ -29,10 +27,10 @@ struct CurationListView: View {
                 if index < 2 {
                     
                     let data = NavigationReadUserCurationType(userCuration: curation,
-                                                              navigationParentView: self.navigationParentView)
+                                                              navigationParentView: self.data.navigationParentView)
                     NavigationLink(value: data) {
                         UserCurationCell(curation: curation,
-                                         navigationParentView: self.navigationParentView)
+                                         navigationParentView: self.data.navigationParentView)
                     }
                 }
             }
@@ -48,12 +46,12 @@ struct CurationListView: View {
 struct CurationListHeader: View {
     @Binding var userCurations: [Curation]
     
-    @State var data: NavigationCurationType
+    @State var data: NavigationListCurationType
     let navigationParentView: NavigationParentView
     
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(data.title)
+            Text(data.title ?? "")
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
@@ -65,11 +63,9 @@ struct CurationListHeader: View {
                     .foregroundColor(.Gray4)
             }
         }
-        .navigationDestination(for: NavigationCurationType.self) { type in
+        .navigationDestination(for: NavigationListCurationType.self) { data in
             ListCurationView(userCurations: $userCurations,
-                             type: data.type,
-                             isAllUser: true,
-                             navigationParentView: self.navigationParentView)
+                             data: data)
         }
     }
 }

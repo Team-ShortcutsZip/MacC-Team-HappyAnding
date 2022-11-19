@@ -30,14 +30,16 @@ struct NavigationReadUserCurationType: Identifiable, Hashable {
     let navigationParentView: NavigationParentView
 }
 
-struct NavigationCurationType: Identifiable, Hashable {
+struct NavigationListCurationType: Identifiable, Hashable {
     var id = UUID().uuidString
     
     var type: CurationType
-    var title: String
-    var isAllUser: Bool?
-    let isAccessCuration: Bool
+    var title: String?
+    var isAllUser: Bool
+    let navigationParentView: NavigationParentView
 }
+
+
 
 struct NavigationEditShortcutType: Identifiable, Hashable {
     var id = UUID().uuidString

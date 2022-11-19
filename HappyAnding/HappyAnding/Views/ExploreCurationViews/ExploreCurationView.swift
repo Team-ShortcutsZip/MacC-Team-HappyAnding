@@ -23,19 +23,19 @@ struct ExploreCurationView: View {
                         .padding(.bottom, 32)
                     
                     //나의 큐레이션
-                    UserCurationListView(data: NavigationCurationType(type: .myCuration,
-                                                                      title: "내가 작성한 큐레이션",
-                                                                      isAccessCuration: true),
-                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser,
-                                         navigationParentView: .curations)
+                    UserCurationListView(data: NavigationListCurationType(type: .myCuration,
+                                                                          title: "내가 작성한 큐레이션",
+                                                                          isAllUser: false,
+                                                                          navigationParentView: .curations),
+                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser)
                         .padding(.bottom, 20)
                     
                     //추천 유저 큐레이션
-                    CurationListView(data: NavigationCurationType(type: .userCuration,
-                                                                  title: "큐레이션 모아보기",
-                                                                  isAccessCuration: true),
-                                     userCurations: $shortcutsZipViewModel.userCurations,
-                                     navigationParentView: .curations)
+                    CurationListView(data: NavigationListCurationType(type: .userCuration,
+                                                                     title: "큐레이션 모아보기",
+                                                                     isAllUser: true,
+                                                                     navigationParentView: .curations),
+                                     userCurations: $shortcutsZipViewModel.userCurations)
                 }
                 .padding(.bottom, 32)
             }
