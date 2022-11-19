@@ -25,7 +25,7 @@ struct ListCurationView: View {
     let data: NavigationListCurationType
     
     var body: some View {
-        ScrollView(ScrollIndicatorVisibility: false) {
+        ScrollView {
             LazyVStack {
                 
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
@@ -56,6 +56,7 @@ struct ListCurationView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
         .navigationDestination(for: NavigationReadUserCurationType.self) { data in
             ReadUserCurationView(data: data)
         }

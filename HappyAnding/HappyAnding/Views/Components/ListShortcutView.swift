@@ -18,7 +18,7 @@ struct ListShortcutView: View {
     @State private var isLastItem = false
     
     var body: some View {
-        ScrollView(ScrollIndicatorVisibility: false) {
+        ScrollView {
             LazyVStack {
                 
                 if data.sectionType != .myShortcut {
@@ -59,6 +59,7 @@ struct ListShortcutView: View {
                     .listRowSeparator(.hidden)
             }
         }
+        .scrollIndicators(.hidden)
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
             ReadShortcutView(data: data)
         }

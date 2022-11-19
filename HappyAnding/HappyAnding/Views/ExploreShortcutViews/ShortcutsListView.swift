@@ -19,7 +19,7 @@ struct ShortcutsListView: View {
     let navigationParentView: NavigationParentView
     
     var body: some View {
-        ScrollView(ScrollIndicatorVisibility: false) {
+        ScrollView {
             
             scrollHeader
             
@@ -50,6 +50,7 @@ struct ShortcutsListView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
             ReadShortcutView(data: data)
         }

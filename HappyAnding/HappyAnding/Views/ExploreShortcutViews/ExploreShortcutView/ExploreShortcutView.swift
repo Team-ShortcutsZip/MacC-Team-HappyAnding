@@ -18,7 +18,7 @@ struct ExploreShortcutView: View {
     
     var body: some View {
         NavigationStack(path: $navigation.shortcutPath) {
-            ScrollView(ScrollIndicatorVisibility: false) {
+            ScrollView {
                 MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser,
                                        navigationParentView: .shortcuts)
                     .padding(.top, 20)
@@ -32,6 +32,7 @@ struct ExploreShortcutView: View {
                 LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
                     .padding(.bottom, 44)
             }
+            .scrollIndicators(.hidden)
             .navigationBarTitle(Text("단축어 둘러보기"))
             .navigationBarTitleDisplayMode(.large)
             .background(Color.Background)
