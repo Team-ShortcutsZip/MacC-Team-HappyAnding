@@ -24,7 +24,6 @@ struct WriteCurationSetView: View {
     @State var isTappedQuestionMark: Bool = false
     
     let isEdit: Bool
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         ZStack {
@@ -76,20 +75,18 @@ struct WriteCurationSetView: View {
         
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                if isEdit {
-                    Button {
-                        self.isWriting.toggle()
-                    } label: {
-                        Text("닫기")
-                    }
+                Button {
+                    self.isWriting.toggle()
+                } label: {
+                    Text("닫기")
+                        .foregroundColor(.Gray5)
                 }
             }
         }
         .navigationDestination(for: Float.self) { isEdit in
             WriteCurationInfoView(curation: $curation,
                                   isWriting: self.$isWriting,
-                                  isEdit: self.isEdit,
-                                  navigationParentView: self.navigationParentView)
+                                  isEdit: self.isEdit)
         }
     }
     
@@ -172,7 +169,6 @@ struct WriteCurationSetView: View {
 struct WriteCurationSetView_Previews: PreviewProvider {
     static var previews: some View {
         WriteCurationSetView(isWriting: .constant(false),
-                             isEdit: false,
-                             navigationParentView: .curations)
+                             isEdit: false)
     }
 }

@@ -40,7 +40,7 @@ class WriteShortcutNavigation: ObservableObject {
     }
 }
 
-class EditCurationNavigation: ObservableObject {
+class WriteCurationNavigation: ObservableObject {
     @Published var navigationPath: NavigationPath
     
     init() {

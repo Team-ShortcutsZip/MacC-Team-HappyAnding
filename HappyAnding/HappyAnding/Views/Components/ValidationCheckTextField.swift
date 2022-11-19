@@ -163,7 +163,7 @@ extension ValidationCheckTextField {
             self.strokeColor = Color.Gray2
         } else if content.count <= lengthLimit {
             if isDownloadLinkTextField {
-                if content.hasPrefix("d") {
+                if content.hasPrefix("https://www.icloud.com/shortcuts/") {
                     isValid = true
                     isExceeded = false
                     self.strokeColor = Color.Success

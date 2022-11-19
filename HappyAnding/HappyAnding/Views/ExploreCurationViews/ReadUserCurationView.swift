@@ -12,7 +12,7 @@ struct ReadUserCurationView: View {
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @StateObject var editNavigation = EditCurationNavigation()
+    @StateObject var writeCurationNavigation = WriteCurationNavigation()
     @State var authorInformation: User? = nil
     
     @State var isWriting = false
@@ -87,13 +87,12 @@ struct ReadUserCurationView: View {
                 .opacity(self.data.userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
         }))
         .fullScreenCover(isPresented: $isWriting) {
-            NavigationStack(path: $editNavigation.navigationPath) {
+            NavigationStack(path: $writeCurationNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting,
                                      curation: self.data.userCuration,
-                                     isEdit: true,
-                                     navigationParentView: .editCuration)
+                                     isEdit: true)
             }
-            .environmentObject(editNavigation)
+            .environmentObject(writeCurationNavigation)
         }
     }
     

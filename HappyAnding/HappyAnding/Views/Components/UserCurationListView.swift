@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserCurationListView: View {
     
+    @StateObject var writeCurationNavigation = WriteCurationNavigation()
     @State var isWriting = false
     @State var data: NavigationListCurationType
     
@@ -22,7 +23,10 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             
-            NavigationLink(value: UInt(0)) {
+            Button {
+                self.isWriting = true
+            } label: {
+                
                 HStack(spacing: 7) {
                     Image(systemName: "plus")
                     Text("큐레이션 만들기")
@@ -36,7 +40,7 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-
+            
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                     
@@ -55,12 +59,13 @@ struct UserCurationListView: View {
         .navigationDestination(for: NavigationReadUserCurationType.self) { data in
             ReadUserCurationView(data: data)
         }
-        .navigationDestination(for: UInt.self) { isEdit in
-            WriteCurationSetView(isWriting: self.$isWriting,
-                                 isEdit: false,
-                                 navigationParentView: self.data.navigationParentView)
-        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .fullScreenCover(isPresented: $isWriting) {
+            NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                WriteCurationSetView(isWriting: $isWriting, isEdit: false)
+            }
+            .environmentObject(writeCurationNavigation)
+        }
     }
 }
 
