@@ -18,41 +18,49 @@ struct ListShortcutView: View {
     @State private var isLastItem = false
     
     var body: some View {
-        
-        List {
-            
-            if data.sectionType != .myShortcut {
-                header
-                    .listRowBackground(Color.Background)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets())
-            }
-            
-            //TODO: 무한 스크롤을 위한 업데이트 함수 필요
-            if let shortcuts = data.shortcuts {
-                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    if data.sectionType == .download {
-                        ShortcutCell(shortcut: shortcut,
-                                     rankNumber: index + 1,
-                                     navigationParentView: data.navigationParentView)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+        ScrollView {
+            LazyVStack {
+                
+                if data.sectionType != .myShortcut {
+                    header
+                        .listRowBackground(Color.Background)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+                }
+                
+                //TODO: 무한 스크롤을 위한 업데이트 함수 필요
+                if let shortcuts = data.shortcuts {
+                    ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                        let navigationData = NavigationReadShortcutType(shortcut: shortcut,
+                                                                        shortcutID: shortcut.id,
+                                                                        navigationParentView: self.data.navigationParentView)
                         
-                    } else {
-                        ShortcutCell(shortcut: shortcut,
-                                     navigationParentView: data.navigationParentView)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+                        NavigationLink(value: navigationData) {
+                            if data.sectionType == .download {
+                                ShortcutCell(shortcut: shortcut,
+                                             rankNumber: index + 1,
+                                             navigationParentView: data.navigationParentView)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                            } else {
+                                ShortcutCell(shortcut: shortcut,
+                                             navigationParentView: data.navigationParentView)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                            }
+                        }
                     }
                 }
+                
+                Rectangle()
+                    .fill(Color.Background)
+                    .frame(height: 44)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
             }
-            
-            
-            Rectangle()
-                .fill(Color.Background)
-                .frame(height: 44)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .listRowBackground(Color.Background)
         .listStyle(.plain)

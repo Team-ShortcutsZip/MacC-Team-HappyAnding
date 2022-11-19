@@ -126,11 +126,6 @@ struct MyPageShortcutList: View {
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
             ReadShortcutView(data: data)
         }
-        .navigationDestination(for: SectionType.self) { type in
-            ListShortcutView(data: NavigationListShortcutType(sectionType: type,
-                                                              shortcuts: self.shortcuts,
-                                                              navigationParentView: .myPage))
-        }
     }
 }
 

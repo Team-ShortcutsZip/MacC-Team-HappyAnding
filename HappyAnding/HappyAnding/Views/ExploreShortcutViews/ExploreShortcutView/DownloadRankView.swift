@@ -23,7 +23,9 @@ struct DownloadRankView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: SectionType.download) {
+                NavigationLink(value: NavigationListShortcutType(sectionType: .download,
+                                                          shortcuts: shortcuts,
+                                                          navigationParentView: .shortcuts)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -48,10 +50,8 @@ struct DownloadRankView: View {
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
             ReadShortcutView(data: data)
         }
-        .navigationDestination(for: SectionType.self) { type in
-            ShortcutsListView(shortcuts: $shortcuts,
-                              sectionType: type,
-                              navigationParentView: self.navigationParentView)
+        .navigationDestination(for: NavigationListShortcutType.self) { data in
+            ListShortcutView(data: data)
         }
     }
 }

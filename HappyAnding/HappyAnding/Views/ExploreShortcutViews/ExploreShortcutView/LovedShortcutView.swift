@@ -21,7 +21,9 @@ struct LovedShortcutView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: SectionType.popular) {
+                NavigationLink(value: NavigationListShortcutType(sectionType: .popular,
+                                                                 shortcuts: shortcuts,
+                                                                 navigationParentView: .shortcuts)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -45,10 +47,8 @@ struct LovedShortcutView: View {
             }
             
         }
-        .navigationDestination(for: SectionType.self) { type in
-            ShortcutsListView(shortcuts: $shortcuts,
-                              sectionType: type,
-                              navigationParentView: .shortcuts)
+        .navigationDestination(for: NavigationListShortcutType.self) { data in
+            ListShortcutView(data: data)
         }
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
             ReadShortcutView(data: data)
