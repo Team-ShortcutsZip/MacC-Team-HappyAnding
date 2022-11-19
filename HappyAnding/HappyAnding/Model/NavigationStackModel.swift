@@ -39,32 +39,6 @@ struct NavigationListCurationType: Identifiable, Hashable {
     let navigationParentView: NavigationParentView
 }
 
-
-
-struct NavigationEditShortcutType: Identifiable, Hashable {
-    var id = UUID().uuidString
-    
-    var shortcut: Shortcuts
-}
-
-// TODO: Navigation Write Description 이슈를 수정하기 위한 시도! (삭제 가능성 존재)
-struct NavigationWriteDescriptionType: Identifiable, Hashable, Equatable {
-    var id = UUID().uuidString
-    
-    var shortcut: Shortcuts
-    var isWriting: Bool
-    var isEdit: Bool
-    var navigationParentView: NavigationParentView
-    
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(id)
-    }
-    
-    static func == (lhs: NavigationWriteDescriptionType, rhs: NavigationWriteDescriptionType) -> Bool {
-        return lhs.id == rhs.id
-    }
-}
-
 enum NavigationParentView: Int {
     case shortcuts
     case curations

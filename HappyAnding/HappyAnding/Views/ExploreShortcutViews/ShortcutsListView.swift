@@ -19,7 +19,7 @@ struct ShortcutsListView: View {
     let navigationParentView: NavigationParentView
     
     var body: some View {
-        ScrollView {
+        ScrollView(ScrollIndicatorVisibility: false) {
             
             scrollHeader
             

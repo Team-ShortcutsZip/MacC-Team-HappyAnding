@@ -11,9 +11,6 @@ struct CurationListView: View {
     
     @State var data: NavigationListCurationType
     @Binding var userCurations: [Curation]
-    enum NavigationUserCuration: Hashable, Equatable {
-        case first
-    }
     
     var body: some View {
         VStack(spacing: 0) {
