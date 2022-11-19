@@ -84,6 +84,7 @@
 		F94B43632907B19A00987819 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = F94B43622907B19A00987819 /* FirebaseFirestoreCombine-Community */; };
 		F956C9F92903F87200C17621 /* ShortcutTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F956C9F82903F87200C17621 /* ShortcutTestModel.swift */; };
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
+		F9724BC129276D5500860F8A /* TestUpdateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BC029276D5500860F8A /* TestUpdateFunction.swift */; };
 		F9914528290850370046986E /* TestUserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9914527290850370046986E /* TestUserCurationListView.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 		F9CAEF832914855900224B0A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+Extension.swift */; };
@@ -188,6 +189,7 @@
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F956C9F82903F87200C17621 /* ShortcutTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutTestModel.swift; sourceTree = "<group>"; };
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		F9724BC029276D5500860F8A /* TestUpdateFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUpdateFunction.swift; sourceTree = "<group>"; };
 		F9914527290850370046986E /* TestUserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserCurationListView.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		F9CAEF822914855900224B0A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				F9914527290850370046986E /* TestUserCurationListView.swift */,
 				8792479A291BDF820040D5C3 /* SearchView.swift */,
 				3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */,
+				F9724BC029276D5500860F8A /* TestUpdateFunction.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -671,6 +674,7 @@
 				F944DD442907B8C400B1AC5C /* FirebaseService.swift in Sources */,
 				87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */,
 				87E99CEC29080C30009B691F /* Curation.swift in Sources */,
+				F9724BC129276D5500860F8A /* TestUpdateFunction.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */,
 				87E99CEE29080D33009B691F /* User.swift in Sources */,

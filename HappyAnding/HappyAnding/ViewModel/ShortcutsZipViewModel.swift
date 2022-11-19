@@ -563,6 +563,8 @@ class ShortcutsZipViewModel: ObservableObject {
             db.collection("Curation").document((model as! Curation).id).setData((model as! Curation).dictionary)
         case _ as User:
             db.collection("User").document((model as! User).id).setData((model as! User).dictionary)
+        case _ as Comments:
+            db.collection("Comment").document((model as! Comments).id).setData((model as! Comments).dictionary)
         default:
             print("this is not a model.")
         }
@@ -686,22 +688,10 @@ class ShortcutsZipViewModel: ObservableObject {
     
     func updateShortcutVersion(shortcut: Shortcuts, updateDescription: String, updateLink: String) {
         var data = shortcut
-        
         //서버 - 단축어 업데이트
         data.downloadLink.insert(updateLink, at: 0)
         data.updateDescription.insert(updateDescription, at: 0)
-        setData(model: data)
-        
-        //서버 - 큐레이션 업데이트
-        let shortcutCell = ShortcutCellModel(
-            id: data.id,
-            sfSymbol: data.sfSymbol,
-            color: data.color,
-            title: data.title,
-            subtitle: data.subtitle,
-            downloadLink: data.downloadLink[0]
-        )
-        updateShortcutInCuration(shortcutCell: shortcutCell, curationIDs: data.curationIDs)
+        data.date.insert(Date().getDate(), at: 0)
         
         //뷰모델 - 단축어 업데이트
         
@@ -731,6 +721,18 @@ class ShortcutsZipViewModel: ObservableObject {
                 shortcutsInCategory[Category(rawValue: category)!.index][index] = shortcut
             }
         }
+        setData(model: data)
+        
+        //서버 - 큐레이션 업데이트
+        let shortcutCell = ShortcutCellModel(
+            id: data.id,
+            sfSymbol: data.sfSymbol,
+            color: data.color,
+            title: data.title,
+            subtitle: data.subtitle,
+            downloadLink: data.downloadLink[0]
+        )
+        updateShortcutInCuration(shortcutCell: shortcutCell, curationIDs: data.curationIDs)
     }
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
