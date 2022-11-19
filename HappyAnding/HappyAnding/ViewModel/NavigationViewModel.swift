@@ -32,7 +32,7 @@ class ProfileNavigation: ObservableObject {
     }
 }
 
-class EditShortcutNavigation: ObservableObject {
+class WriteShortcutNavigation: ObservableObject {
     @Published var navigationPath: NavigationPath
     
     init() {

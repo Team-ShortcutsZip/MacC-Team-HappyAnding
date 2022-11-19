@@ -13,7 +13,7 @@ struct ReadShortcutView: View {
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
     
-    @StateObject var editNavigation = EditShortcutNavigation()
+    @StateObject var writeNavigation = WriteShortcutNavigation()
     @State var isTappedDeleteButton = false
     @State var shortcut: Shortcuts?
     @State var isEdit = false
@@ -99,15 +99,14 @@ struct ReadShortcutView: View {
             )
         }
         .fullScreenCover(isPresented: $isEdit) {
-            NavigationStack(path: $editNavigation.navigationPath) {
+            NavigationStack(path: $writeNavigation.navigationPath) {
                 if let shortcut {
                     WriteShortcutTitleView(isWriting: $isEdit,
                                            shortcut: shortcut,
-                                           isEdit: true,
-                                           navigationParentView: .editShortcut)
+                                           isEdit: true)
                 }
             }
-            .environmentObject(editNavigation)
+            .environmentObject(writeNavigation)
         }
     }
 }

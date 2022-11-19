@@ -30,14 +30,7 @@ struct WriteShortcutTitleView: View {
                                     downloadLink: [""],
                                     curationIDs: [String]())
     
-    // TODO: Refactor 필요, iOS16.0에서 Binding이 안 되는 문제 해결
-    @State var iconSymbol = ""
-    @State var iconColor = ""
-    @State var title = ""
-    @State var downloadLink = ""
-    
     let isEdit: Bool
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -48,7 +41,7 @@ struct WriteShortcutTitleView: View {
             Button(action: {
                 isShowingIconModal = true
             }, label: {
-                if iconSymbol.isEmpty {
+                if shortcut.sfSymbol.isEmpty {
                     ZStack(alignment: .center) {
                         Rectangle()
                             .fill(Color.Gray1)
@@ -64,11 +57,11 @@ struct WriteShortcutTitleView: View {
                 } else {
                     ZStack(alignment: .center) {
                         Rectangle()
-                            .fill(Color.fetchGradient(color: iconColor))
+                            .fill(Color.fetchGradient(color: shortcut.color))
                             .cornerRadius(12.35)
                             .frame(width: 84, height: 84)
                         
-                        Image(systemName: iconSymbol)
+                        Image(systemName: shortcut.sfSymbol)
                             .font(.system(size: 32))
                             .frame(width: 84, height: 84)
                             .foregroundColor(.Text_icon)
@@ -77,8 +70,8 @@ struct WriteShortcutTitleView: View {
             })
             .sheet(isPresented: $isShowingIconModal) {
                 IconModalView(isShowingIconModal: $isShowingIconModal,
-                              iconColor: $iconColor,
-                              iconSymbol: $iconSymbol)
+                              iconColor: $shortcut.color,
+                              iconSymbol: $shortcut.sfSymbol)
             }
             
             ValidationCheckTextField(textType: .mandatory,
@@ -87,7 +80,7 @@ struct WriteShortcutTitleView: View {
                                      placeholder: "단축어 이름을 입력하세요",
                                      lengthLimit: 20,
                                      isDownloadLinkTextField: false,
-                                     content: $title,
+                                     content: $shortcut.title,
                                      isValid: $isNameValid
             )
             .onAppear(perform : UIApplication.shared.hideKeyboard)
@@ -99,7 +92,7 @@ struct WriteShortcutTitleView: View {
                                      placeholder: "단축어 링크를 추가하세요",
                                      lengthLimit: 100,
                                      isDownloadLinkTextField: true   ,
-                                     content: $downloadLink,
+                                     content: $shortcut.downloadLink[0],
                                      isValid: $isLinkValid
             )
             
@@ -108,30 +101,17 @@ struct WriteShortcutTitleView: View {
             NavigationLink(value: 1) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Gray1 )
+                        .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Gray1 )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("다음")
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty && isNameValid && isLinkValid ? .Text_Button : .Text_Button_Disable )
+                        .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Text_Button : .Text_Button_Disable )
                         .Body1()
                 }
             }
-            .disabled(iconColor.isEmpty || iconSymbol.isEmpty || !isNameValid || !isLinkValid)
+            .disabled(shortcut.color.isEmpty || shortcut.sfSymbol.isEmpty || !isNameValid || !isLinkValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
-        }
-        .onAppear {
-            print("shortcut = \(shortcut)")
-            self.iconColor = shortcut.color
-            self.iconSymbol = shortcut.sfSymbol
-            self.title = shortcut.title
-            self.downloadLink = shortcut.downloadLink[0]
-        }
-        .onDisappear {
-            shortcut.color = self.iconColor
-            shortcut.sfSymbol = self.iconSymbol
-            shortcut.title = self.title
-            shortcut.downloadLink[0] = self.downloadLink
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .background(Color.Background)
@@ -140,17 +120,15 @@ struct WriteShortcutTitleView: View {
         .navigationDestination(for: Int.self) { value in
             WriteShortcutdescriptionView(shortcut: $shortcut,
                                          isWriting: $isWriting,
-                                         isEdit: isEdit,
-                                         navigationParentView: self.navigationParentView)
+                                         isEdit: isEdit)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                if isEdit {
-                    Button {
-                        self.presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Text("닫기")
-                    }
+                Button {
+                    self.presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("닫기")
+                        .foregroundColor(.Gray5)
                 }
             }
         }

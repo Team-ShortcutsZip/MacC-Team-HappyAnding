@@ -9,19 +9,18 @@ import SwiftUI
 
 struct MyShortcutCardListView: View {
     
+    @StateObject var writeNavigation = WriteShortcutNavigation()
+    
+    @State var isWriting = false
+    
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
             NavigationListShortcutType(sectionType: .myShortcut,
                                        shortcuts: self.shortcuts,
                                        navigationParentView: self.navigationParentView)
         }
-
     
     let navigationParentView: NavigationParentView
-    
-    enum NavigationShortcutTitleView: Hashable, Equatable {
-        case first
-    }
     
     var body: some View {
         VStack {
@@ -44,7 +43,9 @@ struct MyShortcutCardListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    NavigationLink(value: NavigationShortcutTitleView.first) {
+                    Button {
+                        self.isWriting = true
+                    } label: {
                         AddMyShortcutCardView()
                     }
                     
@@ -69,14 +70,16 @@ struct MyShortcutCardListView: View {
         .navigationDestination(for: NavigationListShortcutType.self) { data in
             ListShortcutView(data: data)
         }
-        .navigationDestination(for: NavigationShortcutTitleView.self) { _ in
-            WriteShortcutTitleView(isWriting: .constant(true),
-                                   isEdit: false,
-                                   navigationParentView: self.navigationParentView)
-        }
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
             ReadShortcutView(data: data)
         }
         .navigationBarTitleDisplayMode(.automatic)
+        .fullScreenCover(isPresented: $isWriting) {
+            NavigationStack(path: $writeNavigation.navigationPath) {
+                WriteShortcutTitleView(isWriting: $isWriting,
+                                       isEdit: false)
+            }
+            .environmentObject(writeNavigation)
+        }
     }
 }

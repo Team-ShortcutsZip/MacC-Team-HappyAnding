@@ -15,12 +15,7 @@ struct WriteShortcutdescriptionView: View {
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
     
-    // TODO: Refactor 필요, iOS16.0에서 Binding이 안 되는 문제 해결
-    @State var subtitle = ""
-    @State var description = ""
-    
     let isEdit: Bool
-    let navigationParentView: NavigationParentView
     
     enum NavigationWriteTagView: Hashable, Equatable {
         case first
@@ -37,7 +32,7 @@ struct WriteShortcutdescriptionView: View {
                                      placeholder: "간단하게 설명을 작성해주세요",
                                      lengthLimit: 35,
                                      isDownloadLinkTextField: false,
-                                     content: $subtitle,
+                                     content: $shortcut.subtitle,
                                      isValid: $isOneLineValid
             )
             
@@ -47,7 +42,7 @@ struct WriteShortcutdescriptionView: View {
                                      placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
                                      lengthLimit: 500,
                                      isDownloadLinkTextField: false,
-                                     content: $description,
+                                     content: $shortcut.description,
                                      isValid: $isMultiLineValid
             )
             
@@ -69,19 +64,10 @@ struct WriteShortcutdescriptionView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
-        .onAppear {
-            self.subtitle = shortcut.subtitle
-            self.description = shortcut.description
-        }
-        .onDisappear {
-            shortcut.subtitle = self.subtitle
-            shortcut.description = self.description
-        }
         .navigationDestination(for: NavigationWriteTagView.self) { value in
             WriteShortcutTagView(isWriting: $isWriting,
                                  shortcut: $shortcut,
-                                 isEdit: isEdit,
-                                 navigationParentView: self.navigationParentView)
+                                 isEdit: isEdit)
         }
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .ignoresSafeArea(.keyboard)

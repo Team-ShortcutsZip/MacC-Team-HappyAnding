@@ -10,11 +10,7 @@ import SwiftUI
 struct WriteShortcutTagView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
-    @EnvironmentObject var curationNavigation: CurationNavigation
-    @EnvironmentObject var profileNavigation: ProfileNavigation
-    @EnvironmentObject var editShortcutNavigation: EditShortcutNavigation
-    @EnvironmentObject var editCurationNavigation: EditCurationNavigation
+    @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
     
     @Binding var isWriting: Bool
     @Binding var shortcut: Shortcuts
@@ -25,14 +21,7 @@ struct WriteShortcutTagView: View {
     @State var existingCategory: [String] = []
     @State var newCategory: [String] = []
     
-    
-    // TODO: Refactor 필요, iOS16.0에서 Binding이 안 되는 문제 해결
-    @State var category = [String]()
-    @State var requiredApp = [String]()
-    @State var shortcutRequirements = ""
-    
     let isEdit: Bool
-    let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack {
@@ -50,7 +39,7 @@ struct WriteShortcutTagView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $category)
+            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shortcut.category)
                 .padding(.bottom, 32)
             
             HStack {
@@ -64,7 +53,7 @@ struct WriteShortcutTagView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            relatedAppList(relatedApps: $requiredApp)
+            relatedAppList(relatedApps: $shortcut.requiredApp)
                 .padding(.bottom, 32)
             
             ValidationCheckTextField(textType: .optional,
@@ -73,21 +62,13 @@ struct WriteShortcutTagView: View {
                                      placeholder: "단축어를 사용하기 위해서 필수적으로 요구되는 내용이 있다면, 작성해주세요",
                                      lengthLimit: 100,
                                      isDownloadLinkTextField: false,
-                                     content: $shortcutRequirements,
+                                     content: $shortcut.shortcutRequirements,
                                      isValid: $isRequirementValid
             )
-            .onChange(of: shortcutRequirements) { newValue in
-                shortcut.shortcutRequirements = newValue
-            }
             
             Spacer()
             
             Button(action: {
-                
-                shortcut.category = self.category
-                shortcut.requiredApp = self.requiredApp
-                shortcut.shortcutRequirements = self.shortcutRequirements
-                
                 shortcut.author = shortcutsZipViewModel.currentUser()
                 
                 if isEdit {
@@ -143,7 +124,6 @@ struct WriteShortcutTagView: View {
                         curationIDs: shortcut.curationIDs
                     )
                     
-                    isWriting.toggle()
                 } else {
                     //새로운 단축어 생성 및 저장
                     // 뷰모델에 추가
@@ -158,22 +138,15 @@ struct WriteShortcutTagView: View {
                     shortcutsZipViewModel.setData(model: shortcut)
                 }
                 
-                switch navigationParentView {
-                case .shortcuts:
-                    shortcutNavigation.shortcutPath = .init()
-                case .curations:
-                    curationNavigation.navigationPath = .init()
-                case .myPage:
-                    profileNavigation.navigationPath = .init()
-                case .editShortcut:
-                    editShortcutNavigation.navigationPath = .init()
-                case .editCuration:
-                    editCurationNavigation.navigationPath = .init()
-                }
+                
+                isWriting.toggle()
+            
+                writeShortcutNavigation.navigationPath = .init()
+                
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!category.isEmpty && isRequirementValid ? .Primary : .Gray1 )
+                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Primary : .Gray1 )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
@@ -181,16 +154,12 @@ struct WriteShortcutTagView: View {
                         .Body1()
                 }
             })
-            .disabled(category.isEmpty || !isRequirementValid)
+            .disabled(shortcut.category.isEmpty || !isRequirementValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
         .onAppear() {
             existingCategory = shortcut.category
-            
-            self.category = shortcut.category
-            self.requiredApp = shortcut.requiredApp
-            self.shortcutRequirements = shortcut.shortcutRequirements
         }
         .navigationTitle(isEdit ? "단축어 편집" :"단축어 등록")
         .ignoresSafeArea(.keyboard)
