@@ -16,6 +16,7 @@ struct HappyAndingApp: App {
     
     @StateObject var userAuth = UserAuth.shared
     @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
+    @AppStorage("signInStatus") var signInStatus = false
     
     init() {
         FirebaseApp.configure()
@@ -24,9 +25,18 @@ struct HappyAndingApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ShortcutTabView()
-                .environmentObject(userAuth)
-                .environmentObject(shorcutsZipViewModel)
+            if signInStatus {
+                ShortcutTabView()
+                    .environmentObject(userAuth)
+                    .environmentObject(shorcutsZipViewModel)
+            }  else {
+                if userAuth.isLoggedIn {
+                    WriteNicknameView()
+                        .environmentObject(shorcutsZipViewModel)
+                } else {
+                    SignInWithAppleView()
+                }
+            }
         }
     }
 }
