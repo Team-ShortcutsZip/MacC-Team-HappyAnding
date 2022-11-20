@@ -89,6 +89,8 @@ private struct ReusableTextView: View {
     let contents: String?
     let contentsArray: [String]?
     
+    @State var heigth: CGFloat = 10000
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
@@ -110,6 +112,16 @@ private struct ReusableTextView: View {
                 }
             }
         }
+        .background(
+            GeometryReader { geometryProxy in
+                Color.clear
+                    .preference(key: SizePreferenceKey.self,
+                                value: geometryProxy.size)
+            })
+        .onPreferenceChange(SizePreferenceKey.self) { newSize in
+            self.heigth = newSize.height
+        }
+        .frame(height: self.heigth)
     }
 }
 
