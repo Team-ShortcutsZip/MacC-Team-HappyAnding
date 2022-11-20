@@ -81,6 +81,7 @@ struct ReadShortcutHeaderView: View {
         })
     }
     
+    // MARK: - 유저 정보
     var userInfo: some View {
         HStack(spacing: 8) {
             
@@ -110,6 +111,7 @@ struct ReadShortcutHeaderView: View {
              */
             
         }
+        .padding(.vertical, 10)
         .frame(maxWidth: .infinity, maxHeight: 44)
         .overlay {
             RoundedRectangle(cornerRadius: 12)

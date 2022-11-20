@@ -8,21 +8,27 @@
 import SwiftUI
 
 struct ReadShortcutTabView: View {
+    
+    @Binding var shortcut: Shortcuts
+    @Binding var heigth: CGFloat
+    
     @State var currentTab: Int = 0
+   
     @Namespace var namespace
     
     var tabItems = ["기본 정보", "버전 정보", "댓글"]
-    
     var body: some View {
-        VStack {
-            tabBarView
-            TabView(selection: self.$currentTab) {
-                view1.tag(0)
-                view2.tag(1)
-                view3.tag(2)
+        GeometryReader { geometry in
+            VStack {
+                tabBarView
+                TabView(selection: self.$currentTab) {
+                    ReadShortcutContentView(shortcut: self.$shortcut).tag(0)
+                    view2.tag(1)
+                    view3.tag(2)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .edgesIgnoringSafeArea(.all)
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .edgesIgnoringSafeArea(.all)
         }
     }
     
@@ -30,6 +36,7 @@ struct ReadShortcutTabView: View {
     var view1: some View {
         Color.red
             .edgesIgnoringSafeArea(.all)
+            .frame(maxHeight: .infinity)
     }
     
     var view2: some View {
@@ -48,7 +55,6 @@ struct ReadShortcutTabView: View {
                 tabBarItem(string: name, tab: index)
             }
         }
-        .padding(.horizontal)
         .background(Color.Background)
         .frame(height: 36)
     }
@@ -78,11 +84,5 @@ struct ReadShortcutTabView: View {
             .animation(.spring(), value: currentTab)
         }
         .buttonStyle(.plain)
-    }
-}
-
-struct ReadShortcutTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadShortcutTabView()
     }
 }

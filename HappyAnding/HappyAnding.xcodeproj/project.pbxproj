@@ -597,8 +597,6 @@
 			files = (
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
 				A3FF018A2918F8EF00384211 /* apache.txt in Resources */,
-				F9724BC7292A578400860F8A /* GoogleService-Info.plist in Resources */,
-				8706202C29265EF3004B47E1 /* GoogleService-Info.plist in Resources */,
 				8795A12C292973A0004B765F /* GoogleService-Info.plist in Resources */,
 				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
 				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
