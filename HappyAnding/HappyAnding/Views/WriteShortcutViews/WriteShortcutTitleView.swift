@@ -126,6 +126,33 @@ struct WriteShortcutTitleView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     self.presentationMode.wrappedValue.dismiss()
+                
+                ValidationCheckTextField(textType: .mandatory,
+                                         isMultipleLines: false,
+                                         title: "단축어 이름",
+                                         placeholder: "단축어 이름을 입력하세요",
+                                         lengthLimit: 20,
+                                         isDownloadLinkTextField: false,
+                                         content: $shortcut.title,
+                                         isValid: $isNameValid
+                )
+//                .onAppear(perform : UIApplication.shared.hideKeyboard)
+                .padding(.top, 30)
+                
+                ValidationCheckTextField(textType: .mandatory,
+                                         isMultipleLines: false,
+                                         title: "단축어 링크",
+                                         placeholder: "단축어 링크를 추가하세요",
+                                         lengthLimit: 100,
+                                         isDownloadLinkTextField: true   ,
+                                         content: $shortcut.downloadLink[0],
+                                         isValid: $isLinkValid
+                )
+                
+                Spacer()
+                
+                NavigationLink {
+                    WriteShortcutdescriptionView(isWriting: $isWriting, shortcut: $shortcut, isEdit: isEdit)
                 } label: {
                     Text("취소")
                         .foregroundColor(.Gray5)

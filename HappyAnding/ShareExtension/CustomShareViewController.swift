@@ -6,17 +6,33 @@
 //
 
 import UIKit
+import SwiftUI
 import Foundation
+import FirebaseCore
+
 
 class CustomShareViewController: UIViewController {
+    
+    @State var isWriting = false
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+//        setupViews()
+        super.viewDidLoad()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.openSwiftUIView()
+        }
 
         // 1: Set the background and call the function to create the navigation bar
         self.view.backgroundColor = .systemGray6
         setupNavBar()
+    }
+    
+    private func openSwiftUIView() {
+        let hostingController = UIHostingController(rootView: WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
+//        hostingController.sizingOptions = .preferredContentSize
+//        hostingController.modalPresentationStyle = .popover
+        self.present(hostingController, animated: true)
     }
 
     // 2: Set the title and the navigation items
