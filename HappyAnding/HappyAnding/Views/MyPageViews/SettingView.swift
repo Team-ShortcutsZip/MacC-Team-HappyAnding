@@ -145,6 +145,7 @@ struct SettingView: View {
             try firebaseAuth.signOut()
             userAuth.signOut()
             self.signInStatus = false
+            shortcutsZipViewModel.resetUser()
         } catch {
             print(error.localizedDescription)
         }
