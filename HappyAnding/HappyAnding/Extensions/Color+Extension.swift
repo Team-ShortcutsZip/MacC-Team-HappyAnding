@@ -46,7 +46,7 @@ extension Color {
     static let Text_icon = Color(light: .White, dark: .Gray6)
     
     static let Text_Button = Color(light: .Background, dark: .Gray6)
-    static let Text_Button_Disable = Color(light: .Gray3, dark: .Gray2)
+    static let Text_Button_Disable = Color(light: .White .opacity(0.8), dark: .Gray2.opacity(0.8))
     
     static let Category_Pick_Fill = Color(light:.White, dark:.Primary)
     static let Category_Pick_Text = Color(light:.Primary, dark:.Gray6)
