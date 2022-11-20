@@ -38,9 +38,7 @@ struct ReadShortcutHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
         .onAppear() {
-            shortcutsZipViewModel.checkLikedShortrcut(shortcutID: shortcut.id) { result in
-                isMyLike = result
-            }
+            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: shortcut.id)
             shortcutsZipViewModel.fetchUser(userID: shortcut.author) { user in
                 userInformation = user
             }

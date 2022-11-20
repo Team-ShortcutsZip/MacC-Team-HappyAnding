@@ -68,18 +68,12 @@ struct ReadShortcutView: View {
         }
         .background(Color.Background)
         .onAppear() {
-            shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
-                self.shortcut = shortcut
-                print("hellohello \(self.$shortcut.unwrap()!)")
-            }
+            self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID)
         }
         .onAppear(perform: {UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground() })
         .onChange(of: isEdit) { _ in
             if !isEdit {
-                shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
-                    self.shortcut = shortcut
-                    print(shortcut)
-                }
+                self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID)
             }
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
