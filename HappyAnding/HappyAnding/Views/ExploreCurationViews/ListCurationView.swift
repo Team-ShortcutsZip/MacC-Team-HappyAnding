@@ -26,7 +26,7 @@ struct ListCurationView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(spacing: 0) {
                 
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                     

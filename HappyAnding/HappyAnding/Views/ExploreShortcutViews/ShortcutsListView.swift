@@ -23,7 +23,7 @@ struct ShortcutsListView: View {
             
             scrollHeader
             
-            LazyVStack {
+            LazyVStack(spacing: 0) {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     let data = NavigationReadShortcutType(shortcut: shortcut,
                                                           shortcutID: shortcut.id,

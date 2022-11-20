@@ -14,7 +14,7 @@ struct DownloadRankView: View {
     let navigationParentView: NavigationParentView
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 Text("다운로드 순위")
                     .Title2()

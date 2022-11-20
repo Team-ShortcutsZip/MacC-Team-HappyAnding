@@ -12,7 +12,7 @@ struct LovedShortcutView: View {
     @Binding var shortcuts: [Shortcuts]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 Text("사랑받는 단축어")
                     .Title2()
