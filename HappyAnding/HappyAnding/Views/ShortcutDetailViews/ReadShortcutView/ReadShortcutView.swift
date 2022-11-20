@@ -23,6 +23,8 @@ struct ReadShortcutView: View {
     
     @State var height: CGFloat = UIScreen.screenHeight / 2
     @State var currentTab: Int = 0
+    @State var commentText = ""
+    @FocusState private var isFocused: Bool
     @Namespace var namespace
     
     private let contentSize = UIScreen.screenHeight / 2
@@ -69,24 +71,30 @@ struct ReadShortcutView: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
            
             VStack {
-                if let shortcut {
-                    Button {
-                        if let url = URL(string: shortcut.downloadLink[0]) {
-                            shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                            shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
-                            openURL(url)
+                if currentTab == 2 {
+                    textField
+                }
+                if !isFocused {
+                    if let shortcut {
+                        Button {
+                            if let url = URL(string: shortcut.downloadLink[0]) {
+                                shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                                shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
+                                openURL(url)
+                            }
+                            
+                        } label: {
+                            Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
+                                .Body1()
+                                .foregroundColor(Color.Text_icon)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.Primary)
                         }
-                        
-                    } label: {
-                        Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
-                            .Body1()
-                            .foregroundColor(Color.Text_icon)
                     }
                 }
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.Primary)
+            .ignoresSafeArea(.keyboard)
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
@@ -134,6 +142,25 @@ struct ReadShortcutView: View {
             UpdateShortcutView(isUpdating: $isUpdating, shortcut: $shortcut)
         }
         .toolbar(.hidden, for: .tabBar)
+    }
+    
+    var textField: some View {
+        HStack {
+            TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
+                .Body2()
+                .focused($isFocused)
+            
+            Image(systemName: "paperplane.fill")
+                .foregroundColor(.Gray5)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.Gray1)
+        )
+        .padding(.horizontal, 16)
+        .padding(.bottom, 20)
     }
 }
 
@@ -209,7 +236,16 @@ extension ReadShortcutView {
                 .padding(.bottom, 20)
             
             if let shortcut {
+                
                 ZStack {
+                    TabView(selection: self.$currentTab) {
+                        Color.clear.tag(0)
+                        Color.clear.tag(1)
+                        Color.clear.tag(2)
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .frame(height: height)
+                    
                     switch(currentTab) {
                     case 0:
                         ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
@@ -228,7 +264,7 @@ extension ReadShortcutView {
                                                         geometryProxy.size)
                                 })
                     case 2:
-                        Text("2")
+                        ReadShortcutCommentView()
                             .background(
                                 GeometryReader { geometryProxy in
                                     Color.clear
@@ -239,13 +275,6 @@ extension ReadShortcutView {
                         EmptyView()
                     }
                     
-                    TabView(selection: self.$currentTab) {
-                        Color.clear.tag(0)
-                        Color.clear.tag(1)
-                        Color.clear.tag(2)
-                    }
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .frame(height: height)
                 }
                 .onPreferenceChange(SizePreferenceKey.self) { newSize in
                     height = contentSize > newSize.height ? contentSize : newSize.height

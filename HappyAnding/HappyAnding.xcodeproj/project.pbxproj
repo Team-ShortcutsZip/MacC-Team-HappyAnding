@@ -21,6 +21,7 @@
 		8795A16E292AB841004B765F /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16D292AB841004B765F /* View+Extension.swift */; };
 		8795A170292AB945004B765F /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16F292AB945004B765F /* UIScreen+Extension.swift */; };
 		8795A172292ABFDE004B765F /* ReadShortcutVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A171292ABFDE004B765F /* ReadShortcutVersionView.swift */; };
+		8795A174292ACA50004B765F /* ReadShortcutCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A173292ACA50004B765F /* ReadShortcutCommentView.swift */; };
 		87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */; };
 		87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B12910649B00C3DA13 /* SignInWithAppleView.swift */; };
 		87E606B629114F7D00C3DA13 /* WriteNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B529114F7D00C3DA13 /* WriteNicknameView.swift */; };
@@ -126,6 +127,7 @@
 		8795A16D292AB841004B765F /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		8795A16F292AB945004B765F /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		8795A171292ABFDE004B765F /* ReadShortcutVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutVersionView.swift; sourceTree = "<group>"; };
+		8795A173292ACA50004B765F /* ReadShortcutCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutCommentView.swift; sourceTree = "<group>"; };
 		87E606AD2910623C00C3DA13 /* HappyAnding.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyAnding.entitlements; sourceTree = "<group>"; };
 		87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
 		87E606B12910649B00C3DA13 /* SignInWithAppleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleView.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 				A04ACB31290686AA004A85A6 /* ReadShortcutHeaderView.swift */,
 				A04ACB33290686C7004A85A6 /* ReadShortcutContentView.swift */,
 				8795A171292ABFDE004B765F /* ReadShortcutVersionView.swift */,
+				8795A173292ACA50004B765F /* ReadShortcutCommentView.swift */,
 			);
 			path = ReadShortcutView;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
 				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
 				A3FF01882918581E00384211 /* LicenseView.swift in Sources */,
+				8795A174292ACA50004B765F /* ReadShortcutCommentView.swift in Sources */,
 				A04ACB0C29041CEE004A85A6 /* LovedShortcutView.swift in Sources */,
 				A09CBA7E2922B36C00D31F5F /* String+Extension.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
