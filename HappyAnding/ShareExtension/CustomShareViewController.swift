@@ -17,23 +17,18 @@ class CustomShareViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupViews()
-        super.viewDidLoad()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.openSwiftUIView()
-        }
-
+        setupViews()
         // 1: Set the background and call the function to create the navigation bar
-        self.view.backgroundColor = .systemGray6
+        self.view.backgroundColor = UIColor(Color.Background)
         setupNavBar()
     }
     
-    private func openSwiftUIView() {
-        let hostingController = UIHostingController(rootView: WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
+//    private func openSwiftUIView() {
+//        let hostingController = UIHostingController(rootView: WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
 //        hostingController.sizingOptions = .preferredContentSize
 //        hostingController.modalPresentationStyle = .popover
-        self.present(hostingController, animated: true)
-    }
+//        self.present(hostingController, animated: true)
+//    }
 
     // 2: Set the title and the navigation items
     private func setupNavBar() {
@@ -56,22 +51,20 @@ class CustomShareViewController: UIViewController {
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     
-    private lazy var textField: UITextField = {
-        let textField = UITextField()
-        textField.text = "some value"
-        textField.backgroundColor = .white
-        textField.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var extShortcutsView: UIView = {
+        let extShortcutsView = UIHostingController(rootView: WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
+        self.present(extShortcutsView, animated: true)
 
-        return textField
+        return extShortcutsView.view
     }()
 
     private func setupViews() {
-        self.view.addSubview(textField)
+        self.view.addSubview(extShortcutsView)
         NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            textField.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            textField.heightAnchor.constraint(equalToConstant: 44)
+            extShortcutsView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            extShortcutsView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            extShortcutsView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            extShortcutsView.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
