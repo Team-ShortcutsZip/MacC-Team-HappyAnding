@@ -19,7 +19,7 @@ struct ListShortcutView: View {
     
     var body: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(spacing: 0) {
                 
                 if data.sectionType != .myShortcut {
                     header
