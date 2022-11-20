@@ -69,7 +69,7 @@ struct WithdrawalView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isTappedCheckToggle ? .Primary : .Gray1)
+                        .foregroundColor(isTappedCheckToggle ? .Primary : .Primary .opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("탈퇴하기")

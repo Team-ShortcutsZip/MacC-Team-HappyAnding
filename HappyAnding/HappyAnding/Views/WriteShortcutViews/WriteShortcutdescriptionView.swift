@@ -51,7 +51,7 @@ struct WriteShortcutdescriptionView: View {
             NavigationLink(value: NavigationWriteTagView.first) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isOneLineValid && isMultiLineValid ? .Primary : .Gray1 )
+                        .foregroundColor(isOneLineValid && isMultiLineValid ? .Primary : .Primary .opacity(0.13) )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("다음")

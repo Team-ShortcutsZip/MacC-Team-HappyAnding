@@ -133,7 +133,7 @@ struct WriteCurationSetView: View {
         NavigationLink(value: Float(0.0)) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(curation.shortcuts.count > 0 ? .Primary : .Gray1)
+                    .foregroundColor(curation.shortcuts.count > 0 ? .Primary : .Primary .opacity(0.13))
                     .padding(.horizontal, 16)
                     .frame(height: 52)
                 Text("다음")
