@@ -33,8 +33,24 @@ struct HappyAndingApp: App {
                 if userAuth.isLoggedIn {
                     WriteNicknameView()
                         .environmentObject(shorcutsZipViewModel)
+                        .onDisappear() {
+                            if shorcutsZipViewModel.userInfo == nil {
+                                shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
+                                    shorcutsZipViewModel.userInfo = user
+                                }
+                            }
+                        }
                 } else {
                     SignInWithAppleView()
+                        .onDisappear() {
+                            if shorcutsZipViewModel.userInfo == nil {
+                                shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
+                                    shorcutsZipViewModel.userInfo = user
+                                    shorcutsZipViewModel.initUserShortcut(user: user)
+                                    shorcutsZipViewModel.curationsMadeByUser = shorcutsZipViewModel.fetchCurationByAuthor(author: user.id)
+                                }
+                            }
+                        }
                 }
             }
         }
