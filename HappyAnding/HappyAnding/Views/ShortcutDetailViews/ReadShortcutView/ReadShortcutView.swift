@@ -208,46 +208,48 @@ extension ReadShortcutView {
             tabBarView
                 .padding(.bottom, 20)
             
-            ZStack {
-                switch(currentTab) {
-                case 0:
-                    ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self,
-                                                value: geometryProxy.size)
-                            })
-                case 1:
-                    Text("1")
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self, value:
-                                                    geometryProxy.size)
-                            })
-                case 2:
-                    Text("2")
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self,
-                                                value: geometryProxy.size)
-                            })
-                default:
-                    EmptyView()
+            if let shortcut {
+                ZStack {
+                    switch(currentTab) {
+                    case 0:
+                        ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
+                            .background(
+                                GeometryReader { geometryProxy in
+                                    Color.clear
+                                        .preference(key: SizePreferenceKey.self,
+                                                    value: geometryProxy.size)
+                                })
+                    case 1:
+                        ReadShortcutVersionView(shortcut: shortcut)
+                            .background(
+                                GeometryReader { geometryProxy in
+                                    Color.clear
+                                        .preference(key: SizePreferenceKey.self, value:
+                                                        geometryProxy.size)
+                                })
+                    case 2:
+                        Text("2")
+                            .background(
+                                GeometryReader { geometryProxy in
+                                    Color.clear
+                                        .preference(key: SizePreferenceKey.self,
+                                                    value: geometryProxy.size)
+                                })
+                    default:
+                        EmptyView()
+                    }
+                    
+                    TabView(selection: self.$currentTab) {
+                        Color.clear.tag(0)
+                        Color.clear.tag(1)
+                        Color.clear.tag(2)
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .frame(height: height)
                 }
-                
-                TabView(selection: self.$currentTab) {
-                    Color.clear.tag(0)
-                    Color.clear.tag(1)
-                    Color.clear.tag(2)
+                .onPreferenceChange(SizePreferenceKey.self) { newSize in
+                    height = contentSize > newSize.height ? contentSize : newSize.height
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(height: height)
-            }
-            .onPreferenceChange(SizePreferenceKey.self) { newSize in
-                height = contentSize > newSize.height ? contentSize : newSize.height
             }
         }
     }
