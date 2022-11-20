@@ -218,9 +218,11 @@ struct WriteShortcutTagView: View {
                                 isFocused = true
                             }
                             .onChange(of: isFocused) { _ in
-                                if !isFocused && !relatedApp.isEmpty {
-                                    relatedApps.append(relatedApp)
-                                    relatedApp = ""
+                                if !isFocused {
+                                    if !relatedApp.isEmpty {
+                                        relatedApps.append(relatedApp)
+                                        relatedApp = ""
+                                    }
                                     isTextFieldShowing = false
                                 }
                             }
