@@ -109,6 +109,7 @@ struct WithdrawalView: View {
             } else {
                 if let user = shortcutsZipViewModel.userInfo {
                     shortcutsZipViewModel.deleteData(model: user)
+                    shortcutsZipViewModel.resetUser()
                     withAnimation(.easeInOut) {
                         self.signInStatus = false
                         userAuth.signOut()
