@@ -57,8 +57,9 @@ struct ReadUserCurationView: View {
         }
         .onChange(of: isWriting) { _ in
             if !isWriting {
-                // TODO: - Curation update 함수 적용
-                print("update curation")
+                if let updatedCuration = shortcutsZipViewModel.fetchCurationDetail(curationID: data.userCuration.id) {
+                    data.userCuration = updatedCuration
+                }
             }
         }
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
