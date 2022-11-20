@@ -44,7 +44,6 @@ class ShortcutsZipViewModel: ObservableObject {
     var allShortcuts: [Shortcuts] = []
 
     init() {
-        print("**init")
         fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
             self.initUserShortcut(user: user)
@@ -505,6 +504,14 @@ class ShortcutsZipViewModel: ObservableObject {
     
     
 //MARK: - 유저 관련 함수
+    
+    //MARK: 로그인 정보 제거
+    
+    func resetUser() {
+        self.userInfo = nil
+        self.shortcutsMadeByUser.removeAll()
+        self.curationsMadeByUser.removeAll()
+    }
     
     // MARK: 현재 로그인한 아이디 리턴
     
