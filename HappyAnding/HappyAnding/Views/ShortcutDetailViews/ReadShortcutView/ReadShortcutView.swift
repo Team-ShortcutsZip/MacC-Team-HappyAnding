@@ -49,6 +49,7 @@ struct ReadShortcutView: View {
                 }
             }
         }
+        
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
@@ -64,6 +65,28 @@ struct ReadShortcutView: View {
                     print(shortcut)
                 }
             }
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+           
+            VStack {
+                if let shortcut {
+                    Button {
+                        if let url = URL(string: shortcut.downloadLink[0]) {
+                            shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                            shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
+                            openURL(url)
+                        }
+                        
+                    } label: {
+                        Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
+                            .Body1()
+                            .foregroundColor(Color.Text_icon)
+                    }
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.Primary)
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
@@ -110,6 +133,7 @@ struct ReadShortcutView: View {
         .fullScreenCover(isPresented: $isUpdating) {
             UpdateShortcutView(isUpdating: $isUpdating, shortcut: $shortcut)
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
