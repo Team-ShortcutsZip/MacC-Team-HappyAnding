@@ -15,8 +15,11 @@ struct ReadShortcutView: View {
     
     @StateObject var writeNavigation = WriteShortcutNavigation()
     @State var isTappedDeleteButton = false
-    @State var shortcut: Shortcuts?
     @State var isEdit = false
+    
+    @State var isMyLike: Bool = false
+    @State var isFirstMyLike = false
+    @State var isClickDownload = false
     
     @State var data: NavigationReadShortcutType
     
@@ -24,16 +27,17 @@ struct ReadShortcutView: View {
         
         VStack {
             
-            if let shortcut {
-                ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
-                ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
+            if let shortcut = data.shortcut {
+                ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
+                ReadShortcutContentView(shortcut: $data.shortcut.unwrap()!)
                 
                 Button(action: {
                     if let url = URL(string: shortcut.downloadLink[0]) {
-                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                        shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
                         openURL(url)
-                        //TODO: 화면 상의 다운로드 숫자 변경 기능 필요
+                        if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
+                            data.shortcut?.numberOfDownload += 1
+                        }
+                        isClickDownload = true
                     }
                 }) {
                     RoundedRectangle(cornerRadius: 12)
@@ -51,16 +55,40 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
-            self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID)
+            data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
+            isFirstMyLike = isMyLike
         }
         .onChange(of: isEdit) { _ in
             if !isEdit {
-                self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID)
+                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            }
+        }
+        .onDisappear() {
+            if let shortcut = data.shortcut {
+                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
+                if isClickDownload && isAlreadyContained {
+                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
+
+                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
+                }
+                if isMyLike != isFirstMyLike {
+                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+                    if isMyLike {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.insert(self.data.shortcutID, at: 0)
+                        shortcutsZipViewModel.shortcutsUserLiked.insert(shortcut, at: 0)
+                    } else {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.removeAll(where: { $0 == self.data.shortcutID })
+                        shortcutsZipViewModel.shortcutsUserLiked.removeAll(where: { $0.id == self.data.shortcutID })
+                    }
+                }
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if shortcut?.author == shortcutsZipViewModel.currentUser() {
+            if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
                 myShortcutMenuSection
             } else {
                 otherShortcutMenuSection
@@ -80,12 +108,8 @@ struct ReadShortcutView: View {
                   secondaryButton: .destructive(
                     Text("삭제"),
                     action: {
-                        if let shortcut {
-                            shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
-                            shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
+                        if let shortcut = data.shortcut {
                             shortcutsZipViewModel.deleteData(model: shortcut)
-                            //FIXME: 뷰모델에서 실제 데이터를 삭제하도록 변경 필요
-                            shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
                             self.presentation.wrappedValue.dismiss()
                         }
                     }
@@ -94,7 +118,7 @@ struct ReadShortcutView: View {
         }
         .fullScreenCover(isPresented: $isEdit) {
             NavigationStack(path: $writeNavigation.navigationPath) {
-                if let shortcut {
+                if let shortcut = data.shortcut {
                     WriteShortcutTitleView(isWriting: $isEdit,
                                            shortcut: shortcut,
                                            isEdit: true)
@@ -150,7 +174,7 @@ extension ReadShortcutView {
     }
     
     func share() {
-        if let shortcut {
+        if let shortcut = data.shortcut {
             guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
             let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
             UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)

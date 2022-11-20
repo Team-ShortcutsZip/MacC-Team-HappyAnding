@@ -12,7 +12,7 @@ struct ReadShortcutHeaderView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var shortcut: Shortcuts
-    @State var isMyLike: Bool = false
+    @Binding var isMyLike: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,23 +29,19 @@ struct ReadShortcutHeaderView: View {
                 Spacer()
                 
                 Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(shortcut.numberOfLike)")
-
-                .Body2()
-                .padding(10)
-                .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
-                .background(isMyLike ? Color.Primary : Color.Gray1)
-                .cornerRadius(12)
-                .onTapGesture(perform: {
-                    isMyLike.toggle()
-                    //화면 상의 좋아요 추가, 취소 기능 동작
-                    if isMyLike {
-                        self.shortcut.numberOfLike += 1
-                    } else {
-                        self.shortcut.numberOfLike -= 1
-                    }
-                    //데이터 상의 좋아요 추가, 취소 기능 동작
-                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
-                })
+                    .Body2()
+                    .padding(10)
+                    .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
+                    .background(isMyLike ? Color.Primary : Color.Gray1)
+                    .cornerRadius(12)
+                    .onTapGesture(perform: {
+                        isMyLike.toggle()
+                        if isMyLike {
+                            self.shortcut.numberOfLike += 1
+                        } else {
+                            self.shortcut.numberOfLike -= 1
+                        }
+                    })
             }
             Text("\(shortcut.title)")
                 .Title1()
@@ -56,15 +52,5 @@ struct ReadShortcutHeaderView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
-        .onAppear() {
-            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: shortcut.id)
-        }
     }
 }
-
-
-//struct ReadShortcutHeaderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadShortcutHeaderView(icon: "book", color: "Coral", numberOfLike: 99, name: "주변 커피집 걸어가기", oneline: "걸어가보자!!!")
-//    }
-//}
