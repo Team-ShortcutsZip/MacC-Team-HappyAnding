@@ -54,10 +54,10 @@ class ShortcutsZipViewModel: ObservableObject {
             self.initShortcut()
         }
         fetchCuration(isAdmin: true) { curations in
-            self.adminCurations = curations
+            self.adminCurations = curations.sorted(by: { $0.dateTime > $1.dateTime })
         }
         fetchCuration(isAdmin: false) { curations in
-            self.userCurations = curations
+            self.userCurations = curations.sorted(by: { $0.dateTime > $1.dateTime })
             self.curationsMadeByUser = self.fetchCurationByAuthor(author: self.currentUser())
         }
         fetchKeyword { keywords in
@@ -80,7 +80,7 @@ class ShortcutsZipViewModel: ObservableObject {
     }
     func initShortcut() {
         sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
-        sortedShortcutsByLike = allShortcuts.filter { $0.numberOfLike > minimumOfLike }
+        sortedShortcutsByLike = allShortcuts.filter { $0.numberOfLike >= minimumOfLike }
         for category in Category.allCases {
             shortcutsInCategory[category.index] = allShortcuts.filter { $0.category.contains(category.rawValue) }
         }
@@ -156,7 +156,6 @@ class ShortcutsZipViewModel: ObservableObject {
         if shortcut.numberOfLike >= 5 {
             self.sortedShortcutsByLike.append(shortcut)
         }
-        //카테고리별 리스트에서 처리
     }
     
     func deleteShortcutInList(shortcut: Shortcuts) {
@@ -270,7 +269,6 @@ class ShortcutsZipViewModel: ObservableObject {
         
         query = db.collection("Curation")
             .whereField("isAdmin", isEqualTo: isAdmin)
-            .order(by: "dateTime", descending: true)
         
         query.addSnapshotListener { snapshot, error in
             guard let snapshot else {
@@ -287,10 +285,21 @@ class ShortcutsZipViewModel: ObservableObject {
                     
                     if (diff.type == .added) {
                         curations.insert(curation, at: 0)
+                        self.curationsMadeByUser.insert(curation, at: 0)
+                        self.userCurations.insert(curation, at: 0)
                     }
                     if (diff.type == .modified) {
                         if let index = curations.firstIndex(where: { $0.id == curation.id}) {
                             curations[index] = curation
+                        }
+                        if let index = self.curationsMadeByUser.firstIndex(where: { $0.id == curation.id}) {
+                            self.curationsMadeByUser[index] = curation
+                        }
+                        if let index = self.adminCurations.firstIndex(where: { $0.id == curation.id}) {
+                            self.adminCurations[index] = curation
+                        }
+                        if let index = self.userCurations.firstIndex(where: { $0.id == curation.id}) {
+                            self.userCurations[index] = curation
                         }
                     }
                     if (diff.type == .removed) {
@@ -470,58 +479,6 @@ class ShortcutsZipViewModel: ObservableObject {
         self.userInfo?.likedShortcuts.removeAll(where: { $0 == shortcutID })
         self.userInfo?.downloadedShortcuts.removeAll(where: { $0.id == shortcutID })
         self.setData(model: userInfo!)
-        
-//        //좋아요한 목록에서 삭제
-//        db.collection("User")
-//            .whereField("likedShortcuts", arrayContains: shortcutID)
-//            .getDocuments() { (querySnapshot, error) in
-//                if let error {
-//                    print("Error getting documents: \(error)")
-//                } else {
-//                    guard let documents = querySnapshot?.documents else { return }
-//                    let decoder = JSONDecoder()
-//                    for document in documents {
-//                        do {
-//                            let data = document.data()
-//                            let jsonData = try JSONSerialization.data(withJSONObject: data)
-//                            var user = try decoder.decode(User.self, from: jsonData)
-//
-//                            user.likedShortcuts.removeAll(where: { $0 == shortcutID })
-//                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
-//                            self.setData(model: user)
-//
-//                        } catch let error {
-//                            print("error: \(error)")
-//                        }
-//                    }
-//                }
-//            }
-        
-//        //다운로드한 목록에서 삭제
-//        db.collection("User")
-//            .whereField("downloadedShortcuts", arrayContains: shortcutID)
-//            .getDocuments() { (querySnapshot, error) in
-//                if let error {
-//                    print("Error getting documents: \(error)")
-//                } else {
-//                    guard let documents = querySnapshot?.documents else { return }
-//                    let decoder = JSONDecoder()
-//                    for document in documents {
-//                        do {
-//                            let data = document.data()
-//                            let jsonData = try JSONSerialization.data(withJSONObject: data)
-//                            var user = try decoder.decode(User.self, from: jsonData)
-//
-//                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
-//                            user.likedShortcuts.removeAll(where: { $0 == shortcutID })
-//                            self.setData(model: user)
-//
-//                        } catch let error {
-//                            print("error: \(error)")
-//                        }
-//                    }
-//                }
-//            }
     }
     
     //MARK: 단축어 삭제 시 해당 단축어를 포함하는 큐레이션에서 삭제하는 함수
