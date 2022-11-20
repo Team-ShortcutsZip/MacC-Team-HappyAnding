@@ -169,6 +169,7 @@ class ShortcutsZipViewModel: ObservableObject {
         shortcut.category.forEach { category in
             self.shortcutsInCategory[Category(rawValue: category)!.index].removeAll(where: { $0.id == shortcut.id })
         }
+        deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
     }
     
     //MARK: Shortcut의 세부 정보를 가져오는 함수
