@@ -38,7 +38,6 @@ extension Comments {
             }
             return false
         })
-        
         return sortedComments
     }
 }
