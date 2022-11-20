@@ -158,7 +158,8 @@ struct ReadUserCurationView: View {
         Button(action: {
         self.presentation.wrappedValue.dismiss()
         }) {
-            Image(systemName: "chevron.backward") // set image here
+            //TODO: 위치와 두께, 색상 조정 필요
+            Image(systemName: "chevron.backward")
                 .foregroundColor(Color.Gray5)
                 .bold()
         }
