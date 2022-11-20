@@ -69,29 +69,14 @@ struct WriteShortcutTagView: View {
             Spacer()
             
             Button(action: {
-                shortcut.author = shortcutsZipViewModel.currentUser()
+                if let index = shortcutsZipViewModel.allShortcuts.firstIndex(where: {$0.id == shortcut.id}) {
+                    shortcutsZipViewModel.allShortcuts[index] = shortcut
+                }
                 
+                shortcut.author = shortcutsZipViewModel.currentUser()
                 if isEdit {
-                    
-                    newCategory = shortcut.category
-                    
-                    //뷰모델에서 변경
-                    if let index = shortcutsZipViewModel.shortcutsUserLiked.firstIndex(where: { $0.id == shortcut.id}) {
-                        shortcutsZipViewModel.shortcutsUserLiked[index] = shortcut
-                    }
-                    if let index = shortcutsZipViewModel.shortcutsUserDownloaded.firstIndex(where: { $0.id == shortcut.id}) {
-                        shortcutsZipViewModel.shortcutsUserDownloaded[index] = shortcut
-                    }
-                    if let index = shortcutsZipViewModel.shortcutsMadeByUser.firstIndex(where: { $0.id == shortcut.id}) {
-                        shortcutsZipViewModel.shortcutsMadeByUser[index] = shortcut
-                    }
-                    if let index = shortcutsZipViewModel.sortedShortcutsByDownload.firstIndex(where: { $0.id == shortcut.id}) {
-                        shortcutsZipViewModel.sortedShortcutsByDownload[index] = shortcut
-                    }
-                    if let index = shortcutsZipViewModel.sortedShortcutsByLike.firstIndex(where: { $0.id == shortcut.id}) {
-                        shortcutsZipViewModel.sortedShortcutsByLike[index] = shortcut
-                    }
                     //뷰모델의 카테고리별 단축어 목록에서 정보 수정
+                    newCategory = shortcut.category
                     existingCategory.forEach { category in
                         if !shortcut.category.contains(category) {
                             newCategory.removeAll(where: { $0 == category })
@@ -123,17 +108,11 @@ struct WriteShortcutTagView: View {
                         ),
                         curationIDs: shortcut.curationIDs
                     )
-                    
                 } else {
                     //새로운 단축어 생성 및 저장
                     // 뷰모델에 추가
                     shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
-                    shortcutsZipViewModel.sortedShortcutsByDownload.append(shortcut)
-                    shortcut.category.forEach { category in
-                        if !shortcutsZipViewModel.isFirstFetchInCategory[Category(rawValue: category)!.index] {
-                            shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
-                        }
-                    }
+                    
                     // 서버에 추가
                     shortcutsZipViewModel.setData(model: shortcut)
                 }
