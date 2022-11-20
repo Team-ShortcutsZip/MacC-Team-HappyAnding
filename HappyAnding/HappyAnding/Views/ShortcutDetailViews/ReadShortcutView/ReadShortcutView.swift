@@ -20,31 +20,22 @@ struct ReadShortcutView: View {
     
     @State var data: NavigationReadShortcutType
     
+    @State var height: CGFloat = 0
+    
     var body: some View {
         
-        VStack {
-            
-            if let shortcut {
-                ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
-                ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
-                
-                Button(action: {
-                    if let url = URL(string: shortcut.downloadLink[0]) {
-                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                        shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
-                        openURL(url)
-                        //TODO: 화면 상의 다운로드 숫자 변경 기능 필요
-                    }
-                }) {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(Color.Primary)
-                        .frame(height: 52)
+        ScrollView {
+            VStack {
+                if let shortcut {
+                    
+                    // MARK: - 단축어 타이틀
+                    ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
+                        .frame(height: 160)
+                    
+                    // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
+                    ReadShortcutTabView(shortcut: self.$shortcut.unwrap()!, heigth: self.$height)
                         .padding(.horizontal, 16)
-                        .overlay {
-                            Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
-                                .Body1()
-                                .foregroundColor(Color.Text_icon)
-                        }
+                        .frame(minHeight: 300, maxHeight: .infinity)
                 }
             }
         }
