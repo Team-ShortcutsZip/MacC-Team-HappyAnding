@@ -52,28 +52,18 @@ struct WriteCurationInfoView: View {
                 .frame(maxHeight: .infinity)
             
             Button {
-                
-                print(" tapped \(curation)")
                 curation.author = shortcutsZipViewModel.currentUser()
-                
-                if isEdit {
-                    if let index = shortcutsZipViewModel.curationsMadeByUser.firstIndex(where: { $0.id == curation.id}) {
-                        shortcutsZipViewModel.curationsMadeByUser[index] = curation
-                    }
-                } else {
-                    shortcutsZipViewModel.curationsMadeByUser.insert(curation, at: 0)
-                    shortcutsZipViewModel.userCurations.insert(curation, at: 0)
-                }
                 shortcutsZipViewModel.setData(model: curation)
                 shortcutsZipViewModel.updateShortcutCurationID(
                     shortcutCells: curation.shortcuts,
                     curationID: curation.id
                 )
+                if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == curation.id}) {
+                    shortcutsZipViewModel.userCurations[index] = curation
+                }
                 
                 self.isWriting.toggle()
-                
                 writeCurationNavigation.navigationPath = .init()
-                
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
