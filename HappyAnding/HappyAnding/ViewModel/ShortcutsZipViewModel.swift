@@ -33,6 +33,8 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var userCurations: [Curation] = []
     @Published var adminCurations: [Curation] = []
     
+    @Published var keywords: Keyword = Keyword(keyword: [String]())
+    
     static let share = ShortcutsZipViewModel()
     private let db = Firestore.firestore()
     
@@ -57,6 +59,9 @@ class ShortcutsZipViewModel: ObservableObject {
         fetchCuration(isAdmin: false) { curations in
             self.userCurations = curations
             self.curationsMadeByUser = self.fetchCurationByAuthor(author: self.currentUser())
+        }
+        fetchKeyword { keywords in
+            self.keywords = keywords
         }
     }
     
@@ -619,4 +624,94 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
     }
+    
+    // MARK: - 검색 관련 함수
+        
+        //MARK: 연관 앱으로 단축어 검색
+        func searchShortcutByRequiredApp(word: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+            var shortcuts: [Shortcuts] = []
+            
+            var query: Query!
+            
+            query = db.collection("Shortcut")
+                .whereField("requiredApp", arrayContains: word)
+                .order(by: "requiredApp", descending: true)
+            
+            query.getDocuments { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            shortcuts.append(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(shortcuts)
+                }
+            }
+        }
+        
+        //MARK: 제목으로 단축어 검색
+        ///prefix기준으로만 검색이 가능
+        func searchShortcutByTitlePrefix(keyword: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
+            var shortcuts: [Shortcuts] = []
+            
+            var query: Query!
+            
+            query = db.collection("Shortcut")
+                .whereField("title", isGreaterThanOrEqualTo: keyword)
+                .whereField("title", isLessThanOrEqualTo: keyword + "\u{f8ff}")
+            
+            query.getDocuments { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(Shortcuts.self, from: jsonData)
+                            shortcuts.append(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(shortcuts)
+                }
+            }
+        }
+    
+    //MARK: 키워드 받아오는 함수
+        func fetchKeyword(completionHandler: @escaping (Keyword)->()) {
+            var _: [String] = []
+            db.collection("Keyword").getDocuments { querySnapshot, error in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let keyword = try decoder.decode(Keyword.self, from: jsonData)
+                            completionHandler(keyword)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                }
+            }
+        }
 }
