@@ -14,6 +14,7 @@ struct ShortcutTabView: View {
     @Environment(\.scenePhase) private var phase
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shorcutsZipViewModel: ShortcutsZipViewModel
+    
     @AppStorage("signInStatus") var signInStatus = false
     @StateObject var viewModel = ShortcutsZipViewModel()
     @State private var isOpenURL = false
@@ -48,73 +49,64 @@ struct ShortcutTabView: View {
     )}
     
     var body: some View {
-        
-        if signInStatus {
-            TabView(selection: handler) {
-                NavigationStack(path: $shortcutNavigation.navigationPath) {
-                    ExploreShortcutView()
-                        .onChange(of: tappedTwice, perform: { tappedTwice in
-                            guard tappedTwice else { return }
-                            shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
-                            self.tappedTwice = false
-                        })
-                }
-                .environmentObject(shortcutNavigation)
-                .tabItem {
-                    Label("단축어", systemImage: "square.stack.3d.up.fill")
-                }
-                .tag(1)
-                
-                NavigationStack(path: $curationNavigation.navigationPath) {
-                    ExploreCurationView()
-                        .onChange(of: tappedTwice, perform: { tappedTwice in
-                            guard tappedTwice else { return }
-                            curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
-                            self.tappedTwice = false
-                        })
-                }
-                .environmentObject(curationNavigation)
-                .tabItem {
-                    Label("큐레이션", systemImage: "folder.fill")
-                }
-                .tag(2)
-                
-                NavigationStack(path: $profileNavigation.navigationPath) {
-                    MyPageView()
-                        .onChange(of: tappedTwice, perform: { tappedTwice in
-                            guard tappedTwice else { return }
-                            profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
-                            self.tappedTwice = false
-                        })
-                }
-                .environmentObject(profileNavigation)
-                .tabItem {
-                    Label("프로필", systemImage: "person.crop.circle.fill")
-                }
-                .tag(3)
+        TabView(selection: handler) {
+            NavigationStack(path: $shortcutNavigation.navigationPath) {
+                ExploreShortcutView()
+                    .onChange(of: tappedTwice, perform: { tappedTwice in
+                        guard tappedTwice else { return }
+                        shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
+                        self.tappedTwice = false
+                    })
             }
-            .environmentObject(ShortcutsZipViewModel())
-            .sheet(isPresented: self.$isOpenURL) {
-                let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                                      navigationParentView: .myPage)
-                ReadShortcutView(data: data)
+            .environmentObject(shortcutNavigation)
+            .tabItem {
+                Label("단축어", systemImage: "square.stack.3d.up.fill")
             }
-            .onChange(of: phase) { newPhase in
-                switch newPhase {
-                case .background: isOpenURL = false
-                default: break
-                }
+            .tag(1)
+            
+            NavigationStack(path: $curationNavigation.navigationPath) {
+                ExploreCurationView()
+                    .onChange(of: tappedTwice, perform: { tappedTwice in
+                        guard tappedTwice else { return }
+                        curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
+                        self.tappedTwice = false
+                    })
             }
-            .onOpenURL { url in
-                fetchShortcutIdFromUrl(urlString: url.absoluteString)
-                isOpenURL = true
+            .environmentObject(curationNavigation)
+            .tabItem {
+                Label("큐레이션", systemImage: "folder.fill")
             }
-        } else {
-            if userAuth.isLoggedIn {
-                WriteNicknameView()
-            } else {
-                SignInWithAppleView()
+            .tag(2)
+            
+            NavigationStack(path: $profileNavigation.navigationPath) {
+                MyPageView()
+                    .onChange(of: tappedTwice, perform: { tappedTwice in
+                        guard tappedTwice else { return }
+                        profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
+                        self.tappedTwice = false
+                    })
             }
+            .environmentObject(profileNavigation)
+            .tabItem {
+                Label("프로필", systemImage: "person.crop.circle.fill")
+            }
+            .tag(3)
+        }
+        .environmentObject(ShortcutsZipViewModel())
+        .sheet(isPresented: self.$isOpenURL) {
+            let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
+                                                  navigationParentView: .myPage)
+            ReadShortcutView(data: data)
+        }
+        .onChange(of: phase) { newPhase in
+            switch newPhase {
+            case .background: isOpenURL = false
+            default: break
+            }
+        }
+        .onOpenURL { url in
+            fetchShortcutIdFromUrl(urlString: url.absoluteString)
+            isOpenURL = true
         }
     }
     
