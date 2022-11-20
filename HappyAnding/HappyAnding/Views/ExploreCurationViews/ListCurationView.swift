@@ -43,13 +43,9 @@ struct ListCurationView: View {
                         .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
                         
                         .onAppear {
-                            if userCurations.last == curation && userCurations.count % 10 == 0 {
-                                print(userCurations.count)
-                                if self.data.isAllUser {
-                                    shortcutsZipViewModel.fetchCurationLimit(isAdmin: false) { curations in
-                                        userCurations.append(contentsOf: curations)
-                                    }
-                                }
+                            //TODO: 10개씩 불러오도록 변경 필요
+                            if self.data.isAllUser {
+                                self.userCurations = shortcutsZipViewModel.userCurations
                             }
                         }
                     }

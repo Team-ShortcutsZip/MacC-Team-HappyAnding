@@ -51,17 +51,11 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
-            shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
-                self.shortcut = shortcut
-                print("hellohello \(self.$shortcut.unwrap()!)")
-            }
+            self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID)
         }
         .onChange(of: isEdit) { _ in
             if !isEdit {
-                shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
-                    self.shortcut = shortcut
-                    print(shortcut)
-                }
+                self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID)
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)

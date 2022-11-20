@@ -60,7 +60,7 @@ struct ShortcutCell: View {
                     .onTapGesture {
                         if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
-                            shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id)  { shortcut in
+                            if let shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id) {
                                 shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
                             }
                         }

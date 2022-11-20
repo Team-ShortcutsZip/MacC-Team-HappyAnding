@@ -35,16 +35,7 @@ struct ShortcutsListView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .onAppear {
-                            if shortcuts.count-1 == index && !isLastShortcut {
-                                self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
-                                    if Set(newShortcuts).intersection(Set(shortcuts)) == [] {
-                                        self.shortcuts.append(contentsOf: newShortcuts)
-                                    }
-                                    else {
-                                        isLastShortcut = true
-                                    }
-                                }
-                            }
+                            
                         }
                     }
                 }
@@ -58,12 +49,7 @@ struct ShortcutsListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)
         .onAppear {
-            if shortcutsZipViewModel.isFirstFetchInCategory[categoryName.index] {
-                self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
-                    self.shortcuts.append(contentsOf: newShortcuts)
-                }
-                shortcutsZipViewModel.isFirstFetchInCategory[categoryName.index] = false
-            }
+            self.shortcuts = shortcutsZipViewModel.shortcutsInCategory[categoryName.index]
         }
     }
     
