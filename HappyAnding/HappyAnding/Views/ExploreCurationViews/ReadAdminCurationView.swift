@@ -105,6 +105,7 @@ struct ReadAdminCurationView: View {
     var btnBack : some View { Button(action: {
         self.presentationMode.wrappedValue.dismiss()
         }) {
+            //TODO: 위치와 두께, 색상 조정 필요
             Image(systemName: "chevron.backward") // set image here
                 .foregroundColor(Color.Gray5)
                 .bold()
