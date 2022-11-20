@@ -74,8 +74,10 @@ class ShortcutsZipViewModel: ObservableObject {
         }
         fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
-            self.fetchShortcutByIds(shortcutIds: user.downloadedShortcuts) { downloadedShortcuts in
-                self.shortcutsUserDownloaded = downloadedShortcuts
+            user.downloadedShortcuts.forEach { downloadedShortcut in
+                self.fetchShortcutDetail(id: downloadedShortcut.id) { shortcut in
+                    self.shortcutsUserDownloaded.append(shortcut)
+                }
             }
             self.fetchShortcutByIds(shortcutIds: user.likedShortcuts) { likedShortcuts in
                 self.shortcutsUserLiked = likedShortcuts
@@ -561,6 +563,8 @@ class ShortcutsZipViewModel: ObservableObject {
             db.collection("Curation").document((model as! Curation).id).setData((model as! Curation).dictionary)
         case _ as User:
             db.collection("User").document((model as! User).id).setData((model as! User).dictionary)
+        case _ as Comments:
+            db.collection("Comment").document((model as! Comments).id).setData((model as! Comments).dictionary)
         default:
             print("this is not a model.")
         }
@@ -569,8 +573,6 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 단축어 수정 시 해당 단축어가 포함된 큐레이션 서버 데이터를 업데이트하는 함수 -> 단축어 정보 업데이트
     
     func updateShortcutInCuration(shortcutCell: ShortcutCellModel, curationIDs: [String]) {
-        var curations: [Curation] = []
-        
         for curationID in curationIDs {
             db.collection("Curation")
                 .whereField("id", isEqualTo: curationID)
@@ -586,13 +588,12 @@ class ShortcutsZipViewModel: ObservableObject {
                                 let jsonData = try JSONSerialization.data(withJSONObject: data)
                                 var curation = try decoder.decode(Curation.self, from: jsonData)
                                 
+                                //서버 데이터 업데이트
                                 if let index = curation.shortcuts.firstIndex(where: { $0.id == shortcutCell.id }) {
                                     curation.shortcuts[index] = shortcutCell
-                                    print(curation)
                                 }
                                 self.setData(model: curation)
-                                curations.append(curation)
-                                    
+                                //뷰모델 업데이트
                             } catch let error {
                                 print("error: \(error)")
                             }
@@ -659,21 +660,79 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 다운로드 수를 업데이트하는 함수
     
     func updateNumberOfDownload(shortcut: Shortcuts) {
-        self.fetchUser(userID: currentUser()) { data in
-            var user = data
-            if !data.downloadedShortcuts.contains(shortcut.id) {
-                self.db.collection("Shortcut").document(shortcut.id)
-                    .updateData([
-                        "numberOfDownload" : FieldValue.increment(Int64(1))
-                    ]) { error in
-                        if let error {
-                            print(error.localizedDescription)
-                        }
+        if let index = userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id}) {
+            if userInfo?.downloadedShortcuts[index].downloadLink != shortcut.downloadLink[0] {
+                self.userInfo!.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0]
+                if let userInfo = self.userInfo {
+                    self.setData(model: userInfo)
+                }
+            }
+        } else {
+            self.db.collection("Shortcut").document(shortcut.id)
+                .updateData([
+                    "numberOfDownload" : FieldValue.increment(Int64(1))
+                ]) { error in
+                    if let error {
+                        print(error.localizedDescription)
                     }
-                user.downloadedShortcuts.append(shortcut.id)
-                self.setData(model: user)
+                }
+            let downloadShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+            userInfo?.downloadedShortcuts.insert(downloadShortcut, at: 0)
+            if let userInfo = self.userInfo {
+                self.setData(model: userInfo)
             }
         }
+    }
+    
+    //MARK: 단축어 버전 업데이트하는 함수
+    
+    func updateShortcutVersion(shortcut: Shortcuts, updateDescription: String, updateLink: String) {
+        var data = shortcut
+        //서버 - 단축어 업데이트
+        data.downloadLink.insert(updateLink, at: 0)
+        data.updateDescription.insert(updateDescription, at: 0)
+        data.date.insert(Date().getDate(), at: 0)
+        
+        //뷰모델 - 단축어 업데이트
+        
+        //다운로드순 정렬 단축어
+        if let index = sortedShortcutsByDownload.firstIndex(where: { $0.id == shortcut.id}) {
+            sortedShortcutsByDownload[index] = shortcut
+        }
+        // 좋아요 정렬 단축어
+        if let index = sortedShortcutsByLike.firstIndex(where: { $0.id == shortcut.id}) {
+            sortedShortcutsByLike[index] = shortcut
+        }
+        //내가 다운로드 한
+        if let index = shortcutsUserDownloaded.firstIndex(where: { $0.id == shortcut.id}) {
+            shortcutsUserDownloaded[index] = shortcut
+        }
+        //내가 좋아요 한
+        if let index = shortcutsUserLiked.firstIndex(where: { $0.id == shortcut.id}) {
+            shortcutsUserLiked[index] = shortcut
+        }
+        //내가 작성한
+        if let index = shortcutsMadeByUser.firstIndex(where: { $0.id == shortcut.id}) {
+            shortcutsMadeByUser[index] = shortcut
+        }
+        //카테고리별 단축어
+        shortcut.category.forEach { category in
+            if let index = shortcutsInCategory[Category(rawValue: category)!.index].firstIndex(where: { $0.id == shortcut.id}) {
+                shortcutsInCategory[Category(rawValue: category)!.index][index] = shortcut
+            }
+        }
+        setData(model: data)
+        
+        //서버 - 큐레이션 업데이트
+        let shortcutCell = ShortcutCellModel(
+            id: data.id,
+            sfSymbol: data.sfSymbol,
+            color: data.color,
+            title: data.title,
+            subtitle: data.subtitle,
+            downloadLink: data.downloadLink[0]
+        )
+        updateShortcutInCuration(shortcutCell: shortcutCell, curationIDs: data.curationIDs)
     }
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
@@ -726,7 +785,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             var user = try decoder.decode(User.self, from: jsonData)
                             
                             user.likedShortcuts.removeAll(where: { $0 == shortcutID })
-                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
+                            user.downloadedShortcuts.removeAll(where: { $0.id == shortcutID })
                             self.setData(model: user)
                             
                         } catch let error {
@@ -751,7 +810,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             let jsonData = try JSONSerialization.data(withJSONObject: data)
                             var user = try decoder.decode(User.self, from: jsonData)
                             
-                            user.downloadedShortcuts.removeAll(where: { $0 == shortcutID })
+                            user.downloadedShortcuts.removeAll(where: { $0.id == shortcutID })
                             user.likedShortcuts.removeAll(where: { $0 == shortcutID })
                             self.setData(model: user)
                             
@@ -838,23 +897,23 @@ class ShortcutsZipViewModel: ObservableObject {
             .whereField("id", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(User.self, from: jsonData)
-                        completionHandler(shortcut)
-                    } catch let error {
-                        print("error: \(error)")
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let shortcut = try decoder.decode(User.self, from: jsonData)
+                            completionHandler(shortcut)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
                     }
                 }
             }
-        }
     }
     
     //MARK: user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
@@ -968,5 +1027,28 @@ class ShortcutsZipViewModel: ObservableObject {
                 completionHandler(shortcuts)
             }
         }
+    }
+    func fetchComment(shortcutID: String, completionHandler: @escaping (Comments) -> ()) {
+        db.collection("Comment")
+            .whereField("id", isEqualTo: shortcutID)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let comments = try decoder.decode(Comments.self, from: jsonData)
+                            completionHandler(comments)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                }
+            }
     }
 }

@@ -190,7 +190,7 @@ struct WriteNicknameView: View {
                 self.signInStatus = true
             }
             
-            shortcutszipViewModel.setData(model: User(id: user?.uid ?? "", nickname: nickname, likedShortcuts: [String](), downloadedShortcuts: [String]()))
+            shortcutszipViewModel.setData(model: User(id: user?.uid ?? "", nickname: nickname, likedShortcuts: [String](), downloadedShortcuts: [DownloadedShortcut]()))
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
