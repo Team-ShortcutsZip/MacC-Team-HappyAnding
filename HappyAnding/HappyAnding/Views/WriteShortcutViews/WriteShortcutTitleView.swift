@@ -101,7 +101,7 @@ struct WriteShortcutTitleView: View {
             NavigationLink(value: 1) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Gray1 )
+                        .foregroundColor(!shortcut.color.isEmpty && !shortcut.sfSymbol.isEmpty && isNameValid && isLinkValid ? .Primary : .Primary .opacity(0.13) )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("다음")
