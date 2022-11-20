@@ -12,13 +12,12 @@ import SwiftUI
 struct UserCurationCell: View {
     
     let curation: Curation
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         ZStack {
             //TODO: userCuration 모델에 nickname 파라미터 통합 필요
-            NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
-                EmptyView()
-            }.opacity(0)
+            
             VStack (alignment: .leading, spacing: 0) {
                 
                 //MARK: - 단축어 아이콘 배열

@@ -20,38 +20,60 @@ struct SettingView: View {
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
     @State var isTappedLogOutButton = false
-//    @State private var isTappedPrivacyButton = false
+    @State var isTappedSignOutButton = false
+    @State var isTappedPrivacyButton = false
+    
+    enum NavigationLisence: Hashable, Equatable {
+        case first
+    }
 
+    enum NavigationWithdrawal: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
-            //            Text("알림 설정")
-            //                .padding(.top, 16)
-            //                .padding(.bottom, 12)
-            //
-            //            //TODO: 화면 연결 필요
-            //            NavigationLink(destination: EmptyView()) {
-            //                SettingCell(title: "알림 및 소리")
-            //            }
             
+            /*
+             // TODO: 알림 기능
+            Text("알림 설정")
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+            
+            //TODO: 화면 연결 필요
+            NavigationLink(destination: EmptyView()) {
+                SettingCell(title: "알림 및 소리")
+            }
+            */
+            
+            // MARK: - 버전 정보
             SettingCell(title: "버전정보", version: "1.0.0")
             
-            //오픈소스 라이선스 버튼
-            NavigationLink(destination: LicenseView()) {
+            
+            // MARK: - 오픈소스 라이선스
+            
+            NavigationLink(value: NavigationLisence.first) {
                 SettingCell(title: "오픈소스 라이선스")
             }
             
-            //개인정보처리방침 버튼
-            NavigationLink(destination: PrivacyPolicyView(webViewModel: webViewModel)) {
+            
+            // MARK: - 개인정보처리방침 모달뷰
+            
+            Button {
+                self.isTappedPrivacyButton.toggle()
+            } label: {
                 SettingCell(title: "개인정보처리방침")
             }
             
-            //개발팀에 관하여 버튼
+            
+            // MARK: - 개발팀에 관하여 버튼
             //TODO: Halogen의 꿈. 추후 스프린트 시 완성되면 적용 예정
 //            NavigationLink(destination: AboutTeamView()) {
 //                SettingCell(title: "개발팀에 관하여")
 //            }
             
-            //개발자에게 연락하기 버튼
+            // MARK: - 개발자에게 연락하기 버튼
+            
             Button(action : {
                 if MFMailComposeViewController.canSendMail() {
                     self.isShowingMailView.toggle()
@@ -66,29 +88,51 @@ struct SettingView: View {
                         .multilineTextAlignment(.leading)
                 }
             }
-            .sheet(isPresented: $isShowingMailView) {
-                MailView(isShowing: self.$isShowingMailView, result: self.$result)
-            }
             
-            //로그아웃 버튼
-            Button(action: {
-                self.isTappedLogOutButton = true
-            }) {
+            
+            // MARK: - 로그아웃 버튼
+            Button {
+                self.isTappedLogOutButton.toggle()
+            } label: {
                 SettingCell(title: "로그아웃")
             }
-            .alert(isPresented: $isTappedLogOutButton) {
-                Alert(title: Text("로그아웃"),
-                      message: Text("로그아웃 하시겠습니까?"),
-                      primaryButton: .default(Text("닫기")
-                                              ,action: { self.isTappedLogOutButton = false }),
-                      secondaryButton: .destructive( Text("로그아웃"), action: { logOut() }))
+            .alert("로그아웃", isPresented: $isTappedLogOutButton) {
+                Button("닫기", role: .cancel) { isTappedLogOutButton.toggle() }
+                Button("로그아웃", role: .destructive) { logOut() }
+            } message: {
+                Text("로그아웃 하시겠습니까?")
             }
-            //회원탈퇴 버튼
-            NavigationLink(destination: WithdrawalView()) {
+            
+            
+            // MARK: - 회원탈퇴 버튼
+            NavigationLink(value: NavigationWithdrawal.first) {
                 SettingCell(title: "탈퇴하기")
             }
+            
             Spacer()
         }
+        .sheet(isPresented: $isShowingMailView) {
+            MailView(isShowing: self.$isShowingMailView, result: self.$result)
+        }
+        
+        .sheet(isPresented: self.$isTappedPrivacyButton) {
+            ZStack {
+                PrivacyPolicyView(webViewModel: webViewModel)
+                    .environmentObject(webViewModel)
+                if webViewModel.isLoading {
+                    ProgressView()
+                }
+            }
+        }
+        
+        .navigationDestination(for: NavigationLisence.self) { value in
+            LicenseView()
+        }
+        
+        .navigationDestination(for: NavigationWithdrawal.self) { _ in
+            WithdrawalView()
+        }
+        
         .padding(.horizontal, 16)
         .background(Color.Background)
         .navigationBarTitleDisplayMode(.inline)

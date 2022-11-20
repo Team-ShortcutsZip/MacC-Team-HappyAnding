@@ -12,19 +12,21 @@ struct ReadShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
-    @State var isEdit = false
-    @State var isTappedDeleteButton = false
     
+    @StateObject var writeNavigation = WriteShortcutNavigation()
+    @State var isTappedDeleteButton = false
     @State var shortcut: Shortcuts?
-    let shortcutID: String
+    @State var isEdit = false
+    
+    @State var data: NavigationReadShortcutType
     
     var body: some View {
         
         VStack {
             
             if let shortcut {
-                ReadShortcutHeaderView(shortcut: shortcut)
-                ReadShortcutContentView(shortcut: shortcut)
+                ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
+                ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
                 
                 Button(action: {
                     if let url = URL(string: shortcut.downloadLink[0]) {
@@ -49,8 +51,17 @@ struct ReadShortcutView: View {
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
-            shortcutsZipViewModel.fetchShortcutDetail(id: shortcutID) { shortcut in
+            shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
                 self.shortcut = shortcut
+                print("hellohello \(self.$shortcut.unwrap()!)")
+            }
+        }
+        .onChange(of: isEdit) { _ in
+            if !isEdit {
+                shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
+                    self.shortcut = shortcut
+                    print(shortcut)
+                }
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -64,13 +75,6 @@ struct ReadShortcutView: View {
             Image(systemName: "ellipsis")
                 .foregroundColor(.Gray4)
         }))
-        .fullScreenCover(isPresented: $isEdit) {
-            NavigationView {
-                if let shortcut {
-                    WriteShortcutTitleView(isWriting: $isEdit, shortcut: shortcut, isEdit: true)
-                }
-            }
-        }
         .alert(isPresented: $isTappedDeleteButton) {
             Alert(title: Text("글 삭제").foregroundColor(.Gray5),
                   message: Text("글을 삭제하시겠습니까?").foregroundColor(.Gray5),
@@ -88,21 +92,34 @@ struct ReadShortcutView: View {
                             shortcutsZipViewModel.deleteData(model: shortcut)
                             //FIXME: 뷰모델에서 실제 데이터를 삭제하도록 변경 필요
                             shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
+                            self.presentation.wrappedValue.dismiss()
                         }
                     }
                   )
             )
         }
+        .fullScreenCover(isPresented: $isEdit) {
+            NavigationStack(path: $writeNavigation.navigationPath) {
+                if let shortcut {
+                    WriteShortcutTitleView(isWriting: $isEdit,
+                                           shortcut: shortcut,
+                                           isEdit: true)
+                }
+            }
+            .environmentObject(writeNavigation)
+        }
     }
 }
 
 extension ReadShortcutView {
+    
     var myShortcutMenuSection: some View {
+        
         Section {
             
-            Button(action: {
+            Button {
                 isEdit.toggle()
-            }) {
+            } label: {
                 Label("편집", systemImage: "square.and.pencil")
             }
             

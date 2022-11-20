@@ -10,6 +10,7 @@ import SwiftUI
 struct WriteShortcutTagView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
     
     @Binding var isWriting: Bool
     @Binding var shortcut: Shortcuts
@@ -69,7 +70,7 @@ struct WriteShortcutTagView: View {
             
             Button(action: {
                 shortcut.author = shortcutsZipViewModel.currentUser()
-                print(shortcut.category)
+                
                 if isEdit {
                     
                     newCategory = shortcut.category
@@ -137,7 +138,11 @@ struct WriteShortcutTagView: View {
                     shortcutsZipViewModel.setData(model: shortcut)
                 }
                 
+                
                 isWriting.toggle()
+            
+                writeShortcutNavigation.navigationPath = .init()
+                
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)

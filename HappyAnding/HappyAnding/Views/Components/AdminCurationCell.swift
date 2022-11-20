@@ -27,9 +27,6 @@ struct AdminCurationCell: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink(destination: ReadAdminCurationView(curation: adminCuration)) {
-                EmptyView()
-            }
             backgroundImage
             titleAndSubtitle
                 .padding([.horizontal, .bottom], 24)

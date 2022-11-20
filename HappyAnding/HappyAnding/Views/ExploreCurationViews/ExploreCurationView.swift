@@ -10,20 +10,32 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var navigation = CurationNavigation()
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigation.navigationPath) {
             ScrollView {
                 VStack(spacing: 0) {
+                    
                     //앱 큐레이션
                     adminCurationsFrameiew(adminCurations: shortcutsZipViewModel.adminCurations)
                         .padding(.top, 20)
                         .padding(.bottom, 32)
+                    
                     //나의 큐레이션
-                    UserCurationListView(userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+                    UserCurationListView(data: NavigationListCurationType(type: .myCuration,
+                                                                          title: "내가 작성한 큐레이션",
+                                                                          isAllUser: false,
+                                                                          navigationParentView: .curations),
+                                         userCurations: $shortcutsZipViewModel.curationsMadeByUser)
                         .padding(.bottom, 20)
+                    
                     //추천 유저 큐레이션
-                    CurationListView(curationListTitle: "유저 큐레이션", userCurations: $shortcutsZipViewModel.userCurations)
+                    CurationListView(data: NavigationListCurationType(type: .userCuration,
+                                                                     title: "큐레이션 모아보기",
+                                                                     isAllUser: true,
+                                                                     navigationParentView: .curations),
+                                     userCurations: $shortcutsZipViewModel.userCurations)
                 }
                 .padding(.bottom, 32)
             }
@@ -32,6 +44,7 @@ struct ExploreCurationView: View {
             .scrollIndicators(.hidden)
             .background(Color.Background)
         }
+        .environmentObject(navigation)
     }
 }
 
@@ -59,7 +72,7 @@ struct adminCurationsFrameiew: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(adminCurations, id: \.id) { curation in
-                        NavigationLink(destination: ReadAdminCurationView(curation: curation)) {
+                        NavigationLink(value: curation) {
                             AdminCurationCell(adminCuration: curation)
                         }
                     }
@@ -67,6 +80,9 @@ struct adminCurationsFrameiew: View {
                 .padding(.leading, 16)
                 .padding(.trailing, 8)
             }
+        }
+        .navigationDestination(for: Curation.self) { data in
+            ReadAdminCurationView(curation: data)
         }
     }
 }

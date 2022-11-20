@@ -33,7 +33,6 @@ struct ShortcutCell: View {
     
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    var shortcut: Shortcuts?
     
     @State var shortcutCell = ShortcutCellModel(
         id: "",
@@ -43,16 +42,13 @@ struct ShortcutCell: View {
         subtitle: "",
         downloadLink: ""
     )
-    
+    var shortcut: Shortcuts?
     var rankNumber: Int = -1
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         
         ZStack {
-            NavigationLink(destination: ReadShortcutView(shortcutID: shortcutCell.id)) {
-                EmptyView()
-            }
-            .opacity(0)
             
             Color.Background
             
@@ -152,6 +148,6 @@ struct ShortcutCell: View {
 
 struct ShortcutCell_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutCell()
+        ShortcutCell(navigationParentView: .curations)
     }
 }
