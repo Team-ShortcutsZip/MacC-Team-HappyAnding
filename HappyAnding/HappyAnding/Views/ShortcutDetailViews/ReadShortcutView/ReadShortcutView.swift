@@ -21,7 +21,12 @@ struct ReadShortcutView: View {
     
     @State var data: NavigationReadShortcutType
     
-    @State var height: CGFloat = 0
+    @State var height: CGFloat = UIScreen.screenHeight / 2
+    @State var currentTab: Int = 0
+    @Namespace var namespace
+    
+    private let contentSize = UIScreen.screenHeight / 2
+    private let tabItems = ["기본 정보", "버전 정보", "댓글"]
     
     var body: some View {
         
@@ -30,13 +35,17 @@ struct ReadShortcutView: View {
                 if let shortcut {
                     
                     // MARK: - 단축어 타이틀
+                    
                     ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
                         .frame(height: 160)
+                        .padding(.bottom, 16)
+                    
                     
                     // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
-                    ReadShortcutTabView(shortcut: self.$shortcut.unwrap()!, heigth: self.$height)
+                    
+                    detailInformationView
                         .padding(.horizontal, 16)
-                        .frame(minHeight: 300, maxHeight: .infinity)
+                        .padding(.top, 4)
                 }
             }
         }
@@ -189,8 +198,105 @@ extension ReadShortcutView {
     }
 }
 
-//struct ReadShortcutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadShortcutView()
-//    }
-//}
+
+// MARK: - 단축어 상세 정보 (기본 정보, 버전 정보, 댓글)
+
+extension ReadShortcutView {
+    
+    var detailInformationView: some View {
+        VStack {
+            tabBarView
+                .padding(.bottom, 20)
+            
+            ZStack {
+                switch(currentTab) {
+                case 0:
+                    ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
+                        .background(
+                            GeometryReader { geometryProxy in
+                                Color.clear
+                                    .preference(key: SizePreferenceKey.self,
+                                                value: geometryProxy.size)
+                            })
+                case 1:
+                    Text("1")
+                        .background(
+                            GeometryReader { geometryProxy in
+                                Color.clear
+                                    .preference(key: SizePreferenceKey.self, value:
+                                                    geometryProxy.size)
+                            })
+                case 2:
+                    Text("2")
+                        .background(
+                            GeometryReader { geometryProxy in
+                                Color.clear
+                                    .preference(key: SizePreferenceKey.self,
+                                                value: geometryProxy.size)
+                            })
+                default:
+                    EmptyView()
+                }
+                
+                TabView(selection: self.$currentTab) {
+                    Color.clear.tag(0)
+                    Color.clear.tag(1)
+                    Color.clear.tag(2)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(height: height)
+            }
+            .onPreferenceChange(SizePreferenceKey.self) { newSize in
+                height = contentSize > newSize.height ? contentSize : newSize.height
+            }
+        }
+    }
+    
+    
+    var tabBarView: some View {
+        HStack(spacing: 20) {
+            ForEach(Array(zip(self.tabItems.indices, self.tabItems)), id: \.0) { index, name in
+                tabBarItem(string: name, tab: index)
+            }
+        }
+        .background(Color.Background)
+        .frame(height: 36)
+    }
+    
+    private func tabBarItem(string: String, tab: Int) -> some View {
+        Button {
+            self.currentTab = tab
+        } label: {
+            VStack {
+                Spacer()
+                
+                if self.currentTab == tab {
+                    Text(string)
+                        .Headline()
+                        .foregroundColor(.Gray5)
+                    Color.Gray5
+                        .frame(height: 2)
+                        .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
+                    
+                } else {
+                    Text(string)
+                        .Body1()
+                        .foregroundColor(.Gray3)
+                    Color.clear.frame(height: 2)
+                }
+            }
+            .animation(.spring(), value: currentTab)
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+
+struct SizePreferenceKey: PreferenceKey {
+    typealias Value = CGSize
+    static var defaultValue: Value = .zero
+    
+    static func reduce(value _: inout Value, nextValue: () -> Value) {
+        _ = nextValue()
+    }
+}
