@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ReadShortcutContentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @State var userInformation: User? = nil
     
     @Binding var shortcut: Shortcuts
     let profileImage: String = "person.crop.circle"
@@ -17,16 +16,6 @@ struct ReadShortcutContentView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("작성자")
-                    .Body2()
-                    .foregroundColor(Color.Gray4)
-                HStack {
-                    Image(systemName: profileImage)
-                    Text(userInformation?.nickname ?? "닉네임")
-                        .Body2()
-                        .foregroundColor(Color.Gray5)
-                }
-                .padding(.bottom, 24)
                 
                 ReusableTextView(title: "단축어 설명", contents: shortcut.description, contentsArray: nil)
                     .padding(.bottom, 20)
@@ -44,11 +33,6 @@ struct ReadShortcutContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)
-        }
-        .onAppear {
-            shortcutsZipViewModel.fetchUser(userID: shortcut.author) { user in
-                userInformation = user
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay {
