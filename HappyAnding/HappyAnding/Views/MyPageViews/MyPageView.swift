@@ -91,13 +91,13 @@ struct MyPageView: View {
                             .Headline()
                             .foregroundColor(.Gray5)
                     }
+                    .navigationDestination(for: NavigationSettingView.self) { _ in
+                        SettingView()
+                    }
                 }
             }
             .scrollIndicators(.hidden)
             .background(Color.Background)
-            .navigationDestination(for: NavigationSettingView.self) { _ in
-                SettingView()
-            }
         }
         .environmentObject(navigation)
     }

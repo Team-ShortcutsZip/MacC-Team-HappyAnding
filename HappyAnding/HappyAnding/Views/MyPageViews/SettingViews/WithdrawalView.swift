@@ -64,9 +64,9 @@ struct WithdrawalView: View {
             .frame(maxWidth: .infinity)
             .padding(.bottom, 12)
             
-            Button(action: {
+            Button {
                 self.isTappedSignOutButton = true
-            }) {
+            } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(isTappedCheckToggle ? .Primary : .Gray1)

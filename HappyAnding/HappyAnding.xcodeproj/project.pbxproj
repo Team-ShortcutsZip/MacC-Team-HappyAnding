@@ -421,7 +421,6 @@
 				87E99CEB29080C30009B691F /* Curation.swift */,
 				87E99CED29080D33009B691F /* User.swift */,
 				F9131B6A2922D38D00868A0E /* Keyword.swift */,
-				8764C0D6291F85DF00E1593B /* NavigationListShortcutType.swift */,
 				8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */,
 			);
 			path = Model;
@@ -633,7 +632,7 @@
 				872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */,
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
-				8764C0D7291F85DF00E1593B /* NavigationListShortcutType.swift in Sources */,
+				8764C0D7291F85DF00E1593B /* NavigationStackModel.swift in Sources */,
 				8764C0D7291F85DF00E1593B /* NavigationStackModel.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,

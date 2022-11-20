@@ -39,6 +39,29 @@ struct NavigationListCurationType: Identifiable, Hashable {
     let navigationParentView: NavigationParentView
 }
 
+//struct NavigationPrivacyPolicy: Hashable, Equatable {
+//    var id = UUID().uuidString
+//}
+//struct NavigationLisence: Hashable, Equatable {
+//    var id = UUID().uuidString
+//}
+//struct NavigationWithdrawal: Hashable, Equatable {
+//    var id = UUID().uuidString
+//}
+
+//enum NavigationPrivacyPolicy: Hashable, Equatable {
+//    case first
+//}
+//
+//enum NavigationLisence: Hashable, Equatable {
+//    case first
+//}
+//
+//enum NavigationWithdrawal: Hashable, Equatable {
+//    case first
+//}
+
+
 enum NavigationParentView: Int {
     case shortcuts
     case curations
