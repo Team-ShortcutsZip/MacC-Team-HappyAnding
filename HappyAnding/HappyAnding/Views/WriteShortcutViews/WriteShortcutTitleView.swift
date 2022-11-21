@@ -13,7 +13,7 @@ struct WriteShortcutTitleView: View {
     
     @Binding var isWriting: Bool
     
-    @State private var clipboardText: String = ""
+    @State var clipboardText: String = ""
     @State var isShowingIconModal = false
     @State var isNameValid = false
     @State var isLinkValid = false
@@ -87,24 +87,33 @@ struct WriteShortcutTitleView: View {
             .onAppear(perform : UIApplication.shared.hideKeyboard)
             .padding(.top, 30)
             
-            ValidationCheckTextField(textType: .mandatory,
-                                     isMultipleLines: false,
-                                     title: "단축어 링크",
-                                     placeholder: "단축어 링크를 추가하세요",
-                                     lengthLimit: 100,
-                                     isDownloadLinkTextField: true   ,
-                                     content: $shortcut.downloadLink[0],
-                                     isValid: $isLinkValid
-            )
-            
-            Button(action: {
-                if UIPasteboard.general.hasStrings {
-                    clipboardText = UIPasteboard.general.string!
-                    shortcut.downloadLink = [clipboardText]
+            HStack(spacing: 0) {
+                ValidationCheckTextField(textType: .mandatory,
+                                         isMultipleLines: false,
+                                         title: "단축어 링크",
+                                         placeholder: "단축어 링크를 추가하세요",
+                                         lengthLimit: 100,
+                                         isDownloadLinkTextField: true   ,
+                                         content: $shortcut.downloadLink[0],
+                                         isValid: $isLinkValid
+                )
+                
+                if UIPasteboard.general.hasStrings && UIPasteboard.general.string!.hasPrefix("https://www.icloud.com/shortcuts/"){
+                    Button(action: {
+                        clipboardText = UIPasteboard.general.string!
+                        shortcut.downloadLink = [clipboardText]
+                    }, label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 12)
+                                .foregroundColor(.Primary)
+                                .frame(width: 80, height: 48)
+                            Text("붙여넣기")
+                                .foregroundColor(.Text_icon)
+                        }
+                    })
+                    .padding(.trailing, 16)
                 }
-            }, label: {
-                Text("붙여넣기")
-            })
+            }
             
             Spacer()
             
