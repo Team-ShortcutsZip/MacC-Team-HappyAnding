@@ -48,11 +48,11 @@ struct ShortcutTabView: View {
         if signInStatus {
             //            let _ = shorcutsZipViewModel.initUserInfo()
             TabView(selection: handler) {
-                NavigationStack(path: $shortcutNavigation.shortcutPath) {
+                NavigationStack(path: $shortcutNavigation.navigationPath) {
                     ExploreShortcutView()
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
-                            shortcutNavigation.shortcutPath.removeLast(shortcutNavigation.shortcutPath.count)
+                            shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
                             self.tappedTwice = false
                         })
                 }
