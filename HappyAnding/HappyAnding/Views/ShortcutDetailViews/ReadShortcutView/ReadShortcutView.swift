@@ -16,6 +16,7 @@ struct ReadShortcutView: View {
     @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
     
@@ -36,33 +37,33 @@ struct ReadShortcutView: View {
     private let tabItems = ["기본 정보", "버전 정보", "댓글"]
     
     var body: some View {
-        
         ScrollView {
-            VStack {
+            VStack(spacing: 0) {
                 if shortcut != nil {
                     
                     // MARK: - 단축어 타이틀
                     
                     ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
                         .frame(height: 160)
-                        .padding(.bottom, 16)
+                        .padding(.bottom, 33)
                         .padding(.top, 20)
+                        .background(.white)
                     
                     
                     // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
                     
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
                         Section(header: tabBarView
-                            .padding(.bottom, 20)) {
+                            .background(Color.white)
+                        ) {
                             detailInformationView
                                 .padding(.top, 4)
+                                .padding(.horizontal, 16)
                         }
                     }
-                    .padding(.horizontal, 16)
                 }
             }
         }
-        
         .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
@@ -322,8 +323,7 @@ extension ReadShortcutView {
                 tabBarItem(string: name, tab: index)
             }
         }
-//        .padding(.horizontal, 16)
-        .background(Color.Background)
+        .padding(.horizontal, 16)
         .frame(height: 36)
     }
     

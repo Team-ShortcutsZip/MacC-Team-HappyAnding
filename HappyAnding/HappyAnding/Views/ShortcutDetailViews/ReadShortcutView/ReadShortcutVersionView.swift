@@ -17,16 +17,14 @@ struct ReadShortcutVersionView: View {
                 .Body2()
                 .foregroundColor(.Gray4)
         } else {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 16) {
                 Text("업데이트 내용")
                     .Body2()
                     .foregroundColor(.Gray4)
-                    .padding(.bottom, 16)
                 ForEach(Array(zip(shortcut.updateDescription, shortcut.updateDescription.indices)), id: \.0) { data, index in
-                    //                if index != 0 {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
-                            Text("Ver \(index+1).0")
+                            Text("Ver \(shortcut.updateDescription.count - index).0")
                                 .Body2()
                                 .foregroundColor(.Gray5)
                             
@@ -36,28 +34,25 @@ struct ReadShortcutVersionView: View {
                                 .foregroundColor(.Gray3)
                         }
                         .onAppear {
-                            var date = shortcut.date[index]
-                            date = shortcut.date[index].substring(from: 0, to: 7)
-                            let index1 = date.index(date.startIndex, offsetBy: 4)
-                            let index2 = date.index(date.startIndex, offsetBy: 6)
-                            date.insert(".", at: index2)
-                            date.insert(".", at: index1)
-                            self.updateDate = date
+                            self.updateDate = shortcut.date[index].getVersionUpdateDateFormat()
                         }
-                        Text(data)
-                            .Body2()
-                            .foregroundColor(.Gray5)
-                        
-                        let link = "[이전 버전 다운로드](\(shortcut.downloadLink[index]))"
-                        Text(.init(link))
-                            .tint(.Primary)
-                        
+                        if data != "" {
+                            Text(data)
+                                .Body2()
+                                .foregroundColor(.Gray5)
+                        }
+                        if index != 0 {
+                            let link = "[이전 버전 다운로드](\(shortcut.downloadLink[index]))"
+                            Text(.init(link))
+                                .tint(.Primary)
+                        }
                         Divider()
+                            .foregroundColor(.Gray1)
                         
                     }
-                    Spacer()
-                        .frame(maxHeight: .infinity)
                 }
+                Spacer()
+                    .frame(maxHeight: .infinity)
             }
         }
     }
