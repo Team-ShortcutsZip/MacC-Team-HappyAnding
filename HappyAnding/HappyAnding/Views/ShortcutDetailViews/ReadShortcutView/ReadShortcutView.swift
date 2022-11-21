@@ -26,6 +26,7 @@ struct ReadShortcutView: View {
     @State var isEdit = false
     
     @State var data: NavigationReadShortcutType
+    @State var comment: Comment = Comment(user_id: "", date: "", depth: 0, contents: "")
     
     @State var height: CGFloat = UIScreen.screenHeight / 2
     @State var currentTab: Int = 0
@@ -64,7 +65,6 @@ struct ReadShortcutView: View {
                 }
             }
         }
-//        .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
             shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
@@ -159,10 +159,11 @@ struct ReadShortcutView: View {
                         for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: btnBack .padding(.horizontal, -8))
+        .navigationBarItems(leading: btnBack.padding(.horizontal, -8))
     }
     
-    var btnBack : some View { Button(action: {
+    var btnBack : some View {
+        Button(action: {
             self.presentationMode.wrappedValue.dismiss()
         }) {
             HStack {
@@ -170,17 +171,26 @@ struct ReadShortcutView: View {
                     .foregroundColor(.Gray4)
                     .font(Font(UIFont.systemFont(ofSize: 18, weight: .medium)))
             }
-            }
         }
+    }
     
     var textField: some View {
         HStack {
+            if comment.depth == 1 {
+                Image(systemName: "arrow.turn.down.right")
+                    .foregroundColor(.Gray4)
+            }
             TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
                 .Body2()
                 .focused($isFocused)
             
-            Image(systemName: "paperplane.fill")
-                .foregroundColor(.Gray5)
+            Button {
+                //TODO: 서버에 데이터 전송
+                print("click")
+            } label: {
+                Image(systemName: "paperplane.fill")
+                    .foregroundColor(.Gray5)
+            }
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
@@ -281,7 +291,7 @@ extension ReadShortcutView {
                                                         geometryProxy.size)
                                 })
                     case 2:
-                        ReadShortcutCommentView()
+                        ReadShortcutCommentView(addedComment: $comment)
                             .background(
                                 GeometryReader { geometryProxy in
                                     Color.clear
