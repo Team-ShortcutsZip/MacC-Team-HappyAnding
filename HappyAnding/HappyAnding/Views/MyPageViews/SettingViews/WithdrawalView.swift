@@ -79,12 +79,20 @@ struct WithdrawalView: View {
             }
             .disabled(!isTappedCheckToggle)
             .padding(.bottom, 44)
-            .alert(isPresented: $isTappedSignOutButton) {
-                Alert(title: Text("탈퇴하기"),
-                      message: Text("ShortcutsZip에서 탈퇴하시겠습니까?"),
-                      primaryButton: .default(Text("취소")
-                                              ,action: { self.isTappedSignOutButton = false }),
-                      secondaryButton: .destructive(Text("탈퇴"), action: { signOut() }))
+            .alert("탈퇴하기", isPresented: $isTappedSignOutButton) {
+                Button(role: .cancel) {
+                    
+                } label: {
+                    Text("닫기")
+                }
+                
+                Button(role: .destructive) {
+                    signOut()
+                } label: {
+                    Text("탈퇴")
+                }
+            } message: {
+                Text("ShortcutsZip에서 탈퇴하시겠습니까?")
             }
         }
         .padding(.horizontal, 16)
