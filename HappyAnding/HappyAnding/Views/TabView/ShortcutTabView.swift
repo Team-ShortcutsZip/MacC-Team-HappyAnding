@@ -16,7 +16,7 @@ struct ShortcutTabView: View {
     @StateObject var viewModel = ShortcutsZipViewModel()
     @State private var tabSelection = Tab.exploreShortcut.tag
     @State private var isOpenURL = false
-    @State private var test = ""
+    @State private var tempShortcutId = ""
     
     init() {
         let transparentAppearence = UITabBarAppearance()
@@ -33,7 +33,6 @@ struct ShortcutTabView: View {
     var body: some View {
         
         if signInStatus {
-//            let _ = shorcutsZipViewModel.initUserInfo()
             TabView(selection: $tabSelection) {
                 ForEach(Tab.allCases, id: \.self) { tab in
                     tab.view
@@ -44,34 +43,16 @@ struct ShortcutTabView: View {
             }
             .environmentObject(ShortcutsZipViewModel())
             .sheet(isPresented: self.$isOpenURL) {
-                //let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                //                                      navigationParentView: .myPage)
-                //ReadShortcutView
-                let data = NavigationReadShortcutType(shortcutID: self.test, navigationParentView: .myPage)
+                let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
+                                                      navigationParentView: .myPage)
                 ReadShortcutView(data: data)
             }
             .onOpenURL { url in
                 if let tab = url.tabIdentifier {
                     tabSelection = tab.tag
                 }
-                
-                let urlString = url.absoluteString
-                guard urlString.contains("shortcutID") else { return }
-                
-                let components = URLComponents(string: urlString)
-                let urlQueryItems = components?.queryItems ?? []
-                
-                var dictionaryData = [String: String]()
-                urlQueryItems.forEach {
-                    dictionaryData[$0.name] = $0.value
-                }
-                
-                guard let shortcutIDfromURL = dictionaryData["shortcutID"] else { return }
-                
-                print("shortcutIDfromURL = \(shortcutIDfromURL)")
-                
-                test = shortcutIDfromURL
-                isOpenURL = true
+                print(url)
+                fetchShortcutIdFromUrl(urlString: url.absoluteString)
             }
         } else {
             if userAuth.isLoggedIn {
@@ -80,6 +61,26 @@ struct ShortcutTabView: View {
                 SignInWithAppleView()
             }
         }
+    }
+    
+    private func fetchShortcutIdFromUrl(urlString: String) {
+        
+        guard urlString.contains("shortcutID") else { return }
+        
+        let components = URLComponents(string: urlString)
+        let urlQueryItems = components?.queryItems ?? []
+        
+        var dictionaryData = [String: String]()
+        urlQueryItems.forEach {
+            dictionaryData[$0.name] = $0.value
+        }
+        
+        guard let shortcutIDfromURL = dictionaryData["shortcutID"] else { return }
+        
+        print("shortcutIDfromURL = \(shortcutIDfromURL)")
+        
+        tempShortcutId  = shortcutIDfromURL
+        isOpenURL = true
     }
 }
 
