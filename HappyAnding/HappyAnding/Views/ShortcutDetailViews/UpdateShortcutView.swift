@@ -22,9 +22,8 @@ struct UpdateShortcutView: View {
                 Button(action: {
                     isUpdating.toggle()
                 }, label: {
-                    Image(systemName: "chevron.backward")
-                        .Title2()
-                        .foregroundColor(.Gray4)
+                    Text("닫기")
+                        .foregroundColor(.Gray5)
                 })
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -81,5 +80,6 @@ struct UpdateShortcutView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
+        .background(Color.Background)
     }
 }
