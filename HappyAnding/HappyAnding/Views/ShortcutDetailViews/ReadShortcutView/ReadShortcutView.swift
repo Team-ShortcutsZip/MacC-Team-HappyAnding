@@ -281,6 +281,23 @@ extension ReadShortcutView {
                 .onPreferenceChange(SizePreferenceKey.self) { newSize in
                     height = contentSize > newSize.height ? contentSize : newSize.height
                 }
+                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
+                    .onEnded { value in
+                        let horizontalAmount = value.translation.width
+                        let verticalAmount = value.translation.height
+                        
+                        if abs(horizontalAmount) > abs(verticalAmount) {
+                            if horizontalAmount < 0 {
+                                if currentTab < 2 {
+                                    currentTab += 1
+                                }
+                            } else {
+                                if currentTab > 0 {
+                                    currentTab -= 1
+                                }
+                            }
+                        }
+                    })
             }
         }
     }
