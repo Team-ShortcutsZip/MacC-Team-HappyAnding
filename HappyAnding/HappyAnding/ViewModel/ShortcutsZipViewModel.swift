@@ -362,6 +362,8 @@ class ShortcutsZipViewModel: ObservableObject {
             db.collection("Curation").document((model as! Curation).id).setData((model as! Curation).dictionary)
         case _ as User:
             db.collection("User").document((model as! User).id).setData((model as! User).dictionary)
+        case _ as Comments:
+            db.collection("Comment").document((model as! Comments).id).setData((model as! Comments).dictionary)
         default:
             print("this is not a model.")
         }
@@ -468,6 +470,8 @@ class ShortcutsZipViewModel: ObservableObject {
             db.collection("Curation").document((model as! Curation).id).delete()
         case _ as User:
             db.collection("User").document((model as! User).id).delete()
+        case _ as Comments:
+            db.collection("Comment").document((model as! Comments).id).delete()
         default:
             print("this is not a model.")
         }
@@ -730,5 +734,28 @@ class ShortcutsZipViewModel: ObservableObject {
             return allComments[index]
         }
         return nil
+    }
+    
+    func updateComment(shortcutID: String, comment: Comment) {
+        if var comments = fetchComment(shortcutID: shortcutID) {
+            comments.comments.append(comment)
+            setData(model: comments)
+        }
+    }
+    
+    //대댓글 삭제 시 이용
+    func deleteComment(shortcutID: String, commentID: String) {
+        if var comments = fetchComment(shortcutID: shortcutID) {
+            comments.comments.removeAll(where: { $0.id == commentID })
+            setData(model: comments)
+        }
+    }
+    
+    //원댓글 삭제 시 이용
+    func deleteCommentByBundleID(shortcutID: String, bundleID: String) {
+        if var comments = fetchComment(shortcutID: shortcutID) {
+            comments.comments.removeAll(where: { $0.bundel_id == bundleID })
+            setData(model: comments)
+        }
     }
 }
