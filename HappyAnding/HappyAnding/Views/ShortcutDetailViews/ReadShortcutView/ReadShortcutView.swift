@@ -46,15 +46,15 @@ struct ReadShortcutView: View {
                     ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
                         .frame(height: 160)
                         .padding(.bottom, 33)
-                        .padding(.top, 20)
-                        .background(.white)
+                        .padding(.top, 40)
+                        .background(Color.White)
                     
                     
                     // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
                     
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
                         Section(header: tabBarView
-                            .background(Color.white)
+                            .background(Color.White)
                         ) {
                             detailInformationView
                                 .padding(.top, 4)
@@ -64,7 +64,7 @@ struct ReadShortcutView: View {
                 }
             }
         }
-        .padding(.vertical, 20)
+//        .padding(.vertical, 20)
         .background(Color.Background)
         .onAppear() {
             shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
@@ -72,6 +72,7 @@ struct ReadShortcutView: View {
                 print("hellohello \(self.$shortcut.unwrap()!)")
             }
         }
+        .onAppear(perform: {UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground() })
         .onChange(of: isEdit) { _ in
             if !isEdit {
                 shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
@@ -153,7 +154,24 @@ struct ReadShortcutView: View {
             .environmentObject(writeNavigation)
         }
         .toolbar(.hidden, for: .tabBar)
+        .toolbarBackground(
+                        Color.White,
+                        for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: btnBack .padding(.horizontal, -8))
     }
+    
+    var btnBack : some View { Button(action: {
+            self.presentationMode.wrappedValue.dismiss()
+        }) {
+            HStack {
+                Image(systemName: "chevron.backward") // set image here
+                    .foregroundColor(.Gray4)
+                    .font(Font(UIFont.systemFont(ofSize: 18, weight: .medium)))
+            }
+            }
+        }
     
     var textField: some View {
         HStack {

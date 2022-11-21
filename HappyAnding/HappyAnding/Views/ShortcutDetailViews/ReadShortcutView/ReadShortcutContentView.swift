@@ -18,6 +18,7 @@ struct ReadShortcutContentView: View {
                 
                 ReusableTextView(title: "단축어 설명", contents: shortcut.description, contentsArray: nil)
                     .padding(.bottom, 24)
+                    .padding(.top, 16)
                 
                 categoryView
                     .padding(.bottom, 24)
