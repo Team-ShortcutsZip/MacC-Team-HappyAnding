@@ -256,6 +256,34 @@ class ShortcutsZipViewModel: ObservableObject {
         return Array(shortcutCells)
     }
     
+    //MARK: 단축어 버전 업데이트하는 함수
+    
+    func updateShortcutVersion(shortcut: Shortcuts, updateDescription: String, updateLink: String) {
+        var data = shortcut
+        //서버 - 단축어 업데이트
+        data.downloadLink.insert(updateLink, at: 0)
+        data.updateDescription.insert(updateDescription, at: 0)
+        data.date.insert(Date().getDate(), at: 0)
+        
+        //카테고리별 단축어
+        shortcut.category.forEach { category in
+            if let index = shortcutsInCategory[Category(rawValue: category)!.index].firstIndex(where: { $0.id == shortcut.id}) {
+                shortcutsInCategory[Category(rawValue: category)!.index][index] = shortcut
+            }
+        }
+        setData(model: data)
+        
+        //서버 - 큐레이션 업데이트
+        let shortcutCell = ShortcutCellModel(
+            id: data.id,
+            sfSymbol: data.sfSymbol,
+            color: data.color,
+            title: data.title,
+            subtitle: data.subtitle,
+            downloadLink: data.downloadLink[0]
+        )
+        updateShortcutInCuration(shortcutCell: shortcutCell, curationIDs: data.curationIDs)
+    }
     
     //MARK: - 큐레이션
     
