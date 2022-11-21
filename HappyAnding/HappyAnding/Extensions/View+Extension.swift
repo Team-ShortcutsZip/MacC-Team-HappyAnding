@@ -17,4 +17,26 @@ extension View {
         )
         .onPreferenceChange(SizePreferenceKey.self, perform: onChange)
     }
+    
+    func swipeBack(perform action: @escaping () -> Void) -> some View {
+        gesture(
+            DragGesture()
+                .onEnded({ value in
+                    if value.translation.width > 50 {
+                        action()
+                    }
+                })
+        )
+    }
+    
+    func swipeForward(perform action: @escaping () -> Void) -> some View {
+        gesture(
+            DragGesture()
+                .onEnded({ value in
+                    if value.translation.width < 0 {
+                        action()
+                    }
+                })
+            )
+    }
 }
