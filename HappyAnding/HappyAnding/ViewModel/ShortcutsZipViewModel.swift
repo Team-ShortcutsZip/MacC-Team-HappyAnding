@@ -33,6 +33,7 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var userCurations: [Curation] = []
     @Published var adminCurations: [Curation] = []
     
+    @Published var allComments: [Comments] = []
     @Published var keywords: Keyword = Keyword(keyword: [String]())
     
     static let share = ShortcutsZipViewModel()
@@ -590,7 +591,7 @@ class ShortcutsZipViewModel: ObservableObject {
             }
     }
     
-    // MARK: - 검색 관련 함수
+// MARK: - 검색 관련 함수
         
         //MARK: 연관 앱으로 단축어 검색
         func searchShortcutByRequiredApp(word: String, completionHandler: @escaping ([Shortcuts]) -> ()) {
@@ -679,4 +680,55 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
         }
+    
+//MARK: - 댓글 관련 함수
+    
+    //MARK: 모든 댓글을 가져오는 함수
+    
+    func fetchCommentAll(shortcutID: String, completionHandler: @escaping ([Comments]) -> ()) {
+        var comments: [Comments] = []
+        var query: Query!
+        
+        query = db.collection("Comment")
+        
+        query.addSnapshotListener { snapshot, error in
+            guard let snapshot else {
+                print("Error fetching snapshots: \(error!)")
+                return
+            }
+            snapshot.documentChanges.forEach { diff in
+                let decoder = JSONDecoder()
+                
+                do {
+                    let data = diff.document.data()
+                    let jsonData = try JSONSerialization.data(withJSONObject: data)
+                    let comment = try decoder.decode(Comments.self, from: jsonData)
+                    
+                    if (diff.type == .added) {
+                        comments.insert(comment, at: 0)
+                    }
+                    if (diff.type == .modified) {
+                        if let index = self.allComments.firstIndex(where: { $0.id == shortcutID}) {
+                            self.allComments[index] = comment
+                        }
+                    }
+                    if (diff.type == .removed) {
+                        comments.removeAll(where: { $0.id == shortcutID})
+                    }
+                } catch let error {
+                    print("error: \(error)")
+                }
+            }
+            completionHandler(comments)
+        }
+    }
+    
+    //MARK: 단축어 ID에 해당하는 댓글 목록 불러오는 함수
+    
+    func fetchComment(shortcutID: String) -> Comments? {
+        if let index = allComments.firstIndex(where: {$0.id == shortcutID}) {
+            return allComments[index]
+        }
+        return nil
+    }
 }
