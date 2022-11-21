@@ -52,8 +52,8 @@ class CustomShareViewController: UIViewController {
     }
     
     private lazy var extShortcutsView: UIView = {
-        let extShortcutsView = UIHostingController(rootView: WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
-//        self.present(extShortcutsView, animated: true)
+        let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
+        self.present(extShortcutsView, animated: true)
 
 //        return extShortcutsView.view
         return UIView()

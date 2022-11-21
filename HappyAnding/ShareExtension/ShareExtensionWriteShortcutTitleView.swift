@@ -1,13 +1,13 @@
 //
-//  WriteShortcutTitleView.swift
-//  HappyAnding
+//  ShareExtensionWriteShortcutTitleView.swift
+//  ShareExtension
 //
-//  Created by 이지원 on 2022/10/19.
+//  Created by HanGyeongjun on 2022/11/22.
 //
 
 import SwiftUI
 
-struct WriteShortcutTitleView: View {
+struct ShareExtensionWriteShortcutTitleView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -75,7 +75,7 @@ struct WriteShortcutTitleView: View {
                               iconSymbol: $shortcut.sfSymbol)
             }
             
-            ValidationCheckTextField(textType: .mandatory,
+                ValidationCheckTextField(textType: .mandatory,
                                          isMultipleLines: false,
                                          title: "단축어 이름",
                                          placeholder: "단축어 이름을 입력하세요",
@@ -84,7 +84,6 @@ struct WriteShortcutTitleView: View {
                                          content: $shortcut.title,
                                          isValid: $isNameValid
                 )
-                .onAppear(perform : UIApplication.shared.hideKeyboard)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
@@ -127,7 +126,7 @@ struct WriteShortcutTitleView: View {
                 Button {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("취소")
+                    Text("닫기")
                         .foregroundColor(.Gray5)
                 }
             }
