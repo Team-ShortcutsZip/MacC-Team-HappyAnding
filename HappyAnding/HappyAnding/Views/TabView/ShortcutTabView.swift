@@ -15,6 +15,8 @@ struct ShortcutTabView: View {
     @AppStorage("signInStatus") var signInStatus = false
     @StateObject var viewModel = ShortcutsZipViewModel()
     @State private var tabSelection = Tab.exploreShortcut.tag
+    @State private var isOpenURL = false
+    @State private var test = ""
     
     init() {
         let transparentAppearence = UITabBarAppearance()
@@ -41,13 +43,35 @@ struct ShortcutTabView: View {
                 }
             }
             .environmentObject(ShortcutsZipViewModel())
+            .sheet(isPresented: self.$isOpenURL) {
+                //let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                //                                      navigationParentView: .myPage)
+                //ReadShortcutView
+                let data = NavigationReadShortcutType(shortcutID: self.test, navigationParentView: .myPage)
+                ReadShortcutView(data: data)
+            }
             .onOpenURL { url in
-                print(url.path)
-                print(url.query)
-                print(url.scheme)
                 if let tab = url.tabIdentifier {
                     tabSelection = tab.tag
                 }
+                
+                let urlString = url.absoluteString
+                guard urlString.contains("shortcutID") else { return }
+                
+                let components = URLComponents(string: urlString)
+                let urlQueryItems = components?.queryItems ?? []
+                
+                var dictionaryData = [String: String]()
+                urlQueryItems.forEach {
+                    dictionaryData[$0.name] = $0.value
+                }
+                
+                guard let shortcutIDfromURL = dictionaryData["shortcutID"] else { return }
+                
+                print("shortcutIDfromURL = \(shortcutIDfromURL)")
+                
+                test = shortcutIDfromURL
+                isOpenURL = true
             }
         } else {
             if userAuth.isLoggedIn {
