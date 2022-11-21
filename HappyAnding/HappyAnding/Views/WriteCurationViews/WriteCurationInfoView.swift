@@ -77,7 +77,7 @@ struct WriteCurationInfoView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isIncomplete ?.Gray1 : .Primary)
+                        .foregroundColor(isIncomplete ? .Primary .opacity(0.13) : .Primary)
                         .padding(.horizontal, 16)
                         .frame(height: 52)
                     Text("완료")
