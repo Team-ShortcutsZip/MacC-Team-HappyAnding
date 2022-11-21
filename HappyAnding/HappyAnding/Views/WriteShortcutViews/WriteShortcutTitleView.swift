@@ -13,6 +13,7 @@ struct WriteShortcutTitleView: View {
     
     @Binding var isWriting: Bool
     
+    @State private var clipboardText: String = ""
     @State var isShowingIconModal = false
     @State var isNameValid = false
     @State var isLinkValid = false
@@ -95,6 +96,15 @@ struct WriteShortcutTitleView: View {
                                      content: $shortcut.downloadLink[0],
                                      isValid: $isLinkValid
             )
+            
+            Button(action: {
+                if UIPasteboard.general.hasStrings {
+                    clipboardText = UIPasteboard.general.string!
+                    shortcut.downloadLink = [clipboardText]
+                }
+            }, label: {
+                Text("붙여넣기")
+            })
             
             Spacer()
             
