@@ -16,7 +16,7 @@ struct ReadShortcutHeaderView: View {
     @State var userInformation: User? = nil
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
                 
                 icon
@@ -25,13 +25,14 @@ struct ReadShortcutHeaderView: View {
                 
                 likeButton
             }
-            Text("\(shortcut.title)")
-                .Title1()
-                .foregroundColor(Color.Gray5)
-            Text("\(shortcut.subtitle)")
-                .Body1()
-                .foregroundColor(Color.Gray3)
-            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("\(shortcut.title)")
+                    .Title1()
+                    .foregroundColor(Color.Gray5)
+                Text("\(shortcut.subtitle)")
+                    .Body1()
+                    .foregroundColor(Color.Gray3)
+            }
             userInfo
         }
         .frame(maxWidth: .infinity, alignment: .leading)
