@@ -75,28 +75,26 @@ struct ReadShortcutView: View {
             Image(systemName: "ellipsis")
                 .foregroundColor(.Gray4)
         }))
-        .alert(isPresented: $isTappedDeleteButton) {
-            Alert(title: Text("글 삭제").foregroundColor(.Gray5),
-                  message: Text("글을 삭제하시겠습니까?").foregroundColor(.Gray5),
-                  primaryButton: .default(
-                    Text("닫기"),
-                    action: {
-                        self.isTappedDeleteButton.toggle()
-                    }),
-                  secondaryButton: .destructive(
-                    Text("삭제"),
-                    action: {
-                        if let shortcut {
-                            shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
-                            shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
-                            shortcutsZipViewModel.deleteData(model: shortcut)
-                            //FIXME: 뷰모델에서 실제 데이터를 삭제하도록 변경 필요
-                            shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
-                            self.presentation.wrappedValue.dismiss()
-                        }
-                    }
-                  )
-            )
+        .alert("글 삭제", isPresented: $isTappedDeleteButton) {
+            Button(role: .cancel) {
+                
+            } label: {
+                Text("닫기")
+            }
+            
+            Button(role: .destructive) {
+                if let shortcut {
+                    shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
+                    shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
+                    shortcutsZipViewModel.deleteData(model: shortcut)
+                    shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
+                    self.presentation.wrappedValue.dismiss()
+                }
+            } label: {
+                Text("삭제")
+            }
+        } message: {
+            Text("글을 삭제하시겠습니까?")
         }
         .fullScreenCover(isPresented: $isEdit) {
             NavigationStack(path: $writeNavigation.navigationPath) {
@@ -131,9 +129,9 @@ extension ReadShortcutView {
             
             Button(role: .destructive, action: {
                 isTappedDeleteButton.toggle()
-             }) {
-                 Label("삭제", systemImage: "trash.fill")
-             }
+            }) {
+                Label("삭제", systemImage: "trash.fill")
+            }
         }
         
     }
@@ -159,7 +157,9 @@ extension ReadShortcutView {
         if let shortcut {
             guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
             let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            guard let window = windowScene?.windows.first else { return }
+            window.rootViewController?.present(activityVC, animated: true, completion: nil)
         }
     }
 }
