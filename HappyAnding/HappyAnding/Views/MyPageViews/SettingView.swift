@@ -16,7 +16,7 @@ struct SettingView: View {
     @StateObject var userAuth = UserAuth.shared
     @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-
+    
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
     @State var isTappedLogOutButton = false
@@ -26,7 +26,7 @@ struct SettingView: View {
     enum NavigationLisence: Hashable, Equatable {
         case first
     }
-
+    
     enum NavigationWithdrawal: Hashable, Equatable {
         case first
     }
@@ -97,8 +97,17 @@ struct SettingView: View {
                 SettingCell(title: "로그아웃")
             }
             .alert("로그아웃", isPresented: $isTappedLogOutButton) {
-                Button("닫기", role: .cancel) { isTappedLogOutButton.toggle() }
-                Button("로그아웃", role: .destructive) { logOut() }
+                Button(role: .cancel) {
+                    
+                } label: {
+                    Text("닫기")
+                }
+                
+                Button(role: .destructive) {
+                    logOut()
+                } label: {
+                    Text("로그아웃")
+                }
             } message: {
                 Text("로그아웃 하시겠습니까?")
             }
