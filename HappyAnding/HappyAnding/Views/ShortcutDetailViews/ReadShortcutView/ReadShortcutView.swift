@@ -17,6 +17,7 @@ struct ReadShortcutView: View {
     @State var isTappedDeleteButton = false
     @State var shortcut: Shortcuts?
     @State var isEdit = false
+    @State var isUpdating = false
     
     @State var data: NavigationReadShortcutType
     
@@ -108,6 +109,9 @@ struct ReadShortcutView: View {
             }
             .environmentObject(writeNavigation)
         }
+        .fullScreenCover(isPresented: $isUpdating) {
+            UpdateShortcutView(isUpdating: $isUpdating, shortcut: $shortcut)
+        }
     }
 }
 
@@ -121,6 +125,12 @@ extension ReadShortcutView {
                 isEdit.toggle()
             } label: {
                 Label("편집", systemImage: "square.and.pencil")
+            }
+            
+            Button {
+                isUpdating.toggle()
+            } label: {
+                Label("업데이트", systemImage: "clock.arrow.circlepath")
             }
             
             Button(action: {
