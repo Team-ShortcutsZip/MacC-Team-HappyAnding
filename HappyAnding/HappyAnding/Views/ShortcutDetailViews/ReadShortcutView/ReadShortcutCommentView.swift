@@ -24,6 +24,7 @@ struct ReadShortcutCommentView: View {
                 Spacer()
             }
         }
+        .padding(.top, 16)
         .onAppear {
             //TODO: 댓글 데이터 불러오기
             for _ in 0...10 {

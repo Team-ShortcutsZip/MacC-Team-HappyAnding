@@ -54,6 +54,7 @@ struct ReadShortcutVersionView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
+            .padding(.top, 16)
         }
     }
 }
