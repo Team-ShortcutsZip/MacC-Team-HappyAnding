@@ -36,6 +36,8 @@ struct WriteNicknameView: View {
     @State private var isTappedPrivacyButton = false
     @State var isNormalString = true
     
+    @FocusState private var isFocused: Bool
+    
     let user = Auth.auth().currentUser
     
     var body: some View {
@@ -103,17 +105,18 @@ struct WriteNicknameView: View {
             HStack {
                 TextField("닉네임 (최대 8글자)", text: $nickname)
                     .Body2()
+                    .focused($isFocused)
                     .foregroundColor(.Gray5)
                     .frame(height: 20)
                     .padding(.leading, 16)
                     .padding(.vertical, 12)
+                    .onAppear(perform : UIApplication.shared.hideKeyboard)
                     .onChange(of: nickname) {_ in
                         isValidLength = nickname.count <= 8 && !nickname.isEmpty
                         isNicknameChecked = false
                         //isNormalString = nickname.isNormalString()
                         isNormalString = nickname.checkCorrectNickname()
                     }
-                
                 if !nickname.isEmpty {
                     textFieldSFSymbol
                 }
@@ -121,7 +124,7 @@ struct WriteNicknameView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .strokeBorder(lineWidth: 1)
-                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
+                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength && isNormalString ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
             )
         }
     }
@@ -164,6 +167,8 @@ struct WriteNicknameView: View {
                 isDuplicatedNickname = result
                 isNicknameChecked = !result
             }
+            
+            isFocused = false
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
