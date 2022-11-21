@@ -257,8 +257,8 @@ extension ReadShortcutView {
     
     func share() {
         if let shortcut {
-            guard let downloadLink = URL(string: shortcut.downloadLink.last!) else { return }
-            let activityVC = UIActivityViewController(activityItems: [downloadLink], applicationActivities: nil)
+            guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
+            let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             guard let window = windowScene?.windows.first else { return }
             window.rootViewController?.present(activityVC, animated: true, completion: nil)
