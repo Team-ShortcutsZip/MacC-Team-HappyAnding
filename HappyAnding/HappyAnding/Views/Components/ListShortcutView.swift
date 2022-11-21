@@ -36,7 +36,7 @@ struct ListShortcutView: View {
                                                                         navigationParentView: self.data.navigationParentView)
                         
                         NavigationLink(value: navigationData) {
-                            if data.sectionType == .download {
+                            if data.sectionType == .download && index < 100 {
                                 ShortcutCell(shortcut: shortcut,
                                              rankNumber: index + 1,
                                              navigationParentView: data.navigationParentView)

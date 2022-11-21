@@ -93,6 +93,7 @@
 		F9A3FA8C292BA48100F5791D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9A3FA8B292BA48100F5791D /* GoogleService-Info.plist */; };
 		F9CAEF832914855900224B0A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+Extension.swift */; };
 		F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */; };
+		F9DEBAA7292AF70C004547BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9DEBAA6292AF70C004547BD /* GoogleService-Info.plist */; };
 		F9F4D36A2906E0B000DC8546 /* Navigationbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -201,6 +202,7 @@
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		F9A3FA8B292BA48100F5791D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../plist69/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9CAEF822914855900224B0A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		F9DEBAA6292AF70C004547BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../plist69/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigationbar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				A0DD0874292B53A6008177BB /* GoogleService-Info.plist */,
+				F9DEBAA6292AF70C004547BD /* GoogleService-Info.plist */,
 				87E99C6C28F94EA6009B691F /* HappyAnding */,
 				87E99C7D28F94EA8009B691F /* HappyAndingTests */,
 				87E99C8728F94EA8009B691F /* HappyAndingUITests */,
@@ -609,6 +612,7 @@
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
 				A3FF018A2918F8EF00384211 /* apache.txt in Resources */,
 				A0DD0875292B53A6008177BB /* GoogleService-Info.plist in Resources */,
+				F9DEBAA7292AF70C004547BD /* GoogleService-Info.plist in Resources */,
 				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
 				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 			);
