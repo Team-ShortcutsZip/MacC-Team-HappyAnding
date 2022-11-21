@@ -59,8 +59,8 @@ struct ShortcutTabView: View {
                 if let tab = url.tabIdentifier {
                     tabSelection = tab.tag
                 }
-                print(url)
                 fetchShortcutIdFromUrl(urlString: url.absoluteString)
+                isOpenURL = true
             }
         } else {
             if userAuth.isLoggedIn {
@@ -88,7 +88,6 @@ struct ShortcutTabView: View {
         print("shortcutIDfromURL = \(shortcutIDfromURL)")
         
         tempShortcutId  = shortcutIDfromURL
-        isOpenURL = true
     }
 }
 
