@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ReadShortcutCommentView: View {
+    @Binding var addedComment: Comment
     @State var comments = [Comment]()
     @State var isReply = true
     
@@ -24,6 +25,7 @@ struct ReadShortcutCommentView: View {
             }
         }
         .onAppear {
+            //TODO: 댓글 데이터 불러오기
             for _ in 0...10 {
                 let comment = Comment(user_id: "1", date: "2022112211",
                                       depth: Int.random(in: 0...1),
@@ -69,6 +71,8 @@ struct ReadShortcutCommentView: View {
                     HStack(spacing: 16) {
                         Button {
                             print("답글")
+                            addedComment.bundel_id = comment.bundel_id
+                            addedComment.depth = 1
                         } label: {
                             Text("답글")
                                 .Footnote()
