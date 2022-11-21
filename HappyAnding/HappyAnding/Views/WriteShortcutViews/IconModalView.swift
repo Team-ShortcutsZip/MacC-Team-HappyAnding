@@ -113,7 +113,7 @@ struct IconModalView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Primary : .Gray1 )
+                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Primary : .Primary .opacity(0.13) )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")

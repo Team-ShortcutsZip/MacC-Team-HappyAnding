@@ -146,7 +146,7 @@ struct WriteShortcutTagView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Primary : .Gray1 )
+                        .foregroundColor(!shortcut.category.isEmpty && isRequirementValid ? .Primary : .Primary .opacity(0.13) )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
