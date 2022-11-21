@@ -175,10 +175,14 @@ struct WriteNicknameView: View {
         })
         .disabled(!isValidLength || !isNormalString)
         ///alert 띄우는 코드
-        .alert(isPresented: $checkNicknameDuplicate){
-            Alert(title: Text("닉네임 중복 확인"),
-                  message: Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다"),
-                  dismissButton: .default(Text(isDuplicatedNickname ? "다시 입력하기" : "확인")))
+        .alert("닉네임 중복 확인", isPresented: $checkNicknameDuplicate) {
+            Button(role: .cancel) {
+                
+            } label: {
+                Text(isDuplicatedNickname ? "다시 입력하기" : "확인")
+            }
+        } message: {
+            Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다")
         }
     }
     
