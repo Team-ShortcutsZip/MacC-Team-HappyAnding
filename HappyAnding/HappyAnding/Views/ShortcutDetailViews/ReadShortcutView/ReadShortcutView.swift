@@ -34,20 +34,26 @@ struct ReadShortcutView: View {
         
         ScrollView {
             VStack {
-                if let shortcut {
+                if shortcut != nil {
                     
                     // MARK: - 단축어 타이틀
                     
                     ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
                         .frame(height: 160)
                         .padding(.bottom, 16)
+                        .padding(.top, 20)
                     
                     
                     // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
                     
-                    detailInformationView
-                        .padding(.horizontal, 16)
-                        .padding(.top, 4)
+                    LazyVStack(pinnedViews: [.sectionHeaders]) {
+                        Section(header: tabBarView
+                            .padding(.bottom, 20)) {
+                            detailInformationView
+                                .padding(.horizontal, 16)
+                                .padding(.top, 4)
+                        }
+                    }
                 }
             }
         }
@@ -232,11 +238,7 @@ extension ReadShortcutView {
     
     var detailInformationView: some View {
         VStack {
-            tabBarView
-                .padding(.bottom, 20)
-            
             if let shortcut {
-                
                 ZStack {
                     TabView(selection: self.$currentTab) {
                         Color.clear.tag(0)
