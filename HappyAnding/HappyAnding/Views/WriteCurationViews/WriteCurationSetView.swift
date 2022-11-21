@@ -78,7 +78,7 @@ struct WriteCurationSetView: View {
                 Button {
                     self.isWriting.toggle()
                 } label: {
-                    Text("닫기")
+                    Text("취소")
                         .foregroundColor(.Gray5)
                 }
             }

@@ -22,7 +22,7 @@ struct UpdateShortcutView: View {
                 Button(action: {
                     isUpdating.toggle()
                 }, label: {
-                    Text("닫기")
+                    Text("취소")
                         .foregroundColor(.Gray5)
                 })
                 .frame(maxWidth: .infinity, alignment: .leading)
