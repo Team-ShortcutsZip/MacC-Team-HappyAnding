@@ -17,19 +17,25 @@ struct ExploreShortcutView: View {
     
     var body: some View {
         ScrollView {
-            MyShortcutCardListView(shortcuts: shortcutsZipViewModel.shortcutsMadeByUser,
-                                   navigationParentView: .shortcuts)
+            DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
+                             navigationParentView: .shortcuts)
             .padding(.top, 20)
             .padding(.bottom, 32)
             
-            DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
+            CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[Category.lifestyle.index],
+                             categoryName: Category.lifestyle,
+                             navigationParentView: .shortcuts)
+            .padding(.bottom, 32)
+            
+            LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
+                .padding(.bottom, 32)
+            
+            CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[Category.utility.index],
+                             categoryName: Category.utility,
                              navigationParentView: .shortcuts)
             .padding(.bottom, 32)
             
             CategoryView()
-                .padding(.bottom, 32)
-            
-            LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
                 .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)

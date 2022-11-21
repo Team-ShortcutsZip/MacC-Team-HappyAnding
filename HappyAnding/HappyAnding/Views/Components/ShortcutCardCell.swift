@@ -8,31 +8,30 @@
 import SwiftUI
 
 struct ShortcutCardCell: View {
+    let categoryShortcutIcon: String
+    let categoryShortcutName: String
+    let categoryShortcutColor: String
+        
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .frame(width: 168, height: 104)
-                .foregroundColor(Color.orange)  //단축어 색깔
-            VStack(alignment: .leading) {
-                Image(systemName: "alarm.fill")  //단축어 아이콘
-                    .foregroundColor(.Text_icon)
-                HStack {
-                    Text("최근에 찍은 사진 업로드")  //단축어 제목
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(2)
-                        .Headline()
-                        .foregroundColor(.Text_icon)
-                    Spacer()
-                }
-            }
-            .frame(width: 144)
+        VStack(alignment: .leading, spacing: 4) {
+            Image(systemName: categoryShortcutIcon)
+                .foregroundColor(Color.Text_icon)
+            Text(categoryShortcutName)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2)
+                .Headline()
+                .foregroundColor(Color.Text_icon)
+            Spacer()
         }
-        .padding(.trailing, 12)
+        .padding(12)
+        .frame(width: 168, height: 104, alignment: .leading)
+        .background(Color.fetchGradient(color: categoryShortcutColor))
+        .cornerRadius(12)
     }
 }
 
 struct ShortcutCardCell_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutCardCell()
+        ShortcutCardCell(categoryShortcutIcon: "alarm.fill", categoryShortcutName: "클립보드의 마크다운 메모로 변환", categoryShortcutColor: "Coral")
     }
 }
