@@ -21,7 +21,7 @@ extension URL {
         
         // shortcutsZip://host
         switch host {
-        case "collect ": return .collect
+        case "collect": return .collect
         case "exploreShortcut": return .exploreShortcut
         case "myPage": return .myPage
         default: return nil

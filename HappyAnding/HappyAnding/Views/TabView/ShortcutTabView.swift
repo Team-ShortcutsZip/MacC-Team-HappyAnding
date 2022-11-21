@@ -14,6 +14,7 @@ struct ShortcutTabView: View {
     @EnvironmentObject var shorcutsZipViewModel: ShortcutsZipViewModel
     @AppStorage("signInStatus") var signInStatus = false
     @StateObject var viewModel = ShortcutsZipViewModel()
+    @State private var tabSelection = Tab.exploreShortcut.tag
     
     init() {
         let transparentAppearence = UITabBarAppearance()
@@ -31,15 +32,23 @@ struct ShortcutTabView: View {
         
         if signInStatus {
 //            let _ = shorcutsZipViewModel.initUserInfo()
-            TabView {
+            TabView(selection: $tabSelection) {
                 ForEach(Tab.allCases, id: \.self) { tab in
                     tab.view
                         .tabItem {
                             Label(tab.tabName, systemImage: tab.systemImage)
-                        }
+                        }.tag(tab.tag)
                 }
             }
             .environmentObject(ShortcutsZipViewModel())
+            .onOpenURL { url in
+                print(url.path)
+                print(url.query)
+                print(url.scheme)
+                if let tab = url.tabIdentifier {
+                    tabSelection = tab.tag
+                }
+            }
         } else {
             if userAuth.isLoggedIn {
                 WriteNicknameView()

@@ -28,6 +28,14 @@ enum Tab: CaseIterable, Hashable {
         }
     }
     
+    var tag: Int {
+        switch self {
+        case .exploreShortcut: return 0
+        case .collect: return 1
+        case .myPage: return 2
+        }
+    }
+    
     @ViewBuilder
     var view: some View {
         switch self {
