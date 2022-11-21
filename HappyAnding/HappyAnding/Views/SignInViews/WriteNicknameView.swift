@@ -36,6 +36,8 @@ struct WriteNicknameView: View {
     @State private var isTappedPrivacyButton = false
     @State var isNormalString = true
     
+    @FocusState private var isFocused: Bool
+    
     let user = Auth.auth().currentUser
     
     var body: some View {
@@ -103,17 +105,18 @@ struct WriteNicknameView: View {
             HStack {
                 TextField("닉네임 (최대 8글자)", text: $nickname)
                     .Body2()
+                    .focused($isFocused)
                     .foregroundColor(.Gray5)
                     .frame(height: 20)
                     .padding(.leading, 16)
                     .padding(.vertical, 12)
+                    .onAppear(perform : UIApplication.shared.hideKeyboard)
                     .onChange(of: nickname) {_ in
                         isValidLength = nickname.count <= 8 && !nickname.isEmpty
                         isNicknameChecked = false
                         //isNormalString = nickname.isNormalString()
                         isNormalString = nickname.checkCorrectNickname()
                     }
-                
                 if !nickname.isEmpty {
                     textFieldSFSymbol
                 }
@@ -121,7 +124,7 @@ struct WriteNicknameView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .strokeBorder(lineWidth: 1)
-                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
+                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength && isNormalString ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
             )
         }
     }
@@ -164,6 +167,8 @@ struct WriteNicknameView: View {
                 isDuplicatedNickname = result
                 isNicknameChecked = !result
             }
+            
+            isFocused = false
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
@@ -175,10 +180,14 @@ struct WriteNicknameView: View {
         })
         .disabled(!isValidLength || !isNormalString)
         ///alert 띄우는 코드
-        .alert(isPresented: $checkNicknameDuplicate){
-            Alert(title: Text("닉네임 중복 확인"),
-                  message: Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다"),
-                  dismissButton: .default(Text(isDuplicatedNickname ? "다시 입력하기" : "확인")))
+        .alert("닉네임 중복 확인", isPresented: $checkNicknameDuplicate) {
+            Button(role: .cancel) {
+                
+            } label: {
+                Text(isDuplicatedNickname ? "다시 입력하기" : "확인")
+            }
+        } message: {
+            Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다")
         }
     }
     
