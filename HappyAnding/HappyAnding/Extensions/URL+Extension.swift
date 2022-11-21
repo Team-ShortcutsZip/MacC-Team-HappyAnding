@@ -16,7 +16,7 @@ extension URL {
     
     // url 들어오는 것으로 어떤 타입의 탭을 보여줘야 하는지 가져오기
     // TabIdentifier 필요
-    var tabIdentifier: Tab? {
+  /*  var tabIdentifier: Tab? {
         guard isDeeplink else { return nil }
         
         // shortcutsZip://host
@@ -27,7 +27,7 @@ extension URL {
         default: return nil
         }
     }
-    
+    */
     // pageIdentifier 필요할 듯?
   //  var detailPage:
 }

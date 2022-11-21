@@ -16,7 +16,6 @@ struct ShortcutTabView: View {
     @EnvironmentObject var shorcutsZipViewModel: ShortcutsZipViewModel
     @AppStorage("signInStatus") var signInStatus = false
     @StateObject var viewModel = ShortcutsZipViewModel()
-    @State private var tabSelection = Tab.exploreShortcut.tag
     @State private var isOpenURL = false
     @State private var tempShortcutId = ""
     
@@ -107,9 +106,6 @@ struct ShortcutTabView: View {
                 }
             }
             .onOpenURL { url in
-                if let tab = url.tabIdentifier {
-                    tabSelection = tab.tag
-                }
                 fetchShortcutIdFromUrl(urlString: url.absoluteString)
                 isOpenURL = true
             }
