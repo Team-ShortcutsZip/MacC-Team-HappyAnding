@@ -15,6 +15,12 @@ struct ShortcutTabView: View {
     @AppStorage("signInStatus") var signInStatus = false
     @StateObject var viewModel = ShortcutsZipViewModel()
     
+    @StateObject var shortcutNavigation = ShortcutNavigation()
+    @StateObject var curationNavigation = CurationNavigation()
+    @StateObject var profileNavigation = ProfileNavigation()
+    @State private var tabSelection = 1
+    @State private var tappedTwice = false
+    
     init() {
         let transparentAppearence = UITabBarAppearance()
         transparentAppearence.configureWithTransparentBackground()
@@ -27,17 +33,62 @@ struct ShortcutTabView: View {
         Theme.navigationBarColors()
     }
     
+    var handler: Binding<Int> { Binding(
+        get: { self.tabSelection },
+        set: {
+            if $0 == self.tabSelection {
+                tappedTwice = true
+            }
+            self.tabSelection = $0
+        }
+    )}
+    
     var body: some View {
         
         if signInStatus {
-//            let _ = shorcutsZipViewModel.initUserInfo()
-            TabView {
-                ForEach(Tab.allCases, id: \.self) { tab in
-                    tab.view
-                        .tabItem {
-                            Label(tab.tabName, systemImage: tab.systemImage)
-                        }
+            //            let _ = shorcutsZipViewModel.initUserInfo()
+            TabView(selection: handler) {
+                NavigationStack(path: $shortcutNavigation.shortcutPath) {
+                    ExploreShortcutView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            shortcutNavigation.shortcutPath.removeLast(shortcutNavigation.shortcutPath.count)
+                            self.tappedTwice = false
+                        })
                 }
+                .environmentObject(shortcutNavigation)
+                .tabItem {
+                    Label("단축어", systemImage: "square.stack.3d.up.fill")
+                }
+                .tag(1)
+                
+                NavigationStack(path: $curationNavigation.navigationPath) {
+                    ExploreCurationView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
+                            self.tappedTwice = false
+                        })
+                }
+                .environmentObject(curationNavigation)
+                .tabItem {
+                    Label("큐레이션", systemImage: "folder.fill")
+                }
+                .tag(2)
+                
+                NavigationStack(path: $profileNavigation.navigationPath) {
+                    MyPageView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
+                            self.tappedTwice = false
+                        })
+                }
+                .environmentObject(profileNavigation)
+                .tabItem {
+                    Label("프로필", systemImage: "person.crop.circle.fill")
+                }
+                .tag(3)
             }
             .environmentObject(ShortcutsZipViewModel())
         } else {

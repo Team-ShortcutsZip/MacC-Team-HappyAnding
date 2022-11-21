@@ -10,14 +10,12 @@ import SwiftUI
 struct MyPageView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @StateObject var navigation = ProfileNavigation()
     
     enum NavigationSettingView: Hashable, Equatable {
         case first
     }
     
     var body: some View {
-        NavigationStack(path: $navigation.navigationPath) {
             ScrollView {
                 VStack(spacing: 32) {
                     
@@ -91,15 +89,13 @@ struct MyPageView: View {
                             .Headline()
                             .foregroundColor(.Gray5)
                     }
-                    .navigationDestination(for: NavigationSettingView.self) { _ in
-                        SettingView()
-                    }
                 }
             }
             .scrollIndicators(.hidden)
             .background(Color.Background)
-        }
-        .environmentObject(navigation)
+            .navigationDestination(for: NavigationSettingView.self) { _ in
+                SettingView()
+            }
     }
 }
 
@@ -107,6 +103,7 @@ struct MyPageShortcutList: View {
     
     var shortcuts: [Shortcuts]?
     var type: SectionType
+    
     var body: some View {
         VStack(spacing: 0) {
             MyPageListHeader(type: type, shortcuts: shortcuts)
