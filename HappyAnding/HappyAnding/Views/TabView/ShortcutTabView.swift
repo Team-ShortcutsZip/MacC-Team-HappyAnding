@@ -20,6 +20,12 @@ struct ShortcutTabView: View {
     @State private var isOpenURL = false
     @State private var tempShortcutId = ""
     
+    @StateObject var shortcutNavigation = ShortcutNavigation()
+    @StateObject var curationNavigation = CurationNavigation()
+    @StateObject var profileNavigation = ProfileNavigation()
+    @State private var tabSelection = 1
+    @State private var tappedTwice = false
+    
     init() {
         let transparentAppearence = UITabBarAppearance()
         transparentAppearence.configureWithTransparentBackground()
@@ -32,16 +38,61 @@ struct ShortcutTabView: View {
         Theme.navigationBarColors()
     }
     
+    var handler: Binding<Int> { Binding(
+        get: { self.tabSelection },
+        set: {
+            if $0 == self.tabSelection {
+                tappedTwice = true
+            }
+            self.tabSelection = $0
+        }
+    )}
+    
     var body: some View {
         
         if signInStatus {
-            TabView(selection: $tabSelection) {
-                ForEach(Tab.allCases, id: \.self) { tab in
-                    tab.view
-                        .tabItem {
-                            Label(tab.tabName, systemImage: tab.systemImage)
-                        }.tag(tab.tag)
+            TabView(selection: handler) {
+                NavigationStack(path: $shortcutNavigation.navigationPath) {
+                    ExploreShortcutView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
+                            self.tappedTwice = false
+                        })
                 }
+                .environmentObject(shortcutNavigation)
+                .tabItem {
+                    Label("단축어", systemImage: "square.stack.3d.up.fill")
+                }
+                .tag(1)
+                
+                NavigationStack(path: $curationNavigation.navigationPath) {
+                    ExploreCurationView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
+                            self.tappedTwice = false
+                        })
+                }
+                .environmentObject(curationNavigation)
+                .tabItem {
+                    Label("큐레이션", systemImage: "folder.fill")
+                }
+                .tag(2)
+                
+                NavigationStack(path: $profileNavigation.navigationPath) {
+                    MyPageView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
+                            self.tappedTwice = false
+                        })
+                }
+                .environmentObject(profileNavigation)
+                .tabItem {
+                    Label("프로필", systemImage: "person.crop.circle.fill")
+                }
+                .tag(3)
             }
             .environmentObject(ShortcutsZipViewModel())
             .sheet(isPresented: self.$isOpenURL) {

@@ -8,10 +8,10 @@
 import SwiftUI
 
 class ShortcutNavigation: ObservableObject {
-    @Published var shortcutPath: NavigationPath
+    @Published var navigationPath: NavigationPath
     
     init() {
-        self.shortcutPath = NavigationPath()
+        self.navigationPath = NavigationPath()
     }
 }
 

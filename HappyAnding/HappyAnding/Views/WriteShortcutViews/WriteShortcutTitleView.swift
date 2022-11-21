@@ -127,7 +127,7 @@ struct WriteShortcutTitleView: View {
                 Button {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("닫기")
+                    Text("취소")
                         .foregroundColor(.Gray5)
                 }
             }

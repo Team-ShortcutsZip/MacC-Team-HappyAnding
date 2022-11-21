@@ -9,55 +9,32 @@ import SwiftUI
 
 struct ReadShortcutContentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @State var userInformation: User? = nil
     
     @Binding var shortcut: Shortcuts
     let profileImage: String = "person.crop.circle"
     
     var body: some View {
-        ScrollView {
             VStack(alignment: .leading) {
-                Text("작성자")
-                    .Body2()
-                    .foregroundColor(Color.Gray4)
-                HStack {
-                    Image(systemName: profileImage)
-                    Text(userInformation?.nickname ?? "닉네임")
-                        .Body2()
-                        .foregroundColor(Color.Gray5)
-                }
-                .padding(.bottom, 24)
                 
                 ReusableTextView(title: "단축어 설명", contents: shortcut.description, contentsArray: nil)
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 24)
+                    .padding(.top, 16)
+                
                 categoryView
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 24)
                 
                 if !shortcut.requiredApp.isEmpty {
                     ReusableTextView(title: "단축어 사용에 필요한 앱", contents: nil, contentsArray: shortcut.requiredApp)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 24)
                 }
                 
                 if !shortcut.shortcutRequirements.isEmpty {
                     ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: shortcut.shortcutRequirements, contentsArray: nil)
                 }
+                Spacer()
+                    .frame(maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(20)
-        }
-        .onAppear {
-            shortcutsZipViewModel.fetchUser(userID: shortcut.author) { user in
-                userInformation = user
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay {
-            RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.Gray2,lineWidth: 1)
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 20)
-        .scrollIndicators(.hidden)
     }
     
     var categoryView: some View {
@@ -113,6 +90,8 @@ private struct ReusableTextView: View {
     let contents: String?
     let contentsArray: [String]?
     
+    @State var heigth: CGFloat = 10000
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
@@ -122,6 +101,7 @@ private struct ReusableTextView: View {
                 Text(contents)
                     .Body2()
                     .foregroundColor(Color.Gray5)
+                    .lineLimit(nil)
             }
             if let contentsArray {
                 ForEach(contentsArray, id: \.self) {
@@ -129,9 +109,20 @@ private struct ReusableTextView: View {
                     Text(content)
                         .Body2()
                         .foregroundColor(Color.Gray5)
+                        .lineLimit(nil)
                 }
             }
         }
+        .background(
+            GeometryReader { geometryProxy in
+                Color.clear
+                    .preference(key: SizePreferenceKey.self,
+                                value: geometryProxy.size)
+            })
+        .onPreferenceChange(SizePreferenceKey.self) { newSize in
+            self.heigth = newSize.height
+        }
+        .frame(height: self.heigth)
     }
 }
 
