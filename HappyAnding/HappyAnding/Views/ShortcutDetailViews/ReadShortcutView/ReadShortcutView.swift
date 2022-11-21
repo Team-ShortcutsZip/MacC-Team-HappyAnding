@@ -10,6 +10,12 @@ import SwiftUI
 struct ReadShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var shortcutNavigation: ShortcutNavigation
+    @EnvironmentObject var curationNavigation: CurationNavigation
+    @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
+    @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
+    @EnvironmentObject var profileNavigation: ProfileNavigation
+    
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
     
@@ -49,10 +55,10 @@ struct ReadShortcutView: View {
                         Section(header: tabBarView
                             .padding(.bottom, 20)) {
                             detailInformationView
-                                .padding(.horizontal, 16)
                                 .padding(.top, 4)
                         }
                     }
+                    .padding(.horizontal, 16)
                 }
             }
         }
@@ -266,8 +272,9 @@ extension ReadShortcutView {
                     default:
                         EmptyView()
                     }
-                    
                 }
+                
+                .animation(.easeInOut, value: currentTab)
                 .onPreferenceChange(SizePreferenceKey.self) { newSize in
                     height = contentSize > newSize.height ? contentSize : newSize.height
                 }
@@ -284,6 +291,22 @@ extension ReadShortcutView {
                             } else {
                                 if currentTab > 0 {
                                     currentTab -= 1
+                                } else {
+                                    
+                                    // MARK: Navigation pop 코드
+//                                    print("swipe back")
+//                                    switch data.navigationParentView {
+//                                    case .shortcuts:
+//                                        shortcutNavigation.shortcutPath.removeLast()
+//                                    case .curations:
+//                                        curationNavigation.navigationPath.removeLast()
+//                                    case .myPage:
+//                                        profileNavigation.navigationPath.removeLast()
+//                                    case .writeCuration:
+//                                        writeCurationNavigation.navigationPath.removeLast()
+//                                    case .writeShortcut:
+//                                        writeShortcutNavigation.navigationPath.removeLast()
+//                                    }
                                 }
                             }
                         }
@@ -299,6 +322,7 @@ extension ReadShortcutView {
                 tabBarItem(string: name, tab: index)
             }
         }
+//        .padding(.horizontal, 16)
         .background(Color.Background)
         .frame(height: 36)
     }
