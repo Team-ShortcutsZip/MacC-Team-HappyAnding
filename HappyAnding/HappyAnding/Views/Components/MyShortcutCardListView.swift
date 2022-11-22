@@ -15,10 +15,10 @@ struct MyShortcutCardListView: View {
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
-            NavigationListShortcutType(sectionType: .myShortcut,
-                                       shortcuts: self.shortcuts,
-                                       navigationParentView: self.navigationParentView)
-        }
+        NavigationListShortcutType(sectionType: .myShortcut,
+                                   shortcuts: self.shortcuts,
+                                   navigationParentView: self.navigationParentView)
+    }
     
     let navigationParentView: NavigationParentView
     
