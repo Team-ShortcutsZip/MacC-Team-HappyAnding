@@ -60,7 +60,7 @@ struct ListCurationView: View {
         .listStyle(.plain)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .navigationBarTitle(self.data.type.rawValue)
+        .navigationBarTitle("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(self.data.type.rawValue)")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
