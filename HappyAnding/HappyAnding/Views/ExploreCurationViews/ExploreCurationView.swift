@@ -35,7 +35,32 @@ struct ExploreCurationView: View {
                                                                   title: "",
                                                                   isAllUser: true,
                                                                   navigationParentView: .curations),
-                                 userCurations: $shortcutsZipViewModel.userCurations)
+                                 userCurations: $shortcutsZipViewModel.personalCurations)
+                .onAppear {
+//                    curationID를 싺다 저장해서 Set하고
+                    //userCuration Filter 에서 해당 ID만 필터링한걸 personal Curation에 넣기
+                    shortcutsZipViewModel.personalCurations.removeAll()
+                    let personalCurationIDs = Set(shortcutsZipViewModel.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
+                    print(personalCurationIDs)
+                    for curationID in personalCurationIDs {
+                        print("\n\n\n\n\ncurationID: \(curationID)")
+                        shortcutsZipViewModel.personalCurations.append(shortcutsZipViewModel.userCurations.first(where: { $0.id == curationID})!)
+                        print(shortcutsZipViewModel.personalCurations)
+                    }
+                    
+                    /*
+                    shortcutsZipViewModel.personalCurations = shortcutsZipViewModel.userCurations.filter {
+                        var isEnvolved = false
+                        let shortcuts = $0.shortcuts
+                        for shortcutDownloaded in shortcutsZipViewModel.shortcutsUserDownloaded {
+                            if shortcuts.map({ $0.id }).contains(shortcutDownloaded.id) {
+                                return true
+                            }
+                        }
+                        return isEnvolved
+                    }
+                     */
+                }
                 //추천 유저 큐레이션
                 CurationListView(data: NavigationListCurationType(type: .userCuration,
                                                                   title: "큐레이션 모아보기",
