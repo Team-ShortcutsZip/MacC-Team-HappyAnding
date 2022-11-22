@@ -102,7 +102,7 @@ struct ShortcutCell: View {
     
     var shortcutInfo: some View {
         
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             if rankNumber != -1 {
                 Text("\(rankNumber)")
                     .Subtitle()

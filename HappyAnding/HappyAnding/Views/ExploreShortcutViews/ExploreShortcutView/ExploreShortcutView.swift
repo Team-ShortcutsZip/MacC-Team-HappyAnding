@@ -20,20 +20,20 @@ struct ExploreShortcutView: View {
             DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
                              navigationParentView: .shortcuts)
             .padding(.top, 20)
-            .padding(.bottom, 32)
+            .padding(.bottom, 24)
             
             CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[Category.lifestyle.index],
                              categoryName: Category.lifestyle,
                              navigationParentView: .shortcuts)
-            .padding(.bottom, 32)
+            .padding(.bottom, 24)
             
             LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
-                .padding(.bottom, 32)
+                .padding(.bottom, 24)
             
             CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[Category.utility.index],
                              categoryName: Category.utility,
                              navigationParentView: .shortcuts)
-            .padding(.bottom, 32)
+            .padding(.bottom, 24)
             
             CategoryView()
                 .padding(.bottom, 44)
