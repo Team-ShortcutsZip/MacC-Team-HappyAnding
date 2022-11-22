@@ -77,6 +77,7 @@
 		A0F822B729164D2300AF4448 /* ShortcutsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822B629164D2300AF4448 /* ShortcutsListView.swift */; };
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
+		A38115B8292B360D0043E8B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A38115B7292B360D0043E8B8 /* GoogleService-Info.plist */; };
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
 		A3FF0183291648A300384211 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF0182291648A300384211 /* MailView.swift */; };
@@ -191,6 +192,7 @@
 		A0F822B629164D2300AF4448 /* ShortcutsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsListView.swift; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3766B222904330300708F83 /* ReadUserCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserCurationView.swift; sourceTree = "<group>"; };
+		A38115B7292B360D0043E8B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCardCell.swift; sourceTree = "<group>"; };
 		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				A0DD0874292B53A6008177BB /* GoogleService-Info.plist */,
 				A38115B7292B360D0043E8B8 /* GoogleService-Info.plist */,
 				4DAD636D292BC49C00ABF8C1 /* GoogleService-Info.plist */,
+				A38115B7292B360D0043E8B8 /* GoogleService-Info.plist */,
 				87E99C6C28F94EA6009B691F /* HappyAnding */,
 				87E99C7D28F94EA8009B691F /* HappyAndingTests */,
 				87E99C8728F94EA8009B691F /* HappyAndingUITests */,
@@ -619,6 +622,9 @@
 				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
 				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 				4DAD636E292BC49C00ABF8C1 /* GoogleService-Info.plist in Resources */,
+				A38115B8292B360D0043E8B8 /* GoogleService-Info.plist in Resources */,
+				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
+				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
