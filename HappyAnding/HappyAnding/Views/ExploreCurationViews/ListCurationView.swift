@@ -29,6 +29,7 @@ struct ListCurationView: View {
             Text("\(data.type.rawValue)이 없습니다.")
                 .Body2()
                 .foregroundColor(Color.Gray4)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
                 .navigationBarTitle(self.data.type.rawValue)
                 .navigationBarTitleDisplayMode(.inline)
