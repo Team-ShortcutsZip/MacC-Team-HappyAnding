@@ -18,57 +18,74 @@ struct ListShortcutView: View {
     @State private var isLastItem = false
     
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                
-                if data.sectionType != .myShortcut {
-                    header
-                        .listRowBackground(Color.Background)
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets())
+        if let shortcuts = data.shortcuts {
+            if shortcuts.count == 0 {
+                VStack(spacing: 0) {
+                    if data.sectionType != .myShortcut {
+                        header
+                            .listRowBackground(Color.Background)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets())
+                    }
+                    Text("\(data.sectionType.rawValue)가 없습니다.")
+                        .Body2()
+                        .foregroundColor(Color.Gray4)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                
-                //TODO: 무한 스크롤을 위한 업데이트 함수 필요
-                if let shortcuts = data.shortcuts {
-                    ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                        let navigationData = NavigationReadShortcutType(shortcut: shortcut,
-                                                                        shortcutID: shortcut.id,
-                                                                        navigationParentView: self.data.navigationParentView)
+                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                .navigationTitle(getNavigationTitle(data.sectionType))
+                .navigationBarTitleDisplayMode(.inline)
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: 0) {
                         
-                        NavigationLink(value: navigationData) {
-                            if data.sectionType == .download && index < 100 {
-                                ShortcutCell(shortcut: shortcut,
-                                             rankNumber: index + 1,
-                                             navigationParentView: data.navigationParentView)
-                                .listRowInsets(EdgeInsets())
+                        if data.sectionType != .myShortcut {
+                            header
+                                .listRowBackground(Color.Background)
                                 .listRowSeparator(.hidden)
-                            } else {
-                                ShortcutCell(shortcut: shortcut,
-                                             navigationParentView: data.navigationParentView)
                                 .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
+                        }
+                        
+                        //TODO: 무한 스크롤을 위한 업데이트 함수 필요
+                        ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                            let navigationData = NavigationReadShortcutType(shortcut: shortcut,
+                                                                            shortcutID: shortcut.id,
+                                                                            navigationParentView: self.data.navigationParentView)
+                            
+                            NavigationLink(value: navigationData) {
+                                if data.sectionType == .download && index < 100 {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 rankNumber: index + 1,
+                                                 navigationParentView: data.navigationParentView)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                } else {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: data.navigationParentView)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
                             }
                         }
+                        Rectangle()
+                            .fill(Color.Background)
+                            .frame(height: 44)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
                     }
                 }
-                
-                Rectangle()
-                    .fill(Color.Background)
-                    .frame(height: 44)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                .scrollIndicators(.hidden)
+                .navigationDestination(for: NavigationReadShortcutType.self) { data in
+                    ReadShortcutView(data: data)
+                }
+                .listRowBackground(Color.Background)
+                .listStyle(.plain)
+                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                .scrollContentBackground(.hidden)
+                .navigationTitle(getNavigationTitle(data.sectionType))
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
-        .scrollIndicators(.hidden)
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
-        .listRowBackground(Color.Background)
-        .listStyle(.plain)
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-        .scrollContentBackground(.hidden)
-        .navigationTitle(getNavigationTitle(data.sectionType))
-        .navigationBarTitleDisplayMode(.inline)
     }
     
     var header: some View {
