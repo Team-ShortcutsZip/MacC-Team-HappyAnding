@@ -53,6 +53,9 @@ struct CurationListHeader: View {
         HStack(alignment: .bottom) {
             if data.type == .personalCuration {
                 Text("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
+                    .Title2()
+                    .foregroundColor(.Gray5)
+                    .onTapGesture { }
             } else {
                 Text(data.title ?? "")
                     .Title2()
