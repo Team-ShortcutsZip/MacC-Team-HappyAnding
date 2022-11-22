@@ -139,8 +139,8 @@ struct ReadShortcutView: View {
             isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
             isFirstMyLike = isMyLike
         }
-        .onChange(of: isEdit) { _ in
-            if !isEdit {
+        .onChange(of: isEdit || isUpdating) { _ in
+            if !isEdit || !isUpdating {
                 data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
             }
         }
@@ -342,7 +342,7 @@ extension ReadShortcutView {
                                                     value: geometryProxy.size)
                                 })
                     case 1:
-                        ReadShortcutVersionView(shortcut: shortcut)
+                        ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
                             .background(
                                 GeometryReader { geometryProxy in
                                     Color.clear

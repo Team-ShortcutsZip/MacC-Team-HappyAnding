@@ -265,6 +265,9 @@ class ShortcutsZipViewModel: ObservableObject {
         data.updateDescription.insert(updateDescription, at: 0)
         data.date.insert(Date().getDate(), at: 0)
         
+        if let index = allShortcuts.firstIndex(where: {$0.id == shortcut.id}) {
+            allShortcuts[index] = data
+        }
         //카테고리별 단축어
         shortcut.category.forEach { category in
             if let index = shortcutsInCategory[Category(rawValue: category)!.index].firstIndex(where: { $0.id == shortcut.id}) {
