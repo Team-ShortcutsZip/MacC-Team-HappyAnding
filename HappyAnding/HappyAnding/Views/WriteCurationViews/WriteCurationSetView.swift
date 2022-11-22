@@ -13,7 +13,7 @@ struct WriteCurationSetView: View {
     
     @Binding var isWriting: Bool
     
-    @State var shortcutCells = Set<ShortcutCellModel>()
+    @State var shortcutCells = [ShortcutCellModel]()
     @State var isSelected = false
     @State var curation = Curation(title: "",
                                    subtitle: "",
@@ -56,12 +56,7 @@ struct WriteCurationSetView: View {
             .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                shortcutsZipViewModel.fetchMadeShortcutCell { shortcuts in
-                    self.shortcutCells = self.shortcutCells.union(shortcuts)
-                }
-                shortcutsZipViewModel.fetchLikedShortcutCell { shortcuts in
-                    self.shortcutCells = self.shortcutCells.union(shortcuts)
-                }
+                self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration()
             }
             
             if isTappedQuestionMark {

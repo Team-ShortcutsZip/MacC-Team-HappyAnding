@@ -22,9 +22,12 @@ struct ReadShortcutView: View {
     
     @StateObject var writeNavigation = WriteShortcutNavigation()
     @State var isTappedDeleteButton = false
-    @State var shortcut: Shortcuts?
     @State var isEdit = false
     @State var isUpdating = false
+    
+    @State var isMyLike: Bool = false
+    @State var isFirstMyLike = false
+    @State var isClickDownload = false
     
     @State var data: NavigationReadShortcutType
     @State var comment: Comment = Comment(user_id: "", date: "", depth: 0, contents: "")
@@ -41,11 +44,11 @@ struct ReadShortcutView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                if shortcut != nil {
+                if data.shortcut != nil {
                     
                     // MARK: - 단축어 타이틀
                     
-                    ReadShortcutHeaderView(shortcut: self.$shortcut.unwrap()!)
+                    ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
                         .frame(height: 160)
                         .padding(.bottom, 33)
                         .padding(.top, 40)
@@ -68,17 +71,35 @@ struct ReadShortcutView: View {
         }
         .background(Color.Background)
         .onAppear() {
-            shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
-                self.shortcut = shortcut
-                print("hellohello \(self.$shortcut.unwrap()!)")
-            }
+            data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
+            isFirstMyLike = isMyLike
         }
         .onAppear(perform: {UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground() })
         .onChange(of: isEdit) { _ in
             if !isEdit {
-                shortcutsZipViewModel.fetchShortcutDetail(id: self.data.shortcutID) { shortcut in
-                    self.shortcut = shortcut
-                    print(shortcut)
+                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            }
+        }
+        .onDisappear() {
+            if let shortcut = data.shortcut {
+                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
+                if isClickDownload && isAlreadyContained {
+                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
+
+                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
+                }
+                if isMyLike != isFirstMyLike {
+                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+                    if isMyLike {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.insert(self.data.shortcutID, at: 0)
+                        shortcutsZipViewModel.shortcutsUserLiked.insert(shortcut, at: 0)
+                    } else {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.removeAll(where: { $0 == self.data.shortcutID })
+                        shortcutsZipViewModel.shortcutsUserLiked.removeAll(where: { $0.id == self.data.shortcutID })
+                    }
                 }
             }
         }
@@ -89,11 +110,13 @@ struct ReadShortcutView: View {
                     textField
                 }
                 if !isFocused {
-                    if let shortcut {
+                    if let shortcut = data.shortcut {
                         Button {
                             if let url = URL(string: shortcut.downloadLink[0]) {
-                                shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                                shortcutsZipViewModel.shortcutsUserDownloaded.append(shortcut)
+                                if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
+                                    data.shortcut?.numberOfDownload += 1
+                                }
+                                isClickDownload = true
                                 openURL(url)
                             }
                             
@@ -110,9 +133,35 @@ struct ReadShortcutView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
+        .background(Color.Background)
+        .onAppear() {
+            data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
+            isFirstMyLike = isMyLike
+        }
+        .onChange(of: isEdit) { _ in
+            if !isEdit {
+                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            }
+        }
+        .onDisappear() {
+            if let shortcut = data.shortcut {
+                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
+                if isClickDownload && isAlreadyContained {
+                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
+
+                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
+                }
+                if isMyLike != isFirstMyLike {
+                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+                }
+            }
+        }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if shortcut?.author == shortcutsZipViewModel.currentUser() {
+            if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
                 myShortcutMenuSection
             } else {
                 otherShortcutMenuSection
@@ -129,7 +178,7 @@ struct ReadShortcutView: View {
             }
             
             Button(role: .destructive) {
-                if let shortcut {
+                if let shortcut = data.shortcut {
                     shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
                     shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
                     shortcutsZipViewModel.deleteData(model: shortcut)
@@ -144,7 +193,7 @@ struct ReadShortcutView: View {
         }
         .fullScreenCover(isPresented: $isEdit) {
             NavigationStack(path: $writeNavigation.navigationPath) {
-                if let shortcut {
+                if let shortcut = data.shortcut {
                     WriteShortcutTitleView(isWriting: $isEdit,
                                            shortcut: shortcut,
                                            isEdit: true)
@@ -153,7 +202,7 @@ struct ReadShortcutView: View {
             .environmentObject(writeNavigation)
         }
         .fullScreenCover(isPresented: $isUpdating) {
-            UpdateShortcutView(isUpdating: $isUpdating, shortcut: $shortcut)
+            UpdateShortcutView(isUpdating: $isUpdating, shortcut: $data.shortcut)
         }
         .toolbar(.hidden, for: .tabBar)
         .toolbarBackground(
@@ -256,7 +305,7 @@ extension ReadShortcutView {
     }
     
     func share() {
-        if let shortcut {
+        if let shortcut = data.shortcut {
             guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
             let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
@@ -273,7 +322,7 @@ extension ReadShortcutView {
     
     var detailInformationView: some View {
         VStack {
-            if let shortcut {
+            if let shortcut = data.shortcut {
                 ZStack {
                     TabView(selection: self.$currentTab) {
                         Color.clear.tag(0)
@@ -285,7 +334,7 @@ extension ReadShortcutView {
                     
                     switch(currentTab) {
                     case 0:
-                        ReadShortcutContentView(shortcut: self.$shortcut.unwrap()!)
+                        ReadShortcutContentView(shortcut: $data.shortcut.unwrap()!)
                             .background(
                                 GeometryReader { geometryProxy in
                                     Color.clear

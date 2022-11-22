@@ -12,7 +12,7 @@ struct ReadShortcutHeaderView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var shortcut: Shortcuts
-    @State var isMyLike: Bool = false
+    @Binding var isMyLike: Bool
     @State var userInformation: User? = nil
     
     var body: some View {
@@ -24,6 +24,7 @@ struct ReadShortcutHeaderView: View {
                 Spacer()
                 
                 likeButton
+
             }
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(shortcut.title)")
@@ -38,9 +39,6 @@ struct ReadShortcutHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
         .onAppear() {
-            shortcutsZipViewModel.checkLikedShortrcut(shortcutID: shortcut.id) { result in
-                isMyLike = result
-            }
             shortcutsZipViewModel.fetchUser(userID: shortcut.author) { user in
                 userInformation = user
             }
@@ -77,8 +75,6 @@ struct ReadShortcutHeaderView: View {
             } else {
                 self.shortcut.numberOfLike -= 1
             }
-            //데이터 상의 좋아요 추가, 취소 기능 동작
-            shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
         })
     }
     
@@ -120,10 +116,3 @@ struct ReadShortcutHeaderView: View {
         }
     }
 }
-
-
-//struct ReadShortcutHeaderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadShortcutHeaderView(icon: "book", color: "Coral", numberOfLike: 99, name: "주변 커피집 걸어가기", oneline: "걸어가보자!!!")
-//    }
-//}

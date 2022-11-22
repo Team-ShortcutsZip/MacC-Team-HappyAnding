@@ -57,8 +57,9 @@ struct ReadUserCurationView: View {
         }
         .onChange(of: isWriting) { _ in
             if !isWriting {
-                // TODO: - Curation update 함수 적용
-                print("update curation")
+                if let updatedCuration = shortcutsZipViewModel.fetchCurationDetail(curationID: data.userCuration.id) {
+                    data.userCuration = updatedCuration
+                }
             }
         }
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
@@ -158,7 +159,8 @@ struct ReadUserCurationView: View {
         Button(action: {
         self.presentation.wrappedValue.dismiss()
         }) {
-            Image(systemName: "chevron.backward") // set image here
+            //TODO: 위치와 두께, 색상 조정 필요
+            Image(systemName: "chevron.backward")
                 .foregroundColor(Color.Gray5)
                 .bold()
         }
