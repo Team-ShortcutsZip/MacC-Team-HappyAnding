@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ReadShortcutCommentView: View {
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var addedComment: Comment
-    @State var comments = [Comment]()
-    @State var isReply = true
+    @Binding var comments: [Comment]
+    let shortcutID: String
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,29 +19,19 @@ struct ReadShortcutCommentView: View {
                 Text("등록된 댓글이 없습니다")
                     .Body2()
                     .foregroundColor(.Gray4)
-                
             } else {
                 comment
                 Spacer()
             }
         }
         .padding(.top, 16)
-        .onAppear {
-            //TODO: 댓글 데이터 불러오기
-            for _ in 0...10 {
-                let comment = Comment(user_id: "1", date: "2022112211",
-                                      depth: Int.random(in: 0...1),
-                                      contents: "댓글을남겨요")
-                comments.append(comment)
-            }
-        }
     }
     
     var comment: some View {
         ForEach(comments, id: \.self) { comment in
             
             HStack(alignment: .top, spacing: 8) {
-                if comment.depth == 0 {
+                if comment.depth == 1 {
                     Image(systemName: "arrow.turn.down.right")
                         .foregroundColor(.Gray4)
                 }

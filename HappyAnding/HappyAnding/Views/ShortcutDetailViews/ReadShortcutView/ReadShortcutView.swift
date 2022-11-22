@@ -30,6 +30,7 @@ struct ReadShortcutView: View {
     @State var isClickDownload = false
     
     @State var data: NavigationReadShortcutType
+    @State var comments: Comments = Comments(id: "", comments: [])
     @State var comment: Comment = Comment(user_id: "", date: "", depth: 0, contents: "")
     
     @State var height: CGFloat = UIScreen.screenHeight / 2
@@ -78,11 +79,6 @@ struct ReadShortcutView: View {
             }
         }
         .background(Color.Background)
-        .onAppear() {
-            data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
-            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
-            isFirstMyLike = isMyLike
-        }
         .onAppear(perform: {UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground() })
         .onChange(of: isEdit) { _ in
             if !isEdit {
@@ -146,11 +142,15 @@ struct ReadShortcutView: View {
             data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
             isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
             isFirstMyLike = isMyLike
+            self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
         }
         .onChange(of: isEdit || isUpdating) { _ in
             if !isEdit || !isUpdating {
                 data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
             }
+        }
+        .onChange(of: shortcutsZipViewModel.allComments) { _ in
+            self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
         }
         .onDisappear() {
             if let shortcut = data.shortcut {
@@ -158,13 +158,14 @@ struct ReadShortcutView: View {
                 if isClickDownload && isAlreadyContained {
                     shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
                     shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
-
+                    
                     let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
                     shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
                 }
                 if isMyLike != isFirstMyLike {
                     shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
                 }
+                print("**\(shortcutsZipViewModel.fetchComment(shortcutID: shortcut.id))")
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -244,8 +245,10 @@ struct ReadShortcutView: View {
                 .focused($isFocused)
             
             Button {
-                //TODO: 서버에 데이터 전송
-                print("click")
+                comment.contents = commentText
+                comments.comments.append(comment)
+                shortcutsZipViewModel.setData(model: comments)
+                commentText = ""
             } label: {
                 Image(systemName: "paperplane.fill")
                     .foregroundColor(.Gray5)
@@ -357,14 +360,14 @@ extension ReadShortcutView {
                                         .preference(key: SizePreferenceKey.self, value:
                                                         geometryProxy.size)
                                 })
-//                    case 2:
-//                        ReadShortcutCommentView(addedComment: $comment)
-//                            .background(
-//                                GeometryReader { geometryProxy in
-//                                    Color.clear
-//                                        .preference(key: SizePreferenceKey.self,
-//                                                    value: geometryProxy.size)
-//                                })
+                    case 2:
+                        ReadShortcutCommentView(addedComment: $comment, comments: $comments.comments, shortcutID: data.shortcutID)
+                            .background(
+                                GeometryReader { geometryProxy in
+                                    Color.clear
+                                        .preference(key: SizePreferenceKey.self,
+                                                    value: geometryProxy.size)
+                                })
                     default:
                         EmptyView()
                     }

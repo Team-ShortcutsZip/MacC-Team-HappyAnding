@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Comments: Identifiable, Codable {
+struct Comments: Identifiable, Codable, Equatable {
     var id: String     //댓글이 달린 단축어 id
     var comments: [Comment]
     
