@@ -75,8 +75,6 @@ struct ReadShortcutHeaderView: View {
             } else {
                 self.shortcut.numberOfLike -= 1
             }
-            //데이터 상의 좋아요 추가, 취소 기능 동작
-            shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
         })
     }
     
