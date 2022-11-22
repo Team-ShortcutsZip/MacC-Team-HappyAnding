@@ -43,7 +43,7 @@ struct CategoryModalView: View {
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text("완료")
-                            .foregroundColor(!selectedCategories.isEmpty ? .Text_icon : .Gray3 )
+                            .foregroundColor(!selectedCategories.isEmpty ? .Text_icon : .Text_Button_Disable)
                             .Body1()
                     }
                 })
