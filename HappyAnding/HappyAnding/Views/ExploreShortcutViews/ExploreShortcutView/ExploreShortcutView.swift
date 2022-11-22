@@ -49,10 +49,10 @@ struct ExploreShortcutView: View {
                         .Headline()
                         .foregroundColor(.Gray5)
                 }
-                .navigationDestination(for: NavigationSearch.self) { _ in
-                    SearchView()
-                }
             }
+        }
+        .navigationDestination(for: NavigationSearch.self) { _ in
+            SearchView()
         }
     }
 }
