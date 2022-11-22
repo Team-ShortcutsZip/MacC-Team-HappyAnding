@@ -52,6 +52,8 @@ extension Color {
     static let Category_Pick_Text = Color(light:.Primary, dark:.Gray6)
     
     static let Tag_Pick_Background = Color(light: Color.clear, dark:.Primary)
+    static let Tag_Background = Color(light: .Background, dark: .Primary)
+    static let Tag_Text = Color(light: .Primary, dark: .white)
 }
 
 extension Color {
