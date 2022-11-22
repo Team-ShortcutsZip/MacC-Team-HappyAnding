@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct UpdateShortcutView: View {
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @Binding var isUpdating: Bool
     @Binding var shortcut: Shortcuts?
     
@@ -61,9 +64,9 @@ struct UpdateShortcutView: View {
             Spacer()
             
             Button(action: {
-                
-                // TODO: updatedLink, updateDescription을 shortcut에 저장
-                
+                if let shortcut {
+                    shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut, updateDescription: updateDescription, updateLink: updatedLink)
+                }
                 isUpdating.toggle()
             }, label: {
                 ZStack {
