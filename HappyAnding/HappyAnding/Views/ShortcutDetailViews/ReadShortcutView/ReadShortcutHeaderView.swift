@@ -24,6 +24,7 @@ struct ReadShortcutHeaderView: View {
                 Spacer()
                 
                 likeButton
+
             }
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(shortcut.title)")

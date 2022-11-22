@@ -133,6 +133,40 @@ struct ReadShortcutView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
+        .padding(.vertical, 20)
+        .background(Color.Background)
+        .onAppear() {
+            data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
+            isFirstMyLike = isMyLike
+        }
+        .onChange(of: isEdit) { _ in
+            if !isEdit {
+                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+            }
+        }
+        .onDisappear() {
+            if let shortcut = data.shortcut {
+                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
+                if isClickDownload && isAlreadyContained {
+                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
+
+                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
+                }
+                if isMyLike != isFirstMyLike {
+                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+                    if isMyLike {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.insert(self.data.shortcutID, at: 0)
+                        shortcutsZipViewModel.shortcutsUserLiked.insert(shortcut, at: 0)
+                    } else {
+                        shortcutsZipViewModel.userInfo?.likedShortcuts.removeAll(where: { $0 == self.data.shortcutID })
+                        shortcutsZipViewModel.shortcutsUserLiked.removeAll(where: { $0.id == self.data.shortcutID })
+                    }
+                }
+            }
+        }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
         .navigationBarItems(trailing: Menu(content: {
             if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
