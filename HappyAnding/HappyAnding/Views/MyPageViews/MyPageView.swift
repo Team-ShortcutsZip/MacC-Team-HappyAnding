@@ -66,18 +66,12 @@ struct MyPageView: View {
                     
                     // MARK: - 좋아요한 단축어
                     
-                    MyPageShortcutList(
-                        shortcuts: shortcutsZipViewModel.shortcutsUserLiked,
-                        type: .myLovingShortcut
-                    )
+                    MyPageShortcutListCell(type: .myLovingShortcut, shortcuts: shortcutsZipViewModel.shortcutsUserLiked)
                     
                     // MARK: -다운로드한 단축어
                     
-                    MyPageShortcutList(
-                        shortcuts: shortcutsZipViewModel.shortcutsUserDownloaded,
-                        type: .myDownloadShortcut
-                    )
-                    .padding(.bottom, 44)
+                    MyPageShortcutListCell(type: .myDownloadShortcut, shortcuts: shortcutsZipViewModel.shortcutsUserDownloaded)
+                        .padding(.bottom, 44)
                 }
             }
             .navigationBarTitle("프로필")
@@ -99,59 +93,45 @@ struct MyPageView: View {
     }
 }
 
-struct MyPageShortcutList: View {
-    
-    var shortcuts: [Shortcuts]?
+struct MyPageShortcutListCell: View {
     var type: SectionType
+    let shortcuts: [Shortcuts]
     
-    var body: some View {
-        VStack(spacing: 0) {
-            MyPageListHeader(type: type, shortcuts: shortcuts)
-                .padding(.horizontal, 16)
-            if let shortcuts {
-                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    if index < 3 {
-                        let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                              navigationParentView: .myPage)
-                        NavigationLink(value: data) {
-                            ShortcutCell(shortcut: shortcut, navigationParentView: .myPage)
-                        }
-                    }
-                }
-            }
-        }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
-    }
-}
-
-struct MyPageListHeader: View {
-
-    var type: SectionType
-    let shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
         NavigationListShortcutType(sectionType: self.type,
                                    shortcuts: self.shortcuts,
                                    navigationParentView: .myPage)
     }
     var body: some View {
-        HStack(alignment: .bottom) {
-            Text(type.rawValue)
-                .Title2()
-                .foregroundColor(.Gray5)
-                .onTapGesture { }
-            Spacer()
-            
-            NavigationLink(value: data) {
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+        NavigationLink(value: data) {
+            HStack() {
+                Text(type == .myLovingShortcut ? "좋아요한 단축어" : "다운로드한 단축어")
+                    .Title2()
+                    .foregroundColor(.Gray5)
+                    .padding(.trailing, 9)
+                Text("\(shortcuts.count)개")
+                    .Body2()
+                    .foregroundColor(Color.Tag_Text)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 4)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill( Color.Tag_Background )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .strokeBorder(Color.Primary, lineWidth: 1))
+                    )
+                Spacer()
+                Image(systemName: "chevron.forward")
+                    .foregroundColor(.Gray5)
+                    .font(Font(UIFont.systemFont(ofSize: 20, weight: .medium)))
+                
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
         }
         .navigationDestination(for: NavigationListShortcutType.self) { data in
             ListShortcutView(data: data)
         }
     }
 }
-
