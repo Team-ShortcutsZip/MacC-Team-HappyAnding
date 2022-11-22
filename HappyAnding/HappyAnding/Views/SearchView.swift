@@ -40,7 +40,7 @@ struct SearchView: View {
                             }
                         }
                     }
-               }
+                }
             }
         }
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
@@ -59,7 +59,7 @@ struct SearchView: View {
                 isSearched = false
             }
         }        .navigationBarTitleDisplayMode(.inline)
-        .background(Color.Background)
+            .background(Color.Background)
     }
     
     private func runSearch() {
@@ -115,14 +115,13 @@ struct SearchView: View {
                 .Body1()
                 .foregroundColor(Color.Gray4)
             
-            Button {
-                //TODO: 버튼 클릭 시 단축어 제안하는 페이지 연결
-            } label: {
+            Link(destination: URL(string: "https://docs.google.com/forms/d/e/1FAIpQLScQc3KeYjDGCE-C2YRU-Hwy2XNy5bt89KVX1OMUzRiySaMX1Q/viewform")!) {
                 Text("단축어 제안하기")
                     .padding(.horizontal, 28)
                     .padding(.vertical, 8)
-            }.buttonStyle(.borderedProminent)
-                .padding(16)
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(16)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.Background)
