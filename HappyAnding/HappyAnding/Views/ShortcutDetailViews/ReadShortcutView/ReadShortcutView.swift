@@ -31,7 +31,8 @@ struct ReadShortcutView: View {
     
     @State var data: NavigationReadShortcutType
     @State var comments: Comments = Comments(id: "", comments: [])
-    @State var comment: Comment = Comment(user_id: "", date: "", depth: 0, contents: "")
+    @State var comment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
+    @State var nestedCommentInfoText: String = ""
     
     @State var height: CGFloat = UIScreen.screenHeight / 2
     @State var currentTab: Int = 0
@@ -165,7 +166,6 @@ struct ReadShortcutView: View {
                 if isMyLike != isFirstMyLike {
                     shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
                 }
-                print("**\(shortcutsZipViewModel.fetchComment(shortcutID: shortcut.id))")
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -235,33 +235,68 @@ struct ReadShortcutView: View {
     }
     
     var textField: some View {
-        HStack {
+        
+        VStack(spacing: 0) {
             if comment.depth == 1 {
-                Image(systemName: "arrow.turn.down.right")
-                    .foregroundColor(.Gray4)
+                nestedCommentInfo
             }
-            TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
-                .Body2()
-                .focused($isFocused)
-            
+            HStack {
+                if comment.depth == 1 {
+                    Image(systemName: "arrow.turn.down.right")
+                        .foregroundColor(.Gray4)
+                }
+                TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
+                    .Body2()
+                    .focused($isFocused)
+                
+                Button {
+                    comment.contents = commentText
+                    comment.date = Date().getDate()
+                    comment.user_id = shortcutsZipViewModel.userInfo!.id
+                    comment.user_nickname = shortcutsZipViewModel.userInfo!.nickname
+                    comments.comments.append(comment)
+                    shortcutsZipViewModel.setData(model: comments)
+                    commentText = ""
+                    comment = comment.resetComment()
+                } label: {
+                    Image(systemName: "paperplane.fill")
+                        .foregroundColor(.Gray5)
+                }
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .background(
+                Rectangle()
+                    .fill(Color.Gray1)
+                    .cornerRadius(12 ,corners: comment.depth == 0 ? .allCorners : [.bottomLeft, .bottomRight])
+            )
+            .padding(.horizontal, 16)
+            .padding(.bottom, 20)
+        }
+    }
+    var nestedCommentInfo: some View {
+        HStack {
+            Text("@\(nestedCommentInfoText)")
+                .Footnote()
+                .foregroundColor(.Gray5)
+            Spacer()
             Button {
-                comment.contents = commentText
-                comments.comments.append(comment)
-                shortcutsZipViewModel.setData(model: comments)
-                commentText = ""
+                comment.bundel_id = "\(Date().getDate())_\(UUID().uuidString)"
+                comment.depth = 0
             } label: {
-                Image(systemName: "paperplane.fill")
+                Image(systemName: "xmark")
+                    .font(Font(UIFont.systemFont(ofSize: 17, weight: .medium)))
                     .foregroundColor(.Gray5)
             }
         }
-        .padding(.vertical, 12)
         .padding(.horizontal, 16)
+        .padding(.vertical, 11)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.Gray1)
+            Rectangle()
+                .fill(Color.Gray2)
+                .cornerRadius(12 ,corners: [.topLeft, .topRight])
         )
         .padding(.horizontal, 16)
-        .padding(.bottom, 20)
     }
 }
 
@@ -361,7 +396,7 @@ extension ReadShortcutView {
                                                         geometryProxy.size)
                                 })
                     case 2:
-                        ReadShortcutCommentView(addedComment: $comment, comments: $comments.comments, shortcutID: data.shortcutID)
+                        ReadShortcutCommentView(addedComment: $comment, comments: $comments.comments, nestedCommentInfoText: $nestedCommentInfoText, shortcutID: data.shortcutID)
                             .background(
                                 GeometryReader { geometryProxy in
                                     Color.clear

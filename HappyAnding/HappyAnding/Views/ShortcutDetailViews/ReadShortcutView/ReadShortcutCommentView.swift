@@ -11,6 +11,7 @@ struct ReadShortcutCommentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var addedComment: Comment
     @Binding var comments: [Comment]
+    @Binding var nestedCommentInfoText: String
     let shortcutID: String
     
     var body: some View {
@@ -45,7 +46,7 @@ struct ReadShortcutCommentView: View {
                             .frame(width: 24, height: 24)
                             .foregroundColor(.Gray4)
                         
-                        Text(comment.user_id)
+                        Text(comment.user_nickname)
                             .Body2()
                             .foregroundColor(.Gray4)
                     }
@@ -62,7 +63,7 @@ struct ReadShortcutCommentView: View {
                     // MARK: Button
                     HStack(spacing: 16) {
                         Button {
-                            print("답글")
+                            nestedCommentInfoText = comment.user_nickname
                             addedComment.bundel_id = comment.bundel_id
                             addedComment.depth = 1
                         } label: {

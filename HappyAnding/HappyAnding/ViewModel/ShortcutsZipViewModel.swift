@@ -747,10 +747,8 @@ class ShortcutsZipViewModel: ObservableObject {
                         comments.insert(comment, at: 0)
                     }
                     if (diff.type == .modified) {
-                        print("**comment modified")
-                        if let index = self.allComments.firstIndex(where: { $0.id == comment.id}) {
-                            self.allComments[index] = comment
-                            print("**\(self.allComments[index])")
+                        if let index = comments.firstIndex(where: {$0.id == comment.id}) {
+                            comments[index] = comment
                         }
                     }
                     if (diff.type == .removed) {
@@ -767,8 +765,9 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 단축어 ID에 해당하는 댓글 목록 불러오는 함수
     
     func fetchComment(shortcutID: String) -> Comments {
-        if let index = self.allComments.firstIndex(where: {$0.id == shortcutID}) {
-            return self.allComments[index]
+        if let index = allComments.firstIndex(where: {$0.id == shortcutID}) {
+            allComments[index].comments = allComments[index].fetchSortedComment()
+            return allComments[index]
         }
         return Comments(id: shortcutID, comments: [])
     }
