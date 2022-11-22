@@ -46,12 +46,20 @@ struct ReadShortcutView: View {
             VStack(spacing: 0) {
                 if data.shortcut != nil {
                     
+                    GeometryReader { geo in
+                        let yOffset = geo.frame(in: .global).minY
+                        
+                        Color.White
+                            .frame(width: geo.size.width, height: 40 + (yOffset > 0 ? yOffset : 0))
+                            .offset(y: yOffset > 0 ? -yOffset : 0)
+                    }
+                    .frame(minHeight: 40)
+                    
                     // MARK: - 단축어 타이틀
                     
                     ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
                         .frame(height: 160)
                         .padding(.bottom, 33)
-                        .padding(.top, 40)
                         .background(Color.White)
                     
                     
