@@ -794,7 +794,7 @@ class ShortcutsZipViewModel: ObservableObject {
     //원댓글 삭제 시 이용
     func deleteCommentByBundleID(shortcutID: String, bundleID: String) {
         var comments = fetchComment(shortcutID: shortcutID)
-        comments.comments.removeAll(where: { $0.bundel_id == bundleID })
+        comments.comments.removeAll(where: { $0.bundle_id == bundleID })
         setData(model: comments)
     }
 }
