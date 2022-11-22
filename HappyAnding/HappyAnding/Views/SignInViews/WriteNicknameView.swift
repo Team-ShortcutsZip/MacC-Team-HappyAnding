@@ -34,9 +34,11 @@ struct WriteNicknameView: View {
     @State var isNicknameChecked: Bool = false
     @State var isValidLength = false
     @State private var isTappedPrivacyButton = false
+    @State var isNormalString = true
+    
+    @FocusState private var isFocused: Bool
     
     let user = Auth.auth().currentUser
-//    let firebase = FirebaseService()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -58,10 +60,17 @@ struct WriteNicknameView: View {
                     .padding(.top, 4)
             }
             
-            Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
-                .Body2()
-                .foregroundColor(nickname.isEmpty ? .Gray2 : .Gray4)
-                .padding(.top, 4)
+            if isNormalString {
+                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
+                    .Body2()
+                    .foregroundColor(nickname.isEmpty ? .Gray2 : .Gray4)
+                    .padding(.top, 4)
+            } else {
+                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
+                    .Body2()
+                    .foregroundColor(.Error)
+                    .padding(.top, 4)
+            }
             
             Spacer()
             
@@ -96,23 +105,26 @@ struct WriteNicknameView: View {
             HStack {
                 TextField("닉네임 (최대 8글자)", text: $nickname)
                     .Body2()
+                    .focused($isFocused)
                     .foregroundColor(.Gray5)
                     .frame(height: 20)
                     .padding(.leading, 16)
                     .padding(.vertical, 12)
+                    .onAppear(perform : UIApplication.shared.hideKeyboard)
                     .onChange(of: nickname) {_ in
                         isValidLength = nickname.count <= 8 && !nickname.isEmpty
                         isNicknameChecked = false
+                        //isNormalString = nickname.isNormalString()
+                        isNormalString = nickname.checkCorrectNickname()
                     }
-                
                 if !nickname.isEmpty {
                     textFieldSFSymbol
                 }
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(lineWidth: 1)
-                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
+                    .strokeBorder(lineWidth: 1)
+                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength && isNormalString ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
             )
         }
     }
@@ -155,21 +167,27 @@ struct WriteNicknameView: View {
                 isDuplicatedNickname = result
                 isNicknameChecked = !result
             }
+            
+            isFocused = false
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValidLength ? .Primary : .Gray1)
+                    .foregroundColor(isValidLength && isNormalString ? .Primary : .Gray1)
                     .frame(width: 80, height: 44)
                 Text("중복확인")
-                    .foregroundColor(isValidLength ? .Text_icon : .Gray3)
+                    .foregroundColor(isValidLength && isNormalString ? .Text_icon : .Gray3)
             }
         })
-        .disabled(!isValidLength)
+        .disabled(!isValidLength || !isNormalString)
         ///alert 띄우는 코드
-        .alert(isPresented: $checkNicknameDuplicate){
-            Alert(title: Text("닉네임 중복 확인"),
-                  message: Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다"),
-                  dismissButton: .default(Text(isDuplicatedNickname ? "다시 입력하기" : "확인")))
+        .alert("닉네임 중복 확인", isPresented: $checkNicknameDuplicate) {
+            Button(role: .cancel) {
+                
+            } label: {
+                Text(isDuplicatedNickname ? "다시 입력하기" : "확인")
+            }
+        } message: {
+            Text(isDuplicatedNickname ? "중복된 닉네임이 있습니다" : "중복된 닉네임이 없습니다")
         }
     }
     
@@ -181,17 +199,17 @@ struct WriteNicknameView: View {
                 self.signInStatus = true
             }
             
-            shortcutszipViewModel.setData(model: User(id: user?.uid ?? "", nickname: nickname, likedShortcuts: [String](), downloadedShortcuts: [String]()))
+            shortcutszipViewModel.setData(model: User(id: user?.uid ?? "", nickname: nickname, likedShortcuts: [String](), downloadedShortcuts: [DownloadedShortcut]()))
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isNicknameChecked ? .Primary : .Gray1)
+                    .foregroundColor(isNicknameChecked && isNormalString ? .Primary : .Gray1)
                     .frame(height: 52)
                 Text("시작하기")
-                    .foregroundColor(isNicknameChecked ? .Text_icon : .Gray3)
+                    .foregroundColor(isNicknameChecked && isNormalString ? .Text_icon : .Gray3)
             }
         })
-        .disabled(!isNicknameChecked)
+        .disabled(!isNicknameChecked || !isNormalString)
     }
 }
 

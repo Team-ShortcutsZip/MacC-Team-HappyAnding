@@ -18,3 +18,15 @@ extension Date {
         return formatter.string(from: current)
     }
 }
+
+extension String {
+    func getVersionUpdateDateFormat() -> String {
+        var date = self.substring(from: 0, to: 7)
+        let index1 = date.index(date.startIndex, offsetBy: 4)
+        let index2 = date.index(date.startIndex, offsetBy: 6)
+        date.insert(".", at: index2)
+        date.insert(".", at: index1)
+        
+        return date
+    }
+}

@@ -9,21 +9,27 @@ import SwiftUI
 
 struct UserCurationListView: View {
     
+    @StateObject var writeCurationNavigation = WriteCurationNavigation()
     @State var isWriting = false
+    @State var data: NavigationListCurationType
     
     @Binding var userCurations: [Curation]
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(title: "나의 큐레이션", userCurations: $userCurations)
+            UserCurationListHeader(userCurations: $userCurations,
+                                   data: data,
+                                   navigationParentView: self.data.navigationParentView)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
+            
             Button {
-                isWriting.toggle()
+                self.isWriting = true
             } label: {
+                
                 HStack(spacing: 7) {
                     Image(systemName: "plus")
-                    Text("나의 큐레이션 만들기")
+                    Text("큐레이션 만들기")
                 }
                 .Headline()
                 .foregroundColor(.Gray4)
@@ -34,58 +40,60 @@ struct UserCurationListView: View {
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
-            .fullScreenCover(isPresented: $isWriting, content: {
-                WriteCurationSetView(isWriting: self.$isWriting, isEdit: false)
-            })
-
-//            NavigationLink(destination: WriteCurationInfoView()){
-//                HStack(spacing: 7) {
-//                    Image(systemName: "plus")
-//                    Text("나의 큐레이션 만들기")
-//                }
-//                .Headline()
-//                .foregroundColor(.Gray4)
-//                .frame(maxWidth: .infinity)
-//                .frame(height: 64)
-//                .background(Color.Gray1)
-//                .cornerRadius(12)
-//                .padding(.bottom, 12)
-//                .padding(.horizontal, 16)
-//            }
+            
             if let userCurations {
                 ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    
+                    let data = NavigationReadUserCurationType(userCuration: curation,
+                                                              navigationParentView: self.data.navigationParentView)
                     //TODO: 데이터 변경 필요
-                    if let curation {
-                        NavigationLink(destination: ReadUserCurationView(userCuration: curation)) {
-                            if index < 2 {
-                                UserCurationCell(curation: curation)
-                            }
+                    if index < 2 {
+                        NavigationLink(value: data) {
+                            UserCurationCell(curation: curation,
+                                             navigationParentView: self.data.navigationParentView)
                         }
                     }
                 }
             }
         }
+        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+            ReadUserCurationView(data: data)
+        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .fullScreenCover(isPresented: $isWriting) {
+            NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                WriteCurationSetView(isWriting: $isWriting, isEdit: false)
+            }
+            .environmentObject(writeCurationNavigation)
+        }
     }
 }
 
 struct UserCurationListHeader: View {
-    var title: String
     @Binding var userCurations: [Curation]
+    
+    @State var data: NavigationListCurationType
+    
+    let navigationParentView: NavigationParentView
+    
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(title)
+            Text(data.title ?? "")
                 .Title2()
                 .foregroundColor(.Gray5)
                 .onTapGesture { }
             Spacer()
-            if let userCurations {
-                NavigationLink(destination: ListCurationView(userCurations: $userCurations, type: CurationType.myCuration)) {
-                    Text("더보기")
-                        .Footnote()
-                        .foregroundColor(.Gray4)
-                }
+            
+            NavigationLink(value: data) {
+                Text("더보기")
+                    .Footnote()
+                    .foregroundColor(.Gray4)
             }
+        }
+        .navigationDestination(for: NavigationListCurationType.self) { data in
+            ListCurationView(userCurations: $userCurations,
+                             data: data)
+            
         }
     }
 }

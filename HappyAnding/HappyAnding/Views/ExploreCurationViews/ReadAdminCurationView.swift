@@ -22,11 +22,8 @@ import SwiftUI
 
 struct ReadAdminCurationView: View {
     
-    //TODO: 큐레이션 데이터 모델 제작 후 해당 ObservedObject 삭제 필요.
-    @ObservedObject var shortcutData = fetchData()
-    let curation: Curation
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let curation: Curation
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -47,13 +44,19 @@ struct ReadAdminCurationView: View {
                 .padding(.bottom, 8)
             
             ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
-                    ShortcutCell(shortcutCell: shortcut)
+                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                       navigationParentView: .curations)
+                NavigationLink(value: data) {
+                    ShortcutCell(shortcutCell: shortcut,
+                                 navigationParentView: .curations)
                 }
             }
             
             Spacer()
                 .frame(height: 44)
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: btnBack)
@@ -102,6 +105,7 @@ struct ReadAdminCurationView: View {
     var btnBack : some View { Button(action: {
         self.presentationMode.wrappedValue.dismiss()
         }) {
+            //TODO: 위치와 두께, 색상 조정 필요
             Image(systemName: "chevron.backward") // set image here
                 .foregroundColor(Color.Gray5)
                 .bold()

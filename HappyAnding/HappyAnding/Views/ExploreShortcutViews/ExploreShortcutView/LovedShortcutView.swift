@@ -12,7 +12,7 @@ struct LovedShortcutView: View {
     @Binding var shortcuts: [Shortcuts]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 Text("사랑받는 단축어")
                     .Title2()
@@ -21,28 +21,37 @@ struct LovedShortcutView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: {
-                    ShortcutsListView(shortcuts: $shortcuts, sectionType: SectionType.popular)
-                        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-                }, label: {
+                NavigationLink(value: NavigationListShortcutType(sectionType: .popular,
+                                                                 shortcuts: shortcuts,
+                                                                 navigationParentView: .shortcuts)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
-                })
+                }
             }
             .padding(.leading, 16)
             
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                     if index < 3 {
-                        NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id), label: {
-                            ShortcutCell(shortcut: shortcut)
-                        })
+                        let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                              navigationParentView: .shortcuts)
+                        
+                        NavigationLink(value: data) {
+                            ShortcutCell(shortcut: shortcut,
+                                         navigationParentView: .shortcuts)
+                        }
                     }
                 }
             }
             
+        }
+        .navigationDestination(for: NavigationListShortcutType.self) { data in
+            ListShortcutView(data: data)
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .background(Color.Background)
     }

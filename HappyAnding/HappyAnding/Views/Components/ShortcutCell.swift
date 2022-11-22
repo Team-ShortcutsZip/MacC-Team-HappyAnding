@@ -33,7 +33,6 @@ struct ShortcutCell: View {
     
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    var shortcut: Shortcuts?
     
     @State var shortcutCell = ShortcutCellModel(
         id: "",
@@ -43,16 +42,13 @@ struct ShortcutCell: View {
         subtitle: "",
         downloadLink: ""
     )
-    
+    var shortcut: Shortcuts?
     var rankNumber: Int = -1
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         
         ZStack {
-            NavigationLink(destination: ReadShortcutView(shortcutID: shortcutCell.id)) {
-                EmptyView()
-            }
-            .opacity(0)
             
             Color.Background
             
@@ -64,7 +60,7 @@ struct ShortcutCell: View {
                     .onTapGesture {
                         if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
-                            shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id)  { shortcut in
+                            if let shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id) {
                                 shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
                             }
                         }
@@ -106,7 +102,7 @@ struct ShortcutCell: View {
     
     var shortcutInfo: some View {
         
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             if rankNumber != -1 {
                 Text("\(rankNumber)")
                     .Subtitle()
@@ -144,7 +140,7 @@ struct ShortcutCell: View {
             .fill(Color.Background_list)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.Background_list_border)
+                    .strokeBorder(Color.Background_list_border)
             )
     }
 }
@@ -152,6 +148,6 @@ struct ShortcutCell: View {
 
 struct ShortcutCell_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutCell()
+        ShortcutCell(navigationParentView: .curations)
     }
 }

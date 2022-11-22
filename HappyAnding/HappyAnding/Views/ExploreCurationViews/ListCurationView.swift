@@ -4,12 +4,11 @@
 //
 //  Created by 이지원 on 2022/10/19.
 //
-
 import SwiftUI
 
 enum CurationType: String {
-    case myCuration = "나의 큐레이션"
-    case userCuration = ""
+    case myCuration = "내가 작성한 큐레이션"
+    case userCuration = "큐레이션 모아보기"
 }
 
 /**
@@ -21,49 +20,58 @@ enum CurationType: String {
 
 struct ListCurationView: View {
     
-//    var userCurations: [UserCuration]
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var userCurations: [Curation]
-    var type: CurationType
-    var title: String?
-    var isAllUser: Bool = false
+    let data: NavigationListCurationType
     
     var body: some View {
-        List {
-            if let title {
-                Text(title)
-                    .Title1()
-                    .foregroundColor(.Gray5)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.Background)
-                    .padding(.horizontal, 16)
-            }
-            ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                UserCurationCell(curation: curation)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.Background)
-                .padding(.top, index == 0 ? 20 : 0 )
-                .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
-                .onAppear {
-                    if userCurations.last == curation && userCurations.count % 10 == 0 {
-                        print(userCurations.count)
-                        if isAllUser {
-                            shortcutsZipViewModel.fetchCurationLimit(isAdmin: false) { curations in
-                                userCurations.append(contentsOf: curations)
+        if userCurations.count == 0 {
+            Text("\(data.type.rawValue)이 없습니다.")
+                .Body2()
+                .foregroundColor(Color.Gray4)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                .navigationBarTitle(self.data.type.rawValue)
+                .navigationBarTitleDisplayMode(.inline)
+        } else {
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    
+                    ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                        
+                        let data = NavigationReadUserCurationType(userCuration: curation,
+                                                                  navigationParentView: self.data.navigationParentView)
+                        
+                        NavigationLink(value: data) {
+                            UserCurationCell(curation: curation,
+                                             navigationParentView: self.data.navigationParentView)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.Background)
+                            .padding(.top, index == 0 ? 20 : 0 )
+                            .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
+                            
+                            .onAppear {
+                                //TODO: 10개씩 불러오도록 변경 필요
+                                if self.data.isAllUser {
+                                    self.userCurations = shortcutsZipViewModel.userCurations
+                                }
                             }
                         }
                     }
                 }
             }
+            .scrollIndicators(.hidden)
+            .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+                ReadUserCurationView(data: data)
+            }
+            .listStyle(.plain)
+            .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+            .scrollContentBackground(.hidden)
+            .navigationBarTitle(self.data.type.rawValue)
+            .navigationBarTitleDisplayMode(.inline)
+
         }
-        .listStyle(.plain)
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-        .scrollContentBackground(.hidden)
-        .navigationBarTitle(type.rawValue)
-        .navigationBarTitleDisplayMode(.inline)
-        
     }
 }
 

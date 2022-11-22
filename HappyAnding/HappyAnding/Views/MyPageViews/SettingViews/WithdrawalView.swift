@@ -64,12 +64,12 @@ struct WithdrawalView: View {
             .frame(maxWidth: .infinity)
             .padding(.bottom, 12)
             
-            Button(action: {
+            Button {
                 self.isTappedSignOutButton = true
-            }) {
+            } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isTappedCheckToggle ? .Primary : .Gray1)
+                        .foregroundColor(isTappedCheckToggle ? .Primary : .Primary .opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("탈퇴하기")
@@ -79,12 +79,20 @@ struct WithdrawalView: View {
             }
             .disabled(!isTappedCheckToggle)
             .padding(.bottom, 44)
-            .alert(isPresented: $isTappedSignOutButton) {
-                Alert(title: Text("탈퇴하기"),
-                      message: Text("ShortcutsZip에서 탈퇴하시겠습니까?"),
-                      primaryButton: .default(Text("취소")
-                                              ,action: { self.isTappedSignOutButton = false }),
-                      secondaryButton: .destructive(Text("탈퇴"), action: { signOut() }))
+            .alert("탈퇴하기", isPresented: $isTappedSignOutButton) {
+                Button(role: .cancel) {
+                    
+                } label: {
+                    Text("닫기")
+                }
+                
+                Button(role: .destructive) {
+                    signOut()
+                } label: {
+                    Text("탈퇴")
+                }
+            } message: {
+                Text("ShortcutsZip에서 탈퇴하시겠습니까?")
             }
         }
         .padding(.horizontal, 16)
@@ -101,6 +109,7 @@ struct WithdrawalView: View {
             } else {
                 if let user = shortcutsZipViewModel.userInfo {
                     shortcutsZipViewModel.deleteData(model: user)
+                    shortcutsZipViewModel.resetUser()
                     withAnimation(.easeInOut) {
                         self.signInStatus = false
                         userAuth.signOut()

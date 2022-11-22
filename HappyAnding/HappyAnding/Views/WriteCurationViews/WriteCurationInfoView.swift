@@ -10,19 +10,15 @@ import SwiftUI
 struct WriteCurationInfoView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     
     @State var isValidTitle = false
     @State var isValidDescription = false
-    @State var curation = Curation(title: "",
-                                   subtitle: "",
-                                   isAdmin: false,
-                                   background: "White",
-                                   author: "",
-                                   shortcuts: [ShortcutCellModel]())
+    
+    @Binding var curation: Curation
     @Binding var isWriting: Bool
     
     let isEdit: Bool
-//    var shortcuts: [Shortcuts]
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
@@ -55,44 +51,41 @@ struct WriteCurationInfoView: View {
             Spacer()
                 .frame(maxHeight: .infinity)
             
-            Button(action: {
+            Button {
                 curation.author = shortcutsZipViewModel.currentUser()
-                
-                if isEdit {
-                    if let index = shortcutsZipViewModel.curationsMadeByUser.firstIndex(where: { $0.id == curation.id}) {
-                        shortcutsZipViewModel.curationsMadeByUser[index] = curation
-                    }
-                } else {
-                    shortcutsZipViewModel.curationsMadeByUser.insert(curation, at: 0)
-                    shortcutsZipViewModel.userCurations.insert(curation, at: 0)
-                }
                 shortcutsZipViewModel.setData(model: curation)
                 shortcutsZipViewModel.updateShortcutCurationID(
                     shortcutCells: curation.shortcuts,
                     curationID: curation.id
                 )
+                if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == curation.id}) {
+                    shortcutsZipViewModel.userCurations[index] = curation
+                }
                 
-                isWriting.toggle()
-            }, label: {
+                self.isWriting.toggle()
+                writeCurationNavigation.navigationPath = .init()
+            } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isIncomplete ?.Gray1 : .Primary)
+                        .foregroundColor(isIncomplete ? .Primary .opacity(0.13) : .Primary)
                         .padding(.horizontal, 16)
                         .frame(height: 52)
                     Text("완료")
                         .foregroundColor(isIncomplete ? .Text_Button_Disable : .Text_Button)
+                        .Body1()
                 }
-            })
+            }
             .disabled(isIncomplete)
         }
         .background(Color.Background)
-        .navigationBarTitle(isEdit ? "나의 큐레이션 편집" : "나의 큐레이션 만들기")
+        .navigationBarTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }
 
-struct WriteCurationInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteCurationInfoView(isWriting: .constant(true), isEdit: false)
-    }
-}
+//struct WriteCurationInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WriteCurationInfoView(isWriting: .constant(true),
+//                              isEdit: false, navigationParentView: .curations)
+//    }
+//}

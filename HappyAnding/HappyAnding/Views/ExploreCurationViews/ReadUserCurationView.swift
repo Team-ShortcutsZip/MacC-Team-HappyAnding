@@ -12,14 +12,14 @@ struct ReadUserCurationView: View {
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var writeCurationNavigation = WriteCurationNavigation()
     @State var authorInformation: User? = nil
     
     @State var isWriting = false
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
-    
-    let userCuration: Curation
+    @State var data: NavigationReadUserCurationType
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -38,16 +38,32 @@ struct ReadUserCurationView: View {
                     userInformation
                         .padding(.top, 103)
                         .padding(.bottom, 22)
-                    UserCurationCell(curation: userCuration)
-                        .padding(.bottom, 12)
+                    
+                    UserCurationCell(curation: data.userCuration,
+                                     navigationParentView: data.navigationParentView)
+                    .padding(.bottom, 12)
                 }
             }
-            ForEach(Array(userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
-                    ShortcutCell(shortcutCell: shortcut)
-                    .padding(.bottom, index == userCuration.shortcuts.count - 1 ? 44 : 0)
+            ForEach(Array(self.data.userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                      navigationParentView: self.data.navigationParentView)
+                
+                NavigationLink(value: data) {
+                    ShortcutCell(shortcutCell: shortcut,
+                                 navigationParentView: self.data.navigationParentView)
+                    .padding(.bottom, index == self.data.userCuration.shortcuts.count - 1 ? 44 : 0)
                 }
             }
+        }
+        .onChange(of: isWriting) { _ in
+            if !isWriting {
+                if let updatedCuration = shortcutsZipViewModel.fetchCurationDetail(curationID: data.userCuration.id) {
+                    data.userCuration = updatedCuration
+                }
+            }
+        }
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: BackButton)
@@ -57,7 +73,7 @@ struct ReadUserCurationView: View {
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Menu(content: {
-            if userCuration.author == shortcutsZipViewModel.currentUser() {
+            if self.data.userCuration.author == shortcutsZipViewModel.currentUser() {
                 myCurationMenuSection
             } else {
                 //다른 사람 큐레이션 볼 때 공유버튼 동작(트레일링 아이템) 제거.
@@ -65,17 +81,19 @@ struct ReadUserCurationView: View {
 //                otherCurationMenuSection
             }
         }, label: {
-            Image(systemName: userCuration.author == shortcutsZipViewModel.currentUser() ? "ellipsis" : "square.and.arrow.up")
+            Image(systemName: self.data.userCuration.author == shortcutsZipViewModel.currentUser() ? "ellipsis" : "square.and.arrow.up")
                 .foregroundColor(.Gray4)
                 //다른 사람 큐레이션 볼 때 공유버튼 (트레일링 아이템) opacity 0
                 // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 제거
-                .opacity(userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
+                .opacity(self.data.userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
         }))
-        .fullScreenCover(isPresented: $isTappedEditButton) {
-            NavigationView {
-                WriteCurationSetView(isWriting: $isTappedEditButton,
-                                     curation: userCuration, isEdit: true)
+        .fullScreenCover(isPresented: $isWriting) {
+            NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                WriteCurationSetView(isWriting: $isWriting,
+                                     curation: self.data.userCuration,
+                                     isEdit: true)
             }
+            .environmentObject(writeCurationNavigation)
         }
     }
     
@@ -125,14 +143,14 @@ struct ReadUserCurationView: View {
                       secondaryButton: .destructive(
                         Text("삭제")
                         , action: {
-                            shortcutsZipViewModel.deleteData(model: userCuration)
-                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != userCuration.id }
+                            shortcutsZipViewModel.deleteData(model: self.data.userCuration)
+                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
                             presentation.wrappedValue.dismiss()
                 }))
             }
         }
         .onAppear {
-            shortcutsZipViewModel.fetchUser(userID: userCuration.author) { user in
+            shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author) { user in
                 authorInformation = user
             }
         }
@@ -141,7 +159,8 @@ struct ReadUserCurationView: View {
         Button(action: {
         self.presentation.wrappedValue.dismiss()
         }) {
-            Image(systemName: "chevron.backward") // set image here
+            //TODO: 위치와 두께, 색상 조정 필요
+            Image(systemName: "chevron.backward")
                 .foregroundColor(Color.Gray5)
                 .bold()
         }
@@ -150,11 +169,13 @@ struct ReadUserCurationView: View {
 
 
 extension ReadUserCurationView {
+    
     var myCurationMenuSection: some View {
+        
         Section {
-            Button(action: {
-                isTappedEditButton.toggle()
-            }) {
+            Button {
+                self.isWriting.toggle()
+            } label: {
                 Label("편집", systemImage: "square.and.pencil")
             }
             

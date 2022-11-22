@@ -15,90 +15,52 @@ struct ShortcutsListView: View {
     
     @State var isLastShortcut: Bool = false
     
-    var categoryName: Category?
-    var sectionType: SectionType?
+    var categoryName: Category
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         ScrollView {
             
             scrollHeader
             
-            LazyVStack {
+            LazyVStack(spacing: 0) {
                 ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                    NavigationLink(destination: ReadShortcutView(shortcutID: shortcut.id)) {
+                    let data = NavigationReadShortcutType(shortcut: shortcut,
+                                                          shortcutID: shortcut.id,
+                                                          navigationParentView: self.navigationParentView)
+                    NavigationLink(value: data) {
                         ShortcutCell(shortcut: shortcut,
-                                     rankNumber: sectionType == .download ? index + 1 : -1)
+                                     navigationParentView: self.navigationParentView)
+                        
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .onAppear {
-                            if shortcuts.count-1 == index && !isLastShortcut {
-                                if let categoryName = self.categoryName {
-                                    self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
-                                        if Set(newShortcuts).intersection(Set(shortcuts)) == [] {
-                                            self.shortcuts.append(contentsOf: newShortcuts)
-                                        }
-                                        else {
-                                            isLastShortcut = true
-                                        }
-                                    }
-                                }
-                                // TODO: sectionType에 따라서 요청함수 다르거 해줘야 함
-                                switch self.sectionType {
-                                case .download:
-                                    shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfDownload") { newShortcuts in
-                                        if Set(newShortcuts).intersection(Set(shortcuts)) == [] {
-                                            self.shortcuts.append(contentsOf: newShortcuts)
-                                        }
-                                        else {
-                                            isLastShortcut = true
-                                        }
-                                    }
-                                case .popular:
-                                    shortcutsZipViewModel.fetchShortcutLimit(orderBy: "numberOfLike") { newShortcuts in
-                                        if Set(newShortcuts).intersection(Set(shortcuts)) == [] {
-                                            self.shortcuts.append(contentsOf: newShortcuts)
-                                        }
-                                        else {
-                                            isLastShortcut = true
-                                        }
-                                    }
-                                default: break
-                                }
-                            }
+                            
                         }
                     }
                 }
             }
         }
-        .navigationBarTitle((categoryName == nil ? "" : categoryName?.translateName())!)
+        .scrollIndicators(.hidden)
+        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+            ReadShortcutView(data: data)
+        }
+        .navigationBarTitle(categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)
         .onAppear {
-            if let categoryName = self.categoryName {
-                if shortcutsZipViewModel.isFirstFetchInCategory[categoryName.index] {
-                    self.shortcutsZipViewModel.fetchCategoryShortcutLimit(category: categoryName, orderBy: "date") { newShortcuts in
-                        self.shortcuts.append(contentsOf: newShortcuts)
-                    }
-                    shortcutsZipViewModel.isFirstFetchInCategory[categoryName.index] = false
-                }
-            }
+            self.shortcuts = shortcutsZipViewModel.shortcutsInCategory[categoryName.index]
         }
     }
     
     var scrollHeader: some View {
         VStack {
-            if let categoryName {
-                Text(categoryName.fetchDescription())
-            } else {
-                if let sectionType {
-                    Text(sectionType.description)
-                }
-            }
+            Text(categoryName.fetchDescription())
         }
         .foregroundColor(.Gray5)
         .Body2()
         .padding(16)
-        .frame(maxWidth: .infinity, alignment: sectionType == .download ? .center : .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             Rectangle()
                 .foregroundColor(Color.Gray1)

@@ -16,6 +16,7 @@ struct HappyAndingApp: App {
     
     @StateObject var userAuth = UserAuth.shared
     @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
+    @AppStorage("signInStatus") var signInStatus = false
     
     init() {
         FirebaseApp.configure()
@@ -24,9 +25,34 @@ struct HappyAndingApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ShortcutTabView()
-                .environmentObject(userAuth)
-                .environmentObject(shorcutsZipViewModel)
+            if signInStatus {
+                ShortcutTabView()
+                    .environmentObject(userAuth)
+                    .environmentObject(shorcutsZipViewModel)
+            }  else {
+                if userAuth.isLoggedIn {
+                    WriteNicknameView()
+                        .environmentObject(shorcutsZipViewModel)
+                        .onDisappear() {
+                            if shorcutsZipViewModel.userInfo == nil {
+                                shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
+                                    shorcutsZipViewModel.userInfo = user
+                                }
+                            }
+                        }
+                } else {
+                    SignInWithAppleView()
+                        .onDisappear() {
+                            if shorcutsZipViewModel.userInfo == nil {
+                                shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
+                                    shorcutsZipViewModel.userInfo = user
+                                    shorcutsZipViewModel.initUserShortcut(user: user)
+                                    shorcutsZipViewModel.curationsMadeByUser = shorcutsZipViewModel.fetchCurationByAuthor(author: user.id)
+                                }
+                            }
+                        }
+                }
+            }
         }
     }
 }
