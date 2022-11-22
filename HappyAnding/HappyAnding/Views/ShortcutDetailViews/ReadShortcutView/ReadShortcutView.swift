@@ -122,6 +122,9 @@ struct ReadShortcutView: View {
                 data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
             }
         }
+        .onChange(of: shortcutsZipViewModel.allComments) { _ in
+            self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
+        }
         .onDisappear() {
             if let shortcut = data.shortcut {
                 let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
@@ -250,7 +253,7 @@ struct ReadShortcutView: View {
                 .foregroundColor(.Gray5)
             Spacer()
             Button {
-                comment.bundel_id = "\(Date().getDate())_\(UUID().uuidString)"
+                comment.bundle_id = "\(Date().getDate())_\(UUID().uuidString)"
                 comment.depth = 0
             } label: {
                 Image(systemName: "xmark")
@@ -365,7 +368,7 @@ extension ReadShortcutView {
                                                         geometryProxy.size)
                                 })
                     case 2:
-                        ReadShortcutCommentView(addedComment: $comment, comments: $comments.comments, nestedCommentInfoText: $nestedCommentInfoText, shortcutID: data.shortcutID)
+                        ReadShortcutCommentView(addedComment: $comment, comments: $comments, nestedCommentInfoText: $nestedCommentInfoText, shortcutID: data.shortcutID)
                             .background(
                                 GeometryReader { geometryProxy in
                                     Color.clear
