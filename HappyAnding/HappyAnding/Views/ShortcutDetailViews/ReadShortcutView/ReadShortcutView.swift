@@ -80,36 +80,8 @@ struct ReadShortcutView: View {
             }
         }
         .background(Color.Background)
-        .onAppear(perform: {UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground() })
-        .onChange(of: isEdit) { _ in
-            if !isEdit {
-                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
-            }
-        }
-        .onDisappear() {
-            if let shortcut = data.shortcut {
-                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
-                if isClickDownload && isAlreadyContained {
-                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
-
-                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
-                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
-                }
-                if isMyLike != isFirstMyLike {
-                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
-                    if isMyLike {
-                        shortcutsZipViewModel.userInfo?.likedShortcuts.insert(self.data.shortcutID, at: 0)
-                        shortcutsZipViewModel.shortcutsUserLiked.insert(shortcut, at: 0)
-                    } else {
-                        shortcutsZipViewModel.userInfo?.likedShortcuts.removeAll(where: { $0 == self.data.shortcutID })
-                        shortcutsZipViewModel.shortcutsUserLiked.removeAll(where: { $0.id == self.data.shortcutID })
-                    }
-                }
-            }
-        }
         .safeAreaInset(edge: .bottom, spacing: 0) {
-           
+            
             VStack {
                 if currentTab == 2 {
                     textField
@@ -138,8 +110,8 @@ struct ReadShortcutView: View {
             }
             .ignoresSafeArea(.keyboard)
         }
-        .background(Color.Background)
         .onAppear() {
+            UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
             data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
             isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
             isFirstMyLike = isMyLike
@@ -149,9 +121,6 @@ struct ReadShortcutView: View {
             if !isEdit || !isUpdating {
                 data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
             }
-        }
-        .onChange(of: shortcutsZipViewModel.allComments) { _ in
-            self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
         }
         .onDisappear() {
             if let shortcut = data.shortcut {
