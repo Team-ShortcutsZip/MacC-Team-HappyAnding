@@ -424,6 +424,8 @@ class ShortcutsZipViewModel: ObservableObject {
         var increment = 0
         if isMyLike {
             increment = 1
+            shortcutsUserLiked.append(shortcut)
+            userInfo?.likedShortcuts.append(shortcut.id)
             self.fetchUser(userID: self.currentUser()) { data in
                 var user = data
                 user.likedShortcuts.append(shortcut.id)
@@ -436,10 +438,11 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         } else {
             increment = -1
+            shortcutsUserLiked.removeAll(where: { $0.id == shortcut.id })
+            userInfo?.likedShortcuts.removeAll(where: { $0 == shortcut.id })
             self.fetchUser(userID: self.currentUser()) { data in
                 var user = data
                 user.likedShortcuts.removeAll(where: { $0 == shortcut.id })
-                
                 self.db.collection("User").document(user.id).setData(user.dictionary) { error in
                     if let error {
                         print(error.localizedDescription)
