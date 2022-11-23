@@ -52,7 +52,7 @@ class CustomShareViewController: UIViewController {
     }
     
     private lazy var extShortcutsView: UIView = {
-        let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
+        let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(isWriting: self.$isWriting, shareExtensionLink: "https://www.icloud.com/shortcuts/e122329600c44dc5a787a5d5f88c7e17", isEdit: false))
         self.present(extShortcutsView, animated: true)
 
 //        return extShortcutsView.view
