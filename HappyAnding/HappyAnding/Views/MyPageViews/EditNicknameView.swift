@@ -79,31 +79,29 @@ struct EditNicknameView: View {
     
     ///닉네임 입력 텍스트필드
     var textField: some View {
-        ZStack(alignment: .leading) {
-            HStack {
-                TextField("닉네임 (최대 8글자)", text: $nickname)
-                    .Body2()
-                    .focused($isFocused)
-                    .foregroundColor(.Gray5)
-                    .frame(height: 20)
-                    .padding(.leading, 16)
-                    .padding(.vertical, 12)
-                    .onAppear(perform : UIApplication.shared.hideKeyboard)
-                    .onChange(of: nickname) {_ in
-                        isValidLength = nickname.count <= 8 && !nickname.isEmpty
-                        isNicknameChecked = false
-                        isNormalString = nickname.checkCorrectNickname()
-                    }
-                if !nickname.isEmpty {
-                    textFieldSFSymbol
+        HStack {
+            TextField("닉네임 (최대 8글자)", text: $nickname)
+                .Body2()
+                .focused($isFocused)
+                .foregroundColor(.Gray5)
+                .frame(height: 20)
+                .padding(.leading, 16)
+                .padding(.vertical, 12)
+                .onAppear(perform : UIApplication.shared.hideKeyboard)
+                .onChange(of: nickname) {_ in
+                    isValidLength = nickname.count <= 8 && !nickname.isEmpty
+                    isNicknameChecked = false
+                    isNormalString = nickname.checkCorrectNickname()
                 }
+            if !nickname.isEmpty {
+                textFieldSFSymbol
             }
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(lineWidth: 1)
-                    .foregroundColor(isNicknameChecked ? .Success : (isValidLength && isNormalString ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
-            )
         }
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(lineWidth: 1)
+                .foregroundColor(isNicknameChecked ? .Success : (isValidLength && isNormalString ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
+        )
     }
     
     ///텍스트필드 SFsymbol 및 버튼
