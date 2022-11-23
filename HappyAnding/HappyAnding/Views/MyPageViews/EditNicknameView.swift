@@ -21,7 +21,7 @@ struct EditNicknameView: View {
     @State var user: User?
     
     @FocusState private var isFocused: Bool
-        
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("닉네임을 수정해주세요")
@@ -135,11 +135,10 @@ struct EditNicknameView: View {
     ///닉네임 중복확인 버튼
     var nicknameCheckButton: some View {
         Button(action: {
-            checkNicknameDuplicate = true
-            
             shortcutszipViewModel.checkNickNameDuplication(name: nickname) { result in
                 isDuplicatedNickname = result
                 isNicknameChecked = !result
+                checkNicknameDuplicate = true
             }
             
             isFocused = false
