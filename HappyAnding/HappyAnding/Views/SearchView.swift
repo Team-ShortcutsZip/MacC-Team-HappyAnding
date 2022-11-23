@@ -124,17 +124,10 @@ struct SearchView: View {
         shortcutResults.removeAll()
         
         for data in shortcutsZipViewModel.allShortcuts {
-            if data.title.contains(searchText.lowercased()) {
-                shortcutResults.insert(data)
-            }
-        }
-        for data in shortcutsZipViewModel.allShortcuts {
-            if data.requiredApp.contains(searchText.lowercased()) {
-                shortcutResults.insert(data)
-            }
-        }
-        for data in shortcutsZipViewModel.allShortcuts {
-            if data.subtitle.contains(searchText.lowercased()) {
+            if data.title.contains(searchText.lowercased()) ||
+                data.requiredApp.contains(searchText.lowercased()) ||
+                data.subtitle.contains(searchText.lowercased())
+            {
                 shortcutResults.insert(data)
             }
         }
