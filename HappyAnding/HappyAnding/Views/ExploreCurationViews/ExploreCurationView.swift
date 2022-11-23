@@ -36,6 +36,7 @@ struct ExploreCurationView: View {
                         print(shortcutsZipViewModel.personalCurations)
                     }
                 }
+                .padding(.bottom, 32)
                 
                 //추천 유저 큐레이션
                 CurationListView(data: NavigationListCurationType(type: .userCuration,
