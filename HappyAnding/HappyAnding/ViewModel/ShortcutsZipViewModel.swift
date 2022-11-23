@@ -463,7 +463,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 다운로드 수를 업데이트하는 함수
     
-    func updateNumberOfDownload(shortcut: Shortcuts) {
+    func updateNumberOfDownload(shortcut: Shortcuts, downloadlinkIndex: Int) {
         self.fetchUser(userID: currentUser()) { data in
             var user = data
             if !data.downloadedShortcuts.contains(where: { $0.id == shortcut.id }) {
@@ -475,7 +475,7 @@ class ShortcutsZipViewModel: ObservableObject {
                             print(error.localizedDescription)
                         }
                     }
-                let shortcutInfo = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+                let shortcutInfo = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[downloadlinkIndex])
                 user.downloadedShortcuts.append(shortcutInfo)
                 self.setData(model: user)
             }
@@ -487,7 +487,7 @@ class ShortcutsZipViewModel: ObservableObject {
     func updateDownloadLinkUpdate(shortcut: Shortcuts) {
         if let index = self.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id}) {
             self.userInfo?.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0]
-            self.setData(model: userInfo)
+            self.setData(model: userInfo as Any)
         }
     }
     

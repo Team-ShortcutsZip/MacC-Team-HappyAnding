@@ -46,9 +46,10 @@ struct ReadShortcutVersionView: View {
                         if index != 0 {
                             Button {
                                 if let url = URL(string: shortcut.downloadLink[index]) {
-                                    isClickPreviousDownload = true
                                     if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
                                         shortcut.numberOfDownload += 1
+                                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
+                                        shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
                                     }
                                     openURL(url)
                                 }
