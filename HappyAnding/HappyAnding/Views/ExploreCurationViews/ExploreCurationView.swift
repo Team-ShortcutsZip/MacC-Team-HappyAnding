@@ -20,13 +20,22 @@ struct ExploreCurationView: View {
                     .padding(.top, 20)
                     .padding(.bottom, 32)
                 
-                //나의 큐레이션
-                UserCurationListView(data: NavigationListCurationType(type: .myCuration,
-                                                                      title: "내가 작성한 큐레이션",
-                                                                      isAllUser: false,
-                                                                      navigationParentView: .curations),
-                                     userCurations: $shortcutsZipViewModel.curationsMadeByUser)
-                .padding(.bottom, 20)
+                //땡땡니을 위한 모음집
+                CurationListView(data: NavigationListCurationType(type: .personalCuration,
+                                                                  title: "",
+                                                                  isAllUser: false,
+                                                                  navigationParentView: .curations),
+                                 userCurations: $shortcutsZipViewModel.personalCurations)
+                .onAppear {
+                    shortcutsZipViewModel.personalCurations.removeAll()
+                    let personalCurationIDs = Set(shortcutsZipViewModel.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
+                    for curationID in personalCurationIDs {
+                        if let curation = shortcutsZipViewModel.userCurations.first(where: { $0.id == curationID }) {
+                            shortcutsZipViewModel.personalCurations.append(curation)
+                        }
+                    }
+                }
+                .padding(.bottom, 32)
                 
                 //추천 유저 큐레이션
                 CurationListView(data: NavigationListCurationType(type: .userCuration,

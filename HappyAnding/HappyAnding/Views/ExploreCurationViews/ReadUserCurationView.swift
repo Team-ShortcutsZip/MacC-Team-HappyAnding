@@ -34,7 +34,7 @@ struct ReadUserCurationView: View {
                 }
                 .frame(minHeight: 371)
                 
-                VStack{
+                VStack {
                     userInformation
                         .padding(.top, 103)
                         .padding(.bottom, 22)
@@ -44,16 +44,19 @@ struct ReadUserCurationView: View {
                     .padding(.bottom, 12)
                 }
             }
-            ForEach(Array(self.data.userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                      navigationParentView: self.data.navigationParentView)
-                
-                NavigationLink(value: data) {
-                    ShortcutCell(shortcutCell: shortcut,
-                                 navigationParentView: self.data.navigationParentView)
-                    .padding(.bottom, index == self.data.userCuration.shortcuts.count - 1 ? 44 : 0)
+            VStack(spacing: 0){
+                ForEach(Array(self.data.userCuration.shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                    let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                          navigationParentView: self.data.navigationParentView)
+                    
+                    NavigationLink(value: data) {
+                        ShortcutCell(shortcutCell: shortcut,
+                                     navigationParentView: self.data.navigationParentView)
+                        .padding(.bottom, index == self.data.userCuration.shortcuts.count - 1 ? 44 : 0)
+                    }
                 }
             }
+            
         }
         .onChange(of: isWriting) { _ in
             if !isWriting {

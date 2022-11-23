@@ -31,6 +31,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     @Published var userCurations: [Curation] = []
+    @Published var personalCurations: [Curation] = []           // "땡땡님을 위한 모음집" 큐레이션배열
     @Published var adminCurations: [Curation] = []
     
     @Published var allComments: [Comments] = []
@@ -62,6 +63,9 @@ class ShortcutsZipViewModel: ObservableObject {
         }
         fetchKeyword { keywords in
             self.keywords = keywords
+        }
+        fetchCommentAll { comments in
+            self.allComments = comments
         }
     }
     
@@ -421,6 +425,8 @@ class ShortcutsZipViewModel: ObservableObject {
         var increment = 0
         if isMyLike {
             increment = 1
+            shortcutsUserLiked.append(shortcut)
+            userInfo?.likedShortcuts.append(shortcut.id)
             self.fetchUser(userID: self.currentUser()) { data in
                 var user = data
                 user.likedShortcuts.append(shortcut.id)
@@ -433,10 +439,11 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         } else {
             increment = -1
+            shortcutsUserLiked.removeAll(where: { $0.id == shortcut.id })
+            userInfo?.likedShortcuts.removeAll(where: { $0 == shortcut.id })
             self.fetchUser(userID: self.currentUser()) { data in
                 var user = data
                 user.likedShortcuts.removeAll(where: { $0 == shortcut.id })
-                
                 self.db.collection("User").document(user.id).setData(user.dictionary) { error in
                     if let error {
                         print(error.localizedDescription)
@@ -720,7 +727,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 모든 댓글을 가져오는 함수
     
-    func fetchCommentAll(shortcutID: String, completionHandler: @escaping ([Comments]) -> ()) {
+    func fetchCommentAll(completionHandler: @escaping ([Comments]) -> ()) {
         var comments: [Comments] = []
         var query: Query!
         
@@ -731,6 +738,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 print("Error fetching snapshots: \(error!)")
                 return
             }
+            print(snapshot.metadata.isFromCache ? "**local cache" : "**server")
             snapshot.documentChanges.forEach { diff in
                 let decoder = JSONDecoder()
                 
@@ -743,12 +751,12 @@ class ShortcutsZipViewModel: ObservableObject {
                         comments.insert(comment, at: 0)
                     }
                     if (diff.type == .modified) {
-                        if let index = self.allComments.firstIndex(where: { $0.id == shortcutID}) {
-                            self.allComments[index] = comment
+                        if let index = comments.firstIndex(where: {$0.id == comment.id}) {
+                            comments[index] = comment
                         }
                     }
                     if (diff.type == .removed) {
-                        comments.removeAll(where: { $0.id == shortcutID})
+                        comments.removeAll(where: { $0.id == comment.id})
                     }
                 } catch let error {
                     print("error: \(error)")
@@ -760,33 +768,34 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 단축어 ID에 해당하는 댓글 목록 불러오는 함수
     
-    func fetchComment(shortcutID: String) -> Comments? {
+    func fetchComment(shortcutID: String) -> Comments {
         if let index = allComments.firstIndex(where: {$0.id == shortcutID}) {
+            allComments[index].comments = allComments[index].fetchSortedComment()
             return allComments[index]
         }
-        return nil
+        return Comments(id: shortcutID, comments: [])
     }
     
     func updateComment(shortcutID: String, comment: Comment) {
-        if var comments = fetchComment(shortcutID: shortcutID) {
-            comments.comments.append(comment)
-            setData(model: comments)
-        }
+        var data = comment
+        data.date = Date().getDate()
+        data.user_id = self.userInfo!.id
+        var comments = fetchComment(shortcutID: shortcutID)
+        comments.comments.append(data)
+        setData(model: comments)
     }
     
     //대댓글 삭제 시 이용
     func deleteComment(shortcutID: String, commentID: String) {
-        if var comments = fetchComment(shortcutID: shortcutID) {
-            comments.comments.removeAll(where: { $0.id == commentID })
-            setData(model: comments)
-        }
+        var comments = fetchComment(shortcutID: shortcutID)
+        comments.comments.removeAll(where: { $0.id == commentID })
+        setData(model: comments)
     }
     
     //원댓글 삭제 시 이용
     func deleteCommentByBundleID(shortcutID: String, bundleID: String) {
-        if var comments = fetchComment(shortcutID: shortcutID) {
-            comments.comments.removeAll(where: { $0.bundel_id == bundleID })
-            setData(model: comments)
-        }
+        var comments = fetchComment(shortcutID: shortcutID)
+        comments.comments.removeAll(where: { $0.bundle_id == bundleID })
+        setData(model: comments)
     }
 }
