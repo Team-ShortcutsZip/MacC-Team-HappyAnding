@@ -130,11 +130,13 @@ struct ReadShortcutView: View {
             if let shortcut = data.shortcut {
                 let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
                 if isClickDownload && isAlreadyContained {
-                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                     shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
                     
                     let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
                     shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
+                } else if isClickDownload && !isAlreadyContained {
+                    shortcutsZipViewModel.updateDownloadLinkUpdate(shortcut: shortcut)
                 }
                 if isMyLike != isFirstMyLike {
                     shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
