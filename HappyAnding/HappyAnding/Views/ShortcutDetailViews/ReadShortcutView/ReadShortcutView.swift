@@ -360,7 +360,7 @@ extension ReadShortcutView {
                                                 value: geometryProxy.size)
                             })
                 case 1:
-                    ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
+                    ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating, isClickDownload: $isClickDownload)
                         .background(
                             GeometryReader { geometryProxy in
                                 Color.clear
