@@ -64,6 +64,11 @@ struct EditNicknameView: View {
                 self.user = user
             })
         }
+        .onDisappear {
+            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser()) { user in
+                shortcutszipViewModel.userInfo = user
+            }
+        }
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
         .background(Color.Background)
