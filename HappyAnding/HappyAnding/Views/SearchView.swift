@@ -21,22 +21,24 @@ struct SearchView: View {
     var body: some View {
         VStack {
             if !isSearched {
-                recommendKeword
+                recommendKeyword
                 Spacer()
             } else {
                 if shortcutResults.count == 0 {
                     proposeView
                 } else {
                     ScrollView {
-                        ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
-                            
-                            let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                  navigationParentView: .shortcuts)
-                            NavigationLink(value: data) {
-                                ShortcutCell(shortcut: shortcut,
-                                             navigationParentView: NavigationParentView.shortcuts)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
+                        VStack(spacing: 0) {
+                            ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
+                                
+                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                                      navigationParentView: .shortcuts)
+                                NavigationLink(value: data) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: NavigationParentView.shortcuts)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
                             }
                         }
                     }
@@ -51,34 +53,24 @@ struct SearchView: View {
         }
         .searchable(text: $searchText)
         .onSubmit(of: .search, runSearch)
-        .onChange(of: searchText) { value in
-            if searchText.isEmpty && !isSearching {
-                // Search cancelled here
-                print("canceled")
+        .onChange(of: searchText) { _ in
+            didChangedSearchText()
+            if !searchText.isEmpty {
+                isSearched = true
+            } else if searchText.isEmpty && !isSearching {
                 shortcutResults.removeAll()
                 isSearched = false
             }
-        }        .navigationBarTitleDisplayMode(.inline)
-            .background(Color.Background)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.Background)
     }
     
     private func runSearch() {
-        Task {
-            isSearched = true
-            shortcutsZipViewModel.searchShortcutByRequiredApp(word: searchText) { shortcuts in
-                shortcuts.forEach { shortcut in
-                    shortcutResults.insert(shortcut)
-                }
-            }
-            shortcutsZipViewModel.searchShortcutByTitlePrefix(keyword: searchText) { shortcuts in
-                shortcuts.forEach { shortcut in
-                    shortcutResults.insert(shortcut)
-                }
-            }
-        }
+        isSearched = true
     }
     
-    var recommendKeword: some View {
+    var recommendKeyword: some View {
         VStack(alignment: .leading) {
             Text("추천 검색어")
                 .padding(.leading, 16)
@@ -125,6 +117,18 @@ struct SearchView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.Background)
+    }
+    private func didChangedSearchText() {
+        shortcutResults.removeAll()
+        
+        for data in shortcutsZipViewModel.allShortcuts {
+            if data.title.contains(searchText.lowercased()) ||
+                data.requiredApp.contains(searchText.lowercased()) ||
+                data.subtitle.contains(searchText.lowercased())
+            {
+                shortcutResults.insert(data)
+            }
+        }
     }
 }
 
