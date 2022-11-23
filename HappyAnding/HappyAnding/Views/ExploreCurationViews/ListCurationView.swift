@@ -26,32 +26,52 @@ struct ListCurationView: View {
     let data: NavigationListCurationType
     
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                
-                ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+        if userCurations.count == 0 {
+            Text("\(data.type.rawValue)이 없습니다.")
+                .Body2()
+                .foregroundColor(Color.Gray4)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                .navigationBarTitle(self.data.type.rawValue)
+                .navigationBarTitleDisplayMode(.inline)
+        } else {
+            ScrollView {
+                LazyVStack(spacing: 0) {
                     
-                    let data = NavigationReadUserCurationType(userCuration: curation,
-                                                              navigationParentView: self.data.navigationParentView)
-                    
-                    NavigationLink(value: data) {
-                        UserCurationCell(curation: curation,
-                                         navigationParentView: self.data.navigationParentView)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.Background)
-                        .padding(.top, index == 0 ? 20 : 0 )
-                        .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
+                    ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
                         
-                        .onAppear {
-                            //TODO: 10개씩 불러오도록 변경 필요
-                            if self.data.isAllUser {
-                                self.userCurations = shortcutsZipViewModel.userCurations
+                        let data = NavigationReadUserCurationType(userCuration: curation,
+                                                                  navigationParentView: self.data.navigationParentView)
+                        
+                        NavigationLink(value: data) {
+                            UserCurationCell(curation: curation,
+                                             navigationParentView: self.data.navigationParentView)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.Background)
+                            .padding(.top, index == 0 ? 20 : 0 )
+                            .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
+                            
+                            .onAppear {
+                                //TODO: 10개씩 불러오도록 변경 필요
+                                if self.data.isAllUser {
+                                    self.userCurations = shortcutsZipViewModel.userCurations
+                                }
                             }
                         }
                     }
                 }
             }
+            .scrollIndicators(.hidden)
+            .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+                ReadUserCurationView(data: data)
+            }
+            .listStyle(.plain)
+            .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+            .scrollContentBackground(.hidden)
+            .navigationBarTitle(self.data.type.rawValue)
+            .navigationBarTitleDisplayMode(.inline)
+
         }
         .scrollIndicators(.hidden)
         .navigationDestination(for: NavigationReadUserCurationType.self) { data in

@@ -8,39 +8,54 @@
 import SwiftUI
 
 struct ReadShortcutCommentView: View {
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var addedComment: Comment
-    @State var comments = [Comment]()
-    @State var isReply = true
+    @Binding var comments: Comments
+    @Binding var nestedCommentInfoText: String
+    @State var isTappedDeleteButton = false
+    @State var deletedComment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
+    let shortcutID: String
     
     var body: some View {
         VStack(alignment: .leading) {
-            if comments.isEmpty {
+            if comments.comments.isEmpty {
                 Text("등록된 댓글이 없습니다")
                     .Body2()
                     .foregroundColor(.Gray4)
-                
             } else {
                 comment
                 Spacer()
             }
         }
         .padding(.top, 16)
-        .onAppear {
-            //TODO: 댓글 데이터 불러오기
-            for _ in 0...10 {
-                let comment = Comment(user_id: "1", date: "2022112211",
-                                      depth: Int.random(in: 0...1),
-                                      contents: "댓글을남겨요")
-                comments.append(comment)
+        .alert("댓글 삭제", isPresented: $isTappedDeleteButton) {
+            Button(role: .cancel) {
+                
+            } label: {
+                Text("닫기")
             }
+            
+            Button(role: .destructive) {
+                if deletedComment.depth == 0 {
+                    comments.comments.removeAll(where: { $0.bundle_id == deletedComment.bundle_id})
+                } else {
+                    comments.comments.removeAll(where: { $0.id == deletedComment.id})
+                }
+                
+                shortcutsZipViewModel.setData(model: comments)
+            } label: {
+                Text("삭제")
+            }
+        } message: {
+            Text("답글도 함께 삭제됩니다. 댓글을 삭제하시겠습니까?")
         }
     }
     
     var comment: some View {
-        ForEach(comments, id: \.self) { comment in
+        ForEach(comments.comments, id: \.self) { comment in
             
             HStack(alignment: .top, spacing: 8) {
-                if comment.depth == 0 {
+                if comment.depth == 1 {
                     Image(systemName: "arrow.turn.down.right")
                         .foregroundColor(.Gray4)
                 }
@@ -54,7 +69,7 @@ struct ReadShortcutCommentView: View {
                             .frame(width: 24, height: 24)
                             .foregroundColor(.Gray4)
                         
-                        Text(comment.user_id)
+                        Text(comment.user_nickname)
                             .Body2()
                             .foregroundColor(.Gray4)
                     }
@@ -71,8 +86,8 @@ struct ReadShortcutCommentView: View {
                     // MARK: Button
                     HStack(spacing: 16) {
                         Button {
-                            print("답글")
-                            addedComment.bundel_id = comment.bundel_id
+                            nestedCommentInfoText = comment.user_nickname
+                            addedComment.bundle_id = comment.bundle_id
                             addedComment.depth = 1
                         } label: {
                             Text("답글")
@@ -80,16 +95,17 @@ struct ReadShortcutCommentView: View {
                                 .foregroundColor(.Gray4)
                         }
                         
-                        Button {
-                            print("수정")
-                        } label: {
-                            Text("수정")
-                                .Footnote()
-                                .foregroundColor(.Gray4)
-                        }
+//                        Button {
+//                            print("수정")
+//                        } label: {
+//                            Text("수정")
+//                                .Footnote()
+//                                .foregroundColor(.Gray4)
+//                        }
                         
                         Button {
-                            print("삭제")
+                            isTappedDeleteButton.toggle()
+                            deletedComment = comment
                         } label: {
                             Text("삭제")
                                 .Footnote()

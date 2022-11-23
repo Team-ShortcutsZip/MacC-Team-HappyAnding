@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ReadShortcutVersionView: View {
     
-    @State var shortcut: Shortcuts
-    @State var updateDate = ""
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @Binding var shortcut: Shortcuts
+    @Binding var isUpdating: Bool
+    
     var body: some View {
         if shortcut.updateDescription.count == 1 {
             Text("아직 업데이트된 버전이 없습니다.")
@@ -29,12 +31,9 @@ struct ReadShortcutVersionView: View {
                                 .foregroundColor(.Gray5)
                             
                             Spacer()
-                            Text(updateDate)
+                            Text(shortcut.date[index].getVersionUpdateDateFormat())
                                 .Body2()
                                 .foregroundColor(.Gray3)
-                        }
-                        .onAppear {
-                            self.updateDate = shortcut.date[index].getVersionUpdateDateFormat()
                         }
                         if data != "" {
                             Text(data)
