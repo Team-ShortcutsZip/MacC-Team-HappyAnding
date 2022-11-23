@@ -232,8 +232,9 @@ struct ReadShortcutView: View {
                     comment = comment.resetComment()
                 } label: {
                     Image(systemName: "paperplane.fill")
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(commentText == "" ? Color.Gray2 : Color.Gray5)
                 }
+                .disabled(commentText == "" ? true : false)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
@@ -340,66 +341,65 @@ extension ReadShortcutView {
     
     var detailInformationView: some View {
         VStack {
-            if let shortcut = data.shortcut {
-                ZStack {
-                    TabView(selection: self.$currentTab) {
-                        Color.clear.tag(0)
-                        Color.clear.tag(1)
-                        Color.clear.tag(2)
-                    }
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .frame(height: height)
-                    
-                    switch(currentTab) {
-                    case 0:
-                        ReadShortcutContentView(shortcut: $data.shortcut.unwrap()!)
-                            .background(
-                                GeometryReader { geometryProxy in
-                                    Color.clear
-                                        .preference(key: SizePreferenceKey.self,
-                                                    value: geometryProxy.size)
-                                })
-                    case 1:
-                        ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
-                            .background(
-                                GeometryReader { geometryProxy in
-                                    Color.clear
-                                        .preference(key: SizePreferenceKey.self, value:
-                                                        geometryProxy.size)
-                                })
-                    case 2:
-                        ReadShortcutCommentView(addedComment: $comment, comments: $comments, nestedCommentInfoText: $nestedCommentInfoText, shortcutID: data.shortcutID)
-                            .background(
-                                GeometryReader { geometryProxy in
-                                    Color.clear
-                                        .preference(key: SizePreferenceKey.self,
-                                                    value: geometryProxy.size)
-                                })
-                    default:
-                        EmptyView()
-                    }
+            ZStack {
+                TabView(selection: self.$currentTab) {
+                    Color.clear.tag(0)
+                    Color.clear.tag(1)
+                    Color.clear.tag(2)
                 }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(height: height)
                 
-                .animation(.easeInOut, value: currentTab)
-                .onPreferenceChange(SizePreferenceKey.self) { newSize in
-                    height = contentSize > newSize.height ? contentSize : newSize.height
+                switch(currentTab) {
+                case 0:
+                    ReadShortcutContentView(shortcut: $data.shortcut.unwrap()!)
+                        .background(
+                            GeometryReader { geometryProxy in
+                                Color.clear
+                                    .preference(key: SizePreferenceKey.self,
+                                                value: geometryProxy.size)
+                            })
+                case 1:
+                    ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
+                        .background(
+                            GeometryReader { geometryProxy in
+                                Color.clear
+                                    .preference(key: SizePreferenceKey.self, value:
+                                                    geometryProxy.size)
+                            })
+                case 2:
+                    ReadShortcutCommentView(addedComment: $comment, comments: $comments, nestedCommentInfoText: $nestedCommentInfoText, shortcutID: data.shortcutID)
+                        .background(
+                            GeometryReader { geometryProxy in
+                                Color.clear
+                                    .preference(key: SizePreferenceKey.self,
+                                                value: geometryProxy.size)
+                            })
+                default:
+                    EmptyView()
                 }
-                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
-                    .onEnded { value in
-                        let horizontalAmount = value.translation.width
-                        let verticalAmount = value.translation.height
-                        
-                        if abs(horizontalAmount) > abs(verticalAmount) {
-                            if horizontalAmount < 0 {
-                                if currentTab < 2 {
-                                    currentTab += 1
-                                }
+            }
+            
+            .animation(.easeInOut, value: currentTab)
+            .onPreferenceChange(SizePreferenceKey.self) { newSize in
+                height = contentSize > newSize.height ? contentSize : newSize.height
+            }
+            .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
+                .onEnded { value in
+                    let horizontalAmount = value.translation.width
+                    let verticalAmount = value.translation.height
+                    
+                    if abs(horizontalAmount) > abs(verticalAmount) {
+                        if horizontalAmount < 0 {
+                            if currentTab < 2 {
+                                currentTab += 1
+                            }
+                        } else {
+                            if currentTab > 0 {
+                                currentTab -= 1
                             } else {
-                                if currentTab > 0 {
-                                    currentTab -= 1
-                                } else {
-                                    
-                                    // MARK: Navigation pop 코드
+                                
+                                // MARK: Navigation pop 코드
 //                                    print("swipe back")
 //                                    switch data.navigationParentView {
 //                                    case .shortcuts:
@@ -413,11 +413,10 @@ extension ReadShortcutView {
 //                                    case .writeShortcut:
 //                                        writeShortcutNavigation.navigationPath.removeLast()
 //                                    }
-                                }
                             }
                         }
-                    })
-            }
+                    }
+                })
         }
     }
     
