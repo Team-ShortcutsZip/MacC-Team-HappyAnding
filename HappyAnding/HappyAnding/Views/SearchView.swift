@@ -18,6 +18,8 @@ struct SearchView: View {
     @State var searchText: String = ""
     @State var shortcutResults = Set<Shortcuts>()
     
+    @FocusState private var isFocused: Bool?
+    
     var body: some View {
         VStack {
             if !isSearched {
@@ -28,15 +30,17 @@ struct SearchView: View {
                     proposeView
                 } else {
                     ScrollView {
-                        ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
-                            
-                            let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                  navigationParentView: .shortcuts)
-                            NavigationLink(value: data) {
-                                ShortcutCell(shortcut: shortcut,
-                                             navigationParentView: NavigationParentView.shortcuts)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
+                        VStack(spacing: 0) {
+                            ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
+                                
+                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                                      navigationParentView: .shortcuts)
+                                NavigationLink(value: data) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: NavigationParentView.shortcuts)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
                             }
                         }
                     }
@@ -51,31 +55,19 @@ struct SearchView: View {
         }
         .searchable(text: $searchText)
         .onSubmit(of: .search, runSearch)
-        .onChange(of: searchText) { value in
+        .onChange(of: searchText) { _ in
+            didChangedSearchText()
             if searchText.isEmpty && !isSearching {
-                // Search cancelled here
-                print("canceled")
                 shortcutResults.removeAll()
                 isSearched = false
             }
-        }        .navigationBarTitleDisplayMode(.inline)
-            .background(Color.Background)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.Background)
     }
     
     private func runSearch() {
-        Task {
-            isSearched = true
-            shortcutsZipViewModel.searchShortcutByRequiredApp(word: searchText) { shortcuts in
-                shortcuts.forEach { shortcut in
-                    shortcutResults.insert(shortcut)
-                }
-            }
-            shortcutsZipViewModel.searchShortcutByTitlePrefix(keyword: searchText) { shortcuts in
-                shortcuts.forEach { shortcut in
-                    shortcutResults.insert(shortcut)
-                }
-            }
-        }
+        isSearched = true
     }
     
     var recommendKeword: some View {
@@ -125,6 +117,25 @@ struct SearchView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.Background)
+    }
+    private func didChangedSearchText() {
+        shortcutResults.removeAll()
+        
+        for data in shortcutsZipViewModel.allShortcuts {
+            if data.title.contains(searchText.lowercased()) {
+                shortcutResults.insert(data)
+            }
+        }
+        for data in shortcutsZipViewModel.allShortcuts {
+            if data.requiredApp.contains(searchText.lowercased()) {
+                shortcutResults.insert(data)
+            }
+        }
+        for data in shortcutsZipViewModel.allShortcuts {
+            if data.subtitle.contains(searchText.lowercased()) {
+                shortcutResults.insert(data)
+            }
+        }
     }
 }
 
