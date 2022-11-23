@@ -43,12 +43,14 @@ struct ReadAdminCurationView: View {
             titleAndSubtitle
                 .padding(.bottom, 8)
             
-            ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
-                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                       navigationParentView: .curations)
-                NavigationLink(value: data) {
-                    ShortcutCell(shortcutCell: shortcut,
-                                 navigationParentView: .curations)
+            VStack(spacing: 0) {
+                ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                    let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                          navigationParentView: .curations)
+                    NavigationLink(value: data) {
+                        ShortcutCell(shortcutCell: shortcut,
+                                     navigationParentView: .curations)
+                    }
                 }
             }
             
