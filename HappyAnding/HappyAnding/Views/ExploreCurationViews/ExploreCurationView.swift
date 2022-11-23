@@ -29,11 +29,10 @@ struct ExploreCurationView: View {
                 .onAppear {
                     shortcutsZipViewModel.personalCurations.removeAll()
                     let personalCurationIDs = Set(shortcutsZipViewModel.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
-                    print(personalCurationIDs)
                     for curationID in personalCurationIDs {
-                        print("\n\n\n\n\ncurationID: \(curationID)")
-                        shortcutsZipViewModel.personalCurations.append(shortcutsZipViewModel.userCurations.first(where: { $0.id == curationID})!)
-                        print(shortcutsZipViewModel.personalCurations)
+                        if let curation = shortcutsZipViewModel.userCurations.first(where: { $0.id == curationID }) {
+                            shortcutsZipViewModel.personalCurations.append(curation)
+                        }
                     }
                 }
                 .padding(.bottom, 32)
