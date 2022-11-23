@@ -57,7 +57,9 @@ struct SearchView: View {
         .onSubmit(of: .search, runSearch)
         .onChange(of: searchText) { _ in
             didChangedSearchText()
-            if searchText.isEmpty && !isSearching {
+            if !searchText.isEmpty {
+                isSearched = true
+            } else if searchText.isEmpty && !isSearching {
                 shortcutResults.removeAll()
                 isSearched = false
             }
