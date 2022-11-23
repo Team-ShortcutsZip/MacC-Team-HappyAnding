@@ -23,7 +23,7 @@ struct SearchView: View {
     var body: some View {
         VStack {
             if !isSearched {
-                recommendKeword
+                recommendKeyword
                 Spacer()
             } else {
                 if shortcutResults.count == 0 {
@@ -72,7 +72,7 @@ struct SearchView: View {
         isSearched = true
     }
     
-    var recommendKeword: some View {
+    var recommendKeyword: some View {
         VStack(alignment: .leading) {
             Text("추천 검색어")
                 .padding(.leading, 16)
