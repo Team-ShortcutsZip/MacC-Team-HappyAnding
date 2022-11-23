@@ -104,7 +104,6 @@ struct ReadShortcutCommentView: View {
                         }
                         
                         Button {
-                            print("삭제")
                             isTappedDeleteButton.toggle()
                             deletedComment = comment
                         } label: {
