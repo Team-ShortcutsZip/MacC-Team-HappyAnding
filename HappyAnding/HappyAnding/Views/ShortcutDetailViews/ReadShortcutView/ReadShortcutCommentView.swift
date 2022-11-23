@@ -47,7 +47,7 @@ struct ReadShortcutCommentView: View {
                 Text("삭제")
             }
         } message: {
-            Text("대댓글도 함께 삭제됩니다. 댓글을 삭제하시겠습니까?")
+            Text("답글도 함께 삭제됩니다. 댓글을 삭제하시겠습니까?")
         }
     }
     

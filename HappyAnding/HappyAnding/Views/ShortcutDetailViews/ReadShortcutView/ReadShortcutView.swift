@@ -41,7 +41,7 @@ struct ReadShortcutView: View {
     @Namespace var namespace
     
     private let contentSize = UIScreen.screenHeight / 2
-    private let tabItems = ["기본 정보", "버전 정보"/*, "댓글"*/]
+    private let tabItems = ["기본 정보", "버전 정보", "댓글"]
     
     var body: some View {
         ScrollView {
