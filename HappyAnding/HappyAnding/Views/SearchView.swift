@@ -18,8 +18,6 @@ struct SearchView: View {
     @State var searchText: String = ""
     @State var shortcutResults = Set<Shortcuts>()
     
-    @FocusState private var isFocused: Bool?
-    
     var body: some View {
         VStack {
             if !isSearched {
