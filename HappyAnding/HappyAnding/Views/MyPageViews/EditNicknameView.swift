@@ -6,10 +6,8 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
 struct EditNicknameView: View {
-    @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var profileNavigation: ProfileNavigation
     
@@ -20,6 +18,7 @@ struct EditNicknameView: View {
     @State var isValidLength = false
     @State private var isTappedPrivacyButton = false
     @State var isNormalString = true
+    @State var user: User?
     
     @FocusState private var isFocused: Bool
         
@@ -58,6 +57,12 @@ struct EditNicknameView: View {
             Spacer()
             
             doneButton
+        }
+        .onAppear {
+            nickname = shortcutszipViewModel.userInfo?.nickname ?? ""
+            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(), completionHandler: { user in
+                self.user = user
+            })
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
@@ -160,8 +165,8 @@ struct EditNicknameView: View {
     ///완료 버튼
     var doneButton: some View {
         Button(action: {
-            
-            //TODO: - 현재 user에 새로운 nickname을 저장
+            user?.nickname = self.nickname
+            shortcutszipViewModel.setData(model: user!)
             
             profileNavigation.navigationPath.removeLast()
         }, label: {
