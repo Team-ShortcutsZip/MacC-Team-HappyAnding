@@ -31,6 +31,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     @Published var userCurations: [Curation] = []
+    @Published var personalCurations: [Curation] = []           // "땡땡님을 위한 모음집" 큐레이션배열
     @Published var adminCurations: [Curation] = []
     
     @Published var allComments: [Comments] = []

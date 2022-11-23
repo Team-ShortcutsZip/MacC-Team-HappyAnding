@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CurationListView: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var data: NavigationListCurationType
     @Binding var userCurations: [Curation]
     
@@ -41,6 +42,8 @@ struct CurationListView: View {
 }
 
 struct CurationListHeader: View {
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var userCurations: [Curation]
     
     @State var data: NavigationListCurationType
@@ -48,10 +51,17 @@ struct CurationListHeader: View {
     
     var body: some View {
         HStack(alignment: .bottom) {
-            Text(data.title ?? "")
-                .Title2()
-                .foregroundColor(.Gray5)
-                .onTapGesture { }
+            if data.type == .personalCuration {
+                Text("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
+                    .Title2()
+                    .foregroundColor(.Gray5)
+                    .onTapGesture { }
+            } else {
+                Text(data.title ?? "")
+                    .Title2()
+                    .foregroundColor(.Gray5)
+                    .onTapGesture { }
+            }
             Spacer()
             
             NavigationLink(value: data) {

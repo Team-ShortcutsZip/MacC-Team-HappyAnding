@@ -9,6 +9,7 @@ import SwiftUI
 enum CurationType: String {
     case myCuration = "내가 작성한 큐레이션"
     case userCuration = "큐레이션 모아보기"
+    case personalCuration = "님을 위한 모음집"
 }
 
 /**
@@ -72,6 +73,15 @@ struct ListCurationView: View {
             .navigationBarTitleDisplayMode(.inline)
 
         }
+        .scrollIndicators(.hidden)
+        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+            ReadUserCurationView(data: data)
+        }
+        .listStyle(.plain)
+        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .scrollContentBackground(.hidden)
+        .navigationBarTitle("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(self.data.type.rawValue)")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
