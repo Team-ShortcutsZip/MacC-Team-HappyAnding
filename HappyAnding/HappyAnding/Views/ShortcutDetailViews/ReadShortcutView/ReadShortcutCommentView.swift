@@ -95,13 +95,13 @@ struct ReadShortcutCommentView: View {
                                 .foregroundColor(.Gray4)
                         }
                         
-                        Button {
-                            print("수정")
-                        } label: {
-                            Text("수정")
-                                .Footnote()
-                                .foregroundColor(.Gray4)
-                        }
+//                        Button {
+//                            print("수정")
+//                        } label: {
+//                            Text("수정")
+//                                .Footnote()
+//                                .foregroundColor(.Gray4)
+//                        }
                         
                         Button {
                             isTappedDeleteButton.toggle()

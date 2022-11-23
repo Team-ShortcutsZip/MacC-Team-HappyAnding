@@ -249,7 +249,7 @@ struct ReadShortcutView: View {
     }
     var nestedCommentInfo: some View {
         HStack {
-            Text("@\(nestedCommentInfoText)")
+            Text("@ \(nestedCommentInfoText)")
                 .Footnote()
                 .foregroundColor(.Gray5)
             Spacer()
