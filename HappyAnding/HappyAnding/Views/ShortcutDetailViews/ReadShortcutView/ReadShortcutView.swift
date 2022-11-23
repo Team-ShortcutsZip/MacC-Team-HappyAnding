@@ -28,6 +28,7 @@ struct ReadShortcutView: View {
     @State var isMyLike: Bool = false
     @State var isFirstMyLike = false
     @State var isClickDownload = false
+    @State var isClickPreviousDownload = false
     
     @State var data: NavigationReadShortcutType
     @State var comments: Comments = Comments(id: "", comments: [])
@@ -360,7 +361,7 @@ extension ReadShortcutView {
                                                 value: geometryProxy.size)
                             })
                 case 1:
-                    ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating, isClickDownload: $isClickDownload)
+                    ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating, isClickPreviousDownload: $isClickPreviousDownload)
                         .background(
                             GeometryReader { geometryProxy in
                                 Color.clear

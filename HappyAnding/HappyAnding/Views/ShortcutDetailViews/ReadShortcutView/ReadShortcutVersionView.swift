@@ -14,7 +14,7 @@ struct ReadShortcutVersionView: View {
     
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool
-    @Binding var isClickDownload: Bool
+    @Binding var isClickPreviousDownload: Bool
     
     var body: some View {
         if shortcut.updateDescription.count == 1 {
@@ -46,7 +46,7 @@ struct ReadShortcutVersionView: View {
                         if index != 0 {
                             Button {
                                 if let url = URL(string: shortcut.downloadLink[index]) {
-                                    isClickDownload = true
+                                    isClickPreviousDownload = true
                                     if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
                                         shortcut.numberOfDownload += 1
                                     }
@@ -54,7 +54,7 @@ struct ReadShortcutVersionView: View {
                                 }
                             } label: {
                                 Text("이전 버전 다운로드")
-                                    .Body1()
+                                    .Body2()
                                     .foregroundColor(.Primary)
                             }
                         }
