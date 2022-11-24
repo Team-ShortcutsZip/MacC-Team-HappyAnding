@@ -218,7 +218,7 @@ struct ReadShortcutView: View {
                 TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
                     .Body2()
                     .focused($isFocused)
-                    .onAppear(perform: UIApplication.shared.hideKeyboard())
+                    .onAppear(perform : UIApplication.shared.hideKeyboard)
                 
                 Button {
                     comment.contents = commentText

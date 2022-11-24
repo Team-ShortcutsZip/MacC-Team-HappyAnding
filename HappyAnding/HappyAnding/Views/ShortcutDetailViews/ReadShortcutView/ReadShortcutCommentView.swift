@@ -103,13 +103,17 @@ struct ReadShortcutCommentView: View {
                                 .foregroundColor(.Gray4)
                         }
                         
-                        Button {
-                            isTappedDeleteButton.toggle()
-                            deletedComment = comment
-                        } label: {
-                            Text("삭제")
-                                .Footnote()
-                                .foregroundColor(.Gray4)
+                        if let user = shortcutsZipViewModel.userInfo {
+                            if user.id == comment.user_id {
+                                Button {
+                                    isTappedDeleteButton.toggle()
+                                    deletedComment = comment
+                                } label: {
+                                    Text("삭제")
+                                        .Footnote()
+                                        .foregroundColor(.Gray4)
+                                }
+                            }
                         }
                     }
                     Divider()
