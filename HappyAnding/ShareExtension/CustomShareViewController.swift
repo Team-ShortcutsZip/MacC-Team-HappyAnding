@@ -7,58 +7,52 @@
 
 import UIKit
 import SwiftUI
-import Foundation
+import MobileCoreServices
+import UniformTypeIdentifiers
 import FirebaseCore
 
 
 class CustomShareViewController: UIViewController {
     
     @State var isWriting = false
-        
+    @State var hostAppShortcutLink: String = "test"
+    
+    func urlData() {
+
+    }
+    
     override func viewDidLoad() {
+        urlData()
         super.viewDidLoad()
         setupViews()
-        // 1: Set the background and call the function to create the navigation bar
         self.view.backgroundColor = UIColor(Color.Background)
         setupNavBar()
     }
     
-//    private func openSwiftUIView() {
-//        let hostingController = UIHostingController(rootView: WriteShortcutTitleView(isWriting: self.$isWriting, isEdit: false))
-//        hostingController.sizingOptions = .preferredContentSize
-//        hostingController.modalPresentationStyle = .popover
-//        self.present(hostingController, animated: true)
-//    }
-
-    // 2: Set the title and the navigation items
+    ///Set Navigation Bar
     private func setupNavBar() {
         self.navigationItem.title = "ShortcutsZip"
-
+        
         let itemCancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         self.navigationItem.setLeftBarButton(itemCancel, animated: false)
-
+        
         let itemDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         self.navigationItem.setRightBarButton(itemDone, animated: false)
     }
-
-    // 3: Define the actions for the navigation items
     @objc private func cancelAction () {
         let error = NSError(domain: "some.bundle.identifier", code: 0, userInfo: [NSLocalizedDescriptionKey: "An error description"])
         extensionContext?.cancelRequest(withError: error)
     }
-
     @objc private func doneAction() {
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     
+    ///UIHostingView (SwiftUI view)
     private lazy var extShortcutsView: UIView = {
-        let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(isWriting: self.$isWriting, shareExtensionLink: "https://www.icloud.com/shortcuts/e122329600c44dc5a787a5d5f88c7e17", isEdit: false))
+        let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(isWriting: self.$isWriting, shareExtensionLink: hostAppShortcutLink, isEdit: false))
         self.present(extShortcutsView, animated: true)
-
-//        return extShortcutsView.view
         return UIView()
     }()
-
     private func setupViews() {
         self.view.addSubview(extShortcutsView)
         NSLayoutConstraint.activate([
