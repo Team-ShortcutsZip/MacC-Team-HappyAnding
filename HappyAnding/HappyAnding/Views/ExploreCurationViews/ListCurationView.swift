@@ -27,7 +27,7 @@ struct ListCurationView: View {
     
     var body: some View {
         if userCurations.count == 0 {
-            Text("\(data.type.rawValue)이 없습니다.")
+            Text("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)이 없습니다.")
                 .Body2()
                 .foregroundColor(Color.Gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -69,7 +69,7 @@ struct ListCurationView: View {
             .listStyle(.plain)
             .background(Color.Background.ignoresSafeArea(.all, edges: .all))
             .scrollContentBackground(.hidden)
-            .navigationBarTitle(self.data.type.rawValue)
+            .navigationBarTitle("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(self.data.type.rawValue)")
             .navigationBarTitleDisplayMode(.inline)
 
         }
