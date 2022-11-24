@@ -144,16 +144,23 @@ struct ReadShortcutView: View {
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-        .navigationBarItems(trailing: Menu(content: {
-            if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
-                myShortcutMenuSection
-            } else {
-                otherShortcutMenuSection
-            }
-        }, label: {
-            Image(systemName: "ellipsis")
-                .foregroundColor(.Gray4)
-        }))
+        
+        .navigationBarItems(
+            leading:
+                btnBack
+                .padding(.leading, -8)
+                .frame(width: 30, alignment: .leading)
+                .background(Color.red),
+            trailing: Menu(content: {
+                if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
+                    myShortcutMenuSection
+                } else {
+                    otherShortcutMenuSection
+                }
+            }, label: {
+                Image(systemName: "ellipsis")
+                    .foregroundColor(.Gray4)
+            }))
         .alert("글 삭제", isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
                 
@@ -194,7 +201,6 @@ struct ReadShortcutView: View {
                         for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: btnBack.padding(.horizontal, -8))
     }
     
     var btnBack : some View {
