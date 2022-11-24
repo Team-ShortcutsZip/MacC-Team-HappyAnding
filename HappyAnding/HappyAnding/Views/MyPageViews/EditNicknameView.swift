@@ -145,10 +145,11 @@ struct EditNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValidLength && isNormalString ? .Gray5 : .Gray1)
+                    .foregroundColor(isValidLength && isNormalString ? .Primary : .Primary .opacity(0.13))
                     .frame(width: 80, height: 44)
                 Text("중복확인")
-                    .foregroundColor(isValidLength && isNormalString ? .Text_icon : .Gray3)
+                    .foregroundColor(isValidLength && isNormalString ? .Text_icon : .Text_Button_Disable)
+                    .Body1()
             }
         })
         .disabled(!isValidLength || !isNormalString)
@@ -177,7 +178,8 @@ struct EditNicknameView: View {
                     .foregroundColor(isNicknameChecked && isNormalString ? .Primary : .Primary .opacity(0.13))
                     .frame(height: 52)
                 Text("완료")
-                    .foregroundColor(.Text_icon)
+                    .foregroundColor(isNicknameChecked && isNormalString ? .Text_icon : .Text_Button_Disable)
+                    .Body1()
             }
         })
         .disabled(!isNicknameChecked || !isNormalString)
