@@ -12,9 +12,7 @@ struct ShortcutTabView: View {
     
     // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @Environment(\.scenePhase) private var phase
-    @EnvironmentObject var userAuth: UserAuth
     
-    @AppStorage("signInStatus") var signInStatus = false
     @State private var isOpenURL = false
     @State private var tempShortcutId = ""
     
