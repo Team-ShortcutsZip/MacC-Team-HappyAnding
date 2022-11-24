@@ -136,10 +136,19 @@ extension ReadUserCurationView {
     
     var curationMenuSection: some View {
         Button(action: {
-            //Place something action here
+            shareCuration()
         }) {
             Label("공유", systemImage: "square.and.arrow.up")
         }
+    }
+    
+    func shareCuration() {
+        guard let deepLink = URL(string: "ShortcutsZip://myPage/CurationDetailView?curationID=\(data.userCuration.id)") else { return }
+        
+        let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        guard let window = windowScene?.windows.first else { return }
+        window.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
 }
 
