@@ -63,7 +63,8 @@ struct adminCurationsFrameiew: View {
                 Text("숏컷집 추천 큐레이션")
                     .Title2()
                     .foregroundColor(.Gray5)
-                    .onTapGesture { }
+                    .id(222)
+                
                 Spacer()
                 //추후에 어드민큐레이션에도 더보기 버튼 들어갈 수 있을 것 같아서 추가해놓은 코드입니다.
                 //                NavigationLink(destination: 더보기 눌렀을 때 뷰이름 입력) {

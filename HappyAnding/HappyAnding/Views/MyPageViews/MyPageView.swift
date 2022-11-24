@@ -35,6 +35,8 @@ struct MyPageView: View {
                         .foregroundColor(.White)
                         .background(Color.Gray3)
                         .clipShape(Circle())
+                        .id(333)
+                    
                     HStack {
                         Text(shortcutsZipViewModel.userInfo?.nickname ?? "User")
                             .Title1()
