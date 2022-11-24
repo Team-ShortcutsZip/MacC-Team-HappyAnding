@@ -37,6 +37,7 @@ struct NavigationBarColorModifier<Background>: ViewModifier where Background: Vi
         
         let scrollAppearance = UINavigationBarAppearance()
         scrollAppearance.configureWithDefaultBackground()
+        scrollAppearance.backgroundColor = UIColor(Color.White)
         scrollAppearance.shadowColor = .clear
         scrollAppearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.Gray5)]
         scrollAppearance.backButtonAppearance = backItemAppearance
