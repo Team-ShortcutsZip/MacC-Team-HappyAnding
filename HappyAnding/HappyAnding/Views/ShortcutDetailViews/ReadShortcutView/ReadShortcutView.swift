@@ -149,8 +149,7 @@ struct ReadShortcutView: View {
             leading:
                 btnBack
                 .padding(.leading, -8)
-                .frame(width: 30, alignment: .leading)
-                .background(Color.red),
+                .frame(width: 30, alignment: .leading),
             trailing: Menu(content: {
                 if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
                     myShortcutMenuSection
