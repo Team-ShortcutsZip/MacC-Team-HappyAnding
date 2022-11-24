@@ -54,6 +54,7 @@ struct ExploreShortcutView: View {
         .navigationDestination(for: NavigationSearch.self) { _ in
             SearchView()
         }
+        .navigationBarBackground ({ Color.Background })
     }
 }
 

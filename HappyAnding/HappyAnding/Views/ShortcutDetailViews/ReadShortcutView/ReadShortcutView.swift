@@ -79,6 +79,7 @@ struct ReadShortcutView: View {
                 }
             }
         }
+        .navigationBarBackground ({ Color.White })
         .background(Color.Background)
         .safeAreaInset(edge: .bottom, spacing: 0) {
             
@@ -152,7 +153,6 @@ struct ReadShortcutView: View {
             }))
         .alert("글 삭제", isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
-                
             } label: {
                 Text("닫기")
             }
@@ -185,24 +185,10 @@ struct ReadShortcutView: View {
             UpdateShortcutView(isUpdating: $isUpdating, shortcut: $data.shortcut)
         }
         .toolbar(.hidden, for: .tabBar)
-        .toolbarBackground(
-                        Color.White,
-                        for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .navigationBarBackButtonHidden(true)
     }
-    
-    var btnBack : some View {
-        Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }) {
-            HStack {
-                Image(systemName: "chevron.backward") // set image here
-                    .foregroundColor(.Gray4)
-                    .font(Font(UIFont.systemFont(ofSize: 18, weight: .medium)))
-            }
-        }
-    }
+}
+
+extension ReadShortcutView {
     
     var textField: some View {
         
@@ -270,9 +256,6 @@ struct ReadShortcutView: View {
         )
         .padding(.horizontal, 16)
     }
-}
-
-extension ReadShortcutView {
     
     var myShortcutMenuSection: some View {
         

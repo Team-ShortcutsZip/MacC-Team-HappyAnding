@@ -84,6 +84,7 @@ struct ListShortcutView: View {
                 .scrollContentBackground(.hidden)
                 .navigationTitle(getNavigationTitle(data.sectionType))
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackground ({ Color.Background })
             }
         }
     }
