@@ -47,9 +47,8 @@ struct ReadShortcutVersionView: View {
                                 if let url = URL(string: shortcut.downloadLink[index]) {
                                     if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
                                         shortcut.numberOfDownload += 1
-                                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
-                                        shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
                                     }
+                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
                                     openURL(url)
                                 }
                             } label: {

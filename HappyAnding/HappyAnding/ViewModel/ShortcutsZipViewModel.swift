@@ -464,13 +464,24 @@ class ShortcutsZipViewModel: ObservableObject {
     //MARK: 다운로드 수를 업데이트하는 함수
     
     /**
-    서버 숫자 업데이트
-    
+     서버 단축어 다운로드 숫자 업데이트,
+     서버 유저 - downlodedShortcuts 정보 수정
+     뷰모델 유저 - downlodedShortcuts 정보 수정
      */
     func updateNumberOfDownload(shortcut: Shortcuts, downloadlinkIndex: Int) {
-        self.fetchUser(userID: currentUser()) { data in
-            var user = data
-            if !data.downloadedShortcuts.contains(where: { $0.id == shortcut.id }) {
+        if var user = self.userInfo {
+            if let index = user.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id }) {
+                //유저 정보
+                if downloadlinkIndex == 0 && user.downloadedShortcuts[index].downloadLink != shortcut.downloadLink[0] {
+                    user.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0] //서버 전송용
+                    self.userInfo?.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0] //뷰모델 변경용
+                    self.setData(model: user)
+                    //단축어 정보
+                    if let shortcutListIndex = self.shortcutsUserDownloaded.firstIndex(where: {$0.id == shortcut.id}) {
+                        shortcutsUserDownloaded[shortcutListIndex] = shortcut
+                    }
+                }
+            } else {
                 self.db.collection("Shortcut").document(shortcut.id)
                     .updateData([
                         "numberOfDownload" : FieldValue.increment(Int64(1))
@@ -479,19 +490,16 @@ class ShortcutsZipViewModel: ObservableObject {
                             print(error.localizedDescription)
                         }
                     }
-                let shortcutInfo = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[downloadlinkIndex])
-                user.downloadedShortcuts.append(shortcutInfo)
+                //유저 정보
+                let shortcutInfo = DownloadedShortcut(
+                    id: shortcut.id,
+                    downloadLink: shortcut.downloadLink[downloadlinkIndex])
+                user.downloadedShortcuts.append(shortcutInfo) // 서버 전송용
+                self.userInfo?.downloadedShortcuts.append(shortcutInfo) //뷰모델 변경용
                 self.setData(model: user)
+                //단축어 정보
+                self.shortcutsUserDownloaded.insert(shortcut, at: 0)
             }
-        }
-    }
-    
-    //MARK: 다운로드 링크 업데이트하는 함수
-    
-    func updateDownloadLinkUpdate(shortcut: Shortcuts) {
-        if let index = self.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id}) {
-            self.userInfo?.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0]
-            self.setData(model: userInfo as Any)
         }
     }
     
