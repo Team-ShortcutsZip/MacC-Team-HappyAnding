@@ -61,7 +61,7 @@ struct ShortcutCell: View {
                         if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
                             if let shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id) {
-                                shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                                shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                             }
                         }
                     }
