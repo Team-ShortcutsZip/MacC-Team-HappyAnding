@@ -89,21 +89,7 @@ struct ReadShortcutView: View {
                 if !isFocused {
                     if let shortcut = data.shortcut {
                         Button {
-                            if var user = shortcutsZipViewModel.userInfo {
-                                print("**\(user.downloadedShortcuts)")
-                                if let index = user.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id}) {
-                                    print("**index \(index)")
-                                    user.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0]
-                                    shortcutsZipViewModel.setData(model: user)
-                                }
-                                else {
-                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
-                                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
-                                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
-                                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
-                                    print("**\(shortcutsZipViewModel.userInfo?.downloadedShortcuts)")
-                                }
-                            }
+                            shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                             if let url = URL(string: shortcut.downloadLink[0]) {
                                 if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
                                     data.shortcut?.numberOfDownload += 1
