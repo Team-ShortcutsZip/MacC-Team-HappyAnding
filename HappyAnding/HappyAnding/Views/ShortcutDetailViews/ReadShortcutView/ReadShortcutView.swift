@@ -28,7 +28,6 @@ struct ReadShortcutView: View {
     @State var isMyLike: Bool = false
     @State var isFirstMyLike = false
     @State var isClickDownload = false
-    @State var isClickPreviousDownload = false
     
     @State var data: NavigationReadShortcutType
     @State var comments: Comments = Comments(id: "", comments: [])
@@ -90,6 +89,21 @@ struct ReadShortcutView: View {
                 if !isFocused {
                     if let shortcut = data.shortcut {
                         Button {
+                            if var user = shortcutsZipViewModel.userInfo {
+                                print("**\(user.downloadedShortcuts)")
+                                if let index = user.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id}) {
+                                    print("**index \(index)")
+                                    user.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0]
+                                    shortcutsZipViewModel.setData(model: user)
+                                }
+                                else {
+                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
+                                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
+                                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
+                                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
+                                    print("**\(shortcutsZipViewModel.userInfo?.downloadedShortcuts)")
+                                }
+                            }
                             if let url = URL(string: shortcut.downloadLink[0]) {
                                 if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
                                     data.shortcut?.numberOfDownload += 1
@@ -128,16 +142,6 @@ struct ReadShortcutView: View {
         }
         .onDisappear() {
             if let shortcut = data.shortcut {
-                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
-                if isClickDownload && isAlreadyContained {
-                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
-                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
-                    
-                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
-                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
-                } else if isClickDownload && !isAlreadyContained {
-                    shortcutsZipViewModel.updateDownloadLinkUpdate(shortcut: shortcut)
-                }
                 if isMyLike != isFirstMyLike {
                     shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
                 }
@@ -368,7 +372,7 @@ extension ReadShortcutView {
                                                 value: geometryProxy.size)
                             })
                 case 1:
-                    ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating, isClickPreviousDownload: $isClickPreviousDownload)
+                    ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
                         .background(
                             GeometryReader { geometryProxy in
                                 Color.clear
