@@ -463,6 +463,10 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 다운로드 수를 업데이트하는 함수
     
+    /**
+    서버 숫자 업데이트
+    
+     */
     func updateNumberOfDownload(shortcut: Shortcuts, downloadlinkIndex: Int) {
         self.fetchUser(userID: currentUser()) { data in
             var user = data

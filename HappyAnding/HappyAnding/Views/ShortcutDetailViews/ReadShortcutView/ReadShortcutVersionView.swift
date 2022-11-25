@@ -14,7 +14,6 @@ struct ReadShortcutVersionView: View {
     
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool
-    @Binding var isClickPreviousDownload: Bool
     
     var body: some View {
         if shortcut.updateDescription.count == 1 {
