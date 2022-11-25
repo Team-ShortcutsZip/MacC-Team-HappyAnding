@@ -401,7 +401,7 @@ extension ReadShortcutView {
                                                     geometryProxy.size)
                             })
                 case 2:
-                    ReadShortcutCommentView(addedComment: $comment, comments: $comments, nestedCommentInfoText: $nestedCommentInfoText, isClickCorrenction: $isClickCorrection, shortcutID: data.shortcutID)
+                    ReadShortcutCommentView(addedComment: $comment, comments: $comments, nestedCommentInfoText: $nestedCommentInfoText, isClickCorrenction: $isClickCorrection, isFocused: _isFocused, shortcutID: data.shortcutID)
                         .background(
                             GeometryReader { geometryProxy in
                                 Color.clear

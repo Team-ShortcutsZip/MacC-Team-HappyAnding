@@ -15,6 +15,7 @@ struct ReadShortcutCommentView: View {
     @Binding var isClickCorrenction: Bool
     @State var isTappedDeleteButton = false
     @State var deletedComment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
+    @FocusState var isFocused: Bool
     let shortcutID: String
     
     var body: some View {
@@ -90,6 +91,7 @@ struct ReadShortcutCommentView: View {
                             nestedCommentInfoText = comment.user_nickname
                             addedComment.bundle_id = comment.bundle_id
                             addedComment.depth = 1
+                            isFocused = true
                         } label: {
                             Text("답글")
                                 .Footnote()
