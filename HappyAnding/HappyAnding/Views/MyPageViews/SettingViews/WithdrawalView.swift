@@ -12,11 +12,16 @@ import FirebaseAuth
 struct WithdrawalView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
-    @StateObject var userAuth = UserAuth.shared
+    @AppStorage("isReauthenticated") var isReauthenticated = false
+    @AppStorage("isTappedSignOutButton") var isTappedSignOutButton = false
+    
+    @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @State private var appleLoginCoordinator: AppleAuthCoordinator?
+    @Environment(\.window) var window: UIWindow?
+    
     @State var isTappedCheckToggle = false
-    @State var isTappedSignOutButton = false
     
     private let signOutTitle = ["탈퇴 시 삭제되는 항목",
                                 "탈퇴 시 삭제되지 않는 항목"]
@@ -65,23 +70,24 @@ struct WithdrawalView: View {
             .padding(.bottom, 12)
             
             Button {
-                self.isTappedSignOutButton = true
+                isTappedSignOutButton = true
+                reAuthenticateUser()
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(isTappedCheckToggle ? .Primary : .Primary .opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
-                    Text("탈퇴하기")
+                    Text("사용자 재인증 후 탈퇴하기")
                         .foregroundColor(isTappedCheckToggle ? .Text_Button : .Text_Button_Disable )
                         .Body1()
                 }
             }
             .disabled(!isTappedCheckToggle)
             .padding(.bottom, 44)
-            .alert("탈퇴하기", isPresented: $isTappedSignOutButton) {
+            .alert("탈퇴하기", isPresented: $isReauthenticated) {
                 Button(role: .cancel) {
-                    
+                    isReauthenticated = false
                 } label: {
                     Text("닫기")
                 }
@@ -101,24 +107,36 @@ struct WithdrawalView: View {
     }
     
     private func signOut() {
-        let firebaseAuth = Auth.auth()
-        let currentUser = firebaseAuth.currentUser
-        currentUser?.delete { error in
-            if let error {
-                print(error.localizedDescription)
-            } else {
-                if let user = shortcutsZipViewModel.userInfo {
-                    shortcutsZipViewModel.deleteData(model: user)
-                    shortcutsZipViewModel.resetUser()
+        
+        
+        if let user = shortcutsZipViewModel.userInfo {
+            shortcutsZipViewModel.deleteUserData(userID: user.id)
+            let firebaseAuth = Auth.auth()
+            let currentUser = firebaseAuth.currentUser
+            currentUser?.delete { error in
+                if let error {
+                    print("**\(error.localizedDescription)")
+                } else {
                     withAnimation(.easeInOut) {
                         self.signInStatus = false
-                        userAuth.signOut()
+                        self.userAuth.signOut()
                     }
                 }
             }
         }
     }
     
+    private func reAuthenticateUser() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            userAuth.signOut()
+            appleLoginCoordinator = AppleAuthCoordinator(window: window)
+            appleLoginCoordinator?.startSignInWithAppleFlow()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
 
 struct WithdrawalView_Previews: PreviewProvider {

@@ -17,6 +17,7 @@ struct HappyAndingApp: App {
     @StateObject var userAuth = UserAuth.shared
     @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
     @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("isReauthenticated") var isReauthenticated = false
     
     init() {
         FirebaseApp.configure()

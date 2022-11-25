@@ -16,6 +16,8 @@ import CryptoKit
 class AppleAuthCoordinator: NSObject {
     
     @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("isReauthenticated") var isReauthenticated = false
+    @AppStorage("isTappedSignOutButton") var isTappedSignOutButton = false
     
     var userAuth = UserAuth.shared
     var currentNonce: String?
@@ -126,6 +128,9 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                         withAnimation(.easeInOut) {
                             self.signInStatus = true
                         }
+                        if self.isTappedSignOutButton {
+                            self.isReauthenticated = true
+                        }
                     } else {
                         self.userAuth.signIn()
                     }
@@ -138,6 +143,8 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                                  didCompleteWithError error: Error) {
         // Handle error.
         print("Sign in with Apple errored: \(error)")
+        self.signInStatus = false
+        self.isReauthenticated = false
       }
 }
 

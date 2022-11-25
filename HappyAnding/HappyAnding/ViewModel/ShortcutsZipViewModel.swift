@@ -17,6 +17,8 @@ import FirebaseAuth
  */
 
 class ShortcutsZipViewModel: ObservableObject {
+    var userAuth = UserAuth.shared
+    @AppStorage("signInStatus") var signInStatus = false
     
     @Published var userInfo: User?                              // 유저정보
     
@@ -533,6 +535,30 @@ class ShortcutsZipViewModel: ObservableObject {
             db.collection("Comment").document((model as! Comments).id).delete()
         default:
             print("this is not a model.")
+        }
+    }
+    
+    func deleteUserData(userID: String) {
+        db.collection("User").document(userID).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+                self.resetUser()
+                
+                let firebaseAuth = Auth.auth()
+                let currentUser = firebaseAuth.currentUser
+                currentUser?.delete { error in
+                    if let error {
+                        print("**\(error.localizedDescription)")
+                    } else {
+                        withAnimation(.easeInOut) {
+                            self.signInStatus = false
+                            self.userAuth.signOut()
+                        }
+                    }
+                }
+            }
         }
     }
     
