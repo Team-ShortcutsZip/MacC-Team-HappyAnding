@@ -122,12 +122,16 @@ struct SettingView: View {
         }
         .sheet(isPresented: $isShowingMailView) {
             MailView(isShowing: self.$isShowingMailView, result: self.$result)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         
         .sheet(isPresented: self.$isTappedPrivacyButton) {
             ZStack {
                 PrivacyPolicyView(webViewModel: webViewModel)
                     .environmentObject(webViewModel)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {
                     ProgressView()
                 }

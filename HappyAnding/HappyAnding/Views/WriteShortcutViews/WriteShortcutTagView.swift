@@ -168,6 +168,7 @@ struct WriteShortcutTagView: View {
                     .sheet(isPresented: $isShowingCategoryModal) {
                         CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
                             .presentationDetents([.fraction(0.7)])
+                            .presentationDragIndicator(.visible)
                     }
                 }
             }

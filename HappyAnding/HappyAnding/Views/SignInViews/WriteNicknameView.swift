@@ -92,6 +92,8 @@ struct WriteNicknameView: View {
             ZStack {
                 PrivacyPolicyView(webViewModel: webViewModel)
                     .environmentObject(webViewModel)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {
                     ProgressView()
                 }
