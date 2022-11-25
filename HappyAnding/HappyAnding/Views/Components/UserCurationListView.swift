@@ -13,15 +13,13 @@ struct UserCurationListView: View {
     @State var isWriting = false
     @State var data: NavigationListCurationType
     
-    @Binding var userCurations: [Curation]
-    
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(userCurations: $userCurations,
+            UserCurationListHeader(userCurations: data.curation,
                                    data: data,
                                    navigationParentView: self.data.navigationParentView)
-                .padding(.bottom, 12)
-                .padding(.horizontal, 16)
+            .padding(.bottom, 12)
+            .padding(.horizontal, 16)
             
             Button {
                 self.isWriting = true
@@ -41,17 +39,15 @@ struct UserCurationListView: View {
                 .padding(.horizontal, 16)
             }
             
-            if let userCurations {
-                ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                    
-                    let data = NavigationReadUserCurationType(userCuration: curation,
-                                                              navigationParentView: self.data.navigationParentView)
-                    //TODO: 데이터 변경 필요
-                    if index < 2 {
-                        NavigationLink(value: data) {
-                            UserCurationCell(curation: curation,
-                                             navigationParentView: self.data.navigationParentView)
-                        }
+            ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
+                
+                let data = NavigationReadUserCurationType(userCuration: curation,
+                                                          navigationParentView: self.data.navigationParentView)
+                //TODO: 데이터 변경 필요
+                if index < 2 {
+                    NavigationLink(value: data) {
+                        UserCurationCell(curation: curation,
+                                         navigationParentView: self.data.navigationParentView)
                     }
                 }
             }
@@ -70,7 +66,7 @@ struct UserCurationListView: View {
 }
 
 struct UserCurationListHeader: View {
-    @Binding var userCurations: [Curation]
+    let userCurations: [Curation]
     
     @State var data: NavigationListCurationType
     
@@ -91,9 +87,7 @@ struct UserCurationListHeader: View {
             }
         }
         .navigationDestination(for: NavigationListCurationType.self) { data in
-            ListCurationView(userCurations: $userCurations,
-                             data: data)
-            
+            ListCurationView(data: data)
         }
     }
 }

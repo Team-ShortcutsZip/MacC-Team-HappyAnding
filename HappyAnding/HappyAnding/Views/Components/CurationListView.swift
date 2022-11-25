@@ -11,17 +11,16 @@ struct CurationListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var data: NavigationListCurationType
-    @Binding var userCurations: [Curation]
     
     var body: some View {
         VStack(spacing: 0) {
-            CurationListHeader(userCurations: $userCurations,
+            CurationListHeader(userCurations: data.curation,
                                data: data,
                                navigationParentView: self.data.navigationParentView)
-                .padding(.bottom, 12)
-                .padding(.horizontal, 16)
+            .padding(.bottom, 12)
+            .padding(.horizontal, 16)
             
-            ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+            ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
                 if index < 2 {
                     
                     let data = NavigationReadUserCurationType(userCuration: curation,
@@ -33,18 +32,30 @@ struct CurationListView: View {
                 }
             }
         }
-        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-            ReadUserCurationView(data: data)
-        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         
+        .onChange(of: shortcutsZipViewModel.personalCurations) { data in
+            if self.data.type == .personalCuration {
+                self.data.curation = data
+            }
+        }
+        .onChange(of: shortcutsZipViewModel.userCurations) { data in
+            if self.data.type == .userCuration {
+                self.data.curation = data
+            }
+        }
+        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
+            if self.data.type == .myCuration {
+                self.data.curation = data
+            }
+        }
     }
 }
 
 struct CurationListHeader: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var userCurations: [Curation]
+    let userCurations: [Curation]
     
     @State var data: NavigationListCurationType
     let navigationParentView: NavigationParentView
@@ -70,9 +81,20 @@ struct CurationListHeader: View {
                     .foregroundColor(.Gray4)
             }
         }
-        .navigationDestination(for: NavigationListCurationType.self) { data in
-            ListCurationView(userCurations: $userCurations,
-                             data: data)
+        .onChange(of: shortcutsZipViewModel.personalCurations) { data in
+            if self.data.type == .personalCuration {
+                self.data.curation = data
+            }
+        }
+        .onChange(of: shortcutsZipViewModel.userCurations) { data in
+            if self.data.type == .userCuration {
+                self.data.curation = data
+            }
+        }
+        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
+            if self.data.type == .myCuration {
+                self.data.curation = data
+            }
         }
     }
 }
