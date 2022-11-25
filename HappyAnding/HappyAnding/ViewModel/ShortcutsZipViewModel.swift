@@ -46,7 +46,6 @@ class ShortcutsZipViewModel: ObservableObject {
     var allShortcuts: [Shortcuts] = []
 
     init() {
-        print("**init \(userInfo) \(shortcutsMadeByUser) \(curationsMadeByUser)")
         fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
             self.initUserShortcut(user: user)
@@ -762,7 +761,6 @@ class ShortcutsZipViewModel: ObservableObject {
                 print("Error fetching snapshots: \(error!)")
                 return
             }
-            print(snapshot.metadata.isFromCache ? "**local cache" : "**server")
             snapshot.documentChanges.forEach { diff in
                 let decoder = JSONDecoder()
                 
