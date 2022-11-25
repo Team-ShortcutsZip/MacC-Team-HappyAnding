@@ -25,7 +25,7 @@ struct WriteNicknameView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
     @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+    @ObservedObject var webViewModel = WebViewModel()
     @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
     
     @State var nickname: String = ""
@@ -90,8 +90,9 @@ struct WriteNicknameView: View {
         .background(Color.Background)
         .sheet(isPresented: self.$isTappedPrivacyButton) {
             ZStack {
-                PrivacyPolicyView(webViewModel: webViewModel)
-                    .environmentObject(webViewModel)
+                PrivacyPolicyView(viewModel: webViewModel,
+                         isTappedPrivacyButton: $isTappedPrivacyButton,
+                         url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {

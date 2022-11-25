@@ -20,7 +20,7 @@ struct LicenseView: View {
 
 struct LicenseCell: View {
     
-    @ObservedObject var webViewModel = WebViewModel(url: "https://github.com/firebase")
+    @ObservedObject var webViewModel = WebViewModel()
     
     @State private var isTappedFirebaseButton = false
     var title: String
