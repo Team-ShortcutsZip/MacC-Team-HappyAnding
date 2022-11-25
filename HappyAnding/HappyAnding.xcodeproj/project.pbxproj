@@ -585,10 +585,10 @@
 			};
 			buildConfigurationList = 87E99C6528F94EA6009B691F /* Build configuration list for PBXProject "HappyAnding" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion =ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				ko,
 				Base,
 			);
 			mainGroup = 87E99C6128F94EA6009B691F;
