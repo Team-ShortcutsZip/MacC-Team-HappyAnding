@@ -53,7 +53,7 @@ struct ShortcutTabView: View {
                             guard tappedTwice else { return }
                             shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
                             withAnimation {
-                                proxy.scrollTo(111)
+                                proxy.scrollTo(111, anchor: .bottom)
                             }
                             self.tappedTwice = false
                         })
@@ -70,7 +70,7 @@ struct ShortcutTabView: View {
                             guard tappedTwice else { return }
                             curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
                             withAnimation {
-                                proxy.scrollTo(222)
+                                proxy.scrollTo(222, anchor: .bottom)
                             }
                             self.tappedTwice = false
                         })
@@ -87,7 +87,7 @@ struct ShortcutTabView: View {
                             guard tappedTwice else { return }
                             profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
                             withAnimation {
-                                proxy.scrollTo(333)
+                                proxy.scrollTo(333, anchor: .bottom)
                             }
                             self.tappedTwice = false
                         })
