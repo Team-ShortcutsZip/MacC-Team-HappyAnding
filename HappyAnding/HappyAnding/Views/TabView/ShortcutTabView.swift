@@ -51,9 +51,12 @@ struct ShortcutTabView: View {
                     ExploreShortcutView()
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
-                            shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
-                            withAnimation {
-                                proxy.scrollTo(111, anchor: .bottom)
+                            if shortcutNavigation.navigationPath.count > 0 {
+                                shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(111, anchor: .bottom)
+                                }
                             }
                             self.tappedTwice = false
                         })
@@ -68,9 +71,12 @@ struct ShortcutTabView: View {
                     ExploreCurationView()
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
-                            curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
-                            withAnimation {
-                                proxy.scrollTo(222, anchor: .bottom)
+                            if curationNavigation.navigationPath.count > 0 {
+                                curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(222, anchor: .bottom)
+                                }
                             }
                             self.tappedTwice = false
                         })
@@ -85,9 +91,12 @@ struct ShortcutTabView: View {
                     MyPageView()
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
-                            profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
-                            withAnimation {
-                                proxy.scrollTo(333, anchor: .bottom)
+                            if profileNavigation.navigationPath.count > 0 {
+                                profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(333, anchor: .bottom)
+                                }
                             }
                             self.tappedTwice = false
                         })
