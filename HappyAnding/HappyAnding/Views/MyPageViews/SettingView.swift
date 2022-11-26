@@ -13,7 +13,7 @@ import FirebaseAuth
 struct SettingView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
-    @StateObject var userAuth = UserAuth.shared
+    @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
