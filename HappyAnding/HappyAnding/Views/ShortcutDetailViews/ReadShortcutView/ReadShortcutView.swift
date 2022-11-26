@@ -267,7 +267,7 @@ struct ReadShortcutView: View {
 extension ReadShortcutView {
     
     @ViewBuilder
-    func readShortcutViewButtonByUser() -> some View {
+    private func readShortcutViewButtonByUser() -> some View {
         if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
             myShortcutMenu
         } else {
@@ -275,7 +275,7 @@ extension ReadShortcutView {
         }
     }
     
-    var myShortcutMenu: some View {
+    private var myShortcutMenu: some View {
         Menu(content: {
             Section {
                 editButton
@@ -289,7 +289,7 @@ extension ReadShortcutView {
         })
     }
     
-    var editButton: some View {
+    private var editButton: some View {
         Button {
             isEdit.toggle()
         } label: {
@@ -297,7 +297,7 @@ extension ReadShortcutView {
         }
     }
     
-    var updateButton: some View {
+    private var updateButton: some View {
         Button {
             isUpdating.toggle()
         } label: {
@@ -305,7 +305,7 @@ extension ReadShortcutView {
         }
     }
     
-    var shareButton: some View {
+    private var shareButton: some View {
         Button(action: {
             shareShortcut()
         }) {
@@ -313,7 +313,7 @@ extension ReadShortcutView {
         }
     }
     
-    var deleteButton: some View {
+    private var deleteButton: some View {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
             // TODO: firebase delete function
@@ -323,7 +323,7 @@ extension ReadShortcutView {
         }
     }
     
-    func shareShortcut() {
+    private func shareShortcut() {
         if let shortcut = data.shortcut {
             guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
             let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
@@ -333,7 +333,6 @@ extension ReadShortcutView {
         }
     }
 }
-
 
 // MARK: - 단축어 상세 정보 (기본 정보, 버전 정보, 댓글)
 
