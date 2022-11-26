@@ -139,8 +139,5 @@ struct MyPageShortcutListCell: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
         }
-        .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
-        }
     }
 }

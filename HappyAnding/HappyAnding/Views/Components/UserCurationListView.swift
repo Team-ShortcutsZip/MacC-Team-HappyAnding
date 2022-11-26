@@ -51,9 +51,9 @@ struct UserCurationListView: View {
                 }
             }
         }
-        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-            ReadUserCurationView(data: data)
-        }
+//        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+//            ReadUserCurationView(data: data)
+//        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
@@ -84,9 +84,6 @@ struct UserCurationListView: View {
                     .Footnote()
                     .foregroundColor(.Gray4)
             }
-        }
-        .navigationDestination(for: NavigationListCurationType.self) { data in
-            ListCurationView(data: data)
         }
     }
 }

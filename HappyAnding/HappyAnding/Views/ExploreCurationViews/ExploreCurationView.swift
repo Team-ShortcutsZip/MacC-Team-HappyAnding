@@ -50,17 +50,6 @@ struct ExploreCurationView: View {
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
         .background(Color.Background)
-        
-        .navigationDestination(for: Curation.self) { data in
-            ReadAdminCurationView(curation: data)
-        }
-        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-            ReadUserCurationView(data: data)
-        }
-        .navigationDestination(for: NavigationListCurationType.self) { data in
-            ListCurationView(data: data)
-        }
-
     }
 }
 

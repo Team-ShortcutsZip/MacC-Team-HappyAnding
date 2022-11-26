@@ -11,10 +11,6 @@ struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    enum NavigationSearch: Hashable, Equatable {
-        case first
-    }
-    
     var body: some View {
         ScrollView {
             DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
@@ -50,9 +46,6 @@ struct ExploreShortcutView: View {
                         .foregroundColor(.Gray5)
                 }
             }
-        }
-        .navigationDestination(for: NavigationSearch.self) { _ in
-            SearchView()
         }
         .navigationBarBackground ({ Color.Background })
     }

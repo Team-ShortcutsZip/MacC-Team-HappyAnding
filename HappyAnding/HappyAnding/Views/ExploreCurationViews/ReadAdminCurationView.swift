@@ -57,9 +57,6 @@ struct ReadAdminCurationView: View {
             Spacer()
                 .frame(height: 44)
         }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
         .background(Color.Background)

@@ -45,9 +45,6 @@ struct SearchView: View {
                 }
             }
         }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
         .onAppear() {
             self.keywords = shortcutsZipViewModel.keywords
         }

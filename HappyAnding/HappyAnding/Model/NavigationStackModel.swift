@@ -40,6 +40,10 @@ struct NavigationListCurationType: Identifiable, Hashable {
     var curation: [Curation]
 }
 
+enum NavigationSearch: Hashable, Equatable {
+    case first
+}
+
 enum NavigationParentView: Int {
     case shortcuts
     case curations

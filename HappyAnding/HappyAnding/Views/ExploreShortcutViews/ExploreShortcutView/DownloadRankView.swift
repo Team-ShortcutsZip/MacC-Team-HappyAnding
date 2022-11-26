@@ -48,11 +48,5 @@ struct DownloadRankView: View {
             }
             .background(Color.Background)
         }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
-        .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
-        }
     }
 }

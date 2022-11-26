@@ -56,9 +56,6 @@ struct ListCurationView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-                ReadUserCurationView(data: data)
-            }
             .listStyle(.plain)
             .background(Color.Background.ignoresSafeArea(.all, edges: .all))
             .navigationBarBackground ({ Color.Background })
