@@ -12,28 +12,58 @@ import WebKit
 
 class WebViewModel: ObservableObject {
     @Published var isLoading = false
+}
+
+struct PrivacyPolicyView: View {
     
-    var url: String
+    @ObservedObject var viewModel: WebViewModel
     
-    init(url: String) {
-        self.url = url 
+    @Binding var isTappedPrivacyButton: Bool
+    
+    let url: String
+    
+    var body: some View {
+        
+        VStack {
+            HStack(spacing: 0) {
+                
+                Button {
+                    self.isTappedPrivacyButton = false
+                } label: {
+                    Text("닫기")
+                        .foregroundColor(.Gray5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 16)
+                }
+                
+                Text("개인정보처리방침")
+                    .Headline()
+                    .frame(maxWidth: .infinity)
+                
+                Spacer()
+                    .frame(maxWidth: .infinity)
+            }
+            .padding(.top, 24)
+            
+            PrivacyPolicyContentView(webViewModel: viewModel, url: self.url)
+        }
     }
 }
 
-
-struct PrivacyPolicyView: UIViewRepresentable {
+struct PrivacyPolicyContentView: UIViewRepresentable {
     
     @ObservedObject var webViewModel: WebViewModel
     
+    let url: String
     let webView = WKWebView()
     
-    func makeCoordinator() -> PrivacyPolicyView.Coordinator {
+    func makeCoordinator() -> PrivacyPolicyContentView.Coordinator {
         Coordinator(self, webViewModel)
     }
     
     func makeUIView(context: Context) -> WKWebView {
         
-        if let url = URL(string: self.webViewModel.url) {
+        if let url = URL(string: self.url) {
             webView.navigationDelegate = context.coordinator
             self.webView.load(URLRequest(url: url))
         }
@@ -41,19 +71,19 @@ struct PrivacyPolicyView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: WKWebView,
-                      context: UIViewRepresentableContext<PrivacyPolicyView>) {
+                      context: UIViewRepresentableContext<PrivacyPolicyContentView>) {
         return
     }
 }
 
-extension PrivacyPolicyView {
+extension PrivacyPolicyContentView {
     
     class Coordinator: NSObject, WKNavigationDelegate {
         @ObservedObject private var webViewModel: WebViewModel
         
-        private let parent: PrivacyPolicyView
+        private let parent: PrivacyPolicyContentView
         
-        init(_ parent: PrivacyPolicyView, _ webViewModel: WebViewModel) {
+        init(_ parent: PrivacyPolicyContentView, _ webViewModel: WebViewModel) {
             self.parent = parent
             self.webViewModel = webViewModel
         }
