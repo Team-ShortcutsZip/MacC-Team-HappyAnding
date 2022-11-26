@@ -84,6 +84,14 @@ struct ReadUserCurationView: View {
             }
             .environmentObject(writeCurationNavigation)
         }
+        .fullScreenCover(isPresented: $isWriting) {
+                    NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                        WriteCurationSetView(isWriting: $isWriting,
+                                             curation: self.data.userCuration,
+                                             isEdit: true)
+                    }
+                    .environmentObject(writeCurationNavigation)
+                }
     }
     
     var userInformation: some View {
@@ -157,6 +165,7 @@ extension ReadUserCurationView {
     private var myCurationMenu: some View {
         Menu(content: {
             Section {
+                editButton
                 shareButton
                 deleteButton
             }
@@ -164,6 +173,14 @@ extension ReadUserCurationView {
             Image(systemName: "ellipsis")
                 .foregroundColor(.Gray4)
         })
+    }
+    
+    private var editButton: some View {
+        Button {
+            self.isWriting.toggle()
+        } label: {
+            Label("편집", systemImage: "square.and.pencil")
+        }
     }
     
     private var shareButton: some View {
