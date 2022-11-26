@@ -31,7 +31,6 @@ struct ShortcutTabView: View {
         UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
         UITabBar.appearance().layer.borderColor = UIColor(Color.clear).cgColor
         UITabBar.appearance().clipsToBounds = true
-        Theme.navigationBarColors()
     }
     
     var handler: Binding<Int> { Binding(
@@ -80,6 +79,7 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
+                        .navigationBarBackground ({ Color.Background })
                 }
                 .environmentObject(curationNavigation)
                 .tabItem {
@@ -100,6 +100,7 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
+                        .navigationBarBackground ({ Color.Background })
                 }
                 .environmentObject(profileNavigation)
                 .tabItem {
