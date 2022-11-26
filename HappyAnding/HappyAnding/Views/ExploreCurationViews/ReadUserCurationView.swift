@@ -146,7 +146,7 @@ struct ReadUserCurationView: View {
 extension ReadUserCurationView {
     
     @ViewBuilder
-    func readCurationViewButtonByUser() -> some View {
+    private func readCurationViewButtonByUser() -> some View {
         if self.data.userCuration.author == shortcutsZipViewModel.currentUser() {
             myCurationMenu
         } else {
@@ -154,7 +154,7 @@ extension ReadUserCurationView {
         }
     }
     
-    var myCurationMenu: some View {
+    private var myCurationMenu: some View {
         Menu(content: {
             Section {
                 shareButton
@@ -166,7 +166,7 @@ extension ReadUserCurationView {
         })
     }
     
-    var shareButton: some View {
+    private var shareButton: some View {
         Button(action: {
             shareCuration()
         }) {
@@ -174,7 +174,7 @@ extension ReadUserCurationView {
         }
     }
     
-    var deleteButton: some View {
+    private var deleteButton: some View {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
             // TODO: firebase delete function
@@ -184,7 +184,7 @@ extension ReadUserCurationView {
         }
     }
     
-    func shareCuration() {
+    private func shareCuration() {
         guard let deepLink = URL(string: "ShortcutsZip://myPage/CurationDetailView?curationID=\(data.userCuration.id)") else { return }
         
         let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
