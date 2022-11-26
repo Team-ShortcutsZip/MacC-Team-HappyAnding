@@ -89,6 +89,7 @@ struct ReadShortcutView: View {
                 if !isFocused {
                     if let shortcut = data.shortcut {
                         Button {
+                            shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                             if let url = URL(string: shortcut.downloadLink[0]) {
                                 if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
                                     data.shortcut?.numberOfDownload += 1
@@ -127,21 +128,19 @@ struct ReadShortcutView: View {
         }
         .onDisappear() {
             if let shortcut = data.shortcut {
-                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
-                if isClickDownload && isAlreadyContained {
-                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
-                    
-                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
-                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
-                }
                 if isMyLike != isFirstMyLike {
                     shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
                 }
             }
         }
         .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-        .navigationBarItems(trailing: readShortcutViewButtonByUser())
+        .navigationBarItems(
+            leading:
+                btnBack
+                .padding(.leading, -8)
+                .frame(width: 30, alignment: .leading),
+            trailing: readShortcutViewButtonByUser()
+            )
         .alert("글 삭제", isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
                 
@@ -182,7 +181,6 @@ struct ReadShortcutView: View {
                         for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: btnBack.padding(.horizontal, -8))
     }
     
     var btnBack : some View {

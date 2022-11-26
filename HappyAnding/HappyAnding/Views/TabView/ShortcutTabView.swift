@@ -50,49 +50,68 @@ struct ShortcutTabView: View {
     )}
     
     var body: some View {
-        TabView(selection: handler) {
-            NavigationStack(path: $shortcutNavigation.navigationPath) {
-                ExploreShortcutView()
-                    .onChange(of: tappedTwice, perform: { tappedTwice in
-                        guard tappedTwice else { return }
-                        shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
-                        self.tappedTwice = false
-                    })
+        ScrollViewReader { proxy in
+            TabView(selection: handler) {
+                NavigationStack(path: $shortcutNavigation.navigationPath) {
+                    ExploreShortcutView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            if shortcutNavigation.navigationPath.count > 0 {
+                                shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(111, anchor: .bottom)
+                                }
+                            }
+                            self.tappedTwice = false
+                        })
+                }
+                .environmentObject(shortcutNavigation)
+                .tabItem {
+                    Label("단축어", systemImage: "square.stack.3d.up.fill")
+                }
+                .tag(1)
+                
+                NavigationStack(path: $curationNavigation.navigationPath) {
+                    ExploreCurationView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            if curationNavigation.navigationPath.count > 0 {
+                                curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(222, anchor: .bottom)
+                                }
+                            }
+                            self.tappedTwice = false
+                        })
+                }
+                .environmentObject(curationNavigation)
+                .tabItem {
+                    Label("큐레이션", systemImage: "folder.fill")
+                }
+                .tag(2)
+                
+                NavigationStack(path: $profileNavigation.navigationPath) {
+                    MyPageView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            if profileNavigation.navigationPath.count > 0 {
+                                profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(333, anchor: .bottom)
+                                }
+                            }
+                            self.tappedTwice = false
+                        })
+                }
+                .environmentObject(profileNavigation)
+                .tabItem {
+                    Label("프로필", systemImage: "person.crop.circle.fill")
+                }
+                .tag(3)
             }
-            .environmentObject(shortcutNavigation)
-            .tabItem {
-                Label("단축어", systemImage: "square.stack.3d.up.fill")
-            }
-            .tag(1)
-            
-            NavigationStack(path: $curationNavigation.navigationPath) {
-                ExploreCurationView()
-                    .onChange(of: tappedTwice, perform: { tappedTwice in
-                        guard tappedTwice else { return }
-                        curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
-                        self.tappedTwice = false
-                    })
-            }
-            .environmentObject(curationNavigation)
-            .tabItem {
-                Label("큐레이션", systemImage: "folder.fill")
-            }
-            .tag(2)
-            
-            NavigationStack(path: $profileNavigation.navigationPath) {
-                MyPageView()
-                    .onChange(of: tappedTwice, perform: { tappedTwice in
-                        guard tappedTwice else { return }
-                        profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
-                        self.tappedTwice = false
-                    })
-            }
-            .environmentObject(profileNavigation)
-            .tabItem {
-                Label("프로필", systemImage: "person.crop.circle.fill")
-            }
-            .tag(3)
-        }
         .sheet(isPresented: self.$isShortcutDeeplink) {
             let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
                                                   navigationParentView: .myPage)
