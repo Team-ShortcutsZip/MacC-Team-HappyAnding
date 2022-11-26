@@ -51,9 +51,6 @@ struct UserCurationListView: View {
                 }
             }
         }
-//        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-//            ReadUserCurationView(data: data)
-//        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
