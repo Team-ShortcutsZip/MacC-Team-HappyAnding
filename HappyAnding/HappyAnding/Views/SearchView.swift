@@ -64,6 +64,7 @@ struct SearchView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)
+        .navigationBarBackground ({ Color.Background })
     }
     
     private func runSearch() {

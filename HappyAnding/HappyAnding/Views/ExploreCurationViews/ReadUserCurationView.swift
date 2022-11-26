@@ -68,9 +68,6 @@ struct ReadUserCurationView: View {
         .navigationDestination(for: NavigationReadShortcutType.self) { data in
             ReadShortcutView(data: data)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: BackButton)
-        .toolbarBackground(Color.clear, for: .navigationBar)
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
@@ -136,16 +133,6 @@ struct ReadUserCurationView: View {
             shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author) { user in
                 authorInformation = user
             }
-        }
-    }
-    var BackButton: some View {
-        Button(action: {
-        self.presentation.wrappedValue.dismiss()
-        }) {
-            //TODO: 위치와 두께, 색상 조정 필요
-            Image(systemName: "chevron.backward")
-                .foregroundColor(Color.Gray5)
-                .bold()
         }
     }
 }

@@ -69,6 +69,7 @@ struct ListCurationView: View {
             }
             .listStyle(.plain)
             .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+            .navigationBarBackground ({ Color.Background })
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
         }

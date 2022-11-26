@@ -39,6 +39,12 @@ struct ShortcutsListView: View {
                         }
                     }
                 }
+                
+                Rectangle()
+                    .fill(Color.Background)
+                    .frame(height: 44)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
             }
         }
         .scrollIndicators(.hidden)
@@ -48,6 +54,7 @@ struct ShortcutsListView: View {
         .navigationBarTitle(categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)
+        .navigationBarBackground ({ Color.Background })
         .onAppear {
             self.shortcuts = shortcutsZipViewModel.shortcutsInCategory[categoryName.index]
         }
