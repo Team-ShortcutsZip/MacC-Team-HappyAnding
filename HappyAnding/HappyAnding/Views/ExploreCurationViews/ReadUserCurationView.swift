@@ -75,8 +75,7 @@ struct ReadUserCurationView: View {
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: readCurationViewButtonByUser(isMyCuration: data.userCuration.author == shortcutsZipViewModel.currentUser()))
-        
+        .navigationBarItems(trailing: readCurationViewButtonByUser())
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting,
@@ -147,8 +146,8 @@ struct ReadUserCurationView: View {
 extension ReadUserCurationView {
     
     @ViewBuilder
-    func readCurationViewButtonByUser(isMyCuration: Bool) -> some View {
-        if isMyCuration {
+    func readCurationViewButtonByUser() -> some View {
+        if self.data.userCuration.author == shortcutsZipViewModel.currentUser() {
             myCurationMenu
         } else {
             shareButton
