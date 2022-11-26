@@ -60,7 +60,7 @@ struct IconModalView: View {
         VStack {
             HStack {
                 Button {
-                    self.isShowingIconModal = true
+                    self.isShowingIconModal = false
                 } label: {
                     Text("닫기")
                         .foregroundColor(.Gray5)
