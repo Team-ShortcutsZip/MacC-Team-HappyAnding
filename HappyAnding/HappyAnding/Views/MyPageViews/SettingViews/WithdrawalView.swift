@@ -71,7 +71,7 @@ struct WithdrawalView: View {
             
             Button {
                 isTappedSignOutButton = true
-                reAuthenticateUser()
+                reauthenticateUser()
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
@@ -107,8 +107,6 @@ struct WithdrawalView: View {
     }
     
     private func signOut() {
-        
-        
         if let user = shortcutsZipViewModel.userInfo {
             shortcutsZipViewModel.deleteUserData(userID: user.id)
             let firebaseAuth = Auth.auth()
@@ -126,12 +124,12 @@ struct WithdrawalView: View {
         }
     }
     
-    private func reAuthenticateUser() {
+    private func reauthenticateUser() {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
             userAuth.signOut()
-            appleLoginCoordinator = AppleAuthCoordinator(window: window)
+            appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: false)
             appleLoginCoordinator?.startSignInWithAppleFlow()
         } catch {
             print(error.localizedDescription)

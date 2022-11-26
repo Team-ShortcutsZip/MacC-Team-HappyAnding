@@ -23,9 +23,11 @@ class AppleAuthCoordinator: NSObject {
     var currentNonce: String?
     let window: UIWindow?
     let shortcutZipViewModel = ShortcutsZipViewModel()
+    let isTappedSignInButton: Bool
     
-    init(window: UIWindow?) {
+    init(window: UIWindow?, isTappedSignInButton: Bool) {
         self.window = window
+        self.isTappedSignInButton = isTappedSignInButton
     }
     
     /// 요청에 nonce의 SHA256 해시를 처리하는 클래스를 포함하여 Apple 로그인 시작
@@ -128,7 +130,7 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                         withAnimation(.easeInOut) {
                             self.signInStatus = true
                         }
-                        if self.isTappedSignOutButton {
+                        if self.isTappedSignOutButton && !self.isTappedSignInButton {
                             self.isReauthenticated = true
                         }
                     } else {
