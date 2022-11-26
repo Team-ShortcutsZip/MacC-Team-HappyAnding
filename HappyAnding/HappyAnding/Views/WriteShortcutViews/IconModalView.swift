@@ -58,7 +58,7 @@ struct IconModalView: View {
     
     var body: some View {
         VStack {
-            HStack {
+            HStack(spacing: 0) {
                 Button {
                     self.isShowingIconModal = false
                 } label: {
