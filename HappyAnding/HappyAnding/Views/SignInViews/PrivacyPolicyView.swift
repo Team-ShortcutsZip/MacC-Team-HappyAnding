@@ -25,7 +25,7 @@ struct PrivacyPolicyView: View {
     var body: some View {
         
         VStack {
-            HStack {
+            HStack(spacing: 0) {
                 
                 Button {
                     self.isTappedPrivacyButton = false
