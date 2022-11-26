@@ -13,7 +13,7 @@ import FirebaseAuth
 struct SettingView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
-    @StateObject var userAuth = UserAuth.shared
+    @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var webViewModel = WebViewModel()
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     

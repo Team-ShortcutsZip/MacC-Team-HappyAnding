@@ -72,21 +72,7 @@ struct ReadUserCurationView: View {
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Menu(content: {
-            if self.data.userCuration.author == shortcutsZipViewModel.currentUser() {
-                myCurationMenuSection
-            } else {
-                //다른 사람 큐레이션 볼 때 공유버튼 동작(트레일링 아이템) 제거.
-                // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 복원
-//                otherCurationMenuSection
-            }
-        }, label: {
-            Image(systemName: self.data.userCuration.author == shortcutsZipViewModel.currentUser() ? "ellipsis" : "square.and.arrow.up")
-                .foregroundColor(.Gray4)
-                //다른 사람 큐레이션 볼 때 공유버튼 (트레일링 아이템) opacity 0
-                // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 제거
-                .opacity(self.data.userCuration.author == shortcutsZipViewModel.currentUser() ? 1 : 0)
-        }))
+        .navigationBarItems(trailing: readCurationViewButtonByUser())
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting,
@@ -95,6 +81,14 @@ struct ReadUserCurationView: View {
             }
             .environmentObject(writeCurationNavigation)
         }
+        .fullScreenCover(isPresented: $isWriting) {
+                    NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                        WriteCurationSetView(isWriting: $isWriting,
+                                             curation: self.data.userCuration,
+                                             isEdit: true)
+                    }
+                    .environmentObject(writeCurationNavigation)
+                }
     }
     
     var userInformation: some View {
@@ -109,20 +103,7 @@ struct ReadUserCurationView: View {
                 Text(authorInformation?.nickname ?? "닉네임")
                     .Headline()
                     .foregroundColor(.Gray4)
-                
                 Spacer()
-                //TODO: 스프린트 1에서 배제 , 추후 주석 삭제 필요
-                /*
-                Image(systemName: "light.beacon.max.fill")
-                    .Headline()
-                    .foregroundColor(.Gray5)
-                    .onTapGesture {
-                        
-                        // TODO: 신고기능 연결
-                        
-                        print("Tapped!")
-                    }
-                 */
             }
             .padding(.horizontal, 30)
             .background(
@@ -130,8 +111,7 @@ struct ReadUserCurationView: View {
                     .frame(height: 48)
                     .foregroundColor(.Gray1)
                     .padding(.horizontal, 16)
-            )
-            .alert(isPresented: $isTappedDeleteButton) {
+            ).alert(isPresented: $isTappedDeleteButton) {
                 Alert(title: Text("글 삭제")
                     .foregroundColor(.Gray5),
                       message: Text("글을 삭제하시겠습니까?")
@@ -160,44 +140,61 @@ struct ReadUserCurationView: View {
 
 extension ReadUserCurationView {
     
-    var myCurationMenuSection: some View {
-        
-        Section {
-            Button {
-                self.isWriting.toggle()
-            } label: {
-                Label("편집", systemImage: "square.and.pencil")
-            }
-            
-            // TODO: 함수 구현 필요
-            // TODO: 2차 스프린트 이후 공유 기능 구현 및 해당 코드 복원
-//            Button(action: {
-//                //Place something action here
-//            }) {
-//                Label("공유", systemImage: "square.and.arrow.up")
-//            }
-            Button(role: .destructive, action: {
-                isTappedDeleteButton.toggle()
-                
-                // TODO: firebase delete function
-                
-            }) {
-                Label("삭제", systemImage: "trash.fill")
-            }
+    @ViewBuilder
+    private func readCurationViewButtonByUser() -> some View {
+        if self.data.userCuration.author == shortcutsZipViewModel.currentUser() {
+            myCurationMenu
+        } else {
+            shareButton
         }
     }
     
-    var otherCurationMenuSection: some View {
+    private var myCurationMenu: some View {
+        Menu(content: {
+            Section {
+                editButton
+                shareButton
+                deleteButton
+            }
+        }, label: {
+            Image(systemName: "ellipsis")
+                .foregroundColor(.Gray4)
+        })
+    }
+    
+    private var editButton: some View {
+        Button {
+            self.isWriting.toggle()
+        } label: {
+            Label("편집", systemImage: "square.and.pencil")
+        }
+    }
+    
+    private var shareButton: some View {
         Button(action: {
-            //Place something action here
+            shareCuration()
         }) {
             Label("공유", systemImage: "square.and.arrow.up")
         }
     }
+    
+    private var deleteButton: some View {
+        Button(role: .destructive, action: {
+            isTappedDeleteButton.toggle()
+            // TODO: firebase delete function
+            
+        }) {
+            Label("삭제", systemImage: "trash.fill")
+        }
+    }
+    
+    private func shareCuration() {
+        guard let deepLink = URL(string: "ShortcutsZip://myPage/CurationDetailView?curationID=\(data.userCuration.id)") else { return }
+        
+        let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        guard let window = windowScene?.windows.first else { return }
+        window.rootViewController?.present(activityVC, animated: true, completion: nil)
+    }
 }
 
-//struct ReadUserCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReadUserCurationView(userCuration: UserCuration.fetchData(number: 1)[0], nickName: "test")
-//    }
-//}

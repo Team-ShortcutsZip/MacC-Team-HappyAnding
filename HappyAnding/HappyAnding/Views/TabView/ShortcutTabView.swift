@@ -12,9 +12,14 @@ struct ShortcutTabView: View {
     
     // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @Environment(\.scenePhase) private var phase
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @State private var isOpenURL = false
+    @AppStorage("signInStatus") var signInStatus = false
+    @State private var isShortcutDeeplink = false
+    @State private var isCurationDeeplink = false
     @State private var tempShortcutId = ""
+    @State private var tempCurationId = ""
     
     @StateObject var shortcutNavigation = ShortcutNavigation()
     @StateObject var curationNavigation = CurationNavigation()
@@ -108,20 +113,26 @@ struct ShortcutTabView: View {
                 }
                 .tag(3)
             }
-            .sheet(isPresented: self.$isOpenURL) {
+            .sheet(isPresented: self.$isShortcutDeeplink) {
                 let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
                                                       navigationParentView: .myPage)
                 ReadShortcutView(data: data)
             }
+            .sheet(isPresented: self.$isCurationDeeplink) {
+                if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
+                    let data = NavigationReadUserCurationType(userCuration: curation, navigationParentView: .myPage)
+                    ReadUserCurationView(data: data)
+                }
+            }
             .onChange(of: phase) { newPhase in
                 switch newPhase {
-                case .background: isOpenURL = false
+                case .background: isShortcutDeeplink = false; isCurationDeeplink = false
                 default: break
                 }
             }
             .onOpenURL { url in
                 fetchShortcutIdFromUrl(urlString: url.absoluteString)
-                isOpenURL = true
+                fetchCurationIdFromUrl(urlString: url.absoluteString)
             }
         }
     }
@@ -140,9 +151,28 @@ struct ShortcutTabView: View {
         
         guard let shortcutIDfromURL = dictionaryData["shortcutID"] else { return }
         
-        print("shortcutIDfromURL = \(shortcutIDfromURL)")
-        
         tempShortcutId  = shortcutIDfromURL
+        isShortcutDeeplink = true
+    }
+    
+    private func fetchCurationIdFromUrl(urlString: String) {
+        
+        guard urlString.contains("curationID") else { return }
+        
+        let components = URLComponents(string: urlString)
+        let urlQueryItems = components?.queryItems ?? []
+        
+        var dictionaryData = [String: String]()
+        urlQueryItems.forEach {
+            dictionaryData[$0.name] = $0.value
+        }
+        
+        guard let curationIDfromURL = dictionaryData["curationID"] else { return }
+        
+        print("curationIDfromURL = \(curationIDfromURL)")
+        
+        tempCurationId  = curationIDfromURL
+        isCurationDeeplink = true
     }
 }
 

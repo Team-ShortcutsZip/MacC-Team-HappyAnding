@@ -55,7 +55,7 @@ struct SignInWithAppleView: View {
     }
     
     func appleLogin() {
-        appleLoginCoordinator = AppleAuthCoordinator(window: window)
+        appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: true)
         appleLoginCoordinator?.startSignInWithAppleFlow()
     }
 }
