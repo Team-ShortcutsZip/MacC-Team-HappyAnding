@@ -140,16 +140,7 @@ struct ReadShortcutView: View {
                 }
             }
             .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-            .navigationBarItems(trailing: Menu(content: {
-                if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
-                    myShortcutMenuSection
-                } else {
-                    otherShortcutMenuSection
-                }
-            }, label: {
-                Image(systemName: "ellipsis")
-                    .foregroundColor(.Gray4)
-            }))
+            .navigationBarItems(trailing: readShortcutViewButtonByUser())
             .alert("글 삭제", isPresented: $isTappedDeleteButton) {
                 Button(role: .cancel) {
                 } label: {
