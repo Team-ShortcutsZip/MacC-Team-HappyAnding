@@ -145,8 +145,6 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                                  didCompleteWithError error: Error) {
         // Handle error.
         print("Sign in with Apple errored: \(error)")
-        self.signInStatus = false
-        self.isReauthenticated = false
       }
 }
 

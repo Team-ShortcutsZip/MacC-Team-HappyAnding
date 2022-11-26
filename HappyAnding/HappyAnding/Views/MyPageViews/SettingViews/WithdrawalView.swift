@@ -125,15 +125,8 @@ struct WithdrawalView: View {
     }
     
     private func reauthenticateUser() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            userAuth.signOut()
-            appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: false)
-            appleLoginCoordinator?.startSignInWithAppleFlow()
-        } catch {
-            print(error.localizedDescription)
-        }
+        appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: false)
+        appleLoginCoordinator?.startSignInWithAppleFlow()
     }
 }
 
