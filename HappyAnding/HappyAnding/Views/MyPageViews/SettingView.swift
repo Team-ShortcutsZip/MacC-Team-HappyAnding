@@ -14,7 +14,7 @@ struct SettingView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
     @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+    @ObservedObject var webViewModel = WebViewModel()
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
@@ -126,8 +126,12 @@ struct SettingView: View {
         
         .sheet(isPresented: self.$isTappedPrivacyButton) {
             ZStack {
-                PrivacyPolicyView(webViewModel: webViewModel)
+                PrivacyPolicyView(viewModel: webViewModel,
+                                  isTappedPrivacyButton: $isTappedPrivacyButton,
+                                  url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
                     .environmentObject(webViewModel)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {
                     ProgressView()
                 }

@@ -18,8 +18,23 @@ struct CategoryModalView: View {
             Color.Background
                 .ignoresSafeArea()
             VStack {
-                Text("카테고리")
-                    .font(.headline)
+                HStack(spacing: 0) {
+                    Button {
+                        self.isShowingCategoryModal = false
+                    } label: {
+                        Text("닫기")
+                            .foregroundColor(.Gray5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 16)
+                    }
+                    
+                    Text("카테고리")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                    
+                    Spacer()
+                        .frame(maxWidth: .infinity)
+                }
                 
                 Spacer()
                     .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)

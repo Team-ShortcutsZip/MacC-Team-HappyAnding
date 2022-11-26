@@ -72,6 +72,8 @@ struct WriteShortcutTitleView: View {
                 IconModalView(isShowingIconModal: $isShowingIconModal,
                               iconColor: $shortcut.color,
                               iconSymbol: $shortcut.sfSymbol)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
             }
             
             ValidationCheckTextField(textType: .mandatory,
