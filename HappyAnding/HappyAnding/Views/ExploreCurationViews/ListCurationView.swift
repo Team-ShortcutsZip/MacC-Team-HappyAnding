@@ -28,12 +28,12 @@ struct ListCurationView: View {
     var body: some View {
         let titleString = data.type == .personalCuration ? (shortcutsZipViewModel.userInfo?.nickname ?? "") : ""
         if userCurations.count == 0 {
-            Text("\(titleString)\(data.type.rawValue)이 없습니다.")
+            Text("\(titleString)\(data.type.rawValue)이(가) 없습니다.")
                 .Body2()
                 .foregroundColor(Color.Gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-                .navigationBarTitle(self.data.type.rawValue)
+                .navigationBarTitle("\(titleString)\(data.type.rawValue)")
                 .navigationBarTitleDisplayMode(.inline)
         } else {
             ScrollView {
@@ -70,18 +70,8 @@ struct ListCurationView: View {
             .listStyle(.plain)
             .background(Color.Background.ignoresSafeArea(.all, edges: .all))
             .scrollContentBackground(.hidden)
-            .navigationBarTitle(titleString)
             .navigationBarTitleDisplayMode(.inline)
-
         }
     }
 }
 
-//struct ListCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ListCurationView(
-//            userCurations: UserCuration.fetchData(number: 10),
-//            type: CurationType.userCuration
-//        )
-//    }
-//}
