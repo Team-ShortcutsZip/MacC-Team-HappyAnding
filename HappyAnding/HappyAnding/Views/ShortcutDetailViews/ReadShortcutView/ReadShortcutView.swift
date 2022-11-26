@@ -140,16 +140,7 @@ struct ReadShortcutView: View {
                 }
             }
             .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-            .navigationBarItems(trailing: Menu(content: {
-                if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
-                    myShortcutMenuSection
-                } else {
-                    otherShortcutMenuSection
-                }
-            }, label: {
-                Image(systemName: "ellipsis")
-                    .foregroundColor(.Gray4)
-            }))
+            .navigationBarItems(trailing: readShortcutViewButtonByUser())
             .alert("글 삭제", isPresented: $isTappedDeleteButton) {
                 Button(role: .cancel) {
                 } label: {
@@ -308,55 +299,64 @@ extension ReadShortcutView {
         .padding(.horizontal, 16)
     }
     
-    var myShortcutMenuSection: some View {
-        
-        Section {
-            
-            Button {
-                isEdit.toggle()
-            } label: {
-                Label("편집", systemImage: "square.and.pencil")
-            }
-            
-            Button {
-                isUpdating.toggle()
-            } label: {
-                Label("업데이트", systemImage: "clock.arrow.circlepath")
-            }
-            
-            Button(action: {
-                share()
-            }) {
-                Label("공유", systemImage: "square.and.arrow.up")
-            }
-            
-            Button(role: .destructive, action: {
-                isTappedDeleteButton.toggle()
-            }) {
-                Label("삭제", systemImage: "trash.fill")
-            }
-        }
-        
-    }
-    
-    var otherShortcutMenuSection: some View {
-        Section {
-            Button(action: {
-                share()
-            }) {
-                Label("공유", systemImage: "square.and.arrow.up")
-            }
-            
-            //TODO: 2차 스프린트 이후 신고 기능 추가 시 사용할 코드
-//            Button(action: {
-//                //Place something action here
-//            }) {
-//                Label("신고", systemImage: "light.beacon.max.fill")
-//            }
+    @ViewBuilder
+    private func readShortcutViewButtonByUser() -> some View {
+        if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
+            myShortcutMenu
+        } else {
+            shareButton
         }
     }
     
-    func share() {
+    private var myShortcutMenu: some View {
+        Menu(content: {
+            Section {
+                editButton
+                updateButton
+                shareButton
+                deleteButton
+            }
+        }, label: {
+            Image(systemName: "ellipsis")
+                .foregroundColor(.Gray4)
+        })
+    }
+    
+    private var editButton: some View {
+        Button {
+            isEdit.toggle()
+        } label: {
+            Label("편집", systemImage: "square.and.pencil")
+        }
+    }
+    
+    private var updateButton: some View {
+        Button {
+            isUpdating.toggle()
+        } label: {
+            Label("업데이트", systemImage: "clock.arrow.circlepath")
+        }
+    }
+    
+    private var shareButton: some View {
+        Button(action: {
+            shareShortcut()
+        }) {
+            Label("공유", systemImage: "square.and.arrow.up")
+        }
+    }
+    
+    private var deleteButton: some View {
+        Button(role: .destructive, action: {
+            isTappedDeleteButton.toggle()
+            // TODO: firebase delete function
+            
+        }) {
+            Label("삭제", systemImage: "trash.fill")
+        }
+    }
+    
+    private func shareShortcut() {
         if let shortcut = data.shortcut {
             guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
             let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
@@ -366,7 +366,6 @@ extension ReadShortcutView {
         }
     }
 }
-
 
 // MARK: - 단축어 상세 정보 (기본 정보, 버전 정보, 댓글)
 
