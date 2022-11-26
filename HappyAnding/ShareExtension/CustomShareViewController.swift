@@ -7,8 +7,10 @@
 
 import UIKit
 import SwiftUI
+import Social
 import MobileCoreServices
 import UniformTypeIdentifiers
+
 import FirebaseCore
 
 
@@ -18,16 +20,55 @@ class CustomShareViewController: UIViewController {
     @State var hostAppShortcutLink: String = "test"
     
     func urlData() {
-
+        let extensionItems = extensionContext?.inputItems as! [NSExtensionItem]
+              
+              for extensionItem in extensionItems {
+                  if let itemProviders = extensionItem.attachments as? [NSItemProvider] {
+                      for itemProvider in itemProviders {
+                          // 해당 객체가 있는지 식별
+                          if itemProvider.hasItemConformingToTypeIdentifier(kUTTypeImage as String) {
+                              itemProvider.loadItem(forTypeIdentifier: kUTTypeImage as String, options: nil, completionHandler: { result, error in
+                                  var image: UIImage?
+                                  if result is UIImage {
+                                      image = result as? UIImage
+                                  }
+                                  
+                                  if result is URL {
+                                      let data = try? Data(contentsOf: result as! URL)
+                                      image = UIImage(data: data!)!
+                                  }
+                                  
+                                  if result is Data {
+                                      image = UIImage(data: result as! Data)!
+                                  }
+                              })
+                          }
+                          
+                          if itemProvider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
+                              itemProvider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { result, error in
+                                  let data = NSData.init(contentsOf:result as! URL)
+                                  DispatchQueue.main.async {
+                                      if let urlStr = result {
+                                          self.hostAppShortcutLink = "\(urlStr)"
+                                      }
+                                  }
+                              })
+                          }
+                      }
+                  }
+              }
     }
     
     override func viewDidLoad() {
         urlData()
+        
+
         super.viewDidLoad()
-        setupViews()
+                setupViews()
         self.view.backgroundColor = UIColor(Color.Background)
         setupNavBar()
     }
+    
     
     ///Set Navigation Bar
     private func setupNavBar() {
@@ -46,6 +87,7 @@ class CustomShareViewController: UIViewController {
     @objc private func doneAction() {
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
+    
     
     ///UIHostingView (SwiftUI view)
     private lazy var extShortcutsView: UIView = {
