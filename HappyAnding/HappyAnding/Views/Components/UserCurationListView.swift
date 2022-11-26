@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct UserCurationListView: View {
-    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
     @State var isWriting = false
     @State var data: NavigationListCurationType
+    @State var curations = [Curation]()
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(userCurations: data.curation,
-                                   data: data,
-                                   navigationParentView: self.data.navigationParentView)
-            .padding(.bottom, 12)
-            .padding(.horizontal, 16)
+            listHeader
+                .padding(.bottom, 12)
+                .padding(.horizontal, 16)
             
             Button {
                 self.isWriting = true
@@ -39,7 +38,7 @@ struct UserCurationListView: View {
                 .padding(.horizontal, 16)
             }
             
-            ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
+            ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
                 
                 let data = NavigationReadUserCurationType(userCuration: curation,
                                                           navigationParentView: self.data.navigationParentView)
@@ -62,17 +61,17 @@ struct UserCurationListView: View {
             }
             .environmentObject(writeCurationNavigation)
         }
+        .onAppear {
+            self.data.curation = shortcutsZipViewModel.curationsMadeByUser
+            self.curations = shortcutsZipViewModel.curationsMadeByUser
+        }
+        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
+            self.data.curation = data
+            self.curations = data
+        }
     }
-}
-
-struct UserCurationListHeader: View {
-    let userCurations: [Curation]
     
-    @State var data: NavigationListCurationType
-    
-    let navigationParentView: NavigationParentView
-    
-    var body: some View {
+    var listHeader: some View {
         HStack(alignment: .bottom) {
             Text(data.title ?? "")
                 .Title2()
@@ -92,8 +91,3 @@ struct UserCurationListHeader: View {
     }
 }
 
-//struct UserCurationListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
-//    }
-//}

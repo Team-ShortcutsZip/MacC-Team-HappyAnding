@@ -11,14 +11,13 @@ struct CurationListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var data: NavigationListCurationType
+    @State var curations = [Curation]()
     
     var body: some View {
         VStack(spacing: 0) {
-            CurationListHeader(userCurations: data.curation,
-                               data: data,
-                               navigationParentView: self.data.navigationParentView)
-            .padding(.bottom, 12)
-            .padding(.horizontal, 16)
+            listHeader
+                .padding(.bottom, 12)
+                .padding(.horizontal, 16)
             
             ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
                 if index < 2 {
@@ -33,34 +32,38 @@ struct CurationListView: View {
             }
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-        
-        .onChange(of: shortcutsZipViewModel.personalCurations) { data in
-            if self.data.type == .personalCuration {
-                self.data.curation = data
-            }
-        }
-        .onChange(of: shortcutsZipViewModel.userCurations) { data in
-            if self.data.type == .userCuration {
-                self.data.curation = data
-            }
-        }
-        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
-            if self.data.type == .myCuration {
-                self.data.curation = data
-            }
-        }
-    }
-}
 
-struct CurationListHeader: View {
+//        .onAppear {
+//            switch data.type {
+//            case .myCuration:
+//                self.curations = shortcutsZipViewModel.curationsMadeByUser
+//            case .userCuration:
+//                self.curations = shortcutsZipViewModel.userCurations
+//            case .personalCuration:
+//
+//                self.curations = shortcutsZipViewModel.personalCurations
+//            }
+//        }
+//        .onChange(of: shortcutsZipViewModel.personalCurations) { data in
+//            if self.data.type == .personalCuration {
+////                shortcutsZipViewModel.refreshPersonalCurations()
+//                self.curations = data
+//            }
+//        }
+//        .onChange(of: shortcutsZipViewModel.userCurations) { data in
+//            if self.data.type == .userCuration {
+////                shortcutsZipViewModel.refreshPersonalCurations()
+//                self.curations = data
+//            }
+//        }
+//        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
+//            if self.data.type == .myCuration {
+//                self.curations = data
+//            }
+//        }
+    }
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    let userCurations: [Curation]
-    
-    @State var data: NavigationListCurationType
-    let navigationParentView: NavigationParentView
-    
-    var body: some View {
+    var listHeader: some View {
         HStack(alignment: .bottom) {
             if data.type == .personalCuration {
                 Text("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
@@ -81,23 +84,36 @@ struct CurationListHeader: View {
                     .foregroundColor(.Gray4)
             }
         }
-        .onChange(of: shortcutsZipViewModel.personalCurations) { data in
-            if self.data.type == .personalCuration {
-                self.data.curation = data
-            }
-        }
-        .onChange(of: shortcutsZipViewModel.userCurations) { data in
-            if self.data.type == .userCuration {
-                self.data.curation = data
-            }
-        }
-        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
-            if self.data.type == .myCuration {
-                self.data.curation = data
-            }
-        }
     }
 }
+
+//struct CurationListHeader: View {
+//
+//    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+//    let userCurations: [Curation]
+//
+//    @State var data: NavigationListCurationType
+//    let navigationParentView: NavigationParentView
+//
+//    var body: some View {
+//
+//        .onChange(of: shortcutsZipViewModel.personalCurations) { data in
+//            if self.data.type == .personalCuration {
+//                self.data.curation = data
+//            }
+//        }
+//        .onChange(of: shortcutsZipViewModel.userCurations) { data in
+//            if self.data.type == .userCuration {
+//                self.data.curation = data
+//            }
+//        }
+//        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
+//            if self.data.type == .myCuration {
+//                self.data.curation = data
+//            }
+//        }
+//    }
+//}
 
 
 //struct CurationListView_Previews: PreviewProvider {

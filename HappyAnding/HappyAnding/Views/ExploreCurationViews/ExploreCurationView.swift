@@ -10,6 +10,16 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+//    @State var personalCurationData = NavigationListCurationType(type: .personalCuration,
+//                                                          title: "",
+//                                                          isAllUser: false,
+//                                                          navigationParentView: .curations,
+//                                                          curation: [Curation]())
+//    @State var usercurationData = NavigationListCurationType(type: .userCuration,
+//                                                             title: "큐레이션 모아보기",
+//                                                             isAllUser: true,
+//                                                             navigationParentView: .curations,
+//                                                             curation: [Curation]())
     
     var body: some View {
         ScrollView {
@@ -46,6 +56,12 @@ struct ExploreCurationView: View {
             }
             .padding(.bottom, 32)
         }
+        .onAppear {
+            
+//            self.personalCurationData.curation = shortcutsZipViewModel.personalCurations
+//            self.usercurationData.curation = shortcutsZipViewModel.userCurations
+        }
+
         .navigationBarTitle(Text("큐레이션 둘러보기"))
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
