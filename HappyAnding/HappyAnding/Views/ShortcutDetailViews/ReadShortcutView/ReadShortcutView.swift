@@ -95,7 +95,6 @@ struct ReadShortcutView: View {
                         if !isFocused {
                             if let shortcut = data.shortcut {
                                 Button {
-                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                                     if let url = URL(string: shortcut.downloadLink[0]) {
                                         if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
                                             data.shortcut?.numberOfDownload += 1
@@ -103,6 +102,7 @@ struct ReadShortcutView: View {
                                         isClickDownload = true
                                         openURL(url)
                                     }
+                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                                 } label: {
                                     Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
                                         .Body1()
