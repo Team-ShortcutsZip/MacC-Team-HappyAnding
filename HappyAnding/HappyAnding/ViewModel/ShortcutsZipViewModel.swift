@@ -70,7 +70,6 @@ class ShortcutsZipViewModel: ObservableObject {
     }
     
     func refreshPersonalCurations() {
-        print("onAppear data view model, \(self.personalCurations)")
         let personalCurationIDs = Set(self.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
         for curationID in personalCurationIDs {
             if let curation = self.userCurations.first(where: { $0.id == curationID }) {
@@ -79,7 +78,6 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
         }
-        print("onAppear data view model2, \(self.personalCurations)")
     }
     
     func initUserShortcut(user: User) {

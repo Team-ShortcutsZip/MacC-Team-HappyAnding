@@ -23,7 +23,6 @@ struct ListCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var data: NavigationListCurationType
-    @State var curations = [Curation]()
     
     var body: some View {
         let titleString = data.type == .personalCuration ? (shortcutsZipViewModel.userInfo?.nickname ?? "") : ""
@@ -39,7 +38,7 @@ struct ListCurationView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     
-                    ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
+                    ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
                         
                         let data = NavigationReadUserCurationType(userCuration: curation,
                                                                   navigationParentView: self.data.navigationParentView)
@@ -52,43 +51,8 @@ struct ListCurationView: View {
                             .listRowBackground(Color.Background)
                             .padding(.top, index == 0 ? 20 : 0 )
                             .padding(.bottom, index == self.data.curation.count - 1 ? 32 : 0)
-                            
-                            .onAppear {
-                                //TODO: 10개씩 불러오도록 변경 필요
-                                if self.data.isAllUser {
-                                    self.data.curation = shortcutsZipViewModel.userCurations
-                                }
-                            }
                         }
                     }
-                }
-            }
-            .onAppear {
-                switch data.type {
-                case .myCuration:
-                    self.curations = shortcutsZipViewModel.curationsMadeByUser
-                case .userCuration:
-                    self.curations = shortcutsZipViewModel.userCurations
-                case .personalCuration:
-                    shortcutsZipViewModel.refreshPersonalCurations()
-                    self.curations = shortcutsZipViewModel.personalCurations
-                }
-            }
-            .onChange(of: shortcutsZipViewModel.personalCurations) { data in
-                if self.data.type == .personalCuration {
-    //                shortcutsZipViewModel.refreshPersonalCurations()
-                    self.curations = data
-                }
-            }
-            .onChange(of: shortcutsZipViewModel.userCurations) { data in
-                if self.data.type == .userCuration {
-    //                shortcutsZipViewModel.refreshPersonalCurations()
-                    self.curations = data
-                }
-            }
-            .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
-                if self.data.type == .myCuration {
-                    self.curations = data
                 }
             }
             .scrollIndicators(.hidden)
