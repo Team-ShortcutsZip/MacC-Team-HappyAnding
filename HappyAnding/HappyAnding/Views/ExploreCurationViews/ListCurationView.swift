@@ -61,6 +61,7 @@ struct ListCurationView: View {
             .navigationBarBackground ({ Color.Background })
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(titleString)
         }
     }
 }
