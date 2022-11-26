@@ -112,26 +112,27 @@ struct ShortcutTabView: View {
                 }
                 .tag(3)
             }
-        .sheet(isPresented: self.$isShortcutDeeplink) {
-            let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                                  navigationParentView: .myPage)
-            ReadShortcutView(data: data)
-        }
-        .sheet(isPresented: self.$isCurationDeeplink) {
-            if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
-                let data = NavigationReadUserCurationType(userCuration: curation, navigationParentView: .myPage)
-                ReadUserCurationView(data: data)
+            .sheet(isPresented: self.$isShortcutDeeplink) {
+                let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
+                                                      navigationParentView: .myPage)
+                ReadShortcutView(data: data)
             }
-        }
-        .onChange(of: phase) { newPhase in
-            switch newPhase {
-            case .background: isShortcutDeeplink = false; isCurationDeeplink = false
-            default: break
+            .sheet(isPresented: self.$isCurationDeeplink) {
+                if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
+                    let data = NavigationReadUserCurationType(userCuration: curation, navigationParentView: .myPage)
+                    ReadUserCurationView(data: data)
+                }
             }
-        }
-        .onOpenURL { url in
-            fetchShortcutIdFromUrl(urlString: url.absoluteString)
-            fetchCurationIdFromUrl(urlString: url.absoluteString)
+            .onChange(of: phase) { newPhase in
+                switch newPhase {
+                case .background: isShortcutDeeplink = false; isCurationDeeplink = false
+                default: break
+                }
+            }
+            .onOpenURL { url in
+                fetchShortcutIdFromUrl(urlString: url.absoluteString)
+                fetchCurationIdFromUrl(urlString: url.absoluteString)
+            }
         }
     }
     
