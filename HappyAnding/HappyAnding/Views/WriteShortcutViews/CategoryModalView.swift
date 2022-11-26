@@ -18,7 +18,7 @@ struct CategoryModalView: View {
             Color.Background
                 .ignoresSafeArea()
             VStack {
-                HStack {
+                HStack(spacing: 0) {
                     Button {
                         self.isShowingCategoryModal = false
                     } label: {
