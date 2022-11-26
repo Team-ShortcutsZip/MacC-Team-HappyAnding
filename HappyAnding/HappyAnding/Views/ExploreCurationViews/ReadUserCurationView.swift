@@ -75,12 +75,8 @@ struct ReadUserCurationView: View {
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Menu(content: {
-            curationMenuSection
-        }, label: {
-            Image(systemName: "ellipsis")
-                .foregroundColor(.Gray4)
-        }))
+        .navigationBarItems(trailing: readCurationViewButtonByUser(isMyCuration: data.userCuration.author == shortcutsZipViewModel.currentUser()))
+        
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting,
@@ -111,7 +107,23 @@ struct ReadUserCurationView: View {
                     .frame(height: 48)
                     .foregroundColor(.Gray1)
                     .padding(.horizontal, 16)
-            )
+            ).alert(isPresented: $isTappedDeleteButton) {
+                Alert(title: Text("글 삭제")
+                    .foregroundColor(.Gray5),
+                      message: Text("글을 삭제하시겠습니까?")
+                    .foregroundColor(.Gray5),
+                      primaryButton: .default(Text("닫기"),
+                      action: {
+                    self.isTappedDeleteButton.toggle()
+                }),
+                      secondaryButton: .destructive(
+                        Text("삭제")
+                        , action: {
+                            shortcutsZipViewModel.deleteData(model: self.data.userCuration)
+                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
+                            presentation.wrappedValue.dismiss()
+                }))
+            }
         }
         .onAppear {
             shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author) { user in
@@ -134,11 +146,42 @@ struct ReadUserCurationView: View {
 
 extension ReadUserCurationView {
     
-    var curationMenuSection: some View {
+    @ViewBuilder
+    func readCurationViewButtonByUser(isMyCuration: Bool) -> some View {
+        if isMyCuration {
+            myCurationMenu
+        } else {
+            shareButton
+        }
+    }
+    
+    var myCurationMenu: some View {
+        Menu(content: {
+            Section {
+                shareButton
+                deleteButton
+            }
+        }, label: {
+            Image(systemName: "ellipsis")
+                .foregroundColor(.Gray4)
+        })
+    }
+    
+    var shareButton: some View {
         Button(action: {
             shareCuration()
         }) {
             Label("공유", systemImage: "square.and.arrow.up")
+        }
+    }
+    
+    var deleteButton: some View {
+        Button(role: .destructive, action: {
+            isTappedDeleteButton.toggle()
+            // TODO: firebase delete function
+            
+        }) {
+            Label("삭제", systemImage: "trash.fill")
         }
     }
     
