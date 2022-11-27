@@ -44,6 +44,23 @@ enum TextFieldState {
     }
 }
 
+enum TextFieldError {
+    case invalidText
+    case invalidLink
+    case excessLimitLenth
+    
+    var message: String {
+        switch self {
+        case .invalidText:
+            return "사용할 수 없는 문자가 포함되어있습니다."
+        case .invalidLink:
+            return "유효하지 않은 링크입니다."
+        case .excessLimitLenth:
+            return "글자 수를 초과하였습니다."
+        }
+    }
+}
+
 struct ValidationCheckTextField: View {
     let textType: TextType
     let isMultipleLines: Bool
@@ -58,6 +75,7 @@ struct ValidationCheckTextField: View {
     @State private var strokeColor = Color.Gray2
     @State private var isExceeded = false
     @State private var textFieldState = TextFieldState.notStatus
+    @State private var textFieldError = TextFieldError.invalidText
     
     @FocusState private var isFocused: Bool
     
@@ -84,7 +102,7 @@ struct ValidationCheckTextField: View {
             
             HStack {
                 if isExceeded {
-                    Text(isDownloadLinkTextField ? "유효하지 않은 링크입니다" : "글자수를 초과하였습니다")
+                    Text(textFieldError.message)
                         .Body2()
                         .foregroundColor(.Error)
                         .padding(.leading)
@@ -126,6 +144,9 @@ struct ValidationCheckTextField: View {
             .Body2()
             .frame(height: 24)
             .padding(16)
+            .onAppear {
+                checkValidation()
+            }
             .onChange(of: isFocused) { newValue in
                 checkValidation()
             }
@@ -155,6 +176,9 @@ struct ValidationCheckTextField: View {
                 .frame(height: 206)
                 .padding(16)
                 .opacity(self.content.isEmpty ? 0.25 : 1)
+                .onAppear {
+                    checkValidation()
+                }
                 .onChange(of: isFocused) { newValue in
                     checkValidation()
                 }
@@ -209,7 +233,7 @@ extension ValidationCheckTextField {
             if content.isEmpty {
                 isValid = textType.isOptional
                 isExceeded = false
-                self.textFieldState = .inProgressSuccess
+                self.textFieldState = .notStatus
             } else if content.count <= lengthLimit {
                 if isDownloadLinkTextField {
                     if content.hasPrefix("https://www.icloud.com/shortcuts/") {
@@ -220,23 +244,34 @@ extension ValidationCheckTextField {
                         isValid = textType.isOptional
                         isExceeded = true
                         self.textFieldState = .inProgressFail
+                        self.textFieldError = .invalidLink
                     }
                 } else {
-                    isValid = true
-                    isExceeded = false
-                    self.textFieldState = .inProgressSuccess
+                    if !content.checkCorrectNickname() {
+                        isValid = false
+                        isExceeded = true
+                        self.textFieldState = .inProgressFail
+                        self.textFieldError = .invalidText
+                    } else {
+                        isValid = true
+                        isExceeded = false
+                        self.textFieldState = .inProgressSuccess
+                    }
                 }
             } else {
                 isValid = false
                 isExceeded = true
-                self.strokeColor = Color.Error
+                self.textFieldState = .inProgressFail
+                self.textFieldError = .excessLimitLenth
             }
         } else {
             if isExceeded {
                 textFieldState = .doneFail
             } else {
                 if content.isEmpty {
-                    textFieldState = .notStatus
+                    isValid = textType.isOptional
+                    isExceeded = false
+                    self.textFieldState = .notStatus
                 } else {
                     textFieldState = .doneSuccess
                 }
