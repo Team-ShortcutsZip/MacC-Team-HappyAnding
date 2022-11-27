@@ -82,7 +82,18 @@ struct ValidationCheckTextField: View {
     
     var body: some View {
         VStack {
-            textFieldTitle
+            
+            HStack {
+                
+                textFieldTitle
+                
+                Spacer()
+                
+                Text("\(content.count)/\(lengthLimit)")
+                    .Body2()
+                    .foregroundColor(.Gray4)
+                    .padding(.trailing, 16)
+            }
             
             ZStack {
                 if isMultipleLines {
@@ -111,10 +122,6 @@ struct ValidationCheckTextField: View {
                 
                 Spacer()
                 
-                Text("\(content.count)/\(lengthLimit)")
-                    .Body2()
-                    .foregroundColor(isExceeded ? .Error : .Gray4)
-                    .padding(.trailing, 16)
             }
         }
         .onChange(of: self.textFieldState) { newValue in
@@ -158,21 +165,7 @@ struct ValidationCheckTextField: View {
     
     var multiLineEditor: some View {
         
-        
-        
         ZStack(alignment: .topLeading) {
-            
-            if content.isEmpty && !isFocused {
-                Text(placeholder)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(16)
-                    .multilineTextAlignment(.leading)
-                    .Body2()
-                    .foregroundColor(.Gray2)
-                    .onTapGesture {
-                        isFocused = true
-                    }
-            }
             
             CustomTextEditor(text: $content,
                              inputHeight: $inputHeight,
@@ -180,19 +173,28 @@ struct ValidationCheckTextField: View {
             .focused($isFocused)
             .frame(height: inputHeight)
             .padding(16)
-            .opacity(self.content.isEmpty && !isFocused ? 0 : 1)
             
+            if content.isEmpty && !isFocused {
+                Text(placeholder)
+                    .Body2()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .padding(16)
+                    .foregroundColor(.Gray2)
+                    .onTapGesture {
+                        isFocused = true
+                    }
+            }
         }
-
-                .onAppear {
-                    checkValidation()
-                }
-                .onChange(of: isFocused) { newValue in
-                    checkValidation()
-                }
-                .onChange(of: content) { newValue in
-                    checkValidation()
-                }
+        .onAppear {
+            checkValidation()
+        }
+        .onChange(of: isFocused) { newValue in
+            checkValidation()
+        }
+        .onChange(of: content) { newValue in
+            checkValidation()
+        }
     }
     
     var stateIcon: some View {
