@@ -285,6 +285,7 @@ extension ValidationCheckTextField {
                     self.textFieldState = .notStatus
                 } else {
                     textFieldState = .doneSuccess
+                    isValid = true
                 }
             }
         }
