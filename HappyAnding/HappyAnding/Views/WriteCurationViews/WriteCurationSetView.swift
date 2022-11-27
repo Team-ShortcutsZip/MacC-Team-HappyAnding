@@ -45,7 +45,7 @@ struct WriteCurationSetView: View {
             }
         }
         .background(Color.Background)
-        .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
+        .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 작성")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration()
