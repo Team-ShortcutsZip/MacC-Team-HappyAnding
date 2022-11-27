@@ -68,6 +68,7 @@ struct ValidationCheckTextField: View {
     @State var placeholder: String
     let lengthLimit: Int
     let isDownloadLinkTextField: Bool
+    @State var inputHeight: CGFloat = 272
     
     @Binding var content: String
     @Binding var isValid: Bool
@@ -156,26 +157,33 @@ struct ValidationCheckTextField: View {
     }
     
     var multiLineEditor: some View {
-        ZStack(alignment: .top) {
-            if content.isEmpty {
-                TextEditor(text: $placeholder)
-                    .scrollContentBackground(.hidden)
-                    .background(Color.Background)
+        
+        
+        
+        ZStack(alignment: .topLeading) {
+            
+            if content.isEmpty && !isFocused {
+                Text(placeholder)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(16)
+                    .multilineTextAlignment(.leading)
                     .Body2()
                     .foregroundColor(.Gray2)
-                    .frame(height: 206)
-                    .padding(16)
-                    .opacity(1)
+                    .onTapGesture {
+                        isFocused = true
+                    }
             }
             
-            TextEditor(text: $content)
-                .focused($isFocused)
-                .scrollContentBackground(.hidden)
-                .background(Color.Background)
-                .Body2()
-                .frame(height: 206)
-                .padding(16)
-                .opacity(self.content.isEmpty ? 0.25 : 1)
+            CustomTextEditor(text: $content,
+                             inputHeight: $inputHeight,
+                             isFocused: _isFocused)
+            .focused($isFocused)
+            .frame(height: inputHeight)
+            .padding(16)
+            .opacity(self.content.isEmpty && !isFocused ? 0 : 1)
+            
+        }
+
                 .onAppear {
                     checkValidation()
                 }
@@ -185,7 +193,6 @@ struct ValidationCheckTextField: View {
                 .onChange(of: content) { newValue in
                     checkValidation()
                 }
-        }
     }
     
     var stateIcon: some View {
