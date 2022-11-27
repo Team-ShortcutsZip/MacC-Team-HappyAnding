@@ -243,3 +243,4 @@ extension ValidationCheckTextField {
             }
         }
     }
+}
