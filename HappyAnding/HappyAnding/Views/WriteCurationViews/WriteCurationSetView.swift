@@ -22,6 +22,7 @@ struct WriteCurationSetView: View {
                                    author: "",
                                    shortcuts: [ShortcutCellModel]())
     @State var isTappedQuestionMark: Bool = false
+    @State var deletedShortcutCells = [ShortcutCellModel]()
     
     let isEdit: Bool
     
@@ -67,7 +68,11 @@ struct WriteCurationSetView: View {
                 }
             }
         }
-        
+        .onAppear() {
+            if isEdit {
+                deletedShortcutCells = curation.shortcuts
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
@@ -81,7 +86,8 @@ struct WriteCurationSetView: View {
         .navigationDestination(for: Float.self) { isEdit in
             WriteCurationInfoView(curation: $curation,
                                   isWriting: self.$isWriting,
-                                  isEdit: self.isEdit)
+                                  isEdit: self.isEdit,
+                                  deletedShortcutCells: $deletedShortcutCells)
         }
     }
     
