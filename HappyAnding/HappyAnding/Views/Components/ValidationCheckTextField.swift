@@ -247,7 +247,7 @@ extension ValidationCheckTextField {
                         self.textFieldError = .invalidLink
                     }
                 } else {
-                    if !content.checkCorrectNickname() {
+                    if !content.checkCorrectNickname() && !isMultipleLines {
                         isValid = false
                         isExceeded = true
                         self.textFieldState = .inProgressFail
