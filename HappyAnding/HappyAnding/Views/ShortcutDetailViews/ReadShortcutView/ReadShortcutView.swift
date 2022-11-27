@@ -235,6 +235,8 @@ extension ReadShortcutView {
                         .foregroundColor(.Gray4)
                 }
                 TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
+                    .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
                     .Body2()
                     .focused($isFocused)
                     .onAppear(perform : UIApplication.shared.hideKeyboard)

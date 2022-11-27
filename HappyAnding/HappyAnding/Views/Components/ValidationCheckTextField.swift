@@ -108,6 +108,8 @@ struct ValidationCheckTextField: View {
     
     var oneLineEditor: some View {
         TextField(placeholder, text: $content)
+            .disableAutocorrection(true)
+            .textInputAutocapitalization(.never)
             .Body2()
             .frame(height: 20)
             .padding(16)
