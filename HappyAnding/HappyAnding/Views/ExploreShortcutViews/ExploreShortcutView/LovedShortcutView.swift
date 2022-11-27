@@ -47,12 +47,6 @@ struct LovedShortcutView: View {
             }
             
         }
-        .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
-        }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
         .background(Color.Background)
     }
 }

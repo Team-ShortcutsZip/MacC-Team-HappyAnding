@@ -71,6 +71,17 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
+    func refreshPersonalCurations() {
+        let personalCurationIDs = Set(self.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
+        for curationID in personalCurationIDs {
+            if let curation = self.userCurations.first(where: { $0.id == curationID }) {
+                if !Set(self.personalCurations).contains(curation) {
+                    self.personalCurations.append(curation)
+                }
+            }
+        }
+    }
+    
     func initUserShortcut(user: User) {
         shortcutsMadeByUser = allShortcuts.filter { $0.author == user.id }
         user.downloadedShortcuts.forEach({ downloadedShortcut in
@@ -83,6 +94,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 shortcutsUserLiked.append(allShortcuts[index])
             }
         })
+        refreshPersonalCurations()
     }
     func initShortcut() {
         sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
@@ -503,6 +515,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 self.shortcutsUserDownloaded.insert(shortcut, at: 0)
             }
         }
+        self.refreshPersonalCurations()
     }
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수

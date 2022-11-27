@@ -66,8 +66,8 @@ struct MyPageView: View {
                 UserCurationListView(data: NavigationListCurationType(type: .myCuration,
                                                                       title: "내가 작성한 큐레이션",
                                                                       isAllUser: false,
-                                                                      navigationParentView: .myPage),
-                                     userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+                                                                      navigationParentView: .myPage,
+                                                                      curation: shortcutsZipViewModel.curationsMadeByUser))
                 .frame(maxWidth: .infinity)
                 
                 // MARK: - 좋아요한 단축어
@@ -138,9 +138,6 @@ struct MyPageShortcutListCell: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
-        }
-        .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
         }
     }
 }
