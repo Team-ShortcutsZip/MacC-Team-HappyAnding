@@ -81,6 +81,8 @@ struct EditNicknameView: View {
     var textField: some View {
         HStack {
             TextField("닉네임 (최대 8글자)", text: $nickname)
+                .disableAutocorrection(true)
+                .textInputAutocapitalization(.never)
                 .Body2()
                 .focused($isFocused)
                 .foregroundColor(.Gray5)
