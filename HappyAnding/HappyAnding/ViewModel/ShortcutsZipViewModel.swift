@@ -69,9 +69,6 @@ class ShortcutsZipViewModel: ObservableObject {
         fetchCommentAll { comments in
             self.allComments = comments
         }
-        if self.currentUser() == "" {
-            signInStatus = false
-        }
     }
     
     func initUserShortcut(user: User) {
