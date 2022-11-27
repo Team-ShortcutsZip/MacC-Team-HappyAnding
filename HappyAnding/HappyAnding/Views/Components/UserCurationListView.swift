@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct UserCurationListView: View {
-    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
     @State var isWriting = false
     @State var data: NavigationListCurationType
-    
-    @Binding var userCurations: [Curation]
+    @State var curations = [Curation]()
     
     var body: some View {
         VStack(spacing: 0) {
-            UserCurationListHeader(userCurations: $userCurations,
-                                   data: data,
-                                   navigationParentView: self.data.navigationParentView)
+            listHeader
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             
@@ -41,23 +38,18 @@ struct UserCurationListView: View {
                 .padding(.horizontal, 16)
             }
             
-            if let userCurations {
-                ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
-                    
-                    let data = NavigationReadUserCurationType(userCuration: curation,
-                                                              navigationParentView: self.data.navigationParentView)
-                    //TODO: 데이터 변경 필요
-                    if index < 2 {
-                        NavigationLink(value: data) {
-                            UserCurationCell(curation: curation,
-                                             navigationParentView: self.data.navigationParentView)
-                        }
+            ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
+                
+                let data = NavigationReadUserCurationType(userCuration: curation,
+                                                          navigationParentView: self.data.navigationParentView)
+                //TODO: 데이터 변경 필요
+                if index < 2 {
+                    NavigationLink(value: data) {
+                        UserCurationCell(curation: curation,
+                                         navigationParentView: self.data.navigationParentView)
                     }
                 }
             }
-        }
-        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-            ReadUserCurationView(data: data)
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
@@ -66,17 +58,17 @@ struct UserCurationListView: View {
             }
             .environmentObject(writeCurationNavigation)
         }
+        .onAppear {
+            self.data.curation = shortcutsZipViewModel.curationsMadeByUser
+            self.curations = shortcutsZipViewModel.curationsMadeByUser
+        }
+        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
+            self.data.curation = data
+            self.curations = data
+        }
     }
-}
-
-struct UserCurationListHeader: View {
-    @Binding var userCurations: [Curation]
     
-    @State var data: NavigationListCurationType
-    
-    let navigationParentView: NavigationParentView
-    
-    var body: some View {
+    var listHeader: some View {
         HStack(alignment: .bottom) {
             Text(data.title ?? "")
                 .Title2()
@@ -90,16 +82,6 @@ struct UserCurationListHeader: View {
                     .foregroundColor(.Gray4)
             }
         }
-        .navigationDestination(for: NavigationListCurationType.self) { data in
-            ListCurationView(userCurations: $userCurations,
-                             data: data)
-            
-        }
     }
 }
 
-//struct UserCurationListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserCurationListView(userCurations: UserCuration.fetchData(number: 5))
-//    }
-//}

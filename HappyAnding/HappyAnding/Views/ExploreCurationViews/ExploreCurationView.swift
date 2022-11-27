@@ -24,8 +24,8 @@ struct ExploreCurationView: View {
                 CurationListView(data: NavigationListCurationType(type: .personalCuration,
                                                                   title: "",
                                                                   isAllUser: false,
-                                                                  navigationParentView: .curations),
-                                 userCurations: $shortcutsZipViewModel.personalCurations)
+                                                                  navigationParentView: .curations,
+                                                                  curation: shortcutsZipViewModel.personalCurations))
                 .onAppear {
                     shortcutsZipViewModel.personalCurations.removeAll()
                     let personalCurationIDs = Set(shortcutsZipViewModel.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
@@ -41,8 +41,8 @@ struct ExploreCurationView: View {
                 CurationListView(data: NavigationListCurationType(type: .userCuration,
                                                                   title: "큐레이션 모아보기",
                                                                   isAllUser: true,
-                                                                  navigationParentView: .curations),
-                                 userCurations: $shortcutsZipViewModel.userCurations)
+                                                                  navigationParentView: .curations,
+                                                                  curation: shortcutsZipViewModel.userCurations))
             }
             .padding(.bottom, 32)
         }
@@ -86,9 +86,6 @@ struct adminCurationsFrameiew: View {
                 .padding(.leading, 16)
                 .padding(.trailing, 8)
             }
-        }
-        .navigationDestination(for: Curation.self) { data in
-            ReadAdminCurationView(curation: data)
         }
     }
 }

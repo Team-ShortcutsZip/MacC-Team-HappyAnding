@@ -149,6 +149,8 @@ struct ValidationCheckTextField: View {
     var oneLineEditor: some View {
         TextField(placeholder, text: $content)
             .focused($isFocused)
+            .disableAutocorrection(true)
+            .textInputAutocapitalization(.never)
             .Body2()
             .frame(height: 24)
             .padding(16)

@@ -19,6 +19,7 @@ struct WriteCurationInfoView: View {
     @Binding var isWriting: Bool
     
     let isEdit: Bool
+    @Binding var deletedShortcutCells: [ShortcutCellModel]
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
@@ -55,13 +56,20 @@ struct WriteCurationInfoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    if isEdit {
+                        curation.shortcuts.forEach { shortcutCell in
+                            deletedShortcutCells.removeAll(where: { $0.id == shortcutCell.id })
+                        }
+                    }
                     curation.author = shortcutsZipViewModel.currentUser()
                     shortcutsZipViewModel.setData(model: curation)
                     shortcutsZipViewModel.updateShortcutCurationID(
                         shortcutCells: curation.shortcuts,
-                        curationID: curation.id
+                        curationID: curation.id,
+                        isEdit: isEdit,
+                        deletedShortcutCells: deletedShortcutCells
                     )
-                    if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == curation.id}) {
+                    if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == curation.id }) {
                         shortcutsZipViewModel.userCurations[index] = curation
                     }
                     

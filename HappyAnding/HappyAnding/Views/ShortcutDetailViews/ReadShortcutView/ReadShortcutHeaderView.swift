@@ -30,9 +30,12 @@ struct ReadShortcutHeaderView: View {
                 Text("\(shortcut.title)")
                     .Title1()
                     .foregroundColor(Color.Gray5)
+                    .fixedSize(horizontal: false, vertical: true)
+                
                 Text("\(shortcut.subtitle)")
                     .Body1()
                     .foregroundColor(Color.Gray3)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             userInfo
         }

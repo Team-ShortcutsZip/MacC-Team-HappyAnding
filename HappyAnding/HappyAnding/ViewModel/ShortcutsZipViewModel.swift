@@ -71,6 +71,17 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
+    func refreshPersonalCurations() {
+        let personalCurationIDs = Set(self.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
+        for curationID in personalCurationIDs {
+            if let curation = self.userCurations.first(where: { $0.id == curationID }) {
+                if !Set(self.personalCurations).contains(curation) {
+                    self.personalCurations.append(curation)
+                }
+            }
+        }
+    }
+    
     func initUserShortcut(user: User) {
         shortcutsMadeByUser = allShortcuts.filter { $0.author == user.id }
         user.downloadedShortcuts.forEach({ downloadedShortcut in
@@ -83,6 +94,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 shortcutsUserLiked.append(allShortcuts[index])
             }
         })
+        refreshPersonalCurations()
     }
     func initShortcut() {
         sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
@@ -503,11 +515,20 @@ class ShortcutsZipViewModel: ObservableObject {
                 self.shortcutsUserDownloaded.insert(shortcut, at: 0)
             }
         }
+        self.refreshPersonalCurations()
     }
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
     
-    func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String) {
+    func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String, isEdit: Bool, deletedShortcutCells: [ShortcutCellModel]?) {
+        if isEdit {
+            deletedShortcutCells!.forEach { shortcutCell in
+                if var shortcut = fetchShortcutDetail(id: shortcutCell.id) {
+                    shortcut.curationIDs.removeAll(where: { $0 == curationID})
+                    self.setData(model: shortcut)
+                }
+            }
+        }
         shortcutCells.forEach { shortcutCell in
             if var shortcut = fetchShortcutDetail(id: shortcutCell.id) {
                 if !shortcut.curationIDs.contains(curationID) {
@@ -550,7 +571,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 let currentUser = firebaseAuth.currentUser
                 currentUser?.delete { error in
                     if let error {
-                        print("**\(error.localizedDescription)")
+                        print("\(error.localizedDescription)")
                     } else {
                         withAnimation(.easeInOut) {
                             self.signInStatus = false
@@ -619,23 +640,23 @@ class ShortcutsZipViewModel: ObservableObject {
             .whereField("id", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(User.self, from: jsonData)
-                        completionHandler(shortcut)
-                    } catch let error {
-                        print("error: \(error)")
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    if documents.isEmpty { self.signInStatus = false }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let user = try decoder.decode(User.self, from: jsonData)
+                            completionHandler(user)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
                     }
                 }
             }
-        }
     }
     
     //MARK: user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환

@@ -64,6 +64,20 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
+                        .navigationDestination(for: NavigationSearch.self) { _ in
+                            SearchView()
+                        }
+                        .navigationDestination(for: NavigationListShortcutType.self) { data in
+                            ListShortcutView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+                            ReadShortcutView(data: data)
+                        }
+                        .navigationDestination(for: Category.self) { category in
+                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
+                                              categoryName: category,
+                                              navigationParentView: .shortcuts)
+                        }
                 }
                 .environmentObject(shortcutNavigation)
                 .tabItem {
@@ -85,6 +99,19 @@ struct ShortcutTabView: View {
                             self.tappedTwice = false
                         })
                         .navigationBarBackground ({ Color.Background })
+                        .navigationDestination(for: Curation.self) { data in
+                            ReadAdminCurationView(curation: data)
+                        }
+                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+                            ReadUserCurationView(data: data)
+                        }
+                        .navigationDestination(for: NavigationListCurationType.self) { data in
+                            ListCurationView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+                            ReadShortcutView(data: data)
+                        }
+                    
                 }
                 .environmentObject(curationNavigation)
                 .tabItem {
@@ -106,6 +133,19 @@ struct ShortcutTabView: View {
                             self.tappedTwice = false
                         })
                         .navigationBarBackground ({ Color.Background })
+                    
+                        .navigationDestination(for: NavigationListShortcutType.self) { data in
+                            ListShortcutView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+                            ReadShortcutView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+                            ReadUserCurationView(data: data)
+                        }
+                        .navigationDestination(for: NavigationListCurationType.self) { data in
+                            ListCurationView(data: data)
+                        }
                 }
                 .environmentObject(profileNavigation)
                 .tabItem {
