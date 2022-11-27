@@ -69,6 +69,9 @@ class ShortcutsZipViewModel: ObservableObject {
         fetchCommentAll { comments in
             self.allComments = comments
         }
+        if self.currentUser() == "" {
+            signInStatus = false
+        }
     }
     
     func initUserShortcut(user: User) {
@@ -550,7 +553,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 let currentUser = firebaseAuth.currentUser
                 currentUser?.delete { error in
                     if let error {
-                        print("**\(error.localizedDescription)")
+                        print("\(error.localizedDescription)")
                     } else {
                         withAnimation(.easeInOut) {
                             self.signInStatus = false
@@ -619,23 +622,23 @@ class ShortcutsZipViewModel: ObservableObject {
             .whereField("id", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(User.self, from: jsonData)
-                        completionHandler(shortcut)
-                    } catch let error {
-                        print("error: \(error)")
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    if documents.isEmpty { self.signInStatus = false }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let user = try decoder.decode(User.self, from: jsonData)
+                            completionHandler(user)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
                     }
                 }
             }
-        }
     }
     
     //MARK: user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
