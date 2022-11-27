@@ -192,6 +192,8 @@ struct WriteShortcutTagView: View {
                     
                     if isTextFieldShowing {
                         TextField("", text: $relatedApp)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
                             .modifier(ClearButton(text: $relatedApp))
                             .focused($isFocused)
                             .onAppear {
