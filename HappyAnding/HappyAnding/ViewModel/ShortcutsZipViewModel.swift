@@ -507,7 +507,15 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
     
-    func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String) {
+    func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String, isEdit: Bool, deletedShortcutCells: [ShortcutCellModel]?) {
+        if isEdit {
+            deletedShortcutCells!.forEach { shortcutCell in
+                if var shortcut = fetchShortcutDetail(id: shortcutCell.id) {
+                    shortcut.curationIDs.removeAll(where: { $0 == curationID})
+                    self.setData(model: shortcut)
+                }
+            }
+        }
         shortcutCells.forEach { shortcutCell in
             if var shortcut = fetchShortcutDetail(id: shortcutCell.id) {
                 if !shortcut.curationIDs.contains(curationID) {
