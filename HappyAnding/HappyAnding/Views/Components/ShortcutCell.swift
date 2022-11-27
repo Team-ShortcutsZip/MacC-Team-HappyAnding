@@ -45,6 +45,7 @@ struct ShortcutCell: View {
     var shortcut: Shortcuts?
     var rankNumber: Int = -1
     let navigationParentView: NavigationParentView
+    var sectionType: SectionType?
     
     var body: some View {
         
@@ -125,10 +126,25 @@ struct ShortcutCell: View {
     var downloadInfo: some View {
         
         VStack(alignment: .center, spacing: 0) {
-            Image(systemName: "arrow.down.app.fill")
-                .foregroundColor(.Gray4)
-                .font(.system(size: 24, weight: .medium))
-                .frame(height: 32)
+            if sectionType == SectionType.myDownloadShortcut {
+                if ((shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: {$0.downloadLink == shortcut?.downloadLink[0]})) == nil) {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .foregroundColor(.Gray4)
+                        .font(.system(size: 24, weight: .medium))
+                        .frame(height: 32)
+                }
+                else {
+                    Image(systemName: "arrow.down.app.fill")
+                        .foregroundColor(.Gray4)
+                        .font(.system(size: 24, weight: .medium))
+                        .frame(height: 32)
+                }
+            } else {
+                Image(systemName: "arrow.down.app.fill")
+                    .foregroundColor(.Gray4)
+                    .font(.system(size: 24, weight: .medium))
+                    .frame(height: 32)
+            }
         }
         .padding(.leading, 12)
         .padding(.trailing, 18)
