@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
 		4D3DBB88292E67E600DE8160 /* EditNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3DBB87292E67E500DE8160 /* EditNicknameView.swift */; };
 		4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */; };
 		4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D778A33290A53BA00C15AC4 /* Application+Extension.swift */; };
 		4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */; };
 		4DAD6370292BCB1000ABF8C1 /* CategoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD636F292BCB1000ABF8C1 /* CategoryCardView.swift */; };
 		872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */; };
-		8764C0D7291F85DF00E1593B /* NavigationStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */; };
 		8788374A2920D549009B3F54 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878837492920D549009B3F54 /* Binding.swift */; };
 		8792478D2918CE450040D5C3 /* UINavigationContoller+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792478C2918CE450040D5C3 /* UINavigationContoller+Extension.swift */; };
 		8792479B291BDF820040D5C3 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792479A291BDF820040D5C3 /* SearchView.swift */; };
@@ -28,7 +26,6 @@
 		87E606B829114FB200C3DA13 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B729114FB200C3DA13 /* UserAuth.swift */; };
 		87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */; };
 		87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C6F28F94EA6009B691F /* ShortcutTabView.swift */; };
-		87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7428F94EA8009B691F /* Preview Assets.xcassets */; };
 		87E99C7F28F94EA8009B691F /* HappyAndingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C7E28F94EA8009B691F /* HappyAndingTests.swift */; };
 		87E99C8928F94EA8009B691F /* HappyAndingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99C8828F94EA8009B691F /* HappyAndingUITests.swift */; };
@@ -84,6 +81,9 @@
 		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
 		A3FF018A2918F8EF00384211 /* apache.txt in Resources */ = {isa = PBXBuildFile; fileRef = A3FF01892918F8EF00384211 /* apache.txt */; };
 		A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF018D291ACFA500384211 /* WithdrawalView.swift */; };
+		F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */; };
+		F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
+		F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
 		F9131B6B2922D38D00868A0E /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9131B6A2922D38D00868A0E /* Keyword.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435C2907B19A00987819 /* FirebaseAnalytics */; };
@@ -585,7 +585,7 @@
 			};
 			buildConfigurationList = 87E99C6528F94EA6009B691F /* Build configuration list for PBXProject "HappyAnding" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion =ko;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				ko,
@@ -611,12 +611,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */,
+				F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */,
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
 				A3FF018A2918F8EF00384211 /* apache.txt in Resources */,
-				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
-				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
-				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
-				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
 				A3C55771292D1C0B003907DC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */,
 				F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */,
 				F9131B6B2922D38D00868A0E /* Keyword.swift in Sources */,
 				87EDB96329082C7F009A750A /* ListCategoryView.swift in Sources */,
@@ -657,8 +656,6 @@
 				A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */,
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
-				8764C0D7291F85DF00E1593B /* NavigationStackModel.swift in Sources */,
-				8764C0D7291F85DF00E1593B /* NavigationStackModel.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
