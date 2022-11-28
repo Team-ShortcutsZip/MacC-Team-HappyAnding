@@ -63,7 +63,7 @@ struct ReadShortcutView: View {
                         // MARK: - 단축어 타이틀
                         
                         ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
-                            .frame(height: 160)
+                            .frame(minHeight: 160)
                             .padding(.bottom, 33)
                             .background(Color.White)
                         
