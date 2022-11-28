@@ -27,34 +27,66 @@ class CheckUpdateVersion {
     static let share = CheckUpdateVersion()
     private let db = Firestore.firestore()
     
+    let appID = "6444001181"
+    var isNeededForceUpdate = false
+    var versionData = Version(latestVersion: "", minimumVersion: "", description: "", title: "")
+    
+    func observeApplicationDidBecomeActive() {
+        self.fetchVersion(completionHandler: { version, isNeeded in
+            self.versionData = version
+            self.isNeededForceUpdate = isNeeded
+            
+            if isNeeded {
+                let alertController = UIAlertController.init(title: "\(version.title)", message: "\(version.description)", preferredStyle: UIAlertController.Style.alert)
+                alertController.addAction(UIAlertAction.init(title: "업데이트", style: UIAlertAction.Style.default, handler: { (action) in
+                    let url = "itms-apps://itunes.apple.com/app/" + self.appID
+                    if let url = URL(string: url){
+                        UIApplication.shared.open(url)
+                    }
+                }))
+                
+                var topController = UIApplication.shared.keyWindow?.rootViewController
+                if topController != nil {
+                    while let presentedViewController = topController?.presentedViewController {
+                        topController = presentedViewController
+                    }
+                }
+                topController!.present(alertController, animated: false, completion: {
+                    
+                })
+            }
+        })
+    }
+    
     func fetchVersion(completionHandler: @escaping (Version, Bool)->()) {
         
-        db.collection("Version")
-            .getDocuments { (querySnapshot, error) in
-                if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
+        db.collection("Version").addSnapshotListener { snapshot, error in
+            guard let snapshot else {
+                print("Error fetching snapshots: \(error!)")
+                return
+            }
+            print("**isFromCache\(snapshot.metadata.isFromCache)")
+            snapshot.documentChanges.forEach { diff in
                 let decoder = JSONDecoder()
                 
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let version = try decoder.decode(Version.self, from: jsonData)
-                        
-                        let localVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-                        
-                        let isNeeded = self.checkIsNeededForceUpdate(localVersion: localVersionString, minimumVersion: version.minimumVersion)
-                        print("**\(isNeeded)")
-                        completionHandler(version, isNeeded)
-                    } catch let error {
-                        print("error: \(error)")
-                    }
+                do {
+                    let data = diff.document.data()
+                    let jsonData = try JSONSerialization.data(withJSONObject: data)
+                    let version = try decoder.decode(Version.self, from: jsonData)
+                    
+                    let localVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+                    
+                    let isNeeded = self.checkIsNeededForceUpdate(localVersion: localVersionString, minimumVersion: version.minimumVersion)
+                    print("**\(isNeeded)")
+                    completionHandler(version, isNeeded)
+                    
+                } catch let error {
+                    print("error: \(error)")
                 }
             }
         }
     }
+
     
     func checkIsNeededForceUpdate(localVersion: String, minimumVersion: String) -> Bool {
         
