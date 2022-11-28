@@ -44,6 +44,7 @@ struct ReadUserCurationView: View {
                     .padding(.bottom, 12)
                 }
             }
+            
             VStack(spacing: 0){
                 ForEach(self.data.userCuration.shortcuts, id: \.self) { shortcut in
                     let data = NavigationReadShortcutType(shortcutID: shortcut.id,
@@ -79,13 +80,30 @@ struct ReadUserCurationView: View {
             .environmentObject(writeCurationNavigation)
         }
         .fullScreenCover(isPresented: $isWriting) {
-                    NavigationStack(path: $writeCurationNavigation.navigationPath) {
-                        WriteCurationSetView(isWriting: $isWriting,
-                                             curation: self.data.userCuration,
-                                             isEdit: true)
-                    }
-                    .environmentObject(writeCurationNavigation)
-                }
+            NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                WriteCurationSetView(isWriting: $isWriting,
+                                     curation: self.data.userCuration,
+                                     isEdit: true)
+            }
+            .environmentObject(writeCurationNavigation)
+        }
+        .alert("글 삭제", isPresented: $isTappedDeleteButton) {
+            Button(role: .cancel) {
+                self.isTappedDeleteButton.toggle()
+            } label: {
+                Text("닫기")
+            }
+            
+            Button(role: .destructive) {
+                shortcutsZipViewModel.deleteData(model: self.data.userCuration)
+                shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
+                presentation.wrappedValue.dismiss()
+            } label: {
+                Text("삭제")
+            }
+        } message: {
+            Text("글을 삭제하시겠습니까?")
+        }
     }
     
     var userInformation: some View {
@@ -110,23 +128,7 @@ struct ReadUserCurationView: View {
                     .frame(height: 48)
                     .foregroundColor(.Gray1)
                     .padding(.horizontal, 16)
-            ).alert(isPresented: $isTappedDeleteButton) {
-                Alert(title: Text("글 삭제")
-                    .foregroundColor(.Gray5),
-                      message: Text("글을 삭제하시겠습니까?")
-                    .foregroundColor(.Gray5),
-                      primaryButton: .default(Text("닫기"),
-                      action: {
-                    self.isTappedDeleteButton.toggle()
-                }),
-                      secondaryButton: .destructive(
-                        Text("삭제")
-                        , action: {
-                            shortcutsZipViewModel.deleteData(model: self.data.userCuration)
-                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
-                            presentation.wrappedValue.dismiss()
-                }))
-            }
+            )
         }
         .onAppear {
             shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author) { user in
