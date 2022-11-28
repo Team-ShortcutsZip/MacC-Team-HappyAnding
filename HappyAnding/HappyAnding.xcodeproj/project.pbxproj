@@ -94,6 +94,7 @@
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 		F9AC2BBA2935D34C00165820 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB92935D34C00165820 /* Image+Extension.swift */; };
+		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
 		F9CAEF832914855900224B0A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+Extension.swift */; };
 		F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */; };
 		F9F4D36A2906E0B000DC8546 /* Navigationbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */; };
@@ -206,6 +207,7 @@
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		F9AC2BB92935D34C00165820 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
+		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
 		F9CAEF822914855900224B0A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigationbar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -489,6 +491,7 @@
 			children = (
 				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
 				4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */,
+				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				F9AC2BBA2935D34C00165820 /* Image+Extension.swift in Sources */,
 				F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */,
 				F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */,
+				F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */,
 				F9131B6B2922D38D00868A0E /* Keyword.swift in Sources */,
 				87EDB96329082C7F009A750A /* ListCategoryView.swift in Sources */,
 				F94B432E2907088400987819 /* UserCurationListView.swift in Sources */,
