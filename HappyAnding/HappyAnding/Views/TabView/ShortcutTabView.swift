@@ -64,6 +64,9 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
+                        .navigationDestination(for: NavigationProfile.self) { _ in
+                            ShowProfileView()
+                        }
                         .navigationDestination(for: NavigationSearch.self) { _ in
                             SearchView()
                         }
@@ -77,6 +80,9 @@ struct ShortcutTabView: View {
                             ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
                                               categoryName: category,
                                               navigationParentView: .shortcuts)
+                        }
+                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+                            ReadUserCurationView(data: data)
                         }
                 }
                 .environmentObject(shortcutNavigation)
@@ -99,6 +105,9 @@ struct ShortcutTabView: View {
                             self.tappedTwice = false
                         })
                         .navigationBarBackground ({ Color.Background })
+                        .navigationDestination(for: NavigationProfile.self) { _ in
+                            ShowProfileView()
+                        }
                         .navigationDestination(for: Curation.self) { data in
                             ReadAdminCurationView(curation: data)
                         }
@@ -133,7 +142,9 @@ struct ShortcutTabView: View {
                             self.tappedTwice = false
                         })
                         .navigationBarBackground ({ Color.Background })
-                    
+                        .navigationDestination(for: NavigationProfile.self) { _ in
+                            ShowProfileView()
+                        }
                         .navigationDestination(for: NavigationListShortcutType.self) { data in
                             ListShortcutView(data: data)
                         }

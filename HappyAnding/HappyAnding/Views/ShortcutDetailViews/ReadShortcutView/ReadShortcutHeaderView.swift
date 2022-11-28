@@ -83,33 +83,35 @@ struct ReadShortcutHeaderView: View {
     
     // MARK: - 유저 정보
     var userInfo: some View {
-        HStack(spacing: 8) {
-            
-            Circle()
-                .frame(width: 24, height: 24)
-                .foregroundColor(.Gray4)
-                .padding(.leading, 16)
-            
-            Text(userInformation?.nickname ?? "닉네임")
-                .Body2()
-                .foregroundColor(.Gray4)
-            
-            Spacer()
-                .frame(maxWidth: .infinity)
-            
-            
-            // TODO: 신고기능
-            
-            /*
-            Image(systemName: "light.beacon.max.fill")
-                .Headline()
-                .foregroundColor(.Gray5)
-                .padding(.trailing, 16)
-                .onTapGesture {
-                    print("Tapped!")
-                }
-             */
-            
+        NavigationLink(value: NavigationProfile.first) {
+            HStack(spacing: 8) {
+                
+                Circle()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.Gray4)
+                    .padding(.leading, 16)
+                
+                Text(userInformation?.nickname ?? "닉네임")
+                    .Body2()
+                    .foregroundColor(.Gray4)
+                
+                Spacer()
+                    .frame(maxWidth: .infinity)
+                
+                
+                // TODO: 신고기능
+                
+                /*
+                Image(systemName: "light.beacon.max.fill")
+                    .Headline()
+                    .foregroundColor(.Gray5)
+                    .padding(.trailing, 16)
+                    .onTapGesture {
+                        print("Tapped!")
+                    }
+                */
+                
+            }
         }
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, maxHeight: 44)
