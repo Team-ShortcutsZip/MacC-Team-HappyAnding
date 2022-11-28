@@ -16,6 +16,7 @@ extension UIFont {
     static var Body2 = UIFont.systemFont(ofSize: 15, weight: .regular)
     static var Subtitle = UIFont.systemFont(ofSize: 15, weight: .heavy)
     static var Footnote = UIFont.systemFont(ofSize: 13, weight: .regular)
+    static var Sb = UIFont.systemFont(ofSize: 15, weight: .semibold)
 }
 
 //출처: https://stackoverflow.com/questions/61705184/how-to-set-line-height-for-a-single-line-text-in-swiftui
@@ -56,5 +57,8 @@ extension View {
     }
     func Footnote() -> some View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Footnote, lineHeight: 18))
+    }
+    func Sb() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Sb, lineHeight: 20))
     }
 }
