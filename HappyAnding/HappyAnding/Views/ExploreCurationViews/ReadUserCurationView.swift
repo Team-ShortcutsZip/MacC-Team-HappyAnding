@@ -90,17 +90,19 @@ struct ReadUserCurationView: View {
     
     var userInformation: some View {
         ZStack {
-            HStack {
-                Image(systemName: "person.fill")
-                    .frame(width: 28, height: 28)
-                    .foregroundColor(.White)
-                    .background(Color.Gray3)
-                    .clipShape(Circle())
-                
-                Text(authorInformation?.nickname ?? "닉네임")
-                    .Headline()
-                    .foregroundColor(.Gray4)
-                Spacer()
+            NavigationLink(value: NavigationProfile.first) {
+                HStack {
+                    Image(systemName: "person.fill")
+                        .frame(width: 28, height: 28)
+                        .foregroundColor(.White)
+                        .background(Color.Gray3)
+                        .clipShape(Circle())
+                    
+                    Text(authorInformation?.nickname ?? "닉네임")
+                        .Headline()
+                        .foregroundColor(.Gray4)
+                    Spacer()
+                }
             }
             .padding(.horizontal, 30)
             .background(
@@ -178,8 +180,6 @@ extension ReadUserCurationView {
     private var deleteButton: some View {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
-            // TODO: firebase delete function
-            
         }) {
             Label("삭제", systemImage: "trash.fill")
         }

@@ -44,6 +44,10 @@ enum NavigationSearch: Hashable, Equatable {
     case first
 }
 
+enum NavigationProfile: Hashable, Equatable {
+    case first
+}
+
 enum NavigationParentView: Int {
     case shortcuts
     case curations
