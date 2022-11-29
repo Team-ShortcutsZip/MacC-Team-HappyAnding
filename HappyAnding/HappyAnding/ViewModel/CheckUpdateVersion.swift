@@ -38,13 +38,14 @@ class CheckUpdateVersion {
             
             if isNeeded {
                 let alertController = UIAlertController.init(title: "\(version.title)", message: "\(version.description)", preferredStyle: UIAlertController.Style.alert)
+                alertController.addAction(UIAlertAction.init(title: "나중에", style: UIAlertAction.Style.default, handler: { (action) in
+                }))
                 alertController.addAction(UIAlertAction.init(title: "업데이트", style: UIAlertAction.Style.default, handler: { (action) in
                     let url = "itms-apps://itunes.apple.com/app/" + self.appID
                     if let url = URL(string: url){
                         UIApplication.shared.open(url)
                     }
                 }))
-                
                 var topController = UIApplication.shared.keyWindow?.rootViewController
                 if topController != nil {
                     while let presentedViewController = topController?.presentedViewController {
