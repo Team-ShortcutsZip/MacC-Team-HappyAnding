@@ -117,12 +117,13 @@ struct ReadUserCurationView: View {
                             .background(Color.Gray3)
                             .clipShape(Circle())
                         
-                        Text(authorInformation?.nickname ?? "닉네임")
+                        Text(authorInformation?.nickname ?? "탈퇴한 사용자")
                             .Headline()
                             .foregroundColor(.Gray4)
                         Spacer()
                     }
                 }
+                .disabled(authorInformation == nil)
                 .padding(.horizontal, 30)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
