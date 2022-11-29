@@ -108,27 +108,29 @@ struct ReadUserCurationView: View {
     
     var userInformation: some View {
         ZStack {
-            NavigationLink(value: NavigationProfile.first) {
-                HStack {
-                    Image(systemName: "person.fill")
-                        .frame(width: 28, height: 28)
-                        .foregroundColor(.White)
-                        .background(Color.Gray3)
-                        .clipShape(Circle())
-                    
-                    Text(authorInformation?.nickname ?? "닉네임")
-                        .Headline()
-                        .foregroundColor(.Gray4)
-                    Spacer()
+            if let data = NavigationProfile(userInfo: self.authorInformation) {
+                NavigationLink(value: data) {
+                    HStack {
+                        Image(systemName: "person.fill")
+                            .frame(width: 28, height: 28)
+                            .foregroundColor(.White)
+                            .background(Color.Gray3)
+                            .clipShape(Circle())
+                        
+                        Text(authorInformation?.nickname ?? "닉네임")
+                            .Headline()
+                            .foregroundColor(.Gray4)
+                        Spacer()
+                    }
                 }
+                .padding(.horizontal, 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .frame(height: 48)
+                        .foregroundColor(.Gray1)
+                        .padding(.horizontal, 16)
+                )
             }
-            .padding(.horizontal, 30)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .frame(height: 48)
-                    .foregroundColor(.Gray1)
-                    .padding(.horizontal, 16)
-            )
         }
         .onAppear {
             shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author) { user in
