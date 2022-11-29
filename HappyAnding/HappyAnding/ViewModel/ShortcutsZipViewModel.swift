@@ -643,7 +643,7 @@ class ShortcutsZipViewModel: ObservableObject {
                     print("Error getting documents: \(error)")
                 } else {
                     guard let documents = querySnapshot?.documents else { return }
-                    if documents.isEmpty { self.signInStatus = false }
+                    if documents.isEmpty { /*self.signInStatus = false*/ }
                     let decoder = JSONDecoder()
                     for document in documents {
                         do {
