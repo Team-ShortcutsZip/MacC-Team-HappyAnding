@@ -71,7 +71,7 @@ struct ShortcutCell: View {
             .background( background )
             .padding(.horizontal, 20)
         }
-        .padding(.top, 12)
+        .padding(.bottom, 12)
         .background(Color.Background)
         .onAppear() {
             if let shortcut  {

@@ -31,6 +31,7 @@ struct LovedShortcutView: View {
                 }
             }
             .padding(.leading, 16)
+            .padding(.bottom, 12)
             
             if let shortcuts {
                 ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
