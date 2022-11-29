@@ -34,6 +34,8 @@ struct HappyAndingApp: App {
                     Text("ShortcutsZip")
                         .foregroundColor(Color.white)
                         .font(.system(size: 26, weight: .bold))
+                        .frame(maxHeight: .infinity)
+                        .ignoresSafeArea()
                 }
                 .alert(version.title, isPresented: $isNeededUpdate) {
                     Button(role: .cancel) {
@@ -53,7 +55,7 @@ struct HappyAndingApp: App {
                     Text(version.description)
                 }
             } else {
-                LaunchScreenView()
+                ShortcutsZipView()
             }
         }
         .onChange(of: scenePhase) { (newScenePhase) in

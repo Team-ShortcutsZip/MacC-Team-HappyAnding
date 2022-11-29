@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LaunchScreenView: View {
+struct ShortcutsZipView: View {
     @StateObject var userAuth = UserAuth.shared
     @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
     @AppStorage("signInStatus") var signInStatus = false
@@ -45,8 +45,8 @@ struct LaunchScreenView: View {
     }
 }
 
-struct LaunchScreenView_Previews: PreviewProvider {
+struct ShortcutsZipView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchScreenView()
+        ShortcutsZipView()
     }
 }

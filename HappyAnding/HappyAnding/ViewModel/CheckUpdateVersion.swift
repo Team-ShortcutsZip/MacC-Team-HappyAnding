@@ -35,7 +35,6 @@ class CheckUpdateVersion {
                 print("Error fetching snapshots: \(error!)")
                 return
             }
-            print("**isFromCache\(snapshot.metadata.isFromCache)")
             snapshot.documentChanges.forEach { diff in
                 let decoder = JSONDecoder()
                 
@@ -45,8 +44,8 @@ class CheckUpdateVersion {
                     let version = try decoder.decode(Version.self, from: jsonData)
                     
                     let localVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-                    
                     let isNeeded = self.checkIsNeededForceUpdate(localVersion: localVersionString, minimumVersion: version.minimumVersion)
+                    
                     completionHandler(version, isNeeded)
                     
                 } catch let error {
