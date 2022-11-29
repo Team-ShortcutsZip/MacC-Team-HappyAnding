@@ -41,6 +41,7 @@ struct CategoryView: View {
                 })
             }
             .padding(.leading, 16)
+            
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                     if index < categoryIndex {
@@ -72,9 +73,3 @@ struct CategoryCellView: View {
             }
     }
 }
-
-//struct CategoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CategoryView()
-//    }
-//}
