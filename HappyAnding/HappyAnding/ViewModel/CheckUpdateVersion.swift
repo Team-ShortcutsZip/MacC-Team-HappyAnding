@@ -31,7 +31,7 @@ class CheckUpdateVersion {
                     let version = try decoder.decode(Version.self, from: jsonData)
                     
                     let localVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-                    let isNeeded = self.checkIsNeededForceUpdate(localVersion: localVersionString, minimumVersion: version.minimumVersion)
+                    let isNeeded = self.compareVersion(versionA: localVersionString, versionB: version.minimumVersion) == ComparisonResult.orderedAscending
                     
                     completionHandler(version, isNeeded)
                     
@@ -39,16 +39,6 @@ class CheckUpdateVersion {
                     print("error: \(error)")
                 }
             }
-        }
-    }
-
-    
-    func checkIsNeededForceUpdate(localVersion: String, minimumVersion: String) -> Bool {
-        
-        if (self.compareVersion(versionA: localVersion, versionB: minimumVersion) == ComparisonResult.orderedAscending) {
-            return true
-        } else {
-            return false
         }
     }
     
