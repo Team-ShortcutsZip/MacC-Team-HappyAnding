@@ -31,8 +31,8 @@ struct ShowProfileView: View {
                         .offset(y: yOffset > 0 ? -yOffset : 0)
                 }
                 
+                //MARK: 프로필이미지 및 닉네임
                 VStack {
-                    // 프로필 이미지
                     Circle()
                         .fill(Color.Gray4)
                         .frame(width: 72, height: 72)
@@ -44,6 +44,7 @@ struct ShowProfileView: View {
                 .frame(height: 160)
                 .background(Color.White)
                 
+                //MARK: 탭바 및 탭 내부 컨텐츠
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
                     Section(header: tabBarView) {
                         profileContentView
@@ -63,6 +64,8 @@ struct ShowProfileView: View {
 }
 
 extension ShowProfileView {
+    
+    //MARK: 탭바
     var tabBarView: some View {
         HStack(spacing: 20) {
             ForEach(Array(zip(self.tabItems.indices, self.tabItems)), id: \.0) { index, name in
@@ -100,6 +103,7 @@ extension ShowProfileView {
         .buttonStyle(.plain)
     }
     
+    //MARK: 탭 내부 컨텐츠
     var profileContentView: some View {
         VStack {
             ZStack {
@@ -112,26 +116,40 @@ extension ShowProfileView {
                 
                 switch(currentTab) {
                 case 0:
-                    VStack(spacing: 0) {
-                        ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
-                            let data = NavigationReadShortcutType(shortcutID:shortcut.id,
-                                                                  navigationParentView: .shortcuts)
-                            NavigationLink(value: data) {
-                                ShortcutCell(shortcut: shortcut,
-                                             navigationParentView: data.navigationParentView)
+                    if shortcuts.isEmpty {
+                        Text("작성한 단축어가 없습니다.")
+                            .Body2()
+                            .foregroundColor(.Gray4)
+                    } else {
+                        VStack(spacing: 0) {
+                            ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
+                                let data = NavigationReadShortcutType(shortcutID:shortcut.id,
+                                                                      navigationParentView: .shortcuts)
+                                NavigationLink(value: data) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: data.navigationParentView)
+                                }
                             }
+                            
+                            Spacer()
                         }
-                        
-                        Spacer()
+                        .background(
+                            GeometryReader { geometryProxy in
+                                Color.clear
+                                    .preference(key: SizePreferenceKey.self,
+                                                value: geometryProxy.size)
+                            }
+                        )
                     }
-                    .background(
-                        GeometryReader { geometryProxy in
-                            Color.clear
-                                .preference(key: SizePreferenceKey.self,
-                                            value: geometryProxy.size)
-                        }
-                    )
                 case 1:
+                    if curations.isEmpty {
+                        
+                        // TODO: 큐레이션에 대한 워딩 변경
+                        
+                        Text("작성한 큐레이션이 없습니다.")
+                            .Body2()
+                            .foregroundColor(.Gray4)
+                    }
                     VStack(spacing: 0) {
                         ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
                             let data = NavigationReadUserCurationType(userCuration: curation,
