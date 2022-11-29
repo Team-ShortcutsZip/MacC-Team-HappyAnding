@@ -24,7 +24,7 @@ struct ShortcutsZipView: View {
                     .environmentObject(shorcutsZipViewModel)
                     .onDisappear() {
                         if shorcutsZipViewModel.userInfo == nil {
-                            shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
+                            shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
                                 shorcutsZipViewModel.userInfo = user
                             }
                         }
@@ -33,7 +33,7 @@ struct ShortcutsZipView: View {
                 SignInWithAppleView()
                     .onDisappear() {
                         if shorcutsZipViewModel.userInfo == nil {
-                            shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
+                            shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
                                 shorcutsZipViewModel.userInfo = user
                                 shorcutsZipViewModel.initUserShortcut(user: user)
                                 shorcutsZipViewModel.curationsMadeByUser = shorcutsZipViewModel.fetchCurationByAuthor(author: user.id)

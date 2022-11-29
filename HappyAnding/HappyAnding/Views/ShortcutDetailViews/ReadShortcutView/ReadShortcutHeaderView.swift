@@ -42,7 +42,8 @@ struct ReadShortcutHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
         .onAppear() {
-            shortcutsZipViewModel.fetchUser(userID: shortcut.author) { user in
+            shortcutsZipViewModel.fetchUser(userID: shortcut.author,
+                                            isCurrentUser: false) { user in
                 userInformation = user
             }
             
