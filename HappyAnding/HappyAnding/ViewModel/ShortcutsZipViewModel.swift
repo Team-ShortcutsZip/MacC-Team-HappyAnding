@@ -48,7 +48,6 @@ class ShortcutsZipViewModel: ObservableObject {
     var allShortcuts: [Shortcuts] = []
 
     init() {
-        print("**init")
         fetchUser(userID: self.currentUser()) { user in
             self.userInfo = user
             self.initUserShortcut(user: user)
