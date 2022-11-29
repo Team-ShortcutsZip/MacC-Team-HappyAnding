@@ -56,7 +56,7 @@ struct HappyAndingApp: App {
                     Text(version.description)
                 }
             } else {
-                LaunchScreenView()
+                ShortcutsZipView()
             }
         }
         .onChange(of: scenePhase) { (newScenePhase) in
