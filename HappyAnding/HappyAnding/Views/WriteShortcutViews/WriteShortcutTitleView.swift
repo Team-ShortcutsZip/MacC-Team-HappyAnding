@@ -132,6 +132,7 @@ struct WriteShortcutTitleView: View {
                                          shortcut.sfSymbol.isEmpty ||
                                          shortcut.title.isEmpty ||
                                          shortcut.downloadLink.isEmpty ||
+                                         !isLinkValid ||
                                          shortcut.subtitle.isEmpty ||
                                          shortcut.description.isEmpty ||
                                          shortcut.category.isEmpty ? .Gray3 : .Primary)
@@ -140,6 +141,7 @@ struct WriteShortcutTitleView: View {
                           shortcut.sfSymbol.isEmpty ||
                           shortcut.title.isEmpty ||
                           shortcut.downloadLink.isEmpty ||
+                          !isLinkValid ||
                           shortcut.subtitle.isEmpty ||
                           shortcut.description.isEmpty ||
                           shortcut.category.isEmpty

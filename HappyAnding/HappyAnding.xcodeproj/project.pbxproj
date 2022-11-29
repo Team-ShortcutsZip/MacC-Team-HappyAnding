@@ -76,7 +76,6 @@
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
-		A3C55775292D55F1003907DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3C55774292D55F1003907DC /* GoogleService-Info.plist */; };
 		A3FF0183291648A300384211 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF0182291648A300384211 /* MailView.swift */; };
 		A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01852918552E00384211 /* AboutTeamView.swift */; };
 		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
@@ -194,7 +193,6 @@
 		A3766B222904330300708F83 /* ReadUserCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserCurationView.swift; sourceTree = "<group>"; };
 		A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCardCell.swift; sourceTree = "<group>"; };
 		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
-		A3C55774292D55F1003907DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		A3FF01852918552E00384211 /* AboutTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamView.swift; sourceTree = "<group>"; };
 		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
@@ -253,7 +251,6 @@
 			isa = PBXGroup;
 			children = (
 				A35C39532936928200C4359F /* GoogleService-Info.plist */,
-				A3C55774292D55F1003907DC /* GoogleService-Info.plist */,
 				87E99C6C28F94EA6009B691F /* HappyAnding */,
 				87E99C7D28F94EA8009B691F /* HappyAndingTests */,
 				87E99C8728F94EA8009B691F /* HappyAndingUITests */,
@@ -619,11 +616,6 @@
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
 				A3FF018A2918F8EF00384211 /* apache.txt in Resources */,
 				A35C39542936928200C4359F /* GoogleService-Info.plist in Resources */,
-				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
-				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
-				87E99C7228F94EA8009B691F /* Assets.xcassets in Resources */,
-				3D41EE08290A4C18008BE986 /* Launch Screen.storyboard in Resources */,
-				A3C55775292D55F1003907DC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
