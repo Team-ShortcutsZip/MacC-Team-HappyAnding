@@ -42,7 +42,7 @@ class CheckUpdateVersion {
         }
     }
     
-    private func compareVersion(versionA:String!, versionB:String!) -> ComparisonResult {
+    private func compareVersion(versionA: String!, versionB: String!) -> ComparisonResult {
         let majorA = Int(Array(versionA.split(separator: "."))[0])!
         let majorB = Int(Array(versionB.split(separator: "."))[0])!
         
