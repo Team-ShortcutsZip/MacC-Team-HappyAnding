@@ -130,22 +130,16 @@ struct ShortcutCell: View {
                 if let index = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut?.id}) {
                     if shortcutsZipViewModel.userInfo?.downloadedShortcuts[index].downloadLink != shortcut?.downloadLink[0] {
                         Image(systemName: "clock.arrow.circlepath")
-                            .foregroundColor(.Gray4)
-                            .font(.system(size: 24, weight: .medium))
-                            .frame(height: 32)
+                            .setCellIcon()
                     }
                     else {
                         Image(systemName: "arrow.down.app.fill")
-                            .foregroundColor(.Gray4)
-                            .font(.system(size: 24, weight: .medium))
-                            .frame(height: 32)
+                            .setCellIcon()
                     }
                 }
             } else {
                 Image(systemName: "arrow.down.app.fill")
-                    .foregroundColor(.Gray4)
-                    .font(.system(size: 24, weight: .medium))
-                    .frame(height: 32)
+                    .setCellIcon()
             }
         }
         .padding(.leading, 12)
