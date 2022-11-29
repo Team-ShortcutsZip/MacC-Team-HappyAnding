@@ -431,22 +431,6 @@ extension ReadShortcutView {
                         } else {
                             if currentTab > 0 {
                                 currentTab -= 1
-                            } else {
-                                
-                                // MARK: Navigation pop 코드
-//                                    print("swipe back")
-//                                    switch data.navigationParentView {
-//                                    case .shortcuts:
-//                                        shortcutNavigation.shortcutPath.removeLast()
-//                                    case .curations:
-//                                        curationNavigation.navigationPath.removeLast()
-//                                    case .myPage:
-//                                        profileNavigation.navigationPath.removeLast()
-//                                    case .writeCuration:
-//                                        writeCurationNavigation.navigationPath.removeLast()
-//                                    case .writeShortcut:
-//                                        writeShortcutNavigation.navigationPath.removeLast()
-//                                    }
                             }
                         }
                     }
