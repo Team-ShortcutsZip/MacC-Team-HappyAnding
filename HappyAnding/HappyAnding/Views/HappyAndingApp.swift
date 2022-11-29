@@ -13,15 +13,14 @@ import FirebaseFirestore
 
 @main
 struct HappyAndingApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.openURL) private var openURL
     
-    @StateObject var userAuth = UserAuth.shared
-    @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
-    @AppStorage("signInStatus") var signInStatus = false
-    @AppStorage("isReauthenticated") var isReauthenticated = false
-    @AppStorage("isNeededUpdate") var isNeededUpdate = true
+    @State var isNeededUpdate = false
+    @State var isShowingLaunchScreen = true
+    @State var version = Version(latestVersion: "", minimumVersion: "", description: "", title: "")
+    
+    let appID = "6444001181"
     
     init() {
         FirebaseApp.configure()
@@ -29,42 +28,51 @@ struct HappyAndingApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if isNeededUpdate {
+            if isShowingLaunchScreen {
                 ZStack {
                     Color.Primary.ignoresSafeArea()
                     Text("ShortcutsZip")
                         .foregroundColor(Color.white)
                         .font(.system(size: 26, weight: .bold))
                 }
+                .alert(version.title, isPresented: $isNeededUpdate) {
+                    Button(role: .cancel) {
+                        isShowingLaunchScreen = false
+                    } label: {
+                        Text("나중에")
+                    }
+                    Button() {
+                        let url = "itms-apps://itunes.apple.com/app/" + self.appID
+                        if let url = URL(string: url){
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        Text("업데이트")
+                    }
+                } message: {
+                    Text(version.description)
+                }
             } else {
-                if signInStatus {
-                    ShortcutTabView()
-                        .environmentObject(userAuth)
-                        .environmentObject(shorcutsZipViewModel)
-                }  else {
-                    if userAuth.isLoggedIn {
-                        WriteNicknameView()
-                            .environmentObject(shorcutsZipViewModel)
-                            .onDisappear() {
-                                if shorcutsZipViewModel.userInfo == nil {
-                                    shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
-                                        shorcutsZipViewModel.userInfo = user
-                                    }
-                                }
-                            }
-                    } else {
-                        SignInWithAppleView()
-                            .onDisappear() {
-                                if shorcutsZipViewModel.userInfo == nil {
-                                    shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser()) { user in
-                                        shorcutsZipViewModel.userInfo = user
-                                        shorcutsZipViewModel.initUserShortcut(user: user)
-                                        shorcutsZipViewModel.curationsMadeByUser = shorcutsZipViewModel.fetchCurationByAuthor(author: user.id)
-                                    }
-                                }
-                            }
+                LaunchScreenView()
+            }
+        }
+        .onChange(of: scenePhase) { (newScenePhase) in
+            switch newScenePhase {
+            case .active:
+                CheckUpdateVersion.share.fetchVersion { version, isNeeded in
+                    self.version = version
+                    self.isNeededUpdate = isNeeded
+                    if !isNeeded {
+                        isShowingLaunchScreen = false
                     }
                 }
+                break
+            case .inactive:
+                break
+            case .background:
+                break
+            @unknown default:
+                break
             }
         }
     }

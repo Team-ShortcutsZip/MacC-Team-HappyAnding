@@ -28,39 +28,6 @@ class CheckUpdateVersion {
     static let share = CheckUpdateVersion()
     private let db = Firestore.firestore()
     
-    let appID = "6444001181"
-    @AppStorage("isNeededUpdate") var isNeededUpdate = true
-    var versionData = Version(latestVersion: "", minimumVersion: "", description: "", title: "")
-    
-    func observeApplicationDidBecomeActive() {
-        self.fetchVersion(completionHandler: { version, isNeeded in
-            self.versionData = version
-            self.isNeededUpdate = isNeeded
-            
-            if isNeeded {
-                let alertController = UIAlertController.init(title: "\(version.title)", message: "\(version.description)", preferredStyle: UIAlertController.Style.alert)
-                alertController.addAction(UIAlertAction.init(title: "나중에", style: UIAlertAction.Style.default, handler: { (action) in
-                    self.isNeededUpdate = false
-                }))
-                alertController.addAction(UIAlertAction.init(title: "업데이트", style: UIAlertAction.Style.default, handler: { (action) in
-                    let url = "itms-apps://itunes.apple.com/app/" + self.appID
-                    if let url = URL(string: url){
-                        UIApplication.shared.open(url)
-                    }
-                }))
-                var topController = UIApplication.shared.keyWindow?.rootViewController
-                if topController != nil {
-                    while let presentedViewController = topController?.presentedViewController {
-                        topController = presentedViewController
-                    }
-                }
-                topController!.present(alertController, animated: false, completion: {
-                    
-                })
-            }
-        })
-    }
-    
     func fetchVersion(completionHandler: @escaping (Version, Bool)->()) {
         
         db.collection("Version").addSnapshotListener { snapshot, error in
@@ -80,7 +47,6 @@ class CheckUpdateVersion {
                     let localVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
                     
                     let isNeeded = self.checkIsNeededForceUpdate(localVersion: localVersionString, minimumVersion: version.minimumVersion)
-                    print("**\(isNeeded)")
                     completionHandler(version, isNeeded)
                     
                 } catch let error {
