@@ -48,9 +48,6 @@ struct ShortcutsListView: View {
             }
         }
         .scrollIndicators(.hidden)
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
         .navigationBarTitle(categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)

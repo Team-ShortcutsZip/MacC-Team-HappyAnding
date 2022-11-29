@@ -21,6 +21,46 @@ enum TextType {
     }
 }
 
+enum TextFieldState {
+    case notStatus
+    case inProgressSuccess
+    case inProgressFail
+    case doneSuccess
+    case doneFail
+    
+    var color: Color {
+        switch self {
+        case .notStatus:
+            return Color.Gray2
+        case .inProgressSuccess:
+            return Color.Primary
+        case .inProgressFail:
+            return Color.red
+        case .doneSuccess:
+            return Color.Gray4
+        case .doneFail:
+            return Color.Gray4
+        }
+    }
+}
+
+enum TextFieldError {
+    case invalidText
+    case invalidLink
+    case excessLimitLenth
+    
+    var message: String {
+        switch self {
+        case .invalidText:
+            return "사용할 수 없는 문자가 포함되어있습니다."
+        case .invalidLink:
+            return "유효하지 않은 링크입니다."
+        case .excessLimitLenth:
+            return "글자 수를 초과하였습니다."
+        }
+    }
+}
+
 struct ValidationCheckTextField: View {
     let textType: TextType
     let isMultipleLines: Bool
@@ -28,16 +68,32 @@ struct ValidationCheckTextField: View {
     @State var placeholder: String
     let lengthLimit: Int
     let isDownloadLinkTextField: Bool
+    @State var inputHeight: CGFloat = 272
     
     @Binding var content: String
     @Binding var isValid: Bool
     
     @State private var strokeColor = Color.Gray2
     @State private var isExceeded = false
+    @State private var textFieldState = TextFieldState.notStatus
+    @State private var textFieldError = TextFieldError.invalidText
+    
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         VStack {
-            textFieldTitle
+            
+            HStack {
+                
+                textFieldTitle
+                
+                Spacer()
+                
+                Text("\(content.count)/\(lengthLimit)")
+                    .Body2()
+                    .foregroundColor(.Gray4)
+                    .padding(.trailing, 16)
+            }
             
             ZStack {
                 if isMultipleLines {
@@ -45,24 +101,8 @@ struct ValidationCheckTextField: View {
                 } else {
                     HStack(alignment: .center) {
                         oneLineEditor
-                        
-                        if isExceeded {
-                            Button(action: {
-                                content.removeAll()
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .Body2()
-                                    .foregroundColor(.Gray4)
-                            }
-                            .padding()
-                        } else if !content.isEmpty {
-                            Image(systemName: "checkmark.circle.fill")
-                                .Body2()
-                                .foregroundColor(.Success)
-                                .padding()
-                        }
+                        stateIcon
                     }
-                    
                 }
             }
             .background(
@@ -74,7 +114,7 @@ struct ValidationCheckTextField: View {
             
             HStack {
                 if isExceeded {
-                    Text(isDownloadLinkTextField ? "유효하지 않은 링크입니다" : "글자수를 초과하였습니다")
+                    Text(textFieldError.message)
                         .Body2()
                         .foregroundColor(.Error)
                         .padding(.leading)
@@ -82,11 +122,11 @@ struct ValidationCheckTextField: View {
                 
                 Spacer()
                 
-                Text("\(content.count)/\(lengthLimit)")
-                    .Body2()
-                    .foregroundColor(isExceeded ? .Error : .Gray4)
-                    .padding(.trailing, 16)
             }
+        }
+        .onChange(of: self.textFieldState) { newValue in
+            self.strokeColor = newValue.color
+            
         }
     }
     
@@ -108,95 +148,146 @@ struct ValidationCheckTextField: View {
     
     var oneLineEditor: some View {
         TextField(placeholder, text: $content)
+            .focused($isFocused)
+            .disableAutocorrection(true)
+            .textInputAutocapitalization(.never)
             .Body2()
-            .frame(height: 20)
+            .frame(height: 24)
             .padding(16)
             .onAppear {
                 checkValidation()
             }
-            .onSubmit {
+            .onChange(of: isFocused) { newValue in
                 checkValidation()
             }
-            .onChange(of: content, perform: {_ in
+            .onChange(of: content) { newValue in
                 checkValidation()
-        })
+            }
     }
     
     var multiLineEditor: some View {
-        ZStack(alignment: .top) {
-            if content.isEmpty {
-                TextEditor(text: $placeholder)
-                    .scrollContentBackground(.hidden)
-                    .background(Color.Background)
-                    .Body2()
-                    .foregroundColor(.Gray2)
-                    .frame(height: 206)
-                    .padding(16)
-                    .opacity(1)
-            }
+        
+        ZStack(alignment: .topLeading) {
             
-            TextEditor(text: $content)
-                .scrollContentBackground(.hidden)
-                .background(Color.Background)
-                .Body2()
-                .frame(height: 206)
-                .padding(16)
-                .opacity(self.content.isEmpty ? 0.25 : 1)
-                .onAppear {
-                    checkValidation()
-                }
-                .onSubmit {
-                    checkValidation()
-                }
-                .onChange(of: content, perform: {_ in
-                    checkValidation()
-                })
+            CustomTextEditor(text: $content,
+                             inputHeight: $inputHeight,
+                             isFocused: _isFocused)
+            .focused($isFocused)
+            .frame(height: inputHeight)
+            .padding(16)
+            
+            if content.isEmpty && !isFocused {
+                Text(placeholder)
+                    .Body2()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .padding(16)
+                    .foregroundColor(.Gray2)
+                    .onTapGesture {
+                        isFocused = true
+                    }
+            }
         }
+        .onAppear {
+            checkValidation()
+        }
+        .onChange(of: isFocused) { newValue in
+            checkValidation()
+        }
+        .onChange(of: content) { newValue in
+            checkValidation()
+        }
+    }
+    
+    var stateIcon: some View {
+        
+        HStack(alignment: .center) {
+            
+            switch self.textFieldState {
+            case .notStatus:
+                EmptyView()
+            case .doneSuccess:
+                Image(systemName: "checkmark.circle.fill")
+                    .Body2()
+                    .foregroundColor(.Success)
+                    .onTapGesture { }
+            case .doneFail:
+                Image(systemName: "xmark.circle.fill")
+                    .Body2()
+                    .foregroundColor(.red)
+            case .inProgressSuccess:
+                Button {
+                    content.removeAll()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .Body2()
+                        .foregroundColor(.Gray5)
+                }
+            case .inProgressFail:
+                Button {
+                    content.removeAll()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .Body2()
+                        .foregroundColor(.Gray5)
+                }
+            }
+        }
+        .padding()
     }
 }
 
 extension ValidationCheckTextField {
+    
     func checkValidation() {
-        if content.isEmpty {
-            isValid = textType.isOptional
-            isExceeded = false
-            self.strokeColor = Color.Gray2
-        } else if content.count <= lengthLimit {
-            if isDownloadLinkTextField {
-                if content.hasPrefix("https://www.icloud.com/shortcuts/") {
-                    isValid = true
-                    isExceeded = false
-                    self.strokeColor = Color.Success
+        if isFocused {
+            if content.isEmpty {
+                isValid = textType.isOptional
+                isExceeded = false
+                self.textFieldState = .notStatus
+            } else if content.count <= lengthLimit {
+                if isDownloadLinkTextField {
+                    if content.hasPrefix("https://www.icloud.com/shortcuts/") {
+                        isValid = true
+                        isExceeded = false
+                        self.textFieldState = .inProgressSuccess
+                    } else {
+                        isValid = textType.isOptional
+                        isExceeded = true
+                        self.textFieldState = .inProgressFail
+                        self.textFieldError = .invalidLink
+                    }
                 } else {
-                    isValid = textType.isOptional
-                    isExceeded = true
-                    self.strokeColor = Color.Error
+                    if !content.checkCorrectNickname() && !isMultipleLines {
+                        isValid = false
+                        isExceeded = true
+                        self.textFieldState = .inProgressFail
+                        self.textFieldError = .invalidText
+                    } else {
+                        isValid = true
+                        isExceeded = false
+                        self.textFieldState = .inProgressSuccess
+                    }
                 }
             } else {
-                isValid = true
-                isExceeded = false
-                self.strokeColor = Color.Success
+                isValid = false
+                isExceeded = true
+                self.textFieldState = .inProgressFail
+                self.textFieldError = .excessLimitLenth
             }
-            
         } else {
-            isValid = false
-            isExceeded = true
-            self.strokeColor = Color.Error
+            if isExceeded {
+                textFieldState = .doneFail
+            } else {
+                if content.isEmpty {
+                    isValid = textType.isOptional
+                    isExceeded = false
+                    self.textFieldState = .notStatus
+                } else {
+                    textFieldState = .doneSuccess
+                    isValid = true
+                }
+            }
         }
     }
 }
-
-//struct ValidationCheckTextField_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ValidationCheckTextField(
-//            textType: .optional,
-//            isMultipleLines: true,
-//            title: "설명",
-//            placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
-//            lengthLimit: 20,
-//            isDownloadLinkTextField: false,
-//            content: .constant(""),
-//            isValid: .constant(true)
-//        )
-//    }
-//}

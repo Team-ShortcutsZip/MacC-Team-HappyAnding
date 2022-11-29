@@ -22,12 +22,11 @@ enum CurationType: String {
 struct ListCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var userCurations: [Curation]
-    let data: NavigationListCurationType
+    @State var data: NavigationListCurationType
     
     var body: some View {
         let titleString = data.type == .personalCuration ? (shortcutsZipViewModel.userInfo?.nickname ?? "") : ""
-        if userCurations.count == 0 {
+        if data.curation.count == 0 {
             Text("\(titleString)\(data.type.rawValue)이(가) 없습니다.")
                 .Body2()
                 .foregroundColor(Color.Gray4)
@@ -39,7 +38,7 @@ struct ListCurationView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     
-                    ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
                         
                         let data = NavigationReadUserCurationType(userCuration: curation,
                                                                   navigationParentView: self.data.navigationParentView)
@@ -51,27 +50,18 @@ struct ListCurationView: View {
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.Background)
                             .padding(.top, index == 0 ? 20 : 0 )
-                            .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
-                            
-                            .onAppear {
-                                //TODO: 10개씩 불러오도록 변경 필요
-                                if self.data.isAllUser {
-                                    self.userCurations = shortcutsZipViewModel.userCurations
-                                }
-                            }
+                            .padding(.bottom, index == self.data.curation.count - 1 ? 32 : 0)
                         }
                     }
                 }
             }
             .scrollIndicators(.hidden)
-            .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-                ReadUserCurationView(data: data)
-            }
             .listStyle(.plain)
             .background(Color.Background.ignoresSafeArea(.all, edges: .all))
             .navigationBarBackground ({ Color.Background })
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(titleString)
         }
     }
 }

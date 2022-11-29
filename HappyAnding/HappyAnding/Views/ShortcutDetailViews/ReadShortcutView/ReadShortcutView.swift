@@ -63,7 +63,7 @@ struct ReadShortcutView: View {
                         // MARK: - 단축어 타이틀
                         
                         ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
-                            .frame(height: 160)
+                            .frame(minHeight: 160)
                             .padding(.bottom, 33)
                             .background(Color.White)
                         
@@ -235,6 +235,8 @@ extension ReadShortcutView {
                         .foregroundColor(.Gray4)
                 }
                 TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
+                    .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
                     .Body2()
                     .focused($isFocused)
                     .onAppear(perform : UIApplication.shared.hideKeyboard)
@@ -429,22 +431,6 @@ extension ReadShortcutView {
                         } else {
                             if currentTab > 0 {
                                 currentTab -= 1
-                            } else {
-                                
-                                // MARK: Navigation pop 코드
-//                                    print("swipe back")
-//                                    switch data.navigationParentView {
-//                                    case .shortcuts:
-//                                        shortcutNavigation.shortcutPath.removeLast()
-//                                    case .curations:
-//                                        curationNavigation.navigationPath.removeLast()
-//                                    case .myPage:
-//                                        profileNavigation.navigationPath.removeLast()
-//                                    case .writeCuration:
-//                                        writeCurationNavigation.navigationPath.removeLast()
-//                                    case .writeShortcut:
-//                                        writeShortcutNavigation.navigationPath.removeLast()
-//                                    }
                             }
                         }
                     }

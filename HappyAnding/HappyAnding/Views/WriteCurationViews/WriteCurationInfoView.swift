@@ -19,6 +19,7 @@ struct WriteCurationInfoView: View {
     @Binding var isWriting: Bool
     
     let isEdit: Bool
+    @Binding var deletedShortcutCells: [ShortcutCellModel]
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
@@ -31,54 +32,59 @@ struct WriteCurationInfoView: View {
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
                                      title: "큐레이션 이름",
-                                     placeholder: "큐레이션 이름을 작성해주세요",
+                                     placeholder: "큐레이션 이름을 입력하세요",
                                      lengthLimit: 20,
                                      isDownloadLinkTextField: false,
                                      content: $curation.title,
                                      isValid: $isValidTitle)
-                .padding(.top, 12)
+            .padding(.top, 12)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: true,
-                                     title: "한 줄 설명",
-                                     placeholder: "나의 큐레이션을 설명할 수 있는 간단한 내용을 작성해주세요",
+                                     title: "큐레이션 설명",
+                                     placeholder: "내가 만든 큐레이션에 대한 설명을 작성해주세요",
                                      lengthLimit: 40,
                                      isDownloadLinkTextField: false,
+                                     inputHeight: 72,
                                      content: Binding(get: {curation.subtitle},
                                                       set: {curation.subtitle = $0}),
                                      isValid: $isValidDescription)
             
             Spacer()
                 .frame(maxHeight: .infinity)
-            
-            Button {
-                curation.author = shortcutsZipViewModel.currentUser()
-                shortcutsZipViewModel.setData(model: curation)
-                shortcutsZipViewModel.updateShortcutCurationID(
-                    shortcutCells: curation.shortcuts,
-                    curationID: curation.id
-                )
-                if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == curation.id}) {
-                    shortcutsZipViewModel.userCurations[index] = curation
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    if isEdit {
+                        curation.shortcuts.forEach { shortcutCell in
+                            deletedShortcutCells.removeAll(where: { $0.id == shortcutCell.id })
+                        }
+                    }
+                    curation.author = shortcutsZipViewModel.currentUser()
+                    shortcutsZipViewModel.setData(model: curation)
+                    shortcutsZipViewModel.updateShortcutCurationID(
+                        shortcutCells: curation.shortcuts,
+                        curationID: curation.id,
+                        isEdit: isEdit,
+                        deletedShortcutCells: deletedShortcutCells
+                    )
+                    if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == curation.id }) {
+                        shortcutsZipViewModel.userCurations[index] = curation
+                    }
+                    
+                    self.isWriting.toggle()
+                    writeCurationNavigation.navigationPath = .init()
+                } label: {
+                    Text("업로드")
+                        .Headline()
+                        .foregroundColor(isIncomplete ? .Primary.opacity(0.3) : .Primary)
                 }
-                
-                self.isWriting.toggle()
-                writeCurationNavigation.navigationPath = .init()
-            } label: {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isIncomplete ? .Primary .opacity(0.13) : .Primary)
-                        .padding(.horizontal, 16)
-                        .frame(height: 52)
-                    Text("완료")
-                        .foregroundColor(isIncomplete ? .Text_Button_Disable : .Text_Button)
-                        .Body1()
-                }
+                .disabled(isIncomplete)
             }
-            .disabled(isIncomplete)
         }
         .background(Color.Background)
-        .navigationBarTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
+        .navigationBarTitle(isEdit ? "큐레이션 편집" : "큐레이션 작성")
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }
