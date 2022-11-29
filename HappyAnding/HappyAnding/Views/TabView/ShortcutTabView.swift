@@ -64,8 +64,8 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
-                        .navigationDestination(for: NavigationProfile.self) { _ in
-                            ShowProfileView()
+                        .navigationDestination(for: NavigationProfile.self) { data in
+                            ShowProfileView(data: data)
                         }
                         .navigationDestination(for: NavigationSearch.self) { _ in
                             SearchView()
@@ -105,8 +105,8 @@ struct ShortcutTabView: View {
                             self.tappedTwice = false
                         })
                         .navigationBarBackground ({ Color.Background })
-                        .navigationDestination(for: NavigationProfile.self) { _ in
-                            ShowProfileView()
+                        .navigationDestination(for: NavigationProfile.self) { data in
+                            ShowProfileView(data: data)
                         }
                         .navigationDestination(for: Curation.self) { data in
                             ReadAdminCurationView(curation: data)
@@ -142,8 +142,8 @@ struct ShortcutTabView: View {
                             self.tappedTwice = false
                         })
                         .navigationBarBackground ({ Color.Background })
-                        .navigationDestination(for: NavigationProfile.self) { _ in
-                            ShowProfileView()
+                        .navigationDestination(for: NavigationProfile.self) { data in
+                            ShowProfileView(data: data)
                         }
                         .navigationDestination(for: NavigationListShortcutType.self) { data in
                             ListShortcutView(data: data)

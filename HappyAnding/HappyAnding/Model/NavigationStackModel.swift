@@ -40,11 +40,13 @@ struct NavigationListCurationType: Identifiable, Hashable {
     var curation: [Curation]
 }
 
-enum NavigationSearch: Hashable, Equatable {
-    case first
+struct NavigationProfile: Identifiable, Hashable {
+    var id = UUID().uuidString
+    
+    var userInfo: User?
 }
 
-enum NavigationProfile: Hashable, Equatable {
+enum NavigationSearch: Hashable, Equatable {
     case first
 }
 

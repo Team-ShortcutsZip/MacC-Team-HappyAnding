@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Identifiable, Codable {
+struct User: Identifiable, Codable, Hashable {
     var id: String
     var nickname: String
     var likedShortcuts: [String]
@@ -19,7 +19,7 @@ struct User: Identifiable, Codable {
     }
 }
 
-struct DownloadedShortcut: Identifiable, Codable {
+struct DownloadedShortcut: Identifiable, Codable, Hashable {
     var id: String
     var downloadLink: String
 }

@@ -11,12 +11,13 @@ struct ShowProfileView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @State var data: NavigationProfile
+    
     @State var shortcuts: [Shortcuts] = []
     @State var curations: [Curation] = []
     @Namespace var namespace
     @State var currentTab: Int = 0
-    @State var height: CGFloat = UIScreen.screenHeight / 2
-    private let contentSize = UIScreen.screenHeight / 2
+    @State var height: CGFloat = 0
     private let tabItems = ["작성한 단축어", "작성한 큐레이션"]
     
     var body: some View {
@@ -35,7 +36,7 @@ struct ShowProfileView: View {
                     Circle()
                         .fill(Color.Gray4)
                         .frame(width: 72, height: 72)
-                    Text("닉네임")
+                    Text(data.userInfo?.nickname ?? "user")
                         .Title1()
                         .foregroundColor(.Gray5)
                 }
@@ -55,11 +56,8 @@ struct ShowProfileView: View {
         .background(Color.Background)
         .toolbar(.visible, for: .tabBar)
         .onAppear {
-            
-            //TODO: - author가 작성한 shortcuts, curations만 불러오기
-            
-            shortcuts = shortcutsZipViewModel.allShortcuts
-            curations = shortcutsZipViewModel.fetchCurationByAuthor(author: "")
+            shortcuts = shortcutsZipViewModel.allShortcuts.filter { $0.author == self.data.userInfo?.id }
+            curations = shortcutsZipViewModel.fetchCurationByAuthor(author: data.userInfo?.id ?? "")
         }
     }
 }
@@ -131,7 +129,8 @@ extension ShowProfileView {
                             Color.clear
                                 .preference(key: SizePreferenceKey.self,
                                             value: geometryProxy.size)
-                        })
+                        }
+                    )
                 case 1:
                     VStack(spacing: 0) {
                         ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
@@ -150,14 +149,15 @@ extension ShowProfileView {
                             Color.clear
                                 .preference(key: SizePreferenceKey.self,
                                             value: geometryProxy.size)
-                        })
+                        }
+                    )
                 default:
                     EmptyView()
                 }
             }
             .animation(.easeInOut, value: currentTab)
             .onPreferenceChange(SizePreferenceKey.self) { newSize in
-                self.height = contentSize > newSize.height ? contentSize : newSize.height
+                self.height = newSize.height
             }
             .gesture(
                 DragGesture(minimumDistance: 20, coordinateSpace: .global)
