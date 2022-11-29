@@ -54,8 +54,8 @@ struct ReadUserCurationView: View {
                                      navigationParentView: self.data.navigationParentView)
                     }
                 }
-                Spacer().frame(height: 44)
             }
+            .padding(.bottom, 44)
             
         }
         .onChange(of: isWriting) { _ in
