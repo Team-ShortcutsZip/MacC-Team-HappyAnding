@@ -48,6 +48,7 @@ struct HappyAndingApp: App {
                         if let url = URL(string: url){
                             UIApplication.shared.open(url)
                         }
+                        isShowingLaunchScreen = false
                     } label: {
                         Text("업데이트")
                     }
