@@ -32,7 +32,7 @@ struct WriteCurationSetView: View {
                 .padding(.bottom, 26)
             
             listHeader
-            
+            infomation
             if shortcutCells.isEmpty {
                 Spacer()
                 Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
@@ -59,9 +59,10 @@ struct WriteCurationSetView: View {
                 Button {
                     self.isWriting.toggle()
                 } label: {
-                    Image(systemName: "chevron.left")
+                    Text("취소")
+                        .Body1()
                         .foregroundColor(.Gray4)
-                        .font(Font(UIFont.systemFont(ofSize: 20, weight: .medium)))                }
+                }
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -103,7 +104,7 @@ struct WriteCurationSetView: View {
         
         ScrollView {
             
-            infomation
+            
             
             ForEach(Array(shortcutCells)) { shortcut in
                 CheckBoxShortcutCell(
@@ -120,15 +121,16 @@ struct WriteCurationSetView: View {
     // MARK: - 안내문구
     var infomation: some View {
         Text("큐레이션을 위한 단축어 목록은 ‘내가 업로드한 단축어'와 ‘좋아요를 누른 단축어'로 구성되어 있습니다.")
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .Body2()
             .foregroundColor(.Gray5)
-            .padding(.vertical, 16)
+            .padding(.all, 16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(.Gray1)
             )
             .padding(.horizontal, 16)
+            .padding(.bottom, 20)
     }
 }
 
