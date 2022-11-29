@@ -92,7 +92,7 @@ struct ReadShortcutHeaderView: View {
                             .foregroundColor(.Gray4)
                             .padding(.leading, 16)
                         
-                        Text(userInformation?.nickname ?? "닉네임")
+                        Text(userInformation?.nickname ?? "탈퇴한 사용자")
                             .Body2()
                             .foregroundColor(.Gray4)
                         
@@ -114,6 +114,7 @@ struct ReadShortcutHeaderView: View {
                         
                     }
                 }
+                .disabled(userInformation == nil)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity, maxHeight: 44)
                 .overlay {
