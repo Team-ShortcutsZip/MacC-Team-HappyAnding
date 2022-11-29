@@ -23,7 +23,6 @@ class CustomShareViewController: UIViewController {
                 for itemProvider in itemProviders {
                     if itemProvider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
                         itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil, completionHandler: { result, error in
-                            let data = NSData.init(contentsOf:result as! URL)
                             DispatchQueue.main.async {
                                 if let urlStr = result {
                                     self.setupViews(link: "\(urlStr)")
@@ -34,13 +33,6 @@ class CustomShareViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    override func viewDidLoad() {
-        pasteUrl()
-        setupNavBar()
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor(Color.Background)
     }
     
     ///Set Navigation Bar
@@ -65,6 +57,14 @@ class CustomShareViewController: UIViewController {
     private func setupViews(link: String) {
         let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(isWriting: self.$isWriting, shareExtensionLink: link, isEdit: false))
         self.present(extShortcutsView, animated: true)
+    }
+    
+    ///viewdidload
+    override func viewDidLoad() {
+        pasteUrl()
+        setupNavBar()
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor(Color.Background)
     }
 }
 
