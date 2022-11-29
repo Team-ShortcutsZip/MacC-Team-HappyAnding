@@ -7,7 +7,6 @@
 
 import UIKit
 import SwiftUI
-import MobileCoreServices
 import UniformTypeIdentifiers
 
 import FirebaseCore
@@ -22,8 +21,8 @@ class CustomShareViewController: UIViewController {
         for extensionItem in extensionItems {
             if let itemProviders = extensionItem.attachments {
                 for itemProvider in itemProviders {
-                    if itemProvider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
-                        itemProvider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { result, error in
+                    if itemProvider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
+                        itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier, options: nil, completionHandler: { result, error in
                             let data = NSData.init(contentsOf:result as! URL)
                             DispatchQueue.main.async {
                                 if let urlStr = result {
