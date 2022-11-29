@@ -19,6 +19,7 @@ struct HappyAndingApp: App {
     @State var isNeededUpdate = false
     @State var isShowingLaunchScreen = true
     @State var version = Version(latestVersion: "", minimumVersion: "", description: "", title: "")
+    @State var isForaWeek = false
     
     let appID = "6444001181"
     
@@ -34,6 +35,8 @@ struct HappyAndingApp: App {
                     Text("ShortcutsZip")
                         .foregroundColor(Color.white)
                         .font(.system(size: 26, weight: .bold))
+                        .frame(maxHeight: .infinity)
+                        .ignoresSafeArea()
                 }
                 .alert(version.title, isPresented: $isNeededUpdate) {
                     Button(role: .cancel) {
@@ -42,7 +45,7 @@ struct HappyAndingApp: App {
                         Text("나중에")
                     }
                     Button() {
-                        let url = "itms-apps://itunes.apple.com/app/" + self.appID
+                        let url = "itms-apps://itunes.apple.com/app/" + appID
                         if let url = URL(string: url){
                             UIApplication.shared.open(url)
                         }
@@ -59,10 +62,10 @@ struct HappyAndingApp: App {
         .onChange(of: scenePhase) { (newScenePhase) in
             switch newScenePhase {
             case .active:
-                CheckUpdateVersion.share.fetchVersion { version, isNeeded in
+                CheckUpdateVersion.share.fetchVersion { version in
                     self.version = version
-                    self.isNeededUpdate = isNeeded
-                    if !isNeeded {
+                    self.isNeededUpdate = version.isNeededForceUpdate
+                    if !version.isNeededForceUpdate {
                         isShowingLaunchScreen = false
                     }
                 }

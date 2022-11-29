@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
+
+import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
-import FirebaseFirestoreSwift
-import FirebaseAuth
 
 /*
     shortcutsZip 앱 내에서 각 뷰에 필요한 데이터를 전달하기위한 ViewModel Class 입니다.
