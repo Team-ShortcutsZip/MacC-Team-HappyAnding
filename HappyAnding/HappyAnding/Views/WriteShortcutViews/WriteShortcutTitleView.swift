@@ -42,15 +42,19 @@ struct WriteShortcutTitleView: View {
     
     let isEdit: Bool
     
+    @State var isInfoButtonTouched: Bool = false
+    
     var body: some View {
-        ScrollView {
-            iconModalView
-            shortcutTitleText
-            shortcutLinkText
-            shortcutSubtitleText
-            shortcutDescriptionText
-            shortcutsRequiredApp
-            shortcutCategory
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 32){
+                iconModalView
+                shortcutTitleText
+                shortcutLinkText
+                shortcutSubtitleText
+                shortcutDescriptionText
+                shortcutCategory
+                shortcutsRequiredApp
+            }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .background(Color.Background)
@@ -128,14 +132,15 @@ struct WriteShortcutTitleView: View {
                     
                 }, label: {
                     Text("업로드")
-                        .foregroundColor(shortcut.color.isEmpty ||
+                        .foregroundColor(.Primary)
+                        .opacity(shortcut.color.isEmpty ||
                                          shortcut.sfSymbol.isEmpty ||
                                          shortcut.title.isEmpty ||
                                          shortcut.downloadLink.isEmpty ||
                                          !isLinkValid ||
                                          shortcut.subtitle.isEmpty ||
                                          shortcut.description.isEmpty ||
-                                         shortcut.category.isEmpty ? .Gray3 : .Primary)
+                                 shortcut.category.isEmpty ? 0.3 : 1)
                 })
                 .disabled(shortcut.color.isEmpty ||
                           shortcut.sfSymbol.isEmpty ||
@@ -189,6 +194,8 @@ struct WriteShortcutTitleView: View {
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
+        .padding(.top, 40)
+        .padding(.bottom, 32)
     }
     
     //MARK: -단축어 이름
@@ -203,7 +210,6 @@ struct WriteShortcutTitleView: View {
                                  isValid: $isNameValid
         )
         .onAppear(perform : UIApplication.shared.hideKeyboard)
-        .padding(.top, 30)
     }
     
     //MARK: -단축어 링크
@@ -224,8 +230,8 @@ struct WriteShortcutTitleView: View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: false,
                                  title: "한줄 설명",
-                                 placeholder: "간단하게 설명을 작성해주세요",
-                                 lengthLimit: 35,
+                                 placeholder: "해당 단축어의 핵심 기능을 작성해주세요",
+                                 lengthLimit: 20,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.subtitle,
                                  isValid: $isOneLineValid
@@ -237,8 +243,8 @@ struct WriteShortcutTitleView: View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: true,
                                  title: "상세 설명",
-                                 placeholder: "단축어에 대한 설명을 작성해주세요\n\n예시)\n- 이럴때 사용하면 좋아요\n- 이 단축어는 이렇게 사용해요",
-                                 lengthLimit: 500,
+                                 placeholder: "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력해주세요",
+                                 lengthLimit: 300,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.description,
                                  isValid: $isMultiLineValid
@@ -248,19 +254,18 @@ struct WriteShortcutTitleView: View {
     //MARK: -카테고리
     private var shortcutCategory: some View {
         VStack {
-            HStack {
+            HStack(alignment: .bottom) {
                 Text("카테고리")
                     .Headline()
-                    .padding(.leading, 16)
                     .foregroundColor(.Gray5)
-                Text("최대 3개 선택")
+                Text("최대 3개")
                     .Footnote()
                     .foregroundColor(.Gray3)
+                Spacer()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
             
             categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shortcut.category)
-                .padding(.bottom, 32)
         }
     }
     struct categoryList: View {
@@ -268,70 +273,84 @@ struct WriteShortcutTitleView: View {
         @Binding var selectedCategories: [String]
         
         var body: some View {
-            ScrollView(.horizontal) {
-                HStack(spacing: 8) {
-                    ForEach(selectedCategories, id:\.self) { item in
-                        CategoryTag(item: item, items: $selectedCategories)
-                    }
-                    
-                    Button(action: {
-                        isShowingCategoryModal = true
-                    }, label: {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text("카테고리 추가")
-                        }
-                    })
-                    .modifier(CellModifier(foregroundColor: Color.Gray3))
-                    .sheet(isPresented: $isShowingCategoryModal) {
-                        CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
-                            .presentationDetents([.fraction(0.7)])
-                            .presentationDragIndicator(.visible)
-                    }
-                }
-            }
-            .padding(.leading, 16)
-        }
-    }
-    struct CategoryTag: View {
-        var item: String
-        @Binding var items: [String]
-        
-        var body: some View {
-            HStack {
-                Text(Category.withLabel(item)!.translateName())
+            HStack(spacing: 8) {
                 
                 Button(action: {
-                    items.removeAll { $0 == item }
+                    isShowingCategoryModal = true
                 }, label: {
-                    Image(systemName: "xmark")
+                    HStack {
+                        if selectedCategories.isEmpty {
+                            Text("카테고리 선택")
+                                .foregroundColor(.Gray2)
+                        } else {
+                            ForEach(selectedCategories, id:\.self) { item in
+                                Text(Category.withLabel(item)!.translateName())
+                                    .foregroundColor(.Gray4)
+                            }
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.forward")
+                            .foregroundColor(selectedCategories.isEmpty ? .Gray2 : .Gray4)
+                    }
                 })
+                .modifier(CellModifier(foregroundColor: .Primary ,strokeColor: selectedCategories.isEmpty ? .Gray2 : .Gray4))
+                .sheet(isPresented: $isShowingCategoryModal) {
+                    CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+                        .presentationDetents([.fraction(0.7)])
+                        .presentationDragIndicator(.visible)
+                }
             }
-            .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
-                                   backgroundColor: Color.Tag_Pick_Background,
-                                   strokeColor: Color.Primary))
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
         }
     }
     
     //MARK: -단축어 사용 필요 앱
     private var shortcutsRequiredApp: some View {
         VStack {
-            HStack {
-                Text("단축어 사용에 필요한 앱")
+            HStack(alignment: .bottom) {
+                Text("단축어 사용을 위해 필요한 앱")
                     .Headline()
-                    .padding(.leading, 16)
                     .foregroundColor(.Gray5)
-                Spacer()
-                Text("(선택입력)")
+                Text("(선택)")
                     .Footnote()
                     .foregroundColor(.Gray3)
+                Spacer()
+                Image(systemName: "info.circle.fill")
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(.Gray4)
+                    .onTapGesture {
+                        isInfoButtonTouched.toggle()
+                    }
             }
-            //        .frame(maxWidth: .infinity, alignment: .leading)
-            relatedAppList(relatedApps: $shortcut.requiredApp)
-                .padding(.bottom, 32)
+            .padding(.horizontal, 16)
+            ZStack(alignment: .top) {
+                relatedAppList(relatedApps: $shortcut.requiredApp)
+                    .padding(.bottom, 44)
+                if isInfoButtonTouched {
+                    ZStack(alignment: .center) {
+                        RoundedRectangle(cornerRadius: 12)
+                            .frame(maxWidth: .infinity, maxHeight: 68)
+                            .foregroundColor(.Gray5)
+                        HStack(alignment: .top) {
+                            Text("해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 작성해 주세요")
+                                .Footnote()
+                                .foregroundColor(.Gray1)
+                                .multilineTextAlignment(.leading)
+                            Spacer()
+                            Image(systemName: "xmark")
+                                .frame(width: 16, height: 16)
+                                .foregroundColor(.Gray1)
+                                .onTapGesture {
+                                    isInfoButtonTouched = false
+                                }
+                        }
+                        .padding(.horizontal, 20)
+                    }
+                    .padding(.horizontal, 16)
+                }
+            }
         }
-        
-        
     }
     struct relatedAppList: View {
         @Binding var relatedApps: [String]
@@ -375,10 +394,10 @@ struct WriteShortcutTitleView: View {
                             Text("앱 추가")
                         }
                     })
-                    .modifier(CellModifier(foregroundColor: Color.Gray3))
+                    .modifier(CellModifier(foregroundColor: Color.Gray2))
                 }
+                .padding(.leading, 16)
             }
-            .padding(.leading, 16)
         }
     }
     struct RelatedAppTag: View {
@@ -395,21 +414,21 @@ struct WriteShortcutTitleView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .modifier(CellModifier(foregroundColor: Color.Category_Pick_Text,
+            .modifier(CellModifier(foregroundColor: Color.Gray4,
                                    backgroundColor: Color.Tag_Pick_Background,
-                                   strokeColor: Color.Primary))
+                                   strokeColor: Color.Gray4))
         }
     }
     struct CellModifier: ViewModifier {
         @State var foregroundColor: Color
         @State var backgroundColor = Color.clear
-        @State var strokeColor = Color.Gray4
+        @State var strokeColor = Color.Gray2
         
         public func body(content: Content) -> some View {
             content
                 .Body2()
                 .foregroundColor(foregroundColor)
-                .frame(height: 46)
+                .frame(height: 52)
                 .padding(.horizontal)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
