@@ -64,7 +64,7 @@ struct MyPageView: View {
                 // MARK: - 내가 작성한 큐레이션
                 
                 UserCurationListView(data: NavigationListCurationType(type: .myCuration,
-                                                                      title: "내가 작성한 큐레이션",
+                                                                      title: "내가 작성한 추천 모음집",
                                                                       isAllUser: false,
                                                                       navigationParentView: .myPage,
                                                                       curation: shortcutsZipViewModel.curationsMadeByUser))

@@ -26,7 +26,7 @@ struct UserCurationListView: View {
                 
                 HStack(spacing: 7) {
                     Image(systemName: "plus")
-                    Text("큐레이션 만들기")
+                    Text("추천 모음집 작성")
                 }
                 .Headline()
                 .foregroundColor(.Gray4)

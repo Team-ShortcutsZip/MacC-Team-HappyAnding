@@ -39,24 +39,21 @@ enum TextFieldState {
         case .doneSuccess:
             return Color.Gray4
         case .doneFail:
-            return Color.Gray4
+            return Color.red
         }
     }
 }
 
 enum TextFieldError {
-    case invalidText
     case invalidLink
     case excessLimitLenth
     
     var message: String {
         switch self {
-        case .invalidText:
-            return "사용할 수 없는 문자가 포함되어있습니다."
         case .invalidLink:
             return "유효하지 않은 링크입니다."
         case .excessLimitLenth:
-            return "글자 수를 초과하였습니다."
+            return "입력할 수 있는 문자 수를 초과했습니다."
         }
     }
 }
@@ -66,7 +63,7 @@ struct ValidationCheckTextField: View {
     let isMultipleLines: Bool
     let title: String
     @State var placeholder: String
-    let lengthLimit: Int
+    let lengthLimit: Int?
     let isDownloadLinkTextField: Bool
     @State var inputHeight: CGFloat = 272
     
@@ -76,7 +73,7 @@ struct ValidationCheckTextField: View {
     @State private var strokeColor = Color.Gray2
     @State private var isExceeded = false
     @State private var textFieldState = TextFieldState.notStatus
-    @State private var textFieldError = TextFieldError.invalidText
+    @State private var textFieldError = TextFieldError.invalidLink
     
     @FocusState private var isFocused: Bool
     
@@ -89,10 +86,12 @@ struct ValidationCheckTextField: View {
                 
                 Spacer()
                 
-                Text("\(content.count)/\(lengthLimit)")
-                    .Body2()
-                    .foregroundColor(.Gray4)
-                    .padding(.trailing, 16)
+                if let lengthLimit {
+                    Text("\(content.count)/\(lengthLimit)")
+                        .Body2()
+                        .foregroundColor(.Gray4)
+                        .padding(.trailing, 16)
+                }
             }
             
             ZStack {
@@ -126,7 +125,6 @@ struct ValidationCheckTextField: View {
         }
         .onChange(of: self.textFieldState) { newValue in
             self.strokeColor = newValue.color
-            
         }
     }
     
@@ -212,7 +210,7 @@ struct ValidationCheckTextField: View {
                     .foregroundColor(.Success)
                     .onTapGesture { }
             case .doneFail:
-                Image(systemName: "xmark.circle.fill")
+                Image(systemName: "exclamationmark.circle.fill")
                     .Body2()
                     .foregroundColor(.red)
             case .inProgressSuccess:
@@ -244,8 +242,8 @@ extension ValidationCheckTextField {
             if content.isEmpty {
                 isValid = textType.isOptional
                 isExceeded = false
-                self.textFieldState = .notStatus
-            } else if content.count <= lengthLimit {
+                self.textFieldState = .inProgressSuccess
+            } else if content.count <= lengthLimit ?? 999 {
                 if isDownloadLinkTextField {
                     if content.hasPrefix("https://www.icloud.com/shortcuts/") {
                         isValid = true
@@ -258,16 +256,9 @@ extension ValidationCheckTextField {
                         self.textFieldError = .invalidLink
                     }
                 } else {
-                    if !content.checkCorrectNickname() && !isMultipleLines {
-                        isValid = false
-                        isExceeded = true
-                        self.textFieldState = .inProgressFail
-                        self.textFieldError = .invalidText
-                    } else {
-                        isValid = true
-                        isExceeded = false
-                        self.textFieldState = .inProgressSuccess
-                    }
+                    isValid = true
+                    isExceeded = false
+                    self.textFieldState = .inProgressSuccess
                 }
             } else {
                 isValid = false

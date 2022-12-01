@@ -24,6 +24,11 @@ struct ReadShortcutCommentView: View {
                 Text("등록된 댓글이 없습니다")
                     .Body2()
                     .foregroundColor(.Gray4)
+                    .padding(.top, 16)
+                
+                Spacer()
+                    .frame(maxHeight: .infinity)
+                
             } else {
                 comment
                 Spacer()

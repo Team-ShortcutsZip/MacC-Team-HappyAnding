@@ -7,9 +7,9 @@
 import SwiftUI
 
 enum CurationType: String {
-    case myCuration = "내가 작성한 큐레이션"
-    case userCuration = "큐레이션 모아보기"
-    case personalCuration = "님을 위한 모음집"
+    case myCuration = "내가 작성한 추천 모음집"
+    case userCuration = "사용자 추천 모음집"
+    case personalCuration = "님을 위한 추천 모음집"
 }
 
 /**
@@ -61,7 +61,7 @@ struct ListCurationView: View {
             .navigationBarBackground ({ Color.Background })
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(titleString)
+            .navigationTitle(data.title ?? "")
         }
     }
 }

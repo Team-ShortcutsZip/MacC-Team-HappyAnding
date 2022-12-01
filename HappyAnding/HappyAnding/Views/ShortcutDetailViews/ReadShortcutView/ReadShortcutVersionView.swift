@@ -16,12 +16,17 @@ struct ReadShortcutVersionView: View {
     @Binding var isUpdating: Bool
     
     var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
         if shortcut.updateDescription.count == 1 {
             Text("아직 업데이트된 버전이 없습니다.")
                 .Body2()
                 .foregroundColor(.Gray4)
+                .padding(.top, 16)
+            
+            Spacer()
+                .frame(maxHeight: .infinity)
+            
         } else {
-            VStack(alignment: .leading, spacing: 16) {
                 Text("업데이트 내용")
                     .Body2()
                     .foregroundColor(.Gray4)
@@ -65,7 +70,7 @@ struct ReadShortcutVersionView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
-            .padding(.top, 16)
         }
+            .padding(.top, 16)
     }
 }
