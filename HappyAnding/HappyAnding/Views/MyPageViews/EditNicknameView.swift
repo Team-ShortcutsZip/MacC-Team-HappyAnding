@@ -59,19 +59,19 @@ struct EditNicknameView: View {
             
             doneButton
         }
-        .onAppear {
-            nickname = shortcutszipViewModel.userInfo?.nickname ?? ""
-            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
-                                            isCurrentUser: true) { user in
-                self.user = user
-            }
-        }
-        .onDisappear {
-            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
-                                            isCurrentUser: true) { user in
-                shortcutszipViewModel.userInfo = user
-            }
-        }
+//        .onAppear {
+//            nickname = shortcutszipViewModel.userInfo?.nickname ?? ""
+//            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
+//                                            isCurrentUser: true) { user in
+//                self.user = user
+//            }
+//        }
+//        .onDisappear {
+//            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
+//                                            isCurrentUser: true) { user in
+//                shortcutszipViewModel.userInfo = user
+//            }
+//        }
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
         .background(Color.Background)

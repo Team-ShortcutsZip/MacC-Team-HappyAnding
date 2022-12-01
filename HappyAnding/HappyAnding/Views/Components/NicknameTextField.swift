@@ -11,45 +11,50 @@ import SwiftUI
 
 struct NicknameTextField: View {
     
-    enum NickNameState {
-        case notStatus // not focus && empty
-        case status // focus
-        case done // 중복확인 완료
-        case doneSuccess // 중복확인 미완료
-        case doneFail // error
+    enum NicknameState {
+        case success
+        case fail
+        case none
         
-        var strokeColor: Color {
-            switch self {
-            case .notStatus:
-                return .Gray2
-            case .status:
-                return .Primary
-            case .done:
-                return .Gray4
-            case .doneSuccess:
-                return .Gray4
-            case .doneFail:
-                return .Gray4
+        var state: Bool {
+            if self == .success || self == .none {
+                return true
+            } else {
+                return false
             }
         }
     }
-
-    enum NickNameError {
-        case none
-        case emoticon
-        case length
+    
+    enum NicknameFocus {
+        case focus
+        case focusError
+        case notfocus
         
-        var message: String {
+        var color: Color {
             switch self {
-            case .none:
-                return "*공백 없이 한글, 숫자, 영문만 입력 가능"
-            case .emoticon:
-                return "사용할 수 없는 문자가 포함되어있습니다."
-            case .length:
-                return "닉네임은 최대 8글자까지 입력 가능합니다."
+            case .focus:
+                return .Primary
+            case .focusError:
+                return .red
+            case .notfocus:
+                return .Gray2
             }
         }
         
+    }
+    
+    enum NicknameError {
+        case length
+        case emoticon
+        
+        var message: String {
+            switch self {
+            case .length:
+                return "*닉네임은 최대 8글자까지 입력가능합니다."
+            case .emoticon:
+                return "사용할 수 없는 문자가 포함되어 있습니다."
+            }
+        }
     }
     
     @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
@@ -59,46 +64,39 @@ struct NicknameTextField: View {
     @Binding var nickname: String
     
     @State var isNickNameChecked = false
-    @State var textFieldState = NickNameState.notStatus
-    @State var textFieldError = NickNameError.none
+    @State var nicknameState = NicknameState.none
+    @State var nicknameFocus = NicknameFocus.notfocus
+    @State var nicknameError = NicknameError.length
+    @State var isCheckedDuplicated = false
     
     var body: some View {
         
         VStack {
             textField
-            errorMessage
-        }
-        .onChange(of: isFocused) { _ in
-            if !isFocused {
-                checkValidation()
+            
+            if nicknameFocus == .focusError {
+                Text(nicknameError.message)
             }
         }
         .onChange(of: nickname) { _ in
-            changedNickname()
-//            self.textFieldState = .status
+            self.nicknameState = .fail
+            changedFocus()
         }
-            
-//        TextField("닉네임 (최대 8글자)", text: $nickname)
-//            .disableAutocorrection(true)
-//            .textInputAutocapitalization(.never)
-//            .Body2()
-//            .focused($isFocused)
-//            .foregroundColor(.Gray5)
-//            .frame(height: 20)
-//            .padding(.leading, 16)
-//            .padding(.vertical, 12)
-//            .onAppear(perform : UIApplication.shared.hideKeyboard)
-//            .onChange(of: nickname) {_ in
-//                isValidLength = nickname.count <= 8 && !nickname.isEmpty
-//                isNicknameChecked = false
-//                isNormalString = nickname.checkCorrectNickname()
-//            }
-//        if !nickname.isEmpty {
-//            textFieldSFSymbol
-//        }
-//        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        .onChange(of: isFocused) { _ in
+            if self.nicknameState != .success {
+                changedFocus()
+            }
+        }
+        .alert("닉네임 중복 확인", isPresented: $isCheckedDuplicated) {
+            Button {
+                
+            } label: {
+                Text(nicknameState.state ? "확인" : "다시 입력하기")
+            }
+        } message: {
+            Text(nicknameState.state ? "중복된 닉네임이 없습니다" : "중복된 닉네임이 있습니다")
+        }
     }
-    
     
     var textField: some View {
         HStack (spacing: 12) {
@@ -117,119 +115,128 @@ struct NicknameTextField: View {
                     }
                 
                 stateIcon
+                    .padding()
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .strokeBorder(lineWidth: 1)
-                    .foregroundColor(textFieldState.strokeColor)
+                    .foregroundColor(nicknameFocus.color)
             )
             
             Button {
                 shortcutszipViewModel.checkNickNameDuplication(name: nickname) { result in
-                    if result {
-                        self.textFieldState = .doneFail
+                    if !result {
+                        self.isCheckedDuplicated = true
+                        self.nicknameState = .success
+                        self.nicknameFocus = .notfocus
+                        self.isFocused = false
                     } else {
-                        self.textFieldState = .doneSuccess
+                        self.nicknameState = .fail
                     }
-                    
                 }
             } label: {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(self.textFieldState == .doneSuccess && textFieldError == .none ? .Primary.opacity(0.13) : .Primary)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty ? .Primary.opacity(0.13) : .Primary)
                         .frame(width: 80, height: 52)
                     
                     Text("중복확인")
                         .Body1()
-                        .foregroundColor(self.textFieldState == .doneSuccess && textFieldError == .none ? .Text_Button_Disable : .Text_icon)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty ? .Text_Button_Disable : .Text_icon)
                 }
             }
-            .disabled(self.textFieldState == .doneSuccess && textFieldError == .none)
+            .disabled(nicknameState != .none || nickname.isEmpty)
         }
     }
     
     var stateIcon: some View {
         HStack {
-        switch self.textFieldState {
-            case .status:
-                if !nickname.isEmpty {
-                    Button {
-                        nickname.removeAll()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .Body2()
-                            .foregroundColor(.Gray5)
-                    }
-                } else {
-                    EmptyView()
+            if isFocused {
+                Button {
+                    nickname.removeAll()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .Body2()
+                        .foregroundColor(.Gray5)
                 }
-            case .doneSuccess:
-                Image(systemName: "checkmark.circle.fill")
-                    .Body2()
-                    .foregroundColor(.Success)
-                    .onTapGesture { }
-            case .doneFail:
-                Image(systemName: "exclamationmark.circle.fill")
-                    .Body2()
-                    .foregroundColor(.red)
-            default:
-                EmptyView()
-            }
-        }
-        .padding()
-    }
-    
-    var errorMessage: some View {
-        VStack {
-            if self.textFieldError == .none {
-                Text(textFieldError.message)
-                    .Footnote()
-                    .foregroundColor(nickname.isEmpty ? .Gray2 : .Gray4)
             } else {
-                Text(textFieldError.message)
-                    .Footnote()
-                    .foregroundColor(.red)
+                if nicknameState == .fail {
+                    Image(systemName: "exclamationmark.circle.fill")
+                        .Body2()
+                        .foregroundColor(.red)
+                        .onTapGesture { }
+                } else if nicknameState == .success {
+                    Image(systemName: "checkmark.circle.fill")
+                        .Body2()
+                        .foregroundColor(.Success)
+                        .onTapGesture { }
+                }
             }
         }
+//        HStack {
+//
+//            if nicknameFocus == .notfocus && !nickname.isEmpty {
+//                if nicknameState == .success {
+//                    Image(systemName: "checkmark.circle.fill")
+//                        .Body2()
+//                        .foregroundColor(.Success)
+//                }
+////                else if nicknameState == .fail && nicknameFocus == .focusError {
+////                    Image(systemName: "exclamationmark.circle.fill")
+////                        .Body2()
+////                        .foregroundColor(.red)
+////                }
+//            } else if !nickname.isEmpty {
+//                Button {
+//                    self.nickname.removeAll()
+//                } label: {
+//                    Image(systemName: "xmark.circle.fill")
+//                        .foregroundColor(.Gray4)
+//                        .Body2()
+//                }
+//            }
+//            else if nicknameFocus == .focusError && nicknameState == .fail {
+//                Image(systemName: "exclamationmark.circle.fill")
+//                    .Body2()
+//                    .foregroundColor(.red)
+//            }
+//
+//
+//
+//        }
     }
     
-    private func checkValidation() {
+    
+    private func changedFocus() {
+        
         if isFocused {
-            if nickname.count > 8 {
-                self.textFieldError = .length
+            if self.nickname.count > 8 {
+                self.nicknameFocus = .focusError
+                self.nicknameError = .length
+                self.nicknameState = .fail
+            } else if !self.nickname.checkCorrectNickname() {
+                self.nicknameFocus = .focusError
+                self.nicknameError = .emoticon
+                self.nicknameState = .fail
             } else {
-                if nickname.checkCorrectNickname() {
-                    self.textFieldError = .none
-//                    self.textFieldState = .status
-                } else {
-                    self.textFieldError = .emoticon
-                }
+                self.nicknameFocus = .focus
+                self.nicknameState = .none
             }
         } else {
-            if nickname.count > 8 || !nickname.isNormalString() {
-                textFieldState = .doneFail
+            if nicknameState == .fail {
+                self.nicknameFocus = .focusError
             } else {
-                textFieldState = .done
+                self.nicknameFocus = .notfocus
             }
-            
+//            if nicknameFocus != .focusError {
+//                self.nicknameFocus = .notfocus
+//            } else {
+//                nicknameState = .fail
+//            }
         }
+        
     }
-    
-    
-    private func changedNickname() {
-        if nickname.count > 8 {
-            self.textFieldError = .length
-        } else {
-            if nickname.checkCorrectNickname() {
-                self.textFieldError = .none
-                self.textFieldState = .status
-            } else {
-                textFieldError = .emoticon
-            }
-        }
-    }
-    
 }
 
 struct NicknameTextField_Previews: PreviewProvider {
