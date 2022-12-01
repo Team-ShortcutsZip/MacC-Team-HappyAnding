@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct NicknameTextField: View {
     
     enum NicknameState {
@@ -67,6 +65,7 @@ struct NicknameTextField: View {
     @State var nicknameFocus = NicknameFocus.notfocus
     @State var nicknameError = NicknameError.length
     @State var isCheckedDuplicated = false
+    @Binding var isValid: Bool
     
     var body: some View {
         
@@ -88,6 +87,9 @@ struct NicknameTextField: View {
                 changedFocus()
             }
         }
+        .onChange(of: nicknameState) { newValue in
+            self.isValid = newValue == .success
+        }
         .alert("닉네임 중복 확인", isPresented: $isCheckedDuplicated) {
             Button {
             } label: {
@@ -108,6 +110,7 @@ struct NicknameTextField: View {
                     .focused($isFocused)
                     .frame(height: 52)
                     .Body2()
+                    .foregroundColor(.Gray5)
                     .padding(.horizontal, 16)
                     .onAppear { UIApplication.shared.hideKeyboard()
                     }
@@ -198,11 +201,6 @@ struct NicknameTextField: View {
             } else {
                 self.nicknameFocus = .notfocus
             }
-//            if nicknameFocus != .focusError {
-//                self.nicknameFocus = .notfocus
-//            } else {
-//                nicknameState = .fail
-//            }
         }
         
     }
@@ -210,6 +208,6 @@ struct NicknameTextField: View {
 
 struct NicknameTextField_Previews: PreviewProvider {
     static var previews: some View {
-        NicknameTextField(nickname: .constant(""))
+        NicknameTextField(nickname: .constant(""), isValid: .constant(true))
     }
 }
