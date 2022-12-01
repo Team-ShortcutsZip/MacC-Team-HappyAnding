@@ -17,7 +17,6 @@ struct ShowProfileView: View {
     @State var curations: [Curation] = []
     @Namespace var namespace
     @State var currentTab: Int = 0
-    @State var height: CGFloat = 0
     private let tabItems = ["작성한 단축어", "작성한 큐레이션"]
     
     var body: some View {
@@ -112,12 +111,12 @@ extension ShowProfileView {
                     Color.clear.tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(height: height)
                 
                 switch(currentTab) {
                 case 0:
                     if shortcuts.isEmpty {
                         Text("작성한 단축어가 없습니다.")
+                            .padding(.top, 24)
                             .Body2()
                             .foregroundColor(.Gray4)
                     } else {
@@ -133,20 +132,13 @@ extension ShowProfileView {
                             
                             Spacer()
                         }
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self,
-                                                value: geometryProxy.size)
-                            }
-                        )
                     }
                 case 1:
                     if curations.isEmpty {
                         
                         // TODO: 큐레이션에 대한 워딩 변경
-                        
                         Text("작성한 큐레이션이 없습니다.")
+                            .padding(.top, 24)
                             .Body2()
                             .foregroundColor(.Gray4)
                     }
@@ -162,21 +154,11 @@ extension ShowProfileView {
                         
                         Spacer()
                     }
-                    .background(
-                        GeometryReader { geometryProxy in
-                            Color.clear
-                                .preference(key: SizePreferenceKey.self,
-                                            value: geometryProxy.size)
-                        }
-                    )
                 default:
                     EmptyView()
                 }
             }
             .animation(.easeInOut, value: currentTab)
-            .onPreferenceChange(SizePreferenceKey.self) { newSize in
-                self.height = newSize.height
-            }
             .gesture(
                 DragGesture(minimumDistance: 20, coordinateSpace: .global)
                     .onEnded { value in
