@@ -75,8 +75,7 @@ struct ValidationCheckTextField: View {
     @State private var textFieldState = TextFieldState.notStatus
     @State private var textFieldError = TextFieldError.invalidLink
     
-    @FocusState private var isFocusedd: Bool
-    @State private var isFocused = false
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         VStack {
@@ -125,11 +124,7 @@ struct ValidationCheckTextField: View {
             }
         }
         .onChange(of: self.textFieldState) { newValue in
-            print("**textFieldState \(newValue) \(isFocused)")
             self.strokeColor = newValue.color
-        }
-        .onChange(of: self.isFocused) { newValue in
-            print("**isFocused \(isFocused)")
         }
     }
     
@@ -151,7 +146,7 @@ struct ValidationCheckTextField: View {
     
     var oneLineEditor: some View {
         TextField(placeholder, text: $content)
-//            .focused(isFocused)
+            .focused($isFocused)
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
             .Body2()
@@ -161,16 +156,13 @@ struct ValidationCheckTextField: View {
                 checkValidation()
             }
             .onChange(of: isFocused) { newValue in
-                print("**one line isFocused \(newValue)")
                 checkValidation()
             }
             .onChange(of: content) { newValue in
                 checkValidation()
             }
             .onTapGesture {
-                print("**onTap \(isFocused)")
                 isFocused = true
-                print("**onTap \(isFocused)")
             }
     }
     
@@ -180,8 +172,8 @@ struct ValidationCheckTextField: View {
             
             CustomTextEditor(text: $content,
                              inputHeight: $inputHeight,
-                             isFocused: _isFocusedd)
-            .focused($isFocusedd)
+                             isFocused: _isFocused)
+            .focused($isFocused)
             .frame(height: inputHeight)
             .padding(16)
             
@@ -193,9 +185,7 @@ struct ValidationCheckTextField: View {
                     .padding(16)
                     .foregroundColor(.Gray2)
                     .onTapGesture {
-                        print("**onTap \(isFocused)")
                         isFocused = true
-                        print("**onTap \(isFocused)")
                     }
             }
         }
