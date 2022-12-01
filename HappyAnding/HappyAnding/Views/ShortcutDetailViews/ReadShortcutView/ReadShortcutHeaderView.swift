@@ -69,7 +69,7 @@ struct ReadShortcutHeaderView: View {
             .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
             .background(isMyLike ? Color.Primary : Color.Gray1)
             .cornerRadius(12)
-            .onTapGesture(perform: {
+            .onTapGesture {
                 isMyLike.toggle()
                 //화면 상의 좋아요 추가, 취소 기능 동작
                 if isMyLike {
@@ -77,7 +77,7 @@ struct ReadShortcutHeaderView: View {
                 } else {
                     self.shortcut.numberOfLike -= 1
                 }
-            })
+            }
     }
     
     // MARK: - 유저 정보
