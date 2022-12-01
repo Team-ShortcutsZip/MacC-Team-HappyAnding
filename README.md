@@ -1,5 +1,8 @@
-<img src = "https://user-images.githubusercontent.com/68676844/205000571-4c6ca3d8-e3cf-4277-ba06-322307c8a7e5.png">
-
+<p>
+  <a href = "https://apps.apple.com/app/shortcutszip/id6444001181">
+    <img src = "https://user-images.githubusercontent.com/68676844/205000571-4c6ca3d8-e3cf-4277-ba06-322307c8a7e5.png">
+  </a>
+</p>
 
 ## Introduction
 **아이폰 기본 앱, 단축어**
@@ -91,5 +94,6 @@
 ## License
 
 [Apache-2.0](https://choosealicense.com/licenses/apache-2.0/)
+
 
 
