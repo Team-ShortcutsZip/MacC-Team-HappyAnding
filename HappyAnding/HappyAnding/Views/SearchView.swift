@@ -48,7 +48,7 @@ struct SearchView: View {
         .onAppear() {
             self.keywords = shortcutsZipViewModel.keywords
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, prompt: "제목 또는 관련앱으로 검색하세요")
         .onSubmit(of: .search, runSearch)
         .onChange(of: searchText) { _ in
             didChangedSearchText()
