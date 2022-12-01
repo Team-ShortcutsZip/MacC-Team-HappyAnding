@@ -27,7 +27,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
             VStack(spacing: 32){
                 iconModalView
                 shortcutTitleText
-                shortcutLinkText
+                shortcutLinkText.disabled(true)
                 shortcutSubtitleText
                 shortcutDescriptionText
                 shortcutCategory
