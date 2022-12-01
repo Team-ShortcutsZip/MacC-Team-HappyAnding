@@ -86,7 +86,7 @@
 		F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
 		F9131B6B2922D38D00868A0E /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9131B6A2922D38D00868A0E /* Keyword.swift */; };
-		F9136EB6293612310034AAB2 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9136EB5293612310034AAB2 /* LaunchScreenView.swift */; };
+		F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435C2907B19A00987819 /* FirebaseAnalytics */; };
 		F94B435F2907B19A00987819 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435E2907B19A00987819 /* FirebaseAuth */; };
@@ -205,7 +205,7 @@
 		A3FF01892918F8EF00384211 /* apache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = apache.txt; sourceTree = "<group>"; };
 		A3FF018D291ACFA500384211 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
 		F9131B6A2922D38D00868A0E /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
-		F9136EB5293612310034AAB2 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipView.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
@@ -345,7 +345,7 @@
 				87E606AE291062D300C3DA13 /* SignInViews */,
 				8792479A291BDF820040D5C3 /* SearchView.swift */,
 				3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */,
-				F9136EB5293612310034AAB2 /* LaunchScreenView.swift */,
+				F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -711,7 +711,7 @@
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
 				87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */,
 				87E99CEC29080C30009B691F /* Curation.swift in Sources */,
-				F9136EB6293612310034AAB2 /* LaunchScreenView.swift in Sources */,
+				F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */,
 				87E99CEE29080D33009B691F /* User.swift in Sources */,

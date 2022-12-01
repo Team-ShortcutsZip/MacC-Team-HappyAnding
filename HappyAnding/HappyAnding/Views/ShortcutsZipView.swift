@@ -19,11 +19,9 @@ struct ShortcutsZipView: View {
         if signInStatus {
             ShortcutTabView()
                 .environmentObject(userAuth)
-                .environmentObject(shortcutsZipViewModel)
         }  else {
             if userAuth.isLoggedIn {
                 WriteNicknameView()
-                    .environmentObject(shortcutsZipViewModel)
                     .onDisappear() {
                         if shortcutsZipViewModel.userInfo == nil {
                             shortcutsZipViewModel.fetchUser(userID: shortcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
