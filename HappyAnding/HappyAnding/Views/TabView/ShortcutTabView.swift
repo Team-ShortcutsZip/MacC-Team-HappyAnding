@@ -115,7 +115,7 @@ struct ShortcutTabView: View {
                 }
                 .environmentObject(curationNavigation)
                 .tabItem {
-                    Label("큐레이션", systemImage: "folder.fill")
+                    Label("추천모음집", systemImage: "folder.fill")
                 }
                 .tag(2)
                 

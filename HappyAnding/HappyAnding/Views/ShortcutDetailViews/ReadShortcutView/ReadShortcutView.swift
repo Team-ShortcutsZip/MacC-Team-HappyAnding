@@ -33,17 +33,15 @@ struct ReadShortcutView: View {
     @State var comments: Comments = Comments(id: "", comments: [])
     @State var comment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
     @State var nestedCommentInfoText: String = ""
-    
-    @State var height: CGFloat = UIScreen.screenHeight / 2
     @State var currentTab: Int = 0
     @State var commentText = ""
+    
     @FocusState private var isFocused: Bool
     @Namespace var namespace
     
     @State var isClickCorrection = false                //댓글 수정버튼 클릭했는지?
     @State var isCancledCorrection = false              //댓글 수정 중 텍스트필드를 제외한 부분을 터치했는지?
     
-    private let contentSize = UIScreen.screenHeight / 2
     private let tabItems = ["기본 정보", "버전 정보", "댓글"]
     
     var body: some View {
@@ -382,42 +380,26 @@ extension ReadShortcutView {
                     Color.clear.tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(height: height)
+                .frame(minHeight: UIScreen.screenHeight / 2 - 50)
                 
                 switch(currentTab) {
                 case 0:
                     ReadShortcutContentView(shortcut: $data.shortcut.unwrap()!)
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self,
-                                                value: geometryProxy.size)
-                            })
                 case 1:
                     ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self, value:
-                                                    geometryProxy.size)
-                            })
                 case 2:
-                    ReadShortcutCommentView(addedComment: $comment, comments: $comments, nestedCommentInfoText: $nestedCommentInfoText, isClickCorrenction: $isClickCorrection, isFocused: _isFocused, shortcutID: data.shortcutID)
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self,
-                                                value: geometryProxy.size)
-                            })
+                    ReadShortcutCommentView(addedComment: $comment,
+                                            comments: $comments,
+                                            nestedCommentInfoText: $nestedCommentInfoText,
+                                            isClickCorrenction: $isClickCorrection,
+                                            isFocused: _isFocused,
+                                            shortcutID: data.shortcutID)
                 default:
                     EmptyView()
                 }
             }
             
             .animation(.easeInOut, value: currentTab)
-            .onPreferenceChange(SizePreferenceKey.self) { newSize in
-                height = contentSize > newSize.height ? contentSize : newSize.height
-            }
             .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
                 .onEnded { value in
                     let horizontalAmount = value.translation.width

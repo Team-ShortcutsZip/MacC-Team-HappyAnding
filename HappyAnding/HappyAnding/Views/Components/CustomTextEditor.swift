@@ -46,7 +46,7 @@ struct CustomTextEditor: UIViewRepresentable {
             let spacing = textView.font!.lineHeight
             if textView.contentSize.height > inputHeight && inputHeight <= maxHeight - spacing {
                 inputHeight += spacing
-            } else if text == "" {
+            } else if text == "" && inputHeight != 272 {
                 inputHeight = 40
             }
         }
