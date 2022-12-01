@@ -71,6 +71,7 @@ struct WriteShortcutTitleView: View {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("취소")
+                        .Body1()
                         .foregroundColor(.Gray5)
                 }
             }
@@ -133,9 +134,11 @@ struct WriteShortcutTitleView: View {
                 }, label: {
                     ZStack {
                         Text("업로드")
+                            .Headline()
                             .foregroundColor(.Text_Button)
                             .opacity(0.7)
                         Text("업로드")
+                            .Headline()
                             .foregroundColor(.Primary)
                             .opacity(shortcut.color.isEmpty ||
                                      shortcut.sfSymbol.isEmpty ||
