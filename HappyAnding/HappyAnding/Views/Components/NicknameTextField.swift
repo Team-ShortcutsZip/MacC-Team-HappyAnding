@@ -67,15 +67,23 @@ struct NicknameTextField: View {
     @State var isCheckedDuplicated = false
     @Binding var isValid: Bool
     
+    var initName = ""
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 8) {
+            
             textField
+                .padding(.top, 16)
             
             if nicknameFocus == .focusError {
                 Text(nicknameError.message)
                     .Footnote()
                     .foregroundColor(.red)
+            } else {
+                Text("* 공백 없이 한글 ,숫자, 영문만 입력 가능")
+                    .Footnote()
+                    .foregroundColor(.Gray3)
             }
         }
         .onChange(of: nickname) { _ in
@@ -112,8 +120,7 @@ struct NicknameTextField: View {
                     .Body2()
                     .foregroundColor(.Gray5)
                     .padding(.horizontal, 16)
-                    .onAppear { UIApplication.shared.hideKeyboard()
-                    }
+                    .onAppear { UIApplication.shared.hideKeyboard() }
                 
                 stateIcon
                     .padding()
@@ -136,20 +143,19 @@ struct NicknameTextField: View {
                     self.isFocused = self.nicknameState != .success
                 }
                 
-                
             } label: {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty ? .Primary.opacity(0.13) : .Primary)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Primary.opacity(0.13) : .Primary)
                         .frame(width: 80, height: 52)
                     
                     Text("중복확인")
                         .Body1()
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty ? .Text_Button_Disable : .Text_icon)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Text_Button_Disable : .Text_icon)
                 }
             }
-            .disabled(nicknameState != .none || nickname.isEmpty)
+            .disabled(nicknameState != .none || nickname.isEmpty || initName == nickname)
         }
     }
     
