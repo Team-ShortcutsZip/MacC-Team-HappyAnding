@@ -29,43 +29,46 @@ struct EditNicknameView: View {
                 .foregroundColor(.Gray5)
                 .padding(.top, 40)
             
-            HStack(spacing: 14) {
-                textField
-                nicknameCheckButton
-            }
+            NicknameTextField(nickname: $nickname)
+//            HStack(spacing: 14) {
+//                textField
+//                nicknameCheckButton
+//            }
             .padding(.top, 16)
-            
-            if nickname.count > 8 {
-                Text("*닉네임은 최대 8글자까지 입력가능합니다.")
-                    .Body2()
-                    .foregroundColor(.red)
-                    .padding(.top, 4)
-            }
-            
-            if isNormalString {
-                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
-                    .Body2()
-                    .foregroundColor(nickname.isEmpty ? .Gray2 : .Gray4)
-                    .padding(.top, 4)
-            } else {
-                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
-                    .Body2()
-                    .foregroundColor(.Error)
-                    .padding(.top, 4)
-            }
-            
+//
+//            if nickname.count > 8 {
+//                Text("*닉네임은 최대 8글자까지 입력가능합니다.")
+//                    .Body2()
+//                    .foregroundColor(.red)
+//                    .padding(.top, 4)
+//            }
+//
+//            if isNormalString {
+//                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
+//                    .Body2()
+//                    .foregroundColor(nickname.isEmpty ? .Gray2 : .Gray4)
+//                    .padding(.top, 4)
+//            } else {
+//                Text("*공백 없이 한글, 숫자, 영문만 입력 가능")
+//                    .Body2()
+//                    .foregroundColor(.Error)
+//                    .padding(.top, 4)
+//            }
+//
             Spacer()
             
             doneButton
         }
         .onAppear {
             nickname = shortcutszipViewModel.userInfo?.nickname ?? ""
-            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(), completionHandler: { user in
+            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
+                                            isCurrentUser: true) { user in
                 self.user = user
-            })
+            }
         }
         .onDisappear {
-            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser()) { user in
+            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
+                                            isCurrentUser: true) { user in
                 shortcutszipViewModel.userInfo = user
             }
         }
@@ -79,31 +82,32 @@ struct EditNicknameView: View {
     
     ///닉네임 입력 텍스트필드
     var textField: some View {
-        HStack {
-            TextField("닉네임 (최대 8글자)", text: $nickname)
-                .disableAutocorrection(true)
-                .textInputAutocapitalization(.never)
-                .Body2()
-                .focused($isFocused)
-                .foregroundColor(.Gray5)
-                .frame(height: 20)
-                .padding(.leading, 16)
-                .padding(.vertical, 12)
-                .onAppear(perform : UIApplication.shared.hideKeyboard)
-                .onChange(of: nickname) {_ in
-                    isValidLength = nickname.count <= 8 && !nickname.isEmpty
-                    isNicknameChecked = false
-                    isNormalString = nickname.checkCorrectNickname()
-                }
-            if !nickname.isEmpty {
-                textFieldSFSymbol
-            }
-        }
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(lineWidth: 1)
-                .foregroundColor(isNicknameChecked ? .Success : (isValidLength && isNormalString ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
-        )
+//        HStack {
+            NicknameTextField(nickname: $nickname)
+//            TextField("닉네임 (최대 8글자)", text: $nickname)
+//                .disableAutocorrection(true)
+//                .textInputAutocapitalization(.never)
+//                .Body2()
+//                .focused($isFocused)
+//                .foregroundColor(.Gray5)
+//                .frame(height: 20)
+//                .padding(.leading, 16)
+//                .padding(.vertical, 12)
+//                .onAppear(perform : UIApplication.shared.hideKeyboard)
+//                .onChange(of: nickname) {_ in
+//                    isValidLength = nickname.count <= 8 && !nickname.isEmpty
+//                    isNicknameChecked = false
+//                    isNormalString = nickname.checkCorrectNickname()
+//                }
+//            if !nickname.isEmpty {
+//                textFieldSFSymbol
+//            }
+//        }
+//        .overlay(
+//            RoundedRectangle(cornerRadius: 12)
+//                .strokeBorder(lineWidth: 1)
+//                .foregroundColor(isNicknameChecked ? .Success : (isValidLength && isNormalString ? .Gray3 : (nickname.isEmpty ? .Gray3 : .red)))
+//        )
     }
     
     ///텍스트필드 SFsymbol 및 버튼
