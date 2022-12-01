@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ShortcutsZipView: View {
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @StateObject var userAuth = UserAuth.shared
-    @StateObject var shorcutsZipViewModel = ShortcutsZipViewModel()
+    
     @AppStorage("signInStatus") var signInStatus = false
     @AppStorage("isReauthenticated") var isReauthenticated = false
     
@@ -17,26 +19,26 @@ struct ShortcutsZipView: View {
         if signInStatus {
             ShortcutTabView()
                 .environmentObject(userAuth)
-                .environmentObject(shorcutsZipViewModel)
+                .environmentObject(shortcutsZipViewModel)
         }  else {
             if userAuth.isLoggedIn {
                 WriteNicknameView()
-                    .environmentObject(shorcutsZipViewModel)
+                    .environmentObject(shortcutsZipViewModel)
                     .onDisappear() {
-                        if shorcutsZipViewModel.userInfo == nil {
-                            shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
-                                shorcutsZipViewModel.userInfo = user
+                        if shortcutsZipViewModel.userInfo == nil {
+                            shortcutsZipViewModel.fetchUser(userID: shortcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
+                                shortcutsZipViewModel.userInfo = user
                             }
                         }
                     }
             } else {
                 SignInWithAppleView()
                     .onDisappear() {
-                        if shorcutsZipViewModel.userInfo == nil {
-                            shorcutsZipViewModel.fetchUser(userID: shorcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
-                                shorcutsZipViewModel.userInfo = user
-                                shorcutsZipViewModel.initUserShortcut(user: user)
-                                shorcutsZipViewModel.curationsMadeByUser = shorcutsZipViewModel.fetchCurationByAuthor(author: user.id)
+                        if shortcutsZipViewModel.userInfo == nil {
+                            shortcutsZipViewModel.fetchUser(userID: shortcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
+                                shortcutsZipViewModel.userInfo = user
+                                shortcutsZipViewModel.initUserShortcut(user: user)
+                                shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.fetchCurationByAuthor(author: user.id)
                             }
                         }
                     }
