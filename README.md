@@ -77,12 +77,10 @@
  
 
 
-
 ## Contributors
-[@Elie](https://www.github.com/JMM00) | [@Green](https://www.github.com/jim4020key) |   [@Halogen](https://www.github.com/HanGyengjun) |  [@HongKi](https://www.github.com/ottoolz) | [@Romi](https://www.github.com/mxnxxii ) | [@Soi](https://www.github.com/JIWON1923) |
+[@Elie](https://www.github.com/JMM00) | [@Green](https://www.github.com/jim4020key) |   [@Halogen](https://www.github.com/HanGyengjun) |  [@HongKi](https://www.github.com/otoolz) | [@Romi](https://www.github.com/mxnxxii ) | [@Soi](https://www.github.com/JIWON1923) |
 :---|:---|:---|:---|:---|:---
-|![elie](https://user-images.githubusercontent.com/68676844/205005538-38658595-9627-4df2-80a5-bdcb6c93b18c.png)|![green](https://user-images.githubusercontent.com/68676844/205005410-a773b326-9c49-47ea-8313-24dc9822f6d6.png)|![halogen](https://user-images.githubusercontent.com/68676844/205005492-210bffd4-4a52-44c2-89ad-65c7c8b838c4.png)|![hongki](https://user-images.githubusercontent.com/68676844/205005435-fd4ccbea-41aa-434f-9889-84f93f988093.png)|![romi](https://user-images.githubusercontent.com/68676844/205005382-74f5b3a6-93a8-4f48-b70e-339f6867ddab.png)|![soi](https://user-images.githubusercontent.com/68676844/205005505-f69366fb-8cff-4c29-b7f8-344e6f7cbefb.png)
-
+|![elie](https://user-images.githubusercontent.com/68676844/205005538-38658595-9627-4df2-80a5-bdcb6c93b18c.png)|![green](https://user-images.githubusercontent.com/68676844/205005410-a773b326-9c49-47ea-8313-24dc9822f6d6.png)|![halogen](https://user-images.githubusercontent.com/68676844/205005492-210bffd4-4a52-44c2-89ad-65c7c8b838c4.png)|![hongki](https://user-images.githubusercontent.com/68676844/205005435-fd4ccbea-41aa-434f-9889-84f93f988093.png)|![romi](https://user-images.githubusercontent.com/68676844/205005382-74f5b3a6-93a8-4f48-b70e-339f6867ddab.png)|![soi](https://user-images.githubusercontent.com/68676844/205079322-77590700-1f9c-4363-8c7e-33cb2eafa22e.png)
 
 
 ## License
