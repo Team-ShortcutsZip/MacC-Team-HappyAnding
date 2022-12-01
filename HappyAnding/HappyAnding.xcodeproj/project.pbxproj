@@ -73,9 +73,7 @@
 		A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */; };
 		A0F822B729164D2300AF4448 /* ShortcutsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822B629164D2300AF4448 /* ShortcutsListView.swift */; };
 		A31F1844292A637300AF4A82 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+Extension.swift */; };
-		A31F1845292A638400AF4A82 /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD829042536009B691F /* SectionType.swift */; };
 		A31F1846292A638700AF4A82 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		A31F1847292A638B00AF4A82 /* Curation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CEB29080C30009B691F /* Curation.swift */; };
 		A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		A3275C7A292E6FCB00CD5B12 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CBA7D2922B36C00D31F5F /* String+Extension.swift */; };
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
@@ -86,8 +84,6 @@
 		A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */; };
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
-		A38115BB292BDBC00043E8B8 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
-		A38115BC292BDBDF0043E8B8 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */; };
 		A3A6AD1A292763E2004C49DC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3A6AD18292763E2004C49DC /* MainInterface.storyboard */; };
 		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
@@ -101,12 +97,8 @@
 		A3FC474F292A616D0058BF26 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 		A3FC4751292A61A00058BF26 /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
 		A3FC4753292A61AE0058BF26 /* IconModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CBA28FFF298009B691F /* IconModalView.swift */; };
-		A3FC4754292A61B10058BF26 /* WriteShortcutdescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CBC28FFF2A1009B691F /* WriteShortcutdescriptionView.swift */; };
-		A3FC4755292A61B30058BF26 /* WriteShortcutTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CBE28FFF2AB009B691F /* WriteShortcutTagView.swift */; };
 		A3FC4756292A61B60058BF26 /* CategoryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC028FFF2B5009B691F /* CategoryModalView.swift */; };
-		A3FC4757292A61BC0058BF26 /* ShortcutsZipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */; };
 		A3FC4758292A61C50058BF26 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CE72907C6E6009B691F /* Shortcuts.swift */; };
-		A3FC4759292A61C80058BF26 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CED29080D33009B691F /* User.swift */; };
 		A3FC475A292A61CC0058BF26 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9131B6A2922D38D00868A0E /* Keyword.swift */; };
 		A3FC475B292A61CE0058BF26 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CDA29042CCA009B691F /* Category.swift */; };
 		A3FF0183291648A300384211 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF0182291648A300384211 /* MailView.swift */; };
@@ -127,6 +119,8 @@
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
+		F976E85229395DB00088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
+		F976E85329395FF00088BBA1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A35C39532936928200C4359F /* GoogleService-Info.plist */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
 		F9AC2BBA2935D34C00165820 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB92935D34C00165820 /* Image+Extension.swift */; };
@@ -781,6 +775,7 @@
 			files = (
 				A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */,
 				A3A6AD1A292763E2004C49DC /* MainInterface.storyboard in Resources */,
+				F976E85329395FF00088BBA1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +808,7 @@
 				4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */,
 				87E99CBF28FFF2AB009B691F /* WriteShortcutTagView.swift in Sources */,
 				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
+				F976E85229395DB00088BBA1 /* ShareExtensionViewModel.swift in Sources */,
 				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
 				8795A170292AB945004B765F /* UIScreen+Extension.swift in Sources */,
 				A04ACB0A29041CD8004A85A6 /* DownloadRankView.swift in Sources */,
@@ -899,15 +895,10 @@
 			files = (
 				A3439AF629395A3A0043E273 /* CustomTextEditor.swift in Sources */,
 				A3439AF529395A100043E273 /* UserAuth.swift in Sources */,
-				A3FC4759292A61C80058BF26 /* User.swift in Sources */,
 				A3FC4751292A61A00058BF26 /* ValidationCheckTextField.swift in Sources */,
-				A38115BC292BDBDF0043E8B8 /* NavigationViewModel.swift in Sources */,
-				A31F1845292A638400AF4A82 /* SectionType.swift in Sources */,
 				A31F1846292A638700AF4A82 /* (null) in Sources */,
-				A31F1847292A638B00AF4A82 /* Curation.swift in Sources */,
 				A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutTitleView.swift in Sources */,
 				A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */,
-				A3FC4755292A61B30058BF26 /* WriteShortcutTagView.swift in Sources */,
 				A31F1844292A637300AF4A82 /* Date+Extension.swift in Sources */,
 				A3FC4756292A61B60058BF26 /* CategoryModalView.swift in Sources */,
 				A3FC4758292A61C50058BF26 /* Shortcuts.swift in Sources */,
@@ -917,11 +908,8 @@
 				F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */,
 				A3FC4753292A61AE0058BF26 /* IconModalView.swift in Sources */,
 				A3FC474F292A616D0058BF26 /* Font+Extension.swift in Sources */,
-				A38115BB292BDBC00043E8B8 /* Comment.swift in Sources */,
 				A3FC475B292A61CE0058BF26 /* Category.swift in Sources */,
 				A35DB3372927E8EB0011A28B /* CustomShareViewController.swift in Sources */,
-				A3FC4754292A61B10058BF26 /* WriteShortcutdescriptionView.swift in Sources */,
-				A3FC4757292A61BC0058BF26 /* ShortcutsZipViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,12 +8,15 @@
 import UIKit
 import Foundation
 
+import FirebaseCore
+
 @objc(CustomShareNavigationController)
 class CustomShareNavigationController: UINavigationController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
+        
+        FirebaseApp.configure()
         self.setViewControllers([CustomShareViewController()], animated: false)
     }
 
