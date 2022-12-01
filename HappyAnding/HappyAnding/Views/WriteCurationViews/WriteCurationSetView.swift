@@ -46,7 +46,7 @@ struct WriteCurationSetView: View {
             }
         }
         .background(Color.Background)
-        .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 작성")
+        .navigationTitle(isEdit ? "추천 모음집 편집" : "추천 모음집 작성")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration()
@@ -120,7 +120,7 @@ struct WriteCurationSetView: View {
     
     // MARK: - 안내문구
     var infomation: some View {
-        Text("큐레이션을 위한 단축어 목록은 ‘내가 업로드한 단축어'와 ‘좋아요를 누른 단축어'로 구성되어 있습니다.")
+        Text("추천 모음집을 위한 단축어 목록은 ‘내가 업로드한 단축어'와 ‘좋아요를 누른 단축어'로 구성되어 있습니다.")
             .frame(maxWidth: .infinity, alignment: .leading)
             .Body2()
             .foregroundColor(.Gray5)

@@ -39,14 +39,14 @@ struct ExploreCurationView: View {
                 
                 //추천 유저 큐레이션
                 CurationListView(data: NavigationListCurationType(type: .userCuration,
-                                                                  title: "큐레이션 모아보기",
+                                                                  title: "사용자 추천 모음집",
                                                                   isAllUser: true,
                                                                   navigationParentView: .curations,
                                                                   curation: shortcutsZipViewModel.userCurations))
             }
             .padding(.bottom, 32)
         }
-        .navigationBarTitle(Text("큐레이션 둘러보기"))
+        .navigationBarTitle(Text("추천 모음집 둘러보기"))
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
         .background(Color.Background)
@@ -60,7 +60,7 @@ struct adminCurationsFrameiew: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
-                Text("숏컷집 추천 큐레이션")
+                Text("숏컷집 추천 모음집")
                     .Title2()
                     .foregroundColor(.Gray5)
                     .id(222)

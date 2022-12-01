@@ -31,8 +31,8 @@ struct WriteCurationInfoView: View {
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
-                                     title: "큐레이션 이름",
-                                     placeholder: "큐레이션 이름을 입력하세요",
+                                     title: "추천 모음집 이름",
+                                     placeholder: "추천 모음집의 이름을 입력하세요",
                                      lengthLimit: 20,
                                      isDownloadLinkTextField: false,
                                      content: $curation.title,
@@ -41,8 +41,8 @@ struct WriteCurationInfoView: View {
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: true,
-                                     title: "큐레이션 설명",
-                                     placeholder: "내가 만든 큐레이션에 대한 설명을 작성해주세요",
+                                     title: "추천 모음집 설명",
+                                     placeholder: "추천 모음집에 대한 설명을 작성해주세요",
                                      lengthLimit: 40,
                                      isDownloadLinkTextField: false,
                                      inputHeight: 72,
@@ -84,7 +84,7 @@ struct WriteCurationInfoView: View {
             }
         }
         .background(Color.Background)
-        .navigationBarTitle(isEdit ? "큐레이션 편집" : "큐레이션 작성")
+        .navigationBarTitle(isEdit ? "추천 모음집 편집" : "추천 모음집 작성")
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }

@@ -26,7 +26,7 @@ struct WithdrawalView: View {
     private let signOutTitle = ["탈퇴 시 삭제되는 항목",
                                 "탈퇴 시 삭제되지 않는 항목"]
     private let signOutDescription = ["로그인 정보 / 닉네임 / 좋아요한 단축어 목록 /\n 다운로드 한 단축어 목록",
-                                      "작성한 단축어 / 작성한 큐레이션"]
+                                      "작성한 단축어 / 작성한 추천 모음집"]
     
     var body: some View {
         VStack(alignment: .leading) {
