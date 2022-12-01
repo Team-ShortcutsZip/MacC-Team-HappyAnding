@@ -11,6 +11,7 @@
 단축어는 한 번의 탭 또는 Siri에게 요청하는 것만으로 앱에서의 작업을 빠르게 수행하는 방법을 제공합니다.
 
 <br>
+
 **단축어의 활용 실태**
 - 설문조사 결과 iPhone을 사용하는 사람 중 79.5%가 단축어를 사용해봤다고 응답했으며,<br>그 중 다른 사람이 만든 단축어를 사용해 본 사람은 88.6%를 차지했습니다.
 
@@ -64,16 +65,9 @@
 
 
 ## Tech Stack
-<img src="https://img.shields.io/badge/Swift UI-F05138?style=for-the-badge&logo=Swift&logoColor=white">
-<img src="https://img.shields.io/badge/Navigation Stack-555555?style=for-the-flat&logo=Swift&logoColor=white">
-<img src="https://img.shields.io/badge/Share Extension-555555?style=for-the-flat&logo=Swift&logoColor=white">
-<img src="https://img.shields.io/badge/Background Tasks-555555?style=for-the-flat&logo=Swift&logoColor=white">
-<img src="https://img.shields.io/badge/Message UI-555555?style=for-the-flat&logo=Swift&logoColor=white">
+<img src="https://img.shields.io/badge/Swift UI-F05138?style=for-the-badge&logo=Swift&logoColor=white"><img src="https://img.shields.io/badge/Navigation Stack-555555?style=for-the-flat&logo=Swift&logoColor=white"><img src="https://img.shields.io/badge/Share Extension-555555?style=for-the-flat&logo=Swift&logoColor=white"><img src="https://img.shields.io/badge/Background Tasks-555555?style=for-the-flat&logo=Swift&logoColor=white"><img src="https://img.shields.io/badge/Message UI-555555?style=for-the-flat&logo=Swift&logoColor=white">
 
-<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white">
-<img src="https://img.shields.io/badge/FirebaseCore-555555?style=for-the-flat&logo=Firebase&logoColor=white">
-<img src="https://img.shields.io/badge/FirebaseFirestore-555555?style=for-the-flat&logo=Firebase&logoColor=white">
-<img src="https://img.shields.io/badge/FirebaseAuth-555555?style=for-the-flat&logo=Firebase&logoColor=white">
+<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"><img src="https://img.shields.io/badge/FirebaseCore-555555?style=for-the-flat&logo=Firebase&logoColor=white"><img src="https://img.shields.io/badge/FirebaseFirestore-555555?style=for-the-flat&logo=Firebase&logoColor=white"><img src="https://img.shields.io/badge/FirebaseAuth-555555?style=for-the-flat&logo=Firebase&logoColor=white">
 
 <img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=GitHub&logoColor=white">
 
