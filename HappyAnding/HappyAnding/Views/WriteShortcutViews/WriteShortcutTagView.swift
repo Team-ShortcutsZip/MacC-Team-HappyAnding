@@ -169,6 +169,7 @@ struct WriteShortcutTagView: View {
                     .sheet(isPresented: $isShowingCategoryModal) {
                         CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
                             .presentationDetents([.fraction(0.7)])
+                            .presentationDragIndicator(.visible)
                     }
                 }
             }
@@ -192,6 +193,8 @@ struct WriteShortcutTagView: View {
                     
                     if isTextFieldShowing {
                         TextField("", text: $relatedApp)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
                             .modifier(ClearButton(text: $relatedApp))
                             .focused($isFocused)
                             .onAppear {

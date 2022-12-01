@@ -57,12 +57,6 @@ struct ReadAdminCurationView: View {
             Spacer()
                 .frame(height: 44)
         }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: btnBack)
-        .toolbarBackground(Color.clear, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
         .background(Color.Background)
@@ -102,16 +96,6 @@ struct ReadAdminCurationView: View {
             Spacer()
         }
         .padding(.horizontal, 16)
-    }
-    
-    var btnBack : some View { Button(action: {
-        self.presentationMode.wrappedValue.dismiss()
-        }) {
-            //TODO: 위치와 두께, 색상 조정 필요
-            Image(systemName: "chevron.backward") // set image here
-                .foregroundColor(Color.Gray5)
-                .bold()
-        }
     }
 }
 

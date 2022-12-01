@@ -20,6 +20,7 @@ struct DownloadRankView: View {
                     .Title2()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .id(111)
                 
                 Spacer()
                 
@@ -46,12 +47,6 @@ struct DownloadRankView: View {
                 }
             }
             .background(Color.Background)
-        }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
-        .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
         }
     }
 }

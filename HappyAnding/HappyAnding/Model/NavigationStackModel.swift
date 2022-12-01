@@ -37,30 +37,12 @@ struct NavigationListCurationType: Identifiable, Hashable {
     var title: String?
     var isAllUser: Bool
     let navigationParentView: NavigationParentView
+    var curation: [Curation]
 }
 
-//struct NavigationPrivacyPolicy: Hashable, Equatable {
-//    var id = UUID().uuidString
-//}
-//struct NavigationLisence: Hashable, Equatable {
-//    var id = UUID().uuidString
-//}
-//struct NavigationWithdrawal: Hashable, Equatable {
-//    var id = UUID().uuidString
-//}
-
-//enum NavigationPrivacyPolicy: Hashable, Equatable {
-//    case first
-//}
-//
-//enum NavigationLisence: Hashable, Equatable {
-//    case first
-//}
-//
-//enum NavigationWithdrawal: Hashable, Equatable {
-//    case first
-//}
-
+enum NavigationSearch: Hashable, Equatable {
+    case first
+}
 
 enum NavigationParentView: Int {
     case shortcuts

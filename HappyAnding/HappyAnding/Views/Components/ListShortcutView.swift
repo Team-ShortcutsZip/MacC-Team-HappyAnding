@@ -61,7 +61,8 @@ struct ListShortcutView: View {
                                     .listRowSeparator(.hidden)
                                 } else {
                                     ShortcutCell(shortcut: shortcut,
-                                                 navigationParentView: data.navigationParentView)
+                                                 navigationParentView: data.navigationParentView,
+                                                 sectionType: data.sectionType)
                                     .listRowInsets(EdgeInsets())
                                     .listRowSeparator(.hidden)
                                 }
@@ -75,15 +76,13 @@ struct ListShortcutView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-                .navigationDestination(for: NavigationReadShortcutType.self) { data in
-                    ReadShortcutView(data: data)
-                }
                 .listRowBackground(Color.Background)
                 .listStyle(.plain)
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
                 .scrollContentBackground(.hidden)
                 .navigationTitle(getNavigationTitle(data.sectionType))
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackground ({ Color.Background })
             }
         }
     }

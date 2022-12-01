@@ -45,6 +45,7 @@ struct ShortcutCell: View {
     var shortcut: Shortcuts?
     var rankNumber: Int = -1
     let navigationParentView: NavigationParentView
+    var sectionType: SectionType?
     
     var body: some View {
         
@@ -61,7 +62,7 @@ struct ShortcutCell: View {
                         if let url = URL(string: shortcutCell.downloadLink) {
                             openURL(url)
                             if let shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCell.id) {
-                                shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
+                                shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                             }
                         }
                     }
@@ -125,10 +126,21 @@ struct ShortcutCell: View {
     var downloadInfo: some View {
         
         VStack(alignment: .center, spacing: 0) {
-            Image(systemName: "arrow.down.app.fill")
-                .foregroundColor(.Gray4)
-                .font(.system(size: 24, weight: .medium))
-                .frame(height: 32)
+            if sectionType == SectionType.myDownloadShortcut {
+                if let index = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut?.id}) {
+                    if shortcutsZipViewModel.userInfo?.downloadedShortcuts[index].downloadLink != shortcut?.downloadLink[0] {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .setCellIcon()
+                    }
+                    else {
+                        Image(systemName: "arrow.down.app.fill")
+                            .setCellIcon()
+                    }
+                }
+            } else {
+                Image(systemName: "arrow.down.app.fill")
+                    .setCellIcon()
+            }
         }
         .padding(.leading, 12)
         .padding(.trailing, 18)

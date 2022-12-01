@@ -58,10 +58,25 @@ struct IconModalView: View {
     
     var body: some View {
         VStack {
-            Text("아이콘")
-                .Headline()
-                .padding(.top, 16)
-                .padding(.bottom, 24)
+            HStack(spacing: 0) {
+                Button {
+                    self.isShowingIconModal = false
+                } label: {
+                    Text("닫기")
+                        .foregroundColor(.Gray5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 16)
+                }
+                
+                Text("아이콘")
+                    .Headline()
+                    .frame(maxWidth: .infinity)
+                
+                Spacer()
+                    .frame(maxWidth: .infinity)
+            }
+            .padding(.top, 24)
+            .padding(.bottom, 24)
             
             ZStack(alignment: .center) {
                 Rectangle()

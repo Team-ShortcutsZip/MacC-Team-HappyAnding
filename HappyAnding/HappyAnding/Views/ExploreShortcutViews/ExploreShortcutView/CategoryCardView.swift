@@ -54,14 +54,6 @@ struct CategoryCardView: View {
                 .padding(.horizontal, 16)
             }
         }
-        .navigationDestination(for: Category.self) { category in
-            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
-                              categoryName: category,
-                              navigationParentView: .shortcuts)
-        }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
     }
 }
 

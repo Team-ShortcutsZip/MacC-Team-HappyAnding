@@ -15,6 +15,10 @@ struct MyPageView: View {
         case first
     }
     
+    enum NavigationNicknameView: Hashable, Equatable {
+        case first
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 32) {
@@ -31,16 +35,18 @@ struct MyPageView: View {
                         .foregroundColor(.White)
                         .background(Color.Gray3)
                         .clipShape(Circle())
+                        .id(333)
+                    
                     HStack {
                         Text(shortcutsZipViewModel.userInfo?.nickname ?? "User")
                             .Title1()
                             .foregroundColor(.Gray5)
-                        //TODO: 스프린트 1에서 배제 추후 주석 삭제 필요
-                        /*
-                         Image(systemName: "square.and.pencil")
-                         .Title2()
-                         .foregroundColor(.Gray4)
-                         */
+                        
+                        NavigationLink(value: NavigationNicknameView.first) {
+                            Image(systemName: "square.and.pencil")
+                                .Title2()
+                                .foregroundColor(.Gray4)
+                        }
                     }
                     Spacer()
                 }
@@ -58,10 +64,10 @@ struct MyPageView: View {
                 // MARK: - 내가 작성한 큐레이션
                 
                 UserCurationListView(data: NavigationListCurationType(type: .myCuration,
-                                                                      title: "내가 작성한 큐레이션",
+                                                                      title: "내가 작성한 추천 모음집",
                                                                       isAllUser: false,
-                                                                      navigationParentView: .myPage),
-                                     userCurations: $shortcutsZipViewModel.curationsMadeByUser)
+                                                                      navigationParentView: .myPage,
+                                                                      curation: shortcutsZipViewModel.curationsMadeByUser))
                 .frame(maxWidth: .infinity)
                 
                 // MARK: - 좋아요한 단축어
@@ -87,6 +93,9 @@ struct MyPageView: View {
         }
         .scrollIndicators(.hidden)
         .background(Color.Background)
+        .navigationDestination(for: NavigationNicknameView.self) { _ in
+            EditNicknameView()
+        }
         .navigationDestination(for: NavigationSettingView.self) { _ in
             SettingView()
         }
@@ -129,9 +138,6 @@ struct MyPageShortcutListCell: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
-        }
-        .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
         }
     }
 }

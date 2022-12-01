@@ -10,16 +10,23 @@ import SwiftUI
 struct ReadShortcutVersionView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @Environment(\.openURL) var openURL
+    
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool
     
     var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
         if shortcut.updateDescription.count == 1 {
             Text("아직 업데이트된 버전이 없습니다.")
                 .Body2()
                 .foregroundColor(.Gray4)
+                .padding(.top, 16)
+            
+            Spacer()
+                .frame(maxHeight: .infinity)
+            
         } else {
-            VStack(alignment: .leading, spacing: 16) {
                 Text("업데이트 내용")
                     .Body2()
                     .foregroundColor(.Gray4)
@@ -41,9 +48,19 @@ struct ReadShortcutVersionView: View {
                                 .foregroundColor(.Gray5)
                         }
                         if index != 0 {
-                            let link = "[이전 버전 다운로드](\(shortcut.downloadLink[index]))"
-                            Text(.init(link))
-                                .tint(.Primary)
+                            Button {
+                                if let url = URL(string: shortcut.downloadLink[index]) {
+                                    if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
+                                        shortcut.numberOfDownload += 1
+                                    }
+                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
+                                    openURL(url)
+                                }
+                            } label: {
+                                Text("이전 버전 다운로드")
+                                    .Body2()
+                                    .foregroundColor(.Primary)
+                            }
                         }
                         Divider()
                             .foregroundColor(.Gray1)
@@ -53,7 +70,7 @@ struct ReadShortcutVersionView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
-            .padding(.top, 16)
         }
+            .padding(.top, 16)
     }
 }

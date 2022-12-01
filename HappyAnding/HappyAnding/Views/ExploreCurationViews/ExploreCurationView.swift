@@ -24,8 +24,8 @@ struct ExploreCurationView: View {
                 CurationListView(data: NavigationListCurationType(type: .personalCuration,
                                                                   title: "",
                                                                   isAllUser: false,
-                                                                  navigationParentView: .curations),
-                                 userCurations: $shortcutsZipViewModel.personalCurations)
+                                                                  navigationParentView: .curations,
+                                                                  curation: shortcutsZipViewModel.personalCurations))
                 .onAppear {
                     shortcutsZipViewModel.personalCurations.removeAll()
                     let personalCurationIDs = Set(shortcutsZipViewModel.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
@@ -39,14 +39,14 @@ struct ExploreCurationView: View {
                 
                 //추천 유저 큐레이션
                 CurationListView(data: NavigationListCurationType(type: .userCuration,
-                                                                  title: "큐레이션 모아보기",
+                                                                  title: "사용자 추천 모음집",
                                                                   isAllUser: true,
-                                                                  navigationParentView: .curations),
-                                 userCurations: $shortcutsZipViewModel.userCurations)
+                                                                  navigationParentView: .curations,
+                                                                  curation: shortcutsZipViewModel.userCurations))
             }
             .padding(.bottom, 32)
         }
-        .navigationBarTitle(Text("큐레이션 둘러보기"))
+        .navigationBarTitle(Text("추천 모음집 둘러보기"))
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
         .background(Color.Background)
@@ -60,10 +60,11 @@ struct adminCurationsFrameiew: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
-                Text("숏컷집 추천 큐레이션")
+                Text("숏컷집 추천 모음집")
                     .Title2()
                     .foregroundColor(.Gray5)
-                    .onTapGesture { }
+                    .id(222)
+                
                 Spacer()
                 //추후에 어드민큐레이션에도 더보기 버튼 들어갈 수 있을 것 같아서 추가해놓은 코드입니다.
                 //                NavigationLink(destination: 더보기 눌렀을 때 뷰이름 입력) {
@@ -85,9 +86,6 @@ struct adminCurationsFrameiew: View {
                 .padding(.leading, 16)
                 .padding(.trailing, 8)
             }
-        }
-        .navigationDestination(for: Curation.self) { data in
-            ReadAdminCurationView(curation: data)
         }
     }
 }

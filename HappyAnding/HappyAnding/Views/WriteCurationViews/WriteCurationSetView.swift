@@ -22,142 +22,115 @@ struct WriteCurationSetView: View {
                                    author: "",
                                    shortcuts: [ShortcutCellModel]())
     @State var isTappedQuestionMark: Bool = false
+    @State var deletedShortcutCells = [ShortcutCellModel]()
     
     let isEdit: Bool
     
     var body: some View {
-        ZStack {
-            VStack {
-                ProgressView(value: 1, total: 2)
-                    .padding(.bottom, 36)
-                
-                listHeader
-                
-                if shortcutCells.isEmpty {
-                    VStack {
-                        Spacer()
-                        Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
-                            .Body2()
-                            .foregroundColor(.Gray4)
-                            .multilineTextAlignment(.center)
-                        Spacer()
-                        
-                    }
-                } else {
-                    ScrollView {
-                        shortcutList
-                    }
-                }
-                
-                bottomButton
-                
-            }
-            .background(Color.Background)
-            .navigationTitle(isEdit ? "큐레이션 편집" : "큐레이션 만들기")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration()
-            }
+        VStack {
+            ProgressView(value: 1, total: 2)
+                .padding(.bottom, 26)
             
-            if isTappedQuestionMark {
-                VStack {
-                    infomation
-                        .padding(.top, 76)
-                    Spacer()
-                }
+            listHeader
+            infomation
+            if shortcutCells.isEmpty {
+                Spacer()
+                Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
+                    .Body2()
+                    .foregroundColor(.Gray4)
+                    .multilineTextAlignment(.center)
+                Spacer()
+                
+            } else {
+                shortcutList
             }
         }
-        
+        .background(Color.Background)
+        .navigationTitle(isEdit ? "추천 모음집 편집" : "추천 모음집 작성")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration()
+            if isEdit {
+                deletedShortcutCells = curation.shortcuts
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     self.isWriting.toggle()
                 } label: {
                     Text("취소")
-                        .foregroundColor(.Gray5)
+                        .Body1()
+                        .foregroundColor(.Gray4)
                 }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(value: Float(0.0)) {
+                    Text("다음")
+                        .Headline()
+                        .foregroundColor(curation.shortcuts.isEmpty ? .Primary.opacity(0.3) : .Primary)
+                }
+                .disabled(curation.shortcuts.isEmpty)
             }
         }
         .navigationDestination(for: Float.self) { isEdit in
             WriteCurationInfoView(curation: $curation,
                                   isWriting: self.$isWriting,
-                                  isEdit: self.isEdit)
+                                  isEdit: self.isEdit,
+                                  deletedShortcutCells: $deletedShortcutCells)
         }
     }
     
     ///단축어 선택 텍스트 및 카운터
     var listHeader: some View {
-        HStack(alignment: .bottom, spacing: 0) {
+        HStack(alignment: .bottom, spacing: 8) {
             Text("단축어 선택")
-                .Headline()
+                .Sb()
                 .foregroundColor(.Gray5)
-                .padding(.trailing, 12)
-            Text("최대 10개 선택")
+            Text("최대 10개")
                 .Footnote()
                 .foregroundColor(.Gray3)
             Spacer()
             Text("\(curation.shortcuts.count)개")
                 .Body2()
                 .foregroundColor(.Primary)
-                .padding(.trailing, 8)
-            Image(systemName: "questionmark.circle")
-                .foregroundColor(Color.Gray5)
-                .frame(width: 20, height: 20)
-                .onTapGesture {
-                    isTappedQuestionMark.toggle()
-                }
         }
         .padding(.horizontal, 16)
-        .padding(.bottom, 20)
     }
     
     ///내가 작성한, 좋아요를 누른 단축어 목록
     var shortcutList: some View {
-        ForEach(Array(shortcutCells)) { shortcut in
-            CheckBoxShortcutCell(
-                isShortcutTapped: curation.shortcuts.contains(shortcut),
-                selectedShortcutCells: $curation.shortcuts,
-                shortcutCell: shortcut
-            )
-        }
-    }
-    
-    ///완료 버튼
-    var bottomButton: some View {
         
-        NavigationLink(value: Float(0.0)) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(curation.shortcuts.count > 0 ? .Primary : .Primary .opacity(0.13))
-                    .padding(.horizontal, 16)
-                    .frame(height: 52)
-                Text("다음")
-                    .foregroundColor(curation.shortcuts.count > 0 ? .Text_Button : .Text_Button_Disable)
+        ScrollView {
+            
+            
+            
+            ForEach(Array(shortcutCells)) { shortcut in
+                CheckBoxShortcutCell(
+                    isShortcutTapped: curation.shortcuts.contains(shortcut),
+                    selectedShortcutCells: $curation.shortcuts,
+                    shortcutCell: shortcut
+                )
             }
         }
-        .padding(.bottom, 24)
-        .disabled(curation.shortcuts.count == 0)
+        .frame(maxWidth: .infinity)
+        .scrollIndicators(.hidden)
     }
     
-    //안내문구 팝업
+    // MARK: - 안내문구
     var infomation: some View {
-        HStack (alignment: .top) {
-            Text("큐레이션은 ‘내가 업로드한 단축어’와 ‘좋아요를 누른 단축어’로 구성할 수 있습니다.")
-                .Body2()
-                .foregroundColor(.Gray5)
-            Spacer()
-            Image(systemName: "xmark")
-                .foregroundColor(.Gray5)
-                .frame(width: 16, height: 16)
-                .onTapGesture {
-                    isTappedQuestionMark = false
-                }
-        }
-        .padding(.all, 16)
-        .background(Color.Gray1)
-        .cornerRadius(12)
-        .frame(height: 72)
-        .padding(.horizontal, 16)
+        Text("추천 모음집을 위한 단축어 목록은 ‘내가 업로드한 단축어'와 ‘좋아요를 누른 단축어'로 구성되어 있습니다.")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .Body2()
+            .foregroundColor(.Gray5)
+            .padding(.all, 16)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundColor(.Gray1)
+            )
+            .padding(.horizontal, 16)
+            .padding(.bottom, 20)
     }
 }
 

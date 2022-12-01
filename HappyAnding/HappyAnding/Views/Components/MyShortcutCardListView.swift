@@ -67,12 +67,6 @@ struct MyShortcutCardListView: View {
                 .padding(.horizontal, 16)
             }
         }
-        .navigationDestination(for: NavigationListShortcutType.self) { data in
-            ListShortcutView(data: data)
-        }
-        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-            ReadShortcutView(data: data)
-        }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeNavigation.navigationPath) {

@@ -33,203 +33,230 @@ struct ReadShortcutView: View {
     @State var comments: Comments = Comments(id: "", comments: [])
     @State var comment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
     @State var nestedCommentInfoText: String = ""
-    
-    @State var height: CGFloat = UIScreen.screenHeight / 2
     @State var currentTab: Int = 0
     @State var commentText = ""
+    
     @FocusState private var isFocused: Bool
     @Namespace var namespace
     
-    private let contentSize = UIScreen.screenHeight / 2
+    @State var isClickCorrection = false                //댓글 수정버튼 클릭했는지?
+    @State var isCancledCorrection = false              //댓글 수정 중 텍스트필드를 제외한 부분을 터치했는지?
+    
     private let tabItems = ["기본 정보", "버전 정보", "댓글"]
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                if data.shortcut != nil {
-                    
-                    GeometryReader { geo in
-                        let yOffset = geo.frame(in: .global).minY
-                        
-                        Color.White
-                            .frame(width: geo.size.width, height: 40 + (yOffset > 0 ? yOffset : 0))
-                            .offset(y: yOffset > 0 ? -yOffset : 0)
-                    }
-                    .frame(minHeight: 40)
-                    
-                    // MARK: - 단축어 타이틀
-                    
-                    ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
-                        .frame(height: 160)
-                        .padding(.bottom, 33)
-                        .background(Color.White)
-                    
-                    
-                    // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
-                    
-                    LazyVStack(pinnedViews: [.sectionHeaders]) {
-                        Section(header: tabBarView
-                            .background(Color.White)
-                        ) {
-                            detailInformationView
-                                .padding(.top, 4)
-                                .padding(.horizontal, 16)
-                        }
-                    }
-                }
-            }
-        }
-        .background(Color.Background)
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            
-            VStack {
-                if currentTab == 2 {
-                    textField
-                }
-                if !isFocused {
-                    if let shortcut = data.shortcut {
-                        Button {
-                            if let url = URL(string: shortcut.downloadLink[0]) {
-                                if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
-                                    data.shortcut?.numberOfDownload += 1
-                                }
-                                isClickDownload = true
-                                openURL(url)
-                            }
+        ZStack {
+            ScrollView {
+                VStack(spacing: 0) {
+                    if data.shortcut != nil {
+                        GeometryReader { geo in
+                            let yOffset = geo.frame(in: .global).minY
                             
-                        } label: {
-                            Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
-                                .Body1()
-                                .foregroundColor(Color.Text_icon)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.Primary)
+                            Color.White
+                                .frame(width: geo.size.width, height: 40 + (yOffset > 0 ? yOffset : 0))
+                                .offset(y: yOffset > 0 ? -yOffset : 0)
+                        }
+                        .frame(minHeight: 40)
+                        
+                        // MARK: - 단축어 타이틀
+                        
+                        ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
+                            .frame(minHeight: 160)
+                            .padding(.bottom, 33)
+                            .background(Color.White)
+                        
+                        
+                        // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
+                        
+                        LazyVStack(pinnedViews: [.sectionHeaders]) {
+                            Section(header: tabBarView
+                                .background(Color.White)
+                            ) {
+                                detailInformationView
+                                    .padding(.top, 4)
+                                    .padding(.horizontal, 16)
+                            }
                         }
                     }
                 }
             }
-            .ignoresSafeArea(.keyboard)
-        }
-        .onAppear() {
-            UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
-            data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
-            isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
-            isFirstMyLike = isMyLike
-            self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
-        }
-        .onChange(of: isEdit || isUpdating) { _ in
-            if !isEdit || !isUpdating {
-                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
-            }
-        }
-        .onChange(of: shortcutsZipViewModel.allComments) { _ in
-            self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
-        }
-        .onDisappear() {
-            if let shortcut = data.shortcut {
-                let isAlreadyContained = shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == self.data.shortcutID}) == nil
-                if isClickDownload && isAlreadyContained {
-                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut)
-                    shortcutsZipViewModel.shortcutsUserDownloaded.insert(shortcut, at: 0)
-                    
-                    let downloadedShortcut = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
-                    shortcutsZipViewModel.userInfo?.downloadedShortcuts.insert(downloadedShortcut, at: 0)
-                }
-                if isMyLike != isFirstMyLike {
-                    shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
-                }
-            }
-        }
-        .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
-        .navigationBarItems(trailing: Menu(content: {
-            if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
-                myShortcutMenuSection
-            } else {
-                otherShortcutMenuSection
-            }
-        }, label: {
-            Image(systemName: "ellipsis")
-                .foregroundColor(.Gray4)
-        }))
-        .alert("글 삭제", isPresented: $isTappedDeleteButton) {
-            Button(role: .cancel) {
+            .scrollDisabled(isClickCorrection)
+            .navigationBarBackground ({ Color.White })
+            .background(Color.Background)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
                 
-            } label: {
-                Text("닫기")
-            }
-            
-            Button(role: .destructive) {
-                if let shortcut = data.shortcut {
-                    shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
-                    shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
-                    shortcutsZipViewModel.deleteData(model: shortcut)
-                    shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
-                    self.presentation.wrappedValue.dismiss()
+                VStack {
+                    if !isClickCorrection {
+                        if currentTab == 2 {
+                            textField
+                        }
+                        if !isFocused {
+                            if let shortcut = data.shortcut {
+                                Button {
+                                    if let url = URL(string: shortcut.downloadLink[0]) {
+                                        if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
+                                            data.shortcut?.numberOfDownload += 1
+                                        }
+                                        isClickDownload = true
+                                        openURL(url)
+                                    }
+                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
+                                } label: {
+                                    Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
+                                        .Body1()
+                                        .foregroundColor(Color.Text_icon)
+                                        .padding()
+                                        .frame(maxWidth: .infinity)
+                                        .background(Color.Primary)
+                                }
+                            }
+                        }
+                    }
                 }
-            } label: {
-                Text("삭제")
+                .ignoresSafeArea(.keyboard)
             }
-        } message: {
-            Text("글을 삭제하시겠습니까?")
-        }
-        .fullScreenCover(isPresented: $isEdit) {
-            NavigationStack(path: $writeNavigation.navigationPath) {
-                if let shortcut = data.shortcut {
-                    WriteShortcutTitleView(isWriting: $isEdit,
-                                           shortcut: shortcut,
-                                           isEdit: true)
+            .onAppear() {
+                UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
+                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+                isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
+                isFirstMyLike = isMyLike
+                self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
+            }
+            .onChange(of: isEdit || isUpdating) { _ in
+                if !isEdit || !isUpdating {
+                    data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
                 }
             }
-            .environmentObject(writeNavigation)
-        }
-        .fullScreenCover(isPresented: $isUpdating) {
-            UpdateShortcutView(isUpdating: $isUpdating, shortcut: $data.shortcut)
-        }
-        .toolbar(.hidden, for: .tabBar)
-        .toolbarBackground(
-                        Color.White,
-                        for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: btnBack.padding(.horizontal, -8))
-    }
-    
-    var btnBack : some View {
-        Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }) {
-            HStack {
-                Image(systemName: "chevron.backward") // set image here
-                    .foregroundColor(.Gray4)
-                    .font(Font(UIFont.systemFont(ofSize: 18, weight: .medium)))
+            .onChange(of: shortcutsZipViewModel.allComments) { _ in
+                self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
+            }
+            .onDisappear() {
+                if let shortcut = data.shortcut {
+                    if isMyLike != isFirstMyLike {
+                        shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+                    }
+                }
+            }
+            .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
+            .navigationBarItems(trailing: readShortcutViewButtonByUser())
+            .alert("글 삭제", isPresented: $isTappedDeleteButton) {
+                Button(role: .cancel) {
+                } label: {
+                    Text("닫기")
+                }
+                
+                Button(role: .destructive) {
+                    if let shortcut = data.shortcut {
+                        shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
+                        shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
+                        shortcutsZipViewModel.deleteData(model: shortcut)
+                        shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
+                        self.presentation.wrappedValue.dismiss()
+                    }
+                } label: {
+                    Text("삭제")
+                }
+            } message: {
+                Text("글을 삭제하시겠습니까?")
+            }
+            .fullScreenCover(isPresented: $isEdit) {
+                NavigationStack(path: $writeNavigation.navigationPath) {
+                    if let shortcut = data.shortcut {
+                        WriteShortcutTitleView(isWriting: $isEdit,
+                                               shortcut: shortcut,
+                                               isEdit: true)
+                    }
+                }
+                .environmentObject(writeNavigation)
+            }
+            .fullScreenCover(isPresented: $isUpdating) {
+                UpdateShortcutView(isUpdating: $isUpdating, shortcut: $data.shortcut)
+            }
+            .toolbar(.hidden, for: .tabBar)
+            if isClickCorrection {
+                Color.black
+                    .ignoresSafeArea()
+                    .opacity(0.4)
+                    .safeAreaInset(edge: .bottom, spacing: 0) {
+                        textField
+                        .ignoresSafeArea(.keyboard)
+                        .focused($isFocused, equals: true)
+                        .task {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                isFocused = true
+                            }
+                        }
+                    }
+                    .onAppear() {
+                        commentText = comment.contents
+                    }
+                    .onTapGesture(count: 1) {
+                        isFocused.toggle()
+                        isCancledCorrection.toggle()
+                    }
+                    .alert("글 삭제", isPresented: $isCancledCorrection) {
+                        Button(role: .cancel) {
+                            isFocused.toggle()
+                        } label: {
+                            Text("계속 작성")
+                        }
+                        
+                        Button(role: .destructive) {
+                            withAnimation(.easeInOut) {
+                                isClickCorrection.toggle()
+                                comment = comment.resetComment()
+                                commentText = ""
+                            }
+                        } label: {
+                            Text("삭제")
+                        }
+                    } message: {
+                        Text("수정사항을 삭제하시겠습니까?")
+                    }
+                
             }
         }
     }
+}
+
+extension ReadShortcutView {
     
     var textField: some View {
         
         VStack(spacing: 0) {
-            if comment.depth == 1 {
+            if comment.depth == 1 && !isClickCorrection {
                 nestedCommentInfo
             }
             HStack {
-                if comment.depth == 1 {
+                if comment.depth == 1 && !isClickCorrection {
                     Image(systemName: "arrow.turn.down.right")
                         .foregroundColor(.Gray4)
                 }
                 TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
+                    .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
                     .Body2()
                     .focused($isFocused)
+                    .onAppear(perform : UIApplication.shared.hideKeyboard)
+                    .onTapGesture {/*터치영역구분을위한부분*/}
                 
                 Button {
-                    comment.contents = commentText
-                    comment.date = Date().getDate()
-                    comment.user_id = shortcutsZipViewModel.userInfo!.id
-                    comment.user_nickname = shortcutsZipViewModel.userInfo!.nickname
-                    comments.comments.append(comment)
+                    if !isClickCorrection {
+                        comment.contents = commentText
+                        comment.date = Date().getDate()
+                        comment.user_id = shortcutsZipViewModel.userInfo!.id
+                        comment.user_nickname = shortcutsZipViewModel.userInfo!.nickname
+                        comments.comments.append(comment)
+                    } else {
+                        if let index = comments.comments.firstIndex(where: { $0.id == comment.id }) {
+                            comments.comments[index].contents = commentText
+                        }
+                        isClickCorrection = false
+                    }
                     shortcutsZipViewModel.setData(model: comments)
                     commentText = ""
                     comment = comment.resetComment()
+                    isFocused.toggle()
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(commentText == "" ? Color.Gray2 : Color.Gray5)
@@ -241,7 +268,7 @@ struct ReadShortcutView: View {
             .background(
                 Rectangle()
                     .fill(Color.Gray1)
-                    .cornerRadius(12 ,corners: comment.depth == 0 ? .allCorners : [.bottomLeft, .bottomRight])
+                    .cornerRadius(12 ,corners: (comment.depth == 1) && (!isClickCorrection) ? [.bottomLeft, .bottomRight] : .allCorners)
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 20)
@@ -271,59 +298,65 @@ struct ReadShortcutView: View {
         )
         .padding(.horizontal, 16)
     }
-}
-
-extension ReadShortcutView {
     
-    var myShortcutMenuSection: some View {
-        
-        Section {
-            
-            Button {
-                isEdit.toggle()
-            } label: {
-                Label("편집", systemImage: "square.and.pencil")
-            }
-            
-            Button {
-                isUpdating.toggle()
-            } label: {
-                Label("업데이트", systemImage: "clock.arrow.circlepath")
-            }
-            
-            Button(action: {
-                share()
-            }) {
-                Label("공유", systemImage: "square.and.arrow.up")
-            }
-            
-            Button(role: .destructive, action: {
-                isTappedDeleteButton.toggle()
-            }) {
-                Label("삭제", systemImage: "trash.fill")
-            }
-        }
-        
-    }
-    
-    var otherShortcutMenuSection: some View {
-        Section {
-            Button(action: {
-                share()
-            }) {
-                Label("공유", systemImage: "square.and.arrow.up")
-            }
-            
-            //TODO: 2차 스프린트 이후 신고 기능 추가 시 사용할 코드
-//            Button(action: {
-//                //Place something action here
-//            }) {
-//                Label("신고", systemImage: "light.beacon.max.fill")
-//            }
+    @ViewBuilder
+    private func readShortcutViewButtonByUser() -> some View {
+        if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
+            myShortcutMenu
+        } else {
+            shareButton
         }
     }
     
-    func share() {
+    private var myShortcutMenu: some View {
+        Menu(content: {
+            Section {
+                editButton
+                updateButton
+                shareButton
+                deleteButton
+            }
+        }, label: {
+            Image(systemName: "ellipsis")
+                .foregroundColor(.Gray4)
+        })
+    }
+    
+    private var editButton: some View {
+        Button {
+            isEdit.toggle()
+        } label: {
+            Label("편집", systemImage: "square.and.pencil")
+        }
+    }
+    
+    private var updateButton: some View {
+        Button {
+            isUpdating.toggle()
+        } label: {
+            Label("업데이트", systemImage: "clock.arrow.circlepath")
+        }
+    }
+    
+    private var shareButton: some View {
+        Button(action: {
+            shareShortcut()
+        }) {
+            Label("공유", systemImage: "square.and.arrow.up")
+        }
+    }
+    
+    private var deleteButton: some View {
+        Button(role: .destructive, action: {
+            isTappedDeleteButton.toggle()
+            // TODO: firebase delete function
+            
+        }) {
+            Label("삭제", systemImage: "trash.fill")
+        }
+    }
+    
+    private func shareShortcut() {
         if let shortcut = data.shortcut {
             guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
             let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
@@ -333,7 +366,6 @@ extension ReadShortcutView {
         }
     }
 }
-
 
 // MARK: - 단축어 상세 정보 (기본 정보, 버전 정보, 댓글)
 
@@ -348,42 +380,26 @@ extension ReadShortcutView {
                     Color.clear.tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(height: height)
+                .frame(minHeight: UIScreen.screenHeight / 2 - 50)
                 
                 switch(currentTab) {
                 case 0:
                     ReadShortcutContentView(shortcut: $data.shortcut.unwrap()!)
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self,
-                                                value: geometryProxy.size)
-                            })
                 case 1:
                     ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self, value:
-                                                    geometryProxy.size)
-                            })
                 case 2:
-                    ReadShortcutCommentView(addedComment: $comment, comments: $comments, nestedCommentInfoText: $nestedCommentInfoText, shortcutID: data.shortcutID)
-                        .background(
-                            GeometryReader { geometryProxy in
-                                Color.clear
-                                    .preference(key: SizePreferenceKey.self,
-                                                value: geometryProxy.size)
-                            })
+                    ReadShortcutCommentView(addedComment: $comment,
+                                            comments: $comments,
+                                            nestedCommentInfoText: $nestedCommentInfoText,
+                                            isClickCorrenction: $isClickCorrection,
+                                            isFocused: _isFocused,
+                                            shortcutID: data.shortcutID)
                 default:
                     EmptyView()
                 }
             }
             
             .animation(.easeInOut, value: currentTab)
-            .onPreferenceChange(SizePreferenceKey.self) { newSize in
-                height = contentSize > newSize.height ? contentSize : newSize.height
-            }
             .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
                 .onEnded { value in
                     let horizontalAmount = value.translation.width
@@ -397,22 +413,6 @@ extension ReadShortcutView {
                         } else {
                             if currentTab > 0 {
                                 currentTab -= 1
-                            } else {
-                                
-                                // MARK: Navigation pop 코드
-//                                    print("swipe back")
-//                                    switch data.navigationParentView {
-//                                    case .shortcuts:
-//                                        shortcutNavigation.shortcutPath.removeLast()
-//                                    case .curations:
-//                                        curationNavigation.navigationPath.removeLast()
-//                                    case .myPage:
-//                                        profileNavigation.navigationPath.removeLast()
-//                                    case .writeCuration:
-//                                        writeCurationNavigation.navigationPath.removeLast()
-//                                    case .writeShortcut:
-//                                        writeShortcutNavigation.navigationPath.removeLast()
-//                                    }
                             }
                         }
                     }

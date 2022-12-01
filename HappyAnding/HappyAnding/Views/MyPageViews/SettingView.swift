@@ -13,8 +13,8 @@ import FirebaseAuth
 struct SettingView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
-    @StateObject var userAuth = UserAuth.shared
-    @ObservedObject var webViewModel = WebViewModel(url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+    @EnvironmentObject var userAuth: UserAuth
+    @ObservedObject var webViewModel = WebViewModel()
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
@@ -47,7 +47,7 @@ struct SettingView: View {
             */
             
             // MARK: - 버전 정보
-            SettingCell(title: "버전정보", version: "1.0.0")
+            SettingCell(title: "버전정보", version: "1.1.0")
             
             
             // MARK: - 오픈소스 라이선스
@@ -126,8 +126,12 @@ struct SettingView: View {
         
         .sheet(isPresented: self.$isTappedPrivacyButton) {
             ZStack {
-                PrivacyPolicyView(webViewModel: webViewModel)
+                PrivacyPolicyView(viewModel: webViewModel,
+                                  isTappedPrivacyButton: $isTappedPrivacyButton,
+                                  url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
                     .environmentObject(webViewModel)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {
                     ProgressView()
                 }

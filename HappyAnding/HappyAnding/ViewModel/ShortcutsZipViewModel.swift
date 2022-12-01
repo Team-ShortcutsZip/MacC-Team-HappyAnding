@@ -17,6 +17,8 @@ import FirebaseAuth
  */
 
 class ShortcutsZipViewModel: ObservableObject {
+    var userAuth = UserAuth.shared
+    @AppStorage("signInStatus") var signInStatus = false
     
     @Published var userInfo: User?                              // 유저정보
     
@@ -69,6 +71,17 @@ class ShortcutsZipViewModel: ObservableObject {
         }
     }
     
+    func refreshPersonalCurations() {
+        let personalCurationIDs = Set(self.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
+        for curationID in personalCurationIDs {
+            if let curation = self.userCurations.first(where: { $0.id == curationID }) {
+                if !Set(self.personalCurations).contains(curation) {
+                    self.personalCurations.append(curation)
+                }
+            }
+        }
+    }
+    
     func initUserShortcut(user: User) {
         shortcutsMadeByUser = allShortcuts.filter { $0.author == user.id }
         user.downloadedShortcuts.forEach({ downloadedShortcut in
@@ -81,6 +94,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 shortcutsUserLiked.append(allShortcuts[index])
             }
         })
+        refreshPersonalCurations()
     }
     func initShortcut() {
         sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
@@ -463,10 +477,25 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 다운로드 수를 업데이트하는 함수
     
-    func updateNumberOfDownload(shortcut: Shortcuts) {
-        self.fetchUser(userID: currentUser()) { data in
-            var user = data
-            if !data.downloadedShortcuts.contains(where: { $0.id == shortcut.id }) {
+    /**
+     서버 단축어 다운로드 숫자 업데이트,
+     서버 유저 - downlodedShortcuts 정보 수정
+     뷰모델 유저 - downlodedShortcuts 정보 수정
+     */
+    func updateNumberOfDownload(shortcut: Shortcuts, downloadlinkIndex: Int) {
+        if var user = self.userInfo {
+            if let index = user.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id }) {
+                //유저 정보
+                if downloadlinkIndex == 0 && user.downloadedShortcuts[index].downloadLink != shortcut.downloadLink[0] {
+                    user.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0] //서버 전송용
+                    self.userInfo?.downloadedShortcuts[index].downloadLink = shortcut.downloadLink[0] //뷰모델 변경용
+                    self.setData(model: user)
+                    //단축어 정보
+                    if let shortcutListIndex = self.shortcutsUserDownloaded.firstIndex(where: {$0.id == shortcut.id}) {
+                        shortcutsUserDownloaded[shortcutListIndex] = shortcut
+                    }
+                }
+            } else {
                 self.db.collection("Shortcut").document(shortcut.id)
                     .updateData([
                         "numberOfDownload" : FieldValue.increment(Int64(1))
@@ -475,16 +504,31 @@ class ShortcutsZipViewModel: ObservableObject {
                             print(error.localizedDescription)
                         }
                     }
-                let shortcutInfo = DownloadedShortcut(id: shortcut.id, downloadLink: shortcut.downloadLink[0])
-                user.downloadedShortcuts.append(shortcutInfo)
+                //유저 정보
+                let shortcutInfo = DownloadedShortcut(
+                    id: shortcut.id,
+                    downloadLink: shortcut.downloadLink[downloadlinkIndex])
+                user.downloadedShortcuts.append(shortcutInfo) // 서버 전송용
+                self.userInfo?.downloadedShortcuts.append(shortcutInfo) //뷰모델 변경용
                 self.setData(model: user)
+                //단축어 정보
+                self.shortcutsUserDownloaded.insert(shortcut, at: 0)
             }
         }
+        self.refreshPersonalCurations()
     }
     
     //MARK: 큐레이션 생성 시 포함된 단축어에 큐레이션 아이디를 저장하는 함수
     
-    func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String) {
+    func updateShortcutCurationID (shortcutCells: [ShortcutCellModel], curationID: String, isEdit: Bool, deletedShortcutCells: [ShortcutCellModel]?) {
+        if isEdit {
+            deletedShortcutCells!.forEach { shortcutCell in
+                if var shortcut = fetchShortcutDetail(id: shortcutCell.id) {
+                    shortcut.curationIDs.removeAll(where: { $0 == curationID})
+                    self.setData(model: shortcut)
+                }
+            }
+        }
         shortcutCells.forEach { shortcutCell in
             if var shortcut = fetchShortcutDetail(id: shortcutCell.id) {
                 if !shortcut.curationIDs.contains(curationID) {
@@ -512,6 +556,30 @@ class ShortcutsZipViewModel: ObservableObject {
             db.collection("Comment").document((model as! Comments).id).delete()
         default:
             print("this is not a model.")
+        }
+    }
+    
+    func deleteUserData(userID: String) {
+        db.collection("User").document(userID).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+                self.resetUser()
+                
+                let firebaseAuth = Auth.auth()
+                let currentUser = firebaseAuth.currentUser
+                currentUser?.delete { error in
+                    if let error {
+                        print("\(error.localizedDescription)")
+                    } else {
+                        withAnimation(.easeInOut) {
+                            self.signInStatus = false
+                            self.userAuth.signOut()
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -554,6 +622,8 @@ class ShortcutsZipViewModel: ObservableObject {
         self.userInfo = nil
         self.shortcutsMadeByUser.removeAll()
         self.curationsMadeByUser.removeAll()
+        self.shortcutsUserDownloaded.removeAll()
+        self.shortcutsUserLiked.removeAll()
     }
     
     // MARK: 현재 로그인한 아이디 리턴
@@ -570,23 +640,23 @@ class ShortcutsZipViewModel: ObservableObject {
             .whereField("id", isEqualTo: userID)
             .getDocuments { (querySnapshot, error) in
                 if let error {
-                print("Error getting documents: \(error)")
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                let decoder = JSONDecoder()
-                
-                for document in documents {
-                    do {
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let shortcut = try decoder.decode(User.self, from: jsonData)
-                        completionHandler(shortcut)
-                    } catch let error {
-                        print("error: \(error)")
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    if documents.isEmpty { /*self.signInStatus = false*/ }
+                    let decoder = JSONDecoder()
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let user = try decoder.decode(User.self, from: jsonData)
+                            completionHandler(user)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
                     }
                 }
             }
-        }
     }
     
     //MARK: user 닉네임 검사함수 - 중복이면 true, 중복되지않으면 false반환
@@ -738,7 +808,6 @@ class ShortcutsZipViewModel: ObservableObject {
                 print("Error fetching snapshots: \(error!)")
                 return
             }
-            print(snapshot.metadata.isFromCache ? "**local cache" : "**server")
             snapshot.documentChanges.forEach { diff in
                 let decoder = JSONDecoder()
                 

@@ -7,9 +7,9 @@
 import SwiftUI
 
 enum CurationType: String {
-    case myCuration = "내가 작성한 큐레이션"
-    case userCuration = "큐레이션 모아보기"
-    case personalCuration = "님을 위한 모음집"
+    case myCuration = "내가 작성한 추천 모음집"
+    case userCuration = "사용자 추천 모음집"
+    case personalCuration = "님을 위한 추천 모음집"
 }
 
 /**
@@ -22,23 +22,23 @@ enum CurationType: String {
 struct ListCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var userCurations: [Curation]
-    let data: NavigationListCurationType
+    @State var data: NavigationListCurationType
     
     var body: some View {
-        if userCurations.count == 0 {
-            Text("\(data.type.rawValue)이 없습니다.")
+        let titleString = data.type == .personalCuration ? (shortcutsZipViewModel.userInfo?.nickname ?? "") : ""
+        if data.curation.count == 0 {
+            Text("\(titleString)\(data.type.rawValue)이(가) 없습니다.")
                 .Body2()
                 .foregroundColor(Color.Gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-                .navigationBarTitle(self.data.type.rawValue)
+                .navigationBarTitle("\(titleString)\(data.type.rawValue)")
                 .navigationBarTitleDisplayMode(.inline)
         } else {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     
-                    ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+                    ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
                         
                         let data = NavigationReadUserCurationType(userCuration: curation,
                                                                   navigationParentView: self.data.navigationParentView)
@@ -50,37 +50,19 @@ struct ListCurationView: View {
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.Background)
                             .padding(.top, index == 0 ? 20 : 0 )
-                            .padding(.bottom, index == userCurations.count - 1 ? 32 : 0)
-                            
-                            .onAppear {
-                                //TODO: 10개씩 불러오도록 변경 필요
-                                if self.data.isAllUser {
-                                    self.userCurations = shortcutsZipViewModel.userCurations
-                                }
-                            }
+                            .padding(.bottom, index == self.data.curation.count - 1 ? 32 : 0)
                         }
                     }
                 }
             }
             .scrollIndicators(.hidden)
-            .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-                ReadUserCurationView(data: data)
-            }
             .listStyle(.plain)
             .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+            .navigationBarBackground ({ Color.Background })
             .scrollContentBackground(.hidden)
-            .navigationBarTitle(self.data.type.rawValue)
             .navigationBarTitleDisplayMode(.inline)
-
+            .navigationTitle(data.title ?? "")
         }
     }
 }
 
-//struct ListCurationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ListCurationView(
-//            userCurations: UserCuration.fetchData(number: 10),
-//            type: CurationType.userCuration
-//        )
-//    }
-//}

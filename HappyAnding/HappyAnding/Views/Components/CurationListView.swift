@@ -11,17 +11,12 @@ struct CurationListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var data: NavigationListCurationType
-    @Binding var userCurations: [Curation]
     
     var body: some View {
         VStack(spacing: 0) {
-            CurationListHeader(userCurations: $userCurations,
-                               data: data,
-                               navigationParentView: self.data.navigationParentView)
-                .padding(.bottom, 12)
-                .padding(.horizontal, 16)
+            listHeader
             
-            ForEach(Array(userCurations.enumerated()), id: \.offset) { index, curation in
+            ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
                 if index < 2 {
                     
                     let data = NavigationReadUserCurationType(userCuration: curation,
@@ -33,23 +28,18 @@ struct CurationListView: View {
                 }
             }
         }
-        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-            ReadUserCurationView(data: data)
-        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-        
+        .onAppear {
+            if self.data.type == .personalCuration {
+                self.data.curation = shortcutsZipViewModel.personalCurations
+            }
+            if self.data.isAllUser {
+                self.data.curation = shortcutsZipViewModel.userCurations
+            }
+        }
     }
-}
-
-struct CurationListHeader: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var userCurations: [Curation]
-    
-    @State var data: NavigationListCurationType
-    let navigationParentView: NavigationParentView
-    
-    var body: some View {
+    var listHeader: some View {
         HStack(alignment: .bottom) {
             if data.type == .personalCuration {
                 Text("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
@@ -70,16 +60,8 @@ struct CurationListHeader: View {
                     .foregroundColor(.Gray4)
             }
         }
-        .navigationDestination(for: NavigationListCurationType.self) { data in
-            ListCurationView(userCurations: $userCurations,
-                             data: data)
-        }
+        .padding(.bottom, 12)
+        .padding(.horizontal, 16)
     }
 }
 
-
-//struct CurationListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CurationListView(curationListTitle:유저 큐레이션", userCurations: UserCuration.fetchData(number: 5))
-//    }
-//}

@@ -13,10 +13,13 @@ struct ShortcutTabView: View {
     // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @Environment(\.scenePhase) private var phase
     @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @AppStorage("signInStatus") var signInStatus = false
-    @State private var isOpenURL = false
+    @State private var isShortcutDeeplink = false
+    @State private var isCurationDeeplink = false
     @State private var tempShortcutId = ""
+    @State private var tempCurationId = ""
     
     @StateObject var shortcutNavigation = ShortcutNavigation()
     @StateObject var curationNavigation = CurationNavigation()
@@ -33,7 +36,6 @@ struct ShortcutTabView: View {
         UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
         UITabBar.appearance().layer.borderColor = UIColor(Color.clear).cgColor
         UITabBar.appearance().clipsToBounds = true
-        Theme.navigationBarColors()
     }
     
     var handler: Binding<Int> { Binding(
@@ -47,62 +49,131 @@ struct ShortcutTabView: View {
     )}
     
     var body: some View {
-        TabView(selection: handler) {
-            NavigationStack(path: $shortcutNavigation.navigationPath) {
-                ExploreShortcutView()
-                    .onChange(of: tappedTwice, perform: { tappedTwice in
-                        guard tappedTwice else { return }
-                        shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
-                        self.tappedTwice = false
-                    })
+        ScrollViewReader { proxy in
+            TabView(selection: handler) {
+                NavigationStack(path: $shortcutNavigation.navigationPath) {
+                    ExploreShortcutView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            if shortcutNavigation.navigationPath.count > 0 {
+                                shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(111, anchor: .bottom)
+                                }
+                            }
+                            self.tappedTwice = false
+                        })
+                        .navigationDestination(for: NavigationSearch.self) { _ in
+                            SearchView()
+                        }
+                        .navigationDestination(for: NavigationListShortcutType.self) { data in
+                            ListShortcutView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+                            ReadShortcutView(data: data)
+                        }
+                        .navigationDestination(for: Category.self) { category in
+                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
+                                              categoryName: category,
+                                              navigationParentView: .shortcuts)
+                        }
+                }
+                .environmentObject(shortcutNavigation)
+                .tabItem {
+                    Label("단축어", systemImage: "square.stack.3d.up.fill")
+                }
+                .tag(1)
+                
+                NavigationStack(path: $curationNavigation.navigationPath) {
+                    ExploreCurationView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            if curationNavigation.navigationPath.count > 0 {
+                                curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(222, anchor: .bottom)
+                                }
+                            }
+                            self.tappedTwice = false
+                        })
+                        .navigationBarBackground ({ Color.Background })
+                        .navigationDestination(for: Curation.self) { data in
+                            ReadAdminCurationView(curation: data)
+                        }
+                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+                            ReadUserCurationView(data: data)
+                        }
+                        .navigationDestination(for: NavigationListCurationType.self) { data in
+                            ListCurationView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+                            ReadShortcutView(data: data)
+                        }
+                    
+                }
+                .environmentObject(curationNavigation)
+                .tabItem {
+                    Label("추천모음집", systemImage: "folder.fill")
+                }
+                .tag(2)
+                
+                NavigationStack(path: $profileNavigation.navigationPath) {
+                    MyPageView()
+                        .onChange(of: tappedTwice, perform: { tappedTwice in
+                            guard tappedTwice else { return }
+                            if profileNavigation.navigationPath.count > 0 {
+                                profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
+                            } else {
+                                withAnimation {
+                                    proxy.scrollTo(333, anchor: .bottom)
+                                }
+                            }
+                            self.tappedTwice = false
+                        })
+                        .navigationBarBackground ({ Color.Background })
+                    
+                        .navigationDestination(for: NavigationListShortcutType.self) { data in
+                            ListShortcutView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
+                            ReadShortcutView(data: data)
+                        }
+                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
+                            ReadUserCurationView(data: data)
+                        }
+                        .navigationDestination(for: NavigationListCurationType.self) { data in
+                            ListCurationView(data: data)
+                        }
+                }
+                .environmentObject(profileNavigation)
+                .tabItem {
+                    Label("프로필", systemImage: "person.crop.circle.fill")
+                }
+                .tag(3)
             }
-            .environmentObject(shortcutNavigation)
-            .tabItem {
-                Label("단축어", systemImage: "square.stack.3d.up.fill")
+            .sheet(isPresented: self.$isShortcutDeeplink) {
+                let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
+                                                      navigationParentView: .myPage)
+                ReadShortcutView(data: data)
             }
-            .tag(1)
-            
-            NavigationStack(path: $curationNavigation.navigationPath) {
-                ExploreCurationView()
-                    .onChange(of: tappedTwice, perform: { tappedTwice in
-                        guard tappedTwice else { return }
-                        curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
-                        self.tappedTwice = false
-                    })
+            .sheet(isPresented: self.$isCurationDeeplink) {
+                if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
+                    let data = NavigationReadUserCurationType(userCuration: curation, navigationParentView: .myPage)
+                    ReadUserCurationView(data: data)
+                }
             }
-            .environmentObject(curationNavigation)
-            .tabItem {
-                Label("큐레이션", systemImage: "folder.fill")
+            .onChange(of: phase) { newPhase in
+                switch newPhase {
+                case .background: isShortcutDeeplink = false; isCurationDeeplink = false
+                default: break
+                }
             }
-            .tag(2)
-            
-            NavigationStack(path: $profileNavigation.navigationPath) {
-                MyPageView()
-                    .onChange(of: tappedTwice, perform: { tappedTwice in
-                        guard tappedTwice else { return }
-                        profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
-                        self.tappedTwice = false
-                    })
+            .onOpenURL { url in
+                fetchShortcutIdFromUrl(urlString: url.absoluteString)
+                fetchCurationIdFromUrl(urlString: url.absoluteString)
             }
-            .environmentObject(profileNavigation)
-            .tabItem {
-                Label("프로필", systemImage: "person.crop.circle.fill")
-            }
-            .tag(3)
-        }        .sheet(isPresented: self.$isOpenURL) {
-            let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                                  navigationParentView: .myPage)
-            ReadShortcutView(data: data)
-        }
-        .onChange(of: phase) { newPhase in
-            switch newPhase {
-            case .background: isOpenURL = false
-            default: break
-            }
-        }
-        .onOpenURL { url in
-            fetchShortcutIdFromUrl(urlString: url.absoluteString)
-            isOpenURL = true
         }
     }
     
@@ -120,9 +191,28 @@ struct ShortcutTabView: View {
         
         guard let shortcutIDfromURL = dictionaryData["shortcutID"] else { return }
         
-        print("shortcutIDfromURL = \(shortcutIDfromURL)")
-        
         tempShortcutId  = shortcutIDfromURL
+        isShortcutDeeplink = true
+    }
+    
+    private func fetchCurationIdFromUrl(urlString: String) {
+        
+        guard urlString.contains("curationID") else { return }
+        
+        let components = URLComponents(string: urlString)
+        let urlQueryItems = components?.queryItems ?? []
+        
+        var dictionaryData = [String: String]()
+        urlQueryItems.forEach {
+            dictionaryData[$0.name] = $0.value
+        }
+        
+        guard let curationIDfromURL = dictionaryData["curationID"] else { return }
+        
+        print("curationIDfromURL = \(curationIDfromURL)")
+        
+        tempCurationId  = curationIDfromURL
+        isCurationDeeplink = true
     }
 }
 
