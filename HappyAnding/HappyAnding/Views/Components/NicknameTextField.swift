@@ -63,7 +63,6 @@ struct NicknameTextField: View {
     
     @Binding var nickname: String
     
-    @State var isNickNameChecked = false
     @State var nicknameState = NicknameState.none
     @State var nicknameFocus = NicknameFocus.notfocus
     @State var nicknameError = NicknameError.length
@@ -71,15 +70,17 @@ struct NicknameTextField: View {
     
     var body: some View {
         
-        VStack {
+        VStack(alignment: .leading, spacing: 8) {
             textField
             
             if nicknameFocus == .focusError {
                 Text(nicknameError.message)
+                    .Footnote()
+                    .foregroundColor(.red)
             }
         }
         .onChange(of: nickname) { _ in
-            self.nicknameState = .fail
+            self.nicknameState = .none
             changedFocus()
         }
         .onChange(of: isFocused) { _ in
@@ -89,12 +90,11 @@ struct NicknameTextField: View {
         }
         .alert("닉네임 중복 확인", isPresented: $isCheckedDuplicated) {
             Button {
-                
             } label: {
-                Text(nicknameState.state ? "확인" : "다시 입력하기")
+                Text(nicknameState == .success ? "확인" : "다시 입력하기")
             }
         } message: {
-            Text(nicknameState.state ? "중복된 닉네임이 없습니다" : "중복된 닉네임이 있습니다")
+            Text(nicknameState == .success ? "중복된 닉네임이 없습니다" : "중복된 닉네임이 있습니다")
         }
     }
     
@@ -109,9 +109,7 @@ struct NicknameTextField: View {
                     .frame(height: 52)
                     .Body2()
                     .padding(.horizontal, 16)
-                    .onAppear { UIApplication.shared.hideKeyboard() }
-                    .onChange(of: nickname) { _ in
-                        self.isNickNameChecked = false
+                    .onAppear { UIApplication.shared.hideKeyboard()
                     }
                 
                 stateIcon
@@ -126,14 +124,16 @@ struct NicknameTextField: View {
             Button {
                 shortcutszipViewModel.checkNickNameDuplication(name: nickname) { result in
                     if !result {
-                        self.isCheckedDuplicated = true
                         self.nicknameState = .success
                         self.nicknameFocus = .notfocus
-                        self.isFocused = false
                     } else {
-                        self.nicknameState = .fail
+                        self.nicknameState = .none
                     }
+                    self.isCheckedDuplicated = true
+                    self.isFocused = self.nicknameState != .success
                 }
+                
+                
             } label: {
                 
                 ZStack {
@@ -174,37 +174,6 @@ struct NicknameTextField: View {
                 }
             }
         }
-//        HStack {
-//
-//            if nicknameFocus == .notfocus && !nickname.isEmpty {
-//                if nicknameState == .success {
-//                    Image(systemName: "checkmark.circle.fill")
-//                        .Body2()
-//                        .foregroundColor(.Success)
-//                }
-////                else if nicknameState == .fail && nicknameFocus == .focusError {
-////                    Image(systemName: "exclamationmark.circle.fill")
-////                        .Body2()
-////                        .foregroundColor(.red)
-////                }
-//            } else if !nickname.isEmpty {
-//                Button {
-//                    self.nickname.removeAll()
-//                } label: {
-//                    Image(systemName: "xmark.circle.fill")
-//                        .foregroundColor(.Gray4)
-//                        .Body2()
-//                }
-//            }
-//            else if nicknameFocus == .focusError && nicknameState == .fail {
-//                Image(systemName: "exclamationmark.circle.fill")
-//                    .Body2()
-//                    .foregroundColor(.red)
-//            }
-//
-//
-//
-//        }
     }
     
     
