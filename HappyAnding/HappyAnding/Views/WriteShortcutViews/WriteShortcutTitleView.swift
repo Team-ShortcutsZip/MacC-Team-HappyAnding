@@ -132,26 +132,20 @@ struct WriteShortcutTitleView: View {
                     writeShortcutNavigation.navigationPath = .init()
                     
                 }, label: {
-                    ZStack {
-                        Text("업로드")
-                            .Headline()
-                            .foregroundColor(.Text_Button)
-                            .opacity(0.7)
-                        Text("업로드")
-                            .Headline()
-                            .foregroundColor(.Primary)
-                            .opacity(shortcut.color.isEmpty ||
-                                     shortcut.sfSymbol.isEmpty ||
-                                     shortcut.title.isEmpty ||
-                                     !isNameValid ||
-                                     shortcut.downloadLink.isEmpty ||
-                                     !isLinkValid ||
-                                     shortcut.subtitle.isEmpty ||
-                                     !isOneLineValid ||
-                                     shortcut.description.isEmpty ||
-                                     !isMultiLineValid ||
-                                     shortcut.category.isEmpty ? 0.3 : 1)
-                    }
+                    Text("업로드")
+                        .Headline()
+                        .foregroundColor(.Primary)
+                        .opacity(shortcut.color.isEmpty ||
+                                 shortcut.sfSymbol.isEmpty ||
+                                 shortcut.title.isEmpty ||
+                                 !isNameValid ||
+                                 shortcut.downloadLink.isEmpty ||
+                                 !isLinkValid ||
+                                 shortcut.subtitle.isEmpty ||
+                                 !isOneLineValid ||
+                                 shortcut.description.isEmpty ||
+                                 !isMultiLineValid ||
+                                 shortcut.category.isEmpty ? 0.3 : 1)
                 })
                 .disabled(shortcut.color.isEmpty ||
                           shortcut.sfSymbol.isEmpty ||
