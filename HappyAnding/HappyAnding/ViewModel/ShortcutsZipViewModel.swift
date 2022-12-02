@@ -48,7 +48,7 @@ class ShortcutsZipViewModel: ObservableObject {
     var allShortcuts: [Shortcuts] = []
 
     init() {
-        fetchUser(userID: self.currentUser()) { user in
+        fetchUser(userID: self.currentUser(), isCurrentUser: true) { user in
             self.userInfo = user
             self.initUserShortcut(user: user)
         }
@@ -441,7 +441,7 @@ class ShortcutsZipViewModel: ObservableObject {
             increment = 1
             shortcutsUserLiked.append(shortcut)
             userInfo?.likedShortcuts.append(shortcut.id)
-            self.fetchUser(userID: self.currentUser()) { data in
+            self.fetchUser(userID: self.currentUser(), isCurrentUser: true) { data in
                 var user = data
                 user.likedShortcuts.append(shortcut.id)
                 
@@ -455,7 +455,7 @@ class ShortcutsZipViewModel: ObservableObject {
             increment = -1
             shortcutsUserLiked.removeAll(where: { $0.id == shortcut.id })
             userInfo?.likedShortcuts.removeAll(where: { $0 == shortcut.id })
-            self.fetchUser(userID: self.currentUser()) { data in
+            self.fetchUser(userID: self.currentUser(), isCurrentUser: true) { data in
                 var user = data
                 user.likedShortcuts.removeAll(where: { $0 == shortcut.id })
                 self.db.collection("User").document(user.id).setData(user.dictionary) { error in
@@ -634,7 +634,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: 로그인한 아이디로 User 가져오는 함수
     
-    func fetchUser(userID: String, completionHandler: @escaping (User)->()) {
+    func fetchUser(userID: String, isCurrentUser: Bool, completionHandler: @escaping (User)->()) {
         
         db.collection("User")
             .whereField("id", isEqualTo: userID)
@@ -643,7 +643,11 @@ class ShortcutsZipViewModel: ObservableObject {
                     print("Error getting documents: \(error)")
                 } else {
                     guard let documents = querySnapshot?.documents else { return }
-                    if documents.isEmpty { /*self.signInStatus = false*/ }
+                    if documents.isEmpty && isCurrentUser {
+                        withAnimation(.easeInOut) {
+                            self.signInStatus = false
+                        }
+                    }
                     let decoder = JSONDecoder()
                     for document in documents {
                         do {
@@ -652,6 +656,9 @@ class ShortcutsZipViewModel: ObservableObject {
                             let user = try decoder.decode(User.self, from: jsonData)
                             completionHandler(user)
                         } catch let error {
+                            withAnimation(.easeInOut) {
+                                self.signInStatus = true
+                            }
                             print("error: \(error)")
                         }
                     }

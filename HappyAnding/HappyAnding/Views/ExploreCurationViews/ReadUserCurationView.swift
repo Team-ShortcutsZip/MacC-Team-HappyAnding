@@ -134,7 +134,8 @@ struct ReadUserCurationView: View {
             }
         }
         .onAppear {
-            shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author) { user in
+            shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author,
+                                            isCurrentUser: false) { user in
                 authorInformation = user
             }
         }

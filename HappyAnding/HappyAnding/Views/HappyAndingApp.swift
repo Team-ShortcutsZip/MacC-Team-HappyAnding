@@ -16,6 +16,8 @@ struct HappyAndingApp: App {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.openURL) private var openURL
     
+    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
+    
     @State var isNeededUpdate = false
     @State var isShowingLaunchScreen = true
     @State var version = Version(latestVersion: "", minimumVersion: "", description: "", title: "")
@@ -57,6 +59,7 @@ struct HappyAndingApp: App {
                 }
             } else {
                 ShortcutsZipView()
+                    .environmentObject(shortcutsZipViewModel)
             }
         }
         .onChange(of: scenePhase) { (newScenePhase) in

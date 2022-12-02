@@ -31,12 +31,18 @@ struct EditNicknameView: View {
         }
         .onAppear {
             nickname = shortcutszipViewModel.userInfo?.nickname ?? ""
-            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser()) { user in
+//<<<<<<< HEAD
+            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
+                                            isCurrentUser: true) { user in
+//=======
+//            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser()) { user in
+//>>>>>>> develop
                 self.user = user
             }
         }
         .onDisappear {
-            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser()) { user in
+            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
+                                            isCurrentUser: true) { user in
                 shortcutszipViewModel.userInfo = user
             }
         }
