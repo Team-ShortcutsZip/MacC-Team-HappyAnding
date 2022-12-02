@@ -13,7 +13,7 @@ import FirebaseFirestore
 class ShareExtensionViewModel: ObservableObject {
     private let db = Firestore.firestore()
     
-    private var userInfo = UserDefaults.shared.string(forKey: "ShareUserInfo")!
+    private var userInfo = UserDefaults.shared.string(forKey: "ShareUserInfo") ?? ""
     
     @Published var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [], requiredApp: [], numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [], curationIDs: [])
     

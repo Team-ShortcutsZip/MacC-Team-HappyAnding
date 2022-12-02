@@ -35,7 +35,6 @@ struct ShareExtensionWriteShortcutTitleView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 32){
-                Text("\(UserDefaults.shared.string(forKey: "ShareUserInfo")!)")
                 iconModalView
                 shortcutTitleText
                 shortcutLinkText.disabled(true)

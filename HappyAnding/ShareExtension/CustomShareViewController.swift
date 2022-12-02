@@ -28,22 +28,25 @@ class CustomShareViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(enabledDoneButton), name: NSNotification.Name(rawValue: "enabledDoneButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(inEnabledDoneButton), name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
         
-        pasteUrl { url in
-            
-            //로그인 정보 empty 일 때
-            if ((UserDefaults.shared.string(forKey: "ShareUserInfo")?.isEmpty) == nil) {
-                let alert = UIAlertController(title: "로그인을 먼저 진행해주세요", message:
-                                                "이 기능은 로그인 후 사용할 수 있는 기능이에요", preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .default, handler: nil)
-                alert.addAction(action)
-                self.present(alert, animated: true, completion: nil)
+        //로그인 정보 empty 일 때
+        if  UserDefaults.shared.string(forKey: "ShareUserInfo") == nil {
+            let alert = UIAlertController(title: "로그인을 먼저 진행해주세요", message:
+                                            "이 기능은 로그인 후 사용할 수 있는 기능이에요", preferredStyle: .alert)
+            let action = UIAlertAction(title: "확인", style: .default) { _ in
+                self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
             }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        pasteUrl { url in
             
             //링크가 적절하지 않을 때
             if !self.shareExtensionViewModel.isLinkValid(content: "\(url)") {
-                let alert = UIAlertController(title: "복사한 링크가 단축어 링크가 아니에요", message:
-                                                "단축어를 올리기 위해 적절한 링크를 복사해 주세요", preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .default, handler: self.dismissAction())
+                let alert = UIAlertController(title: "복사한 링크가 단축어 링크가 아니에요", message:"단축어를 올리기 위해 적절한 링크를 복사해 주세요", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .default) { action in
+                    self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                }
                 alert.addAction(action)
                 self.present(alert, animated: true, completion: nil)
             }
