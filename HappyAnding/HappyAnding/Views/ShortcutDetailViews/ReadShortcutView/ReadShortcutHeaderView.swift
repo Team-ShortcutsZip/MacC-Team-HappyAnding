@@ -24,7 +24,7 @@ struct ReadShortcutHeaderView: View {
                 Spacer()
                 
                 likeButton
-
+                
             }
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(shortcut.title)")
@@ -42,7 +42,8 @@ struct ReadShortcutHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
         .onAppear() {
-            shortcutsZipViewModel.fetchUser(userID: shortcut.author) { user in
+            shortcutsZipViewModel.fetchUser(userID: shortcut.author,
+                                            isCurrentUser: false) { user in
                 userInformation = user
             }
             
@@ -64,58 +65,64 @@ struct ReadShortcutHeaderView: View {
     // MARK: 좋아요 버튼
     var likeButton: some View {
         Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(shortcut.numberOfLike)")
-
-        .Body2()
-        .padding(10)
-        .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
-        .background(isMyLike ? Color.Primary : Color.Gray1)
-        .cornerRadius(12)
-        .onTapGesture(perform: {
-            isMyLike.toggle()
-            //화면 상의 좋아요 추가, 취소 기능 동작
-            if isMyLike {
-                self.shortcut.numberOfLike += 1
-            } else {
-                self.shortcut.numberOfLike -= 1
+            .Body2()
+            .padding(10)
+            .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
+            .background(isMyLike ? Color.Primary : Color.Gray1)
+            .cornerRadius(12)
+            .onTapGesture {
+                isMyLike.toggle()
+                //화면 상의 좋아요 추가, 취소 기능 동작
+                if isMyLike {
+                    self.shortcut.numberOfLike += 1
+                } else {
+                    self.shortcut.numberOfLike -= 1
+                }
             }
-        })
     }
     
     // MARK: - 유저 정보
     var userInfo: some View {
-        HStack(spacing: 8) {
-            
-            Circle()
-                .frame(width: 24, height: 24)
-                .foregroundColor(.Gray4)
-                .padding(.leading, 16)
-            
-            Text(userInformation?.nickname ?? "닉네임")
-                .Body2()
-                .foregroundColor(.Gray4)
-            
-            Spacer()
-                .frame(maxWidth: .infinity)
-            
-            
-            // TODO: 신고기능
-            
-            /*
-            Image(systemName: "light.beacon.max.fill")
-                .Headline()
-                .foregroundColor(.Gray5)
-                .padding(.trailing, 16)
-                .onTapGesture {
-                    print("Tapped!")
+        ZStack {
+            if let data = NavigationProfile(userInfo: self.userInformation) {
+                NavigationLink(value: data) {
+                    HStack(spacing: 8) {
+                        
+                        Circle()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.Gray4)
+                            .padding(.leading, 16)
+                        
+                        Text(userInformation?.nickname ?? "탈퇴한 사용자")
+                            .Body2()
+                            .foregroundColor(.Gray4)
+                        
+                        Spacer()
+                            .frame(maxWidth: .infinity)
+                        
+                        
+                        // TODO: 신고기능
+                        
+                        /*
+                         Image(systemName: "light.beacon.max.fill")
+                         .Headline()
+                         .foregroundColor(.Gray5)
+                         .padding(.trailing, 16)
+                         .onTapGesture {
+                         print("Tapped!")
+                         }
+                         */
+                        
+                    }
                 }
-             */
-            
-        }
-        .padding(.vertical, 10)
-        .frame(maxWidth: .infinity, maxHeight: 44)
-        .overlay {
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.Gray1, lineWidth: 1)
+                .disabled(userInformation == nil)
+                .padding(.vertical, 10)
+                .frame(maxWidth: .infinity, maxHeight: 44)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.Gray1, lineWidth: 1)
+                }
+            }
         }
     }
 }

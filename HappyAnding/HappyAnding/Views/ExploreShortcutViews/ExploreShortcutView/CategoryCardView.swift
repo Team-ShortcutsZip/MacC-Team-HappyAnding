@@ -56,9 +56,3 @@ struct CategoryCardView: View {
         }
     }
 }
-
-//struct CategoryCardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CategoryCardView()
-//    }
-//}
