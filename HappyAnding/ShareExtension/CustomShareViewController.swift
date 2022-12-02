@@ -113,7 +113,7 @@ class CustomShareViewController: UIViewController {
         let cancelButton: UIButton = {
             let button = UIButton()
             button.setTitle("취소", for: .normal)
-            button.setTitleColor(UIColor(Color.Gray4), for: .normal)
+            button.setTitleColor(UIColor(light: UIColor(Color.Gray4), dark: UIColor(Color("NavigationCancelButtonUIColor"))), for: .normal)
             button.titleLabel?.font = UIFont.Body1
             button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
             
@@ -147,11 +147,11 @@ class CustomShareViewController: UIViewController {
         let customNavBarAppearance = UINavigationBarAppearance()
         
         customNavBarAppearance.configureWithOpaqueBackground()
-        customNavBarAppearance.backgroundColor = UIColor(Color.Background)
+        customNavBarAppearance.backgroundColor = UIColor(light: UIColor(Color.Background), dark: UIColor(Color("BackgroudUIColor")))
         customNavBarAppearance.shadowColor = .clear
         
-        customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(Color.Gray5)]
-        customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(Color.Gray5)]
+        customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(light: UIColor(Color.Gray5), dark: UIColor(Color("NavigationTitleUIColor")))]
+        customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(light: UIColor(Color.Gray5), dark: UIColor(Color("NavigationTitleUIColor")))]
         
         let barButtonItemAppearance = UIBarButtonItemAppearance(style: .plain)
         barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(Color.Primary), .font: UIFont.Headline]
