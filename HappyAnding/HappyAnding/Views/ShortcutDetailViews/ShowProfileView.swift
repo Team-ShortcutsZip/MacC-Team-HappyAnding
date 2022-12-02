@@ -110,40 +110,49 @@ extension ShowProfileView {
                     Color.clear.tag(0)
                     Color.clear.tag(1)
                 }
+                .frame(minHeight: UIScreen.screenHeight / 2)
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 
                 switch(currentTab) {
                 case 0:
                     if shortcuts.isEmpty {
-                        Text("작성한 단축어가 없습니다.")
-                            .padding(.top, 24)
-                            .Body2()
-                            .foregroundColor(.Gray4)
-                    } else {
-                        VStack(spacing: 0) {
-                            ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
-                                let data = NavigationReadShortcutType(shortcutID:shortcut.id,
-                                                                      navigationParentView: .shortcuts)
-                                NavigationLink(value: data) {
-                                    ShortcutCell(shortcut: shortcut,
-                                                 navigationParentView: data.navigationParentView)
-                                }
-                            }
-                            
+                        VStack {
+                            Text("작성한 단축어가 없습니다.")
+                                .padding(.top, 16)
+                                .Body2()
+                                .foregroundColor(.Gray4)
                             Spacer()
                         }
+                    }
+                    
+                    VStack(spacing: 0) {
+                        ForEach(shortcuts, id:\.self) { shortcut in
+                            let data = NavigationReadShortcutType(shortcutID:shortcut.id,
+                                                                  navigationParentView: .shortcuts)
+                            NavigationLink(value: data) {
+                                ShortcutCell(shortcut: shortcut,
+                                             navigationParentView: data.navigationParentView)
+                            }
+                        }
+                        
+                        Spacer()
+                            .frame(maxHeight: .infinity)
                     }
                 case 1:
                     if curations.isEmpty {
                         
                         // TODO: 큐레이션에 대한 워딩 변경
-                        Text("작성한 큐레이션이 없습니다.")
-                            .padding(.top, 24)
-                            .Body2()
-                            .foregroundColor(.Gray4)
+                        VStack{
+                            Text("작성한 큐레이션이 없습니다.")
+                                .padding(.top, 16)
+                                .Body2()
+                                .foregroundColor(.Gray4)
+                            Spacer()
+                        }
                     }
+                    
                     VStack(spacing: 0) {
-                        ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
+                        ForEach(curations, id: \.self) { curation in
                             let data = NavigationReadUserCurationType(userCuration: curation,
                                                                       navigationParentView: .shortcuts)
                             NavigationLink(value: data) {
