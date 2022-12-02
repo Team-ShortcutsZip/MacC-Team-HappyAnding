@@ -27,12 +27,31 @@ class CustomShareViewController: UIViewController {
         self.view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledDoneButton), name: NSNotification.Name(rawValue: "enabledDoneButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(inEnabledDoneButton), name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
+        
         pasteUrl { url in
+            
+            //로그인 정보 empty 일 때
+            if ((UserDefaults.shared.string(forKey: "ShareUserInfo")?.isEmpty) == nil) {
+                let alert = UIAlertController(title: "로그인을 먼저 진행해주세요", message:
+                                                "이 기능은 로그인 후 사용할 수 있는 기능이에요", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+            //링크가 적절하지 않을 때
+            if !self.shareExtensionViewModel.isLinkValid(content: "\(url)") {
+                let alert = UIAlertController(title: "복사한 링크가 단축어 링크가 아니에요", message:
+                                                "단축어를 올리기 위해 적절한 링크를 복사해 주세요", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .default, handler: self.dismissAction())
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+            //익스텐션 뷰 뜸
             self.shareExtensionViewModel.shortcut.downloadLink.append("\(url)")
             let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(shareExtensionViewModel: self.shareExtensionViewModel))
-            
             self.view.addSubview(extShortcutsView.view)
-            
             extShortcutsView.view.translatesAutoresizingMaskIntoConstraints = false
             extShortcutsView.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
             extShortcutsView.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
@@ -111,6 +130,9 @@ class CustomShareViewController: UIViewController {
     }
     @objc private func doneAction() {
         shareExtensionViewModel.setData()
+        extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+    }
+    func dismissAction() {
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     @objc func dismissKeyboard() {

@@ -13,9 +13,12 @@ import FirebaseFirestore
 class ShareExtensionViewModel: ObservableObject {
     private let db = Firestore.firestore()
     
+    private var userInfo = UserDefaults.shared.string(forKey: "ShareUserInfo")!
+    
     @Published var shortcut = Shortcuts(sfSymbol: "", color: "", title: "", subtitle: "", description: "", category: [], requiredApp: [], numberOfLike: 0, numberOfDownload: 0, author: "", shortcutRequirements: "", downloadLink: [], curationIDs: [])
     
     func setData() {
+        self.shortcut.author = userInfo
         db.collection("Shortcut")
             .document(self.shortcut.id)
             .setData(self.shortcut.dictionary) { err in
@@ -35,5 +38,9 @@ class ShareExtensionViewModel: ObservableObject {
         !shortcut.subtitle.isEmpty &&
         !shortcut.description.isEmpty &&
         !shortcut.category.isEmpty
+    }
+    
+    func isLinkValid(content: String) -> Bool {
+        content.hasPrefix("https://www.icloud.com/shortcuts/")
     }
 }

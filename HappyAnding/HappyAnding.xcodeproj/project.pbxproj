@@ -79,6 +79,8 @@
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3439AF529395A100043E273 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B729114FB200C3DA13 /* UserAuth.swift */; };
 		A3439AF629395A3A0043E273 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
+		A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */; };
+		A3439AFC2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */; };
 		A35C39542936928200C4359F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A35C39532936928200C4359F /* GoogleService-Info.plist */; };
 		A35DB3372927E8EB0011A28B /* CustomShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */; };
 		A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */; };
@@ -243,6 +245,7 @@
 		A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipViewModel.swift; sourceTree = "<group>"; };
 		A0F822B629164D2300AF4448 /* ShortcutsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsListView.swift; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
+		A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		A35C39532936928200C4359F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareViewController.swift; sourceTree = "<group>"; };
 		A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareNavigationController.swift; sourceTree = "<group>"; };
@@ -490,6 +493,7 @@
 				8795A16D292AB841004B765F /* View+Extension.swift */,
 				8795A16F292AB945004B765F /* UIScreen+Extension.swift */,
 				F9AC2BB92935D34C00165820 /* Image+Extension.swift */,
+				A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -862,6 +866,7 @@
 				A3FF01882918581E00384211 /* LicenseView.swift in Sources */,
 				8795A174292ACA50004B765F /* ReadShortcutCommentView.swift in Sources */,
 				A04ACB0C29041CEE004A85A6 /* LovedShortcutView.swift in Sources */,
+				A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
 				A09CBA7E2922B36C00D31F5F /* String+Extension.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
 				F9DB8EBB293986E100516CE1 /* ShareExtensionViewModel.swift in Sources */,
@@ -907,6 +912,7 @@
 				A3FC4758292A61C50058BF26 /* Shortcuts.swift in Sources */,
 				A3275C7A292E6FCB00CD5B12 /* String+Extension.swift in Sources */,
 				A3FC475A292A61CC0058BF26 /* Keyword.swift in Sources */,
+				A3439AFC2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
 				A3FC474E292A616A0058BF26 /* Color+Extension.swift in Sources */,
 				F9DB8EBD293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift in Sources */,
 				F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */,

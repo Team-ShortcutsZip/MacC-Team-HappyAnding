@@ -624,12 +624,14 @@ class ShortcutsZipViewModel: ObservableObject {
         self.curationsMadeByUser.removeAll()
         self.shortcutsUserDownloaded.removeAll()
         self.shortcutsUserLiked.removeAll()
+        UserDefaults.shared.set(nil, forKey: "ShareUserInfo")
     }
     
     // MARK: 현재 로그인한 아이디 리턴
     
     func currentUser() -> String {
-        Auth.auth().currentUser?.uid ?? ""
+        UserDefaults.shared.set(Auth.auth().currentUser?.uid, forKey: "ShareUserInfo")
+        return Auth.auth().currentUser?.uid ?? ""
     }
     
     //MARK: 로그인한 아이디로 User 가져오는 함수
