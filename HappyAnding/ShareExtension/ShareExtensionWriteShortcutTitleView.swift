@@ -37,21 +37,9 @@ struct ShareExtensionWriteShortcutTitleView: View {
             VStack(spacing: 32){
                 iconModalView
                 shortcutTitleText
-                    .onTapGesture {
-                        isTextFocused = [true, false, false, false]
-                    }
                 shortcutLinkText.disabled(true)
-                    .onTapGesture {
-                        isTextFocused = [false, true, false, false]
-                    }
                 shortcutSubtitleText
-                    .onTapGesture {
-                        isTextFocused = [false, false, true, false]
-                    }
                 shortcutDescriptionText
-                    .onTapGesture {
-                        isTextFocused = [false, false, false, true]
-                    }
                 shortcutCategory
                 shortcutsRequiredApp
             }
@@ -126,7 +114,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
         //.onTapGesture {
         //  firstResponder = .shortcutTitleText
         // }
-        //        .onAppear(perform : UIApplication.shared.hideKeyboard)
+//        .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
     
     //MARK: -단축어 링크

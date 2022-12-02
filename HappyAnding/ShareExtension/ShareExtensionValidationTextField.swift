@@ -147,16 +147,15 @@ struct ShareExtensionValidationCheckTextField: View {
     }
     
     var oneLineEditor: some View {
-        TextField(placeholder, text: $content)
+        TextField(placeholder, text: $content) { _ in
+            for index in isFocused.indices {
+                isFocused[index] = index == self.index
+            }
+        }
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
             .Body2()
             .frame(height: 24)
-            .onTapGesture {
-                for index in isFocused.indices {
-                    isFocused[index] = index == self.index
-                }
-            }
             .padding(16)
             .onAppear {
                 checkValidation()
@@ -187,9 +186,7 @@ struct ShareExtensionValidationCheckTextField: View {
                     .multilineTextAlignment(.leading)
                     .padding(16)
                     .foregroundColor(.Gray2)
-                    .onTapGesture {
-                        isFocused[index] = true
-                    }
+                    .allowsHitTesting(false)
             }
         }
         .onAppear {

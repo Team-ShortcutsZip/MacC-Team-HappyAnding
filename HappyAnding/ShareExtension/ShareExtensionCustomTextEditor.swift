@@ -60,11 +60,13 @@ struct ShareExtensionCustomTextEditor: UIViewRepresentable {
         }
         
         func textViewDidBeginEditing(_ textView: UITextView) {
-            self.isFocused[index] = true
+            for index in isFocused.indices {
+                isFocused[index] = index == self.index
+            }
         }
         
         func textViewDidEndEditing(_ textView: UITextView) {
-            self.isFocused[index] = false
+            isFocused[index] = false
         }
     }
 }
