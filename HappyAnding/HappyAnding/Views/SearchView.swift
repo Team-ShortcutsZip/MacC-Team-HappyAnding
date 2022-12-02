@@ -101,7 +101,7 @@ struct SearchView: View {
     
     var proposeView: some View {
         VStack(alignment: .center) {
-            Text("\"\(searchText)\"의 결과가 없어요.\n원하는 단축어를 제안해보는건 어떠세요?").multilineTextAlignment(.center)
+            Text("\'\(searchText)\'의 결과가 없어요.\n원하는 단축어를 제안해보는건 어떠세요?").multilineTextAlignment(.center)
                 .Body1()
                 .foregroundColor(Color.Gray4)
             
