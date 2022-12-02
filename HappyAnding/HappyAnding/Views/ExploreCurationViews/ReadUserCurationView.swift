@@ -44,6 +44,7 @@ struct ReadUserCurationView: View {
                     .padding(.bottom, 12)
                 }
             }
+            
             VStack(spacing: 0){
                 ForEach(self.data.userCuration.shortcuts, id: \.self) { shortcut in
                     let data = NavigationReadShortcutType(shortcutID: shortcut.id,
@@ -79,51 +80,57 @@ struct ReadUserCurationView: View {
             .environmentObject(writeCurationNavigation)
         }
         .fullScreenCover(isPresented: $isWriting) {
-                    NavigationStack(path: $writeCurationNavigation.navigationPath) {
-                        WriteCurationSetView(isWriting: $isWriting,
-                                             curation: self.data.userCuration,
-                                             isEdit: true)
-                    }
-                    .environmentObject(writeCurationNavigation)
-                }
+            NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                WriteCurationSetView(isWriting: $isWriting,
+                                     curation: self.data.userCuration,
+                                     isEdit: true)
+            }
+            .environmentObject(writeCurationNavigation)
+        }
+        .alert("글 삭제", isPresented: $isTappedDeleteButton) {
+            Button(role: .cancel) {
+                self.isTappedDeleteButton.toggle()
+            } label: {
+                Text("닫기")
+            }
+            
+            Button(role: .destructive) {
+                shortcutsZipViewModel.deleteData(model: self.data.userCuration)
+                shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
+                presentation.wrappedValue.dismiss()
+            } label: {
+                Text("삭제")
+            }
+        } message: {
+            Text("글을 삭제하시겠습니까?")
+        }
     }
     
     var userInformation: some View {
         ZStack {
-            HStack {
-                Image(systemName: "person.fill")
-                    .frame(width: 28, height: 28)
-                    .foregroundColor(.White)
-                    .background(Color.Gray3)
-                    .clipShape(Circle())
-                
-                Text(authorInformation?.nickname ?? "닉네임")
-                    .Headline()
-                    .foregroundColor(.Gray4)
-                Spacer()
-            }
-            .padding(.horizontal, 30)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .frame(height: 48)
-                    .foregroundColor(.Gray1)
-                    .padding(.horizontal, 16)
-            ).alert(isPresented: $isTappedDeleteButton) {
-                Alert(title: Text("글 삭제")
-                    .foregroundColor(.Gray5),
-                      message: Text("글을 삭제하시겠습니까?")
-                    .foregroundColor(.Gray5),
-                      primaryButton: .default(Text("닫기"),
-                      action: {
-                    self.isTappedDeleteButton.toggle()
-                }),
-                      secondaryButton: .destructive(
-                        Text("삭제")
-                        , action: {
-                            shortcutsZipViewModel.deleteData(model: self.data.userCuration)
-                            shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
-                            presentation.wrappedValue.dismiss()
-                }))
+            if let data = NavigationProfile(userInfo: self.authorInformation) {
+                NavigationLink(value: data) {
+                    HStack {
+                        Image(systemName: "person.fill")
+                            .frame(width: 28, height: 28)
+                            .foregroundColor(.White)
+                            .background(Color.Gray3)
+                            .clipShape(Circle())
+                        
+                        Text(authorInformation?.nickname ?? "탈퇴한 사용자")
+                            .Headline()
+                            .foregroundColor(.Gray4)
+                        Spacer()
+                    }
+                }
+                .disabled(authorInformation == nil)
+                .padding(.horizontal, 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .frame(height: 48)
+                        .foregroundColor(.Gray1)
+                        .padding(.horizontal, 16)
+                )
             }
         }
         .onAppear {
@@ -179,8 +186,6 @@ extension ReadUserCurationView {
     private var deleteButton: some View {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
-            // TODO: firebase delete function
-            
         }) {
             Label("삭제", systemImage: "trash.fill")
         }
