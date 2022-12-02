@@ -50,9 +50,6 @@ struct ShortcutCell: View {
     var body: some View {
         
         ZStack {
-            
-            Color.Background
-            
             HStack {
                 icon
                 shortcutInfo
