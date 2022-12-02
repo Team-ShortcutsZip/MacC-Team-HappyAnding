@@ -227,7 +227,7 @@ struct WriteShortcutTitleView: View {
                                  title: "단축어 링크",
                                  placeholder: "단축어 링크를 추가하세요",
                                  lengthLimit: nil,
-                                 isDownloadLinkTextField: true   ,
+                                 isDownloadLinkTextField: true,
                                  content: $shortcut.downloadLink[0],
                                  isValid: $isLinkValid
         )
