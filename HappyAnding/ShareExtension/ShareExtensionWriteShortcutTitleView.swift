@@ -58,6 +58,14 @@ struct ShareExtensionWriteShortcutTitleView: View {
         }
         //        .ignoresSafeArea(edges: .bottom)
         .background(Color.Background)
+        .onChange(of: shareExtensionViewModel.shortcut) { _ in
+            let isDoneValid = shareExtensionViewModel.isDoneValid()
+            if isDoneValid {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enabledDoneButton"), object: nil)
+            } else {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
+            }
+        }
     }
     
     //MARK: -아이콘 모달 버튼
