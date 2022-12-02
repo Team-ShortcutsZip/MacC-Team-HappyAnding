@@ -122,8 +122,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
                                                isMultipleLines: false,
                                                title: "단축어 링크",
                                                placeholder: "단축어 링크를 추가하세요",
-                                               lengthLimit: 100,
-                                               isDownloadLinkTextField: true   ,
+                                               lengthLimit: nil,
+                                               isDownloadLinkTextField: true,
                                                content: $shareExtensionViewModel.shortcut.downloadLink[0],
                                                isValid: $isLinkValid,
                                                isFocused: $isTextFocused,
@@ -183,43 +183,36 @@ struct ShareExtensionWriteShortcutTitleView: View {
         @Binding var selectedCategories: [String]
         
         var body: some View {
-            ZStack {
-                
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.Background)
-                    .frame(height: 52)
+            HStack {
+                Button(action: {
+                    isShowingCategoryModal = true
+                }, label: {
+                    HStack {
+                        if selectedCategories.isEmpty {
+                            Text("카테고리 선택")
+                                .foregroundColor(.Gray2)
+                                .Body2()
+                        } else {
+                            Text(selectedCategories.map { String( Category(rawValue: $0)!.translateName()) }.joined(separator: ", "))
+                                .foregroundColor(.Gray4)
+                                .Body2()
+                                .multilineTextAlignment(.leading)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.forward")
+                            .foregroundColor(selectedCategories.isEmpty ? .Gray2 : .Gray4)
+                    }
+                    .padding(.all, 16)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
                             .strokeBorder(selectedCategories.isEmpty ? Color.Gray2 : Color.Gray4, lineWidth: 1)
                     )
-                HStack {
-                    Button(action: {
-                        isShowingCategoryModal = true
-                    }, label: {
-                        HStack {
-                            if selectedCategories.isEmpty {
-                                Text("카테고리 선택")
-                                    .foregroundColor(.Gray2)
-                                    .Body2()
-                            } else {
-                                ForEach(selectedCategories, id:\.self) { item in
-                                    Text(Category.withLabel(item)!.translateName())
-                                        .foregroundColor(.Gray4)
-                                        .Body2()
-                                }
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                                .foregroundColor(selectedCategories.isEmpty ? .Gray2 : .Gray4)
-                        }
-                    })
-                    .sheet(isPresented: $isShowingCategoryModal) {
-                        CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
-                            .presentationDetents([.fraction(0.7)])
-                            .presentationDragIndicator(.visible)
-                    }
+                })
+                .sheet(isPresented: $isShowingCategoryModal) {
+                    CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+                        .presentationDetents([.fraction(0.7)])
+                        .presentationDragIndicator(.visible)
                 }
-                .padding(.horizontal, 16)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
@@ -328,7 +321,11 @@ struct ShareExtensionWriteShortcutTitleView: View {
         
         var body: some View {
             HStack {
-                Text(item)
+                Button(action: {
+                    //TODO: 탭 되었을 때 수정 로직 추가
+                }, label: {
+                    Text(item)
+                })
                 
                 Button(action: {
                     items.removeAll { $0 == item }
@@ -381,8 +378,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
 
 extension View {
     
-//    @available(iOSApplicationExtension, unavailable)
-//    func hideKeyboard() {
-//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//    }
+    //    @available(iOSApplicationExtension, unavailable)
+    //    func hideKeyboard() {
+    //        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    //    }
 }
