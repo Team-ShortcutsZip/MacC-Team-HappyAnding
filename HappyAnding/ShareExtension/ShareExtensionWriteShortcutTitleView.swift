@@ -44,8 +44,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
                 shortcutsRequiredApp
             }
         }
-        //        .ignoresSafeArea(edges: .bottom)
         .background(Color.Background)
+        
         .onChange(of: shareExtensionViewModel.shortcut) { _ in
             let isDoneValid = shareExtensionViewModel.isDoneValid()
             if isDoneValid {
@@ -53,6 +53,9 @@ struct ShareExtensionWriteShortcutTitleView: View {
             } else {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "keyboardHide"))) { object in
+            isTextFocused = [false, false, false, false]
         }
     }
     

@@ -113,9 +113,9 @@ class CustomShareViewController: UIViewController {
         shareExtensionViewModel.setData()
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
-    
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "keyboardHide"), object: nil)
     }
     
     func customNavBarAppearance() -> UINavigationBarAppearance {
