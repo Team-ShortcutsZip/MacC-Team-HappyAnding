@@ -132,26 +132,20 @@ struct WriteShortcutTitleView: View {
                     writeShortcutNavigation.navigationPath = .init()
                     
                 }, label: {
-                    ZStack {
-                        Text("업로드")
-                            .Headline()
-                            .foregroundColor(.Text_Button)
-                            .opacity(0.7)
-                        Text("업로드")
-                            .Headline()
-                            .foregroundColor(.Primary)
-                            .opacity(shortcut.color.isEmpty ||
-                                     shortcut.sfSymbol.isEmpty ||
-                                     shortcut.title.isEmpty ||
-                                     !isNameValid ||
-                                     shortcut.downloadLink.isEmpty ||
-                                     !isLinkValid ||
-                                     shortcut.subtitle.isEmpty ||
-                                     !isOneLineValid ||
-                                     shortcut.description.isEmpty ||
-                                     !isMultiLineValid ||
-                                     shortcut.category.isEmpty ? 0.3 : 1)
-                    }
+                    Text("업로드")
+                        .Headline()
+                        .foregroundColor(.Primary)
+                        .opacity(shortcut.color.isEmpty ||
+                                 shortcut.sfSymbol.isEmpty ||
+                                 shortcut.title.isEmpty ||
+                                 !isNameValid ||
+                                 shortcut.downloadLink.isEmpty ||
+                                 !isLinkValid ||
+                                 shortcut.subtitle.isEmpty ||
+                                 !isOneLineValid ||
+                                 shortcut.description.isEmpty ||
+                                 !isMultiLineValid ||
+                                 shortcut.category.isEmpty ? 0.3 : 1)
                 })
                 .disabled(shortcut.color.isEmpty ||
                           shortcut.sfSymbol.isEmpty ||
@@ -232,8 +226,8 @@ struct WriteShortcutTitleView: View {
                                  isMultipleLines: false,
                                  title: "단축어 링크",
                                  placeholder: "단축어 링크를 추가하세요",
-                                 lengthLimit: 100,
-                                 isDownloadLinkTextField: true   ,
+                                 lengthLimit: nil,
+                                 isDownloadLinkTextField: true,
                                  content: $shortcut.downloadLink[0],
                                  isValid: $isLinkValid
         )
@@ -288,43 +282,36 @@ struct WriteShortcutTitleView: View {
         @Binding var selectedCategories: [String]
         
         var body: some View {
-            ZStack {
-                
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.Background)
-                    .frame(height: 52)
+            HStack {
+                Button(action: {
+                    isShowingCategoryModal = true
+                }, label: {
+                    HStack {
+                        if selectedCategories.isEmpty {
+                            Text("카테고리 선택")
+                                .foregroundColor(.Gray2)
+                                .Body2()
+                        } else {
+                            Text(selectedCategories.map { Category(rawValue: $0)!.translateName() }.joined(separator: ", "))
+                                .foregroundColor(.Gray4)
+                                .Body2()
+                                .multilineTextAlignment(.leading)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.forward")
+                            .foregroundColor(selectedCategories.isEmpty ? .Gray2 : .Gray4)
+                    }
+                    .padding(.all, 16)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
                             .strokeBorder(selectedCategories.isEmpty ? Color.Gray2 : Color.Gray4, lineWidth: 1)
                     )
-                HStack {
-                    Button(action: {
-                        isShowingCategoryModal = true
-                    }, label: {
-                        HStack {
-                            if selectedCategories.isEmpty {
-                                Text("카테고리 선택")
-                                    .foregroundColor(.Gray2)
-                                    .Body2()
-                            } else {
-                                ForEach(selectedCategories, id:\.self) { item in
-                                    Text(Category.withLabel(item)!.translateName())
-                                        .foregroundColor(.Gray4)
-                                        .Body2()
-                                }
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                                .foregroundColor(selectedCategories.isEmpty ? .Gray2 : .Gray4)
-                        }
-                    })
-                    .sheet(isPresented: $isShowingCategoryModal) {
-                        CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
-                            .presentationDetents([.fraction(0.7)])
-                            .presentationDragIndicator(.visible)
-                    }
+                })
+                .sheet(isPresented: $isShowingCategoryModal) {
+                    CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+                        .presentationDetents([.fraction(0.7)])
+                        .presentationDragIndicator(.visible)
                 }
-                .padding(.horizontal, 16)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 8)

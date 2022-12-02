@@ -253,7 +253,11 @@ struct WriteShortcutTagView: View {
         
         var body: some View {
             HStack {
-                Text(item)
+                Button(action: {
+                    //TODO: 탭 되었을 때 수정 로직 추가
+                }, label: {
+                    Text(item)
+                })
                 
                 Button(action: {
                     items.removeAll { $0 == item }
