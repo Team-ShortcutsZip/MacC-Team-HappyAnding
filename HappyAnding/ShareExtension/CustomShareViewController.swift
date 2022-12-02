@@ -23,6 +23,8 @@ class CustomShareViewController: UIViewController {
     ///viewdidload
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(enabledDoneButton), name: NSNotification.Name(rawValue: "enabledDoneButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(inEnabledDoneButton), name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
         pasteUrl { url in
@@ -110,6 +112,10 @@ class CustomShareViewController: UIViewController {
     @objc private func doneAction() {
         shareExtensionViewModel.setData()
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     func customNavBarAppearance() -> UINavigationBarAppearance {

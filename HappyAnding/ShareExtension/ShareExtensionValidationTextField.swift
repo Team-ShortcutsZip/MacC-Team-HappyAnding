@@ -152,20 +152,23 @@ struct ShareExtensionValidationCheckTextField: View {
                 isFocused[index] = index == self.index
             }
         }
-            .disableAutocorrection(true)
-            .textInputAutocapitalization(.never)
-            .Body2()
-            .frame(height: 24)
-            .padding(16)
-            .onAppear {
-                checkValidation()
-            }
-            .onChange(of: isFocused) { newValue in
-                checkValidation()
-            }
-            .onChange(of: content) { newValue in
-                checkValidation()
-            }
+        .disableAutocorrection(true)
+        .textInputAutocapitalization(.never)
+        .Body2()
+        .frame(height: 24)
+        .padding(16)
+        .onAppear {
+            checkValidation()
+        }
+        .onChange(of: isFocused) { newValue in
+            checkValidation()
+        }
+        .onChange(of: content) { newValue in
+            checkValidation()
+        }
+        .onSubmit {
+            isFocused[index] = false
+        }
     }
     
     var multiLineEditor: some View {

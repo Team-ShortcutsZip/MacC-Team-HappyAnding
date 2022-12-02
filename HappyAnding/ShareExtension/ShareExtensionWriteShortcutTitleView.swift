@@ -111,10 +111,6 @@ struct ShareExtensionWriteShortcutTitleView: View {
                                                isValid: $isNameValid,
                                                isFocused: $isTextFocused, index: 0
         )
-        //.onTapGesture {
-        //  firstResponder = .shortcutTitleText
-        // }
-//        .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
     
     //MARK: -단축어 링크
@@ -378,4 +374,12 @@ struct ShareExtensionWriteShortcutTitleView: View {
             }
         }
     }
+}
+
+extension View {
+    
+//    @available(iOSApplicationExtension, unavailable)
+//    func hideKeyboard() {
+//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//    }
 }
