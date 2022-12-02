@@ -17,7 +17,7 @@ struct ShowProfileView: View {
     @State var curations: [Curation] = []
     @Namespace var namespace
     @State var currentTab: Int = 0
-    private let tabItems = ["작성한 단축어", "작성한 큐레이션"]
+    private let tabItems = ["작성한 단축어", "작성한 추천 모음집"]
     
     var body: some View {
         ScrollView {
@@ -140,10 +140,8 @@ extension ShowProfileView {
                     }
                 case 1:
                     if curations.isEmpty {
-                        
-                        // TODO: 큐레이션에 대한 워딩 변경
                         VStack{
-                            Text("작성한 큐레이션이 없습니다.")
+                            Text("작성한 추천 모음집이 없습니다.")
                                 .padding(.top, 16)
                                 .Body2()
                                 .foregroundColor(.Gray4)
