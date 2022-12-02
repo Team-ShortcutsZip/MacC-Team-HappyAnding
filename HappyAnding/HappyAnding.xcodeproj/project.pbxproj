@@ -22,6 +22,7 @@
 		8795A170292AB945004B765F /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16F292AB945004B765F /* UIScreen+Extension.swift */; };
 		8795A172292ABFDE004B765F /* ReadShortcutVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A171292ABFDE004B765F /* ReadShortcutVersionView.swift */; };
 		8795A174292ACA50004B765F /* ReadShortcutCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A173292ACA50004B765F /* ReadShortcutCommentView.swift */; };
+		87CFD8492939187200F97B86 /* NicknameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CFD8482939187200F97B86 /* NicknameTextField.swift */; };
 		87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */; };
 		87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B12910649B00C3DA13 /* SignInWithAppleView.swift */; };
 		87E606B629114F7D00C3DA13 /* WriteNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B529114F7D00C3DA13 /* WriteNicknameView.swift */; };
@@ -139,6 +140,7 @@
 		8795A16F292AB945004B765F /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		8795A171292ABFDE004B765F /* ReadShortcutVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutVersionView.swift; sourceTree = "<group>"; };
 		8795A173292ACA50004B765F /* ReadShortcutCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutCommentView.swift; sourceTree = "<group>"; };
+		87CFD8482939187200F97B86 /* NicknameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameTextField.swift; sourceTree = "<group>"; };
 		87E606AD2910623C00C3DA13 /* HappyAnding.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappyAnding.entitlements; sourceTree = "<group>"; };
 		87E606AF291062F900C3DA13 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
 		87E606B12910649B00C3DA13 /* SignInWithAppleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleView.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				F94B432D2907088400987819 /* UserCurationListView.swift */,
 				A3B263692909DFD200829DE1 /* CurationListView.swift */,
 				87276C372933F6AB00C92F4C /* CustomTextEditor.swift */,
+				87CFD8482939187200F97B86 /* NicknameTextField.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -671,6 +674,7 @@
 				A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */,
 				87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */,
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
+				87CFD8492939187200F97B86 /* NicknameTextField.swift in Sources */,
 				4D3DBB962934E31A00DE8160 /* ShowProfileView.swift in Sources */,
 				A0DD085729276608008177BB /* URL+Extension.swift in Sources */,
 				87E99CD929042536009B691F /* SectionType.swift in Sources */,
