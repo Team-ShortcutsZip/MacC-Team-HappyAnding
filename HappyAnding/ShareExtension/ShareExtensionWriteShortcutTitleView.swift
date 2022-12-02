@@ -7,7 +7,15 @@
 
 import SwiftUI
 
+
+
 struct ShareExtensionWriteShortcutTitleView: View {
+    
+    enum TextFieldType {
+        case shortcutTitleText
+        case shortcutSubtitleText
+        case shortcutDescriptionText
+    }
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -22,14 +30,28 @@ struct ShareExtensionWriteShortcutTitleView: View {
     @State var isRequirementValid = false
     @State var isInfoButtonTouched: Bool = false
     
+    @State var isTextFocused = [Bool](repeating: false, count: 4)
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 32){
                 iconModalView
                 shortcutTitleText
+                    .onTapGesture {
+                        isTextFocused = [true, false, false, false]
+                    }
                 shortcutLinkText.disabled(true)
+                    .onTapGesture {
+                        isTextFocused = [false, true, false, false]
+                    }
                 shortcutSubtitleText
+                    .onTapGesture {
+                        isTextFocused = [false, false, true, false]
+                    }
                 shortcutDescriptionText
+                    .onTapGesture {
+                        isTextFocused = [false, false, false, true]
+                    }
                 shortcutCategory
                 shortcutsRequiredApp
             }
@@ -83,54 +105,63 @@ struct ShareExtensionWriteShortcutTitleView: View {
     
     //MARK: -단축어 이름
     private var shortcutTitleText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: "단축어 이름",
-                                 placeholder: "단축어 이름을 입력하세요",
-                                 lengthLimit: 20,
-                                 isDownloadLinkTextField: false,
-                                 content: $shareExtensionViewModel.shortcut.title,
-                                 isValid: $isNameValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: false,
+                                               title: "단축어 이름",
+                                               placeholder: "단축어 이름을 입력하세요",
+                                               lengthLimit: 20,
+                                               isDownloadLinkTextField: false,
+                                               content: $shareExtensionViewModel.shortcut.title,
+                                               isValid: $isNameValid,
+                                               isFocused: $isTextFocused, index: 0
         )
-//        .onAppear(perform : UIApplication.shared.hideKeyboard)
+        //.onTapGesture {
+        //  firstResponder = .shortcutTitleText
+        // }
+        //        .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
     
     //MARK: -단축어 링크
     private var shortcutLinkText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: "단축어 링크",
-                                 placeholder: "단축어 링크를 추가하세요",
-                                 lengthLimit: 100,
-                                 isDownloadLinkTextField: true   ,
-                                 content: $shareExtensionViewModel.shortcut.downloadLink[0],
-                                 isValid: $isLinkValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: false,
+                                               title: "단축어 링크",
+                                               placeholder: "단축어 링크를 추가하세요",
+                                               lengthLimit: 100,
+                                               isDownloadLinkTextField: true   ,
+                                               content: $shareExtensionViewModel.shortcut.downloadLink[0],
+                                               isValid: $isLinkValid,
+                                               isFocused: $isTextFocused,
+                                               index: 1
         )
     }
     
     //MARK: -한줄 설명
     private var shortcutSubtitleText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: "한줄 설명",
-                                 placeholder: "해당 단축어의 핵심 기능을 작성해주세요",
-                                 lengthLimit: 20,
-                                 isDownloadLinkTextField: false,
-                                 content: $shareExtensionViewModel.shortcut.subtitle,
-                                 isValid: $isOneLineValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: false,
+                                               title: "한줄 설명",
+                                               placeholder: "해당 단축어의 핵심 기능을 작성해주세요",
+                                               lengthLimit: 20,
+                                               isDownloadLinkTextField: false,
+                                               content: $shareExtensionViewModel.shortcut.subtitle,
+                                               isValid: $isOneLineValid,
+                                               isFocused: $isTextFocused,
+                                               index: 2
         )
     }
     
     //MARK: -상세 설명
     private var shortcutDescriptionText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: true,
-                                 title: "상세 설명",
-                                 placeholder: "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력해주세요",
-                                 lengthLimit: 300,
-                                 isDownloadLinkTextField: false,
-                                 content: $shareExtensionViewModel.shortcut.description,
-                                 isValid: $isMultiLineValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: true,
+                                               title: "상세 설명",
+                                               placeholder: "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력해주세요",
+                                               lengthLimit: 300,
+                                               isDownloadLinkTextField: false,
+                                               content: $shareExtensionViewModel.shortcut.description,
+                                               isValid: $isMultiLineValid, isFocused: $isTextFocused,
+                                               index: 3
         )
     }
     
