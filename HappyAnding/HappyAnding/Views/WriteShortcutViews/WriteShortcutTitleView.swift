@@ -292,7 +292,7 @@ struct WriteShortcutTitleView: View {
                                 .foregroundColor(.Gray2)
                                 .Body2()
                         } else {
-                            Text(selectedCategories.map { String( Category(rawValue: $0)!.translateName()) }.joined(separator: ", "))
+                            Text(selectedCategories.map { Category(rawValue: $0)!.translateName() }.joined(separator: ", "))
                                 .foregroundColor(.Gray4)
                                 .Body2()
                                 .multilineTextAlignment(.leading)
