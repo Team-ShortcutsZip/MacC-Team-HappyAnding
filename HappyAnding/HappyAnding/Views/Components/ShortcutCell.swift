@@ -50,9 +50,6 @@ struct ShortcutCell: View {
     var body: some View {
         
         ZStack {
-            
-            Color.Background
-            
             HStack {
                 icon
                 shortcutInfo
@@ -71,7 +68,7 @@ struct ShortcutCell: View {
             .background( background )
             .padding(.horizontal, 20)
         }
-        .padding(.top, 12)
+        .padding(.bottom, 12)
         .background(Color.Background)
         .onAppear() {
             if let shortcut  {

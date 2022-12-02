@@ -25,8 +25,8 @@ struct DownloadRankView: View {
                 Spacer()
                 
                 NavigationLink(value: NavigationListShortcutType(sectionType: .download,
-                                                          shortcuts: shortcuts,
-                                                          navigationParentView: .shortcuts)) {
+                                                                 shortcuts: shortcuts,
+                                                                 navigationParentView: .shortcuts)) {
                     Text("더보기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
@@ -34,6 +34,7 @@ struct DownloadRankView: View {
                 }
             }
             .padding(.leading, 16)
+            .padding(.bottom, 12)
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
