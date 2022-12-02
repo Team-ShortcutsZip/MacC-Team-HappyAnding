@@ -104,7 +104,7 @@ struct NicknameTextField: View {
                 Text(nicknameState == .success ? "확인" : "다시 입력하기")
             }
         } message: {
-            Text(nicknameState == .success ? "중복된 닉네임이 없습니다" : "중복된 닉네임이 있습니다")
+            Text(nicknameState == .success ? "사용 가능한 닉네임입니다" : "이미 사용 중인 닉네임입니다")
         }
     }
     
