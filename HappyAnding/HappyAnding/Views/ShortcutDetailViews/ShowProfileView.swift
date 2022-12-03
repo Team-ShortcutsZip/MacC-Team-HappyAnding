@@ -139,6 +139,7 @@ extension ShowProfileView {
                         Spacer()
                             .frame(maxHeight: .infinity)
                     }
+                    .padding(.bottom, 44)
                 case 1:
                     if curations.isEmpty {
                         VStack{
@@ -162,6 +163,7 @@ extension ShowProfileView {
                         
                         Spacer()
                     }
+                    .padding(.bottom, 44)
                 default:
                     EmptyView()
                 }
