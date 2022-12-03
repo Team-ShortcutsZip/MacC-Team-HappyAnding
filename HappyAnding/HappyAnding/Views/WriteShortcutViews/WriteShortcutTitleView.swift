@@ -408,7 +408,7 @@ struct WriteShortcutTitleView: View {
                                     isTextFieldShowing = false
                                 }
                             }
-                            .modifier(CellModifier(foregroundColor: Color.Gray4))
+                            .modifier(CellModifier(foregroundColor: Color.Gray4, strokeColor: Color.Primary))
                     }
                     
                     Button(action: {
@@ -420,7 +420,7 @@ struct WriteShortcutTitleView: View {
                             Text("앱 추가")
                         }
                     })
-                    .modifier(CellModifier(foregroundColor: Color.Gray2))
+                    .modifier(CellModifier(foregroundColor: Color.Gray2, strokeColor: Color.Gray2))
                 }
                 .padding(.leading, 16)
             }
@@ -449,7 +449,7 @@ struct WriteShortcutTitleView: View {
     struct CellModifier: ViewModifier {
         @State var foregroundColor: Color
         @State var backgroundColor = Color.clear
-        @State var strokeColor = Color.Gray2
+        @State var strokeColor: Color
         
         public func body(content: Content) -> some View {
             content
