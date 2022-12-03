@@ -27,10 +27,9 @@ struct ShareExtensionWriteShortcutTitleView: View {
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
     @State var isShowingCategoryModal = false
-    @State var isRequirementValid = false
     @State var isInfoButtonTouched: Bool = false
     
-    @State var isTextFocused = [Bool](repeating: false, count: 4)
+    @State var isTextFocused = [Bool](repeating: false, count: 5)
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -268,8 +267,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
     }
     struct relatedAppList: View {
         @Binding var relatedApps: [String]
-        
-        @FocusState private var isFocused: Bool
+        @State var isTextFocused = [Bool](repeating: false, count: 5)
         @State var isTextFieldShowing = false
         @State var relatedApp = ""
         
@@ -283,12 +281,11 @@ struct ShareExtensionWriteShortcutTitleView: View {
                     if isTextFieldShowing {
                         TextField("", text: $relatedApp)
                             .modifier(ClearButton(text: $relatedApp))
-                            .focused($isFocused)
                             .onAppear {
-                                isFocused = true
+                                isTextFocused[4] = true
                             }
-                            .onChange(of: isFocused) { _ in
-                                if !isFocused {
+                            .onChange(of: isTextFocused[4]) { _ in
+                                if !isTextFocused[4] {
                                     if !relatedApp.isEmpty {
                                         relatedApps.append(relatedApp)
                                         relatedApp = ""
@@ -296,23 +293,29 @@ struct ShareExtensionWriteShortcutTitleView: View {
                                     isTextFieldShowing = false
                                 }
                             }
-                            .modifier(CellModifier(foregroundColor: Color.Gray4))
+                            .onSubmit {
+                                isTextFocused[4] = false
+                            }
+                            .modifier(CellModifier(foregroundColor: Color.Gray4, strokeColor: Color.Primary))
                     }
                     
                     Button(action: {
                         isTextFieldShowing = true
-                        isFocused = true
+                        isTextFocused[4] = true
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
                             Text("앱 추가")
                         }
                     })
-                    .modifier(CellModifier(foregroundColor: Color.Gray2))
+                    .modifier(CellModifier(foregroundColor: Color.Gray2, strokeColor: Color.Gray2))
                 }
                 .padding(.leading, 16)
             }
             .scrollIndicators(.hidden)
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "keyboardHide"))) { object in
+                isTextFocused[4] = false
+            }
         }
     }
     struct RelatedAppTag: View {
@@ -341,7 +344,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
     struct CellModifier: ViewModifier {
         @State var foregroundColor: Color
         @State var backgroundColor = Color.clear
-        @State var strokeColor = Color.Gray2
+        @State var strokeColor: Color
         
         public func body(content: Content) -> some View {
             content
@@ -374,12 +377,4 @@ struct ShareExtensionWriteShortcutTitleView: View {
             }
         }
     }
-}
-
-extension View {
-    
-    //    @available(iOSApplicationExtension, unavailable)
-    //    func hideKeyboard() {
-    //        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    //    }
 }
