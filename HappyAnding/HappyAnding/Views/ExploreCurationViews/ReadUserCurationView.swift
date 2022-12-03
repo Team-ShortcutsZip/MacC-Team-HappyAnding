@@ -180,6 +180,8 @@ extension ReadUserCurationView {
             shareCuration()
         }) {
             Label("공유", systemImage: "square.and.arrow.up")
+                .foregroundColor(.Gray4)
+                .fontWeight(.medium)
         }
     }
     
