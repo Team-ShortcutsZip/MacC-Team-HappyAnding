@@ -49,7 +49,7 @@ struct WriteCurationSetView: View {
         .navigationTitle(isEdit ? "추천 모음집 편집" : "추천 모음집 작성")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration()
+            self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration().sorted { $0.title < $1.title }
             if isEdit {
                 deletedShortcutCells = curation.shortcuts
             }

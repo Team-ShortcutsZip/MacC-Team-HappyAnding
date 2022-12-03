@@ -138,6 +138,7 @@ struct ReadUserCurationView: View {
                                             isCurrentUser: false) { user in
                 authorInformation = user
             }
+            data.userCuration.shortcuts = data.userCuration.shortcuts.sorted { $0.title < $1.title }
         }
     }
 }
