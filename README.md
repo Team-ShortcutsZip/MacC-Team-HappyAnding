@@ -84,8 +84,8 @@
 
 
 ## Thanks To
-- 우리팀 최고의 멘토 [@Judy](https://github.com/manju-minji)
-- 아이디어에 영감을  레드 [@LED](https://github.com/sm-amoled)
+- 우리팀 최고의 멘토 [@킹갓제너럴에인젤 쥬디](https://github.com/manju-minji)
+- 아이디어에 영감을 레드 [@LED](https://github.com/sm-amoled)
 
 ## License
 
