@@ -27,14 +27,10 @@ struct MyPageView: View {
                 
                 HStack(spacing: 16) {
                     
-                    //TODO: 사용되는 임시 이미지 지정되면 변경 필요
-                    
-                    Image(systemName: "person.fill")
-                        .font(.title)
+                    Image(systemName: "person.crop.circle.fill")
+                        .font(.system(size: 60, weight: .medium))
                         .frame(width: 60, height: 60)
-                        .foregroundColor(.White)
-                        .background(Color.Gray3)
-                        .clipShape(Circle())
+                        .foregroundColor(.Gray3)
                         .id(333)
                     
                     HStack {

@@ -88,9 +88,10 @@ struct ReadShortcutHeaderView: View {
                 NavigationLink(value: data) {
                     HStack(spacing: 8) {
                         
-                        Circle()
+                        Image(systemName: "person.crop.circle.fill")
+                            .font(.system(size: 24, weight: .medium))
                             .frame(width: 24, height: 24)
-                            .foregroundColor(.Gray4)
+                            .foregroundColor(.Gray3)
                             .padding(.leading, 16)
                         
                         Text(userInformation?.nickname ?? "탈퇴한 사용자")

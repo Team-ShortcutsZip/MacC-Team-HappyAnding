@@ -111,11 +111,10 @@ struct ReadUserCurationView: View {
             if let data = NavigationProfile(userInfo: self.authorInformation) {
                 NavigationLink(value: data) {
                     HStack {
-                        Image(systemName: "person.fill")
+                        Image(systemName: "person.crop.circle.fill")
+                            .font(.system(size: 28, weight: .medium))
                             .frame(width: 28, height: 28)
-                            .foregroundColor(.White)
-                            .background(Color.Gray3)
-                            .clipShape(Circle())
+                            .foregroundColor(.Gray3)
                         
                         Text(authorInformation?.nickname ?? "탈퇴한 사용자")
                             .Headline()
@@ -181,6 +180,8 @@ extension ReadUserCurationView {
             shareCuration()
         }) {
             Label("공유", systemImage: "square.and.arrow.up")
+                .foregroundColor(.Gray4)
+                .fontWeight(.medium)
         }
     }
     
