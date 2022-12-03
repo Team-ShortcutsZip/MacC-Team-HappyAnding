@@ -23,7 +23,8 @@ struct CurationListView: View {
                                                               navigationParentView: self.data.navigationParentView)
                     NavigationLink(value: data) {
                         UserCurationCell(curation: curation,
-                                         navigationParentView: self.data.navigationParentView)
+                                         navigationParentView: self.data.navigationParentView,
+                                         lineLimit: 2)
                     }
                 }
             }

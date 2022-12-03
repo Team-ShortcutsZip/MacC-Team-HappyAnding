@@ -157,7 +157,8 @@ extension ShowProfileView {
                                                                       navigationParentView: .shortcuts)
                             NavigationLink(value: data) {
                                 UserCurationCell(curation: curation,
-                                                 navigationParentView: data.navigationParentView)
+                                                 navigationParentView: data.navigationParentView,
+                                                 lineLimit: 2)
                             }
                         }
                         

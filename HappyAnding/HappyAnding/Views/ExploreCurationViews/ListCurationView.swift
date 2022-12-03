@@ -45,7 +45,8 @@ struct ListCurationView: View {
                         
                         NavigationLink(value: data) {
                             UserCurationCell(curation: curation,
-                                             navigationParentView: self.data.navigationParentView)
+                                             navigationParentView: self.data.navigationParentView,
+                                             lineLimit: 2)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.Background)

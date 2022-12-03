@@ -46,7 +46,8 @@ struct UserCurationListView: View {
                 if index < 2 {
                     NavigationLink(value: data) {
                         UserCurationCell(curation: curation,
-                                         navigationParentView: self.data.navigationParentView)
+                                         navigationParentView: self.data.navigationParentView,
+                                         lineLimit: 2)
                     }
                 }
             }

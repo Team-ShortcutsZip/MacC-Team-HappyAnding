@@ -13,6 +13,7 @@ struct UserCurationCell: View {
     
     @State var curation: Curation
     let navigationParentView: NavigationParentView
+    var lineLimit: Int?
     
     var body: some View {
         ZStack {
@@ -67,7 +68,7 @@ struct UserCurationCell: View {
                 Text(curation.subtitle)
                     .Body2()
                     .multilineTextAlignment(.leading)
-                    .lineLimit(10)
+                    .lineLimit(lineLimit)
                     .foregroundColor(Color.Gray5)
                     .padding(.bottom, 20)
                     .fixedSize(horizontal: false, vertical: true)

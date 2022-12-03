@@ -41,9 +41,10 @@ struct ReadUserCurationView: View {
                     
                     UserCurationCell(curation: data.userCuration,
                                      navigationParentView: data.navigationParentView)
-                    .padding(.bottom, 12)
                 }
             }
+            .background(Color.white)
+            .padding(.bottom, 12)
             
             VStack(spacing: 0){
                 ForEach(self.data.userCuration.shortcuts, id: \.self) { shortcut in
