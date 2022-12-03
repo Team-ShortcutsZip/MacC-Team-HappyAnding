@@ -78,13 +78,13 @@
 		A31F1846292A638700AF4A82 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		A3275C7A292E6FCB00CD5B12 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CBA7D2922B36C00D31F5F /* String+Extension.swift */; };
+		A328DFD5293B829000CE4FC3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A328DFD4293B828F00CE4FC3 /* GoogleService-Info.plist */; };
+		A328DFD6293B829000CE4FC3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A328DFD4293B828F00CE4FC3 /* GoogleService-Info.plist */; };
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3439AF529395A100043E273 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B729114FB200C3DA13 /* UserAuth.swift */; };
 		A3439AF629395A3A0043E273 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
 		A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */; };
 		A3439AFC2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */; };
-		A3439B05293B48C20043E273 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3439B04293B48C20043E273 /* GoogleService-Info.plist */; };
-		A3439B06293B493F0043E273 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3439B04293B48C20043E273 /* GoogleService-Info.plist */; };
 		A35DB3372927E8EB0011A28B /* CustomShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */; };
 		A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */; };
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
@@ -248,9 +248,9 @@
 		A0DD085629276608008177BB /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipViewModel.swift; sourceTree = "<group>"; };
 		A0F822B629164D2300AF4448 /* ShortcutsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsListView.swift; sourceTree = "<group>"; };
+		A328DFD4293B828F00CE4FC3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
-		A3439B04293B48C20043E273 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A35C39532936928200C4359F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareViewController.swift; sourceTree = "<group>"; };
 		A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareNavigationController.swift; sourceTree = "<group>"; };
@@ -337,7 +337,7 @@
 		87E99C6128F94EA6009B691F = {
 			isa = PBXGroup;
 			children = (
-				A3439B04293B48C20043E273 /* GoogleService-Info.plist */,
+				A328DFD4293B828F00CE4FC3 /* GoogleService-Info.plist */,
 				87E99C6C28F94EA6009B691F /* HappyAnding */,
 				87E99C7D28F94EA8009B691F /* HappyAndingTests */,
 				87E99C8728F94EA8009B691F /* HappyAndingUITests */,
@@ -781,8 +781,8 @@
 			files = (
 				F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */,
 				F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */,
-				A3439B05293B48C20043E273 /* GoogleService-Info.plist in Resources */,
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
+				A328DFD5293B829000CE4FC3 /* GoogleService-Info.plist in Resources */,
 				A3FF018A2918F8EF00384211 /* apache.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -805,8 +805,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A328DFD6293B829000CE4FC3 /* GoogleService-Info.plist in Resources */,
 				A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */,
-				A3439B06293B493F0043E273 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1094,7 +1094,7 @@
 				CODE_SIGN_ENTITLEMENTS = HappyAnding/HappyAnding.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"HappyAnding/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HN3RL67C46;
@@ -1112,7 +1112,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1136,7 +1136,7 @@
 				CODE_SIGN_ENTITLEMENTS = HappyAnding/HappyAnding.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"HappyAnding/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HN3RL67C46;
@@ -1154,7 +1154,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1251,7 +1251,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HN3RL67C46;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1263,7 +1263,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1283,7 +1283,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HN3RL67C46;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1295,7 +1295,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

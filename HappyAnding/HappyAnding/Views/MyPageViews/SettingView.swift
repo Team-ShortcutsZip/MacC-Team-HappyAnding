@@ -47,7 +47,7 @@ struct SettingView: View {
             */
             
             // MARK: - 버전 정보
-            SettingCell(title: "버전정보", version: "1.1.0")
+            SettingCell(title: "버전정보", version: "1.2.0")
             
             
             // MARK: - 오픈소스 라이선스
