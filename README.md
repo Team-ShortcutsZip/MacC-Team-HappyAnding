@@ -83,6 +83,10 @@
 |![elie](https://user-images.githubusercontent.com/68676844/205005538-38658595-9627-4df2-80a5-bdcb6c93b18c.png)|![green](https://user-images.githubusercontent.com/68676844/205005410-a773b326-9c49-47ea-8313-24dc9822f6d6.png)|![halogen](https://user-images.githubusercontent.com/68676844/205005492-210bffd4-4a52-44c2-89ad-65c7c8b838c4.png)|![hongki](https://user-images.githubusercontent.com/68676844/205005435-fd4ccbea-41aa-434f-9889-84f93f988093.png)|![romi](https://user-images.githubusercontent.com/68676844/205005382-74f5b3a6-93a8-4f48-b70e-339f6867ddab.png)|![soi](https://user-images.githubusercontent.com/68676844/205079322-77590700-1f9c-4363-8c7e-33cb2eafa22e.png)
 
 
+## Thanks To
+- 우리팀 최고의 멘토 [@Judy](https://github.com/manju-minji)
+- 아이디어에 영감을  레드 [@LED](https://github.com/sm-amoled)
+
 ## License
 
 [Apache-2.0](https://choosealicense.com/licenses/apache-2.0/)

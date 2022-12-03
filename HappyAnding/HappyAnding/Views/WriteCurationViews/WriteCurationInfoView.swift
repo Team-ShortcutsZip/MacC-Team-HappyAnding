@@ -61,6 +61,7 @@ struct WriteCurationInfoView: View {
                             deletedShortcutCells.removeAll(where: { $0.id == shortcutCell.id })
                         }
                     }
+                    curation.shortcuts = curation.shortcuts.sorted { $0.title < $1.title }
                     curation.author = shortcutsZipViewModel.currentUser()
                     shortcutsZipViewModel.setData(model: curation)
                     shortcutsZipViewModel.updateShortcutCurationID(
