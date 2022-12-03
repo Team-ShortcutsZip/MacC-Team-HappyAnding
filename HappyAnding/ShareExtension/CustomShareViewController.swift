@@ -43,7 +43,7 @@ class CustomShareViewController: UIViewController {
             
             //링크가 적절하지 않을 때
             if !self.shareExtensionViewModel.isLinkValid(content: "\(url)") {
-                let alert = UIAlertController(title: "복사한 링크가 단축어 링크가 아니에요", message:"단축어를 올리기 위해 적절한 링크를 복사해 주세요", preferredStyle: .alert)
+                let alert = UIAlertController(title: "잘못된 접근이에요", message:"해당 링크는 ShortcutsZip으로 공유할 수 없어요", preferredStyle: .alert)
                 let action = UIAlertAction(title: "확인", style: .default) { action in
                     self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
                 }

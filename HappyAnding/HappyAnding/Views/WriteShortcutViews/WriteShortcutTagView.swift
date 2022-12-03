@@ -121,7 +121,6 @@ struct WriteShortcutTagView: View {
                 isWriting.toggle()
             
                 writeShortcutNavigation.navigationPath = .init()
-                print("**완료")
                 
             }, label: {
                 ZStack {
