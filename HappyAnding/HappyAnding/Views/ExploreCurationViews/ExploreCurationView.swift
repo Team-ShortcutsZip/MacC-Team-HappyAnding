@@ -26,15 +26,6 @@ struct ExploreCurationView: View {
                                                                   isAllUser: false,
                                                                   navigationParentView: .curations,
                                                                   curation: shortcutsZipViewModel.personalCurations))
-                .onAppear {
-                    shortcutsZipViewModel.personalCurations.removeAll()
-                    let personalCurationIDs = Set(shortcutsZipViewModel.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
-                    for curationID in personalCurationIDs {
-                        if let curation = shortcutsZipViewModel.userCurations.first(where: { $0.id == curationID }) {
-                            shortcutsZipViewModel.personalCurations.append(curation)
-                        }
-                    }
-                }
                 .padding(.bottom, 32)
                 
                 //추천 유저 큐레이션
@@ -50,6 +41,9 @@ struct ExploreCurationView: View {
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
         .background(Color.Background)
+        .onAppear {
+            shortcutsZipViewModel.refreshPersonalCurations()
+        }
     }
 }
 
