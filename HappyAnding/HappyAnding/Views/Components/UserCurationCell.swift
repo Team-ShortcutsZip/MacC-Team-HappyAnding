@@ -11,7 +11,7 @@ import SwiftUI
 
 struct UserCurationCell: View {
     
-    let curation: Curation
+    @State var curation: Curation
     let navigationParentView: NavigationParentView
     
     var body: some View {
@@ -71,6 +71,9 @@ struct UserCurationCell: View {
                     .foregroundColor(Color.Gray5)
                     .padding(.bottom, 20)
                     .fixedSize(horizontal: false, vertical: true)
+            }
+            .onAppear() {
+                curation.shortcuts = curation.shortcuts.sorted(by: { $0.title < $1.title})
             }
             .padding(.horizontal, 24)
             .background(Color.Background_list)
