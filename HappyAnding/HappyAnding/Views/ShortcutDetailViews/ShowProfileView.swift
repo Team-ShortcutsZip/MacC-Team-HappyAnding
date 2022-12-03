@@ -32,9 +32,10 @@ struct ShowProfileView: View {
                 
                 //MARK: 프로필이미지 및 닉네임
                 VStack {
-                    Circle()
-                        .fill(Color.Gray4)
+                    Image(systemName: "person.crop.circle.fill")
+                        .font(.system(size: 72, weight: .medium))
                         .frame(width: 72, height: 72)
+                        .foregroundColor(.Gray3)
                     Text(data.userInfo?.nickname ?? "user")
                         .Title1()
                         .foregroundColor(.Gray5)
