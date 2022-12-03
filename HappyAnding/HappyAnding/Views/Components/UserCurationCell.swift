@@ -73,7 +73,7 @@ struct UserCurationCell: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .onAppear() {
-                curation.shortcuts = curation.shortcuts.sorted(by: { $0.title < $1.title})
+                curation.shortcuts = curation.shortcuts.sorted { $0.title < $1.title }
             }
             .padding(.horizontal, 24)
             .background(Color.Background_list)
