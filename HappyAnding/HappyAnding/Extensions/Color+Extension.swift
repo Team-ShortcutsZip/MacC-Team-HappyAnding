@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 extension String {
     
@@ -79,5 +80,28 @@ extension Color {
         let colors = [Color("\(color)01"), Color("\(color)02")]
         return LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
         
+    }
+}
+
+extension UIColor {
+    static var Gray4: UIColor {
+        guard let color = UIColor(named: "Grey060") else { return .label }
+        return color
+    }
+    static var Gray5: UIColor {
+        guard let color = UIColor(named: "Grey070") else { return .label }
+        return color
+    }
+    static var Background: UIColor {
+        guard let color = UIColor(named: "Grey020") else { return .label }
+        return color
+    }
+    static var Primary: UIColor {
+        guard let color = UIColor(named: "Primary") else { return .label }
+        return color
+    }
+    static var PrimaryOpacity: UIColor {
+        guard let color = UIColor(named: "Primary") else { return .label }
+        return color.withAlphaComponent(0.3)
     }
 }

@@ -1,6 +1,6 @@
 //
-//  ValidationCheckTextField.swift.swift
-//  HappyAnding
+//  ShareExtensionValidationTextField.swift
+//  ShareExtension
 //
 //  Created by 이지원 on 2022/10/20.
 //
@@ -58,7 +58,7 @@ enum TextFieldError {
     }
 }
 
-struct ValidationCheckTextField: View {
+struct ShareExtensionValidationCheckTextField: View {
     let textType: TextType
     let isMultipleLines: Bool
     let title: String
@@ -75,7 +75,9 @@ struct ValidationCheckTextField: View {
     @State private var textFieldState = TextFieldState.notStatus
     @State private var textFieldError = TextFieldError.invalidLink
     
-    @FocusState private var isFocused: Bool
+    @Binding var isFocused: [Bool]
+    
+    var index: Int
     
     var body: some View {
         VStack {
@@ -145,48 +147,49 @@ struct ValidationCheckTextField: View {
     }
     
     var oneLineEditor: some View {
-        TextField(placeholder, text: $content)
-            .focused($isFocused)
-            .disableAutocorrection(true)
-            .textInputAutocapitalization(.never)
-            .Body2()
-            .frame(height: 24)
-            .padding(16)
-            .onAppear {
-                checkValidation()
+        TextField(placeholder, text: $content) { _ in
+            for index in isFocused.indices {
+                isFocused[index] = index == self.index
             }
-            .onChange(of: isFocused) { newValue in
-                checkValidation()
-            }
-            .onChange(of: content) { newValue in
-                checkValidation()
-            }
-            .onTapGesture {
-                isFocused = true
-            }
+        }
+        .disableAutocorrection(true)
+        .textInputAutocapitalization(.never)
+        .Body2()
+        .frame(height: 24)
+        .padding(16)
+        .onAppear {
+            checkValidation()
+        }
+        .onChange(of: isFocused) { newValue in
+            checkValidation()
+        }
+        .onChange(of: content) { newValue in
+            checkValidation()
+        }
+        .onSubmit {
+            isFocused[index] = false
+        }
     }
     
     var multiLineEditor: some View {
         
         ZStack(alignment: .topLeading) {
             
-            CustomTextEditor(text: $content,
+            ShareExtensionCustomTextEditor(text: $content,
                              inputHeight: $inputHeight,
-                             isFocused: _isFocused)
-            .focused($isFocused)
+                                           isFocused: $isFocused,
+                                           index: .constant(3))
             .frame(height: inputHeight)
             .padding(16)
             
-            if content.isEmpty && !isFocused {
+            if content.isEmpty && !isFocused[index] {
                 Text(placeholder)
                     .Body2()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
                     .padding(16)
                     .foregroundColor(.Gray2)
-                    .onTapGesture {
-                        isFocused = true
-                    }
+                    .allowsHitTesting(false)
             }
         }
         .onAppear {
@@ -238,10 +241,10 @@ struct ValidationCheckTextField: View {
     }
 }
 
-extension ValidationCheckTextField {
+extension ShareExtensionValidationCheckTextField {
     
     func checkValidation() {
-        if isFocused {
+        if isFocused[index] {
             if content.isEmpty {
                 isValid = textType.isOptional
                 isExceeded = false

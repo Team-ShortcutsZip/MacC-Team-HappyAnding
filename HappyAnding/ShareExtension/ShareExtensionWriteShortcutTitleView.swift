@@ -1,19 +1,25 @@
 //
-//  WriteShortcutTitleView.swift
-//  HappyAnding
+//  ShareExtensionWriteShortcutTitleView.swift
+//  ShareExtension
 //
-//  Created by 이지원 on 2022/10/19.
+//  Created by HanGyeongjun on 2022/11/22.
 //
 
 import SwiftUI
 
-struct WriteShortcutTitleView: View {
+
+
+struct ShareExtensionWriteShortcutTitleView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
+    enum TextFieldType {
+        case shortcutTitleText
+        case shortcutSubtitleText
+        case shortcutDescriptionText
+    }
+    
     @Environment(\.presentationMode) var presentationMode
     
-    @Binding var isWriting: Bool
+    @ObservedObject var shareExtensionViewModel: ShareExtensionViewModel
     
     @State var isShowingIconModal = false
     @State var isNameValid = false
@@ -21,145 +27,34 @@ struct WriteShortcutTitleView: View {
     @State var isOneLineValid = false
     @State var isMultiLineValid = false
     @State var isShowingCategoryModal = false
-    @State var isRequirementValid = false
-    
-    @State var existingCategory: [String] = []
-    @State var newCategory: [String] = []
-    
-    @State var shortcut = Shortcuts(sfSymbol: "",
-                                    color: "",
-                                    title: "",
-                                    subtitle: "",
-                                    description: "",
-                                    category: [String](),
-                                    requiredApp: [String](),
-                                    numberOfLike: 0,
-                                    numberOfDownload: 0,
-                                    author: "",
-                                    shortcutRequirements: "",
-                                    downloadLink: [""],
-                                    curationIDs: [String]())
-    
-    let isEdit: Bool
-    
     @State var isInfoButtonTouched: Bool = false
+    
+    @State var isTextFocused = [Bool](repeating: false, count: 5)
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 32){
                 iconModalView
                 shortcutTitleText
-                shortcutLinkText
+                shortcutLinkText.disabled(true)
                 shortcutSubtitleText
                 shortcutDescriptionText
                 shortcutCategory
                 shortcutsRequiredApp
             }
         }
-        //        .ignoresSafeArea(edges: .bottom)
         .background(Color.Background)
-        .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Int.self) { value in
-            WriteShortcutdescriptionView(shortcut: $shortcut,
-                                         isWriting: $isWriting,
-                                         isEdit: isEdit)
+        
+        .onChange(of: shareExtensionViewModel.shortcut) { _ in
+            let isDoneValid = shareExtensionViewModel.isDoneValid()
+            if isDoneValid {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enabledDoneButton"), object: nil)
+            } else {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
+            }
         }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    self.presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("취소")
-                        .Body1()
-                        .foregroundColor(.Gray5)
-                }
-            }
-            
-            // MARK: -업로드 버튼
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    if let index = shortcutsZipViewModel.allShortcuts.firstIndex(where: {$0.id == shortcut.id}) {
-                        shortcutsZipViewModel.allShortcuts[index] = shortcut
-                    }
-                    
-                    shortcut.author = shortcutsZipViewModel.currentUser()
-                    if isEdit {
-                        //뷰모델의 카테고리별 단축어 목록에서 정보 수정
-                        newCategory = shortcut.category
-                        existingCategory.forEach { category in
-                            if !shortcut.category.contains(category) {
-                                newCategory.removeAll(where: { $0 == category })
-                                shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].removeAll(where: { $0.id == shortcut.id })
-                            } else {
-                                newCategory.removeAll(where: { $0 == category })
-                                if let index = shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].firstIndex(where: { $0.id == shortcut.id}) {
-                                    shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index][index] = shortcut
-                                }
-                            }
-                        }
-                        newCategory.forEach { category in
-                            if !shortcutsZipViewModel.isFirstFetchInCategory[Category(rawValue: category)!.index] {
-                                shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
-                            }
-                        }
-                        
-                        //서버 데이터 변경
-                        shortcutsZipViewModel.setData(model: shortcut)
-                        //TODO: 셀정보에 변경사항이 있을 경우에만 함수를 호출하도록 변경 필요
-                        shortcutsZipViewModel.updateShortcutInCuration(
-                            shortcutCell: ShortcutCellModel(
-                                id: shortcut.id,
-                                sfSymbol: shortcut.sfSymbol,
-                                color: shortcut.color,
-                                title: shortcut.title,
-                                subtitle: shortcut.subtitle,
-                                downloadLink: shortcut.downloadLink.last!
-                            ),
-                            curationIDs: shortcut.curationIDs
-                        )
-                    } else {
-                        //새로운 단축어 생성 및 저장
-                        // 뷰모델에 추가
-                        shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
-                        
-                        // 서버에 추가
-                        shortcutsZipViewModel.setData(model: shortcut)
-                    }
-                    
-                    isWriting.toggle()
-                    
-                    writeShortcutNavigation.navigationPath = .init()
-                    
-                }, label: {
-                    Text("업로드")
-                        .Headline()
-                        .foregroundColor(.Primary)
-                        .opacity(shortcut.color.isEmpty ||
-                                 shortcut.sfSymbol.isEmpty ||
-                                 shortcut.title.isEmpty ||
-                                 !isNameValid ||
-                                 shortcut.downloadLink.isEmpty ||
-                                 !isLinkValid ||
-                                 shortcut.subtitle.isEmpty ||
-                                 !isOneLineValid ||
-                                 shortcut.description.isEmpty ||
-                                 !isMultiLineValid ||
-                                 shortcut.category.isEmpty ? 0.3 : 1)
-                })
-                .disabled(shortcut.color.isEmpty ||
-                          shortcut.sfSymbol.isEmpty ||
-                          shortcut.title.isEmpty ||
-                          !isNameValid ||
-                          shortcut.downloadLink.isEmpty ||
-                          !isLinkValid ||
-                          shortcut.subtitle.isEmpty ||
-                          !isOneLineValid ||
-                          shortcut.description.isEmpty ||
-                          !isMultiLineValid ||
-                          shortcut.category.isEmpty
-                )
-            }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "keyboardHide"))) { object in
+            isTextFocused = [false, false, false, false]
         }
     }
     
@@ -168,7 +63,7 @@ struct WriteShortcutTitleView: View {
         Button(action: {
             isShowingIconModal = true
         }, label: {
-            if shortcut.sfSymbol.isEmpty {
+            if shareExtensionViewModel.shortcut.sfSymbol.isEmpty {
                 ZStack(alignment: .center) {
                     Rectangle()
                         .fill(Color.Gray1)
@@ -184,11 +79,11 @@ struct WriteShortcutTitleView: View {
             } else {
                 ZStack(alignment: .center) {
                     Rectangle()
-                        .fill(Color.fetchGradient(color: shortcut.color))
+                        .fill(Color.fetchGradient(color: shareExtensionViewModel.shortcut.color))
                         .cornerRadius(12.35)
                         .frame(width: 84, height: 84)
                     
-                    Image(systemName: shortcut.sfSymbol)
+                    Image(systemName: shareExtensionViewModel.shortcut.sfSymbol)
                         .font(.system(size: 32))
                         .frame(width: 84, height: 84)
                         .foregroundColor(.Text_icon)
@@ -197,8 +92,8 @@ struct WriteShortcutTitleView: View {
         })
         .sheet(isPresented: $isShowingIconModal) {
             IconModalView(isShowingIconModal: $isShowingIconModal,
-                          iconColor: $shortcut.color,
-                          iconSymbol: $shortcut.sfSymbol)
+                          iconColor: $shareExtensionViewModel.shortcut.color,
+                          iconSymbol: $shareExtensionViewModel.shortcut.sfSymbol)
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
@@ -208,54 +103,59 @@ struct WriteShortcutTitleView: View {
     
     //MARK: -단축어 이름
     private var shortcutTitleText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: "단축어 이름",
-                                 placeholder: "단축어 이름을 입력하세요",
-                                 lengthLimit: 20,
-                                 isDownloadLinkTextField: false,
-                                 content: $shortcut.title,
-                                 isValid: $isNameValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: false,
+                                               title: "단축어 이름",
+                                               placeholder: "단축어 이름을 입력하세요",
+                                               lengthLimit: 20,
+                                               isDownloadLinkTextField: false,
+                                               content: $shareExtensionViewModel.shortcut.title,
+                                               isValid: $isNameValid,
+                                               isFocused: $isTextFocused, index: 0
         )
-        .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
     
     //MARK: -단축어 링크
     private var shortcutLinkText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: "단축어 링크",
-                                 placeholder: "단축어 링크를 추가하세요",
-                                 lengthLimit: nil,
-                                 isDownloadLinkTextField: true,
-                                 content: $shortcut.downloadLink[0],
-                                 isValid: $isLinkValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: false,
+                                               title: "단축어 링크",
+                                               placeholder: "단축어 링크를 추가하세요",
+                                               lengthLimit: nil,
+                                               isDownloadLinkTextField: true,
+                                               content: $shareExtensionViewModel.shortcut.downloadLink[0],
+                                               isValid: $isLinkValid,
+                                               isFocused: $isTextFocused,
+                                               index: 1
         )
     }
     
     //MARK: -한줄 설명
     private var shortcutSubtitleText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: "한줄 설명",
-                                 placeholder: "해당 단축어의 핵심 기능을 작성해주세요",
-                                 lengthLimit: 20,
-                                 isDownloadLinkTextField: false,
-                                 content: $shortcut.subtitle,
-                                 isValid: $isOneLineValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: false,
+                                               title: "한줄 설명",
+                                               placeholder: "해당 단축어의 핵심 기능을 작성해주세요",
+                                               lengthLimit: 20,
+                                               isDownloadLinkTextField: false,
+                                               content: $shareExtensionViewModel.shortcut.subtitle,
+                                               isValid: $isOneLineValid,
+                                               isFocused: $isTextFocused,
+                                               index: 2
         )
     }
     
     //MARK: -상세 설명
     private var shortcutDescriptionText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: true,
-                                 title: "상세 설명",
-                                 placeholder: "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력해주세요",
-                                 lengthLimit: 300,
-                                 isDownloadLinkTextField: false,
-                                 content: $shortcut.description,
-                                 isValid: $isMultiLineValid
+        ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                               isMultipleLines: true,
+                                               title: "상세 설명",
+                                               placeholder: "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력해주세요",
+                                               lengthLimit: 300,
+                                               isDownloadLinkTextField: false,
+                                               content: $shareExtensionViewModel.shortcut.description,
+                                               isValid: $isMultiLineValid, isFocused: $isTextFocused,
+                                               index: 3
         )
     }
     
@@ -273,7 +173,7 @@ struct WriteShortcutTitleView: View {
             }
             .padding(.horizontal, 16)
             
-            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shortcut.category)
+            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shareExtensionViewModel.shortcut.category)
                 .padding(.top, 2)
         }
     }
@@ -292,7 +192,7 @@ struct WriteShortcutTitleView: View {
                                 .foregroundColor(.Gray2)
                                 .Body2()
                         } else {
-                            Text(selectedCategories.map { Category(rawValue: $0)!.translateName() }.joined(separator: ", "))
+                            Text(selectedCategories.map { String( Category(rawValue: $0)!.translateName()) }.joined(separator: ", "))
                                 .foregroundColor(.Gray4)
                                 .Body2()
                                 .multilineTextAlignment(.leading)
@@ -338,7 +238,7 @@ struct WriteShortcutTitleView: View {
             }
             .padding(.horizontal, 16)
             ZStack(alignment: .top) {
-                relatedAppList(relatedApps: $shortcut.requiredApp)
+                relatedAppList(relatedApps: $shareExtensionViewModel.shortcut.requiredApp)
                     .padding(.bottom, 44)
                 if isInfoButtonTouched {
                     ZStack(alignment: .center) {
@@ -367,8 +267,7 @@ struct WriteShortcutTitleView: View {
     }
     struct relatedAppList: View {
         @Binding var relatedApps: [String]
-        
-        @FocusState private var isFocused: Bool
+        @State var isTextFocused = [Bool](repeating: false, count: 5)
         @State var isTextFieldShowing = false
         @State var relatedApp = ""
         
@@ -380,14 +279,13 @@ struct WriteShortcutTitleView: View {
                     }
                     
                     if isTextFieldShowing {
-                        TextField("", text: $relatedApp)
+                        ShareExtensionTagTextField(text: $relatedApp, isFirstResponder: $isTextFocused[4])
                             .modifier(ClearButton(text: $relatedApp))
-                            .focused($isFocused)
                             .onAppear {
-                                isFocused = true
+                                isTextFocused[4] = true
                             }
-                            .onChange(of: isFocused) { _ in
-                                if !isFocused {
+                            .onChange(of: isTextFocused[4]) { _ in
+                                if !isTextFocused[4] {
                                     if !relatedApp.isEmpty {
                                         relatedApps.append(relatedApp)
                                         relatedApp = ""
@@ -395,12 +293,15 @@ struct WriteShortcutTitleView: View {
                                     isTextFieldShowing = false
                                 }
                             }
+                            .onSubmit {
+                                isTextFocused[4] = false
+                            }
                             .modifier(CellModifier(foregroundColor: Color.Gray4, strokeColor: Color.Primary))
                     }
                     
                     Button(action: {
                         isTextFieldShowing = true
-                        isFocused = true
+                        isTextFocused[4] = true
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
@@ -420,7 +321,11 @@ struct WriteShortcutTitleView: View {
         
         var body: some View {
             HStack {
-                Text(item)
+                Button(action: {
+                    //TODO: 탭 되었을 때 수정 로직 추가
+                }, label: {
+                    Text(item)
+                })
                 
                 Button(action: {
                     items.removeAll { $0 == item }
