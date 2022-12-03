@@ -279,7 +279,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
                     }
                     
                     if isTextFieldShowing {
-                        TextField("", text: $relatedApp)
+                        ShareExtensionTagTextField(text: $relatedApp, isFirstResponder: $isTextFocused[4])
                             .modifier(ClearButton(text: $relatedApp))
                             .onAppear {
                                 isTextFocused[4] = true
@@ -313,9 +313,6 @@ struct ShareExtensionWriteShortcutTitleView: View {
                 .padding(.leading, 16)
             }
             .scrollIndicators(.hidden)
-            .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "keyboardHide"))) { object in
-                isTextFocused[4] = false
-            }
         }
     }
     struct RelatedAppTag: View {

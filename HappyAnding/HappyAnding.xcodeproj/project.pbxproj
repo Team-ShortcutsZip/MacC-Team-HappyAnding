@@ -129,6 +129,7 @@
 		F9DB8EB92939853D00516CE1 /* ShareExtensionValidationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */; };
 		F9DB8EBB293986E100516CE1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
 		F9DB8EBD293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */; };
+		F9DB8ED3293B4C3200516CE1 /* ShareExtensionTagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */; };
 		F9F4D36A2906E0B000DC8546 /* Navigationbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -277,6 +278,7 @@
 		F9CAEF822914855900224B0A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionValidationTextField.swift; sourceTree = "<group>"; };
 		F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCustomTextEditor.swift; sourceTree = "<group>"; };
+		F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionTagTextField.swift; sourceTree = "<group>"; };
 		F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigationbar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -603,6 +605,7 @@
 				A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutTitleView.swift */,
 				F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */,
 				F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */,
+				F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */,
 				A3A6AD1B292763E2004C49DC /* Info.plist */,
 			);
 			path = ShareExtension;
@@ -935,6 +938,7 @@
 				A3275C7A292E6FCB00CD5B12 /* String+Extension.swift in Sources */,
 				A3FC475A292A61CC0058BF26 /* Keyword.swift in Sources */,
 				A3439AFC2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
+				F9DB8ED3293B4C3200516CE1 /* ShareExtensionTagTextField.swift in Sources */,
 				A3FC474E292A616A0058BF26 /* Color+Extension.swift in Sources */,
 				F9DB8EBD293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift in Sources */,
 				F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */,
