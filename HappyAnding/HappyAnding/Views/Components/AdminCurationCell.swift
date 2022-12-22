@@ -43,7 +43,7 @@ struct AdminCurationCell: View {
                     .Title1()
                     .foregroundColor(.Text_curation)
                     .lineLimit(1)
-                Text(adminCuration.subtitle)
+                Text(adminCuration.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                     .Body2()
                     .foregroundColor(.Text_curation)
                     .lineLimit(2)
