@@ -47,11 +47,11 @@ struct AdminCurationCell: View {
                     .Body2()
                     .foregroundColor(.Text_curation)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading)
             }
             Spacer()
         }
     }
-    
     
     ///백그라운드 이미지
     var backgroundImage: some View {
