@@ -89,7 +89,7 @@ struct ReadAdminCurationView: View {
                 Text(curation.title)
                     .Title2()
                     .foregroundColor(.Gray5)
-                Text(curation.subtitle)
+                Text(curation.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                     .Body2()
                     .foregroundColor(.Gray4)
             }
