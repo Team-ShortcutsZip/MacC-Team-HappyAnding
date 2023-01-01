@@ -14,6 +14,7 @@ struct ReadShortcutHeaderView: View {
     @Binding var shortcut: Shortcuts
     @Binding var isMyLike: Bool
     @State var userInformation: User? = nil
+    @State var numberOfLike = 0
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -45,9 +46,11 @@ struct ReadShortcutHeaderView: View {
             shortcutsZipViewModel.fetchUser(userID: shortcut.author,
                                             isCurrentUser: false) { user in
                 userInformation = user
+                numberOfLike = shortcut.numberOfLike
             }
             
         }
+        .onDisappear { self.shortcut.numberOfLike = numberOfLike }
     }
     
     // MARK: 단축어 아이콘
@@ -64,7 +67,7 @@ struct ReadShortcutHeaderView: View {
     
     // MARK: 좋아요 버튼
     var likeButton: some View {
-        Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(shortcut.numberOfLike)")
+        Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(numberOfLike)")
             .Body2()
             .padding(10)
             .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
@@ -73,11 +76,7 @@ struct ReadShortcutHeaderView: View {
             .onTapGesture {
                 isMyLike.toggle()
                 //화면 상의 좋아요 추가, 취소 기능 동작
-                if isMyLike {
-                    self.shortcut.numberOfLike += 1
-                } else {
-                    self.shortcut.numberOfLike -= 1
-                }
+                numberOfLike += isMyLike ? 1 : -1
             }
     }
     
