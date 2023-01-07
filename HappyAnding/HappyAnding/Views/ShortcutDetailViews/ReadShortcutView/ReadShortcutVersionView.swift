@@ -15,6 +15,9 @@ struct ReadShortcutVersionView: View {
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    @State private var tryActionWithoutSignIn: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
         if shortcut.updateDescription.count == 1 {
@@ -49,12 +52,16 @@ struct ReadShortcutVersionView: View {
                         }
                         if index != 0 {
                             Button {
-                                if let url = URL(string: shortcut.downloadLink[index]) {
-                                    if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
-                                        shortcut.numberOfDownload += 1
+                                if !useWithoutSignIn {
+                                    if let url = URL(string: shortcut.downloadLink[index]) {
+                                        if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
+                                            shortcut.numberOfDownload += 1
+                                        }
+                                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
+                                        openURL(url)
                                     }
-                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
-                                    openURL(url)
+                                } else {
+                                    self.tryActionWithoutSignIn = true
                                 }
                             } label: {
                                 Text("이전 버전 다운로드")
@@ -71,6 +78,21 @@ struct ReadShortcutVersionView: View {
                     .frame(maxHeight: .infinity)
             }
         }
-            .padding(.top, 16)
+        .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
+            Button(role: .cancel) {
+                tryActionWithoutSignIn = false
+            } label: {
+                Text("취소")
+            }
+            Button {
+                useWithoutSignIn = false
+                tryActionWithoutSignIn = false
+            } label: {
+                Text("로그인하기")
+            }
+        } message: {
+            Text("이 기능은 로그인 후 사용할 수 있어요")
+        }
+        .padding(.top, 16)
     }
 }

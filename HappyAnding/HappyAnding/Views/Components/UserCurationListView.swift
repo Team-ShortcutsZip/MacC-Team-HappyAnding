@@ -73,7 +73,7 @@ struct UserCurationListView: View {
                 Text("로그인하기")
             }
         } message: {
-            Text("추천 모음집 작성은 로그인 후 사용할 수 있는 기능이에요")
+            Text("추천 모음집 작성은 로그인 후 사용할 수 있어요")
         }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {

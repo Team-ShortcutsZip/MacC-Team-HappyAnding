@@ -86,7 +86,7 @@ struct MyShortcutCardListView: View {
                 Text("로그인하기")
             }
         } message: {
-            Text("단축어 작성은 로그인 후 사용할 수 있는 기능이에요")
+            Text("단축어 작성은 로그인 후 사용할 수 있어요")
         }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
