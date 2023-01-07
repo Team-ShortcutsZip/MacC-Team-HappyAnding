@@ -23,9 +23,6 @@ struct ShortcutsZipView: View {
         }  else {
             if useWithoutSignIn {
                 ShortcutTabView()
-                    .onAppear() {
-                        print(userAuth)
-                    }
 //                    .environmentObject(userAuth)
             } else {
                 if userAuth.isLoggedIn {

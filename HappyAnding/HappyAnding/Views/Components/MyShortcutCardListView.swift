@@ -10,8 +10,10 @@ import SwiftUI
 struct MyShortcutCardListView: View {
     
     @StateObject var writeNavigation = WriteShortcutNavigation()
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
+    @State private var tryWriteWithoutSignIn: Bool = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
@@ -44,7 +46,11 @@ struct MyShortcutCardListView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     Button {
-                        self.isWriting = true
+                        if !useWithoutSignIn {
+                            self.isWriting = true
+                        } else {
+                            self.tryWriteWithoutSignIn = true
+                        }
                     } label: {
                         AddMyShortcutCardView()
                     }
@@ -66,6 +72,21 @@ struct MyShortcutCardListView: View {
                 }
                 .padding(.horizontal, 16)
             }
+        }
+        .alert("로그인을 진행해주세요", isPresented: $tryWriteWithoutSignIn) {
+            Button(role: .cancel) {
+                tryWriteWithoutSignIn = false
+            } label: {
+                Text("취소")
+            }
+            Button {
+                useWithoutSignIn = false
+                tryWriteWithoutSignIn = false
+            } label: {
+                Text("로그인하기")
+            }
+        } message: {
+            Text("단축어 작성은 로그인 후 사용할 수 있는 기능이에요")
         }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
