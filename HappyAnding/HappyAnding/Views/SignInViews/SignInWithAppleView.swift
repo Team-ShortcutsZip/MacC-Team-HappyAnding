@@ -14,6 +14,8 @@ struct SignInWithAppleView: View {
         
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
+    
     var body: some View {
         
         VStack {
@@ -33,9 +35,6 @@ struct SignInWithAppleView: View {
             
             Spacer()
             
-            
-            // TODO: HiFi design 수정 시 색상 및 폰트 변경
-            
             Button(action: {
                 appleLogin()
             }, label: {
@@ -48,8 +47,17 @@ struct SignInWithAppleView: View {
                     Text("\(Image(systemName: "applelogo")) Apple로 로그인")
                         .foregroundColor(.White)
                 }
-                .padding(.bottom, 37)
+                .padding(.bottom, 8)
             })
+            
+            Button(action: {
+                useWithoutSignIn = true
+            }, label: {
+                Text("로그인 없이 둘러보기")
+                    .Body2()
+                    .foregroundColor(.Gray5)
+            })
+            .padding(.bottom, 12)
         }
         .background(Color.Background)
     }
