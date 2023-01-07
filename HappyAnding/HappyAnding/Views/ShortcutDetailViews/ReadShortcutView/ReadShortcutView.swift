@@ -254,7 +254,7 @@ extension ReadShortcutView {
                     Image(systemName: "arrow.turn.down.right")
                         .foregroundColor(.Gray4)
                 }
-                TextField(useWithoutSignIn ? "로그인 후 댓글을 작성할 수 있습니다" : "댓글을 입력하세요", text: $commentText, axis: .vertical)
+                TextField(useWithoutSignIn ? "로그인 후 댓글을 작성할 수 있어요" : "댓글을 입력하세요", text: $commentText, axis: .vertical)
                     .disabled(useWithoutSignIn == true)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
