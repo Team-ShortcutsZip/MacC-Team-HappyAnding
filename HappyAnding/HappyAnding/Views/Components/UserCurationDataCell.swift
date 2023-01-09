@@ -1,17 +1,18 @@
 //
-//  UserCurationCell.swift
+//  UserCurationDataCell.swift
 //  HappyAnding
 //
-//  Created by 이지원 on 2022/10/20.
+//  Created by 전지민 on 2023/01/10.
 //
 
 import SwiftUI
 
 //MARK: - UserCurationCell 구현 시작
 
-struct UserCurationCell: View {
+struct UserCurationDataCell: View {
     
-    @State var curation: Curation
+    @Binding var data: NavigationReadUserCurationType
+    
     let navigationParentView: NavigationParentView
     var lineLimit: Int?
     
@@ -23,7 +24,7 @@ struct UserCurationCell: View {
                 
                 //MARK: - 단축어 아이콘 배열
                 HStack {
-                    ForEach(curation.shortcuts.prefix(4), id: \.self) { shortcut in
+                    ForEach(data.userCuration.shortcuts.prefix(4), id: \.self) { shortcut in
                         ZStack {
                             Rectangle()
                                 .fill(Color.fetchGradient(
@@ -38,7 +39,7 @@ struct UserCurationCell: View {
                     }
                     
                     //단축어가 4개 이상인 경우에만 그리는 아이콘
-                    if curation.shortcuts.count > 4 {
+                    if data.userCuration.shortcuts.count > 4 {
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Color.Gray2)
@@ -46,7 +47,7 @@ struct UserCurationCell: View {
                                 .frame(width: 36, height: 36)
                             HStack(spacing: 0) {
                                 Image(systemName: "plus")
-                                Text("\(curation.shortcuts.count-4)")
+                                Text("\(data.userCuration.shortcuts.count-4)")
                             }
                             .foregroundColor(.Gray5)
                             .Footnote()
@@ -58,11 +59,11 @@ struct UserCurationCell: View {
                 
                 //MARK: - curation title, subtitle
                 
-                Text(curation.title)
+                Text(data.userCuration.title)
                     .Headline()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(curation.subtitle)
+                Text(data.userCuration.subtitle)
                     .Body2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
@@ -71,7 +72,7 @@ struct UserCurationCell: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .onAppear() {
-                curation.shortcuts = curation.shortcuts.sorted { $0.title < $1.title }
+                data.userCuration.shortcuts = data.userCuration.shortcuts.sorted { $0.title < $1.title }
             }
             .padding(.horizontal, 24)
             .background(Color.Background_list)
@@ -86,15 +87,3 @@ struct UserCurationCell: View {
         .padding(.bottom, 12)
     }
 }
-
-//struct UserCurationCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VStack {
-//            UserCurationCell(
-//                title: "워라벨 지키기. 단축어와 함께",
-//                subtitle: "nil",
-//                shortcuts: Shortcut.fetchData(number: 5)
-//            )
-//        }
-//    }
-//}
