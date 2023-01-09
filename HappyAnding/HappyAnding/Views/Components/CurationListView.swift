@@ -16,16 +16,13 @@ struct CurationListView: View {
         VStack(spacing: 0) {
             listHeader
             
-            ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
-                if index < 2 {
-                    
-                    let data = NavigationReadUserCurationType(userCuration: curation,
-                                                              navigationParentView: self.data.navigationParentView)
-                    NavigationLink(value: data) {
-                        UserCurationCell(curation: curation,
-                                         navigationParentView: self.data.navigationParentView,
-                                         lineLimit: 2)
-                    }
+            ForEach(data.curation.prefix(2), id: \.self) { curation in
+                let data = NavigationReadUserCurationType(userCuration: curation,
+                                                          navigationParentView: self.data.navigationParentView)
+                NavigationLink(value: data) {
+                    UserCurationCell(curation: curation,
+                                     navigationParentView: self.data.navigationParentView,
+                                     lineLimit: 2)
                 }
             }
         }
