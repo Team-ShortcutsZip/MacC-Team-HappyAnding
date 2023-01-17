@@ -72,6 +72,7 @@ class ShortcutsZipViewModel: ObservableObject {
     }
     
     func refreshPersonalCurations() {
+        self.personalCurations.removeAll()
         let personalCurationIDs = Set(self.shortcutsUserDownloaded.flatMap({ $0.curationIDs }))
         for curationID in personalCurationIDs {
             if let curation = self.userCurations.first(where: { $0.id == curationID }) {
@@ -430,7 +431,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
         }
-        
+//        self.refreshPersonalCurations()
     }
     
     //MARK: 좋아요 수를 업데이트하는 함수

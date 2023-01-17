@@ -39,14 +39,14 @@ struct ExploreCurationView: View {
                                                                   curation: shortcutsZipViewModel.userCurations))
             }
             .padding(.bottom, 32)
+            .onChange(of: shortcutsZipViewModel.userCurations) { _ in
+                shortcutsZipViewModel.refreshPersonalCurations()
+            }
         }
         .navigationBarTitle(Text("추천 모음집 둘러보기"))
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
         .background(Color.Background)
-        .onAppear {
-            shortcutsZipViewModel.refreshPersonalCurations()
-        }
     }
 }
 
