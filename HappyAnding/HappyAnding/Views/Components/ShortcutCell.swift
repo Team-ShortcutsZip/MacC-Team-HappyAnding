@@ -111,7 +111,7 @@ struct ShortcutCell: View {
                 .Headline()
                 .foregroundColor(.Gray5)
                 .lineLimit(1)
-            Text(shortcutCell.subtitle + "        ")
+            Text(shortcutCell.subtitle.LineBreaking)
                 .Footnote()
                 .foregroundColor(.Gray3)
                 .multilineTextAlignment(.leading)

@@ -108,6 +108,7 @@
 		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
 		A3FF018A2918F8EF00384211 /* apache.txt in Resources */ = {isa = PBXBuildFile; fileRef = A3FF01892918F8EF00384211 /* apache.txt */; };
 		A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF018D291ACFA500384211 /* WithdrawalView.swift */; };
+		A3FF4F832979C09000FA9EEE /* LineBreaking+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */; };
 		F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */; };
 		F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
@@ -266,6 +267,7 @@
 		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		A3FF01892918F8EF00384211 /* apache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = apache.txt; sourceTree = "<group>"; };
 		A3FF018D291ACFA500384211 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
+		A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LineBreaking+Extension.swift"; sourceTree = "<group>"; };
 		F9131B6A2922D38D00868A0E /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
 		F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipView.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 				8795A16F292AB945004B765F /* UIScreen+Extension.swift */,
 				F9AC2BB92935D34C00165820 /* Image+Extension.swift */,
 				A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */,
+				A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -899,6 +902,7 @@
 				87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */,
 				F9724BBF292755E400860F8A /* Comment.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
+				A3FF4F832979C09000FA9EEE /* LineBreaking+Extension.swift in Sources */,
 				A0F822B729164D2300AF4448 /* ShortcutsListView.swift in Sources */,
 				4D3DBB88292E67E600DE8160 /* EditNicknameView.swift in Sources */,
 				87E99CE82907C6E6009B691F /* Shortcuts.swift in Sources */,
