@@ -16,6 +16,7 @@ struct ShortcutTabView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State private var randomCategories = Category.allCases.shuffled().prefix(2)
+    @State var isFolded = true
     
     @AppStorage("signInStatus") var signInStatus = false
     @State private var isShortcutDeeplink = false
@@ -54,7 +55,7 @@ struct ShortcutTabView: View {
         ScrollViewReader { proxy in
             TabView(selection: handler) {
                 NavigationStack(path: $shortcutNavigation.navigationPath) {
-                    ExploreShortcutView(randomCategories: Array(randomCategories))
+                    ExploreShortcutView(randomCategories: Array(randomCategories), isFolded: $isFolded)
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
                             if shortcutNavigation.navigationPath.count > 0 {
@@ -65,6 +66,11 @@ struct ShortcutTabView: View {
                                 }
                             }
                             self.tappedTwice = false
+                        })
+                        .onChange(of: isFolded, perform: { tappedMore in
+                            withAnimation {
+                                proxy.scrollTo(999, anchor: .bottom)
+                            }
                         })
                         .navigationDestination(for: NavigationProfile.self) { data in
                             ShowProfileView(data: data)

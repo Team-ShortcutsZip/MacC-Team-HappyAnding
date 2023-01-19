@@ -11,6 +11,7 @@ struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     let randomCategories: [Category]
+    @Binding var isFolded: Bool
     
     var body: some View {
         ScrollView {
@@ -32,7 +33,7 @@ struct ExploreShortcutView: View {
                              navigationParentView: .shortcuts)
             .padding(.bottom, 24)
             
-            CategoryView()
+            CategoryView(isFolded: $isFolded)
                 .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
@@ -54,7 +55,7 @@ struct ExploreShortcutView: View {
 
 struct ExploreShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ExploreShortcutView(randomCategories: [Category.lifestyle, Category.utility])
+        ExploreShortcutView(randomCategories: [Category.lifestyle, Category.utility], isFolded: .constant(true))
     }
 }
 
