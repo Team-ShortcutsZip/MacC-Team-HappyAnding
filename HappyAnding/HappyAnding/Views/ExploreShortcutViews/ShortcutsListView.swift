@@ -34,9 +34,6 @@ struct ShortcutsListView: View {
                         
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
-                        .onAppear {
-                            
-                        }
                     }
                 }
                 
@@ -47,7 +44,6 @@ struct ShortcutsListView: View {
                     .listRowSeparator(.hidden)
             }
         }
-        .scrollIndicators(.hidden)
         .navigationBarTitle(categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.Background)

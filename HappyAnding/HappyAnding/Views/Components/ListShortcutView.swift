@@ -61,7 +61,6 @@ struct ListShortcutView: View {
                             .listRowSeparator(.hidden)
                     }
                 }
-                .scrollIndicators(.hidden)
                 .listRowBackground(Color.Background)
                 .listStyle(.plain)
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
