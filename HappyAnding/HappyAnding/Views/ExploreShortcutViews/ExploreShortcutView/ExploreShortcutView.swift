@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    let randomCategories: [Category]
     
     var body: some View {
         ScrollView {
@@ -18,16 +19,16 @@ struct ExploreShortcutView: View {
             .padding(.top, 20)
             .padding(.bottom, 24)
             
-            CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[Category.lifestyle.index],
-                             categoryName: Category.lifestyle,
+            CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[randomCategories[0].index],
+                             categoryName: randomCategories[0],
                              navigationParentView: .shortcuts)
             .padding(.bottom, 24)
             
             LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
                 .padding(.bottom, 24)
             
-            CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[Category.utility.index],
-                             categoryName: Category.utility,
+            CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[randomCategories[1].index],
+                             categoryName: randomCategories[1],
                              navigationParentView: .shortcuts)
             .padding(.bottom, 24)
             
@@ -53,7 +54,7 @@ struct ExploreShortcutView: View {
 
 struct ExploreShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ExploreShortcutView()
+        ExploreShortcutView(randomCategories: [Category.lifestyle, Category.utility])
     }
 }
 
