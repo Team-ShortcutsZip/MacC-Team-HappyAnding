@@ -19,31 +19,18 @@ struct ListShortcutView: View {
     var body: some View {
         if let shortcuts = data.shortcuts {
             if shortcuts.count == 0 {
-                VStack(spacing: 0) {
-                    if data.sectionType != .myShortcut {
-                        header
-                            .listRowBackground(Color.Background)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets())
-                    }
-                    Text("\(data.sectionType.rawValue)가 없습니다.")
-                        .Body2()
-                        .foregroundColor(Color.Gray4)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-                .navigationTitle(data.sectionType.rawValue)
-                .navigationBarTitleDisplayMode(.inline)
+                Text("\(data.sectionType.rawValue)가 없습니다.")
+                    .Body2()
+                    .foregroundColor(Color.Gray4)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                    .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                    .navigationTitle(data.sectionType.rawValue)
+                    .navigationBarTitleDisplayMode(.inline)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         
-                        if data.sectionType != .myShortcut {
-                            header
-                                .listRowBackground(Color.Background)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
-                        }
                         //TODO: 무한 스크롤을 위한 업데이트 함수 필요
                         switch data.sectionType {
                         case .download:
@@ -74,27 +61,6 @@ struct ListShortcutView: View {
                 .navigationBarBackground ({ Color.Background })
             }
         }
-    }
-    
-    var header: some View {
-        
-        VStack {
-            Text(data.sectionType.description)
-                .foregroundColor(.Gray5)
-                .Body2()
-                .padding(16)
-                .frame(maxWidth: .infinity,
-                       alignment: data.sectionType == .download ? .center : .leading)
-                .background(
-                    Rectangle()
-                        .foregroundColor(Color.Gray1)
-                        .cornerRadius(12)
-                )
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.Background)
-        }
-        .padding(.vertical, 20)
-        .padding(.horizontal, 16)
     }
     
     @ViewBuilder
