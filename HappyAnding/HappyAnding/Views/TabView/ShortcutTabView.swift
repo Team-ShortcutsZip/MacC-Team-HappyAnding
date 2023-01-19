@@ -15,6 +15,8 @@ struct ShortcutTabView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @State private var randomCategories = Category.allCases.shuffled().prefix(2)
+    
     @AppStorage("signInStatus") var signInStatus = false
     @State private var isShortcutDeeplink = false
     @State private var isCurationDeeplink = false
@@ -52,7 +54,7 @@ struct ShortcutTabView: View {
         ScrollViewReader { proxy in
             TabView(selection: handler) {
                 NavigationStack(path: $shortcutNavigation.navigationPath) {
-                    ExploreShortcutView()
+                    ExploreShortcutView(randomCategories: Array(randomCategories))
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
                             if shortcutNavigation.navigationPath.count > 0 {
