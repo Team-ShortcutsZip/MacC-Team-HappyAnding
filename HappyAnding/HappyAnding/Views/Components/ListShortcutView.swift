@@ -32,7 +32,7 @@ struct ListShortcutView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-                .navigationTitle(getNavigationTitle(data.sectionType))
+                .navigationTitle(data.sectionType.rawValue)
                 .navigationBarTitleDisplayMode(.inline)
             } else {
                 ScrollView {
@@ -69,7 +69,7 @@ struct ListShortcutView: View {
                 .listStyle(.plain)
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
                 .scrollContentBackground(.hidden)
-                .navigationTitle(getNavigationTitle(data.sectionType))
+                .navigationTitle(data.sectionType.rawValue)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackground ({ Color.Background })
             }
@@ -79,7 +79,7 @@ struct ListShortcutView: View {
     var header: some View {
         
         VStack {
-            Text(getDescriptions(data.sectionType))
+            Text(data.sectionType.description)
                 .foregroundColor(.Gray5)
                 .Body2()
                 .padding(16)
@@ -128,36 +128,6 @@ struct ListShortcutView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
             }
-        }
-    }
-    
-    private func getNavigationTitle(_ sectionType: SectionType) -> String {
-        switch sectionType {
-        case .download:
-            return "다운로드 순위"
-        case .popular:
-            return "사랑받는 단축어"
-        case .myShortcut:
-            return "내가 작성한 단축어"
-        case .myLovingShortcut:
-            return "좋아요한 단축어"
-        case .myDownloadShortcut:
-            return "다운로드한 단축어"
-        }
-    }
-    
-    private func getDescriptions(_ sectionType: SectionType) -> String {
-        switch sectionType {
-        case .download:
-            return "1위 ~ 100위"
-        case .popular:
-            return "💡 좋아요를 많이 받은 단축어들로 구성되어 있어요!"
-        case .myShortcut:
-            return ""
-        case .myLovingShortcut:
-            return "💗 내가 좋아요를 누른 단축어를 모아볼 수 있어요"
-        case .myDownloadShortcut:
-            return "💫 내가 다운로드한 단축어를 모아볼 수 있어요"
         }
     }
 }
