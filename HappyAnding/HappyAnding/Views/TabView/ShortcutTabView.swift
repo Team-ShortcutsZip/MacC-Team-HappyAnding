@@ -27,7 +27,7 @@ struct ShortcutTabView: View {
     @StateObject var shortcutNavigation = ShortcutNavigation()
     @StateObject var curationNavigation = CurationNavigation()
     @StateObject var profileNavigation = ProfileNavigation()
-    @State private var tabSelection = 1
+    @AppStorage("selectedTab") var selectedTab = 1
     @State private var tappedTwice = false
     
     init() {
@@ -42,12 +42,12 @@ struct ShortcutTabView: View {
     }
     
     var handler: Binding<Int> { Binding(
-        get: { self.tabSelection },
+        get: { self.selectedTab },
         set: {
-            if $0 == self.tabSelection {
+            if $0 == self.selectedTab {
                 tappedTwice = true
             }
-            self.tabSelection = $0
+            self.selectedTab = $0
         }
     )}
     
