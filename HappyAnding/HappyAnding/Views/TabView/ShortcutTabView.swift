@@ -67,11 +67,11 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
-                        .onChange(of: isFolded, perform: { tappedMore in
+                        .onChange(of: isFolded) { tappedMore in
                             withAnimation {
                                 proxy.scrollTo(999, anchor: .bottom)
                             }
-                        })
+                        }
                         .navigationDestination(for: NavigationProfile.self) { data in
                             ShowProfileView(data: data)
                         }
