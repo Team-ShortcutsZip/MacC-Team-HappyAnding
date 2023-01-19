@@ -8,6 +8,7 @@
 import Foundation
 
 enum SectionType: String {
+    case recent = "최신 단축어"
     case download = "다운로드 순위"
     case popular = "사랑받는 단축어"
     case myShortcut = "내가 작성한 단축어"
@@ -16,6 +17,8 @@ enum SectionType: String {
     
     var description: String {
         switch self {
+        case .recent:
+            return "🆕 최신 등록된 단축어들을 둘러보세요"
         case .download:
             return "1위 ~ 100위"
         case .popular:

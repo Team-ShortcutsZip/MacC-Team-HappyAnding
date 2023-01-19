@@ -15,8 +15,8 @@ struct ExploreShortcutView: View {
     
     var body: some View {
         ScrollView {
-            DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
-                             navigationParentView: .shortcuts)
+            RecentRegisteredView(shortcuts: $shortcutsZipViewModel.allShortcuts,
+                                 navigationParentView: .shortcuts)
             .padding(.top, 20)
             .padding(.bottom, 24)
             
@@ -24,14 +24,18 @@ struct ExploreShortcutView: View {
                              categoryName: randomCategories[0],
                              navigationParentView: .shortcuts)
             .padding(.bottom, 24)
-            
-            LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
-                .padding(.bottom, 24)
+
+            DownloadRankView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByDownload,
+                             navigationParentView: .shortcuts)
+            .padding(.bottom, 24)
             
             CategoryCardView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[randomCategories[1].index],
                              categoryName: randomCategories[1],
                              navigationParentView: .shortcuts)
             .padding(.bottom, 24)
+            
+            LovedShortcutView(shortcuts: $shortcutsZipViewModel.sortedShortcutsByLike)
+                .padding(.bottom, 24)
             
             CategoryView(isFolded: $isFolded)
                 .padding(.bottom, 44)
