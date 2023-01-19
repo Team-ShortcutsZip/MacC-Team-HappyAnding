@@ -16,6 +16,9 @@ struct ReadShortcutHeaderView: View {
     @State var userInformation: User? = nil
     @State var numberOfLike = 0
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    @State private var tryActionWithoutSignIn: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
@@ -40,6 +43,21 @@ struct ReadShortcutHeaderView: View {
             }
             userInfo
         }
+        .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
+            Button(role: .cancel) {
+                tryActionWithoutSignIn = false
+            } label: {
+                Text("취소")
+            }
+            Button {
+                useWithoutSignIn = false
+                tryActionWithoutSignIn = false
+            } label: {
+                Text("로그인하기")
+            }
+        } message: {
+            Text("이 기능은 로그인 후 사용할 수 있어요")
+        }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
         .onAppear() {
@@ -48,7 +66,6 @@ struct ReadShortcutHeaderView: View {
                 userInformation = user
                 numberOfLike = shortcut.numberOfLike
             }
-            
         }
         .onDisappear { self.shortcut.numberOfLike = numberOfLike }
     }
@@ -74,9 +91,13 @@ struct ReadShortcutHeaderView: View {
             .background(isMyLike ? Color.Primary : Color.Gray1)
             .cornerRadius(12)
             .onTapGesture {
-                isMyLike.toggle()
-                //화면 상의 좋아요 추가, 취소 기능 동작
-                numberOfLike += isMyLike ? 1 : -1
+                if !useWithoutSignIn {
+                    isMyLike.toggle()
+                    //화면 상의 좋아요 추가, 취소 기능 동작
+                    numberOfLike += isMyLike ? 1 : -1
+                } else {
+                    tryActionWithoutSignIn = true
+                }
             }
     }
     
