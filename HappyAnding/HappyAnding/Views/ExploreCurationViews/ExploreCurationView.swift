@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     var body: some View {
         ScrollView {
@@ -20,13 +21,15 @@ struct ExploreCurationView: View {
                     .padding(.top, 20)
                     .padding(.bottom, 32)
                 
-                //땡땡니을 위한 모음집
-                CurationListView(data: NavigationListCurationType(type: .personalCuration,
-                                                                  title: "",
-                                                                  isAllUser: false,
-                                                                  navigationParentView: .curations,
-                                                                  curation: shortcutsZipViewModel.personalCurations))
-                .padding(.bottom, 32)
+                //사용자를 위한 모음집
+                if !useWithoutSignIn {
+                    CurationListView(data: NavigationListCurationType(type: .personalCuration,
+                                                                      title: "",
+                                                                      isAllUser: false,
+                                                                      navigationParentView: .curations,
+                                                                      curation: shortcutsZipViewModel.personalCurations))
+                    .padding(.bottom, 32)
+                }
                 
                 //추천 유저 큐레이션
                 CurationListView(data: NavigationListCurationType(type: .userCuration,
@@ -36,14 +39,14 @@ struct ExploreCurationView: View {
                                                                   curation: shortcutsZipViewModel.userCurations))
             }
             .padding(.bottom, 32)
+            .onChange(of: shortcutsZipViewModel.userCurations) { _ in
+                shortcutsZipViewModel.refreshPersonalCurations()
+            }
         }
         .navigationBarTitle(Text("추천 모음집 둘러보기"))
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
         .background(Color.Background)
-        .onAppear {
-            shortcutsZipViewModel.refreshPersonalCurations()
-        }
     }
 }
 

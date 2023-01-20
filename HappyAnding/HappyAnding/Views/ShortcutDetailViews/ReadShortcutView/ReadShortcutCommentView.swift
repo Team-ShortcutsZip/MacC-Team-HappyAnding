@@ -16,6 +16,8 @@ struct ReadShortcutCommentView: View {
     @State var isTappedDeleteButton = false
     @State var deletedComment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
     @FocusState var isFocused: Bool
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    
     let shortcutID: String
     
     var body: some View {
@@ -93,15 +95,17 @@ struct ReadShortcutCommentView: View {
                     
                     // MARK: Button
                     HStack(spacing: 16) {
-                        Button {
-                            nestedCommentInfoText = comment.user_nickname
-                            addedComment.bundle_id = comment.bundle_id
-                            addedComment.depth = 1
-                            isFocused = true
-                        } label: {
-                            Text("답글")
-                                .Footnote()
-                                .foregroundColor(.Gray4)
+                        if !useWithoutSignIn {
+                            Button {
+                                nestedCommentInfoText = comment.user_nickname
+                                addedComment.bundle_id = comment.bundle_id
+                                addedComment.depth = 1
+                                isFocused = true
+                            } label: {
+                                Text("답글")
+                                    .Footnote()
+                                    .foregroundColor(.Gray4)
+                            }
                         }
                         
                         if let user = shortcutsZipViewModel.userInfo {

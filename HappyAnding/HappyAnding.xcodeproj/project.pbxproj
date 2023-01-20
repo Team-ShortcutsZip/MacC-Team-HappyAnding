@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D3DBB88292E67E600DE8160 /* EditNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3DBB87292E67E500DE8160 /* EditNicknameView.swift */; };
 		4D3DBB962934E31A00DE8160 /* ShowProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3DBB952934E31A00DE8160 /* ShowProfileView.swift */; };
+		4D402E7B2979342800D9A825 /* RecentRegisteredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D402E7A2979342800D9A825 /* RecentRegisteredView.swift */; };
 		4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */; };
 		4D778A34290A53BA00C15AC4 /* Application+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D778A33290A53BA00C15AC4 /* Application+Extension.swift */; };
 		4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */; };
@@ -108,6 +109,7 @@
 		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
 		A3FF018A2918F8EF00384211 /* apache.txt in Resources */ = {isa = PBXBuildFile; fileRef = A3FF01892918F8EF00384211 /* apache.txt */; };
 		A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF018D291ACFA500384211 /* WithdrawalView.swift */; };
+		A3FF4F832979C09000FA9EEE /* LineBreaking+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */; };
 		F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */; };
 		F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
@@ -176,6 +178,7 @@
 		3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4D3DBB87292E67E500DE8160 /* EditNicknameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditNicknameView.swift; sourceTree = "<group>"; };
 		4D3DBB952934E31A00DE8160 /* ShowProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileView.swift; sourceTree = "<group>"; };
+		4D402E7A2979342800D9A825 /* RecentRegisteredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentRegisteredView.swift; sourceTree = "<group>"; };
 		4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		4D778A33290A53BA00C15AC4 /* Application+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Application+Extension.swift"; sourceTree = "<group>"; };
 		4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateShortcutView.swift; sourceTree = "<group>"; };
@@ -266,6 +269,7 @@
 		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		A3FF01892918F8EF00384211 /* apache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = apache.txt; sourceTree = "<group>"; };
 		A3FF018D291ACFA500384211 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
+		A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LineBreaking+Extension.swift"; sourceTree = "<group>"; };
 		F9131B6A2922D38D00868A0E /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
 		F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipView.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
@@ -502,6 +506,7 @@
 				8795A16F292AB945004B765F /* UIScreen+Extension.swift */,
 				F9AC2BB92935D34C00165820 /* Image+Extension.swift */,
 				A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */,
+				A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -556,6 +561,7 @@
 			isa = PBXGroup;
 			children = (
 				87E99CA828FFF24F009B691F /* ExploreShortcutView.swift */,
+				4D402E7A2979342800D9A825 /* RecentRegisteredView.swift */,
 				A04ACB0B29041CEE004A85A6 /* LovedShortcutView.swift */,
 				A04ACB0929041CD8004A85A6 /* DownloadRankView.swift */,
 				A04ACB0D29041D61004A85A6 /* CategoryView.swift */,
@@ -846,6 +852,7 @@
 				A04ACB0A29041CD8004A85A6 /* DownloadRankView.swift in Sources */,
 				87E99CD1290145DE009B691F /* PaletteView.swift in Sources */,
 				4DAD6370292BCB1000ABF8C1 /* CategoryCardView.swift in Sources */,
+				4D402E7B2979342800D9A825 /* RecentRegisteredView.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
 				8795A16E292AB841004B765F /* View+Extension.swift in Sources */,
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
@@ -899,6 +906,7 @@
 				87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */,
 				F9724BBF292755E400860F8A /* Comment.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
+				A3FF4F832979C09000FA9EEE /* LineBreaking+Extension.swift in Sources */,
 				A0F822B729164D2300AF4448 /* ShortcutsListView.swift in Sources */,
 				4D3DBB88292E67E600DE8160 /* EditNicknameView.swift in Sources */,
 				87E99CE82907C6E6009B691F /* Shortcuts.swift in Sources */,
@@ -1264,6 +1272,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1296,6 +1305,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

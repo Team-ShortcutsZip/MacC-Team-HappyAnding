@@ -1,13 +1,13 @@
 //
-//  DownloadRankView.swift
+//  RecentRegisteredView.swift
 //  HappyAnding
 //
-//  Created by KiWoong Hong on 2022/10/22.
+//  Created by kimjimin on 2023/01/19.
 //
 
 import SwiftUI
 
-struct DownloadRankView: View {
+struct RecentRegisteredView: View {
     
     @Binding var shortcuts: [Shortcuts]
     
@@ -16,14 +16,15 @@ struct DownloadRankView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("다운로드 순위")
+                Text("최신 단축어")
                     .Title2()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .id(111)
                 
                 Spacer()
                 
-                NavigationLink(value: NavigationListShortcutType(sectionType: .download,
+                NavigationLink(value: NavigationListShortcutType(sectionType: .recent,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
                     Text("더보기")
@@ -41,7 +42,6 @@ struct DownloadRankView: View {
                                                           navigationParentView: self.navigationParentView)
                     NavigationLink(value: data) {
                         ShortcutCell(shortcut: shortcut,
-                                     rankNumber: index + 1,
                                      navigationParentView: self.navigationParentView)
                     }
                 }

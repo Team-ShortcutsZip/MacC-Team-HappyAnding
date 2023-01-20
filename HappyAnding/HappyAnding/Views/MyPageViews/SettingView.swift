@@ -13,6 +13,7 @@ import FirebaseAuth
 struct SettingView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     @EnvironmentObject var userAuth: UserAuth
     @ObservedObject var webViewModel = WebViewModel()
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
@@ -89,33 +90,42 @@ struct SettingView: View {
                 }
             }
             
-            
-            // MARK: - 로그아웃 버튼
-            Button {
-                self.isTappedLogOutButton.toggle()
-            } label: {
-                SettingCell(title: "로그아웃")
-            }
-            .alert("로그아웃", isPresented: $isTappedLogOutButton) {
-                Button(role: .cancel) {
-                    
+            //로그인없이 둘러보기 여부에 따라 보여지는 버튼 다르게 표시
+            if useWithoutSignIn {
+                //MARK: - 로그인없이 둘러보기 시 로그인 버튼
+                Button {
+                    useWithoutSignIn = false
                 } label: {
-                    Text("닫기")
+                    SettingCell(title: "로그인")
                 }
                 
-                Button(role: .destructive) {
-                    logOut()
+            } else {
+                // MARK: - 로그아웃 버튼
+                Button {
+                    self.isTappedLogOutButton.toggle()
                 } label: {
-                    Text("로그아웃")
+                    SettingCell(title: "로그아웃")
                 }
-            } message: {
-                Text("로그아웃 하시겠습니까?")
-            }
-            
-            
-            // MARK: - 회원탈퇴 버튼
-            NavigationLink(value: NavigationWithdrawal.first) {
-                SettingCell(title: "탈퇴하기")
+                .alert("로그아웃", isPresented: $isTappedLogOutButton) {
+                    Button(role: .cancel) {
+                        
+                    } label: {
+                        Text("닫기")
+                    }
+                    
+                    Button(role: .destructive) {
+                        logOut()
+                    } label: {
+                        Text("로그아웃")
+                    }
+                } message: {
+                    Text("로그아웃 하시겠습니까?")
+                }
+                
+                // MARK: - 회원탈퇴 버튼
+                NavigationLink(value: NavigationWithdrawal.first) {
+                    SettingCell(title: "탈퇴하기")
+                }
             }
             
             Spacer()

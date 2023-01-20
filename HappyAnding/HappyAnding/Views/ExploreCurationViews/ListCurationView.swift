@@ -37,23 +37,20 @@ struct ListCurationView: View {
         } else {
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    
-                    ForEach(Array(data.curation.enumerated()), id: \.offset) { index, curation in
-                        
-                        let data = NavigationReadUserCurationType(userCuration: curation,
-                                                                  navigationParentView: self.data.navigationParentView)
-                        
-                        NavigationLink(value: data) {
-                            UserCurationCell(curation: curation,
-                                             navigationParentView: self.data.navigationParentView,
-                                             lineLimit: 2)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.Background)
-                            .padding(.top, index == 0 ? 20 : 0 )
-                            .padding(.bottom, index == self.data.curation.count - 1 ? 32 : 0)
-                        }
+                    Rectangle()
+                        .fill(Color.Background)
+                        .frame(height: 20)
+                    switch data.type {
+                    case .personalCuration:
+                        makeCurationCellList(shortcutsZipViewModel.personalCurations)
+                    case .userCuration:
+                        makeCurationCellList(shortcutsZipViewModel.userCurations)
+                    case .myCuration:
+                        makeCurationCellList(shortcutsZipViewModel.curationsMadeByUser)
                     }
+                    Rectangle()
+                        .fill(Color.Background)
+                        .frame(height: 32)
                 }
             }
             .scrollIndicators(.hidden)
@@ -63,6 +60,24 @@ struct ListCurationView: View {
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(data.title ?? "")
+        }
+    }
+    
+    @ViewBuilder
+    private func makeCurationCellList(_ curations: [Curation]) -> some View {
+        ForEach(curations, id: \.self) { curation in
+            
+            let data = NavigationReadUserCurationType(userCuration: curation,
+                                                      navigationParentView: self.data.navigationParentView)
+            
+            NavigationLink(value: data) {
+                UserCurationCell(curation: curation,
+                                 navigationParentView: self.data.navigationParentView,
+                                 lineLimit: 2)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.Background)
+            }
         }
     }
 }

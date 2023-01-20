@@ -15,6 +15,9 @@ struct ShortcutTabView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @State private var randomCategories = Category.allCases.shuffled().prefix(2)
+    @State var isFolded = true
+    
     @AppStorage("signInStatus") var signInStatus = false
     @State private var isShortcutDeeplink = false
     @State private var isCurationDeeplink = false
@@ -24,7 +27,7 @@ struct ShortcutTabView: View {
     @StateObject var shortcutNavigation = ShortcutNavigation()
     @StateObject var curationNavigation = CurationNavigation()
     @StateObject var profileNavigation = ProfileNavigation()
-    @State private var tabSelection = 1
+    @AppStorage("selectedTab") var selectedTab = 1
     @State private var tappedTwice = false
     
     init() {
@@ -39,12 +42,12 @@ struct ShortcutTabView: View {
     }
     
     var handler: Binding<Int> { Binding(
-        get: { self.tabSelection },
+        get: { self.selectedTab },
         set: {
-            if $0 == self.tabSelection {
+            if $0 == self.selectedTab {
                 tappedTwice = true
             }
-            self.tabSelection = $0
+            self.selectedTab = $0
         }
     )}
     
@@ -52,7 +55,7 @@ struct ShortcutTabView: View {
         ScrollViewReader { proxy in
             TabView(selection: handler) {
                 NavigationStack(path: $shortcutNavigation.navigationPath) {
-                    ExploreShortcutView()
+                    ExploreShortcutView(randomCategories: Array(randomCategories), isFolded: $isFolded)
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
                             if shortcutNavigation.navigationPath.count > 0 {
@@ -64,6 +67,11 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
+                        .onChange(of: isFolded) { _ in
+                            withAnimation {
+                                proxy.scrollTo(999, anchor: .bottom)
+                            }
+                        }
                         .navigationDestination(for: NavigationProfile.self) { data in
                             ShowProfileView(data: data)
                         }
