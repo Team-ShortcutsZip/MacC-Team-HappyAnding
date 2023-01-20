@@ -19,33 +19,22 @@ struct ListShortcutView: View {
     var body: some View {
         if let shortcuts = data.shortcuts {
             if shortcuts.count == 0 {
-                VStack(spacing: 0) {
-                    if data.sectionType != .myShortcut {
-                        header
-                            .listRowBackground(Color.Background)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets())
-                    }
-                    Text("\(data.sectionType.rawValue)가 없습니다.")
-                        .Body2()
-                        .foregroundColor(Color.Gray4)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-                .navigationTitle(getNavigationTitle(data.sectionType))
-                .navigationBarTitleDisplayMode(.inline)
+                Text("\(data.sectionType.rawValue)가 없습니다.")
+                    .Body2()
+                    .foregroundColor(Color.Gray4)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                    .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                    .navigationTitle(data.sectionType.rawValue)
+                    .navigationBarTitleDisplayMode(.inline)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         
-                        if data.sectionType != .myShortcut {
-                            header
-                                .listRowBackground(Color.Background)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets())
-                        }
                         //TODO: 무한 스크롤을 위한 업데이트 함수 필요
                         switch data.sectionType {
+                        case .recent:
+                            makeShortcutCellList(shortcutsZipViewModel.allShortcuts)
                         case .download:
                             makeIndexShortcutCellList(shortcutsZipViewModel.sortedShortcutsByDownload)
                         case .popular:
@@ -64,37 +53,15 @@ struct ListShortcutView: View {
                             .listRowSeparator(.hidden)
                     }
                 }
-                .scrollIndicators(.hidden)
                 .listRowBackground(Color.Background)
                 .listStyle(.plain)
                 .background(Color.Background.ignoresSafeArea(.all, edges: .all))
                 .scrollContentBackground(.hidden)
-                .navigationTitle(getNavigationTitle(data.sectionType))
+                .navigationTitle(data.sectionType.rawValue)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackground ({ Color.Background })
             }
         }
-    }
-    
-    var header: some View {
-        
-        VStack {
-            Text(getDescriptions(data.sectionType))
-                .foregroundColor(.Gray5)
-                .Body2()
-                .padding(16)
-                .frame(maxWidth: .infinity,
-                       alignment: data.sectionType == .download ? .center : .leading)
-                .background(
-                    Rectangle()
-                        .foregroundColor(Color.Gray1)
-                        .cornerRadius(12)
-                )
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.Background)
-        }
-        .padding(.vertical, 20)
-        .padding(.horizontal, 16)
     }
     
     @ViewBuilder
@@ -128,36 +95,6 @@ struct ListShortcutView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
             }
-        }
-    }
-    
-    private func getNavigationTitle(_ sectionType: SectionType) -> String {
-        switch sectionType {
-        case .download:
-            return "다운로드 순위"
-        case .popular:
-            return "사랑받는 단축어"
-        case .myShortcut:
-            return "내가 작성한 단축어"
-        case .myLovingShortcut:
-            return "좋아요한 단축어"
-        case .myDownloadShortcut:
-            return "다운로드한 단축어"
-        }
-    }
-    
-    private func getDescriptions(_ sectionType: SectionType) -> String {
-        switch sectionType {
-        case .download:
-            return "1위 ~ 100위"
-        case .popular:
-            return "💡 좋아요를 많이 받은 단축어들로 구성되어 있어요!"
-        case .myShortcut:
-            return ""
-        case .myLovingShortcut:
-            return "💗 내가 좋아요를 누른 단축어를 모아볼 수 있어요"
-        case .myDownloadShortcut:
-            return "💫 내가 다운로드한 단축어를 모아볼 수 있어요"
         }
     }
 }

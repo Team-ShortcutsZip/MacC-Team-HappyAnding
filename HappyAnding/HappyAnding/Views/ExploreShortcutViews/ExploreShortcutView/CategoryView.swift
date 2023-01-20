@@ -11,15 +11,7 @@ struct CategoryView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var categoryIndex = 6
-    @State var isTappedPlutButton = true {
-        didSet {
-            if isTappedPlutButton {
-                categoryIndex = 6
-            } else {
-                categoryIndex = 12
-            }
-        }
-    }
+    @Binding var isFolded: Bool
     
     var body: some View {
         VStack {
@@ -32,13 +24,16 @@ struct CategoryView: View {
                 Spacer()
                                 
                 Button(action: {
-                    self.isTappedPlutButton.toggle()
+                    self.isFolded.toggle()
                 }, label: {
-                    Text(isTappedPlutButton ? "펼치기" : "접기")
+                    Text(isFolded ? "펼치기" : "접기")
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
                 })
+                .onChange(of: isFolded) { _ in
+                    categoryIndex = isFolded ? 6 : 12
+                }
             }
             .padding(.leading, 16)
             
@@ -52,6 +47,8 @@ struct CategoryView: View {
                 }
             }
             .padding(.horizontal, 16)
+            .padding(.bottom, 16)
+            .id(999)
         }
     }
 }
