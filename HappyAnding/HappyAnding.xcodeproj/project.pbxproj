@@ -121,7 +121,6 @@
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
-		F989217E296C6AD400C21912 /* UserCurationDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F989217D296C6AD400C21912 /* UserCurationDataCell.swift */; };
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
 		F9AC2BBA2935D34C00165820 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB92935D34C00165820 /* Image+Extension.swift */; };
@@ -273,7 +272,6 @@
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewModel.swift; sourceTree = "<group>"; };
-		F989217D296C6AD400C21912 /* UserCurationDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationDataCell.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
 		F9AC2BB92935D34C00165820 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
@@ -525,7 +523,6 @@
 				A3B263692909DFD200829DE1 /* CurationListView.swift */,
 				87276C372933F6AB00C92F4C /* CustomTextEditor.swift */,
 				87CFD8482939187200F97B86 /* NicknameTextField.swift */,
-				F989217D296C6AD400C21912 /* UserCurationDataCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -829,7 +826,6 @@
 				F94B432E2907088400987819 /* UserCurationListView.swift in Sources */,
 				A04ACB34290686C7004A85A6 /* ReadShortcutContentView.swift in Sources */,
 				A3FF0183291648A300384211 /* MailView.swift in Sources */,
-				F989217E296C6AD400C21912 /* UserCurationDataCell.swift in Sources */,
 				87E99CAF28FFF26A009B691F /* EditShortcutView.swift in Sources */,
 				A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */,
 				87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */,

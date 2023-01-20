@@ -22,18 +22,21 @@ struct UserCurationCell: View {
             VStack (alignment: .leading, spacing: 0) {
                 
                 //MARK: - 단축어 아이콘 배열
+                
                 HStack {
-                    ForEach(curation.shortcuts.prefix(4), id: \.self) { shortcut in
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.fetchGradient(
-                                    color: shortcut.color)
-                                )
-                                .cornerRadius(8)
-                                .frame(width: 36, height: 36)
-                            Image(systemName: shortcut.sfSymbol)
-                                .foregroundColor(Color.Text_icon)
-                                .font(.system(size: 15))
+                    ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
+                        if index < 4 {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.fetchGradient(
+                                        color: shortcut.color)
+                                    )
+                                    .cornerRadius(8)
+                                    .frame(width: 36, height: 36)
+                                Image(systemName: shortcut.sfSymbol)
+                                    .foregroundColor(Color.Text_icon)
+                                    .font(.system(size: 15))
+                            }
                         }
                     }
                     

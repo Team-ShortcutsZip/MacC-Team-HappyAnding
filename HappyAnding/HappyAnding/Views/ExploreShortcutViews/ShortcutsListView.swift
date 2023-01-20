@@ -24,7 +24,7 @@ struct ShortcutsListView: View {
             scrollHeader
             
             LazyVStack(spacing: 0) {
-                ForEach(shortcuts, id: \.self) { shortcut in
+                ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     let data = NavigationReadShortcutType(shortcut: shortcut,
                                                           shortcutID: shortcut.id,
                                                           navigationParentView: self.navigationParentView)

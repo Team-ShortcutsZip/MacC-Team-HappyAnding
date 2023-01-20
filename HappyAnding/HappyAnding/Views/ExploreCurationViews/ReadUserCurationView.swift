@@ -39,7 +39,8 @@ struct ReadUserCurationView: View {
                         .padding(.top, 103)
                         .padding(.bottom, 22)
                     
-                    UserCurationDataCell(data: $data, navigationParentView: data.navigationParentView)
+                    UserCurationCell(curation: data.userCuration,
+                                     navigationParentView: data.navigationParentView)
                 }
             }
             .background(Color.white)
@@ -58,13 +59,6 @@ struct ReadUserCurationView: View {
             }
             .padding(.bottom, 44)
             
-        }
-        .refreshable {
-            print("refresh")
-            if let updatedCuration = shortcutsZipViewModel.fetchCurationDetail(curationID: data.userCuration.id) {
-                data.userCuration = updatedCuration
-                print(updatedCuration)
-            }
         }
         .onChange(of: isWriting) { _ in
             if !isWriting {
