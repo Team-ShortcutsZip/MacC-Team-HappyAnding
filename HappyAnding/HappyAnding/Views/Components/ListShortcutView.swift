@@ -47,14 +47,14 @@ struct ListShortcutView: View {
                         //TODO: 무한 스크롤을 위한 업데이트 함수 필요
                         switch data.sectionType {
                         case .download:
-                            ForEach(Array(shortcutsZipViewModel.sortedShortcutsByDownload.enumerated()), id: \.offset) { index, shortcut in
+                            ForEach(shortcutsZipViewModel.sortedShortcutsByDownload.prefix(100), id: \.self) { shortcut in
                                 let navigationData = NavigationReadShortcutType(shortcut: shortcut,
                                                                                 shortcutID: shortcut.id,
                                                                                 navigationParentView: self.data.navigationParentView)
                                 
                                 NavigationLink(value: navigationData) {
                                     ShortcutCell(shortcut: shortcut,
-                                                 rankNumber: index + 1,
+                                                 rankNumber: 1,
                                                  navigationParentView: data.navigationParentView)
                                     .listRowInsets(EdgeInsets())
                                     .listRowSeparator(.hidden)

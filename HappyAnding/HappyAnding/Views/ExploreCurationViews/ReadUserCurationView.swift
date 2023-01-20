@@ -20,7 +20,6 @@ struct ReadUserCurationView: View {
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
     @State var data: NavigationReadUserCurationType
-    @State var index = 0
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -40,14 +39,14 @@ struct ReadUserCurationView: View {
                         .padding(.top, 103)
                         .padding(.bottom, 22)
                     
-                    UserCurationCell(curation: data.userCuration, navigationParentView: data.navigationParentView)
+                    UserCurationDataCell(data: $data, navigationParentView: data.navigationParentView)
                 }
             }
             .background(Color.white)
             .padding(.bottom, 12)
             
             VStack(spacing: 0){
-                ForEach(shortcutsZipViewModel.userCurations[index].shortcuts, id: \.self) { shortcut in
+                ForEach(self.data.userCuration.shortcuts, id: \.self) { shortcut in
                     let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                           navigationParentView: self.data.navigationParentView)
                     
@@ -60,6 +59,18 @@ struct ReadUserCurationView: View {
             .padding(.bottom, 44)
             
         }
+        .refreshable {
+            if let updatedCuration = shortcutsZipViewModel.fetchCurationDetail(curationID: data.userCuration.id) {
+                data.userCuration = updatedCuration
+            }
+        }
+        .onChange(of: isWriting) { _ in
+            if !isWriting {
+                if let updatedCuration = shortcutsZipViewModel.fetchCurationDetail(curationID: data.userCuration.id) {
+                    data.userCuration = updatedCuration
+                }
+            }
+        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
@@ -68,7 +79,15 @@ struct ReadUserCurationView: View {
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting,
-                                     curation: shortcutsZipViewModel.userCurations[index],
+                                     curation: self.data.userCuration,
+                                     isEdit: true)
+            }
+            .environmentObject(writeCurationNavigation)
+        }
+        .fullScreenCover(isPresented: $isWriting) {
+            NavigationStack(path: $writeCurationNavigation.navigationPath) {
+                WriteCurationSetView(isWriting: $isWriting,
+                                     curation: self.data.userCuration,
                                      isEdit: true)
             }
             .environmentObject(writeCurationNavigation)
@@ -123,9 +142,7 @@ struct ReadUserCurationView: View {
                                             isCurrentUser: false) { user in
                 authorInformation = user
             }
-            if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == data.userCuration.id}) {
-                self.index = index
-            }
+            data.userCuration.shortcuts = data.userCuration.shortcuts.sorted { $0.title < $1.title }
         }
     }
 }
