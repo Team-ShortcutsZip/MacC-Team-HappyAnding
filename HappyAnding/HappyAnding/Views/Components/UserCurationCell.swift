@@ -11,7 +11,9 @@ import SwiftUI
 
 struct UserCurationCell: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var curation: Curation
+    @State var index = 0
     let navigationParentView: NavigationParentView
     var lineLimit: Int?
     
@@ -23,7 +25,7 @@ struct UserCurationCell: View {
                 
                 //MARK: - 단축어 아이콘 배열
                 HStack {
-                    ForEach(curation.shortcuts.prefix(4), id: \.self) { shortcut in
+                    ForEach(shortcutsZipViewModel.userCurations[index].shortcuts.prefix(4), id: \.self) { shortcut in
                         ZStack {
                             Rectangle()
                                 .fill(Color.fetchGradient(
@@ -38,7 +40,7 @@ struct UserCurationCell: View {
                     }
                     
                     //단축어가 4개 이상인 경우에만 그리는 아이콘
-                    if curation.shortcuts.count > 4 {
+                    if shortcutsZipViewModel.userCurations[index].shortcuts.count > 4 {
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Color.Gray2)
@@ -46,7 +48,7 @@ struct UserCurationCell: View {
                                 .frame(width: 36, height: 36)
                             HStack(spacing: 0) {
                                 Image(systemName: "plus")
-                                Text("\(curation.shortcuts.count-4)")
+                                Text("\(shortcutsZipViewModel.userCurations[index].shortcuts.count-4)")
                             }
                             .foregroundColor(.Gray5)
                             .Footnote()
@@ -58,11 +60,11 @@ struct UserCurationCell: View {
                 
                 //MARK: - curation title, subtitle
                 
-                Text(curation.title)
+                Text(shortcutsZipViewModel.userCurations[index].title)
                     .Headline()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(curation.subtitle)
+                Text(shortcutsZipViewModel.userCurations[index].subtitle)
                     .Body2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
@@ -71,7 +73,9 @@ struct UserCurationCell: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .onAppear() {
-                curation.shortcuts = curation.shortcuts.sorted { $0.title < $1.title }
+                if let index = shortcutsZipViewModel.userCurations.firstIndex(of: curation) {
+                    self.index = index
+                }
             }
             .padding(.horizontal, 24)
             .background(Color.Background_list)
@@ -86,15 +90,3 @@ struct UserCurationCell: View {
         .padding(.bottom, 12)
     }
 }
-
-//struct UserCurationCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        VStack {
-//            UserCurationCell(
-//                title: "워라벨 지키기. 단축어와 함께",
-//                subtitle: "nil",
-//                shortcuts: Shortcut.fetchData(number: 5)
-//            )
-//        }
-//    }
-//}
