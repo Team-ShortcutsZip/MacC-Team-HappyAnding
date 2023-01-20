@@ -62,6 +62,7 @@ class ShortcutsZipViewModel: ObservableObject {
         fetchCuration(isAdmin: false) { curations in
             self.userCurations = curations.sorted(by: { $0.dateTime > $1.dateTime })
             self.curationsMadeByUser = self.fetchCurationByAuthor(author: self.currentUser())
+            self.sortCuration()
         }
         fetchKeyword { keywords in
             self.keywords = keywords
@@ -309,7 +310,13 @@ class ShortcutsZipViewModel: ObservableObject {
     
     //MARK: - 큐레이션
     
-     
+    //MARK: 추천모음집 단축어 순서 정렬 함수
+    func sortCuration() {
+        for index in 0..<userCurations.count {
+            userCurations[index].shortcuts = userCurations[index].shortcuts.sorted{ $0.title < $1.title}
+        }
+    }
+    
     //MARK: Curation을 (admin, user) 구분하여 가져오는 함수
     
     func fetchCuration(isAdmin: Bool, completionHandler: @escaping ([Curation])->()) {
