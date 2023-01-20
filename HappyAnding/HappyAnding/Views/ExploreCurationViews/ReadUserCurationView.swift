@@ -60,8 +60,10 @@ struct ReadUserCurationView: View {
             
         }
         .refreshable {
+            print("refresh")
             if let updatedCuration = shortcutsZipViewModel.fetchCurationDetail(curationID: data.userCuration.id) {
                 data.userCuration = updatedCuration
+                print(updatedCuration)
             }
         }
         .onChange(of: isWriting) { _ in
