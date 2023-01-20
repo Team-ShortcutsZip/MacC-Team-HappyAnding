@@ -8,5 +8,5 @@
 import Foundation
 
 extension String {
-    var LineBreaking: String { self + "           " }
+    var lineBreaking: String { self + "           " }
 }

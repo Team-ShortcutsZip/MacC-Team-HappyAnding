@@ -65,7 +65,7 @@ struct UserCurationCell: View {
                     .Headline()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(curation.subtitle.LineBreaking)
+                Text(curation.subtitle.lineBreaking)
                     .Body2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
