@@ -33,6 +33,8 @@ struct ListShortcutView: View {
                         
                         //TODO: 무한 스크롤을 위한 업데이트 함수 필요
                         switch data.sectionType {
+                        case .recent:
+                            makeShortcutCellList(shortcutsZipViewModel.allShortcuts)
                         case .download:
                             makeIndexShortcutCellList(shortcutsZipViewModel.sortedShortcutsByDownload)
                         case .popular:
