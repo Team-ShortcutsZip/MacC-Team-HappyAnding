@@ -14,32 +14,38 @@ struct ShortcutsZipView: View {
     
     @AppStorage("signInStatus") var signInStatus = false
     @AppStorage("isReauthenticated") var isReauthenticated = false
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     var body: some View {
         if signInStatus {
             ShortcutTabView()
                 .environmentObject(userAuth)
         }  else {
-            if userAuth.isLoggedIn {
-                WriteNicknameView()
-                    .onDisappear() {
-                        if shortcutsZipViewModel.userInfo == nil {
-                            shortcutsZipViewModel.fetchUser(userID: shortcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
-                                shortcutsZipViewModel.userInfo = user
-                            }
-                        }
-                    }
+            if useWithoutSignIn {
+                ShortcutTabView()
+//                    .environmentObject(userAuth)
             } else {
-                SignInWithAppleView()
-                    .onDisappear() {
-                        if shortcutsZipViewModel.userInfo == nil {
-                            shortcutsZipViewModel.fetchUser(userID: shortcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
-                                shortcutsZipViewModel.userInfo = user
-                                shortcutsZipViewModel.initUserShortcut(user: user)
-                                shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.fetchCurationByAuthor(author: user.id)
+                if userAuth.isLoggedIn {
+                    WriteNicknameView()
+                        .onDisappear() {
+                            if shortcutsZipViewModel.userInfo == nil {
+                                shortcutsZipViewModel.fetchUser(userID: shortcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
+                                    shortcutsZipViewModel.userInfo = user
+                                }
                             }
                         }
-                    }
+                } else {
+                    SignInWithAppleView()
+                        .onDisappear() {
+                            if shortcutsZipViewModel.userInfo == nil {
+                                shortcutsZipViewModel.fetchUser(userID: shortcutsZipViewModel.currentUser(), isCurrentUser: true) { user in
+                                    shortcutsZipViewModel.userInfo = user
+                                    shortcutsZipViewModel.initUserShortcut(user: user)
+                                    shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.fetchCurationByAuthor(author: user.id)
+                                }
+                            }
+                        }
+                }
             }
         }
     }

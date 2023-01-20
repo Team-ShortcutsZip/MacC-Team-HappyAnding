@@ -42,6 +42,9 @@ struct ReadShortcutView: View {
     @State var isClickCorrection = false                //댓글 수정버튼 클릭했는지?
     @State var isCancledCorrection = false              //댓글 수정 중 텍스트필드를 제외한 부분을 터치했는지?
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    @State private var tryActionWithoutSignIn: Bool = false
+    
     private let tabItems = ["기본 정보", "버전 정보", "댓글"]
     
     var body: some View {
@@ -80,6 +83,21 @@ struct ReadShortcutView: View {
                     }
                 }
             }
+            .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
+                Button(role: .cancel) {
+                    tryActionWithoutSignIn = false
+                } label: {
+                    Text("취소")
+                }
+                Button {
+                    useWithoutSignIn = false
+                    tryActionWithoutSignIn = false
+                } label: {
+                    Text("로그인하기")
+                }
+            } message: {
+                Text("이 기능은 로그인 후 사용할 수 있어요")
+            }
             .scrollDisabled(isClickCorrection)
             .navigationBarBackground ({ Color.White })
             .background(Color.Background)
@@ -93,14 +111,18 @@ struct ReadShortcutView: View {
                         if !isFocused {
                             if let shortcut = data.shortcut {
                                 Button {
-                                    if let url = URL(string: shortcut.downloadLink[0]) {
-                                        if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
-                                            data.shortcut?.numberOfDownload += 1
+                                    if !useWithoutSignIn {
+                                        if let url = URL(string: shortcut.downloadLink[0]) {
+                                            if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
+                                                data.shortcut?.numberOfDownload += 1
+                                            }
+                                            isClickDownload = true
+                                            openURL(url)
                                         }
-                                        isClickDownload = true
-                                        openURL(url)
+                                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
+                                    } else {
+                                        self.tryActionWithoutSignIn = true
                                     }
-                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                                 } label: {
                                     Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
                                         .Body1()
@@ -232,7 +254,8 @@ extension ReadShortcutView {
                     Image(systemName: "arrow.turn.down.right")
                         .foregroundColor(.Gray4)
                 }
-                TextField("댓글을 입력하세요", text: $commentText, axis: .vertical)
+                TextField(useWithoutSignIn ? "로그인 후 댓글을 작성할 수 있어요" : "댓글을 입력하세요", text: $commentText, axis: .vertical)
+                    .disabled(useWithoutSignIn == true)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .Body2()

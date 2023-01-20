@@ -10,7 +10,8 @@ import SwiftUI
 struct MyPageView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+
     enum NavigationSettingView: Hashable, Equatable {
         case first
     }
@@ -34,14 +35,16 @@ struct MyPageView: View {
                         .id(333)
                     
                     HStack {
-                        Text(shortcutsZipViewModel.userInfo?.nickname ?? "User")
+                        Text(shortcutsZipViewModel.userInfo?.nickname ?? "사용자")
                             .Title1()
                             .foregroundColor(.Gray5)
                         
-                        NavigationLink(value: NavigationNicknameView.first) {
-                            Image(systemName: "square.and.pencil")
-                                .Title2()
-                                .foregroundColor(.Gray4)
+                        if !useWithoutSignIn {
+                            NavigationLink(value: NavigationNicknameView.first) {
+                                Image(systemName: "square.and.pencil")
+                                    .Title2()
+                                    .foregroundColor(.Gray4)
+                            }
                         }
                     }
                     Spacer()
