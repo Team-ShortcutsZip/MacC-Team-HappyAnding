@@ -64,7 +64,7 @@ struct UserCurationCell: View {
                     .Headline()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(shortcutsZipViewModel.userCurations[index].subtitle)
+                Text(shortcutsZipViewModel.userCurations[index].subtitle.lineBreaking)
                     .Body2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
