@@ -431,6 +431,7 @@ class ShortcutsZipViewModel: ObservableObject {
                 }
             }
         }
+//        self.refreshPersonalCurations()
     }
     
     //MARK: 좋아요 수를 업데이트하는 함수
