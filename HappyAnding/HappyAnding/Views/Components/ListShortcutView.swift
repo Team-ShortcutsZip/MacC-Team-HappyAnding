@@ -47,15 +47,75 @@ struct ListShortcutView: View {
                         //TODO: 무한 스크롤을 위한 업데이트 함수 필요
                         switch data.sectionType {
                         case .download:
-                            makeIndexShortcutCellList(shortcutsZipViewModel.sortedShortcutsByDownload)
+                            ForEach(Array(shortcutsZipViewModel.sortedShortcutsByDownload.enumerated()), id: \.offset) { index, shortcut in
+                                let navigationData = NavigationReadShortcutType(shortcut: shortcut,
+                                                                                shortcutID: shortcut.id,
+                                                                                navigationParentView: self.data.navigationParentView)
+                                
+                                NavigationLink(value: navigationData) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 rankNumber: index + 1,
+                                                 navigationParentView: data.navigationParentView)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
+                            }
                         case .popular:
-                            makeShortcutCellList(shortcutsZipViewModel.sortedShortcutsByLike)
+                            ForEach(shortcutsZipViewModel.sortedShortcutsByLike, id: \.self) { shortcut in
+                                let navigationData = NavigationReadShortcutType(shortcut: shortcut,
+                                                                                shortcutID: shortcut.id,
+                                                                                navigationParentView: self.data.navigationParentView)
+
+                                NavigationLink(value: navigationData) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: data.navigationParentView,
+                                                 sectionType: data.sectionType)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
+                            }
                         case .myDownloadShortcut:
-                            makeShortcutCellList(shortcutsZipViewModel.shortcutsUserDownloaded)
+                            ForEach(shortcutsZipViewModel.shortcutsUserDownloaded, id: \.self) { shortcut in
+                                let navigationData = NavigationReadShortcutType(shortcut: shortcut,
+                                                                                shortcutID: shortcut.id,
+                                                                                navigationParentView: self.data.navigationParentView)
+
+                                NavigationLink(value: navigationData) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: data.navigationParentView,
+                                                 sectionType: data.sectionType)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
+                            }
                         case .myLovingShortcut:
-                            makeShortcutCellList(shortcutsZipViewModel.shortcutsUserLiked)
+                            ForEach(shortcutsZipViewModel.shortcutsUserLiked, id: \.self) { shortcut in
+                                let navigationData = NavigationReadShortcutType(shortcut: shortcut,
+                                                                                shortcutID: shortcut.id,
+                                                                                navigationParentView: self.data.navigationParentView)
+
+                                NavigationLink(value: navigationData) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: data.navigationParentView,
+                                                 sectionType: data.sectionType)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
+                            }
                         case .myShortcut:
-                            makeShortcutCellList(shortcutsZipViewModel.shortcutsMadeByUser)
+                            ForEach(shortcutsZipViewModel.shortcutsMadeByUser, id: \.self) { shortcut in
+                                let navigationData = NavigationReadShortcutType(shortcut: shortcut,
+                                                                                shortcutID: shortcut.id,
+                                                                                navigationParentView: self.data.navigationParentView)
+
+                                NavigationLink(value: navigationData) {
+                                    ShortcutCell(shortcut: shortcut,
+                                                 navigationParentView: data.navigationParentView,
+                                                 sectionType: data.sectionType)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
+                                }
+                            }
                         }
                         Rectangle()
                             .fill(Color.Background)
@@ -97,39 +157,6 @@ struct ListShortcutView: View {
         .padding(.horizontal, 16)
     }
     
-    @ViewBuilder
-    private func makeShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
-        ForEach(shortcuts, id: \.self) { shortcut in
-            let navigationData = NavigationReadShortcutType(shortcut: shortcut,
-                                                            shortcutID: shortcut.id,
-                                                            navigationParentView: self.data.navigationParentView)
-
-            NavigationLink(value: navigationData) {
-                ShortcutCell(shortcut: shortcut,
-                             navigationParentView: data.navigationParentView,
-                             sectionType: data.sectionType)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func makeIndexShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
-        ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-            let navigationData = NavigationReadShortcutType(shortcut: shortcut,
-                                                            shortcutID: shortcut.id,
-                                                            navigationParentView: self.data.navigationParentView)
-            
-            NavigationLink(value: navigationData) {
-                ShortcutCell(shortcut: shortcut,
-                             rankNumber: index + 1,
-                             navigationParentView: data.navigationParentView)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-            }
-        }
-    }
     
     private func getNavigationTitle(_ sectionType: SectionType) -> String {
         switch sectionType {

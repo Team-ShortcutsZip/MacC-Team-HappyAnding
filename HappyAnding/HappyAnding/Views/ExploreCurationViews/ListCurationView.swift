@@ -42,11 +42,50 @@ struct ListCurationView: View {
                         .frame(height: 20)
                     switch data.type {
                     case .personalCuration:
-                        makeCurationCellList(shortcutsZipViewModel.personalCurations)
+                        ForEach(shortcutsZipViewModel.personalCurations, id: \.self) { curation in
+                            
+                            let data = NavigationReadUserCurationType(userCuration: curation,
+                                                                      navigationParentView: self.data.navigationParentView)
+                            
+                            NavigationLink(value: data) {
+                                UserCurationCell(curation: curation,
+                                                 navigationParentView: self.data.navigationParentView,
+                                                 lineLimit: 2)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .listRowBackground(Color.Background)
+                            }
+                        }
                     case .userCuration:
-                        makeCurationCellList(shortcutsZipViewModel.userCurations)
+                        ForEach(shortcutsZipViewModel.userCurations, id: \.self) { curation in
+                            
+                            let data = NavigationReadUserCurationType(userCuration: curation,
+                                                                      navigationParentView: self.data.navigationParentView)
+                            
+                            NavigationLink(value: data) {
+                                UserCurationCell(curation: curation,
+                                                 navigationParentView: self.data.navigationParentView,
+                                                 lineLimit: 2)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .listRowBackground(Color.Background)
+                            }
+                        }
                     case .myCuration:
-                        makeCurationCellList(shortcutsZipViewModel.curationsMadeByUser)
+                        ForEach(shortcutsZipViewModel.curationsMadeByUser, id: \.self) { curation in
+                            
+                            let data = NavigationReadUserCurationType(userCuration: curation,
+                                                                      navigationParentView: self.data.navigationParentView)
+                            
+                            NavigationLink(value: data) {
+                                UserCurationCell(curation: curation,
+                                                 navigationParentView: self.data.navigationParentView,
+                                                 lineLimit: 2)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .listRowBackground(Color.Background)
+                            }
+                        }
                     }
                     Rectangle()
                         .fill(Color.Background)
@@ -60,24 +99,6 @@ struct ListCurationView: View {
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(data.title ?? "")
-        }
-    }
-    
-    @ViewBuilder
-    private func makeCurationCellList(_ curations: [Curation]) -> some View {
-        ForEach(curations, id: \.self) { curation in
-            
-            let data = NavigationReadUserCurationType(userCuration: curation,
-                                                      navigationParentView: self.data.navigationParentView)
-            
-            NavigationLink(value: data) {
-                UserCurationCell(curation: curation,
-                                 navigationParentView: self.data.navigationParentView,
-                                 lineLimit: 2)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.Background)
-            }
         }
     }
 }
