@@ -46,12 +46,12 @@ struct UserCurationListView: View {
                 .padding(.horizontal, 16)
             }
             
-            var count = 0
-            ForEach(curations.prefix(2), id: \.self) { curation in
+            ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
                 
                 let data = NavigationReadUserCurationType(userCuration: curation,
                                                           navigationParentView: self.data.navigationParentView)
-                if count < 2 {
+                //TODO: 데이터 변경 필요
+                if index < 2 {
                     NavigationLink(value: data) {
                         UserCurationCell(curation: curation,
                                          navigationParentView: self.data.navigationParentView,
