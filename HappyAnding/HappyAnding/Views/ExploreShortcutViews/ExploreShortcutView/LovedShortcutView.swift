@@ -14,23 +14,17 @@ struct LovedShortcutView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("사랑받는 단축어")
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: "사랑받는 단축어")
                 
                 Spacer()
                 
                 NavigationLink(value: NavigationListShortcutType(sectionType: .popular,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
-                    Text("더보기")
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: "더보기")
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
             if let shortcuts {

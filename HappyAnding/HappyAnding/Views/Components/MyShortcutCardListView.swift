@@ -27,21 +27,15 @@ struct MyShortcutCardListView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("내가 작성한 단축어")
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: "내가 작성한 단축어")
                 
                 Spacer()
                 
                 NavigationLink(value: data) {
-                    Text("더보기")
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: "더보기")
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {

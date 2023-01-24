@@ -91,16 +91,12 @@ struct UserCurationListView: View {
     
     var listHeader: some View {
         HStack(alignment: .bottom) {
-            Text(data.title ?? "")
-                .Title2()
-                .foregroundColor(.Gray5)
+            SubtitleTextView(text: data.title ?? "")
                 .onTapGesture { }
             Spacer()
             
             NavigationLink(value: data) {
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+                MoreCaptionTextView(text: "더보기")
             }
         }
     }

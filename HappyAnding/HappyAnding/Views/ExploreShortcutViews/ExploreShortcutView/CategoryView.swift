@@ -16,26 +16,20 @@ struct CategoryView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("카테고리 모아보기")
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: "카테고리 모아보기")
                 
                 Spacer()
                                 
                 Button(action: {
                     self.isFolded.toggle()
                 }, label: {
-                    Text(isFolded ? "펼치기" : "접기")
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: isFolded ? "펼치기" : "접기")
                 })
                 .onChange(of: isFolded) { _ in
                     categoryIndex = isFolded ? 6 : 12
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in

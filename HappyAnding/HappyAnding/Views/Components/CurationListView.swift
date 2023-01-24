@@ -40,22 +40,16 @@ struct CurationListView: View {
     var listHeader: some View {
         HStack(alignment: .bottom) {
             if data.type == .personalCuration {
-                Text("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: "\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
                     .onTapGesture { }
             } else {
-                Text(data.title ?? "")
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: data.title ?? "")
                     .onTapGesture { }
             }
             Spacer()
             
             NavigationLink(value: data) {
-                Text("더보기")
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+                MoreCaptionTextView(text: "더보기")
             }
         }
         .padding(.bottom, 12)

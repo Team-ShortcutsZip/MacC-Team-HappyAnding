@@ -17,21 +17,15 @@ struct CategoryCardView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(categoryName.translateName())
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: categoryName.translateName())
                 
                 Spacer()
                 
                 NavigationLink(value: categoryName) {
-                    Text("더보기")
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: "더보기")
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
             ScrollView(.horizontal, showsIndicators: false) {

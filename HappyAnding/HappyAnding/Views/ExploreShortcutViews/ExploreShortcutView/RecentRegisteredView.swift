@@ -16,10 +16,7 @@ struct RecentRegisteredView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("최신 단축어")
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: "최신 단축어")
                     .id(111)
                 
                 Spacer()
@@ -27,13 +24,10 @@ struct RecentRegisteredView: View {
                 NavigationLink(value: NavigationListShortcutType(sectionType: .recent,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
-                    Text("더보기")
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: "더보기")
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in

@@ -17,7 +17,7 @@ struct ExploreCurationView: View {
             VStack(spacing: 0) {
                 
                 //앱 큐레이션
-                adminCurationsFrameiew(adminCurations: shortcutsZipViewModel.adminCurations)
+                adminCurationsFrameView(adminCurations: shortcutsZipViewModel.adminCurations)
                     .padding(.top, 20)
                     .padding(.bottom, 32)
                 
@@ -50,16 +50,14 @@ struct ExploreCurationView: View {
     }
 }
 
-struct adminCurationsFrameiew: View {
+struct adminCurationsFrameView: View {
     
     let adminCurations: [Curation]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
-                Text("숏컷집 추천 모음집")
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: "숏컷집 추천 모음집")
                     .id(222)
                 
                 Spacer()
