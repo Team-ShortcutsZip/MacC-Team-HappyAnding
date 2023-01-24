@@ -86,9 +86,7 @@ struct ReadAdminCurationView: View {
     var titleAndSubtitle: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text(curation.title)
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: curation.title)
                 Text(curation.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                     .Body2()
                     .foregroundColor(.Gray4)

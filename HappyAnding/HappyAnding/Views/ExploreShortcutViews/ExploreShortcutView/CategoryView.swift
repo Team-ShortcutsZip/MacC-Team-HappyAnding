@@ -16,26 +16,20 @@ struct CategoryView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(TextLiteral.categoryViewTitle)
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: TextLiteral.categoryViewTitle)
                 
                 Spacer()
                                 
                 Button(action: {
                     self.isFolded.toggle()
                 }, label: {
-                    Text(isFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: isFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
                 })
                 .onChange(of: isFolded) { _ in
                     categoryIndex = isFolded ? 6 : 12
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in

@@ -16,23 +16,17 @@ struct DownloadRankView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(TextLiteral.downloadRankViewTitle)
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: TextLiteral.downloadRankViewTitle)
                 
                 Spacer()
                 
                 NavigationLink(value: NavigationListShortcutType(sectionType: .download,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
-                    Text(TextLiteral.more)
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: TextLiteral.more)
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in

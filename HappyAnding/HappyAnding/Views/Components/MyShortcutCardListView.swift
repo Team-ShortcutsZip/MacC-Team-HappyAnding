@@ -27,21 +27,15 @@ struct MyShortcutCardListView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(TextLiteral.myShortcutCardListViewTitle)
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: TextLiteral.myShortcutCardListViewTitle)
                 
                 Spacer()
                 
                 NavigationLink(value: data) {
-                    Text(TextLiteral.more)
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: TextLiteral.more)
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {

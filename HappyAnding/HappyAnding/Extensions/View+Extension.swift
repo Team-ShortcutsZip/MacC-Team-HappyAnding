@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: - 제스쳐
 extension View {
     func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
         background(
@@ -45,6 +46,7 @@ extension View {
     }
 }
 
+//MARK: - 둥근 모서리
 struct RoundedCorner: Shape {
 
     var radius: CGFloat = .infinity

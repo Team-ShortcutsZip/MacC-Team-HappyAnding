@@ -43,6 +43,7 @@ struct ReadUserCurationView: View {
                     UserCurationCell(curation: data.userCuration, navigationParentView: data.navigationParentView)
                 }
             }
+            .padding(.bottom, 8)
             .background(Color.White)
             .padding(.bottom, 12)
             

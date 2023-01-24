@@ -14,23 +14,17 @@ struct LovedShortcutView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(TextLiteral.lovedShortcutViewTitle)
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: TextLiteral.lovedShortcutViewTitle)
                 
                 Spacer()
                 
                 NavigationLink(value: NavigationListShortcutType(sectionType: .popular,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
-                    Text(TextLiteral.more)
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: TextLiteral.more)
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
             if let shortcuts {
