@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReadShortcutHeaderView: View {
-    
+    @Environment(\.loginAlertKey) var loginAlerter
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var shortcut: Shortcuts
@@ -17,7 +17,6 @@ struct ReadShortcutHeaderView: View {
     @State var numberOfLike = 0
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -42,21 +41,6 @@ struct ReadShortcutHeaderView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             userInfo
-        }
-        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
-            Button(role: .cancel) {
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
@@ -96,7 +80,7 @@ struct ReadShortcutHeaderView: View {
                     //화면 상의 좋아요 추가, 취소 기능 동작
                     numberOfLike += isMyLike ? 1 : -1
                 } else {
-                    tryActionWithoutSignIn = true
+                    loginAlerter.showAlert = true
                 }
             }
     }

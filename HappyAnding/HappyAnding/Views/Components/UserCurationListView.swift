@@ -10,25 +10,33 @@ import SwiftUI
 struct UserCurationListView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
+    @Environment(\.loginAlertKey) var loginAlert
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
     @State var data: NavigationListCurationType
     @State var curations = [Curation]()
-    @State private var tryWriteWithoutSignIn: Bool = false
-
     
     var body: some View {
         VStack(spacing: 0) {
-            listHeader
-                .padding(.bottom, 12)
-                .padding(.horizontal, 16)
+            HStack(alignment: .bottom) {
+                SubtitleTextView(text: data.title ?? "")
+                    .onTapGesture { }
+                Spacer()
+                
+                NavigationLink(value: data) {
+                    MoreCaptionTextView(text: "더보기")
+                }
+            }
+            .padding(.bottom, 12)
+            .padding(.horizontal, 16)
             
             Button {
                 if !useWithoutSignIn {
                     self.isWriting = true
                 } else {
-                    self.tryWriteWithoutSignIn = true
+                    loginAlert.showAlert = true
                 }
             } label: {
                 
@@ -57,21 +65,6 @@ struct UserCurationListView: View {
                 }
             }
         }
-        .alert(TextLiteral.loginTitle, isPresented: $tryWriteWithoutSignIn) {
-            Button(role: .cancel) {
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
-        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
@@ -88,6 +81,7 @@ struct UserCurationListView: View {
             self.curations = data
         }
     }
+<<<<<<< HEAD
     
     var listHeader: some View {
         HStack(alignment: .bottom) {
@@ -100,5 +94,7 @@ struct UserCurationListView: View {
             }
         }
     }
+=======
+>>>>>>> 1d4ff74 ([Feat] add login alerter)
 }
 

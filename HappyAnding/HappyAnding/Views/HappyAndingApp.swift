@@ -17,6 +17,9 @@ struct HappyAndingApp: App {
     @Environment(\.openURL) private var openURL
     
     @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
+    @StateObject var loginAlerter = Alerter()
+    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isNeededUpdate = false
     @State var isShowingLaunchScreen = true
@@ -60,6 +63,20 @@ struct HappyAndingApp: App {
             } else {
                 ShortcutsZipView()
                     .environmentObject(shortcutsZipViewModel)
+                    .environment(\.loginAlertKey, loginAlerter)
+                    .alert("로그인을 진행해주세요", isPresented: $loginAlerter.showAlert) {
+                        Button(role: .cancel) {
+                        } label: {
+                            Text("취소")
+                        }
+                        Button {
+                            useWithoutSignIn = false
+                        } label: {
+                            Text("로그인하기")
+                        }
+                    } message: {
+                        Text("이 기능은 로그인 후 사용할 수 있어요")
+                    }
             }
         }
         .onChange(of: scenePhase) { (newScenePhase) in

@@ -11,12 +11,12 @@ struct ReadShortcutVersionView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Environment(\.openURL) var openURL
+    @Environment(\.loginAlertKey) var loginAlerter
     
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -61,7 +61,7 @@ struct ReadShortcutVersionView: View {
                                         openURL(url)
                                     }
                                 } else {
-                                    self.tryActionWithoutSignIn = true
+                                    loginAlerter.showAlert = true
                                 }
                             } label: {
                                 Text(TextLiteral.readShortcutVersionViewDownloadPreviousVersion)
@@ -77,21 +77,6 @@ struct ReadShortcutVersionView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
-        }
-        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
-            Button(role: .cancel) {
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
         }
         .padding(.top, 16)
     }

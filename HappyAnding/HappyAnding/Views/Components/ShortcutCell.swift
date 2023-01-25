@@ -30,7 +30,7 @@ import SwiftUI
 
 
 struct ShortcutCell: View {
-    
+    @Environment(\.loginAlertKey) var loginAlerter
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
@@ -48,7 +48,6 @@ struct ShortcutCell: View {
     var sectionType: SectionType?
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
     
     var body: some View {
         
@@ -67,28 +66,13 @@ struct ShortcutCell: View {
                                 }
                             }
                         } else {
-                            tryActionWithoutSignIn = true
+                            loginAlerter.showAlert = true
                         }
                     }
             }
             .padding(.vertical, 20)
             .background( background )
             .padding(.horizontal, 20)
-        }
-        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
-            Button(role: .cancel) {
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
         }
         .padding(.bottom, 12)
         .background(Color.Background)

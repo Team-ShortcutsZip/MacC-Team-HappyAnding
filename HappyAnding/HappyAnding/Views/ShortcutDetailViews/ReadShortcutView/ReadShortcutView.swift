@@ -19,6 +19,7 @@ struct ReadShortcutView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @Environment(\.openURL) private var openURL
+    @Environment(\.loginAlertKey) var loginAlerter
     
     @StateObject var writeNavigation = WriteShortcutNavigation()
     @State var isTappedDeleteButton = false
@@ -43,7 +44,6 @@ struct ReadShortcutView: View {
     @State var isCancledCorrection = false              //댓글 수정 중 텍스트필드를 제외한 부분을 터치했는지?
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
     
     private let tabItems = [TextLiteral.readShortcutViewBasicTabTitle, TextLiteral.readShortcutViewVersionTabTitle, TextLiteral.readShortcutViewCommentTabTitle]
     
@@ -83,21 +83,6 @@ struct ReadShortcutView: View {
                     }
                 }
             }
-            .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
-                Button(role: .cancel) {
-                    tryActionWithoutSignIn = false
-                } label: {
-                    Text(TextLiteral.cancel)
-                }
-                Button {
-                    useWithoutSignIn = false
-                    tryActionWithoutSignIn = false
-                } label: {
-                    Text(TextLiteral.loginAction)
-                }
-            } message: {
-                Text(TextLiteral.loginMessage)
-            }
             .scrollDisabled(isClickCorrection)
             .navigationBarBackground ({ Color.White })
             .background(Color.Background)
@@ -121,7 +106,7 @@ struct ReadShortcutView: View {
                                         }
                                         shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                                     } else {
-                                        self.tryActionWithoutSignIn = true
+                                        loginAlerter.showAlert = true
                                     }
                                 } label: {
                                     Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")

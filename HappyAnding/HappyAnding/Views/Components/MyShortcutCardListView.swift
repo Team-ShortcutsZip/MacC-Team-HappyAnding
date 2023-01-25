@@ -11,9 +11,9 @@ struct MyShortcutCardListView: View {
     
     @StateObject var writeNavigation = WriteShortcutNavigation()
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    @Environment(\.loginAlertKey) var loginAlerter
     
     @State var isWriting = false
-    @State private var tryWriteWithoutSignIn: Bool = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
@@ -43,7 +43,8 @@ struct MyShortcutCardListView: View {
                         if !useWithoutSignIn {
                             self.isWriting = true
                         } else {
-                            self.tryWriteWithoutSignIn = true
+//                            self.tryWriteWithoutSignIn = true
+                            loginAlerter.showAlert = true
                         }
                     } label: {
                         AddMyShortcutCardView()
@@ -66,21 +67,6 @@ struct MyShortcutCardListView: View {
                 }
                 .padding(.horizontal, 16)
             }
-        }
-        .alert(TextLiteral.loginTitle, isPresented: $tryWriteWithoutSignIn) {
-            Button(role: .cancel) {
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
         }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
