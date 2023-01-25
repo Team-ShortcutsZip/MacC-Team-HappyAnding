@@ -11,12 +11,12 @@ struct ReadShortcutVersionView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Environment(\.openURL) var openURL
+    @Environment(\.loginAlertKey) var loginAlerter
     
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -61,7 +61,7 @@ struct ReadShortcutVersionView: View {
                                         openURL(url)
                                     }
                                 } else {
-                                    self.tryActionWithoutSignIn = true
+                                    loginAlerter.showAlert = true
                                 }
                             } label: {
                                 Text("이전 버전 다운로드")
@@ -77,21 +77,6 @@ struct ReadShortcutVersionView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
-        }
-        .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
-            Button(role: .cancel) {
-                tryActionWithoutSignIn = false
-            } label: {
-                Text("취소")
-            }
-            Button {
-                useWithoutSignIn = false
-                tryActionWithoutSignIn = false
-            } label: {
-                Text("로그인하기")
-            }
-        } message: {
-            Text("이 기능은 로그인 후 사용할 수 있어요")
         }
         .padding(.top, 16)
     }

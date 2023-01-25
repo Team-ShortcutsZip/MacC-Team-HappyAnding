@@ -10,25 +10,33 @@ import SwiftUI
 struct UserCurationListView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
+    @Environment(\.loginAlertKey) var loginAlert
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
     @State var data: NavigationListCurationType
     @State var curations = [Curation]()
-    @State private var tryWriteWithoutSignIn: Bool = false
-
     
     var body: some View {
         VStack(spacing: 0) {
-            listHeader
-                .padding(.bottom, 12)
-                .padding(.horizontal, 16)
+            HStack(alignment: .bottom) {
+                SubtitleTextView(text: data.title ?? "")
+                    .onTapGesture { }
+                Spacer()
+                
+                NavigationLink(value: data) {
+                    MoreCaptionTextView(text: "더보기")
+                }
+            }
+            .padding(.bottom, 12)
+            .padding(.horizontal, 16)
             
             Button {
                 if !useWithoutSignIn {
                     self.isWriting = true
                 } else {
-                    self.tryWriteWithoutSignIn = true
+                    loginAlert.showAlert = true
                 }
             } label: {
                 
@@ -57,21 +65,6 @@ struct UserCurationListView: View {
                 }
             }
         }
-        .alert("로그인을 진행해주세요", isPresented: $tryWriteWithoutSignIn) {
-            Button(role: .cancel) {
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text("취소")
-            }
-            Button {
-                useWithoutSignIn = false
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text("로그인하기")
-            }
-        } message: {
-            Text("이 기능은 로그인 후 사용할 수 있어요")
-        }
         .background(Color.Background.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
@@ -86,18 +79,6 @@ struct UserCurationListView: View {
         .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
             self.data.curation = data
             self.curations = data
-        }
-    }
-    
-    var listHeader: some View {
-        HStack(alignment: .bottom) {
-            SubtitleTextView(text: data.title ?? "")
-                .onTapGesture { }
-            Spacer()
-            
-            NavigationLink(value: data) {
-                MoreCaptionTextView(text: "더보기")
-            }
         }
     }
 }

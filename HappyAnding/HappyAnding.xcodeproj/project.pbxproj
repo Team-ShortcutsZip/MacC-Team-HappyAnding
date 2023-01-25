@@ -121,6 +121,7 @@
 		F94B43612907B19A00987819 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F94B43602907B19A00987819 /* FirebaseFirestore */; };
 		F94B43632907B19A00987819 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = F94B43622907B19A00987819 /* FirebaseFirestoreCombine-Community */; };
 		F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45B62980301F000C2441 /* SubtitleTextView.swift */; };
+		F96D45BB29804057000C2441 /* Alert+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45BA29804057000C2441 /* Alert+Extension.swift */; };
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
@@ -275,6 +276,7 @@
 		F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipView.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F96D45B62980301F000C2441 /* SubtitleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTextView.swift; sourceTree = "<group>"; };
+		F96D45BA29804057000C2441 /* Alert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Extension.swift"; sourceTree = "<group>"; };
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewModel.swift; sourceTree = "<group>"; };
@@ -509,6 +511,7 @@
 				F9AC2BB92935D34C00165820 /* Image+Extension.swift */,
 				A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */,
 				A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */,
+				F96D45BA29804057000C2441 /* Alert+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -903,6 +906,7 @@
 				8795A174292ACA50004B765F /* ReadShortcutCommentView.swift in Sources */,
 				A04ACB0C29041CEE004A85A6 /* LovedShortcutView.swift in Sources */,
 				A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
+				F96D45BB29804057000C2441 /* Alert+Extension.swift in Sources */,
 				A09CBA7E2922B36C00D31F5F /* String+Extension.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
 				F9DB8EBB293986E100516CE1 /* ShareExtensionViewModel.swift in Sources */,

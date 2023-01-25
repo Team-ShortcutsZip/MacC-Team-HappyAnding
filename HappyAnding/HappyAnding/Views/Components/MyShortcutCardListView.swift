@@ -11,9 +11,9 @@ struct MyShortcutCardListView: View {
     
     @StateObject var writeNavigation = WriteShortcutNavigation()
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    @Environment(\.loginAlertKey) var loginAlerter
     
     @State var isWriting = false
-    @State private var tryWriteWithoutSignIn: Bool = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
@@ -43,7 +43,8 @@ struct MyShortcutCardListView: View {
                         if !useWithoutSignIn {
                             self.isWriting = true
                         } else {
-                            self.tryWriteWithoutSignIn = true
+//                            self.tryWriteWithoutSignIn = true
+                            loginAlerter.showAlert = true
                         }
                     } label: {
                         AddMyShortcutCardView()
@@ -66,21 +67,6 @@ struct MyShortcutCardListView: View {
                 }
                 .padding(.horizontal, 16)
             }
-        }
-        .alert("로그인을 진행해주세요", isPresented: $tryWriteWithoutSignIn) {
-            Button(role: .cancel) {
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text("취소")
-            }
-            Button {
-                useWithoutSignIn = false
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text("로그인하기")
-            }
-        } message: {
-            Text("이 기능은 로그인 후 사용할 수 있어요")
         }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
