@@ -124,6 +124,7 @@
 		F94B43632907B19A00987819 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = F94B43622907B19A00987819 /* FirebaseFirestoreCombine-Community */; };
 		F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45B62980301F000C2441 /* SubtitleTextView.swift */; };
 		F96D45BB29804057000C2441 /* Alert+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45BA29804057000C2441 /* Alert+Extension.swift */; };
+		F96D45BD29816578000C2441 /* StickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45BC29816578000C2441 /* StickyHeader.swift */; };
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
@@ -280,6 +281,7 @@
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F96D45B62980301F000C2441 /* SubtitleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTextView.swift; sourceTree = "<group>"; };
 		F96D45BA29804057000C2441 /* Alert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Extension.swift"; sourceTree = "<group>"; };
+		F96D45BC29816578000C2441 /* StickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeader.swift; sourceTree = "<group>"; };
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewModel.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				87276C372933F6AB00C92F4C /* CustomTextEditor.swift */,
 				87CFD8482939187200F97B86 /* NicknameTextField.swift */,
 				F96D45B62980301F000C2441 /* SubtitleTextView.swift */,
+				F96D45BC29816578000C2441 /* StickyHeader.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -897,6 +900,7 @@
 				F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */,
+				F96D45BD29816578000C2441 /* StickyHeader.swift in Sources */,
 				87E99CEE29080D33009B691F /* User.swift in Sources */,
 				F976E82C29368E0D0088BBA1 /* Version.swift in Sources */,
 				87E99CB928FFF291009B691F /* WriteShortcutTitleView.swift in Sources */,

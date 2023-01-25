@@ -27,18 +27,9 @@ struct ReadAdminCurationView: View {
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            GeometryReader { geo in
-                let yOffset = geo.frame(in: .global).minY
-                
-                Image(curation.background)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: geo.size.width, height: 304 + (yOffset > 0 ? yOffset : 0))
-                    .clipped()
-                    .offset(y: yOffset > 0 ? -yOffset : 0)
-            }
-            .frame(minHeight: 304)
-            .padding(.bottom, 20)
+            
+            StickyHeader(height: 304, image: curation.background)
+                .padding(.bottom, 20)
             
             titleAndSubtitle
                 .padding(.bottom, 8)
