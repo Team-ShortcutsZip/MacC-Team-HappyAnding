@@ -22,13 +22,8 @@ struct ShowProfileView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                GeometryReader { geo in
-                    let yOffset = geo.frame(in: .global).minY
-                    
-                    Color.White
-                        .frame(width: geo.size.width, height: 40 + (yOffset > 0 ? yOffset : 0))
-                        .offset(y: yOffset > 0 ? -yOffset : 0)
-                }
+                
+                StickyHeader(height: 40)
                 
                 //MARK: 프로필이미지 및 닉네임
                 VStack {

@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct ReadUserCurationView: View {
-    
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
+    
     @State var authorInformation: User? = nil
     
     @State var isWriting = false
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
+    
     @State var data: NavigationReadUserCurationType
     @State var index = 0
     
@@ -26,14 +27,7 @@ struct ReadUserCurationView: View {
         ScrollView(showsIndicators: false) {
             ZStack(alignment: .bottom) {
                 
-                GeometryReader { geo in
-                    let yOffset = geo.frame(in: .global).minY
-                    
-                    Color.White
-                        .frame(width: geo.size.width, height: 371 + (yOffset > 0 ? yOffset : 0))
-                        .offset(y: yOffset > 0 ? -yOffset : 0)
-                }
-                .frame(minHeight: 371)
+                StickyHeader(height: 371)
                 
                 VStack {
                     userInformation

@@ -14,12 +14,11 @@ struct ExploreCurationView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
+            VStack(spacing: 32) {
                 
                 //앱 큐레이션
                 adminCurationsFrameView(adminCurations: shortcutsZipViewModel.adminCurations)
                     .padding(.top, 20)
-                    .padding(.bottom, 32)
                 
                 //사용자를 위한 모음집
                 if !useWithoutSignIn {
@@ -28,7 +27,6 @@ struct ExploreCurationView: View {
                                                                       isAllUser: false,
                                                                       navigationParentView: .curations,
                                                                       curation: shortcutsZipViewModel.personalCurations))
-                    .padding(.bottom, 32)
                 }
                 
                 //추천 유저 큐레이션
@@ -38,7 +36,8 @@ struct ExploreCurationView: View {
                                                                   navigationParentView: .curations,
                                                                   curation: shortcutsZipViewModel.userCurations))
             }
-            .padding(.bottom, 32)
+            .padding(.top, 20)
+            .padding(.bottom, 44)
             .onChange(of: shortcutsZipViewModel.userCurations) { _ in
                 shortcutsZipViewModel.refreshPersonalCurations()
             }
