@@ -48,9 +48,9 @@ struct NicknameTextField: View {
         var message: String {
             switch self {
             case .length:
-                return "*닉네임은 최대 8글자까지 입력가능합니다."
+                return TextLiteral.nicknameTextFieldLength
             case .emoticon:
-                return "사용할 수 없는 문자가 포함되어 있습니다."
+                return TextLiteral.nicknameTextFieldEmoticon
             }
         }
     }
@@ -81,7 +81,7 @@ struct NicknameTextField: View {
                     .Footnote()
                     .foregroundColor(.red)
             } else {
-                Text("* 공백 없이 한글 ,숫자, 영문만 입력 가능")
+                Text(TextLiteral.nicknameTextFieldSpace)
                     .Footnote()
                     .foregroundColor(.Gray3)
             }
@@ -98,13 +98,13 @@ struct NicknameTextField: View {
         .onChange(of: nicknameState) { newValue in
             self.isValid = newValue == .success
         }
-        .alert("닉네임 중복 확인", isPresented: $isCheckedDuplicated) {
+        .alert(TextLiteral.nicknameTextFieldDuplicateTitle, isPresented: $isCheckedDuplicated) {
             Button {
             } label: {
-                Text(nicknameState == .success ? "확인" : "다시 입력하기")
+                Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessLabel : TextLiteral.nicknameTextFieldDuplicateFailLabel)
             }
         } message: {
-            Text(nicknameState == .success ? "사용 가능한 닉네임입니다" : "이미 사용 중인 닉네임입니다")
+            Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessMessage : TextLiteral.nicknameTextFieldDuplicateFailMessage)
         }
     }
     
@@ -112,7 +112,7 @@ struct NicknameTextField: View {
         HStack (spacing: 12) {
             
             HStack {
-                TextField("닉네임 (최대 8글자)", text: $nickname)
+                TextField(TextLiteral.nicknameTextFieldTitle, text: $nickname)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .focused($isFocused)
@@ -150,7 +150,7 @@ struct NicknameTextField: View {
                         .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Primary.opacity(0.13) : .Primary)
                         .frame(width: 80, height: 52)
                     
-                    Text("중복확인")
+                    Text(TextLiteral.nicknameTextFieldDuplicateCheck)
                         .Body1()
                         .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Text_Button_Disable : .Text_icon)
                 }

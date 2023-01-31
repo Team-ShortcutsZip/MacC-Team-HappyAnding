@@ -14,7 +14,7 @@ struct LovedShortcutView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("사랑받는 단축어")
+                Text(TextLiteral.lovedShortcutViewTitle)
                     .Title2()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -24,7 +24,7 @@ struct LovedShortcutView: View {
                 NavigationLink(value: NavigationListShortcutType(sectionType: .popular,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
-                    Text("더보기")
+                    Text(TextLiteral.more)
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)

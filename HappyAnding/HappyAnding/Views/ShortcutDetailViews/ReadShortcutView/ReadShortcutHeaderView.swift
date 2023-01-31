@@ -43,20 +43,20 @@ struct ReadShortcutHeaderView: View {
             }
             userInfo
         }
-        .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
+        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
             Button(role: .cancel) {
                 tryActionWithoutSignIn = false
             } label: {
-                Text("취소")
+                Text(TextLiteral.cancel)
             }
             Button {
                 useWithoutSignIn = false
                 tryActionWithoutSignIn = false
             } label: {
-                Text("로그인하기")
+                Text(TextLiteral.loginAction)
             }
         } message: {
-            Text("이 기능은 로그인 후 사용할 수 있어요")
+            Text(TextLiteral.loginMessage)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
@@ -114,7 +114,7 @@ struct ReadShortcutHeaderView: View {
                             .foregroundColor(.Gray3)
                             .padding(.leading, 16)
                         
-                        Text(userInformation?.nickname ?? "탈퇴한 사용자")
+                        Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
                             .Body2()
                             .foregroundColor(.Gray4)
                         

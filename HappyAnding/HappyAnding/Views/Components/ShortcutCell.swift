@@ -75,20 +75,20 @@ struct ShortcutCell: View {
             .background( background )
             .padding(.horizontal, 20)
         }
-        .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
+        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
             Button(role: .cancel) {
                 tryActionWithoutSignIn = false
             } label: {
-                Text("취소")
+                Text(TextLiteral.cancel)
             }
             Button {
                 useWithoutSignIn = false
                 tryActionWithoutSignIn = false
             } label: {
-                Text("로그인하기")
+                Text(TextLiteral.loginAction)
             }
         } message: {
-            Text("이 기능은 로그인 후 사용할 수 있어요")
+            Text(TextLiteral.loginMessage)
         }
         .padding(.bottom, 12)
         .background(Color.Background)

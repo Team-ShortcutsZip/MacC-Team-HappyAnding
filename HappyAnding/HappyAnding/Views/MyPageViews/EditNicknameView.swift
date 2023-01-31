@@ -17,26 +17,22 @@ struct EditNicknameView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("닉네임을 수정해주세요")
+            Text(TextLiteral.editNicknameViewHeadline)
                 .Title1()
                 .foregroundColor(.Gray5)
                 .padding(.top, 40)
             
             NicknameTextField(nickname: $nickname, isValid: $isValid, initName: self.user?.nickname ?? "")
-            .padding(.top, 16)
-
+                .padding(.top, 16)
+            
             Spacer()
             
             doneButton
         }
         .onAppear {
             nickname = shortcutszipViewModel.userInfo?.nickname ?? ""
-//<<<<<<< HEAD
             shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
                                             isCurrentUser: true) { user in
-//=======
-//            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser()) { user in
-//>>>>>>> develop
                 self.user = user
             }
         }
@@ -49,7 +45,7 @@ struct EditNicknameView: View {
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
         .background(Color.Background)
-        .navigationTitle("닉네임 수정")
+        .navigationTitle(TextLiteral.editNicknameViewTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -66,7 +62,7 @@ struct EditNicknameView: View {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(isValid ? .Primary : .Primary .opacity(0.13))
                     .frame(height: 52)
-                Text("완료")
+                Text(TextLiteral.done)
                     .foregroundColor(isValid ? .Text_icon : .Text_Button_Disable)
                     .Body1()
             }

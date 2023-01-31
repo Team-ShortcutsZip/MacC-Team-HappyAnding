@@ -53,7 +53,7 @@ struct CurationListView: View {
             Spacer()
             
             NavigationLink(value: data) {
-                Text("더보기")
+                Text(TextLiteral.more)
                     .Footnote()
                     .foregroundColor(.Gray4)
             }

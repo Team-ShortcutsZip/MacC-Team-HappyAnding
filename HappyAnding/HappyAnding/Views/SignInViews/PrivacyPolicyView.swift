@@ -30,13 +30,13 @@ struct PrivacyPolicyView: View {
                 Button {
                     self.isTappedPrivacyButton = false
                 } label: {
-                    Text("닫기")
+                    Text(TextLiteral.close)
                         .foregroundColor(.Gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 16)
                 }
                 
-                Text("개인정보처리방침")
+                Text(TextLiteral.settingViewPrivacyPolicy)
                     .Headline()
                     .frame(maxWidth: .infinity)
                 

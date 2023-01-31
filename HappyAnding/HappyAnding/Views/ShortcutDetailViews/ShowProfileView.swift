@@ -17,7 +17,7 @@ struct ShowProfileView: View {
     @State var curations: [Curation] = []
     @Namespace var namespace
     @State var currentTab: Int = 0
-    private let tabItems = ["작성한 단축어", "작성한 추천 모음집"]
+    private let tabItems = [TextLiteral.showProfileViewShortcutTabTitle, TextLiteral.showProfileViewCurationTabTitle]
     
     var body: some View {
         ScrollView {
@@ -36,7 +36,7 @@ struct ShowProfileView: View {
                         .font(.system(size: 72, weight: .medium))
                         .frame(width: 72, height: 72)
                         .foregroundColor(.Gray3)
-                    Text(data.userInfo?.nickname ?? "user")
+                    Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .Title1()
                         .foregroundColor(.Gray5)
                 }
@@ -118,7 +118,7 @@ extension ShowProfileView {
                 case 0:
                     if shortcuts.isEmpty {
                         VStack {
-                            Text("작성한 단축어가 없습니다.")
+                            Text(TextLiteral.showProfileViewNoShortcuts)
                                 .padding(.top, 16)
                                 .Body2()
                                 .foregroundColor(.Gray4)
@@ -143,7 +143,7 @@ extension ShowProfileView {
                 case 1:
                     if curations.isEmpty {
                         VStack{
-                            Text("작성한 추천 모음집이 없습니다.")
+                            Text(TextLiteral.showProfileViewNoCurations)
                                 .padding(.top, 16)
                                 .Body2()
                                 .foregroundColor(.Gray4)

@@ -41,7 +41,7 @@ struct ExploreShortcutView: View {
                 .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
-        .navigationBarTitle(Text("단축어 둘러보기"))
+        .navigationBarTitle(TextLiteral.exploreShortcutViewTitle)
         .navigationBarTitleDisplayMode(.large)
         .background(Color.Background)
         .toolbar {

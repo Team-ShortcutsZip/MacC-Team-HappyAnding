@@ -62,13 +62,13 @@ struct IconModalView: View {
                 Button {
                     self.isShowingIconModal = false
                 } label: {
-                    Text("닫기")
+                    Text(TextLiteral.close)
                         .foregroundColor(.Gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 16)
                 }
                 
-                Text("아이콘")
+                Text(TextLiteral.iconModalViewTitle)
                     .Headline()
                     .frame(maxWidth: .infinity)
                 
@@ -96,7 +96,7 @@ struct IconModalView: View {
             }
             .padding(.bottom, 24)
             
-            Text("색상")
+            Text(TextLiteral.iconModalViewColor)
                 .Subtitle()
                 .padding(.leading, 16)
                 .foregroundColor(.Gray4)
@@ -109,7 +109,7 @@ struct IconModalView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
             
-            Text("기호")
+            Text(TextLiteral.iconModalViewIcon)
                 .Subtitle()
                 .padding(.leading, 16)
                 .foregroundColor(.Gray4)
@@ -131,7 +131,7 @@ struct IconModalView: View {
                         .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Primary : .Primary .opacity(0.13) )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
-                    Text("완료")
+                    Text(TextLiteral.done)
                         .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Text_Button : .Text_Button_Disable )
                         .Body1()
                 }

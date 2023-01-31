@@ -25,7 +25,7 @@ struct CategoryCardView: View {
                 Spacer()
                 
                 NavigationLink(value: categoryName) {
-                    Text("더보기")
+                    Text(TextLiteral.more)
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
