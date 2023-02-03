@@ -14,8 +14,8 @@ struct LoginAlertKey: EnvironmentKey {
 
 extension EnvironmentValues {
     var loginAlertKey: Alerter {
-        get { return self[LoginAlertKey] }
-        set { self[LoginAlertKey] = newValue }
+        get { return self[LoginAlertKey.self] }
+        set { self[LoginAlertKey.self] = newValue }
     }
 }
 
