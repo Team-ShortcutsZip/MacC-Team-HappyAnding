@@ -103,9 +103,6 @@ struct WriteCurationSetView: View {
     var shortcutList: some View {
         
         ScrollView {
-            
-            
-            
             ForEach(Array(shortcutCells)) { shortcut in
                 CheckBoxShortcutCell(
                     isShortcutTapped: curation.shortcuts.contains(shortcut),

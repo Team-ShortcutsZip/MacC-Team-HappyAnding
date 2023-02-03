@@ -33,6 +33,7 @@ struct ReadShortcutVersionView: View {
                 Text(TextLiteral.readShortcutVersionViewUpdateContent)
                     .Body2()
                     .foregroundColor(.Gray4)
+            
                 ForEach(Array(zip(shortcut.updateDescription, shortcut.updateDescription.indices)), id: \.0) { data, index in
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
