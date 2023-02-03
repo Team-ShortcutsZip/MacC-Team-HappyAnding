@@ -11,6 +11,8 @@ struct CategoryModalView: View {
     @Binding var isShowingCategoryModal: Bool
     @Binding var selectedCategories: [String]
     
+    var screenHeight = UIScreen.main.bounds.size.height
+    
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -29,7 +31,7 @@ struct CategoryModalView: View {
                     }
                     
                     Text("카테고리")
-                        .font(.headline)
+                        .Headline()
                         .frame(maxWidth: .infinity)
                     
                     Spacer()
@@ -37,7 +39,7 @@ struct CategoryModalView: View {
                 }
                 
                 Spacer()
-                    .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
+                    .frame(height: screenHeight * 0.7 * 0.04)
                 
                 LazyVGrid(columns: gridLayout, spacing: 12) {
                     ForEach(Category.allCases, id: \.self) { item in
@@ -47,7 +49,7 @@ struct CategoryModalView: View {
                 .padding(.horizontal, 16)
                 
                 Spacer()
-                    .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
+                    .frame(height: screenHeight * 0.7 * 0.04)
                 
                 Button(action: {
                     isShowingCategoryModal = false

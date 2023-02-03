@@ -31,12 +31,8 @@ struct EditNicknameView: View {
         }
         .onAppear {
             nickname = shortcutszipViewModel.userInfo?.nickname ?? ""
-//<<<<<<< HEAD
             shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser(),
                                             isCurrentUser: true) { user in
-//=======
-//            shortcutszipViewModel.fetchUser(userID: shortcutszipViewModel.currentUser()) { user in
-//>>>>>>> develop
                 self.user = user
             }
         }

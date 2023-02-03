@@ -36,13 +36,8 @@ struct ShortcutsListView: View {
                         .listRowSeparator(.hidden)
                     }
                 }
-                
-                Rectangle()
-                    .fill(Color.Background)
-                    .frame(height: 44)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
             }
+            .padding(.bottom, 44)
         }
         .navigationBarTitle(categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)

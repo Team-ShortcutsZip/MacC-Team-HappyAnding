@@ -111,7 +111,6 @@ struct ReadShortcutCommentView: View {
                         if let user = shortcutsZipViewModel.userInfo {
                             if user.id == comment.user_id {
                                 Button {
-                                    print("수정")
                                     withAnimation(.easeInOut) {
                                         isClickCorrenction.toggle()
                                         addedComment = comment

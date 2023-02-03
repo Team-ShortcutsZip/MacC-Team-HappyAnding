@@ -12,8 +12,10 @@ import SwiftUI
 struct UserCurationCell: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var curation: Curation
     @State var index = 0
+    
     let navigationParentView: NavigationParentView
     var lineLimit: Int?
     
@@ -28,9 +30,7 @@ struct UserCurationCell: View {
                     ForEach(shortcutsZipViewModel.userCurations[index].shortcuts.prefix(4), id: \.self) { shortcut in
                         ZStack {
                             Rectangle()
-                                .fill(Color.fetchGradient(
-                                    color: shortcut.color)
-                                )
+                                .fill(Color.fetchGradient(color: shortcut.color))
                                 .cornerRadius(8)
                                 .frame(width: 36, height: 36)
                             Image(systemName: shortcut.sfSymbol)

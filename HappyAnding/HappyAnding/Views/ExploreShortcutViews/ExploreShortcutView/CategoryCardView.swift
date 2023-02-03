@@ -10,7 +10,9 @@ import SwiftUI
 struct CategoryCardView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @Binding var shortcuts: [Shortcuts]
+    
     let categoryName: Category
     let navigationParentView: NavigationParentView
     
@@ -33,13 +35,15 @@ struct CategoryCardView: View {
                     if let shortcuts {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
                             if index < 7 {
-                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                      navigationParentView: self.navigationParentView)
+                                let data = NavigationReadShortcutType(
+                                    shortcutID: shortcut.id,
+                                    navigationParentView: self.navigationParentView)
                                 
                                 NavigationLink(value: data) {
-                                    ShortcutCardCell(categoryShortcutIcon: shortcut.sfSymbol,
-                                                     categoryShortcutName: shortcut.title,
-                                                     categoryShortcutColor: shortcut.color)
+                                    ShortcutCardCell(
+                                        categoryShortcutIcon: shortcut.sfSymbol,
+                                        categoryShortcutName: shortcut.title,
+                                        categoryShortcutColor: shortcut.color)
                                 }
                             }
                         }
