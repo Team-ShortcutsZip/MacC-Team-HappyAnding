@@ -56,23 +56,8 @@ struct WriteCurationInfoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    if isEdit {
-                        curation.shortcuts.forEach { shortcutCell in
-                            deletedShortcutCells.removeAll(where: { $0.id == shortcutCell.id })
-                        }
-                    }
-                    curation.shortcuts = curation.shortcuts.sorted { $0.title < $1.title }
-                    curation.author = shortcutsZipViewModel.currentUser()
-                    shortcutsZipViewModel.setData(model: curation)
-                    shortcutsZipViewModel.updateShortcutCurationID(
-                        shortcutCells: curation.shortcuts,
-                        curationID: curation.id,
-                        isEdit: isEdit,
-                        deletedShortcutCells: deletedShortcutCells
-                    )
-                    if let index = shortcutsZipViewModel.userCurations.firstIndex(where: { $0.id == curation.id }) {
-                        shortcutsZipViewModel.userCurations[index] = curation
-                    }
+                    
+                    shortcutsZipViewModel.addCuration(curation: curation, isEdit: isEdit, deletedShortcutCells: deletedShortcutCells)
                     
                     self.isWriting.toggle()
                     writeCurationNavigation.navigationPath = .init()
@@ -89,10 +74,3 @@ struct WriteCurationInfoView: View {
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }
-
-//struct WriteCurationInfoView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WriteCurationInfoView(isWriting: .constant(true),
-//                              isEdit: false, navigationParentView: .curations)
-//    }
-//}
