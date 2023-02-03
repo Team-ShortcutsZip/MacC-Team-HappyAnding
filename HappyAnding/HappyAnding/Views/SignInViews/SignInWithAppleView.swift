@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignInWithAppleView: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
-        
+
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
@@ -59,6 +62,9 @@ struct SignInWithAppleView: View {
             })
             .padding(.bottom, 12)
         }
+        .onAppear() {
+            shortcutsZipViewModel.resetUser()
+        }
         .background(Color.Background)
     }
     
@@ -66,6 +72,18 @@ struct SignInWithAppleView: View {
         appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: true)
         appleLoginCoordinator?.startSignInWithAppleFlow()
     }
+    
+    private func logOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+//            userAuth.signOut()
+            shortcutsZipViewModel.resetUser()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
 }
 
 struct SignUpView_Previews: PreviewProvider {

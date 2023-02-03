@@ -719,6 +719,18 @@ class ShortcutsZipViewModel: ObservableObject {
             }
     }
     
+//    테스트 함수. 최종 commit 시 삭제 필요
+//    func deleteCache() {
+//        Firestore.firestore().clearPersistence { error in
+//            if let error = error {
+//                // Handle the error
+//                print("Error clearing Firestore cache: \(error)")
+//            } else {
+//                print("Firestore cache cleared successfully")
+//            }
+//        }
+//    }
+//
 // MARK: - 검색 관련 함수
         
         //MARK: 연관 앱으로 단축어 검색
