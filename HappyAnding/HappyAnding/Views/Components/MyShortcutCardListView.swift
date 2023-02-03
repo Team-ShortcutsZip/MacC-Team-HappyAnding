@@ -43,7 +43,6 @@ struct MyShortcutCardListView: View {
                         if !useWithoutSignIn {
                             self.isWriting = true
                         } else {
-//                            self.tryWriteWithoutSignIn = true
                             loginAlerter.showAlert = true
                         }
                     } label: {
@@ -71,8 +70,7 @@ struct MyShortcutCardListView: View {
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeNavigation.navigationPath) {
-                WriteShortcutTitleView(isWriting: $isWriting,
-                                       isEdit: false)
+                WriteShortcutTitleView(isWriting: $isWriting, isEdit: false)
             }
             .environmentObject(writeNavigation)
         }
