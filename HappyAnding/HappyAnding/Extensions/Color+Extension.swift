@@ -81,6 +81,9 @@ extension Color {
         return LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
         
     }
+    static func fetchDefualtGradient() -> LinearGradient {
+        LinearGradient(colors: [Color.Gray1], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
 }
 
 extension UIColor {
