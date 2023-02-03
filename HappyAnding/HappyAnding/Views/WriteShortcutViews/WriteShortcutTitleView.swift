@@ -56,15 +56,9 @@ struct WriteShortcutTitleView: View {
                 shortcutsRequiredApp
             }
         }
-        //        .ignoresSafeArea(edges: .bottom)
         .background(Color.Background)
         .navigationTitle(isEdit ? TextLiteral.writeShortcutTitleViewEdit : TextLiteral.writeShortcutTitleViewPost)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Int.self) { value in
-            WriteShortcutdescriptionView(shortcut: $shortcut,
-                                         isWriting: $isWriting,
-                                         isEdit: isEdit)
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
@@ -85,47 +79,18 @@ struct WriteShortcutTitleView: View {
                     
                     shortcut.author = shortcutsZipViewModel.currentUser()
                     if isEdit {
-                        //뷰모델의 카테고리별 단축어 목록에서 정보 수정
-                        newCategory = shortcut.category
-                        existingCategory.forEach { category in
-                            if !shortcut.category.contains(category) {
-                                newCategory.removeAll(where: { $0 == category })
-                                shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].removeAll(where: { $0.id == shortcut.id })
-                            } else {
-                                newCategory.removeAll(where: { $0 == category })
-                                if let index = shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].firstIndex(where: { $0.id == shortcut.id}) {
-                                    shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index][index] = shortcut
-                                }
-                            }
-                        }
-                        newCategory.forEach { category in
-                            if !shortcutsZipViewModel.isFirstFetchInCategory[Category(rawValue: category)!.index] {
-                                shortcutsZipViewModel.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
-                            }
-                        }
+                        //단축어 수정
+                        //뷰모델의 카테고리별 단축어 목록에서 정보 수정 및 해당 단축어가 포함된 큐레이션 수정
+                        shortcutsZipViewModel.updateShortcut(existingCategory: existingCategory, newCategory: shortcut.category, shortcut: shortcut)
                         
-                        //서버 데이터 변경
-                        shortcutsZipViewModel.setData(model: shortcut)
-                        //TODO: 셀정보에 변경사항이 있을 경우에만 함수를 호출하도록 변경 필요
-                        shortcutsZipViewModel.updateShortcutInCuration(
-                            shortcutCell: ShortcutCellModel(
-                                id: shortcut.id,
-                                sfSymbol: shortcut.sfSymbol,
-                                color: shortcut.color,
-                                title: shortcut.title,
-                                subtitle: shortcut.subtitle,
-                                downloadLink: shortcut.downloadLink.last!
-                            ),
-                            curationIDs: shortcut.curationIDs
-                        )
                     } else {
                         //새로운 단축어 생성 및 저장
                         // 뷰모델에 추가
                         shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
                         
-                        // 서버에 추가
-                        shortcutsZipViewModel.setData(model: shortcut)
                     }
+                    // 서버에 추가 또는 수정
+                    shortcutsZipViewModel.setData(model: shortcut)
                     
                     isWriting.toggle()
                     
@@ -135,32 +100,24 @@ struct WriteShortcutTitleView: View {
                     Text(TextLiteral.upload)
                         .Headline()
                         .foregroundColor(.Primary)
-                        .opacity(shortcut.color.isEmpty ||
-                                 shortcut.sfSymbol.isEmpty ||
-                                 shortcut.title.isEmpty ||
-                                 !isNameValid ||
-                                 shortcut.downloadLink.isEmpty ||
-                                 !isLinkValid ||
-                                 shortcut.subtitle.isEmpty ||
-                                 !isOneLineValid ||
-                                 shortcut.description.isEmpty ||
-                                 !isMultiLineValid ||
-                                 shortcut.category.isEmpty ? 0.3 : 1)
+                        .opacity(isUnavailableUploadButton() ? 0.3 : 1)
                 })
-                .disabled(shortcut.color.isEmpty ||
-                          shortcut.sfSymbol.isEmpty ||
-                          shortcut.title.isEmpty ||
-                          !isNameValid ||
-                          shortcut.downloadLink.isEmpty ||
-                          !isLinkValid ||
-                          shortcut.subtitle.isEmpty ||
-                          !isOneLineValid ||
-                          shortcut.description.isEmpty ||
-                          !isMultiLineValid ||
-                          shortcut.category.isEmpty
-                )
+                .disabled(isUnavailableUploadButton())
             }
         }
+    }
+    
+    private func isUnavailableUploadButton() -> Bool {
+        shortcut.color.isEmpty ||
+        shortcut.sfSymbol.isEmpty ||
+        shortcut.title.isEmpty ||
+        !isNameValid ||
+        shortcut.downloadLink.isEmpty ||
+        !isLinkValid ||
+        shortcut.subtitle.isEmpty ||
+        !isOneLineValid ||
+        shortcut.description.isEmpty ||
+        !isMultiLineValid || shortcut.category.isEmpty
     }
     
     //MARK: -아이콘 모달 버튼
@@ -168,31 +125,15 @@ struct WriteShortcutTitleView: View {
         Button(action: {
             isShowingIconModal = true
         }, label: {
-            if shortcut.sfSymbol.isEmpty {
-                ZStack(alignment: .center) {
-                    Rectangle()
-                        .fill(Color.Gray1)
-                        .cornerRadius(12.35)
-                        .frame(width: 84, height: 84)
-                    
-                    Image(systemName: "plus")
-                        .font(.system(size: 24))
-                        .frame(width: 84, height: 84)
-                        .foregroundColor(.Gray5)
-                }
-                
-            } else {
-                ZStack(alignment: .center) {
-                    Rectangle()
-                        .fill(Color.fetchGradient(color: shortcut.color))
-                        .cornerRadius(12.35)
-                        .frame(width: 84, height: 84)
-                    
-                    Image(systemName: shortcut.sfSymbol)
-                        .font(.system(size: 32))
-                        .frame(width: 84, height: 84)
-                        .foregroundColor(.Text_icon)
-                }
+            ZStack(alignment: .center) {
+                Rectangle()
+                    .fill(isEdit ? Color.fetchGradient(color: shortcut.color) : Color.fetchDefualtGradient())
+                    .cornerRadius(12.35)
+                    .frame(width: 84, height: 84)
+                Image(systemName: isEdit ? shortcut.sfSymbol : "plus")
+                    .font(.system(size: 24))
+                    .frame(width: 84, height: 84)
+                    .foregroundColor(isEdit ? .Text_icon : .Gray5)
             }
         })
         .sheet(isPresented: $isShowingIconModal) {
