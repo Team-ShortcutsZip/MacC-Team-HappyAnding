@@ -172,17 +172,6 @@ struct ShortcutTabView: View {
                 }
                 .tag(3)
             }
-            .sheet(isPresented: self.$isShortcutDeeplink) {
-                let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                                      navigationParentView: .myPage)
-                ReadShortcutView(data: data)
-            }
-            .sheet(isPresented: self.$isCurationDeeplink) {
-                if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
-                    let data = NavigationReadUserCurationType(userCuration: curation, navigationParentView: .myPage)
-                    ReadUserCurationView(data: data)
-                }
-            }
             .onChange(of: phase) { newPhase in
                 switch newPhase {
                 case .background: isShortcutDeeplink = false; isCurationDeeplink = false
@@ -212,6 +201,10 @@ struct ShortcutTabView: View {
         
         tempShortcutId  = shortcutIDfromURL
         isShortcutDeeplink = true
+        
+        let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
+                                              navigationParentView: .myPage)
+        navigateLink(data: data)
     }
     
     private func fetchCurationIdFromUrl(urlString: String) {
@@ -228,10 +221,28 @@ struct ShortcutTabView: View {
         
         guard let curationIDfromURL = dictionaryData["curationID"] else { return }
         
-        print("curationIDfromURL = \(curationIDfromURL)")
-        
         tempCurationId  = curationIDfromURL
         isCurationDeeplink = true
+        
+        if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
+            let data = NavigationReadUserCurationType(userCuration: curation,
+                                                      navigationParentView: .myPage)
+            navigateLink(data: data)
+        }
+    }
+    
+    private func navigateLink<T: Hashable> (data: T) {
+        
+        switch selectedTab {
+        case 1:
+            shortcutNavigation.navigationPath.append(data)
+        case 2:
+            curationNavigation.navigationPath.append(data)
+        case 3:
+            profileNavigation.navigationPath.append(data)
+        default:
+            break
+        }
     }
 }
 
