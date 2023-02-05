@@ -46,7 +46,7 @@ struct WriteCurationSetView: View {
             }
         }
         .background(Color.Background)
-        .navigationTitle(isEdit ? TextLiteral.writeCurationSetViewTitleEdit : TextLiteral.writeCurationSetViewTitleWrite)
+        .navigationTitle(isEdit ? TextLiteral.writeCurationSetViewEdit : TextLiteral.writeCurationSetViewPost)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration().sorted { $0.title < $1.title }

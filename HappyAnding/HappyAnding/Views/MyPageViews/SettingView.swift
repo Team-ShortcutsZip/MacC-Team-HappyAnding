@@ -110,7 +110,7 @@ struct SettingView: View {
                     Button(role: .cancel) {
                         
                     } label: {
-                        Text(TextLiteral.close)
+                        Text(TextLiteral.cancel)
                     }
                     
                     Button(role: .destructive) {

@@ -25,8 +25,6 @@ enum TextLiteral {
     static let delete: String = "삭제"
     static let withdrawnUser: String = "탈퇴한 사용자"
     static let defaultUser: String = "user"
-    static let requiredAppsTitle: String = "단축어 사용에 필요한 앱"
-    static let categoryTitle: String = "카테고리"
     
     // MARK: - ExploreShortcutView
     static let exploreShortcutViewTitle: String = "단축어 둘러보기"
@@ -78,11 +76,13 @@ enum TextLiteral {
     static let writeShortcutTitleViewOneLinePlaceholder: String = "단축어의 핵심 기능을 입력하세요"
     static let writeShortcutTitleViewMultiLineTitle: String = "상세 설명"
     static let writeShortcutTitleViewMultiLinePlaceholder: String = "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력하세요"
-    static let writeShortcutTitleViewTitleEdit: String = "단축어 편집"
-    static let writeShortcutTitleViewTitleWrite: String = "단축어 등록"
+    static let writeShortcutTitleViewEdit: String = "단축어 편집"
+    static let writeShortcutTitleViewPost: String = "단축어 등록"
+    static let writeShortcutTitleViewCategoryTitle: String = "카테고리"
     static let writeShortcutTitleViewCategoryDescription: String = "최대 3개"
     static let writeShortcutTitleViewCategoryCell: String = "카테고리 선택"
     static let writeShortcutTitleViewRequiredAppDescription: String = "(선택)"
+    static let writeShortcutTitleViewRequiredAppsTitle: String = "단축어 사용에 필요한 앱"
     static let writeShortcutTitleViewRequiredAppInformation: String = "해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 입력해주세요"
     static let writeShortcutTitleViewRequiredAppCell: String = "앱 추가"
     
@@ -90,6 +90,9 @@ enum TextLiteral {
     static let iconModalViewTitle: String = "아이콘"
     static let iconModalViewColor: String = "색상"
     static let iconModalViewIcon: String = "기호"
+    
+    // MARK: - CategoryModalView
+    static let categoryModalViewTitle: String = "카테고리"
     
     // MARK: - ReadShortcutView
     static let readShortcutViewBasicTabTitle: String = "기본 정보"
@@ -104,6 +107,9 @@ enum TextLiteral {
     
     // MARK: - ReadShortcutContentView
     static let readShortcutContentViewDescription: String = "단축어 설명"
+    static let readShortcutContentViewCategory: String = "카테고리"
+    static let readShortcutContentViewRequiredApps: String = "단축어 사용에 필요한 앱"
+    static let readShortcutContentViewRequirements: String = "단축어 사용을 위한 요구사항"
     
     // MARK: - ReadShortcutVersionView
     static let readShortcutVersionViewNoUpdates: String = "업데이트된 버전이 없어요"
@@ -140,8 +146,8 @@ enum TextLiteral {
     
     // MARK: - WriteCurationSetView
     static let writeCurationSetViewNoShortcuts: String = "아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)"
-    static let writeCurationSetViewTitleEdit: String = "추천 모음집 편집"
-    static let writeCurationSetViewTitleWrite: String = "추천 모음집 작성"
+    static let writeCurationSetViewEdit: String = "추천 모음집 편집"
+    static let writeCurationSetViewPost: String = "추천 모음집 작성"
     static let writeCurationSetViewSelectionTitle: String = "단축어 선택"
     static let writeCurationSetViewSelectionDescription: String = "최대 10개"
     static let writeCurationSetViewSelectionInformation: String = "추천 모음집을 위한 단축어 목록은 '내가 업로드한 단축어'와 '좋아요를 누른 단축어'로 구성되어 있어요."
@@ -151,6 +157,8 @@ enum TextLiteral {
     static let writeCurationInfoViewNamePlaceholder: String = "추천 모음집의 이름을 입력하세요"
     static let writeCurationInfoViewDescriptionTitle: String = "추천 모음집 설명"
     static let writeCurationInfoViewDescriptionPlaceholder: String = "추천 모음집에 대한 설명을 입력하세요"
+    static let writeCurationInfoViewEdit: String = "추천 모음집 편집"
+    static let wrietCurationInfoViewPost: String = "추천 모음집 작성"
     
     // MARK: - WithdrawalView
     static let withdrawalViewTitle: String = "탈퇴하기"

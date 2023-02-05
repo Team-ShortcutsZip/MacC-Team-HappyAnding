@@ -77,7 +77,7 @@ struct ReadUserCurationView: View {
             Button(role: .cancel) {
                 self.isTappedDeleteButton.toggle()
             } label: {
-                Text(TextLiteral.close)
+                Text(TextLiteral.cancel)
             }
             
             Button(role: .destructive) {

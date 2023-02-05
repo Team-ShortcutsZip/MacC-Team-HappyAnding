@@ -88,7 +88,7 @@ struct WithdrawalView: View {
                 Button(role: .cancel) {
                     isReauthenticated = false
                 } label: {
-                    Text(TextLiteral.close)
+                    Text(TextLiteral.cancel)
                 }
                 
                 Button(role: .destructive) {

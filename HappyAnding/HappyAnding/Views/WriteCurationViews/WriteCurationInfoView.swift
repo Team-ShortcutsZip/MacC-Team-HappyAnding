@@ -85,7 +85,7 @@ struct WriteCurationInfoView: View {
             }
         }
         .background(Color.Background)
-        .navigationBarTitle(isEdit ? TextLiteral.writeCurationSetViewTitleEdit : TextLiteral.writeCurationSetViewTitleWrite)
+        .navigationBarTitle(isEdit ? TextLiteral.writeCurationInfoViewEdit : TextLiteral.wrietCurationInfoViewPost)
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }

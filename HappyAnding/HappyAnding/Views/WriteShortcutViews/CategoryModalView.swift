@@ -28,7 +28,7 @@ struct CategoryModalView: View {
                             .padding(.leading, 16)
                     }
                     
-                    Text(TextLiteral.categoryTitle)
+                    Text(TextLiteral.categoryModalViewTitle)
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                     

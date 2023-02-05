@@ -58,7 +58,7 @@ struct WriteShortcutTitleView: View {
         }
         //        .ignoresSafeArea(edges: .bottom)
         .background(Color.Background)
-        .navigationTitle(isEdit ? TextLiteral.writeShortcutTitleViewTitleEdit : TextLiteral.writeShortcutTitleViewTitleWrite)
+        .navigationTitle(isEdit ? TextLiteral.writeShortcutTitleViewEdit : TextLiteral.writeShortcutTitleViewPost)
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Int.self) { value in
             WriteShortcutdescriptionView(shortcut: $shortcut,
@@ -263,7 +263,7 @@ struct WriteShortcutTitleView: View {
     private var shortcutCategory: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text(TextLiteral.categoryTitle)
+                Text(TextLiteral.writeShortcutTitleViewCategoryTitle)
                     .Headline()
                     .foregroundColor(.Gray5)
                 Text(TextLiteral.writeShortcutTitleViewCategoryDescription)
@@ -322,7 +322,7 @@ struct WriteShortcutTitleView: View {
     private var shortcutsRequiredApp: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text(TextLiteral.requiredAppsTitle)
+                Text(TextLiteral.writeShortcutTitleViewRequiredAppsTitle)
                     .Headline()
                     .foregroundColor(.Gray5)
                 Text(TextLiteral.writeShortcutTitleViewRequiredAppDescription)
