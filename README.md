@@ -1,6 +1,6 @@
 <p>
   <a href = "https://apps.apple.com/app/shortcutszip/id6444001181">
-    <img src = "https://user-images.githubusercontent.com/68676844/205000571-4c6ca3d8-e3cf-4277-ba06-322307c8a7e5.png">
+    <img src = "https://user-images.githubusercontent.com/94854258/216820991-54eabae1-690c-4cf4-ad20-a744ed5f839b.png">
   </a>
 </p>
 
@@ -78,7 +78,7 @@
 
 
 ## Contributors
-[@Elie](https://www.github.com/JMM00) | [@Green](https://www.github.com/jim4020key) |   [@Halogen](https://www.github.com/HanGyengjun) |  [@HongKi](https://www.github.com/otoolz) | [@Romi](https://www.github.com/mxnxxii ) | [@Soi](https://www.github.com/JIWON1923) |
+[@Elie](https://www.github.com/JMM00) | [@Green](https://www.github.com/jim4020key) |   [@Halogen](https://www.github.com/HanGyeongjun) |  [@HongKi](https://www.github.com/otoolz) | [@Romi](https://www.github.com/mxnxxii ) | [@Soi](https://www.github.com/JIWON1923) |
 :---|:---|:---|:---|:---|:---
 |![elie](https://user-images.githubusercontent.com/68676844/205005538-38658595-9627-4df2-80a5-bdcb6c93b18c.png)|![green](https://user-images.githubusercontent.com/68676844/205005410-a773b326-9c49-47ea-8313-24dc9822f6d6.png)|![halogen](https://user-images.githubusercontent.com/68676844/205005492-210bffd4-4a52-44c2-89ad-65c7c8b838c4.png)|![hongki](https://user-images.githubusercontent.com/68676844/205005435-fd4ccbea-41aa-434f-9889-84f93f988093.png)|![romi](https://user-images.githubusercontent.com/68676844/205005382-74f5b3a6-93a8-4f48-b70e-339f6867ddab.png)|![soi](https://user-images.githubusercontent.com/68676844/205079322-77590700-1f9c-4363-8c7e-33cb2eafa22e.png)
 
