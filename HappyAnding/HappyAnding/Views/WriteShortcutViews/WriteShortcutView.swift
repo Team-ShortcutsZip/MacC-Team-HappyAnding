@@ -126,13 +126,13 @@ struct WriteShortcutView: View {
         }, label: {
             ZStack(alignment: .center) {
                 Rectangle()
-                    .fill(isEdit ? Color.fetchGradient(color: shortcut.color) : Color.fetchDefualtGradient())
+                    .fill(!shortcut.sfSymbol.isEmpty ? Color.fetchGradient(color: shortcut.color) : Color.fetchDefualtGradient())
                     .cornerRadius(12.35)
                     .frame(width: 84, height: 84)
-                Image(systemName: isEdit ? shortcut.sfSymbol : "plus")
+                Image(systemName: !shortcut.sfSymbol.isEmpty ? shortcut.sfSymbol : "plus")
                     .font(.system(size: 24))
                     .frame(width: 84, height: 84)
-                    .foregroundColor(isEdit ? .Text_icon : .Gray5)
+                    .foregroundColor(!shortcut.sfSymbol.isEmpty ? .Text_icon : .Gray5)
             }
         })
         .sheet(isPresented: $isShowingIconModal) {
