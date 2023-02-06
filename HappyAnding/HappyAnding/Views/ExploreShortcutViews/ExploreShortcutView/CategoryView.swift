@@ -10,6 +10,7 @@ import SwiftUI
 struct CategoryView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var categoryIndex = 6
     @Binding var isFolded: Bool
     

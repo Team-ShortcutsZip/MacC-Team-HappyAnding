@@ -170,9 +170,9 @@ struct ValidationCheckTextField: View {
         
         ZStack(alignment: .topLeading) {
             
-            CustomTextEditor(text: $content,
-                             inputHeight: $inputHeight,
-                             isFocused: _isFocused)
+            CustomTextEditor(isFocused: _isFocused,
+                             text: $content,
+                             inputHeight: $inputHeight)
             .focused($isFocused)
             .frame(height: inputHeight)
             .padding(16)

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ShortcutsCategoryListView: View {
+    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var navigationTitle = ""

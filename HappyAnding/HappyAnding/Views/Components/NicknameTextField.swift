@@ -59,12 +59,12 @@ struct NicknameTextField: View {
     
     @FocusState var isFocused: Bool
     
-    @Binding var nickname: String
-    
     @State var nicknameState = NicknameState.none
     @State var nicknameFocus = NicknameFocus.notfocus
     @State var nicknameError = NicknameError.length
     @State var isCheckedDuplicated = false
+    
+    @Binding var nickname: String
     @Binding var isValid: Bool
     
     var initName = ""

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoryModalView: View {
+    
     @Binding var isShowingCategoryModal: Bool
     @Binding var selectedCategories: [String]
     

@@ -35,6 +35,7 @@ class ShortcutsZipViewModel: ObservableObject {
     
     @Published var allComments: [Comments] = []
     @Published var keywords: Keyword = Keyword(keyword: [String]())
+    
     @AppStorage("signInStatus") var signInStatus = false
     
     static let share = ShortcutsZipViewModel()

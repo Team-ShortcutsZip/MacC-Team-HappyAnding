@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WriteShortcutView: View {
+    
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation

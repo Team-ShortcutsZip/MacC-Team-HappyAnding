@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ShortcutCardCell: View {
+    
     let categoryShortcutIcon: String
     let categoryShortcutName: String
     let categoryShortcutColor: String
