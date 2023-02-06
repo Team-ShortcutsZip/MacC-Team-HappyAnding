@@ -85,7 +85,7 @@ struct ShortcutTabView: View {
                             ReadShortcutView(data: data)
                         }
                         .navigationDestination(for: Category.self) { category in
-                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
+                            ShortcutsCategoryListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
                                               categoryName: category,
                                               navigationParentView: .shortcuts)
                         }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShortcutsListView: View {
+struct ShortcutsCategoryListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Binding var shortcuts:[Shortcuts]

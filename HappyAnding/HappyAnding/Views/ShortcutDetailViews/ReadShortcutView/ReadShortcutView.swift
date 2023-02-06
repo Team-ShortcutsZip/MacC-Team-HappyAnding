@@ -162,7 +162,7 @@ struct ReadShortcutView: View {
             .fullScreenCover(isPresented: $isEdit) {
                 NavigationStack(path: $writeNavigation.navigationPath) {
                     if let shortcut = data.shortcut {
-                        WriteShortcutTitleView(isWriting: $isEdit,
+                        WriteShortcutView(isWriting: $isEdit,
                                                shortcut: shortcut,
                                                isEdit: true)
                     }
