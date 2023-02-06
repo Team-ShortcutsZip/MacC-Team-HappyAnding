@@ -70,7 +70,7 @@ struct MyShortcutCardListView: View {
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeNavigation.navigationPath) {
-                WriteShortcutTitleView(isWriting: $isWriting, isEdit: false)
+                WriteShortcutView(isWriting: $isWriting, isEdit: false)
             }
             .environmentObject(writeNavigation)
         }

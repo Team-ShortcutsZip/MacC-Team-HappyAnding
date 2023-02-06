@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WriteShortcutTitleView: View {
+struct WriteShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation

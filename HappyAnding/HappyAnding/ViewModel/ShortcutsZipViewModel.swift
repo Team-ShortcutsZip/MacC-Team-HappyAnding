@@ -406,7 +406,6 @@ class ShortcutsZipViewModel: ObservableObject {
     }
 }
     
-    
 //MARK: - 저장, 편집 관련 함수
 extension ShortcutsZipViewModel {
     //TODO: Error 처리 필요
