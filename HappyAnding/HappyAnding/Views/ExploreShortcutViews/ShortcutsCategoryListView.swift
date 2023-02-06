@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ShortcutsCategoryListView: View {
-    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var shortcuts:[Shortcuts]
-    @State var navigationTitle = ""
     
+    @State var navigationTitle = ""
     @State var isLastShortcut: Bool = false
+    
+    @Binding var shortcuts:[Shortcuts]
     
     var categoryName: Category
     let navigationParentView: NavigationParentView

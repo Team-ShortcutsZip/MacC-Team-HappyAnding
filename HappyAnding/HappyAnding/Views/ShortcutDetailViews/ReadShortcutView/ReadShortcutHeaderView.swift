@@ -13,6 +13,7 @@ struct ReadShortcutHeaderView: View {
     
     @Binding var shortcut: Shortcuts
     @Binding var isMyLike: Bool
+    
     @State var userInformation: User? = nil
     @State var numberOfLike = 0
     

@@ -58,7 +58,6 @@
 		87E99CE82907C6E6009B691F /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CE72907C6E6009B691F /* Shortcuts.swift */; };
 		87E99CEC29080C30009B691F /* Curation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CEB29080C30009B691F /* Curation.swift */; };
 		87E99CEE29080D33009B691F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CED29080D33009B691F /* User.swift */; };
-		A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0029027BDE004A85A6 /* TabRouter.swift */; };
 		A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */; };
 		A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */; };
 		A04ACB0A29041CD8004A85A6 /* DownloadRankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04ACB0929041CD8004A85A6 /* DownloadRankView.swift */; };
@@ -231,7 +230,6 @@
 		87E99CE72907C6E6009B691F /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		87E99CEB29080C30009B691F /* Curation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curation.swift; sourceTree = "<group>"; };
 		87E99CED29080D33009B691F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		A04ACB0029027BDE004A85A6 /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
 		A04ACB052903D0B2004A85A6 /* MyShortcutCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardView.swift; sourceTree = "<group>"; };
 		A04ACB072903DECC004A85A6 /* MyShortcutCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShortcutCardListView.swift; sourceTree = "<group>"; };
 		A04ACB0929041CD8004A85A6 /* DownloadRankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadRankView.swift; sourceTree = "<group>"; };
@@ -545,7 +543,6 @@
 			isa = PBXGroup;
 			children = (
 				87E99C6F28F94EA6009B691F /* ShortcutTabView.swift */,
-				A04ACB0029027BDE004A85A6 /* TabRouter.swift */,
 			);
 			path = TabView;
 			sourceTree = "<group>";
@@ -859,7 +856,6 @@
 				87E99CA928FFF24F009B691F /* ExploreShortcutView.swift in Sources */,
 				A04ACB082903DECC004A85A6 /* MyShortcutCardListView.swift in Sources */,
 				87E99CA128FFF225009B691F /* MyPageView.swift in Sources */,
-				A04ACB0129027BDE004A85A6 /* TabRouter.swift in Sources */,
 				8792478D2918CE450040D5C3 /* UINavigationContoller+Extension.swift in Sources */,
 				87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */,
 				8795A172292ABFDE004B765F /* ReadShortcutVersionView.swift in Sources */,

@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct WriteShortcutView: View {
-    
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
-    @Environment(\.presentationMode) var presentationMode
     
     @Binding var isWriting: Bool
+    
+    @State var isInfoButtonTouched = false
     
     @State var isShowingIconModal = false
     @State var isNameValid = false
@@ -41,8 +42,6 @@ struct WriteShortcutView: View {
                                     curationIDs: [String]())
     
     let isEdit: Bool
-    
-    @State var isInfoButtonTouched: Bool = false
     
     var body: some View {
         ScrollView(showsIndicators: false) {

@@ -11,18 +11,19 @@ import SwiftUI
 import FirebaseAuth
 
 struct SettingView: View {
-    
-    @AppStorage("signInStatus") var signInStatus = false
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel()
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
+    @ObservedObject var webViewModel = WebViewModel()
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
     @State var isTappedLogOutButton = false
     @State var isTappedSignOutButton = false
     @State var isTappedPrivacyButton = false
+    
+    @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     enum NavigationLisence: Hashable, Equatable {
         case first

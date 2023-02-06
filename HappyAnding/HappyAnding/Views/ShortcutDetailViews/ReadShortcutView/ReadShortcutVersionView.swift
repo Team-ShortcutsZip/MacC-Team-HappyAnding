@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ReadShortcutVersionView: View {
-    
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @Environment(\.openURL) var openURL
     @Environment(\.loginAlertKey) var loginAlerter
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool

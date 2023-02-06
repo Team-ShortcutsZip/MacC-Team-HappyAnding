@@ -11,8 +11,6 @@ struct WriteCurationSetView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @Binding var isWriting: Bool
-    
     @State var shortcutCells = [ShortcutCellModel]()
     @State var isSelected = false
     @State var curation = Curation(title: "",
@@ -23,6 +21,8 @@ struct WriteCurationSetView: View {
                                    shortcuts: [ShortcutCellModel]())
     @State var isTappedQuestionMark: Bool = false
     @State var deletedShortcutCells = [ShortcutCellModel]()
+    
+    @Binding var isWriting: Bool
     
     let isEdit: Bool
     
@@ -77,8 +77,8 @@ struct WriteCurationSetView: View {
         .navigationDestination(for: Float.self) { isEdit in
             WriteCurationInfoView(curation: $curation,
                                   isWriting: self.$isWriting,
-                                  isEdit: self.isEdit,
-                                  deletedShortcutCells: $deletedShortcutCells)
+                                  deletedShortcutCells: $deletedShortcutCells,
+                                  isEdit: self.isEdit)
         }
     }
     

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ExploreShortcutView: View {
-    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    let randomCategories: [Category]
+    
     @Binding var isFolded: Bool
+    let randomCategories: [Category]
     
     var body: some View {
         ScrollView {
@@ -59,7 +59,7 @@ struct ExploreShortcutView: View {
 
 struct ExploreShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ExploreShortcutView(randomCategories: [Category.lifestyle, Category.utility], isFolded: .constant(true))
+        ExploreShortcutView(isFolded: .constant(true), randomCategories: [Category.lifestyle, Category.utility])
     }
 }
 
