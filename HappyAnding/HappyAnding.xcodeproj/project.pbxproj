@@ -68,7 +68,7 @@
 		A09CBA7E2922B36C00D31F5F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CBA7D2922B36C00D31F5F /* String+Extension.swift */; };
 		A0DD085729276608008177BB /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DD085629276608008177BB /* URL+Extension.swift */; };
 		A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */; };
-		A0F822B729164D2300AF4448 /* ShortcutsCategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822B629164D2300AF4448 /* ShortcutsCategoryListView.swift */; };
+		A0F822B729164D2300AF4448 /* ListCategoryShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */; };
 		A31F1844292A637300AF4A82 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+Extension.swift */; };
 		A31F1846292A638700AF4A82 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
@@ -240,7 +240,7 @@
 		A09CBA7D2922B36C00D31F5F /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A0DD085629276608008177BB /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipViewModel.swift; sourceTree = "<group>"; };
-		A0F822B629164D2300AF4448 /* ShortcutsCategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsCategoryListView.swift; sourceTree = "<group>"; };
+		A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCategoryShortcutView.swift; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		A3439B04293B48C20043E273 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -452,7 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				A04ACB0F29044E52004A85A6 /* ExploreShortcutView */,
-				A0F822B629164D2300AF4448 /* ShortcutsCategoryListView.swift */,
+				A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */,
 			);
 			path = ExploreShortcutViews;
 			sourceTree = "<group>";
@@ -892,7 +892,7 @@
 				F9724BBF292755E400860F8A /* Comment.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
 				A3FF4F832979C09000FA9EEE /* LineBreaking+Extension.swift in Sources */,
-				A0F822B729164D2300AF4448 /* ShortcutsCategoryListView.swift in Sources */,
+				A0F822B729164D2300AF4448 /* ListCategoryShortcutView.swift in Sources */,
 				4D3DBB88292E67E600DE8160 /* EditNicknameView.swift in Sources */,
 				87E99CE82907C6E6009B691F /* Shortcuts.swift in Sources */,
 			);
