@@ -20,7 +20,6 @@ enum CurationType: String {
  */
 
 struct ListCurationView: View {
-    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @State var data: NavigationListCurationType
     
@@ -65,7 +64,7 @@ struct ListCurationView: View {
     
     @ViewBuilder
     private func makeCurationCellList(_ curations: [Curation]) -> some View {
-        ForEach(curations, id: \.self) { curation in
+        ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
             
             let data = NavigationReadUserCurationType(userCuration: curation,
                                                       navigationParentView: self.data.navigationParentView)

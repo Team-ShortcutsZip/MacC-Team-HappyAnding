@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct UserCurationListView: View {
+    @Environment(\.loginAlertKey) var loginAlert
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
-    @Environment(\.loginAlertKey) var loginAlert
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
     @State var data: NavigationListCurationType
-    @State var curations = [Curation]()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -54,14 +53,16 @@ struct UserCurationListView: View {
                 .padding(.horizontal, 16)
             }
             
-            ForEach(curations.prefix(2), id: \.self) { curation in
-                
-                let data = NavigationReadUserCurationType(userCuration: curation,
-                                                          navigationParentView: self.data.navigationParentView)
-                NavigationLink(value: data) {
-                    UserCurationCell(curation: curation,
-                                     navigationParentView: self.data.navigationParentView,
-                                     lineLimit: 2)
+            ForEach(Array(shortcutsZipViewModel.curationsMadeByUser.enumerated()), id: \.offset) { index, curation in
+
+                if index < 2 {
+                    let data = NavigationReadUserCurationType(userCuration: curation,
+                                                              navigationParentView: self.data.navigationParentView)
+                    NavigationLink(value: data) {
+                        UserCurationCell(curation: curation,
+                                         navigationParentView: self.data.navigationParentView,
+                                         lineLimit: 2)
+                    }
                 }
             }
         }
@@ -71,14 +72,6 @@ struct UserCurationListView: View {
                 WriteCurationSetView(isWriting: $isWriting, isEdit: false)
             }
             .environmentObject(writeCurationNavigation)
-        }
-        .onAppear {
-            self.data.curation = shortcutsZipViewModel.curationsMadeByUser
-            self.curations = shortcutsZipViewModel.curationsMadeByUser
-        }
-        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
-            self.data.curation = data
-            self.curations = data
         }
     }
 }
