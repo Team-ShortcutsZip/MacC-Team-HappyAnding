@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct MyShortcutCardListView: View {
-    
-    @StateObject var writeNavigation = WriteShortcutNavigation()
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     @Environment(\.loginAlertKey) var loginAlerter
     
+    @StateObject var writeNavigation = WriteShortcutNavigation()
     @State var isWriting = false
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {

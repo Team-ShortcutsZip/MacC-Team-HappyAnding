@@ -10,18 +10,16 @@ import SwiftUI
 import FirebaseAuth
 
 struct WithdrawalView: View {
-    
-    @AppStorage("signInStatus") var signInStatus = false
-    @AppStorage("isReauthenticated") var isReauthenticated = false
-    @AppStorage("isTappedSignOutButton") var isTappedSignOutButton = false
-    
+    @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
-    @Environment(\.window) var window: UIWindow?
-    
     @State var isTappedCheckToggle = false
+    
+    @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("isReauthenticated") var isReauthenticated = false
+    @AppStorage("isTappedSignOutButton") var isTappedSignOutButton = false
     
     private let signOutTitle = ["탈퇴 시 삭제되는 항목",
                                 "탈퇴 시 삭제되지 않는 항목"]

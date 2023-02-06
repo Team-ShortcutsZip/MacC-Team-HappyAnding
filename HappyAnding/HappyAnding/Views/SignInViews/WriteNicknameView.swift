@@ -22,15 +22,16 @@ import FirebaseAuth
  */
 
 struct WriteNicknameView: View {
-    
-    @AppStorage("signInStatus") var signInStatus = false
     @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel()
     @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
+    
+    @ObservedObject var webViewModel = WebViewModel()
     
     @State var nickname: String = ""
     @State private var isTappedPrivacyButton = false
     @State var isValid = false
+    
+    @AppStorage("signInStatus") var signInStatus = false
     
     let user = Auth.auth().currentUser
     

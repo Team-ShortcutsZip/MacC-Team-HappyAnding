@@ -21,8 +21,8 @@ import SwiftUI
  */
 
 struct ReadAdminCurationView: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     let curation: Curation
 
     var body: some View {

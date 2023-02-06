@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ReadShortcutView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
+    @Environment(\.openURL) private var openURL
+    @Environment(\.loginAlertKey) var loginAlerter
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var shortcutNavigation: ShortcutNavigation
@@ -16,12 +20,8 @@ struct ReadShortcutView: View {
     @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
-    @Environment(\.openURL) private var openURL
-    @Environment(\.loginAlertKey) var loginAlerter
-    
     @StateObject var writeNavigation = WriteShortcutNavigation()
+    
     @State var isTappedDeleteButton = false
     @State var isEdit = false
     @State var isUpdating = false
@@ -37,11 +37,11 @@ struct ReadShortcutView: View {
     @State var currentTab: Int = 0
     @State var commentText = ""
     
-    @FocusState private var isFocused: Bool
-    @Namespace var namespace
-    
     @State var isClickCorrection = false                //댓글 수정버튼 클릭했는지?
     @State var isCancledCorrection = false              //댓글 수정 중 텍스트필드를 제외한 부분을 터치했는지?
+    
+    @FocusState private var isFocused: Bool
+    @Namespace var namespace
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     

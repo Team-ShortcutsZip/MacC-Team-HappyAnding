@@ -12,10 +12,10 @@ struct UserCurationListView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
     
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    
     @State var isWriting = false
     @State var data: NavigationListCurationType
+    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -60,8 +60,8 @@ struct UserCurationListView: View {
                                                               navigationParentView: self.data.navigationParentView)
                     NavigationLink(value: data) {
                         UserCurationCell(curation: curation,
-                                         navigationParentView: self.data.navigationParentView,
-                                         lineLimit: 2)
+                                         lineLimit: 2,
+                                         navigationParentView: self.data.navigationParentView)
                     }
                 }
             }

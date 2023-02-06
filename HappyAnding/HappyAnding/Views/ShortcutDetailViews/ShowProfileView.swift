@@ -15,8 +15,10 @@ struct ShowProfileView: View {
     
     @State var shortcuts: [Shortcuts] = []
     @State var curations: [Curation] = []
-    @Namespace var namespace
     @State var currentTab: Int = 0
+    
+    @Namespace var namespace
+    
     private let tabItems = ["작성한 단축어", "작성한 추천 모음집"]
     
     var body: some View {
@@ -152,8 +154,8 @@ extension ShowProfileView {
                                                                       navigationParentView: .shortcuts)
                             NavigationLink(value: data) {
                                 UserCurationCell(curation: curation,
-                                                 navigationParentView: data.navigationParentView,
-                                                 lineLimit: 2)
+                                                 lineLimit: 2,
+                                                 navigationParentView: data.navigationParentView)
                             }
                         }
                         

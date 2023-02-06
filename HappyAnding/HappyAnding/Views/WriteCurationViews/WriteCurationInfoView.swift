@@ -17,13 +17,13 @@ struct WriteCurationInfoView: View {
     
     @Binding var curation: Curation
     @Binding var isWriting: Bool
-    
-    let isEdit: Bool
     @Binding var deletedShortcutCells: [ShortcutCellModel]
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
     }
+    
+    let isEdit: Bool
     
     var body: some View {
         VStack(spacing: 24) {

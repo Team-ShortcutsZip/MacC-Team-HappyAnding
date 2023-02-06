@@ -16,8 +16,8 @@ struct UserCurationCell: View {
     @State var curation: Curation
     @State var index = 0
     
-    let navigationParentView: NavigationParentView
     var lineLimit: Int?
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         ZStack {

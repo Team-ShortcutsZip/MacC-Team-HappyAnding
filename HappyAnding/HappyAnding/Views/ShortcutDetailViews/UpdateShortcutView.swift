@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct UpdateShortcutView: View {
-    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
-    @Binding var isUpdating: Bool
-    @Binding var shortcut: Shortcuts?
     
     @State var updatedLink = ""
     @State var updateDescription = ""
     @State var isLinkValid = false
     @State var isDescriptionValid = false
+    
+    @Binding var isUpdating: Bool
+    @Binding var shortcut: Shortcuts?
     
     var body: some View {
         VStack {

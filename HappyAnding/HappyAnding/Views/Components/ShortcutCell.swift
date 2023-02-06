@@ -42,12 +42,12 @@ struct ShortcutCell: View {
         subtitle: "",
         downloadLink: ""
     )
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    
     var shortcut: Shortcuts?
     var rankNumber: Int = -1
-    let navigationParentView: NavigationParentView
     var sectionType: SectionType?
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         

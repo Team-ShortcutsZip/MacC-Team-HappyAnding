@@ -73,8 +73,8 @@ struct ListShortcutView: View {
 
             NavigationLink(value: navigationData) {
                 ShortcutCell(shortcut: shortcut,
-                             navigationParentView: data.navigationParentView,
-                             sectionType: data.sectionType)
+                             sectionType: data.sectionType,
+                             navigationParentView: data.navigationParentView)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
             }

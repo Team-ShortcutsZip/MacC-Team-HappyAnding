@@ -9,26 +9,26 @@ import SwiftUI
 import BackgroundTasks
 
 struct ShortcutTabView: View {
-    
     // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @Environment(\.scenePhase) private var phase
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @State private var randomCategories = Category.allCases.shuffled().prefix(2)
-    @State var isFolded = true
+    @StateObject var shortcutNavigation = ShortcutNavigation()
+    @StateObject var curationNavigation = CurationNavigation()
+    @StateObject var profileNavigation = ProfileNavigation()
     
-    @AppStorage("signInStatus") var signInStatus = false
     @State private var isShortcutDeeplink = false
     @State private var isCurationDeeplink = false
     @State private var tempShortcutId = ""
     @State private var tempCurationId = ""
     
-    @StateObject var shortcutNavigation = ShortcutNavigation()
-    @StateObject var curationNavigation = CurationNavigation()
-    @StateObject var profileNavigation = ProfileNavigation()
-    @AppStorage("selectedTab") var selectedTab = 1
+    @State private var randomCategories = Category.allCases.shuffled().prefix(2)
+    @State var isFolded = true
     @State private var tappedTwice = false
+    
+    @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("selectedTab") var selectedTab = 1
     
     init() {
         let transparentAppearence = UITabBarAppearance()
@@ -55,7 +55,7 @@ struct ShortcutTabView: View {
         ScrollViewReader { proxy in
             TabView(selection: handler) {
                 NavigationStack(path: $shortcutNavigation.navigationPath) {
-                    ExploreShortcutView(randomCategories: Array(randomCategories), isFolded: $isFolded)
+                    ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
                             if shortcutNavigation.navigationPath.count > 0 {

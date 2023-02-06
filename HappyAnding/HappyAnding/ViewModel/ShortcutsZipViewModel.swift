@@ -17,8 +17,6 @@ import FirebaseAuth
  */
 
 class ShortcutsZipViewModel: ObservableObject {
-    var userAuth = UserAuth.shared
-    @AppStorage("signInStatus") var signInStatus = false
     
     @Published var userInfo: User?                              // 유저정보
     
@@ -27,9 +25,8 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var shortcutsMadeByUser: [Shortcuts] = []        // 유저가 만든 숏컷배열
     @Published var sortedShortcutsByDownload: [Shortcuts] = []  // 다운로드 수에 의해 정렬된 숏컷
     @Published var sortedShortcutsByLike: [Shortcuts] = []      // 다운로드 수에 의해 정렬된 숏컷
+    
     @Published var shortcutsInCategory: [[Shortcuts]] = [[Shortcuts]].init(repeating: [], count: Category.allCases.count) // Category에서 사용할 숏컷 배열
-    @Published var isFirstFetchInCategory = [Bool] (repeating: true, count: Category.allCases.count) //카테고리를 리스트 첫 fetch여부
-    @Published var isLastFetchInCategory = [Bool] (repeating: false, count: Category.allCases.count) //카테고리를 리스트 마지막 fetch여부
     
     @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
     @Published var userCurations: [Curation] = []
@@ -38,14 +35,16 @@ class ShortcutsZipViewModel: ObservableObject {
     
     @Published var allComments: [Comments] = []
     @Published var keywords: Keyword = Keyword(keyword: [String]())
+    @AppStorage("signInStatus") var signInStatus = false
     
     static let share = ShortcutsZipViewModel()
     private let db = Firestore.firestore()
     
+    var allShortcuts: [Shortcuts] = []
+    var userAuth = UserAuth.shared
+    
     let numberOfPageLimit = 10
     let minimumOfLike = 5
-    
-    var allShortcuts: [Shortcuts] = []
     
     init() {
         fetchUser(userID: self.currentUser(), isCurrentUser: true) { user in
@@ -439,11 +438,11 @@ extension ShortcutsZipViewModel {
                 }
             }
         }
-        newCategory.forEach { category in
-            if !self.isFirstFetchInCategory[Category(rawValue: category)!.index] {
-                self.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
-            }
-        }
+//        newCategory.forEach { category in
+//            if !self.isFirstFetchInCategory[Category(rawValue: category)!.index] {
+//                self.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
+//            }
+//        }
         
         //TODO: 셀정보에 변경사항이 있을 경우에만 함수를 호출하도록 변경 필요
         self.updateShortcutInCuration(
