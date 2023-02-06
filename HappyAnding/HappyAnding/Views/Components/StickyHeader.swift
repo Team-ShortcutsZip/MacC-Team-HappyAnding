@@ -20,6 +20,7 @@ import SwiftUI
  */
 
 struct StickyHeader: View {
+    
     var height: CGFloat
     var image: String?
     

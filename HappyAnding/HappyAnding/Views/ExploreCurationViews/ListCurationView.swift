@@ -20,7 +20,9 @@ enum CurationType: String {
  */
 
 struct ListCurationView: View {
+    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var data: NavigationListCurationType
     
     var body: some View {

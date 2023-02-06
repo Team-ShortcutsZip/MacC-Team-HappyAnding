@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SubtitleTextView: View {
+    
     var text: String
     
     var body: some View {
@@ -19,6 +20,7 @@ struct SubtitleTextView: View {
 }
 
 struct MoreCaptionTextView: View {
+    
     var text: String
     
     var body: some View {

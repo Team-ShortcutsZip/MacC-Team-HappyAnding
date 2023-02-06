@@ -10,6 +10,7 @@ import SwiftUI
 struct UserCurationListView: View {
     @Environment(\.loginAlertKey) var loginAlert
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
     
     @State var isWriting = false

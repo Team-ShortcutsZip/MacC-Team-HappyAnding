@@ -10,6 +10,7 @@ import SwiftUI
 struct MyPageView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
 
     enum NavigationSettingView: Hashable, Equatable {

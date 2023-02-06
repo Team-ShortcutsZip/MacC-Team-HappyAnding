@@ -10,13 +10,13 @@ import SwiftUI
 struct ReadShortcutCommentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @State var isTappedDeleteButton = false
+    @State var deletedComment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
+    
     @Binding var addedComment: Comment                  //추가되는 댓글
     @Binding var comments: Comments                     //화면에 그려지는 댓글들
     @Binding var nestedCommentInfoText: String          //대댓글 작성 시 텍스트필드 위에 뜨는 작성자 정보
     @Binding var isClickCorrenction: Bool
-    
-    @State var isTappedDeleteButton = false
-    @State var deletedComment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
     
     @FocusState var isFocused: Bool
     

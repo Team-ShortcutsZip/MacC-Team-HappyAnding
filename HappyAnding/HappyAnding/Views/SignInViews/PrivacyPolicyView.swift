@@ -79,6 +79,7 @@ struct PrivacyPolicyContentView: UIViewRepresentable {
 extension PrivacyPolicyContentView {
     
     class Coordinator: NSObject, WKNavigationDelegate {
+        
         @ObservedObject private var webViewModel: WebViewModel
         
         private let parent: PrivacyPolicyContentView

@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct CustomTextEditor: UIViewRepresentable {
+    @FocusState var isFocused: Bool
+    
     @Binding var text: String
     @Binding var inputHeight: CGFloat
-    @FocusState var isFocused: Bool
     
     func makeUIView(context: UIViewRepresentableContext<CustomTextEditor>) -> UITextView {
         let textView = UITextView(frame: .zero)
@@ -30,9 +31,10 @@ struct CustomTextEditor: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, UITextViewDelegate {
+        @FocusState var isFocused: Bool
+        
         @Binding var text: String
         @Binding var inputHeight: CGFloat
-        @FocusState var isFocused: Bool
         
         let maxHeight: CGFloat = 272
         

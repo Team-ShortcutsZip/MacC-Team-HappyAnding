@@ -23,6 +23,7 @@ struct LicenseCell: View {
     @ObservedObject var webViewModel = WebViewModel()
     
     @State private var isTappedFirebaseButton = false
+    
     var title: String
     var text: String
     

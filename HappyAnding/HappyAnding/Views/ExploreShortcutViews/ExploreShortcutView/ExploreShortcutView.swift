@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ExploreShortcutView: View {
+    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var isFolded: Bool
+    
     let randomCategories: [Category]
     
     var body: some View {

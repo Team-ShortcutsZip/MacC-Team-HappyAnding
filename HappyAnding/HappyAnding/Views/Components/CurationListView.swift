@@ -10,6 +10,7 @@ import SwiftUI
 struct CurationListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var data: NavigationListCurationType
     
     var body: some View {

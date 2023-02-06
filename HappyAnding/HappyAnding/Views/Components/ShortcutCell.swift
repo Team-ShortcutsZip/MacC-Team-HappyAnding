@@ -30,6 +30,7 @@ import SwiftUI
 
 
 struct ShortcutCell: View {
+    
     @Environment(\.loginAlertKey) var loginAlerter
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
@@ -42,6 +43,7 @@ struct ShortcutCell: View {
         subtitle: "",
         downloadLink: ""
     )
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     var shortcut: Shortcuts?

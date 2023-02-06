@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     var body: some View {

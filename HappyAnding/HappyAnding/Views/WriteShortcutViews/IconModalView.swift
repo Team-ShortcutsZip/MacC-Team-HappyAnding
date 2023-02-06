@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct IconModalView: View {
+    
     @Binding var isShowingIconModal: Bool
     @Binding var iconColor: String
     @Binding var iconSymbol: String
