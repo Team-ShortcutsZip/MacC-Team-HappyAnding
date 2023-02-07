@@ -77,11 +77,11 @@ enum TextLiteral {
     static let writeShortcutTitleViewMultiLineTitle: String = "상세 설명"
     static let writeShortcutTitleViewMultiLinePlaceholder: String = "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력하세요"
     static let writeShortcutTitleViewEdit: String = "단축어 편집"
-    static let writeShortcutTitleViewPost: String = "단축어 등록"
+    static let writeShortcutTitleViewPost: String = "단축어 작성"
     static let writeShortcutTitleViewCategoryTitle: String = "카테고리"
     static let writeShortcutTitleViewCategoryDescription: String = "최대 3개"
     static let writeShortcutTitleViewCategoryCell: String = "카테고리 선택"
-    static let writeShortcutTitleViewRequiredAppDescription: String = "(선택)"
+    static let writeShortcutTitleViewRequiredAppDescription: String = "선택"
     static let writeShortcutTitleViewRequiredAppsTitle: String = "단축어 사용에 필요한 앱"
     static let writeShortcutTitleViewRequiredAppInformation: String = "해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 입력해주세요"
     static let writeShortcutTitleViewRequiredAppCell: String = "앱 추가"
@@ -119,7 +119,7 @@ enum TextLiteral {
     // MARK: - ReadShortcutCommentView
     static let readShortcutCommentViewNoComments: String = "등록된 댓글이 없어요"
     static let readShortcutCommentViewDeletionTitle: String = "댓글 삭제"
-    static let readShortcutCommentViewDeletionMessage: String = "답글도 함께 삭제됩니다. 댓글을 삭제하시겠습니까?"
+    static let readShortcutCommentViewDeletionMessage: String = "답글도 함께 삭제돼요. 댓글을 삭제하시겠어요?"
     static let readShortcutCommentViewReply: String = "답글"
     static let readShortcutCommentViewEdit: String = "수정"
     
@@ -145,7 +145,7 @@ enum TextLiteral {
     static let readUserCurationViewDeletionMessage: String = "추천 모음집을 삭제하시겠어요?"
     
     // MARK: - WriteCurationSetView
-    static let writeCurationSetViewNoShortcuts: String = "아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)"
+    static let writeCurationSetViewNoShortcuts: String = "아직 선택할 수 있는 단축어가 없어요\n단축어를 업로드하거나 좋아요를 눌러주세요"
     static let writeCurationSetViewEdit: String = "추천 모음집 편집"
     static let writeCurationSetViewPost: String = "추천 모음집 작성"
     static let writeCurationSetViewSelectionTitle: String = "단축어 선택"
