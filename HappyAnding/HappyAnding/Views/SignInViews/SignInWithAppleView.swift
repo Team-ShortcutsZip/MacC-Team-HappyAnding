@@ -54,6 +54,7 @@ struct SignInWithAppleView: View {
             })
             
             Button(action: {
+                logOut()
                 useWithoutSignIn = true
             }, label: {
                 Text("로그인 없이 둘러보기")
@@ -61,9 +62,6 @@ struct SignInWithAppleView: View {
                     .foregroundColor(.Gray5)
             })
             .padding(.bottom, 12)
-        }
-        .onAppear() {
-            shortcutsZipViewModel.resetUser()
         }
         .background(Color.Background)
     }
