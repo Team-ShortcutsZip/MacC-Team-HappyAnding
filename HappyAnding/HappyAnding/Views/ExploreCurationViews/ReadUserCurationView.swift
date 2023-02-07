@@ -62,8 +62,8 @@ struct ReadUserCurationView: View {
         .navigationBarItems(trailing: readCurationViewButtonByUser())
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
-                WriteCurationSetView(curation: shortcutsZipViewModel.userCurations[index],
-                                     isWriting: $isWriting,
+                WriteCurationSetView(isWriting: $isWriting,
+                                     curation: shortcutsZipViewModel.userCurations[index],
                                      isEdit: true)
             }
             .environmentObject(writeCurationNavigation)

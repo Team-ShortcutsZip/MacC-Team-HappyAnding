@@ -18,6 +18,8 @@ import FirebaseAuth
 
 class ShortcutsZipViewModel: ObservableObject {
     
+    @AppStorage("signInStatus") var signInStatus = false
+    
     @Published var userInfo: User?                              // 유저정보
     
     @Published var shortcutsUserLiked: [Shortcuts] = []         // 유저가 좋아요한 숏컷들
@@ -35,8 +37,6 @@ class ShortcutsZipViewModel: ObservableObject {
     
     @Published var allComments: [Comments] = []
     @Published var keywords: Keyword = Keyword(keyword: [String]())
-    
-    @AppStorage("signInStatus") var signInStatus = false
     
     static let share = ShortcutsZipViewModel()
     private let db = Firestore.firestore()

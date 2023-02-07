@@ -307,9 +307,10 @@ struct WriteShortcutView: View {
         }
     }
     struct relatedAppList: View {
+        @FocusState private var isFocused: Bool
+        
         @Binding var relatedApps: [String]
         
-        @FocusState private var isFocused: Bool
         @State var isTextFieldShowing = false
         @State var relatedApp = ""
         
@@ -317,7 +318,7 @@ struct WriteShortcutView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(relatedApps, id:\.self) { item in
-                        RelatedAppTag(item: item, items: $relatedApps)
+                        RelatedAppTag(items: $relatedApps, item: item)
                     }
                     
                     if isTextFieldShowing {
@@ -356,8 +357,9 @@ struct WriteShortcutView: View {
         }
     }
     struct RelatedAppTag: View {
-        var item: String
         @Binding var items: [String]
+        
+        var item: String
         
         var body: some View {
             HStack {

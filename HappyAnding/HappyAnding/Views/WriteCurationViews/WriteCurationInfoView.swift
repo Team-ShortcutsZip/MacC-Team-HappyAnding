@@ -12,12 +12,12 @@ struct WriteCurationInfoView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     
-    @State var isValidTitle = false
-    @State var isValidDescription = false
-    
     @Binding var curation: Curation
     @Binding var isWriting: Bool
     @Binding var deletedShortcutCells: [ShortcutCellModel]
+    
+    @State var isValidTitle = false
+    @State var isValidDescription = false
     
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)

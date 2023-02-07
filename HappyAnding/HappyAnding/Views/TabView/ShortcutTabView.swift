@@ -18,6 +18,9 @@ struct ShortcutTabView: View {
     @StateObject var curationNavigation = CurationNavigation()
     @StateObject var profileNavigation = ProfileNavigation()
     
+    @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("selectedTab") var selectedTab = 1
+    
     @State private var isShortcutDeeplink = false
     @State private var isCurationDeeplink = false
     @State private var tempShortcutId = ""
@@ -26,9 +29,6 @@ struct ShortcutTabView: View {
     @State private var randomCategories = Category.allCases.shuffled().prefix(2)
     @State var isFolded = true
     @State private var tappedTwice = false
-    
-    @AppStorage("signInStatus") var signInStatus = false
-    @AppStorage("selectedTab") var selectedTab = 1
     
     init() {
         let transparentAppearence = UITabBarAppearance()

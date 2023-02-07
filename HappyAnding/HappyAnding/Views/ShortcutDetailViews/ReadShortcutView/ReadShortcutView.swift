@@ -40,10 +40,9 @@ struct ReadShortcutView: View {
     @State var isClickCorrection = false                //댓글 수정버튼 클릭했는지?
     @State var isCancledCorrection = false              //댓글 수정 중 텍스트필드를 제외한 부분을 터치했는지?
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     @FocusState private var isFocused: Bool
     @Namespace var namespace
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     private let tabItems = [TextLiteral.readShortcutViewBasicTabTitle, TextLiteral.readShortcutViewVersionTabTitle, TextLiteral.readShortcutViewCommentTabTitle]
     
@@ -391,11 +390,11 @@ extension ReadShortcutView {
                 case 1:
                     ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
                 case 2:
-                    ReadShortcutCommentView(addedComment: $comment,
+                    ReadShortcutCommentView(isFocused: _isFocused,
+                                            addedComment: $comment,
                                             comments: $comments,
                                             nestedCommentInfoText: $nestedCommentInfoText,
                                             isClickCorrenction: $isClickCorrection,
-                                            isFocused: _isFocused,
                                             shortcutID: data.shortcutID)
                 default:
                     EmptyView()

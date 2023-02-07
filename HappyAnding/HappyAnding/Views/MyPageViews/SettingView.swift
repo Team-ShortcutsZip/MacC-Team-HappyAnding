@@ -16,14 +16,14 @@ struct SettingView: View {
     
     @ObservedObject var webViewModel = WebViewModel()
     
+    @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
+    
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
     @State var isTappedLogOutButton = false
     @State var isTappedSignOutButton = false
     @State var isTappedPrivacyButton = false
-    
-    @AppStorage("signInStatus") var signInStatus = false
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     enum NavigationLisence: Hashable, Equatable {
         case first
