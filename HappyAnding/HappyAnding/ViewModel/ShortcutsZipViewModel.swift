@@ -439,11 +439,6 @@ extension ShortcutsZipViewModel {
                 }
             }
         }
-//        newCategory.forEach { category in
-//            if !self.isFirstFetchInCategory[Category(rawValue: category)!.index] {
-//                self.shortcutsInCategory[Category(rawValue: category)!.index].insert(shortcut, at: 0)
-//            }
-//        }
         
         //TODO: 셀정보에 변경사항이 있을 경우에만 함수를 호출하도록 변경 필요
         self.updateShortcutInCuration(
