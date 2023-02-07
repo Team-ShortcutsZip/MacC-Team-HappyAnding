@@ -15,8 +15,6 @@ struct ShortcutsZipView: View {
     @AppStorage("signInStatus") var signInStatus = false
     @AppStorage("isReauthenticated") var isReauthenticated = false
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-//    최종 commit 시 삭제 필요
-//    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
     
     var body: some View {
         if signInStatus {
