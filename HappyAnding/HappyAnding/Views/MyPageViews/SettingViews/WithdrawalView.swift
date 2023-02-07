@@ -14,12 +14,12 @@ struct WithdrawalView: View {
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @State private var appleLoginCoordinator: AppleAuthCoordinator?
-    @State var isTappedCheckToggle = false
-    
     @AppStorage("signInStatus") var signInStatus = false
     @AppStorage("isReauthenticated") var isReauthenticated = false
     @AppStorage("isTappedSignOutButton") var isTappedSignOutButton = false
+    
+    @State private var appleLoginCoordinator: AppleAuthCoordinator?
+    @State var isTappedCheckToggle = false
     
     private let signOutTitle = ["탈퇴 시 삭제되는 항목",
                                 "탈퇴 시 삭제되지 않는 항목"]

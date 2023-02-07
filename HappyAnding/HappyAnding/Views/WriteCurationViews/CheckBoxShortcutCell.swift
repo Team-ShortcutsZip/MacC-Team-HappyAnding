@@ -9,9 +9,9 @@ import SwiftUI
 
 struct CheckBoxShortcutCell: View {
     
-    @State var isShortcutTapped: Bool = false
-    
     @Binding var selectedShortcutCells: [ShortcutCellModel]
+    
+    @State var isShortcutTapped: Bool = false
     
     let shortcutCell: ShortcutCellModel
     

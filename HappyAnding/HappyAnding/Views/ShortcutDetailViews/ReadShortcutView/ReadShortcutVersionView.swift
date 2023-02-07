@@ -12,10 +12,10 @@ struct ReadShortcutVersionView: View {
     @Environment(\.loginAlertKey) var loginAlerter
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    
     @Binding var shortcut: Shortcuts
     @Binding var isUpdating: Bool
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {

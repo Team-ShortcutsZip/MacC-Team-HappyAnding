@@ -104,7 +104,7 @@ struct IconModalView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             LazyVGrid(columns: gridLayout, spacing: 12) {
                 ForEach(colors, id: \.self) { item in
-                    ColorCell(paletteColor: item, iconColor: $iconColor)
+                    ColorCell(iconColor: $iconColor, paletteColor: item)
                 }
             }
             .padding(.horizontal, 16)
@@ -117,7 +117,7 @@ struct IconModalView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             LazyVGrid(columns: gridLayout, spacing: 12) {
                 ForEach(symbols, id: \.self) { item in
-                    SymbolCell(paletteSymbol: item, iconSymbol: $iconSymbol)
+                    SymbolCell(iconSymbol: $iconSymbol, paletteSymbol: item)
                 }
             }
             .padding(.horizontal, 16)
@@ -145,8 +145,9 @@ struct IconModalView: View {
     }
     
     struct ColorCell: View {
-        let paletteColor: String
         @Binding var iconColor: String
+        
+        let paletteColor: String
         
         var body: some View {
             Button(action: {
@@ -168,8 +169,9 @@ struct IconModalView: View {
     }
     
     struct SymbolCell: View {
-        let paletteSymbol: String
         @Binding var iconSymbol: String
+        
+        let paletteSymbol: String
         
         var body: some View {
             Button(action: {

@@ -12,9 +12,9 @@ struct SignInWithAppleView: View {
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
         
-    @State private var appleLoginCoordinator: AppleAuthCoordinator?
-    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
+    
+    @State private var appleLoginCoordinator: AppleAuthCoordinator?
     
     var body: some View {
         

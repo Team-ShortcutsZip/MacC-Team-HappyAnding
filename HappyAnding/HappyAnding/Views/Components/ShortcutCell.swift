@@ -35,6 +35,8 @@ struct ShortcutCell: View {
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    
     @State var shortcutCell = ShortcutCellModel(
         id: "",
         sfSymbol: "",
@@ -43,8 +45,6 @@ struct ShortcutCell: View {
         subtitle: "",
         downloadLink: ""
     )
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     var shortcut: Shortcuts?
     var rankNumber: Int = -1

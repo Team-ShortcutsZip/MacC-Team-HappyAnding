@@ -13,10 +13,10 @@ struct UserCurationListView: View {
     
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
     
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    
     @State var isWriting = false
     @State var data: NavigationListCurationType
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {

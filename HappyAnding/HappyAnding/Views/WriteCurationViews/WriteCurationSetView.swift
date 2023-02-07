@@ -11,6 +11,8 @@ struct WriteCurationSetView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @Binding var isWriting: Bool
+    
     @State var shortcutCells = [ShortcutCellModel]()
     @State var isSelected = false
     @State var curation = Curation(title: "",
@@ -21,8 +23,6 @@ struct WriteCurationSetView: View {
                                    shortcuts: [ShortcutCellModel]())
     @State var isTappedQuestionMark: Bool = false
     @State var deletedShortcutCells = [ShortcutCellModel]()
-    
-    @Binding var isWriting: Bool
     
     let isEdit: Bool
     
@@ -105,8 +105,7 @@ struct WriteCurationSetView: View {
         ScrollView {
             ForEach(Array(shortcutCells)) { shortcut in
                 CheckBoxShortcutCell(
-                    isShortcutTapped: curation.shortcuts.contains(shortcut),
-                    selectedShortcutCells: $curation.shortcuts,
+                    selectedShortcutCells: $curation.shortcuts, isShortcutTapped: curation.shortcuts.contains(shortcut),
                     shortcutCell: shortcut
                 )
             }

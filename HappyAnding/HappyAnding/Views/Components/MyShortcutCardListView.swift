@@ -12,10 +12,9 @@ struct MyShortcutCardListView: View {
     @Environment(\.loginAlertKey) var loginAlerter
     @StateObject var writeNavigation = WriteShortcutNavigation()
     
-    @State var isWriting = false
-    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
+    @State var isWriting = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {

@@ -27,11 +27,11 @@ struct WriteNicknameView: View {
     
     @ObservedObject var webViewModel = WebViewModel()
     
+    @AppStorage("signInStatus") var signInStatus = false
+    
     @State var nickname: String = ""
     @State private var isTappedPrivacyButton = false
     @State var isValid = false
-    
-    @AppStorage("signInStatus") var signInStatus = false
     
     let user = Auth.auth().currentUser
     

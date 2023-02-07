@@ -275,7 +275,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(relatedApps, id:\.self) { item in
-                        RelatedAppTag(item: item, items: $relatedApps)
+                        RelatedAppTag(items: $relatedApps, item: item)
                     }
                     
                     if isTextFieldShowing {
@@ -316,8 +316,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
         }
     }
     struct RelatedAppTag: View {
-        var item: String
         @Binding var items: [String]
+        var item: String
         
         var body: some View {
             HStack {
