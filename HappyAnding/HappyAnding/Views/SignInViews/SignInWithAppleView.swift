@@ -54,7 +54,7 @@ struct SignInWithAppleView: View {
             })
             
             Button(action: {
-                logOut()
+                setDefaultUserSetting()
                 useWithoutSignIn = true
             }, label: {
                 Text("로그인 없이 둘러보기")
@@ -69,14 +69,15 @@ struct SignInWithAppleView: View {
     func appleLogin() {
         appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: true)
         appleLoginCoordinator?.startSignInWithAppleFlow()
+            UserDefaults.shared.set(true, forKey: "isSignInForShareExtension")
     }
     
-    private func logOut() {
+    private func setDefaultUserSetting() {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-//            userAuth.signOut()
             shortcutsZipViewModel.resetUser()
+            UserDefaults.shared.set(false, forKey: "isFirstLaunch")
         } catch {
             print(error.localizedDescription)
         }

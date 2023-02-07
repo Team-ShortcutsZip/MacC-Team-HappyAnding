@@ -19,6 +19,7 @@ class CustomShareViewController: UIViewController {
     
     var itemDone: UIBarButtonItem!
     var itemCancel: UIBarButtonItem!
+    var isSignInForShareExtension: Bool!
     
     ///viewdidload
     override func viewDidLoad() {
@@ -29,7 +30,7 @@ class CustomShareViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(inEnabledDoneButton), name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
         
         //로그인 정보 empty 일 때
-        if  UserDefaults.shared.string(forKey: "ShareUserInfo") == nil {
+        if  UserDefaults.shared.string(forKey: "ShareUserInfo") == nil || UserDefaults.shared.bool(forKey: "isSignInForShareExtension") == false {
             let alert = UIAlertController(title: "로그인을 먼저 진행해주세요", message:
                                             "이 기능은 로그인 후 사용할 수 있는 기능이에요", preferredStyle: .alert)
             let action = UIAlertAction(title: "확인", style: .default) { _ in
