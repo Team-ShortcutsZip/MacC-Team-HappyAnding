@@ -22,13 +22,13 @@ struct CategoryModalView: View {
                     Button {
                         self.isShowingCategoryModal = false
                     } label: {
-                        Text("닫기")
+                        Text(TextLiteral.close)
                             .foregroundColor(.Gray5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 16)
                     }
                     
-                    Text("카테고리")
+                    Text(TextLiteral.categoryModalViewTitle)
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                     
@@ -57,7 +57,7 @@ struct CategoryModalView: View {
                             .foregroundColor(!selectedCategories.isEmpty ? .Primary : .Primary .opacity(0.13) )
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
-                        Text("완료")
+                        Text(TextLiteral.done)
                             .foregroundColor(!selectedCategories.isEmpty ? .Text_icon : .Text_Button_Disable)
                             .Body1()
                     }

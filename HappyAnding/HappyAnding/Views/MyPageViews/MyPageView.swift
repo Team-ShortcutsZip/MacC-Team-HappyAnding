@@ -35,7 +35,7 @@ struct MyPageView: View {
                         .id(333)
                     
                     HStack {
-                        Text(shortcutsZipViewModel.userInfo?.nickname ?? "사용자")
+                        Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
                             .Title1()
                             .foregroundColor(.Gray5)
                         
@@ -63,7 +63,7 @@ struct MyPageView: View {
                 // MARK: - 내가 작성한 큐레이션
                 
                 UserCurationListView(data: NavigationListCurationType(type: .myCuration,
-                                                                      title: "내가 작성한 추천 모음집",
+                                                                      title: TextLiteral.myPageViewMyCuration,
                                                                       isAllUser: false,
                                                                       navigationParentView: .myPage,
                                                                       curation: shortcutsZipViewModel.curationsMadeByUser))
@@ -79,7 +79,7 @@ struct MyPageView: View {
                     .padding(.bottom, 44)
             }
         }
-        .navigationBarTitle("프로필")
+        .navigationBarTitle(TextLiteral.myPageViewTitle)
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem {
@@ -113,7 +113,7 @@ struct MyPageShortcutListCell: View {
     var body: some View {
         NavigationLink(value: data) {
             HStack() {
-                Text(type == .myLovingShortcut ? "좋아요한 단축어" : "다운로드한 단축어")
+                Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
                     .Title2()
                     .foregroundColor(.Gray5)
                     .padding(.trailing, 9)

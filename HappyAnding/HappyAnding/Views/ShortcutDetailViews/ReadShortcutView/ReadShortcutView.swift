@@ -45,7 +45,7 @@ struct ReadShortcutView: View {
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     @State private var tryActionWithoutSignIn: Bool = false
     
-    private let tabItems = ["기본 정보", "버전 정보", "댓글"]
+    private let tabItems = [TextLiteral.readShortcutViewBasicTabTitle, TextLiteral.readShortcutViewVersionTabTitle, TextLiteral.readShortcutViewCommentTabTitle]
     
     var body: some View {
         ZStack {
@@ -83,20 +83,20 @@ struct ReadShortcutView: View {
                     }
                 }
             }
-            .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
+            .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
                 Button(role: .cancel) {
                     tryActionWithoutSignIn = false
                 } label: {
-                    Text("취소")
+                    Text(TextLiteral.cancel)
                 }
                 Button {
                     useWithoutSignIn = false
                     tryActionWithoutSignIn = false
                 } label: {
-                    Text("로그인하기")
+                    Text(TextLiteral.loginAction)
                 }
             } message: {
-                Text("이 기능은 로그인 후 사용할 수 있어요")
+                Text(TextLiteral.loginMessage)
             }
             .scrollDisabled(isClickCorrection)
             .navigationBarBackground ({ Color.White })
@@ -161,10 +161,10 @@ struct ReadShortcutView: View {
             }
             .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
             .navigationBarItems(trailing: readShortcutViewButtonByUser())
-            .alert("글 삭제", isPresented: $isTappedDeleteButton) {
+            .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $isTappedDeleteButton) {
                 Button(role: .cancel) {
                 } label: {
-                    Text("닫기")
+                    Text(TextLiteral.cancel)
                 }
                 
                 Button(role: .destructive) {
@@ -176,10 +176,10 @@ struct ReadShortcutView: View {
                         self.presentation.wrappedValue.dismiss()
                     }
                 } label: {
-                    Text("삭제")
+                    Text(TextLiteral.delete)
                 }
             } message: {
-                Text("글을 삭제하시겠습니까?")
+                Text(TextLiteral.readShortcutViewDeletionMessage)
             }
             .fullScreenCover(isPresented: $isEdit) {
                 NavigationStack(path: $writeNavigation.navigationPath) {
@@ -216,11 +216,11 @@ struct ReadShortcutView: View {
                         isFocused.toggle()
                         isCancledCorrection.toggle()
                     }
-                    .alert("글 삭제", isPresented: $isCancledCorrection) {
+                    .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $isCancledCorrection) {
                         Button(role: .cancel) {
                             isFocused.toggle()
                         } label: {
-                            Text("계속 작성")
+                            Text(TextLiteral.readShortcutViewKeepFixes)
                         }
                         
                         Button(role: .destructive) {
@@ -230,10 +230,10 @@ struct ReadShortcutView: View {
                                 commentText = ""
                             }
                         } label: {
-                            Text("삭제")
+                            Text(TextLiteral.delete)
                         }
                     } message: {
-                        Text("수정사항을 삭제하시겠습니까?")
+                        Text(TextLiteral.readShortcutViewDeleteFixes)
                     }
                 
             }
@@ -254,7 +254,7 @@ extension ReadShortcutView {
                     Image(systemName: "arrow.turn.down.right")
                         .foregroundColor(.Gray4)
                 }
-                TextField(useWithoutSignIn ? "로그인 후 댓글을 작성할 수 있어요" : "댓글을 입력하세요", text: $commentText, axis: .vertical)
+                TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $commentText, axis: .vertical)
                     .disabled(useWithoutSignIn == true)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
@@ -349,7 +349,7 @@ extension ReadShortcutView {
         Button {
             isEdit.toggle()
         } label: {
-            Label("편집", systemImage: "square.and.pencil")
+            Label(TextLiteral.edit, systemImage: "square.and.pencil")
         }
     }
     
@@ -357,7 +357,7 @@ extension ReadShortcutView {
         Button {
             isUpdating.toggle()
         } label: {
-            Label("업데이트", systemImage: "clock.arrow.circlepath")
+            Label(TextLiteral.update, systemImage: "clock.arrow.circlepath")
         }
     }
     
@@ -365,7 +365,7 @@ extension ReadShortcutView {
         Button(action: {
             shareShortcut()
         }) {
-            Label("공유", systemImage: "square.and.arrow.up")
+            Label(TextLiteral.share, systemImage: "square.and.arrow.up")
                 .foregroundColor(.Gray4)
                 .fontWeight(.medium)
         }
@@ -377,7 +377,7 @@ extension ReadShortcutView {
             // TODO: firebase delete function
             
         }) {
-            Label("삭제", systemImage: "trash.fill")
+            Label(TextLiteral.delete, systemImage: "trash.fill")
         }
     }
     

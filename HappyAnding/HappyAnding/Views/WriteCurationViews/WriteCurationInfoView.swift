@@ -31,8 +31,8 @@ struct WriteCurationInfoView: View {
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
-                                     title: "추천 모음집 이름",
-                                     placeholder: "추천 모음집의 이름을 입력하세요",
+                                     title: TextLiteral.writeCurationInfoViewNameTitle,
+                                     placeholder: TextLiteral.writeCurationInfoViewNamePlaceholder,
                                      lengthLimit: 20,
                                      isDownloadLinkTextField: false,
                                      content: $curation.title,
@@ -41,8 +41,8 @@ struct WriteCurationInfoView: View {
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: true,
-                                     title: "추천 모음집 설명",
-                                     placeholder: "추천 모음집에 대한 설명을 작성해주세요",
+                                     title: TextLiteral.writeCurationInfoViewDescriptionTitle,
+                                     placeholder: TextLiteral.writeCurationInfoViewDescriptionPlaceholder,
                                      lengthLimit: 40,
                                      isDownloadLinkTextField: false,
                                      inputHeight: 72,
@@ -77,7 +77,7 @@ struct WriteCurationInfoView: View {
                     self.isWriting.toggle()
                     writeCurationNavigation.navigationPath = .init()
                 } label: {
-                    Text("업로드")
+                    Text(TextLiteral.upload)
                         .Headline()
                         .foregroundColor(isIncomplete ? .Primary.opacity(0.3) : .Primary)
                 }
@@ -85,7 +85,7 @@ struct WriteCurationInfoView: View {
             }
         }
         .background(Color.Background)
-        .navigationBarTitle(isEdit ? "추천 모음집 편집" : "추천 모음집 작성")
+        .navigationBarTitle(isEdit ? TextLiteral.writeCurationInfoViewEdit : TextLiteral.wrietCurationInfoViewPost)
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }

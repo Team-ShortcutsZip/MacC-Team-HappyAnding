@@ -37,7 +37,7 @@ struct WriteNicknameView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            Text("닉네임을 입력해주세요")
+            Text(TextLiteral.writeNicknameViewHeadline)
                 .Title1()
                 .foregroundColor(.Gray5)
                 .padding(.top, 40)
@@ -46,7 +46,7 @@ struct WriteNicknameView: View {
 
             Spacer()
             
-            Text("개인정보처리방침")
+            Text(TextLiteral.settingViewPrivacyPolicy)
                 .Body2()
                 .foregroundColor(Color.Gray3)
                 .padding(.bottom, 12)
@@ -64,7 +64,7 @@ struct WriteNicknameView: View {
             ZStack {
                 PrivacyPolicyView(viewModel: webViewModel,
                          isTappedPrivacyButton: $isTappedPrivacyButton,
-                         url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+                                  url: TextLiteral.settingViewPrivacyPolicyURL)
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {
@@ -88,7 +88,7 @@ struct WriteNicknameView: View {
                 RoundedRectangle(cornerRadius: 12)
                     .foregroundColor(isValid ? .Primary : .Primary .opacity(0.13))
                     .frame(height: 52)
-                Text("시작하기")
+                Text(TextLiteral.writeNicknameViewStart)
                     .foregroundColor(isValid ? .Text_icon : .Text_Button_Disable)
                     .Body1()
             }

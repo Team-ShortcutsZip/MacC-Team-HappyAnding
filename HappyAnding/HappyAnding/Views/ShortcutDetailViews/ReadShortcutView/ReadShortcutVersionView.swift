@@ -20,17 +20,17 @@ struct ReadShortcutVersionView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-        if shortcut.updateDescription.count == 1 {
-            Text("아직 업데이트된 버전이 없습니다.")
-                .Body2()
-                .foregroundColor(.Gray4)
-                .padding(.top, 16)
-            
-            Spacer()
-                .frame(maxHeight: .infinity)
-            
-        } else {
-                Text("업데이트 내용")
+            if shortcut.updateDescription.count == 1 {
+                Text(TextLiteral.readShortcutVersionViewNoUpdates)
+                    .Body2()
+                    .foregroundColor(.Gray4)
+                    .padding(.top, 16)
+                
+                Spacer()
+                    .frame(maxHeight: .infinity)
+                
+            } else {
+                Text(TextLiteral.readShortcutVersionViewUpdateContent)
                     .Body2()
                     .foregroundColor(.Gray4)
                 ForEach(Array(zip(shortcut.updateDescription, shortcut.updateDescription.indices)), id: \.0) { data, index in
@@ -64,7 +64,7 @@ struct ReadShortcutVersionView: View {
                                     self.tryActionWithoutSignIn = true
                                 }
                             } label: {
-                                Text("이전 버전 다운로드")
+                                Text(TextLiteral.readShortcutVersionViewDownloadPreviousVersion)
                                     .Body2()
                                     .foregroundColor(.Primary)
                             }
@@ -78,20 +78,20 @@ struct ReadShortcutVersionView: View {
                     .frame(maxHeight: .infinity)
             }
         }
-        .alert("로그인을 진행해주세요", isPresented: $tryActionWithoutSignIn) {
+        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
             Button(role: .cancel) {
                 tryActionWithoutSignIn = false
             } label: {
-                Text("취소")
+                Text(TextLiteral.cancel)
             }
             Button {
                 useWithoutSignIn = false
                 tryActionWithoutSignIn = false
             } label: {
-                Text("로그인하기")
+                Text(TextLiteral.loginAction)
             }
         } message: {
-            Text("이 기능은 로그인 후 사용할 수 있어요")
+            Text(TextLiteral.loginMessage)
         }
         .padding(.top, 16)
     }

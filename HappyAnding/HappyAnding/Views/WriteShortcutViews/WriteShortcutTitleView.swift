@@ -58,7 +58,7 @@ struct WriteShortcutTitleView: View {
         }
         //        .ignoresSafeArea(edges: .bottom)
         .background(Color.Background)
-        .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
+        .navigationTitle(isEdit ? TextLiteral.writeShortcutTitleViewEdit : TextLiteral.writeShortcutTitleViewPost)
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Int.self) { value in
             WriteShortcutdescriptionView(shortcut: $shortcut,
@@ -70,7 +70,7 @@ struct WriteShortcutTitleView: View {
                 Button {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("취소")
+                    Text(TextLiteral.cancel)
                         .Body1()
                         .foregroundColor(.Gray5)
                 }
@@ -132,7 +132,7 @@ struct WriteShortcutTitleView: View {
                     writeShortcutNavigation.navigationPath = .init()
                     
                 }, label: {
-                    Text("업로드")
+                    Text(TextLiteral.upload)
                         .Headline()
                         .foregroundColor(.Primary)
                         .opacity(shortcut.color.isEmpty ||
@@ -210,8 +210,8 @@ struct WriteShortcutTitleView: View {
     private var shortcutTitleText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: false,
-                                 title: "단축어 이름",
-                                 placeholder: "단축어 이름을 입력하세요",
+                                 title: TextLiteral.writeShortcutTitleViewNameTitle,
+                                 placeholder: TextLiteral.writeShortcutTitleViewNamePlaceholder,
                                  lengthLimit: 20,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.title,
@@ -224,8 +224,8 @@ struct WriteShortcutTitleView: View {
     private var shortcutLinkText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: false,
-                                 title: "단축어 링크",
-                                 placeholder: "단축어 링크를 추가하세요",
+                                 title: TextLiteral.writeShortcutTitleViewLinkTitle,
+                                 placeholder: TextLiteral.writeShortcutTitleViewLinkPlaceholder,
                                  lengthLimit: nil,
                                  isDownloadLinkTextField: true,
                                  content: $shortcut.downloadLink[0],
@@ -237,8 +237,8 @@ struct WriteShortcutTitleView: View {
     private var shortcutSubtitleText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: false,
-                                 title: "한줄 설명",
-                                 placeholder: "해당 단축어의 핵심 기능을 작성해주세요",
+                                 title: TextLiteral.writeShortcutTitleViewOneLineTitle,
+                                 placeholder: TextLiteral.writeShortcutTitleViewOneLinePlaceholder,
                                  lengthLimit: 20,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.subtitle,
@@ -250,8 +250,8 @@ struct WriteShortcutTitleView: View {
     private var shortcutDescriptionText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: true,
-                                 title: "상세 설명",
-                                 placeholder: "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력해주세요",
+                                 title: TextLiteral.writeShortcutTitleViewMultiLineTitle,
+                                 placeholder: TextLiteral.writeShortcutTitleViewMultiLinePlaceholder,
                                  lengthLimit: 300,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.description,
@@ -263,10 +263,10 @@ struct WriteShortcutTitleView: View {
     private var shortcutCategory: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text("카테고리")
+                Text(TextLiteral.writeShortcutTitleViewCategoryTitle)
                     .Headline()
                     .foregroundColor(.Gray5)
-                Text("최대 3개")
+                Text(TextLiteral.writeShortcutTitleViewCategoryDescription)
                     .Footnote()
                     .foregroundColor(.Gray3)
                 Spacer()
@@ -288,7 +288,7 @@ struct WriteShortcutTitleView: View {
                 }, label: {
                     HStack {
                         if selectedCategories.isEmpty {
-                            Text("카테고리 선택")
+                            Text(TextLiteral.writeShortcutTitleViewCategoryCell)
                                 .foregroundColor(.Gray2)
                                 .Body2()
                         } else {
@@ -322,10 +322,10 @@ struct WriteShortcutTitleView: View {
     private var shortcutsRequiredApp: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text("단축어 사용을 위해 필요한 앱")
+                Text(TextLiteral.writeShortcutTitleViewRequiredAppsTitle)
                     .Headline()
                     .foregroundColor(.Gray5)
-                Text("(선택)")
+                Text(TextLiteral.writeShortcutTitleViewRequiredAppDescription)
                     .Footnote()
                     .foregroundColor(.Gray3)
                 Spacer()
@@ -346,7 +346,7 @@ struct WriteShortcutTitleView: View {
                             .frame(maxWidth: .infinity, maxHeight: 68)
                             .foregroundColor(.Gray5)
                         HStack(alignment: .top) {
-                            Text("해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 작성해 주세요")
+                            Text(TextLiteral.writeShortcutTitleViewRequiredAppInformation)
                                 .Footnote()
                                 .foregroundColor(.Gray1)
                                 .multilineTextAlignment(.leading)
@@ -404,7 +404,7 @@ struct WriteShortcutTitleView: View {
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
-                            Text("앱 추가")
+                            Text(TextLiteral.writeShortcutTitleViewRequiredAppCell)
                         }
                     })
                     .modifier(CellModifier(foregroundColor: Color.Gray2, strokeColor: Color.Gray2))

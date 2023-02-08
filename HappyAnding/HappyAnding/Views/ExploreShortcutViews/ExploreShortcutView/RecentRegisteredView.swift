@@ -16,7 +16,7 @@ struct RecentRegisteredView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("최신 단축어")
+                Text(TextLiteral.recentRegisteredViewTitle)
                     .Title2()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -27,7 +27,7 @@ struct RecentRegisteredView: View {
                 NavigationLink(value: NavigationListShortcutType(sectionType: .recent,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
-                    Text("더보기")
+                    Text(TextLiteral.more)
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)

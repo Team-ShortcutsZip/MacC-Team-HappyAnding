@@ -16,7 +16,7 @@ struct CategoryView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("카테고리 모아보기")
+                Text(TextLiteral.categoryViewTitle)
                     .Title2()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -26,7 +26,7 @@ struct CategoryView: View {
                 Button(action: {
                     self.isFolded.toggle()
                 }, label: {
-                    Text(isFolded ? "펼치기" : "접기")
+                    Text(isFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)

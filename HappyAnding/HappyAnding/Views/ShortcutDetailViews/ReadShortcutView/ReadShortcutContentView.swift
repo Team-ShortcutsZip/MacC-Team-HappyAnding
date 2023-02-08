@@ -16,7 +16,7 @@ struct ReadShortcutContentView: View {
     var body: some View {
             VStack(alignment: .leading) {
                 
-                ReusableTextView(title: "단축어 설명", contents: shortcut.description, contentsArray: nil)
+                ReusableTextView(title: TextLiteral.readShortcutContentViewDescription, contents: shortcut.description, contentsArray: nil)
                     .padding(.bottom, 24)
                     .padding(.top, 16)
                 
@@ -24,12 +24,12 @@ struct ReadShortcutContentView: View {
                     .padding(.bottom, 24)
                 
                 if !shortcut.requiredApp.isEmpty {
-                    ReusableTextView(title: "단축어 사용에 필요한 앱", contents: nil, contentsArray: shortcut.requiredApp)
+                    ReusableTextView(title: TextLiteral.readShortcutContentViewRequiredApps, contents: nil, contentsArray: shortcut.requiredApp)
                         .padding(.bottom, 24)
                 }
                 
                 if !shortcut.shortcutRequirements.isEmpty {
-                    ReusableTextView(title: "단축어 사용을 위한 요구사항", contents: shortcut.shortcutRequirements, contentsArray: nil)
+                    ReusableTextView(title: TextLiteral.readShortcutContentViewRequirements, contents: shortcut.shortcutRequirements, contentsArray: nil)
                 }
                 Spacer()
                     .frame(maxHeight: .infinity)
@@ -39,7 +39,7 @@ struct ReadShortcutContentView: View {
     
     var categoryView: some View {
         VStack(alignment: .leading) {
-            Text("카테고리")
+            Text(TextLiteral.readShortcutContentViewCategory)
                 .Body2()
                 .foregroundColor(.Gray4)
             

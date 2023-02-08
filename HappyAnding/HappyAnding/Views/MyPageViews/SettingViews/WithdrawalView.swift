@@ -23,15 +23,14 @@ struct WithdrawalView: View {
     
     @State var isTappedCheckToggle = false
     
-    private let signOutTitle = ["탈퇴 시 삭제되는 항목",
-                                "탈퇴 시 삭제되지 않는 항목"]
-    private let signOutDescription = ["로그인 정보 / 닉네임 / 좋아요한 단축어 목록 /\n 다운로드 한 단축어 목록",
-                                      "작성한 단축어 / 작성한 추천 모음집"]
+    private let signOutTitle = [TextLiteral.withdrawalViewDeleteTitle,
+                                TextLiteral.withdrawalViewNoDeleteTitle]
+    private let signOutDescription = [TextLiteral.withdrawalViewDeleteContent, TextLiteral.withdrawalViewNoDeleteContent]
     
     var body: some View {
         VStack(alignment: .leading) {
             
-            Text("ShortcutsZip에서 탈퇴 시 다음과 같이 사용자 데이터가 처리됩니다.")
+            Text(TextLiteral.withdrawalViewHeadline)
                 .Title2()
                 .foregroundColor(.Gray5)
                 .multilineTextAlignment(.leading)
@@ -58,7 +57,7 @@ struct WithdrawalView: View {
                     .onTapGesture {
                         isTappedCheckToggle.toggle()
                     }
-                Text("위 내용을 확인했으며 데이터 처리방법에 동의합니다.")
+                Text(TextLiteral.withdrawalViewAgree)
                     .Body2()
                     .foregroundColor(.Gray4)
                     .multilineTextAlignment(.leading)
@@ -78,32 +77,32 @@ struct WithdrawalView: View {
                         .foregroundColor(isTappedCheckToggle ? .Primary : .Primary .opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
-                    Text("사용자 재인증 후 탈퇴하기")
+                    Text(TextLiteral.withdrawalViewButton)
                         .foregroundColor(isTappedCheckToggle ? .Text_Button : .Text_Button_Disable )
                         .Body1()
                 }
             }
             .disabled(!isTappedCheckToggle)
             .padding(.bottom, 44)
-            .alert("탈퇴하기", isPresented: $isReauthenticated) {
+            .alert(TextLiteral.withdrawalViewAlertTitle, isPresented: $isReauthenticated) {
                 Button(role: .cancel) {
                     isReauthenticated = false
                 } label: {
-                    Text("닫기")
+                    Text(TextLiteral.cancel)
                 }
                 
                 Button(role: .destructive) {
                     signOut()
                 } label: {
-                    Text("탈퇴")
+                    Text(TextLiteral.withdrawalViewAlertAction)
                 }
             } message: {
-                Text("ShortcutsZip에서 탈퇴하시겠습니까?")
+                Text(TextLiteral.withdrawalViewAlertMessage)
             }
         }
         .padding(.horizontal, 16)
         .background(Color.Background)
-        .navigationTitle("탈퇴하기")
+        .navigationTitle(TextLiteral.withdrawalViewTitle)
     }
     
     private func signOut() {

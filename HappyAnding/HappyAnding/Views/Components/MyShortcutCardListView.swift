@@ -27,7 +27,7 @@ struct MyShortcutCardListView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("내가 작성한 단축어")
+                Text(TextLiteral.myShortcutCardListViewTitle)
                     .Title2()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -35,7 +35,7 @@ struct MyShortcutCardListView: View {
                 Spacer()
                 
                 NavigationLink(value: data) {
-                    Text("더보기")
+                    Text(TextLiteral.more)
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)
@@ -73,20 +73,20 @@ struct MyShortcutCardListView: View {
                 .padding(.horizontal, 16)
             }
         }
-        .alert("로그인을 진행해주세요", isPresented: $tryWriteWithoutSignIn) {
+        .alert(TextLiteral.loginTitle, isPresented: $tryWriteWithoutSignIn) {
             Button(role: .cancel) {
                 tryWriteWithoutSignIn = false
             } label: {
-                Text("취소")
+                Text(TextLiteral.cancel)
             }
             Button {
                 useWithoutSignIn = false
                 tryWriteWithoutSignIn = false
             } label: {
-                Text("로그인하기")
+                Text(TextLiteral.loginAction)
             }
         } message: {
-            Text("이 기능은 로그인 후 사용할 수 있어요")
+            Text(TextLiteral.loginMessage)
         }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {

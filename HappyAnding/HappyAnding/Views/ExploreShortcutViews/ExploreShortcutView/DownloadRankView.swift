@@ -16,7 +16,7 @@ struct DownloadRankView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("다운로드 순위")
+                Text(TextLiteral.downloadRankViewTitle)
                     .Title2()
                     .foregroundColor(Color.Gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -26,7 +26,7 @@ struct DownloadRankView: View {
                 NavigationLink(value: NavigationListShortcutType(sectionType: .download,
                                                                  shortcuts: shortcuts,
                                                                  navigationParentView: .shortcuts)) {
-                    Text("더보기")
+                    Text(TextLiteral.more)
                         .Footnote()
                         .foregroundColor(Color.Gray4)
                         .padding(.trailing, 16)

@@ -73,11 +73,11 @@ struct ReadUserCurationView: View {
             }
             .environmentObject(writeCurationNavigation)
         }
-        .alert("글 삭제", isPresented: $isTappedDeleteButton) {
+        .alert(TextLiteral.readUserCurationViewDeletionTitle, isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
                 self.isTappedDeleteButton.toggle()
             } label: {
-                Text("닫기")
+                Text(TextLiteral.cancel)
             }
             
             Button(role: .destructive) {
@@ -85,10 +85,10 @@ struct ReadUserCurationView: View {
                 shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
                 presentation.wrappedValue.dismiss()
             } label: {
-                Text("삭제")
+                Text(TextLiteral.delete)
             }
         } message: {
-            Text("글을 삭제하시겠습니까?")
+            Text(TextLiteral.readUserCurationViewDeletionMessage)
         }
     }
     
@@ -102,7 +102,7 @@ struct ReadUserCurationView: View {
                             .frame(width: 28, height: 28)
                             .foregroundColor(.Gray3)
                         
-                        Text(authorInformation?.nickname ?? "탈퇴한 사용자")
+                        Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
                             .Headline()
                             .foregroundColor(.Gray4)
                         Spacer()
@@ -159,7 +159,7 @@ extension ReadUserCurationView {
         Button {
             self.isWriting.toggle()
         } label: {
-            Label("편집", systemImage: "square.and.pencil")
+            Label(TextLiteral.edit, systemImage: "square.and.pencil")
         }
     }
     
@@ -167,7 +167,7 @@ extension ReadUserCurationView {
         Button(action: {
             shareCuration()
         }) {
-            Label("공유", systemImage: "square.and.arrow.up")
+            Label(TextLiteral.share, systemImage: "square.and.arrow.up")
                 .foregroundColor(.Gray4)
                 .fontWeight(.medium)
         }
@@ -177,7 +177,7 @@ extension ReadUserCurationView {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
         }) {
-            Label("삭제", systemImage: "trash.fill")
+            Label(TextLiteral.delete, systemImage: "trash.fill")
         }
     }
     
