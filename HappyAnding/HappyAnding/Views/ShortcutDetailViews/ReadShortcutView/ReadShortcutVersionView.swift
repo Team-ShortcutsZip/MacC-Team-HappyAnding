@@ -61,7 +61,7 @@ struct ReadShortcutVersionView: View {
                                         openURL(url)
                                     }
                                 } else {
-                                    loginAlerter.showAlert = true
+                                    loginAlerter.isPresented = true
                                 }
                             } label: {
                                 Text("이전 버전 다운로드")

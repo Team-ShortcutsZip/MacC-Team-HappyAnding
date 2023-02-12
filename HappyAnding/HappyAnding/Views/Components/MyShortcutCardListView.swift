@@ -44,7 +44,7 @@ struct MyShortcutCardListView: View {
                         if !useWithoutSignIn {
                             self.isWriting = true
                         } else {
-                            loginAlerter.showAlert = true
+                            loginAlerter.isPresented = true
                         }
                     } label: {
                         AddMyShortcutCardView()

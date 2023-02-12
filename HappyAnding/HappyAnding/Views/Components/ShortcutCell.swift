@@ -68,7 +68,7 @@ struct ShortcutCell: View {
                                 }
                             }
                         } else {
-                            loginAlerter.showAlert = true
+                            loginAlerter.isPresented = true
                         }
                     }
             }

@@ -64,7 +64,7 @@ struct HappyAndingApp: App {
                 ShortcutsZipView()
                     .environmentObject(shortcutsZipViewModel)
                     .environment(\.loginAlertKey, loginAlerter)
-                    .alert("로그인을 진행해주세요", isPresented: $loginAlerter.showAlert) {
+                    .alert("로그인을 진행해주세요", isPresented: $loginAlerter.isPresented) {
                         Button(role: .cancel) {
                         } label: {
                             Text("취소")
