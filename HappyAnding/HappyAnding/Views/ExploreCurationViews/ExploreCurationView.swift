@@ -46,7 +46,7 @@ struct ExploreCurationView: View {
         .navigationBarTitle(Text(TextLiteral.exploreCurationViewTitle))
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
 }
 
@@ -65,7 +65,7 @@ struct adminCurationsFrameView: View {
                 //                NavigationLink(destination: 더보기 눌렀을 때 뷰이름 입력) {
                 //                    Text("더보기")
                 //                        .Footnote()
-                //                        .foregroundColor(.Gray4)
+                //                        .foregroundColor(.gray4)
                 //                }
             }
             .padding(.horizontal, 16)

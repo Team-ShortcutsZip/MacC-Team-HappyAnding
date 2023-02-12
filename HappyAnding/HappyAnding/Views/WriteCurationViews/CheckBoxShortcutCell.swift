@@ -18,7 +18,7 @@ struct CheckBoxShortcutCell: View {
     var body: some View {
         
         ZStack {
-            Color.Background
+            Color.shortcutsZipBackground
             
             HStack {
                 toggle
@@ -48,12 +48,12 @@ struct CheckBoxShortcutCell: View {
             }
         }
         .padding(.top, 0)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
     
     var toggle: some View {
         Image(systemName: isShortcutTapped ? "checkmark.square.fill" : "square")
-            .foregroundColor(isShortcutTapped ? .Primary : .Gray3)
+            .foregroundColor(isShortcutTapped ? .shortcutsZipPrimary : .gray3)
             .padding(.leading, 20)
     }
     
@@ -76,11 +76,11 @@ struct CheckBoxShortcutCell: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(shortcutCell.title)
                 .Headline()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle)
                 .Footnote()
-                .foregroundColor(.Gray3)
+                .foregroundColor(.gray3)
                 .lineLimit(2)
         }
         .padding(.leading, 12)
@@ -90,10 +90,10 @@ struct CheckBoxShortcutCell: View {
     var background: some View {
         
         RoundedRectangle(cornerRadius: 12)
-            .fill(isShortcutTapped ? Color.White : Color.Background_list)
+            .fill(isShortcutTapped ? Color.shortcutsZipWhite : Color.backgroudList)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(isShortcutTapped ? Color.Primary : Color.Background_list_border)
+                    .strokeBorder(isShortcutTapped ? Color.shortcutsZipPrimary : Color.backgroudListBorder)
             )
     }}
 

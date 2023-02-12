@@ -36,7 +36,7 @@ struct StickyHeader: View {
                     .clipped()
                     .offset(y: yOffset > 0 ? -yOffset : 0)
             } else {
-                Color.White
+                Color.shortcutsZipWhite
                     .frame(width: geo.size.width, height: height + (yOffset > 0 ? yOffset : 0))
                     .offset(y: yOffset > 0 ? -yOffset : 0)
             }

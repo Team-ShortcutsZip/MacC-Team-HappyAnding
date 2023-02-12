@@ -14,7 +14,7 @@ struct LicenseView: View {
             LicenseCell(title: "[Firebase](https://github.com/firebase)", text: "License\nThe contents of this repository are licensed under the Apache License, version 2.0.\nYour use of Firebase is governed by the Terms of Service for Firebase Services.")
             LicenseCell(title: "Apache License 2.0", text: readTextFile("apache.txt"))
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
 }
 
@@ -31,14 +31,14 @@ struct LicenseCell: View {
         VStack(alignment: .leading) {
             Text(.init(title))
                 .Title2()
-                .foregroundColor(Color.Gray5)
+                .foregroundColor(Color.gray5)
                 .multilineTextAlignment(.leading)
                 .padding(.top, 36)
-                .tint(.Gray5)
+                .tint(.gray5)
             
             Text(text)
                 .Body2()
-                .foregroundColor(Color.Gray4)
+                .foregroundColor(Color.gray4)
                 .multilineTextAlignment(.leading)
             Spacer()
         }

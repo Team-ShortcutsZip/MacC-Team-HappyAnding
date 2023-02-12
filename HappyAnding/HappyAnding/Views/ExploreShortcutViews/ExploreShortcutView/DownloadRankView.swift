@@ -40,7 +40,7 @@ struct DownloadRankView: View {
                     }
                 }
             }
-            .background(Color.Background)
+            .background(Color.shortcutsZipBackground)
         }
     }
 }

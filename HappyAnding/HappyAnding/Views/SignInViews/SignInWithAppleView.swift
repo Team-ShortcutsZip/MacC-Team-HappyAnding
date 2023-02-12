@@ -27,11 +27,11 @@ struct SignInWithAppleView: View {
             
             Text("ShortcutsZip")
                 .LargeTitle()
-                .foregroundColor(.Primary)
+                .foregroundColor(.shortcutsZipPrimary)
             
             Text("단축어 생활의 시작")
                 .Body2()
-                .foregroundColor(.Gray3)
+                .foregroundColor(.gray3)
             
             Spacer()
             
@@ -42,10 +42,10 @@ struct SignInWithAppleView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .padding(.horizontal, 16)
                         .frame(height: 52)
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                     
                     Text("\(Image(systemName: "applelogo")) Apple로 로그인")
-                        .foregroundColor(.White)
+                        .foregroundColor(.shortcutsZipWhite)
                 }
                 .padding(.bottom, 8)
             })
@@ -55,11 +55,11 @@ struct SignInWithAppleView: View {
             }, label: {
                 Text("로그인 없이 둘러보기")
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
             })
             .padding(.bottom, 12)
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
     
     func appleLogin() {

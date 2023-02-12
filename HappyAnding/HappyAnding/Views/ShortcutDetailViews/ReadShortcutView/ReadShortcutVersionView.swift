@@ -19,36 +19,36 @@ struct ReadShortcutVersionView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            if shortcut.updateDescription.count == 1 {
-                Text(TextLiteral.readShortcutVersionViewNoUpdates)
+        if shortcut.updateDescription.count == 1 {
+            Text(TextLiteral.readShortcutVersionViewNoUpdates)
+                .Body2()
+                .foregroundColor(.gray4)
+                .padding(.top, 16)
+            
+            Spacer()
+                .frame(maxHeight: .infinity)
+            
+        } else {
+            Text(TextLiteral.readShortcutVersionViewUpdateContent)
                     .Body2()
-                    .foregroundColor(.Gray4)
-                    .padding(.top, 16)
-                
-                Spacer()
-                    .frame(maxHeight: .infinity)
-                
-            } else {
-                Text(TextLiteral.readShortcutVersionViewUpdateContent)
-                    .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
             
                 ForEach(Array(zip(shortcut.updateDescription, shortcut.updateDescription.indices)), id: \.0) { data, index in
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Text("Ver \(shortcut.updateDescription.count - index).0")
                                 .Body2()
-                                .foregroundColor(.Gray5)
+                                .foregroundColor(.gray5)
                             
                             Spacer()
                             Text(shortcut.date[index].getVersionUpdateDateFormat())
                                 .Body2()
-                                .foregroundColor(.Gray3)
+                                .foregroundColor(.gray3)
                         }
                         if data != "" {
                             Text(data)
                                 .Body2()
-                                .foregroundColor(.Gray5)
+                                .foregroundColor(.gray5)
                         }
                         if index != 0 {
                             Button {
@@ -66,11 +66,11 @@ struct ReadShortcutVersionView: View {
                             } label: {
                                 Text(TextLiteral.readShortcutVersionViewDownloadPreviousVersion)
                                     .Body2()
-                                    .foregroundColor(.Primary)
+                                    .foregroundColor(.shortcutsZipPrimary)
                             }
                         }
                         Divider()
-                            .foregroundColor(.Gray1)
+                            .foregroundColor(.gray1)
                         
                     }
                 }

@@ -38,7 +38,7 @@ struct ReadUserCurationView: View {
                 }
             }
             .padding(.bottom, 8)
-            .background(Color.White)
+            .background(Color.shortcutsZipWhite)
             .padding(.bottom, 12)
             
             VStack(spacing: 0){
@@ -55,7 +55,7 @@ struct ReadUserCurationView: View {
             .padding(.bottom, 44)
             
         }
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
@@ -95,11 +95,11 @@ struct ReadUserCurationView: View {
                         Image(systemName: "person.crop.circle.fill")
                             .font(.system(size: 28, weight: .medium))
                             .frame(width: 28, height: 28)
-                            .foregroundColor(.Gray3)
+                            .foregroundColor(.gray3)
                         
                         Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
                             .Headline()
-                            .foregroundColor(.Gray4)
+                            .foregroundColor(.gray4)
                         Spacer()
                     }
                 }
@@ -108,7 +108,7 @@ struct ReadUserCurationView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 12)
                         .frame(height: 48)
-                        .foregroundColor(.Gray1)
+                        .foregroundColor(.gray1)
                         .padding(.horizontal, 16)
                 )
             }
@@ -146,7 +146,7 @@ extension ReadUserCurationView {
             }
         }, label: {
             Image(systemName: "ellipsis")
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
         })
     }
     
@@ -163,7 +163,7 @@ extension ReadUserCurationView {
             shareCuration()
         }) {
             Label(TextLiteral.share, systemImage: "square.and.arrow.up")
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .fontWeight(.medium)
         }
     }

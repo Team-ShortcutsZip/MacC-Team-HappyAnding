@@ -54,14 +54,14 @@ struct CategoryCellView: View {
     
     var body: some View {
         RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
-            .strokeBorder(Color.Gray1, lineWidth: 1)
-            .background(Color.White)
+            .strokeBorder(Color.gray1, lineWidth: 1)
+            .background(Color.shortcutsZipWhite)
             .cornerRadius(12)
             .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
             .overlay {
                 Text(categoryName)
                     .Body2()
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
             }
     }
 }

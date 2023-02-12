@@ -64,12 +64,12 @@ struct WriteCurationInfoView: View {
                 } label: {
                     Text(TextLiteral.upload)
                         .Headline()
-                        .foregroundColor(isIncomplete ? .Primary.opacity(0.3) : .Primary)
+                        .foregroundColor(isIncomplete ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                 }
                 .disabled(isIncomplete)
             }
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationBarTitle(isEdit ? TextLiteral.writeCurationInfoViewEdit : TextLiteral.wrietCurationInfoViewPost)
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }

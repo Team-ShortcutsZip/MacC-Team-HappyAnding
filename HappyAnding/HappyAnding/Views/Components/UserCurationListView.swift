@@ -45,10 +45,10 @@ struct UserCurationListView: View {
                     Text(TextLiteral.userCurationListViewAdd)
                 }
                 .Headline()
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity)
                 .frame(height: 64)
-                .background(Color.Background_plus)
+                .background(Color.backgroundPlus)
                 .cornerRadius(12)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
@@ -67,7 +67,7 @@ struct UserCurationListView: View {
                 }
             }
         }
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting, isEdit: false)

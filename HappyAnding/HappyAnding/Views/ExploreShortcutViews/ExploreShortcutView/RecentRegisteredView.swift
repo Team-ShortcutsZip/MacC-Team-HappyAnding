@@ -40,7 +40,7 @@ struct RecentRegisteredView: View {
                     }
                 }
             }
-            .background(Color.Background)
+            .background(Color.shortcutsZipBackground)
         }
     }
 }

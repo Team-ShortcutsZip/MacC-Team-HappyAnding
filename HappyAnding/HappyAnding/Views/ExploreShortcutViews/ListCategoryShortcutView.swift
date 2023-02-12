@@ -42,8 +42,8 @@ struct ListCategoryShortcutView: View {
         }
         .navigationBarTitle(categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color.Background)
-        .navigationBarBackground ({ Color.Background })
+        .background(Color.shortcutsZipBackground)
+        .navigationBarBackground ({ Color.shortcutsZipBackground })
         .onAppear {
             self.shortcuts = shortcutsZipViewModel.shortcutsInCategory[categoryName.index]
         }
@@ -53,13 +53,13 @@ struct ListCategoryShortcutView: View {
         VStack {
             Text(categoryName.fetchDescription())
         }
-        .foregroundColor(.Gray5)
+        .foregroundColor(.gray5)
         .Body2()
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             Rectangle()
-                .foregroundColor(Color.Gray1)
+                .foregroundColor(Color.gray1)
                 .cornerRadius(12)
         )
         .padding(.vertical, 20)

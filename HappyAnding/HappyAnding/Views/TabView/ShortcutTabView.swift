@@ -34,9 +34,9 @@ struct ShortcutTabView: View {
         let transparentAppearence = UITabBarAppearance()
         transparentAppearence.configureWithTransparentBackground()
         UITabBar.appearance().standardAppearance = transparentAppearence
-        UITabBar.appearance().barTintColor = UIColor(Color.White)
-        UITabBar.appearance().backgroundColor = UIColor(Color.White)
-        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
+        UITabBar.appearance().barTintColor = UIColor(Color.shortcutsZipWhite)
+        UITabBar.appearance().backgroundColor = UIColor(Color.shortcutsZipWhite)
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.gray2)
         UITabBar.appearance().layer.borderColor = UIColor(Color.clear).cgColor
         UITabBar.appearance().clipsToBounds = true
     }
@@ -112,7 +112,7 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
-                        .navigationBarBackground ({ Color.Background })
+                        .navigationBarBackground ({ Color.shortcutsZipBackground })
                         .navigationDestination(for: NavigationProfile.self) { data in
                             ShowProfileView(data: data)
                         }
@@ -149,7 +149,7 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
-                        .navigationBarBackground ({ Color.Background })
+                        .navigationBarBackground ({ Color.shortcutsZipBackground })
                         .navigationDestination(for: NavigationProfile.self) { data in
                             ShowProfileView(data: data)
                         }

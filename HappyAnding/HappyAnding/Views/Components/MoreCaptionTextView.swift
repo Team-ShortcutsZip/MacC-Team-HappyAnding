@@ -14,6 +14,6 @@ struct MoreCaptionTextView: View {
     var body: some View {
         Text(text)
             .Footnote()
-            .foregroundColor(Color.Gray4)
+            .foregroundColor(Color.gray4)
     }
 }

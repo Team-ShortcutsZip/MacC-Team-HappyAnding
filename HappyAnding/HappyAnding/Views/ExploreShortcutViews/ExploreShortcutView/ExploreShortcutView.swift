@@ -42,17 +42,17 @@ struct ExploreShortcutView: View {
         .scrollIndicators(.hidden)
         .navigationBarTitle(TextLiteral.exploreShortcutViewTitle)
         .navigationBarTitleDisplayMode(.large)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .toolbar {
             ToolbarItem {
                 NavigationLink(value: NavigationSearch.first) {
                     Image(systemName: "magnifyingglass")
                         .Headline()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             }
         }
-        .navigationBarBackground ({ Color.Background })
+        .navigationBarBackground ({ Color.shortcutsZipBackground })
     }
 }
 

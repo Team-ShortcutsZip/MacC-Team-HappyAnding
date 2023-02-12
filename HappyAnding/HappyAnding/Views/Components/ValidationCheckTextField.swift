@@ -31,13 +31,13 @@ enum TextFieldState {
     var color: Color {
         switch self {
         case .notStatus:
-            return Color.Gray2
+            return Color.gray2
         case .inProgressSuccess:
-            return Color.Primary
+            return Color.shortcutsZipPrimary
         case .inProgressFail:
             return Color.red
         case .doneSuccess:
-            return Color.Gray4
+            return Color.gray4
         case .doneFail:
             return Color.red
         }
@@ -70,7 +70,7 @@ struct ValidationCheckTextField: View {
     @Binding var content: String
     @Binding var isValid: Bool
     
-    @State private var strokeColor = Color.Gray2
+    @State private var strokeColor = Color.gray2
     @State private var isExceeded = false
     @State private var textFieldState = TextFieldState.notStatus
     @State private var textFieldError = TextFieldError.invalidLink
@@ -89,7 +89,7 @@ struct ValidationCheckTextField: View {
                 if let lengthLimit {
                     Text("\(content.count)/\(lengthLimit)")
                         .Body2()
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                         .padding(.trailing, 16)
                 }
             }
@@ -115,7 +115,7 @@ struct ValidationCheckTextField: View {
                 if isExceeded {
                     Text(textFieldError.message)
                         .Body2()
-                        .foregroundColor(.Error)
+                        .foregroundColor(.shortcutsZipError)
                         .padding(.leading)
                 }
                 
@@ -132,13 +132,13 @@ struct ValidationCheckTextField: View {
         HStack {
             Text(title)
                 .Headline()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .padding(.leading, 16)
             
             if textType.isOptional {
                 Text(TextLiteral.validationCheckTextFieldOption)
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -183,7 +183,7 @@ struct ValidationCheckTextField: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
                     .padding(16)
-                    .foregroundColor(.Gray2)
+                    .foregroundColor(.gray2)
                     .onTapGesture {
                         isFocused = true
                     }
@@ -210,7 +210,7 @@ struct ValidationCheckTextField: View {
             case .doneSuccess:
                 Image(systemName: "checkmark.circle.fill")
                     .Body2()
-                    .foregroundColor(.Success)
+                    .foregroundColor(.shortcutsZipSuccess)
                     .onTapGesture { }
             case .doneFail:
                 Image(systemName: "exclamationmark.circle.fill")
@@ -222,7 +222,7 @@ struct ValidationCheckTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             case .inProgressFail:
                 Button {
@@ -230,7 +230,7 @@ struct ValidationCheckTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             }
         }

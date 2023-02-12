@@ -27,7 +27,7 @@ struct CurationListView: View {
                 }
             }
         }
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .onAppear {
             if self.data.type == .personalCuration {
                 self.data.curation = shortcutsZipViewModel.personalCurations

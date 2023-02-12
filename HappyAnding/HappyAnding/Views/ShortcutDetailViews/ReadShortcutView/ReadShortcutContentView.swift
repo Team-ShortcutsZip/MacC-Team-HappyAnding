@@ -39,13 +39,13 @@ struct ReadShortcutContentView: View {
         VStack(alignment: .leading) {
             Text(TextLiteral.readShortcutContentViewCategory)
                 .Body2()
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
             
             HStack(spacing: 8) {
                 ForEach(shortcut.category, id: \.self) { categoryName in
                     Text(Category(rawValue: categoryName)!.translateName())
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             }
         }
@@ -64,11 +64,11 @@ private struct ReusableTextView: View {
         VStack(alignment: .leading) {
             Text(title)
                 .Body2()
-                .foregroundColor(Color.Gray4)
+                .foregroundColor(Color.gray4)
             if let contents {
                 Text(contents)
                     .Body2()
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
                     .lineLimit(nil)
             }
             if let contentsArray {
@@ -76,7 +76,7 @@ private struct ReusableTextView: View {
                     content in
                     Text(content)
                         .Body2()
-                        .foregroundColor(Color.Gray5)
+                        .foregroundColor(Color.gray5)
                         .lineLimit(nil)
                 }
             }
