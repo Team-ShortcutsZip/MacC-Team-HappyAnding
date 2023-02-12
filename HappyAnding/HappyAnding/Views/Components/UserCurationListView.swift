@@ -8,27 +8,35 @@
 import SwiftUI
 
 struct UserCurationListView: View {
+    @Environment(\.loginAlertKey) var loginAlert
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
     @State var data: NavigationListCurationType
-    @State var curations = [Curation]()
-    @State private var tryWriteWithoutSignIn: Bool = false
-
     
     var body: some View {
         VStack(spacing: 0) {
-            listHeader
-                .padding(.bottom, 12)
-                .padding(.horizontal, 16)
+            HStack(alignment: .bottom) {
+                SubtitleTextView(text: data.title ?? "")
+                    .onTapGesture { }
+                Spacer()
+                
+                NavigationLink(value: data) {
+                    MoreCaptionTextView(text: TextLiteral.more)
+                }
+            }
+            .padding(.bottom, 12)
+            .padding(.horizontal, 16)
             
             Button {
                 if !useWithoutSignIn {
                     self.isWriting = true
                 } else {
-                    self.tryWriteWithoutSignIn = true
+                    loginAlert.isPresented = true
                 }
             } label: {
                 
@@ -37,71 +45,34 @@ struct UserCurationListView: View {
                     Text(TextLiteral.userCurationListViewAdd)
                 }
                 .Headline()
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity)
                 .frame(height: 64)
-                .background(Color.Background_plus)
+                .background(Color.backgroundPlus)
                 .cornerRadius(12)
                 .padding(.bottom, 12)
                 .padding(.horizontal, 16)
             }
             
-            ForEach(curations.prefix(2), id: \.self) { curation in
-                
-                let data = NavigationReadUserCurationType(userCuration: curation,
-                                                          navigationParentView: self.data.navigationParentView)
-                NavigationLink(value: data) {
-                    UserCurationCell(curation: curation,
-                                     navigationParentView: self.data.navigationParentView,
-                                     lineLimit: 2)
+            ForEach(Array(shortcutsZipViewModel.curationsMadeByUser.enumerated()), id: \.offset) { index, curation in
+
+                if index < 2 {
+                    let data = NavigationReadUserCurationType(userCuration: curation,
+                                                              navigationParentView: self.data.navigationParentView)
+                    NavigationLink(value: data) {
+                        UserCurationCell(curation: curation,
+                                         lineLimit: 2,
+                                         navigationParentView: self.data.navigationParentView)
+                    }
                 }
             }
         }
-        .alert(TextLiteral.loginTitle, isPresented: $tryWriteWithoutSignIn) {
-            Button(role: .cancel) {
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
-        }
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeCurationNavigation.navigationPath) {
                 WriteCurationSetView(isWriting: $isWriting, isEdit: false)
             }
             .environmentObject(writeCurationNavigation)
-        }
-        .onAppear {
-            self.data.curation = shortcutsZipViewModel.curationsMadeByUser
-            self.curations = shortcutsZipViewModel.curationsMadeByUser
-        }
-        .onChange(of: shortcutsZipViewModel.curationsMadeByUser) { data in
-            self.data.curation = data
-            self.curations = data
-        }
-    }
-    
-    var listHeader: some View {
-        HStack(alignment: .bottom) {
-            Text(data.title ?? "")
-                .Title2()
-                .foregroundColor(.Gray5)
-                .onTapGesture { }
-            Spacer()
-            
-            NavigationLink(value: data) {
-                Text(TextLiteral.more)
-                    .Footnote()
-                    .foregroundColor(.Gray4)
-            }
         }
     }
 }

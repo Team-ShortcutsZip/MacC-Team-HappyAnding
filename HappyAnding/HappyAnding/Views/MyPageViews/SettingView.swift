@@ -11,12 +11,13 @@ import SwiftUI
 import FirebaseAuth
 
 struct SettingView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
+    @ObservedObject var webViewModel = WebViewModel()
     
     @AppStorage("signInStatus") var signInStatus = false
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
-    @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel()
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
@@ -157,7 +158,7 @@ struct SettingView: View {
         }
         
         .padding(.horizontal, 16)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -184,7 +185,7 @@ struct SettingCell: View {
             if let version {Text(version)}
         }
         .Body1()
-        .foregroundColor(.Gray4)
+        .foregroundColor(.gray4)
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
     }

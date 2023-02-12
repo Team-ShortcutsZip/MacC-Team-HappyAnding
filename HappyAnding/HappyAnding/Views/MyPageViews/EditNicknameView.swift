@@ -19,7 +19,7 @@ struct EditNicknameView: View {
         VStack(alignment: .leading) {
             Text(TextLiteral.editNicknameViewHeadline)
                 .Title1()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .padding(.top, 40)
             
             NicknameTextField(nickname: $nickname, isValid: $isValid, initName: self.user?.nickname ?? "")
@@ -44,7 +44,7 @@ struct EditNicknameView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationTitle(TextLiteral.editNicknameViewTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -60,10 +60,10 @@ struct EditNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValid ? .Primary : .Primary .opacity(0.13))
+                    .foregroundColor(isValid ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
                     .frame(height: 52)
                 Text(TextLiteral.done)
-                    .foregroundColor(isValid ? .Text_icon : .Text_Button_Disable)
+                    .foregroundColor(isValid ? .textIcon : .textButtonDisable)
                     .Body1()
             }
         })

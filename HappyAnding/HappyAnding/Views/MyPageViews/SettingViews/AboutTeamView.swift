@@ -14,12 +14,12 @@ struct AboutTeamView: View {
             VStack {
                 Text("Team Happy ANDing")
                     .Title1()
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 16)
                 Text("안녕하세요. ShortcutsZip의 개발팀 Team Happy ANDing입니다. ")
                     .Body2()
-                    .foregroundColor(Color.Gray3)
+                    .foregroundColor(Color.gray3)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 16)
             }
@@ -33,7 +33,7 @@ struct AboutTeamView: View {
             .padding(.top, 12)
         }
         .frame(maxWidth: .infinity, maxHeight: . infinity)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .scrollIndicators(.hidden)
         .navigationTitle("개발팀에 관하여")
     }
@@ -42,7 +42,7 @@ struct AboutTeamView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .frame(height: 200)
-                .foregroundColor(Color.Gray2)
+                .foregroundColor(Color.gray2)
                 .contextMenu{
                     Button {
                         // Add this item to a list of favorites.

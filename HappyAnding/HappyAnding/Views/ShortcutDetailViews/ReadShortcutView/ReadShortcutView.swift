@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ReadShortcutView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
+    @Environment(\.openURL) private var openURL
+    @Environment(\.loginAlertKey) var loginAlerter
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var shortcutNavigation: ShortcutNavigation
@@ -16,11 +20,8 @@ struct ReadShortcutView: View {
     @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     @EnvironmentObject var profileNavigation: ProfileNavigation
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
-    @Environment(\.openURL) private var openURL
-    
     @StateObject var writeNavigation = WriteShortcutNavigation()
+    
     @State var isTappedDeleteButton = false
     @State var isEdit = false
     @State var isUpdating = false
@@ -36,14 +37,12 @@ struct ReadShortcutView: View {
     @State var currentTab: Int = 0
     @State var commentText = ""
     
-    @FocusState private var isFocused: Bool
-    @Namespace var namespace
-    
     @State var isClickCorrection = false                //댓글 수정버튼 클릭했는지?
     @State var isCancledCorrection = false              //댓글 수정 중 텍스트필드를 제외한 부분을 터치했는지?
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
+    @FocusState private var isFocused: Bool
+    @Namespace var namespace
     
     private let tabItems = [TextLiteral.readShortcutViewBasicTabTitle, TextLiteral.readShortcutViewVersionTabTitle, TextLiteral.readShortcutViewCommentTabTitle]
     
@@ -52,28 +51,21 @@ struct ReadShortcutView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     if data.shortcut != nil {
-                        GeometryReader { geo in
-                            let yOffset = geo.frame(in: .global).minY
-                            
-                            Color.White
-                                .frame(width: geo.size.width, height: 40 + (yOffset > 0 ? yOffset : 0))
-                                .offset(y: yOffset > 0 ? -yOffset : 0)
-                        }
-                        .frame(minHeight: 40)
+                        StickyHeader(height: 40)
                         
                         // MARK: - 단축어 타이틀
                         
                         ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
                             .frame(minHeight: 160)
                             .padding(.bottom, 33)
-                            .background(Color.White)
+                            .background(Color.shortcutsZipWhite)
                         
                         
                         // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
                         
                         LazyVStack(pinnedViews: [.sectionHeaders]) {
                             Section(header: tabBarView
-                                .background(Color.White)
+                                .background(Color.shortcutsZipWhite)
                             ) {
                                 detailInformationView
                                     .padding(.top, 4)
@@ -83,24 +75,9 @@ struct ReadShortcutView: View {
                     }
                 }
             }
-            .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
-                Button(role: .cancel) {
-                    tryActionWithoutSignIn = false
-                } label: {
-                    Text(TextLiteral.cancel)
-                }
-                Button {
-                    useWithoutSignIn = false
-                    tryActionWithoutSignIn = false
-                } label: {
-                    Text(TextLiteral.loginAction)
-                }
-            } message: {
-                Text(TextLiteral.loginMessage)
-            }
             .scrollDisabled(isClickCorrection)
-            .navigationBarBackground ({ Color.White })
-            .background(Color.Background)
+            .navigationBarBackground ({ Color.shortcutsZipWhite })
+            .background(Color.shortcutsZipBackground)
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 
                 VStack {
@@ -121,15 +98,15 @@ struct ReadShortcutView: View {
                                         }
                                         shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                                     } else {
-                                        self.tryActionWithoutSignIn = true
+                                        loginAlerter.isPresented = true
                                     }
                                 } label: {
                                     Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
                                         .Body1()
-                                        .foregroundColor(Color.Text_icon)
+                                        .foregroundColor(Color.textIcon)
                                         .padding()
                                         .frame(maxWidth: .infinity)
-                                        .background(Color.Primary)
+                                        .background(Color.shortcutsZipPrimary)
                                 }
                             }
                         }
@@ -184,7 +161,7 @@ struct ReadShortcutView: View {
             .fullScreenCover(isPresented: $isEdit) {
                 NavigationStack(path: $writeNavigation.navigationPath) {
                     if let shortcut = data.shortcut {
-                        WriteShortcutTitleView(isWriting: $isEdit,
+                        WriteShortcutView(isWriting: $isEdit,
                                                shortcut: shortcut,
                                                isEdit: true)
                     }
@@ -252,7 +229,7 @@ extension ReadShortcutView {
             HStack {
                 if comment.depth == 1 && !isClickCorrection {
                     Image(systemName: "arrow.turn.down.right")
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
                 TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $commentText, axis: .vertical)
                     .disabled(useWithoutSignIn == true)
@@ -282,7 +259,7 @@ extension ReadShortcutView {
                     isFocused.toggle()
                 } label: {
                     Image(systemName: "paperplane.fill")
-                        .foregroundColor(commentText == "" ? Color.Gray2 : Color.Gray5)
+                        .foregroundColor(commentText == "" ? Color.gray2 : Color.gray5)
                 }
                 .disabled(commentText == "" ? true : false)
             }
@@ -290,7 +267,7 @@ extension ReadShortcutView {
             .padding(.horizontal, 16)
             .background(
                 Rectangle()
-                    .fill(Color.Gray1)
+                    .fill(Color.gray1)
                     .cornerRadius(12 ,corners: (comment.depth == 1) && (!isClickCorrection) ? [.bottomLeft, .bottomRight] : .allCorners)
             )
             .padding(.horizontal, 16)
@@ -301,7 +278,7 @@ extension ReadShortcutView {
         HStack {
             Text("@ \(nestedCommentInfoText)")
                 .Footnote()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
             Spacer()
             Button {
                 comment.bundle_id = "\(Date().getDate())_\(UUID().uuidString)"
@@ -309,14 +286,14 @@ extension ReadShortcutView {
             } label: {
                 Image(systemName: "xmark")
                     .font(Font(UIFont.systemFont(ofSize: 17, weight: .medium)))
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 11)
         .background(
             Rectangle()
-                .fill(Color.Gray2)
+                .fill(Color.gray2)
                 .cornerRadius(12 ,corners: [.topLeft, .topRight])
         )
         .padding(.horizontal, 16)
@@ -341,7 +318,7 @@ extension ReadShortcutView {
             }
         }, label: {
             Image(systemName: "ellipsis")
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
         })
     }
     
@@ -366,7 +343,7 @@ extension ReadShortcutView {
             shareShortcut()
         }) {
             Label(TextLiteral.share, systemImage: "square.and.arrow.up")
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .fontWeight(.medium)
         }
     }
@@ -413,11 +390,11 @@ extension ReadShortcutView {
                 case 1:
                     ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdating)
                 case 2:
-                    ReadShortcutCommentView(addedComment: $comment,
+                    ReadShortcutCommentView(isFocused: _isFocused,
+                                            addedComment: $comment,
                                             comments: $comments,
                                             nestedCommentInfoText: $nestedCommentInfoText,
                                             isClickCorrenction: $isClickCorrection,
-                                            isFocused: _isFocused,
                                             shortcutID: data.shortcutID)
                 default:
                     EmptyView()
@@ -466,15 +443,15 @@ extension ReadShortcutView {
                 if self.currentTab == tab {
                     Text(string)
                         .Headline()
-                        .foregroundColor(.Gray5)
-                    Color.Gray5
+                        .foregroundColor(.gray5)
+                    Color.gray5
                         .frame(height: 2)
                         .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
                     
                 } else {
                     Text(string)
                         .Body1()
-                        .foregroundColor(.Gray3)
+                        .foregroundColor(.gray3)
                     Color.clear.frame(height: 2)
                 }
             }

@@ -22,11 +22,12 @@ import FirebaseAuth
  */
 
 struct WriteNicknameView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
+    
+    @ObservedObject var webViewModel = WebViewModel()
     
     @AppStorage("signInStatus") var signInStatus = false
-    @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel()
-    @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
     
     @State var nickname: String = ""
     @State private var isTappedPrivacyButton = false
@@ -39,7 +40,7 @@ struct WriteNicknameView: View {
             
             Text(TextLiteral.writeNicknameViewHeadline)
                 .Title1()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .padding(.top, 40)
             
             NicknameTextField(nickname: $nickname, isValid: $isValid)
@@ -48,7 +49,7 @@ struct WriteNicknameView: View {
             
             Text(TextLiteral.settingViewPrivacyPolicy)
                 .Body2()
-                .foregroundColor(Color.Gray3)
+                .foregroundColor(Color.gray3)
                 .padding(.bottom, 12)
                 .frame(maxWidth: .infinity)
                 .onTapGesture {
@@ -59,7 +60,7 @@ struct WriteNicknameView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .sheet(isPresented: self.$isTappedPrivacyButton) {
             ZStack {
                 PrivacyPolicyView(viewModel: webViewModel,
@@ -86,10 +87,10 @@ struct WriteNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValid ? .Primary : .Primary .opacity(0.13))
+                    .foregroundColor(isValid ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
                     .frame(height: 52)
                 Text(TextLiteral.writeNicknameViewStart)
-                    .foregroundColor(isValid ? .Text_icon : .Text_Button_Disable)
+                    .foregroundColor(isValid ? .textIcon : .textButtonDisable)
                     .Body1()
             }
         })

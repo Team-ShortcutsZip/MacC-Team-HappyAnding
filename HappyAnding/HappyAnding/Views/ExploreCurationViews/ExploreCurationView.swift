@@ -10,16 +10,16 @@ import SwiftUI
 struct ExploreCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
+            VStack(spacing: 32) {
                 
                 //앱 큐레이션
-                adminCurationsFrameiew(adminCurations: shortcutsZipViewModel.adminCurations)
+                adminCurationsFrameView(adminCurations: shortcutsZipViewModel.adminCurations)
                     .padding(.top, 20)
-                    .padding(.bottom, 32)
                 
                 //사용자를 위한 모음집
                 if !useWithoutSignIn {
@@ -28,7 +28,6 @@ struct ExploreCurationView: View {
                                                                       isAllUser: false,
                                                                       navigationParentView: .curations,
                                                                       curation: shortcutsZipViewModel.personalCurations))
-                    .padding(.bottom, 32)
                 }
                 
                 //추천 유저 큐레이션
@@ -38,7 +37,8 @@ struct ExploreCurationView: View {
                                                                   navigationParentView: .curations,
                                                                   curation: shortcutsZipViewModel.userCurations))
             }
-            .padding(.bottom, 32)
+            .padding(.top, 20)
+            .padding(.bottom, 44)
             .onChange(of: shortcutsZipViewModel.userCurations) { _ in
                 shortcutsZipViewModel.refreshPersonalCurations()
             }
@@ -46,20 +46,18 @@ struct ExploreCurationView: View {
         .navigationBarTitle(Text(TextLiteral.exploreCurationViewTitle))
         .navigationBarTitleDisplayMode(.large)
         .scrollIndicators(.hidden)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
 }
 
-struct adminCurationsFrameiew: View {
+struct adminCurationsFrameView: View {
     
     let adminCurations: [Curation]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom) {
-                Text(TextLiteral.exploreCurationViewAdminCurations)
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: TextLiteral.exploreCurationViewAdminCurations)
                     .id(222)
                 
                 Spacer()
@@ -67,7 +65,7 @@ struct adminCurationsFrameiew: View {
                 //                NavigationLink(destination: 더보기 눌렀을 때 뷰이름 입력) {
                 //                    Text("더보기")
                 //                        .Footnote()
-                //                        .foregroundColor(.Gray4)
+                //                        .foregroundColor(.gray4)
                 //                }
             }
             .padding(.horizontal, 16)

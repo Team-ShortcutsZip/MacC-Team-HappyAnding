@@ -31,7 +31,7 @@ struct PrivacyPolicyView: View {
                     self.isTappedPrivacyButton = false
                 } label: {
                     Text(TextLiteral.close)
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 16)
                 }
@@ -79,6 +79,7 @@ struct PrivacyPolicyContentView: UIViewRepresentable {
 extension PrivacyPolicyContentView {
     
     class Coordinator: NSObject, WKNavigationDelegate {
+        
         @ObservedObject private var webViewModel: WebViewModel
         
         private let parent: PrivacyPolicyContentView

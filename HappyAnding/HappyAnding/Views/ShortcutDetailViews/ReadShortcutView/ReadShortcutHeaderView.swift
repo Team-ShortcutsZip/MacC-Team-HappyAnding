@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ReadShortcutHeaderView: View {
-    
+    @Environment(\.loginAlertKey) var loginAlerter
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @Binding var shortcut: Shortcuts
     @Binding var isMyLike: Bool
+    
     @State var userInformation: User? = nil
     @State var numberOfLike = 0
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -33,30 +33,15 @@ struct ReadShortcutHeaderView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(shortcut.title)")
                     .Title1()
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
                     .fixedSize(horizontal: false, vertical: true)
                 
                 Text("\(shortcut.subtitle)")
                     .Body1()
-                    .foregroundColor(Color.Gray3)
+                    .foregroundColor(Color.gray3)
                     .fixedSize(horizontal: false, vertical: true)
             }
             userInfo
-        }
-        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
-            Button(role: .cancel) {
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
@@ -75,7 +60,7 @@ struct ReadShortcutHeaderView: View {
         VStack {
             Image(systemName: shortcut.sfSymbol)
                 .Title2()
-                .foregroundColor(Color.Text_icon)
+                .foregroundColor(Color.textIcon)
         }
         .frame(width: 52, height: 52)
         .background(Color.fetchGradient(color: shortcut.color))
@@ -87,8 +72,8 @@ struct ReadShortcutHeaderView: View {
         Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(numberOfLike)")
             .Body2()
             .padding(10)
-            .foregroundColor(isMyLike ? Color.Text_icon : Color.Gray4)
-            .background(isMyLike ? Color.Primary : Color.Gray1)
+            .foregroundColor(isMyLike ? Color.textIcon : Color.gray4)
+            .background(isMyLike ? Color.shortcutsZipPrimary : Color.gray1)
             .cornerRadius(12)
             .onTapGesture {
                 if !useWithoutSignIn {
@@ -96,7 +81,7 @@ struct ReadShortcutHeaderView: View {
                     //화면 상의 좋아요 추가, 취소 기능 동작
                     numberOfLike += isMyLike ? 1 : -1
                 } else {
-                    tryActionWithoutSignIn = true
+                    loginAlerter.isPresented = true
                 }
             }
     }
@@ -111,12 +96,12 @@ struct ReadShortcutHeaderView: View {
                         Image(systemName: "person.crop.circle.fill")
                             .font(.system(size: 24, weight: .medium))
                             .frame(width: 24, height: 24)
-                            .foregroundColor(.Gray3)
+                            .foregroundColor(.gray3)
                             .padding(.leading, 16)
                         
                         Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
                             .Body2()
-                            .foregroundColor(.Gray4)
+                            .foregroundColor(.gray4)
                         
                         Spacer()
                             .frame(maxWidth: .infinity)
@@ -127,7 +112,7 @@ struct ReadShortcutHeaderView: View {
                         /*
                          Image(systemName: "light.beacon.max.fill")
                          .Headline()
-                         .foregroundColor(.Gray5)
+                         .foregroundColor(.gray5)
                          .padding(.trailing, 16)
                          .onTapGesture {
                          print("Tapped!")
@@ -141,7 +126,7 @@ struct ReadShortcutHeaderView: View {
                 .frame(maxWidth: .infinity, maxHeight: 44)
                 .overlay {
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.Gray1, lineWidth: 1)
+                        .stroke(Color.gray1, lineWidth: 1)
                 }
             }
         }

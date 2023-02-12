@@ -10,32 +10,27 @@ import SwiftUI
 struct CategoryView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @State var categoryIndex = 6
+    
     @Binding var isFolded: Bool
+    @State var categoryIndex = 6
     
     var body: some View {
         VStack {
             HStack {
-                Text(TextLiteral.categoryViewTitle)
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: TextLiteral.categoryViewTitle)
                 
                 Spacer()
                                 
                 Button(action: {
                     self.isFolded.toggle()
                 }, label: {
-                    Text(isFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: isFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
                 })
                 .onChange(of: isFolded) { _ in
                     categoryIndex = isFolded ? 6 : 12
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
@@ -59,14 +54,14 @@ struct CategoryCellView: View {
     
     var body: some View {
         RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
-            .strokeBorder(Color.Gray1, lineWidth: 1)
-            .background(Color.White)
+            .strokeBorder(Color.gray1, lineWidth: 1)
+            .background(Color.shortcutsZipWhite)
             .cornerRadius(12)
             .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
             .overlay {
                 Text(categoryName)
                     .Body2()
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
             }
     }
 }

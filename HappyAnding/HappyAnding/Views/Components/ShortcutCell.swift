@@ -31,8 +31,11 @@ import SwiftUI
 
 struct ShortcutCell: View {
     
+    @Environment(\.loginAlertKey) var loginAlerter
     @Environment(\.openURL) private var openURL
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var shortcutCell = ShortcutCellModel(
         id: "",
@@ -42,13 +45,11 @@ struct ShortcutCell: View {
         subtitle: "",
         downloadLink: ""
     )
+    
     var shortcut: Shortcuts?
     var rankNumber: Int = -1
-    let navigationParentView: NavigationParentView
     var sectionType: SectionType?
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    @State private var tryActionWithoutSignIn: Bool = false
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         
@@ -67,7 +68,7 @@ struct ShortcutCell: View {
                                 }
                             }
                         } else {
-                            tryActionWithoutSignIn = true
+                            loginAlerter.isPresented = true
                         }
                     }
             }
@@ -75,23 +76,8 @@ struct ShortcutCell: View {
             .background( background )
             .padding(.horizontal, 20)
         }
-        .alert(TextLiteral.loginTitle, isPresented: $tryActionWithoutSignIn) {
-            Button(role: .cancel) {
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryActionWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
-        }
         .padding(.bottom, 12)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .onAppear() {
             if let shortcut  {
                 self.shortcutCell = ShortcutCellModel(
@@ -115,7 +101,7 @@ struct ShortcutCell: View {
                 .frame(width: 52, height: 52)
             
             Image(systemName: shortcutCell.sfSymbol)
-                .foregroundColor(.Text_icon)
+                .foregroundColor(.textIcon)
         }
         .padding(.leading, 20)
     }
@@ -126,16 +112,16 @@ struct ShortcutCell: View {
             if rankNumber != -1 {
                 Text("\(rankNumber)")
                     .Subtitle()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .padding(0)
             }
             Text(shortcutCell.title)
                 .Headline()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle.lineBreaking)
                 .Footnote()
-                .foregroundColor(.Gray3)
+                .foregroundColor(.gray3)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
         }
@@ -168,10 +154,10 @@ struct ShortcutCell: View {
     var background: some View {
         
         RoundedRectangle(cornerRadius: 12)
-            .fill(Color.Background_list)
+            .fill(Color.backgroudList)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.Background_list_border)
+                    .strokeBorder(Color.backgroudListBorder)
             )
     }
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct UpdateShortcutView: View {
-    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var isUpdating: Bool
@@ -26,7 +25,7 @@ struct UpdateShortcutView: View {
                     isUpdating.toggle()
                 }, label: {
                     Text(TextLiteral.cancel)
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 })
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -71,11 +70,10 @@ struct UpdateShortcutView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .Primary : .Primary.opacity(0.13))
+                        .foregroundColor(isLinkValid && isDescriptionValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
-                    
                     Text(TextLiteral.update)
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .Text_Button : .Text_Button_Disable)
+                        .foregroundColor(isLinkValid && isDescriptionValid ? .textButton : .textButtonDisable)
                         .Body1()
                 }
             })
@@ -83,6 +81,6 @@ struct UpdateShortcutView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
 }

@@ -22,7 +22,7 @@ struct NavigationBarColorModifier<Background>: ViewModifier where Background: Vi
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.clear
         appearance.shadowColor = .clear
-        appearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.Gray5)]
+        appearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.gray5)]
         //back button color 지정
         let backItemAppearance = UIBarButtonItemAppearance()
         backItemAppearance.normal.titleTextAttributes = [
@@ -32,14 +32,14 @@ struct NavigationBarColorModifier<Background>: ViewModifier where Background: Vi
         
         //indicator color 지정
         let image = UIImage(systemName: "chevron.backward")?
-            .withTintColor(UIColor(.Gray4), renderingMode: .alwaysOriginal)
+            .withTintColor(UIColor(.gray4), renderingMode: .alwaysOriginal)
         appearance.setBackIndicatorImage(image, transitionMaskImage: image)
         
         let scrollAppearance = UINavigationBarAppearance()
         scrollAppearance.configureWithDefaultBackground()
-        scrollAppearance.backgroundColor = UIColor(Color.White)
+        scrollAppearance.backgroundColor = UIColor(Color.shortcutsZipWhite)
         scrollAppearance.shadowColor = .clear
-        scrollAppearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.Gray5)]
+        scrollAppearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.gray5)]
         scrollAppearance.backButtonAppearance = backItemAppearance
         scrollAppearance.setBackIndicatorImage(image, transitionMaskImage: image)
         

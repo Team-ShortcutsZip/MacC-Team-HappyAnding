@@ -11,21 +11,17 @@ struct ReadShortcutContentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var shortcut: Shortcuts
+    
     let profileImage: String = "person.crop.circle"
     
     var body: some View {
-            VStack(alignment: .leading) {
-                
+            VStack(alignment: .leading, spacing: 24) {
                 ReusableTextView(title: TextLiteral.readShortcutContentViewDescription, contents: shortcut.description, contentsArray: nil)
-                    .padding(.bottom, 24)
-                    .padding(.top, 16)
                 
                 categoryView
-                    .padding(.bottom, 24)
                 
                 if !shortcut.requiredApp.isEmpty {
                     ReusableTextView(title: TextLiteral.readShortcutContentViewRequiredApps, contents: nil, contentsArray: shortcut.requiredApp)
-                        .padding(.bottom, 24)
                 }
                 
                 if !shortcut.shortcutRequirements.isEmpty {
@@ -34,6 +30,7 @@ struct ReadShortcutContentView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
+            .padding(.top, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
@@ -41,45 +38,15 @@ struct ReadShortcutContentView: View {
         VStack(alignment: .leading) {
             Text(TextLiteral.readShortcutContentViewCategory)
                 .Body2()
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
             
             HStack(spacing: 8) {
                 ForEach(shortcut.category, id: \.self) { categoryName in
-                    Text(translateName(categoryName))
+                    Text(Category(rawValue: categoryName)!.translateName())
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             }
-        }
-    }
-    private func translateName(_ categoryName: String) -> String {
-        switch categoryName {
-        case "education":
-            return "교육"
-        case "finance":
-            return "금융"
-        case "business":
-            return "비즈니스"
-        case "health":
-            return "건강 및 피트니스"
-        case "lifestyle":
-            return "라이프스타일"
-        case "weather":
-            return "날씨"
-        case "photo":
-            return "사진 및 비디오"
-        case "decoration":
-            return "데코레이션/꾸미기"
-        case "utility":
-            return "유틸리티"
-        case "sns":
-            return "소셜 네트워킹"
-        case "entertainment":
-            return "엔터테인먼트"
-        case "trip":
-            return "여행"
-        default:
-            return ""
         }
     }
 }
@@ -96,11 +63,11 @@ private struct ReusableTextView: View {
         VStack(alignment: .leading) {
             Text(title)
                 .Body2()
-                .foregroundColor(Color.Gray4)
+                .foregroundColor(Color.gray4)
             if let contents {
                 Text(contents)
                     .Body2()
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
                     .lineLimit(nil)
             }
             if let contentsArray {
@@ -108,7 +75,7 @@ private struct ReusableTextView: View {
                     content in
                     Text(content)
                         .Body2()
-                        .foregroundColor(Color.Gray5)
+                        .foregroundColor(Color.gray5)
                         .lineLimit(nil)
                 }
             }

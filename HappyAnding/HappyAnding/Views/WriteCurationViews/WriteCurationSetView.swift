@@ -37,7 +37,7 @@ struct WriteCurationSetView: View {
                 Spacer()
                 Text(TextLiteral.writeCurationSetViewNoShortcuts)
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .multilineTextAlignment(.center)
                 Spacer()
                 
@@ -45,7 +45,7 @@ struct WriteCurationSetView: View {
                 shortcutList
             }
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationTitle(isEdit ? TextLiteral.writeCurationSetViewEdit : TextLiteral.writeCurationSetViewPost)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -61,7 +61,7 @@ struct WriteCurationSetView: View {
                 } label: {
                     Text(TextLiteral.cancel)
                         .Body1()
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
             }
             
@@ -69,7 +69,7 @@ struct WriteCurationSetView: View {
                 NavigationLink(value: Float(0.0)) {
                     Text(TextLiteral.next)
                         .Headline()
-                        .foregroundColor(curation.shortcuts.isEmpty ? .Primary.opacity(0.3) : .Primary)
+                        .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                 }
                 .disabled(curation.shortcuts.isEmpty)
             }
@@ -77,8 +77,8 @@ struct WriteCurationSetView: View {
         .navigationDestination(for: Float.self) { isEdit in
             WriteCurationInfoView(curation: $curation,
                                   isWriting: self.$isWriting,
-                                  isEdit: self.isEdit,
-                                  deletedShortcutCells: $deletedShortcutCells)
+                                  deletedShortcutCells: $deletedShortcutCells,
+                                  isEdit: self.isEdit)
         }
     }
     
@@ -87,14 +87,14 @@ struct WriteCurationSetView: View {
         HStack(alignment: .bottom, spacing: 8) {
             Text(TextLiteral.writeCurationSetViewSelectionTitle)
                 .Sb()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
             Text(TextLiteral.writeCurationSetViewSelectionDescription)
                 .Footnote()
-                .foregroundColor(.Gray3)
+                .foregroundColor(.gray3)
             Spacer()
             Text("\(curation.shortcuts.count)개")
                 .Body2()
-                .foregroundColor(.Primary)
+                .foregroundColor(.shortcutsZipPrimary)
         }
         .padding(.horizontal, 16)
     }
@@ -103,13 +103,9 @@ struct WriteCurationSetView: View {
     var shortcutList: some View {
         
         ScrollView {
-            
-            
-            
             ForEach(Array(shortcutCells)) { shortcut in
                 CheckBoxShortcutCell(
-                    isShortcutTapped: curation.shortcuts.contains(shortcut),
-                    selectedShortcutCells: $curation.shortcuts,
+                    selectedShortcutCells: $curation.shortcuts, isShortcutTapped: curation.shortcuts.contains(shortcut),
                     shortcutCell: shortcut
                 )
             }
@@ -123,11 +119,11 @@ struct WriteCurationSetView: View {
         Text(TextLiteral.writeCurationSetViewSelectionInformation)
             .frame(maxWidth: .infinity, alignment: .leading)
             .Body2()
-            .foregroundColor(.Gray5)
+            .foregroundColor(.gray5)
             .padding(.all, 16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.Gray1)
+                    .foregroundColor(.gray1)
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 20)

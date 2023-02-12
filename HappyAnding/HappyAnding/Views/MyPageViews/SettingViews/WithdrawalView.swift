@@ -10,17 +10,15 @@ import SwiftUI
 import FirebaseAuth
 
 struct WithdrawalView: View {
+    @Environment(\.window) var window: UIWindow?
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @AppStorage("signInStatus") var signInStatus = false
     @AppStorage("isReauthenticated") var isReauthenticated = false
     @AppStorage("isTappedSignOutButton") var isTappedSignOutButton = false
     
-    @EnvironmentObject var userAuth: UserAuth
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
-    @Environment(\.window) var window: UIWindow?
-    
     @State var isTappedCheckToggle = false
     
     private let signOutTitle = [TextLiteral.withdrawalViewDeleteTitle,
@@ -32,19 +30,19 @@ struct WithdrawalView: View {
             
             Text(TextLiteral.withdrawalViewHeadline)
                 .Title2()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .multilineTextAlignment(.leading)
                 .padding(.vertical, 32)
             
             ForEach(0..<signOutTitle.count, id: \.self) { index in
                 Text(signOutTitle[index])
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                     .padding(.bottom, 8)
                 
                 Text(signOutDescription[index])
                     .Body2()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
                     .padding(.bottom, 16)
             }
             
@@ -53,13 +51,13 @@ struct WithdrawalView: View {
             HStack(spacing: 8) {
                 Image(systemName: isTappedCheckToggle ? "checkmark.square.fill" : "square")
                     .Title2()
-                    .foregroundColor(isTappedCheckToggle ? .Primary : .Gray4)
+                    .foregroundColor(isTappedCheckToggle ? .shortcutsZipPrimary : .gray4)
                     .onTapGesture {
                         isTappedCheckToggle.toggle()
                     }
                 Text(TextLiteral.withdrawalViewAgree)
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .multilineTextAlignment(.leading)
                     .onTapGesture {
                         self.isTappedCheckToggle.toggle()
@@ -74,11 +72,11 @@ struct WithdrawalView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isTappedCheckToggle ? .Primary : .Primary .opacity(0.13))
+                        .foregroundColor(isTappedCheckToggle ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text(TextLiteral.withdrawalViewButton)
-                        .foregroundColor(isTappedCheckToggle ? .Text_Button : .Text_Button_Disable )
+                        .foregroundColor(isTappedCheckToggle ? .textButton : .textButtonDisable )
                         .Body1()
                 }
             }
@@ -101,7 +99,7 @@ struct WithdrawalView: View {
             }
         }
         .padding(.horizontal, 16)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationTitle(TextLiteral.withdrawalViewTitle)
     }
     

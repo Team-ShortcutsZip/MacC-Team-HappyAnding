@@ -17,12 +17,13 @@ struct HappyAndingApp: App {
     @Environment(\.openURL) private var openURL
     
     @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
+    @StateObject var loginAlerter = Alerter()
+    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isNeededUpdate = false
     @State var isShowingLaunchScreen = true
     @State var version = Version(latestVersion: "", minimumVersion: "", description: "", title: "")
-    
-    let appID = "6444001181"
     
     init() {
         FirebaseApp.configure()
@@ -32,7 +33,7 @@ struct HappyAndingApp: App {
         WindowGroup {
             if isShowingLaunchScreen {
                 ZStack {
-                    Color.Primary.ignoresSafeArea()
+                    Color.shortcutsZipPrimary.ignoresSafeArea()
                     Text("ShortcutsZip")
                         .foregroundColor(Color.white)
                         .font(.system(size: 26, weight: .bold))
@@ -43,16 +44,16 @@ struct HappyAndingApp: App {
                     Button(role: .cancel) {
                         isShowingLaunchScreen = false
                     } label: {
-                        Text("나중에")
+                        Text(TextLiteral.later)
                     }
                     Button() {
-                        let url = "itms-apps://itunes.apple.com/app/" + self.appID
+                        let url = TextLiteral.appStoreUrl
                         if let url = URL(string: url){
                             UIApplication.shared.open(url)
                         }
                         isShowingLaunchScreen = false
                     } label: {
-                        Text("업데이트")
+                        Text(TextLiteral.update)
                     }
                 } message: {
                     Text(version.description)
@@ -60,6 +61,20 @@ struct HappyAndingApp: App {
             } else {
                 ShortcutsZipView()
                     .environmentObject(shortcutsZipViewModel)
+                    .environment(\.loginAlertKey, loginAlerter)
+                    .alert(TextLiteral.loginTitle, isPresented: $loginAlerter.isPresented) {
+                        Button(role: .cancel) {
+                        } label: {
+                            Text(TextLiteral.cancel)
+                        }
+                        Button {
+                            useWithoutSignIn = false
+                        } label: {
+                            Text(TextLiteral.loginAction)
+                        }
+                    } message: {
+                        Text(TextLiteral.loginMessage)
+                    }
             }
         }
         .onChange(of: scenePhase) { (newScenePhase) in

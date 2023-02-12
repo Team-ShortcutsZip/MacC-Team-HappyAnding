@@ -31,11 +31,11 @@ struct NicknameTextField: View {
         var color: Color {
             switch self {
             case .focus:
-                return .Primary
+                return .shortcutsZipPrimary
             case .focusError:
-                return .red
+                return .shortcutsZipError
             case .notfocus:
-                return .Gray2
+                return .gray2
             }
         }
         
@@ -60,12 +60,12 @@ struct NicknameTextField: View {
     @FocusState var isFocused: Bool
     
     @Binding var nickname: String
+    @Binding var isValid: Bool
     
     @State var nicknameState = NicknameState.none
     @State var nicknameFocus = NicknameFocus.notfocus
     @State var nicknameError = NicknameError.length
     @State var isCheckedDuplicated = false
-    @Binding var isValid: Bool
     
     var initName = ""
     
@@ -79,11 +79,11 @@ struct NicknameTextField: View {
             if nicknameFocus == .focusError {
                 Text(nicknameError.message)
                     .Footnote()
-                    .foregroundColor(.red)
+                    .foregroundColor(.shortcutsZipError)
             } else {
                 Text(TextLiteral.nicknameTextFieldSpace)
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
             }
         }
         .onChange(of: nickname) { _ in
@@ -118,7 +118,7 @@ struct NicknameTextField: View {
                     .focused($isFocused)
                     .frame(height: 52)
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                     .padding(.horizontal, 16)
                     .onAppear { UIApplication.shared.hideKeyboard() }
                 
@@ -147,12 +147,12 @@ struct NicknameTextField: View {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Primary.opacity(0.13) : .Primary)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .shortcutsZipPrimary.opacity(0.13) : .shortcutsZipPrimary)
                         .frame(width: 80, height: 52)
                     
                     Text(TextLiteral.nicknameTextFieldDuplicateCheck)
                         .Body1()
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Text_Button_Disable : .Text_icon)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .textButtonDisable : .textIcon)
                 }
             }
             .disabled(nicknameState != .none || nickname.isEmpty || initName == nickname)
@@ -167,18 +167,18 @@ struct NicknameTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             } else {
                 if nicknameState == .fail {
                     Image(systemName: "exclamationmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.red)
+                        .foregroundColor(.shortcutsZipError)
                         .onTapGesture { }
                 } else if nicknameState == .success {
                     Image(systemName: "checkmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Success)
+                        .foregroundColor(.shortcutsZipSuccess)
                         .onTapGesture { }
                 }
             }

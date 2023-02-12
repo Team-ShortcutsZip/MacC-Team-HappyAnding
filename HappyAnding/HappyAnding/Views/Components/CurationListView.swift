@@ -10,6 +10,7 @@ import SwiftUI
 struct CurationListView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var data: NavigationListCurationType
     
     var body: some View {
@@ -21,12 +22,12 @@ struct CurationListView: View {
                                                           navigationParentView: self.data.navigationParentView)
                 NavigationLink(value: data) {
                     UserCurationCell(curation: curation,
-                                     navigationParentView: self.data.navigationParentView,
-                                     lineLimit: 2)
+                                     lineLimit: 2,
+                                     navigationParentView: self.data.navigationParentView)
                 }
             }
         }
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .onAppear {
             if self.data.type == .personalCuration {
                 self.data.curation = shortcutsZipViewModel.personalCurations
@@ -40,22 +41,16 @@ struct CurationListView: View {
     var listHeader: some View {
         HStack(alignment: .bottom) {
             if data.type == .personalCuration {
-                Text("\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: "\(shortcutsZipViewModel.userInfo?.nickname ?? "")\(data.type.rawValue)")
                     .onTapGesture { }
             } else {
-                Text(data.title ?? "")
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: data.title ?? "")
                     .onTapGesture { }
             }
             Spacer()
             
             NavigationLink(value: data) {
-                Text(TextLiteral.more)
-                    .Footnote()
-                    .foregroundColor(.Gray4)
+                MoreCaptionTextView(text: TextLiteral.more)
             }
         }
         .padding(.bottom, 12)

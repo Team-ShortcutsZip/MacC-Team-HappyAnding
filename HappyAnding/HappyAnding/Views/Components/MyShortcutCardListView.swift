@@ -9,11 +9,12 @@ import SwiftUI
 
 struct MyShortcutCardListView: View {
     
+    @Environment(\.loginAlertKey) var loginAlerter
     @StateObject var writeNavigation = WriteShortcutNavigation()
+    
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
-    @State private var tryWriteWithoutSignIn: Bool = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
@@ -27,21 +28,15 @@ struct MyShortcutCardListView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(TextLiteral.myShortcutCardListViewTitle)
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: TextLiteral.myShortcutCardListViewTitle)
                 
                 Spacer()
                 
                 NavigationLink(value: data) {
-                    Text(TextLiteral.more)
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: TextLiteral.more)
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -49,7 +44,7 @@ struct MyShortcutCardListView: View {
                         if !useWithoutSignIn {
                             self.isWriting = true
                         } else {
-                            self.tryWriteWithoutSignIn = true
+                            loginAlerter.isPresented = true
                         }
                     } label: {
                         AddMyShortcutCardView()
@@ -73,26 +68,10 @@ struct MyShortcutCardListView: View {
                 .padding(.horizontal, 16)
             }
         }
-        .alert(TextLiteral.loginTitle, isPresented: $tryWriteWithoutSignIn) {
-            Button(role: .cancel) {
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.cancel)
-            }
-            Button {
-                useWithoutSignIn = false
-                tryWriteWithoutSignIn = false
-            } label: {
-                Text(TextLiteral.loginAction)
-            }
-        } message: {
-            Text(TextLiteral.loginMessage)
-        }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
             NavigationStack(path: $writeNavigation.navigationPath) {
-                WriteShortcutTitleView(isWriting: $isWriting,
-                                       isEdit: false)
+                WriteShortcutView(isWriting: $isWriting, isEdit: false)
             }
             .environmentObject(writeNavigation)
         }
