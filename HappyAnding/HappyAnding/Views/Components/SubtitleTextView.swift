@@ -18,14 +18,3 @@ struct SubtitleTextView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
-struct MoreCaptionTextView: View {
-    
-    var text: String
-    
-    var body: some View {
-        Text(text)
-            .Footnote()
-            .foregroundColor(Color.Gray4)
-    }
-}
