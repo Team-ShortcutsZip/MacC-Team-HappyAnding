@@ -33,7 +33,7 @@ struct NicknameTextField: View {
             case .focus:
                 return .shortcutsZipPrimary
             case .focusError:
-                return .red
+                return .shortcutsZipError
             case .notfocus:
                 return .gray2
             }
@@ -79,7 +79,7 @@ struct NicknameTextField: View {
             if nicknameFocus == .focusError {
                 Text(nicknameError.message)
                     .Footnote()
-                    .foregroundColor(.red)
+                    .foregroundColor(.shortcutsZipError)
             } else {
                 Text(TextLiteral.nicknameTextFieldSpace)
                     .Footnote()
@@ -173,7 +173,7 @@ struct NicknameTextField: View {
                 if nicknameState == .fail {
                     Image(systemName: "exclamationmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.red)
+                        .foregroundColor(.shortcutsZipError)
                         .onTapGesture { }
                 } else if nicknameState == .success {
                     Image(systemName: "checkmark.circle.fill")

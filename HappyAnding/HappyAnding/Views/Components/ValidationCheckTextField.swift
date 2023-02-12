@@ -35,11 +35,11 @@ enum TextFieldState {
         case .inProgressSuccess:
             return Color.shortcutsZipPrimary
         case .inProgressFail:
-            return Color.red
+            return Color.shortcutsZipError
         case .doneSuccess:
             return Color.gray4
         case .doneFail:
-            return Color.red
+            return Color.shortcutsZipError
         }
     }
 }
@@ -215,7 +215,7 @@ struct ValidationCheckTextField: View {
             case .doneFail:
                 Image(systemName: "exclamationmark.circle.fill")
                     .Body2()
-                    .foregroundColor(.red)
+                    .foregroundColor(.shortcutsZipError)
             case .inProgressSuccess:
                 Button {
                     content.removeAll()
