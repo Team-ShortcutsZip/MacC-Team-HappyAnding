@@ -36,7 +36,7 @@ struct UserCurationListView: View {
                 if !useWithoutSignIn {
                     self.isWriting = true
                 } else {
-                    loginAlert.showAlert = true
+                    loginAlert.isPresented = true
                 }
             } label: {
                 

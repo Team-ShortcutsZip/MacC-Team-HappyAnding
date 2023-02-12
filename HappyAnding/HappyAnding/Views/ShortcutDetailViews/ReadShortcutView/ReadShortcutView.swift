@@ -98,7 +98,7 @@ struct ReadShortcutView: View {
                                         }
                                         shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                                     } else {
-                                        loginAlerter.showAlert = true
+                                        loginAlerter.isPresented = true
                                     }
                                 } label: {
                                     Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")

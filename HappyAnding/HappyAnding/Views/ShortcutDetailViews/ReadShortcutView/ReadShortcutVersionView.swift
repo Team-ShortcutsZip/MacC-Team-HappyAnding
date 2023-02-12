@@ -61,7 +61,7 @@ struct ReadShortcutVersionView: View {
                                         openURL(url)
                                     }
                                 } else {
-                                    loginAlerter.showAlert = true
+                                    loginAlerter.isPresented = true
                                 }
                             } label: {
                                 Text(TextLiteral.readShortcutVersionViewDownloadPreviousVersion)

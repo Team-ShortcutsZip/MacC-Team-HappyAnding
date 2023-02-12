@@ -521,6 +521,7 @@
 				87CFD8482939187200F97B86 /* NicknameTextField.swift */,
 				F96D45B62980301F000C2441 /* SubtitleTextView.swift */,
 				F96D45BC29816578000C2441 /* StickyHeader.swift */,
+				F9DD22F129916DF4004875FE /* Alerter.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -537,7 +538,6 @@
 				8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */,
 				F9724BBE292755E400860F8A /* Comment.swift */,
 				F976E82B29368E0D0088BBA1 /* Version.swift */,
-				F9DD22F129916DF4004875FE /* Alerter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

@@ -81,7 +81,7 @@ struct ReadShortcutHeaderView: View {
                     //화면 상의 좋아요 추가, 취소 기능 동작
                     numberOfLike += isMyLike ? 1 : -1
                 } else {
-                    loginAlerter.showAlert = true
+                    loginAlerter.isPresented = true
                 }
             }
     }
