@@ -50,7 +50,7 @@ struct ReadAdminCurationView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         
         //TODO: 추후 공유 기능 추가 시 사용할 코드
         //            .toolbar {
@@ -60,7 +60,7 @@ struct ReadAdminCurationView: View {
         //                        //TODO: Share 버튼 눌렀을 때 Curation공유 링크 생성 및 actionSheet 나타내기
         //                    }) {
         //                        Image(systemName: "square.and.arrow.up")
-        //                            .foregroundColor(.Gray4)
+        //                            .foregroundColor(.gray4)
         //                    }
         //                }
         //            }
@@ -80,7 +80,7 @@ struct ReadAdminCurationView: View {
                 SubtitleTextView(text: curation.title)
                 Text(curation.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
             }
             Spacer()
         }

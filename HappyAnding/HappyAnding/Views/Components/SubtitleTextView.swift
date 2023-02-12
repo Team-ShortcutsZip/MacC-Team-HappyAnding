@@ -14,7 +14,7 @@ struct SubtitleTextView: View {
     var body: some View {
         Text(text)
             .Title2()
-            .foregroundColor(Color.Gray5)
+            .foregroundColor(Color.gray5)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

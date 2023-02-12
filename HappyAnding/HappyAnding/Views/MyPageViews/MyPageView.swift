@@ -32,19 +32,19 @@ struct MyPageView: View {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.system(size: 60, weight: .medium))
                         .frame(width: 60, height: 60)
-                        .foregroundColor(.Gray3)
+                        .foregroundColor(.gray3)
                         .id(333)
                     
                     HStack {
                         Text(shortcutsZipViewModel.userInfo?.nickname ?? "사용자")
                             .Title1()
-                            .foregroundColor(.Gray5)
+                            .foregroundColor(.gray5)
                         
                         if !useWithoutSignIn {
                             NavigationLink(value: NavigationNicknameView.first) {
                                 Image(systemName: "square.and.pencil")
                                     .Title2()
-                                    .foregroundColor(.Gray4)
+                                    .foregroundColor(.gray4)
                             }
                         }
                     }
@@ -87,12 +87,12 @@ struct MyPageView: View {
                 NavigationLink(value: NavigationSettingView.first) {
                     Image(systemName: "gearshape.fill")
                         .Headline()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             }
         }
         .scrollIndicators(.hidden)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationDestination(for: NavigationNicknameView.self) { _ in
             EditNicknameView()
         }
@@ -116,23 +116,23 @@ struct MyPageShortcutListCell: View {
             HStack() {
                 Text(type == .myLovingShortcut ? "좋아요한 단축어" : "다운로드한 단축어")
                     .Title2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                     .padding(.trailing, 9)
                 Text("\(shortcuts.count)개")
                     .Body2()
-                    .foregroundColor(Color.Tag_Text)
+                    .foregroundColor(Color.tagText)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 4)
                     .background(
                         RoundedRectangle(cornerRadius: 16)
-                            .fill( Color.Tag_Background )
+                            .fill( Color.tagBackground )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 16)
-                                    .strokeBorder(Color.Primary, lineWidth: 1))
+                                    .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))
                     )
                 Spacer()
                 Image(systemName: "chevron.forward")
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                     .font(Font(UIFont.systemFont(ofSize: 20, weight: .medium)))
                 
             }

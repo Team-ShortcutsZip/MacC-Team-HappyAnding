@@ -22,7 +22,7 @@ struct ReadShortcutVersionView: View {
         if shortcut.updateDescription.count == 1 {
             Text("아직 업데이트된 버전이 없습니다.")
                 .Body2()
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .padding(.top, 16)
             
             Spacer()
@@ -31,24 +31,24 @@ struct ReadShortcutVersionView: View {
         } else {
                 Text("업데이트 내용")
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
             
                 ForEach(Array(zip(shortcut.updateDescription, shortcut.updateDescription.indices)), id: \.0) { data, index in
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Text("Ver \(shortcut.updateDescription.count - index).0")
                                 .Body2()
-                                .foregroundColor(.Gray5)
+                                .foregroundColor(.gray5)
                             
                             Spacer()
                             Text(shortcut.date[index].getVersionUpdateDateFormat())
                                 .Body2()
-                                .foregroundColor(.Gray3)
+                                .foregroundColor(.gray3)
                         }
                         if data != "" {
                             Text(data)
                                 .Body2()
-                                .foregroundColor(.Gray5)
+                                .foregroundColor(.gray5)
                         }
                         if index != 0 {
                             Button {
@@ -66,11 +66,11 @@ struct ReadShortcutVersionView: View {
                             } label: {
                                 Text("이전 버전 다운로드")
                                     .Body2()
-                                    .foregroundColor(.Primary)
+                                    .foregroundColor(.shortcutsZipPrimary)
                             }
                         }
                         Divider()
-                            .foregroundColor(.Gray1)
+                            .foregroundColor(.gray1)
                         
                     }
                 }

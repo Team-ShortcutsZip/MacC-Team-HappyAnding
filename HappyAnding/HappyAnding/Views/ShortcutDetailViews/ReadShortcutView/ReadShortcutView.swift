@@ -58,14 +58,14 @@ struct ReadShortcutView: View {
                         ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
                             .frame(minHeight: 160)
                             .padding(.bottom, 33)
-                            .background(Color.White)
+                            .background(Color.shortcutsZipWhite)
                         
                         
                         // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
                         
                         LazyVStack(pinnedViews: [.sectionHeaders]) {
                             Section(header: tabBarView
-                                .background(Color.White)
+                                .background(Color.shortcutsZipWhite)
                             ) {
                                 detailInformationView
                                     .padding(.top, 4)
@@ -76,8 +76,8 @@ struct ReadShortcutView: View {
                 }
             }
             .scrollDisabled(isClickCorrection)
-            .navigationBarBackground ({ Color.White })
-            .background(Color.Background)
+            .navigationBarBackground ({ Color.shortcutsZipWhite })
+            .background(Color.shortcutsZipBackground)
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 
                 VStack {
@@ -103,10 +103,10 @@ struct ReadShortcutView: View {
                                 } label: {
                                     Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
                                         .Body1()
-                                        .foregroundColor(Color.Text_icon)
+                                        .foregroundColor(Color.textIcon)
                                         .padding()
                                         .frame(maxWidth: .infinity)
-                                        .background(Color.Primary)
+                                        .background(Color.shortcutsZipPrimary)
                                 }
                             }
                         }
@@ -229,7 +229,7 @@ extension ReadShortcutView {
             HStack {
                 if comment.depth == 1 && !isClickCorrection {
                     Image(systemName: "arrow.turn.down.right")
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
                 TextField(useWithoutSignIn ? "로그인 후 댓글을 작성할 수 있어요" : "댓글을 입력하세요", text: $commentText, axis: .vertical)
                     .disabled(useWithoutSignIn == true)
@@ -259,7 +259,7 @@ extension ReadShortcutView {
                     isFocused.toggle()
                 } label: {
                     Image(systemName: "paperplane.fill")
-                        .foregroundColor(commentText == "" ? Color.Gray2 : Color.Gray5)
+                        .foregroundColor(commentText == "" ? Color.gray2 : Color.gray5)
                 }
                 .disabled(commentText == "" ? true : false)
             }
@@ -267,7 +267,7 @@ extension ReadShortcutView {
             .padding(.horizontal, 16)
             .background(
                 Rectangle()
-                    .fill(Color.Gray1)
+                    .fill(Color.gray1)
                     .cornerRadius(12 ,corners: (comment.depth == 1) && (!isClickCorrection) ? [.bottomLeft, .bottomRight] : .allCorners)
             )
             .padding(.horizontal, 16)
@@ -278,7 +278,7 @@ extension ReadShortcutView {
         HStack {
             Text("@ \(nestedCommentInfoText)")
                 .Footnote()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
             Spacer()
             Button {
                 comment.bundle_id = "\(Date().getDate())_\(UUID().uuidString)"
@@ -286,14 +286,14 @@ extension ReadShortcutView {
             } label: {
                 Image(systemName: "xmark")
                     .font(Font(UIFont.systemFont(ofSize: 17, weight: .medium)))
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 11)
         .background(
             Rectangle()
-                .fill(Color.Gray2)
+                .fill(Color.gray2)
                 .cornerRadius(12 ,corners: [.topLeft, .topRight])
         )
         .padding(.horizontal, 16)
@@ -318,7 +318,7 @@ extension ReadShortcutView {
             }
         }, label: {
             Image(systemName: "ellipsis")
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
         })
     }
     
@@ -343,7 +343,7 @@ extension ReadShortcutView {
             shareShortcut()
         }) {
             Label("공유", systemImage: "square.and.arrow.up")
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .fontWeight(.medium)
         }
     }
@@ -443,15 +443,15 @@ extension ReadShortcutView {
                 if self.currentTab == tab {
                     Text(string)
                         .Headline()
-                        .foregroundColor(.Gray5)
-                    Color.Gray5
+                        .foregroundColor(.gray5)
+                    Color.gray5
                         .frame(height: 2)
                         .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
                     
                 } else {
                     Text(string)
                         .Body1()
-                        .foregroundColor(.Gray3)
+                        .foregroundColor(.gray3)
                     Color.clear.frame(height: 2)
                 }
             }

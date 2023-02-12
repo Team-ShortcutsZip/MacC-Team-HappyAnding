@@ -158,7 +158,7 @@ struct SettingView: View {
         }
         
         .padding(.horizontal, 16)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -185,7 +185,7 @@ struct SettingCell: View {
             if let version {Text(version)}
         }
         .Body1()
-        .foregroundColor(.Gray4)
+        .foregroundColor(.gray4)
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
     }

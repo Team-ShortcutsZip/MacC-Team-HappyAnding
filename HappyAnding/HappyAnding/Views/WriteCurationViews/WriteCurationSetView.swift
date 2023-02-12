@@ -37,7 +37,7 @@ struct WriteCurationSetView: View {
                 Spacer()
                 Text("아직 선택할 수 있는 단축어가 없어요.\n단축어를 업로드하거나 좋아요를 눌러주세요:)")
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .multilineTextAlignment(.center)
                 Spacer()
                 
@@ -45,7 +45,7 @@ struct WriteCurationSetView: View {
                 shortcutList
             }
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationTitle(isEdit ? "추천 모음집 편집" : "추천 모음집 작성")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -61,7 +61,7 @@ struct WriteCurationSetView: View {
                 } label: {
                     Text("취소")
                         .Body1()
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
             }
             
@@ -69,7 +69,7 @@ struct WriteCurationSetView: View {
                 NavigationLink(value: Float(0.0)) {
                     Text("다음")
                         .Headline()
-                        .foregroundColor(curation.shortcuts.isEmpty ? .Primary.opacity(0.3) : .Primary)
+                        .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                 }
                 .disabled(curation.shortcuts.isEmpty)
             }
@@ -87,14 +87,14 @@ struct WriteCurationSetView: View {
         HStack(alignment: .bottom, spacing: 8) {
             Text("단축어 선택")
                 .Sb()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
             Text("최대 10개")
                 .Footnote()
-                .foregroundColor(.Gray3)
+                .foregroundColor(.gray3)
             Spacer()
             Text("\(curation.shortcuts.count)개")
                 .Body2()
-                .foregroundColor(.Primary)
+                .foregroundColor(.shortcutsZipPrimary)
         }
         .padding(.horizontal, 16)
     }
@@ -119,11 +119,11 @@ struct WriteCurationSetView: View {
         Text("추천 모음집을 위한 단축어 목록은 ‘내가 업로드한 단축어'와 ‘좋아요를 누른 단축어'로 구성되어 있습니다.")
             .frame(maxWidth: .infinity, alignment: .leading)
             .Body2()
-            .foregroundColor(.Gray5)
+            .foregroundColor(.gray5)
             .padding(.all, 16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.Gray1)
+                    .foregroundColor(.gray1)
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 20)

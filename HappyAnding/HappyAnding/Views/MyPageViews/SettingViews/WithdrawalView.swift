@@ -31,19 +31,19 @@ struct WithdrawalView: View {
             
             Text("ShortcutsZip에서 탈퇴 시 다음과 같이 사용자 데이터가 처리됩니다.")
                 .Title2()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .multilineTextAlignment(.leading)
                 .padding(.vertical, 32)
             
             ForEach(0..<signOutTitle.count, id: \.self) { index in
                 Text(signOutTitle[index])
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                     .padding(.bottom, 8)
                 
                 Text(signOutDescription[index])
                     .Body2()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
                     .padding(.bottom, 16)
             }
             
@@ -52,13 +52,13 @@ struct WithdrawalView: View {
             HStack(spacing: 8) {
                 Image(systemName: isTappedCheckToggle ? "checkmark.square.fill" : "square")
                     .Title2()
-                    .foregroundColor(isTappedCheckToggle ? .Primary : .Gray4)
+                    .foregroundColor(isTappedCheckToggle ? .shortcutsZipPrimary : .gray4)
                     .onTapGesture {
                         isTappedCheckToggle.toggle()
                     }
                 Text("위 내용을 확인했으며 데이터 처리방법에 동의합니다.")
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .multilineTextAlignment(.leading)
                     .onTapGesture {
                         self.isTappedCheckToggle.toggle()
@@ -73,11 +73,11 @@ struct WithdrawalView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isTappedCheckToggle ? .Primary : .Primary .opacity(0.13))
+                        .foregroundColor(isTappedCheckToggle ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("사용자 재인증 후 탈퇴하기")
-                        .foregroundColor(isTappedCheckToggle ? .Text_Button : .Text_Button_Disable )
+                        .foregroundColor(isTappedCheckToggle ? .textButton : .textButtonDisable )
                         .Body1()
                 }
             }
@@ -100,7 +100,7 @@ struct WithdrawalView: View {
             }
         }
         .padding(.horizontal, 16)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationTitle("탈퇴하기")
     }
     

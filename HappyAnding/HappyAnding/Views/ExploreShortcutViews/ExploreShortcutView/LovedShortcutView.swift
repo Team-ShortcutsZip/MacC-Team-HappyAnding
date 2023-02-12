@@ -42,7 +42,7 @@ struct LovedShortcutView: View {
             }
             
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
 }
 

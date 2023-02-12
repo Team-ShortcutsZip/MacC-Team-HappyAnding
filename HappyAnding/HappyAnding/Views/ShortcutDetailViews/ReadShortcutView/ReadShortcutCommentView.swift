@@ -29,7 +29,7 @@ struct ReadShortcutCommentView: View {
             if comments.comments.isEmpty {
                 Text("등록된 댓글이 없습니다")
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .padding(.top, 16)
                 
                 Spacer()
@@ -70,7 +70,7 @@ struct ReadShortcutCommentView: View {
             HStack(alignment: .top, spacing: 8) {
                 if comment.depth == 1 {
                     Image(systemName: "arrow.turn.down.right")
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     
@@ -81,11 +81,11 @@ struct ReadShortcutCommentView: View {
                         Image(systemName: "person.crop.circle.fill")
                             .font(.system(size: 24, weight: .medium))
                             .frame(width: 24, height: 24)
-                            .foregroundColor(.Gray3)
+                            .foregroundColor(.gray3)
                         
                         Text(comment.user_nickname)
                             .Body2()
-                            .foregroundColor(.Gray4)
+                            .foregroundColor(.gray4)
                     }
                     .padding(.bottom, 4)
                     
@@ -94,7 +94,7 @@ struct ReadShortcutCommentView: View {
                     
                     Text(comment.contents)
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     // MARK: Button
@@ -108,7 +108,7 @@ struct ReadShortcutCommentView: View {
                             } label: {
                                 Text("답글")
                                     .Footnote()
-                                    .foregroundColor(.Gray4)
+                                    .foregroundColor(.gray4)
                             }
                         }
                         
@@ -122,7 +122,7 @@ struct ReadShortcutCommentView: View {
                                 } label: {
                                     Text("수정")
                                         .Footnote()
-                                        .foregroundColor(.Gray4)
+                                        .foregroundColor(.gray4)
                                 }
                                 
                                 
@@ -132,13 +132,13 @@ struct ReadShortcutCommentView: View {
                                 } label: {
                                     Text("삭제")
                                         .Footnote()
-                                        .foregroundColor(.Gray4)
+                                        .foregroundColor(.gray4)
                                 }
                             }
                         }
                     }
                     Divider()
-                        .background(Color.Gray1)
+                        .background(Color.gray1)
                 }
             }
             .padding(.bottom, 16)

@@ -35,7 +35,7 @@ struct HappyAndingApp: App {
         WindowGroup {
             if isShowingLaunchScreen {
                 ZStack {
-                    Color.Primary.ignoresSafeArea()
+                    Color.shortcutsZipPrimary.ignoresSafeArea()
                     Text("ShortcutsZip")
                         .foregroundColor(Color.white)
                         .font(.system(size: 26, weight: .bold))

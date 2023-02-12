@@ -64,7 +64,7 @@ struct IconModalView: View {
                     self.isShowingIconModal = false
                 } label: {
                     Text("닫기")
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 16)
                 }
@@ -81,7 +81,7 @@ struct IconModalView: View {
             
             ZStack(alignment: .center) {
                 Rectangle()
-                    .fill(Color.Gray1)
+                    .fill(Color.gray1)
                     .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
                 
@@ -93,14 +93,14 @@ struct IconModalView: View {
                 Image(systemName: iconSymbol)
                     .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
-                    .foregroundColor(.Text_icon)
+                    .foregroundColor(.textIcon)
             }
             .padding(.bottom, 24)
             
             Text("색상")
                 .Subtitle()
                 .padding(.leading, 16)
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity, alignment: .leading)
             LazyVGrid(columns: gridLayout, spacing: 12) {
                 ForEach(colors, id: \.self) { item in
@@ -113,7 +113,7 @@ struct IconModalView: View {
             Text("기호")
                 .Subtitle()
                 .padding(.leading, 16)
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity, alignment: .leading)
             LazyVGrid(columns: gridLayout, spacing: 12) {
                 ForEach(symbols, id: \.self) { item in
@@ -129,11 +129,11 @@ struct IconModalView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Primary : .Primary .opacity(0.13) )
+                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13) )
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text("완료")
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .Text_Button : .Text_Button_Disable )
+                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .textButton : .textButtonDisable )
                         .Body1()
                 }
             })
@@ -141,7 +141,7 @@ struct IconModalView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
     
     struct ColorCell: View {
@@ -161,7 +161,7 @@ struct IconModalView: View {
                     
                     if paletteColor == iconColor {
                         Image(systemName: "checkmark")
-                            .foregroundColor(.Text_icon)
+                            .foregroundColor(.textIcon)
                     }
                 }
             })
@@ -179,12 +179,12 @@ struct IconModalView: View {
             }, label: {
                 ZStack(alignment: .center) {
                     Rectangle()
-                        .fill(paletteSymbol == iconSymbol ? Color.Gray1 : Color.clear)
+                        .fill(paletteSymbol == iconSymbol ? Color.gray1 : Color.clear)
                         .cornerRadius(8)
                         .frame(width: 36, height: 36)
                     
                     Image(systemName: paletteSymbol)
-                        .foregroundColor(paletteSymbol == iconSymbol ? Color.Gray5 : Color.Gray3)
+                        .foregroundColor(paletteSymbol == iconSymbol ? Color.gray5 : Color.gray3)
                 }
             })
         }

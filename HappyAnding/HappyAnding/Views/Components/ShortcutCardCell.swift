@@ -16,12 +16,12 @@ struct ShortcutCardCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Image(systemName: categoryShortcutIcon)
-                .foregroundColor(Color.Text_icon)
+                .foregroundColor(Color.textIcon)
             Text(categoryShortcutName)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
                 .Headline()
-                .foregroundColor(Color.Text_icon)
+                .foregroundColor(Color.textIcon)
             Spacer()
         }
         .padding(12)

@@ -31,11 +31,11 @@ struct NicknameTextField: View {
         var color: Color {
             switch self {
             case .focus:
-                return .Primary
+                return .shortcutsZipPrimary
             case .focusError:
                 return .red
             case .notfocus:
-                return .Gray2
+                return .gray2
             }
         }
         
@@ -83,7 +83,7 @@ struct NicknameTextField: View {
             } else {
                 Text("* 공백 없이 한글 ,숫자, 영문만 입력 가능")
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
             }
         }
         .onChange(of: nickname) { _ in
@@ -118,7 +118,7 @@ struct NicknameTextField: View {
                     .focused($isFocused)
                     .frame(height: 52)
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                     .padding(.horizontal, 16)
                     .onAppear { UIApplication.shared.hideKeyboard() }
                 
@@ -147,12 +147,12 @@ struct NicknameTextField: View {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Primary.opacity(0.13) : .Primary)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .shortcutsZipPrimary.opacity(0.13) : .shortcutsZipPrimary)
                         .frame(width: 80, height: 52)
                     
                     Text("중복확인")
                         .Body1()
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Text_Button_Disable : .Text_icon)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .textButtonDisable : .textIcon)
                 }
             }
             .disabled(nicknameState != .none || nickname.isEmpty || initName == nickname)
@@ -167,7 +167,7 @@ struct NicknameTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             } else {
                 if nicknameState == .fail {
@@ -178,7 +178,7 @@ struct NicknameTextField: View {
                 } else if nicknameState == .success {
                     Image(systemName: "checkmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Success)
+                        .foregroundColor(.shortcutsZipSuccess)
                         .onTapGesture { }
                 }
             }

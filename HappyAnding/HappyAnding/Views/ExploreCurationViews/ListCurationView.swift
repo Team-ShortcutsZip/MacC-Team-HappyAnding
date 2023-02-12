@@ -30,16 +30,16 @@ struct ListCurationView: View {
         if data.curation.count == 0 {
             Text("\(titleString)\(data.type.rawValue)이(가) 없습니다.")
                 .Body2()
-                .foregroundColor(Color.Gray4)
+                .foregroundColor(Color.gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
                 .navigationBarTitle("\(titleString)\(data.type.rawValue)")
                 .navigationBarTitleDisplayMode(.inline)
         } else {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     Rectangle()
-                        .fill(Color.Background)
+                        .fill(Color.shortcutsZipBackground)
                         .frame(height: 20)
                     switch data.type {
                     case .personalCuration:
@@ -50,14 +50,14 @@ struct ListCurationView: View {
                         makeCurationCellList(shortcutsZipViewModel.curationsMadeByUser)
                     }
                     Rectangle()
-                        .fill(Color.Background)
+                        .fill(Color.shortcutsZipBackground)
                         .frame(height: 32)
                 }
             }
             .scrollIndicators(.hidden)
             .listStyle(.plain)
-            .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-            .navigationBarBackground ({ Color.Background })
+            .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(data.title ?? "")
@@ -77,7 +77,7 @@ struct ListCurationView: View {
                                  navigationParentView: self.data.navigationParentView)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
-                .listRowBackground(Color.Background)
+                .listRowBackground(Color.shortcutsZipBackground)
             }
         }
     }

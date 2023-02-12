@@ -10,7 +10,7 @@ import SwiftUI
 extension Image {
     func setCellIcon() -> some View {
         self
-            .foregroundColor(.Gray4)
+            .foregroundColor(.gray4)
             .font(.system(size: 24, weight: .medium))
             .frame(height: 32)
     }

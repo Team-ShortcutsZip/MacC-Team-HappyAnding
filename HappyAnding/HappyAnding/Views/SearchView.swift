@@ -60,8 +60,8 @@ struct SearchView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color.Background)
-        .navigationBarBackground ({ Color.Background })
+        .background(Color.shortcutsZipBackground)
+        .navigationBarBackground ({ Color.shortcutsZipBackground })
     }
     
     private func runSearch() {
@@ -80,12 +80,12 @@ struct SearchView: View {
                     ForEach(keywords.keyword, id: \.self) { keyword in
                         Text(keyword)
                             .Body2()
-                            .foregroundColor(Color.Gray4)
+                            .foregroundColor(Color.gray4)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .strokeBorder(Color.Gray4, lineWidth: 1)
+                                    .strokeBorder(Color.gray4, lineWidth: 1)
                             )
                             .onTapGesture {
                                 searchText = keyword
@@ -103,7 +103,7 @@ struct SearchView: View {
         VStack(alignment: .center) {
             Text("\'\(searchText)\'의 결과가 없어요.\n원하는 단축어를 제안해보는건 어떠세요?").multilineTextAlignment(.center)
                 .Body1()
-                .foregroundColor(Color.Gray4)
+                .foregroundColor(Color.gray4)
             
             Link(destination: URL(string: "https://docs.google.com/forms/d/e/1FAIpQLScQc3KeYjDGCE-C2YRU-Hwy2XNy5bt89KVX1OMUzRiySaMX1Q/viewform")!) {
                 Text("단축어 제안하기")
@@ -114,7 +114,7 @@ struct SearchView: View {
             .padding(16)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
     private func didChangedSearchText() {
         shortcutResults.removeAll()

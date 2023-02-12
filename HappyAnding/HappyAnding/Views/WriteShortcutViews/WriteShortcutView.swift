@@ -56,7 +56,7 @@ struct WriteShortcutView: View {
                 shortcutsRequiredApp
             }
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationTitle(isEdit ? "단축어 편집" : "단축어 등록")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -66,7 +66,7 @@ struct WriteShortcutView: View {
                 } label: {
                     Text("취소")
                         .Body1()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             }
             
@@ -99,7 +99,7 @@ struct WriteShortcutView: View {
                 }, label: {
                     Text("업로드")
                         .Headline()
-                        .foregroundColor(.Primary)
+                        .foregroundColor(.shortcutsZipPrimary)
                         .opacity(isUnavailableUploadButton() ? 0.3 : 1)
                 })
                 .disabled(isUnavailableUploadButton())
@@ -133,7 +133,7 @@ struct WriteShortcutView: View {
                 Image(systemName: !shortcut.sfSymbol.isEmpty ? shortcut.sfSymbol : "plus")
                     .font(.system(size: 24))
                     .frame(width: 84, height: 84)
-                    .foregroundColor(!shortcut.sfSymbol.isEmpty ? .Text_icon : .Gray5)
+                    .foregroundColor(!shortcut.sfSymbol.isEmpty ? .textIcon : .gray5)
             }
         })
         .sheet(isPresented: $isShowingIconModal) {
@@ -206,10 +206,10 @@ struct WriteShortcutView: View {
             HStack(alignment: .bottom) {
                 Text("카테고리")
                     .Headline()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                 Text("최대 3개")
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
                 Spacer()
             }
             .padding(.horizontal, 16)
@@ -230,22 +230,22 @@ struct WriteShortcutView: View {
                     HStack {
                         if selectedCategories.isEmpty {
                             Text("카테고리 선택")
-                                .foregroundColor(.Gray2)
+                                .foregroundColor(.gray2)
                                 .Body2()
                         } else {
                             Text(selectedCategories.map { Category(rawValue: $0)!.translateName() }.joined(separator: ", "))
-                                .foregroundColor(.Gray4)
+                                .foregroundColor(.gray4)
                                 .Body2()
                                 .multilineTextAlignment(.leading)
                         }
                         Spacer()
                         Image(systemName: "chevron.forward")
-                            .foregroundColor(selectedCategories.isEmpty ? .Gray2 : .Gray4)
+                            .foregroundColor(selectedCategories.isEmpty ? .gray2 : .gray4)
                     }
                     .padding(.all, 16)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(selectedCategories.isEmpty ? Color.Gray2 : Color.Gray4, lineWidth: 1)
+                            .strokeBorder(selectedCategories.isEmpty ? Color.gray2 : Color.gray4, lineWidth: 1)
                     )
                 })
                 .sheet(isPresented: $isShowingCategoryModal) {
@@ -265,14 +265,14 @@ struct WriteShortcutView: View {
             HStack(alignment: .bottom) {
                 Text("단축어 사용을 위해 필요한 앱")
                     .Headline()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                 Text("(선택)")
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
                     .frame(width: 20, height: 20)
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .onTapGesture {
                         isInfoButtonTouched.toggle()
                     }
@@ -285,16 +285,16 @@ struct WriteShortcutView: View {
                     ZStack(alignment: .center) {
                         RoundedRectangle(cornerRadius: 12)
                             .frame(maxWidth: .infinity, maxHeight: 68)
-                            .foregroundColor(.Gray5)
+                            .foregroundColor(.gray5)
                         HStack(alignment: .top) {
                             Text("해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 작성해 주세요")
                                 .Footnote()
-                                .foregroundColor(.Gray1)
+                                .foregroundColor(.gray1)
                                 .multilineTextAlignment(.leading)
                             Spacer()
                             Image(systemName: "xmark")
                                 .frame(width: 16, height: 16)
-                                .foregroundColor(.Gray1)
+                                .foregroundColor(.gray1)
                                 .onTapGesture {
                                     isInfoButtonTouched = false
                                 }
@@ -337,7 +337,7 @@ struct WriteShortcutView: View {
                                     isTextFieldShowing = false
                                 }
                             }
-                            .modifier(CellModifier(foregroundColor: Color.Gray4, strokeColor: Color.Primary))
+                            .modifier(CellModifier(foregroundColor: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
                     }
                     
                     Button(action: {
@@ -349,7 +349,7 @@ struct WriteShortcutView: View {
                             Text("앱 추가")
                         }
                     })
-                    .modifier(CellModifier(foregroundColor: Color.Gray2, strokeColor: Color.Gray2))
+                    .modifier(CellModifier(foregroundColor: Color.gray2, strokeColor: Color.gray2))
                 }
                 .padding(.leading, 16)
             }
@@ -371,9 +371,9 @@ struct WriteShortcutView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .modifier(CellModifier(foregroundColor: Color.Gray4,
-                                   backgroundColor: Color.Background,
-                                   strokeColor: Color.Gray4))
+            .modifier(CellModifier(foregroundColor: Color.gray4,
+                                   backgroundColor: Color.shortcutsZipBackground,
+                                   strokeColor: Color.gray4))
         }
     }
     struct CellModifier: ViewModifier {
@@ -407,7 +407,7 @@ struct WriteShortcutView: View {
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
             }
         }

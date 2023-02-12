@@ -64,12 +64,12 @@ struct WriteCurationInfoView: View {
                 } label: {
                     Text("업로드")
                         .Headline()
-                        .foregroundColor(isIncomplete ? .Primary.opacity(0.3) : .Primary)
+                        .foregroundColor(isIncomplete ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                 }
                 .disabled(isIncomplete)
             }
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationBarTitle(isEdit ? "추천 모음집 편집" : "추천 모음집 작성")
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }

@@ -77,7 +77,7 @@ struct ShortcutCell: View {
             .padding(.horizontal, 20)
         }
         .padding(.bottom, 12)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .onAppear() {
             if let shortcut  {
                 self.shortcutCell = ShortcutCellModel(
@@ -101,7 +101,7 @@ struct ShortcutCell: View {
                 .frame(width: 52, height: 52)
             
             Image(systemName: shortcutCell.sfSymbol)
-                .foregroundColor(.Text_icon)
+                .foregroundColor(.textIcon)
         }
         .padding(.leading, 20)
     }
@@ -112,16 +112,16 @@ struct ShortcutCell: View {
             if rankNumber != -1 {
                 Text("\(rankNumber)")
                     .Subtitle()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .padding(0)
             }
             Text(shortcutCell.title)
                 .Headline()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle.lineBreaking)
                 .Footnote()
-                .foregroundColor(.Gray3)
+                .foregroundColor(.gray3)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
         }
@@ -154,10 +154,10 @@ struct ShortcutCell: View {
     var background: some View {
         
         RoundedRectangle(cornerRadius: 12)
-            .fill(Color.Background_list)
+            .fill(Color.backgroudList)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.Background_list_border)
+                    .strokeBorder(Color.backgroudListBorder)
             )
     }
 }
