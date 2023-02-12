@@ -844,7 +844,6 @@ extension ShortcutsZipViewModel {
     
     //MARK: 키워드 받아오는 함수
     func fetchKeyword(completionHandler: @escaping (Keyword)->()) {
-        var _: [String] = []
         db.collection("Keyword").getDocuments { querySnapshot, error in
             if let error {
                 print("Error getting documents: \(error)")
