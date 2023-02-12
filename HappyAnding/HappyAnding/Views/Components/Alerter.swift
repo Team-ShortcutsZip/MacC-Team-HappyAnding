@@ -1,8 +1,8 @@
 //
-//  Alerter.swift
+//  SwiftUIView.swift
 //  HappyAnding
 //
-//  Created by 전지민 on 2023/02/07.
+//  Created by 전지민 on 2023/02/12.
 //
 
 import SwiftUI
@@ -14,3 +14,4 @@ class Alerter: ObservableObject {
 struct LoginAlertKey: EnvironmentKey {
     static let defaultValue = Alerter()
 }
+

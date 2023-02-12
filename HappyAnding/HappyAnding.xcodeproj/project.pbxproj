@@ -107,6 +107,8 @@
 		F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
 		F9131B6B2922D38D00868A0E /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9131B6A2922D38D00868A0E /* Keyword.swift */; };
 		F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */; };
+		F91A72C1299915C500CA135A /* MoreCaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91A72C0299915C500CA135A /* MoreCaptionTextView.swift */; };
+		F91A72C32999160E00CA135A /* Alerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91A72C22999160E00CA135A /* Alerter.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435C2907B19A00987819 /* FirebaseAnalytics */; };
 		F94B435F2907B19A00987819 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435E2907B19A00987819 /* FirebaseAuth */; };
@@ -127,7 +129,6 @@
 		F9DB8EBB293986E100516CE1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
 		F9DB8EBD293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */; };
 		F9DB8ED3293B4C3200516CE1 /* ShareExtensionTagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */; };
-		F9DD22F229916DF4004875FE /* Alerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DD22F129916DF4004875FE /* Alerter.swift */; };
 		F9F4D36A2906E0B000DC8546 /* Navigationbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -260,6 +261,8 @@
 		A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LineBreaking+Extension.swift"; sourceTree = "<group>"; };
 		F9131B6A2922D38D00868A0E /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
 		F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipView.swift; sourceTree = "<group>"; };
+		F91A72C0299915C500CA135A /* MoreCaptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCaptionTextView.swift; sourceTree = "<group>"; };
+		F91A72C22999160E00CA135A /* Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerter.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F96D45B62980301F000C2441 /* SubtitleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTextView.swift; sourceTree = "<group>"; };
 		F96D45BA29804057000C2441 /* EnvironmentValues+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Extension.swift"; sourceTree = "<group>"; };
@@ -274,7 +277,6 @@
 		F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionValidationTextField.swift; sourceTree = "<group>"; };
 		F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCustomTextEditor.swift; sourceTree = "<group>"; };
 		F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionTagTextField.swift; sourceTree = "<group>"; };
-		F9DD22F129916DF4004875FE /* Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerter.swift; sourceTree = "<group>"; };
 		F9F4D3692906E0B000DC8546 /* Navigationbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigationbar+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -516,8 +518,9 @@
 				87276C372933F6AB00C92F4C /* CustomTextEditor.swift */,
 				87CFD8482939187200F97B86 /* NicknameTextField.swift */,
 				F96D45B62980301F000C2441 /* SubtitleTextView.swift */,
+				F91A72C0299915C500CA135A /* MoreCaptionTextView.swift */,
 				F96D45BC29816578000C2441 /* StickyHeader.swift */,
-				F9DD22F129916DF4004875FE /* Alerter.swift */,
+				F91A72C22999160E00CA135A /* Alerter.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -848,6 +851,7 @@
 				A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */,
 				87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */,
 				87E606B829114FB200C3DA13 /* UserAuth.swift in Sources */,
+				F91A72C1299915C500CA135A /* MoreCaptionTextView.swift in Sources */,
 				4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */,
 				87E99C9F28FFF21B009B691F /* SettingView.swift in Sources */,
 				A04ACB32290686AA004A85A6 /* ReadShortcutHeaderView.swift in Sources */,
@@ -860,6 +864,7 @@
 				87E99CBB28FFF298009B691F /* IconModalView.swift in Sources */,
 				87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */,
 				F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */,
+				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
 				87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */,
@@ -883,7 +888,6 @@
 				A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
 				F96D45BB29804057000C2441 /* EnvironmentValues+Extension.swift in Sources */,
 				A09CBA7E2922B36C00D31F5F /* String+Extension.swift in Sources */,
-				F9DD22F229916DF4004875FE /* Alerter.swift in Sources */,
 				87E99CB528FFF282009B691F /* WriteCurationInfoView.swift in Sources */,
 				F9DB8EBB293986E100516CE1 /* ShareExtensionViewModel.swift in Sources */,
 				8788374A2920D549009B3F54 /* Binding+Extension.swift in Sources */,
