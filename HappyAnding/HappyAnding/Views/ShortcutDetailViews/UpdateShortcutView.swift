@@ -72,7 +72,6 @@ struct UpdateShortcutView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(isLinkValid && isDescriptionValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
-                    
                     Text(TextLiteral.update)
                         .foregroundColor(isLinkValid && isDescriptionValid ? .textButton : .textButtonDisable)
                         .Body1()

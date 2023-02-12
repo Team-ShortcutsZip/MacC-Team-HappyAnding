@@ -16,7 +16,6 @@ struct ReadShortcutContentView: View {
     
     var body: some View {
             VStack(alignment: .leading, spacing: 24) {
-                
                 ReusableTextView(title: TextLiteral.readShortcutContentViewDescription, contents: shortcut.description, contentsArray: nil)
                 
                 categoryView

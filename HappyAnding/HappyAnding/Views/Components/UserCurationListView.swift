@@ -26,7 +26,7 @@ struct UserCurationListView: View {
                 Spacer()
                 
                 NavigationLink(value: data) {
-                    MoreCaptionTextView(text: "더보기")
+                    MoreCaptionTextView(text: TextLiteral.more)
                 }
             }
             .padding(.bottom, 12)
@@ -75,20 +75,5 @@ struct UserCurationListView: View {
             .environmentObject(writeCurationNavigation)
         }
     }
-<<<<<<< HEAD
-    
-    var listHeader: some View {
-        HStack(alignment: .bottom) {
-            SubtitleTextView(text: data.title ?? "")
-                .onTapGesture { }
-            Spacer()
-            
-            NavigationLink(value: data) {
-                MoreCaptionTextView(text: TextLiteral.more)
-            }
-        }
-    }
-=======
->>>>>>> 1d4ff74 ([Feat] add login alerter)
 }
 
