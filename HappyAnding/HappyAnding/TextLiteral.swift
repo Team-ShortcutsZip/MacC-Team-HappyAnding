@@ -21,10 +21,13 @@ enum TextLiteral {
     static let done: String = "완료"
     static let edit: String = "편집"
     static let update: String = "업데이트"
+    static let later: String = "나중에"
     static let share: String = "공유"
     static let delete: String = "삭제"
     static let withdrawnUser: String = "탈퇴한 사용자"
     static let defaultUser: String = "user"
+    
+    static let appStoreUrl: String = "itms-apps://itunes.apple.com/app/6444001181"
     
     // MARK: - ExploreShortcutView
     static let exploreShortcutViewTitle: String = "단축어 둘러보기"

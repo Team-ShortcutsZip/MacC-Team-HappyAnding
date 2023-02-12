@@ -25,8 +25,6 @@ struct HappyAndingApp: App {
     @State var isShowingLaunchScreen = true
     @State var version = Version(latestVersion: "", minimumVersion: "", description: "", title: "")
     
-    let appID = "6444001181"
-    
     init() {
         FirebaseApp.configure()
     }
@@ -46,16 +44,16 @@ struct HappyAndingApp: App {
                     Button(role: .cancel) {
                         isShowingLaunchScreen = false
                     } label: {
-                        Text("나중에")
+                        Text(TextLiteral.later)
                     }
                     Button() {
-                        let url = "itms-apps://itunes.apple.com/app/" + self.appID
+                        let url = TextLiteral.appStoreUrl
                         if let url = URL(string: url){
                             UIApplication.shared.open(url)
                         }
                         isShowingLaunchScreen = false
                     } label: {
-                        Text("업데이트")
+                        Text(TextLiteral.update)
                     }
                 } message: {
                     Text(version.description)
@@ -64,18 +62,18 @@ struct HappyAndingApp: App {
                 ShortcutsZipView()
                     .environmentObject(shortcutsZipViewModel)
                     .environment(\.loginAlertKey, loginAlerter)
-                    .alert("로그인을 진행해주세요", isPresented: $loginAlerter.isPresented) {
+                    .alert(TextLiteral.loginTitle, isPresented: $loginAlerter.isPresented) {
                         Button(role: .cancel) {
                         } label: {
-                            Text("취소")
+                            Text(TextLiteral.cancel)
                         }
                         Button {
                             useWithoutSignIn = false
                         } label: {
-                            Text("로그인하기")
+                            Text(TextLiteral.loginAction)
                         }
                     } message: {
-                        Text("이 기능은 로그인 후 사용할 수 있어요")
+                        Text(TextLiteral.loginMessage)
                     }
             }
         }
