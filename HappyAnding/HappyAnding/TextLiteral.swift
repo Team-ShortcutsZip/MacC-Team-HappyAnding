@@ -190,10 +190,10 @@ enum TextLiteral {
     static let settingViewWithdrawal: String = "탈퇴하기"
     
     // MARK: - SignInWithAppleView
-    static let SignInWithAppleViewTitle: String = "ShortcutsZip"
-    static let SignInWithAppleViewSubTitle: String = "편리한 단축어 공유 플랫폼"
-    static let SignInWithAppleViewSignInWithApple: String = "Apple로 로그인"
-    static let SignInWithAppleViewUseWithoutSignIn: String = "로그인 없이 둘러보기"
+    static let signInWithAppleViewTitle: String = "ShortcutsZip"
+    static let signInWithAppleViewSubTitle: String = "편리한 단축어 공유 플랫폼"
+    static let signInWithAppleViewSignInWithApple: String = "Apple로 로그인"
+    static let signInWithAppleViewUseWithoutSignIn: String = "로그인 없이 둘러보기"
     
     // MARK: - MyPageView
     static let myPageViewTitle: String = "프로필"
@@ -220,9 +220,9 @@ enum TextLiteral {
     static let searchViewProposalURL: String = "https://docs.google.com/forms/d/e/1FAIpQLScQc3KeYjDGCE-C2YRU-Hwy2XNy5bt89KVX1OMUzRiySaMX1Q/viewform"
     
     //MARK: - CustomShareViewController
-    static let CustomShareViewControllerSignInAlertTitle: String = "로그인을 먼저 진행해주세요"
-    static let CustomShareViewControllerSignInAlertMessage: String = "이 기능은 로그인 후 사용할 수 있는 기능이에요"
-    static let CustomShareViewControllerLinkVaildAlertTitle: String = "잘못된 접근이에요"
-    static let CustomShareViewControllerLinkVaildAlertMessage: String = "해당 링크는 ShortcutsZip으로 공유할 수 없어요"
-    static let CustomShareViewControllerCheck: String = "확인"
+    static let customShareViewControllerSignInAlertTitle: String = "로그인을 먼저 진행해주세요"
+    static let customShareViewControllerSignInAlertMessage: String = "이 기능은 로그인 후 사용할 수 있는 기능이에요"
+    static let customShareViewControllerLinkVaildAlertTitle: String = "잘못된 접근이에요"
+    static let customShareViewControllerLinkVaildAlertMessage: String = "해당 링크는 ShortcutsZip으로 공유할 수 없어요"
+    static let customShareViewControllerCheck: String = "확인"
 }
