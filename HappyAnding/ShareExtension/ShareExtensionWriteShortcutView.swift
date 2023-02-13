@@ -102,8 +102,8 @@ struct ShareExtensionWriteShortcutView: View {
     private var shortcutTitleText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: false,
-                                               title: TextLiteral.writeShortcutTitleViewNameTitle,
-                                               placeholder: TextLiteral.writeShortcutTitleViewNamePlaceholder,
+                                               title: TextLiteral.writeShortcutViewNameTitle,
+                                               placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
                                                lengthLimit: 20,
                                                isDownloadLinkTextField: false,
                                                content: $shareExtensionViewModel.shortcut.title,
@@ -116,8 +116,8 @@ struct ShareExtensionWriteShortcutView: View {
     private var shortcutLinkText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: false,
-                                               title: TextLiteral.writeShortcutTitleViewLinkTitle,
-                                               placeholder: TextLiteral.writeShortcutTitleViewLinkPlaceholder,
+                                               title: TextLiteral.writeShortcutViewLinkTitle,
+                                               placeholder: TextLiteral.writeShortcutViewLinkPlaceholder,
                                                lengthLimit: nil,
                                                isDownloadLinkTextField: true,
                                                content: $shareExtensionViewModel.shortcut.downloadLink[0],
@@ -131,8 +131,8 @@ struct ShareExtensionWriteShortcutView: View {
     private var shortcutSubtitleText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: false,
-                                               title: TextLiteral.writeShortcutTitleViewOneLineTitle,
-                                               placeholder: TextLiteral.writeShortcutTitleViewOneLinePlaceholder,
+                                               title: TextLiteral.writeShortcutViewOneLineTitle,
+                                               placeholder: TextLiteral.writeShortcutViewOneLinePlaceholder,
                                                lengthLimit: 20,
                                                isDownloadLinkTextField: false,
                                                content: $shareExtensionViewModel.shortcut.subtitle,
@@ -146,8 +146,8 @@ struct ShareExtensionWriteShortcutView: View {
     private var shortcutDescriptionText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: true,
-                                               title: TextLiteral.writeShortcutTitleViewMultiLineTitle,
-                                               placeholder: TextLiteral.writeShortcutTitleViewMultiLinePlaceholder,
+                                               title: TextLiteral.writeShortcutViewMultiLineTitle,
+                                               placeholder: TextLiteral.writeShortcutViewMultiLinePlaceholder,
                                                lengthLimit: 300,
                                                isDownloadLinkTextField: false,
                                                content: $shareExtensionViewModel.shortcut.description,
@@ -160,10 +160,10 @@ struct ShareExtensionWriteShortcutView: View {
     private var shortcutCategory: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text(TextLiteral.writeShortcutTitleViewCategoryTitle)
+                Text(TextLiteral.writeShortcutViewCategoryTitle)
                     .Headline()
                     .foregroundColor(.gray5)
-                Text(TextLiteral.writeShortcutTitleViewCategoryDescription)
+                Text(TextLiteral.writeShortcutViewCategoryDescription)
                     .Footnote()
                     .foregroundColor(.gray3)
                 Spacer()
@@ -185,7 +185,7 @@ struct ShareExtensionWriteShortcutView: View {
                 }, label: {
                     HStack {
                         if selectedCategories.isEmpty {
-                            Text(TextLiteral.writeShortcutTitleViewCategoryCell)
+                            Text(TextLiteral.writeShortcutViewCategoryCell)
                                 .foregroundColor(.gray2)
                                 .Body2()
                         } else {
@@ -219,10 +219,10 @@ struct ShareExtensionWriteShortcutView: View {
     private var shortcutsRequiredApp: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text(TextLiteral.writeShortcutTitleViewRequiredAppsTitle)
+                Text(TextLiteral.writeShortcutViewRequiredAppsTitle)
                     .Headline()
                     .foregroundColor(.gray5)
-                Text(TextLiteral.writeShortcutTitleViewRequiredAppDescription)
+                Text(TextLiteral.writeShortcutViewRequiredAppDescription)
                     .Footnote()
                     .foregroundColor(.gray3)
                 Spacer()
@@ -243,7 +243,7 @@ struct ShareExtensionWriteShortcutView: View {
                             .frame(maxWidth: .infinity, maxHeight: 68)
                             .foregroundColor(.gray5)
                         HStack(alignment: .top) {
-                            Text(TextLiteral.writeShortcutTitleViewRequiredAppInformation)
+                            Text(TextLiteral.writeShortcutViewRequiredAppInformation)
                                 .Footnote()
                                 .foregroundColor(.gray1)
                                 .multilineTextAlignment(.leading)
@@ -302,7 +302,7 @@ struct ShareExtensionWriteShortcutView: View {
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
-                            Text(TextLiteral.writeShortcutTitleViewRequiredAppCell)
+                            Text(TextLiteral.writeShortcutViewRequiredAppCell)
                         }
                     })
                     .modifier(CellModifier(foregroundColor: Color.gray2, strokeColor: Color.gray2))

@@ -57,7 +57,7 @@ struct WriteShortcutView: View {
             }
         }
         .background(Color.shortcutsZipBackground)
-        .navigationTitle(isEdit ? TextLiteral.writeShortcutTitleViewEdit : TextLiteral.writeShortcutTitleViewPost)
+        .navigationTitle(isEdit ? TextLiteral.writeShortcutViewEdit : TextLiteral.writeShortcutViewPost)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -151,8 +151,8 @@ struct WriteShortcutView: View {
     private var shortcutTitleText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: false,
-                                 title: TextLiteral.writeShortcutTitleViewNameTitle,
-                                 placeholder: TextLiteral.writeShortcutTitleViewNamePlaceholder,
+                                 title: TextLiteral.writeShortcutViewNameTitle,
+                                 placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
                                  lengthLimit: 20,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.title,
@@ -165,8 +165,8 @@ struct WriteShortcutView: View {
     private var shortcutLinkText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: false,
-                                 title: TextLiteral.writeShortcutTitleViewLinkTitle,
-                                 placeholder: TextLiteral.writeShortcutTitleViewLinkPlaceholder,
+                                 title: TextLiteral.writeShortcutViewLinkTitle,
+                                 placeholder: TextLiteral.writeShortcutViewLinkPlaceholder,
                                  lengthLimit: nil,
                                  isDownloadLinkTextField: true,
                                  content: $shortcut.downloadLink[0],
@@ -178,8 +178,8 @@ struct WriteShortcutView: View {
     private var shortcutSubtitleText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: false,
-                                 title: TextLiteral.writeShortcutTitleViewOneLineTitle,
-                                 placeholder: TextLiteral.writeShortcutTitleViewOneLinePlaceholder,
+                                 title: TextLiteral.writeShortcutViewOneLineTitle,
+                                 placeholder: TextLiteral.writeShortcutViewOneLinePlaceholder,
                                  lengthLimit: 20,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.subtitle,
@@ -191,8 +191,8 @@ struct WriteShortcutView: View {
     private var shortcutDescriptionText: some View {
         ValidationCheckTextField(textType: .mandatory,
                                  isMultipleLines: true,
-                                 title: TextLiteral.writeShortcutTitleViewMultiLineTitle,
-                                 placeholder: TextLiteral.writeShortcutTitleViewMultiLinePlaceholder,
+                                 title: TextLiteral.writeShortcutViewMultiLineTitle,
+                                 placeholder: TextLiteral.writeShortcutViewMultiLinePlaceholder,
                                  lengthLimit: 300,
                                  isDownloadLinkTextField: false,
                                  content: $shortcut.description,
@@ -204,10 +204,10 @@ struct WriteShortcutView: View {
     private var shortcutCategory: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text(TextLiteral.writeShortcutTitleViewCategoryTitle)
+                Text(TextLiteral.writeShortcutViewCategoryTitle)
                     .Headline()
                     .foregroundColor(.gray5)
-                Text(TextLiteral.writeShortcutTitleViewCategoryDescription)
+                Text(TextLiteral.writeShortcutViewCategoryDescription)
                     .Footnote()
                     .foregroundColor(.gray3)
                 Spacer()
@@ -229,7 +229,7 @@ struct WriteShortcutView: View {
                 }, label: {
                     HStack {
                         if selectedCategories.isEmpty {
-                            Text(TextLiteral.writeShortcutTitleViewCategoryCell)
+                            Text(TextLiteral.writeShortcutViewCategoryCell)
                                 .foregroundColor(.gray2)
                                 .Body2()
                         } else {
@@ -263,10 +263,10 @@ struct WriteShortcutView: View {
     private var shortcutsRequiredApp: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text(TextLiteral.writeShortcutTitleViewRequiredAppsTitle)
+                Text(TextLiteral.writeShortcutViewRequiredAppsTitle)
                     .Headline()
                     .foregroundColor(.gray5)
-                Text(TextLiteral.writeShortcutTitleViewRequiredAppDescription)
+                Text(TextLiteral.writeShortcutViewRequiredAppDescription)
                     .Footnote()
                     .foregroundColor(.gray3)
                 Spacer()
@@ -287,7 +287,7 @@ struct WriteShortcutView: View {
                             .frame(maxWidth: .infinity, maxHeight: 68)
                             .foregroundColor(.gray5)
                         HStack(alignment: .top) {
-                            Text(TextLiteral.writeShortcutTitleViewRequiredAppInformation)
+                            Text(TextLiteral.writeShortcutViewRequiredAppInformation)
                                 .Footnote()
                                 .foregroundColor(.gray1)
                                 .multilineTextAlignment(.leading)
@@ -346,7 +346,7 @@ struct WriteShortcutView: View {
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
-                            Text(TextLiteral.writeShortcutTitleViewRequiredAppCell)
+                            Text(TextLiteral.writeShortcutViewRequiredAppCell)
                         }
                     })
                     .modifier(CellModifier(foregroundColor: Color.gray2, strokeColor: Color.gray2))

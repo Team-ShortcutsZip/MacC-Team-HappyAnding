@@ -108,7 +108,7 @@ class CustomShareViewController: UIViewController {
             navigationController!.navigationBar.compactScrollEdgeAppearance = newNavBarAppearance
         }
         
-        self.navigationItem.title = TextLiteral.writeShortcutTitleViewPost
+        self.navigationItem.title = TextLiteral.writeShortcutViewPost
         
         let cancelButton: UIButton = {
             let button = UIButton()
