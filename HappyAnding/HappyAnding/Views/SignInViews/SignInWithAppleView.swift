@@ -28,11 +28,11 @@ struct SignInWithAppleView: View {
             Image("logo")
                 .padding(.bottom, 28)
             
-            Text("ShortcutsZip")
+            Text(TextLiteral.SignInWithAppleViewTitle)
                 .LargeTitle()
                 .foregroundColor(.shortcutsZipPrimary)
             
-            Text("단축어 생활의 시작")
+            Text(TextLiteral.SignInWithAppleViewSubTitle)
                 .Body2()
                 .foregroundColor(.gray3)
             
@@ -47,7 +47,7 @@ struct SignInWithAppleView: View {
                         .frame(height: 52)
                         .foregroundColor(.gray5)
                     
-                    Text("\(Image(systemName: "applelogo")) Apple로 로그인")
+                    Label(TextLiteral.SignInWithAppleViewSignInWithApple, systemImage: "applelogo")
                         .foregroundColor(.shortcutsZipWhite)
                 }
                 .padding(.bottom, 8)
@@ -57,7 +57,7 @@ struct SignInWithAppleView: View {
                 setDefaultUserSetting()
                 useWithoutSignIn = true
             }, label: {
-                Text("로그인 없이 둘러보기")
+                Text(TextLiteral.SignInWithAppleViewUseWithoutSignIn)
                     .Body2()
                     .foregroundColor(.gray5)
             })
