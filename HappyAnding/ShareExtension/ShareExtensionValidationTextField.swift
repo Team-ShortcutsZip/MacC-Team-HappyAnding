@@ -51,9 +51,9 @@ enum TextFieldError {
     var message: String {
         switch self {
         case .invalidLink:
-            return "유효하지 않은 링크입니다."
+            return TextLiteral.validationCheckTextFieldInvalid
         case .excessLimitLenth:
-            return "입력할 수 있는 문자 수를 초과했습니다."
+            return TextLiteral.validationCheckTextFieldExcess
         }
     }
 }
@@ -138,7 +138,7 @@ struct ShareExtensionValidationCheckTextField: View {
                 .padding(.leading, 16)
             
             if textType.isOptional {
-                Text("(선택입력)")
+                Text(TextLiteral.validationCheckTextFieldOption)
                     .Footnote()
                     .foregroundColor(.gray3)
             }
@@ -251,7 +251,7 @@ extension ShareExtensionValidationCheckTextField {
                 self.textFieldState = .inProgressSuccess
             } else if content.count <= lengthLimit ?? 999 {
                 if isDownloadLinkTextField {
-                    if content.hasPrefix("https://www.icloud.com/shortcuts/") {
+                    if content.hasPrefix(TextLiteral.validationCheckTextFieldPrefix) {
                         isValid = true
                         isExceeded = false
                         self.textFieldState = .inProgressSuccess

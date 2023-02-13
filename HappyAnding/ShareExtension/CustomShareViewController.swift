@@ -53,7 +53,7 @@ class CustomShareViewController: UIViewController {
             
             //익스텐션 뷰 뜸
             self.shareExtensionViewModel.shortcut.downloadLink.append("\(url)")
-            let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(shareExtensionViewModel: self.shareExtensionViewModel))
+            let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutView(shareExtensionViewModel: self.shareExtensionViewModel))
             self.view.addSubview(extShortcutsView.view)
             extShortcutsView.view.translatesAutoresizingMaskIntoConstraints = false
             extShortcutsView.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
