@@ -30,9 +30,9 @@ class CustomShareViewController: UIViewController {
         
         //로그인 정보 empty 일 때
         if  UserDefaults.shared.string(forKey: "ShareUserInfo") == nil || UserDefaults.shared.bool(forKey: "isSignInForShareExtension") == false {
-            let alert = UIAlertController(title: "로그인을 먼저 진행해주세요", message:
-                                            "이 기능은 로그인 후 사용할 수 있는 기능이에요", preferredStyle: .alert)
-            let action = UIAlertAction(title: "확인", style: .default) { _ in
+            let alert = UIAlertController(title: TextLiteral.CustomShareViewControllerSignInAlertTitle, message:
+                                            TextLiteral.CustomShareViewControllerSignInAlertMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: TextLiteral.CustomShareViewControllerCheck, style: .default) { _ in
                 self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
             }
             alert.addAction(action)
@@ -43,8 +43,8 @@ class CustomShareViewController: UIViewController {
             
             //링크가 적절하지 않을 때
             if !self.shareExtensionViewModel.isLinkValid(content: "\(url)") {
-                let alert = UIAlertController(title: "잘못된 접근이에요", message:"해당 링크는 ShortcutsZip으로 공유할 수 없어요", preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .default) { action in
+                let alert = UIAlertController(title: TextLiteral.CustomShareViewControllerLinkVaildAlertTitle, message: TextLiteral.CustomShareViewControllerLinkVaildAlertMessage, preferredStyle: .alert)
+                let action = UIAlertAction(title: TextLiteral.CustomShareViewControllerCheck, style: .default) { action in
                     self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
                 }
                 alert.addAction(action)
@@ -108,11 +108,11 @@ class CustomShareViewController: UIViewController {
             navigationController!.navigationBar.compactScrollEdgeAppearance = newNavBarAppearance
         }
         
-        self.navigationItem.title = "단축어 작성"
+        self.navigationItem.title = TextLiteral.writeShortcutTitleViewPost
         
         let cancelButton: UIButton = {
             let button = UIButton()
-            button.setTitle("취소", for: .normal)
+            button.setTitle(TextLiteral.cancel, for: .normal)
             button.setTitleColor(UIColor.gray4, for: .normal)
             button.titleLabel?.font = UIFont.Body1
             button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
@@ -122,7 +122,7 @@ class CustomShareViewController: UIViewController {
         itemCancel = UIBarButtonItem(customView: cancelButton)
         self.navigationItem.setLeftBarButton(itemCancel, animated: false)
         
-        itemDone = UIBarButtonItem(title: "업로드", style: .plain, target: self, action: #selector(doneAction))
+        itemDone = UIBarButtonItem(title: TextLiteral.upload, style: .plain, target: self, action: #selector(doneAction))
         self.navigationItem.setRightBarButton(itemDone, animated: false)
         
         itemDone.isEnabled = false
