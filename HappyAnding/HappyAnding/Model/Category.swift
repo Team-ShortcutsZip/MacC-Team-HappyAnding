@@ -96,7 +96,7 @@ enum Category: String, CaseIterable {
         case .photo:
             return "사진 및 비디오"
         case .decoration:
-            return "데코레이션/꾸미기"
+            return "데코레이션"
         case .utility:
             return "유틸리티"
         case .sns:
