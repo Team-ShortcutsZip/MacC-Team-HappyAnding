@@ -170,6 +170,7 @@ struct SettingView: View {
             userAuth.signOut()
             self.signInStatus = false
             shortcutsZipViewModel.resetUser()
+            UserDefaults.shared.set(false, forKey: "isSignInForShareExtension")
         } catch {
             print(error.localizedDescription)
         }

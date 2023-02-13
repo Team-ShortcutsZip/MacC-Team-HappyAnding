@@ -23,7 +23,6 @@ struct ShortcutsZipView: View {
         }  else {
             if useWithoutSignIn {
                 ShortcutTabView()
-//                    .environmentObject(userAuth)
             } else {
                 if userAuth.isLoggedIn {
                     WriteNicknameView()

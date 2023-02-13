@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignInWithAppleView: View {
+    
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
@@ -51,6 +54,7 @@ struct SignInWithAppleView: View {
             })
             
             Button(action: {
+                setDefaultUserSetting()
                 useWithoutSignIn = true
             }, label: {
                 Text("로그인 없이 둘러보기")
@@ -65,7 +69,20 @@ struct SignInWithAppleView: View {
     func appleLogin() {
         appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: true)
         appleLoginCoordinator?.startSignInWithAppleFlow()
+            UserDefaults.shared.set(true, forKey: "isSignInForShareExtension")
     }
+    
+    private func setDefaultUserSetting() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            shortcutsZipViewModel.resetUser()
+            UserDefaults.shared.set(false, forKey: "isFirstLaunch")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
 }
 
 struct SignUpView_Previews: PreviewProvider {
