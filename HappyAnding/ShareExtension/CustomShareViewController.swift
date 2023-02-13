@@ -19,7 +19,6 @@ class CustomShareViewController: UIViewController {
     
     var itemDone: UIBarButtonItem!
     var itemCancel: UIBarButtonItem!
-    var isSignInForShareExtension: Bool!
     
     ///viewdidload
     override func viewDidLoad() {
