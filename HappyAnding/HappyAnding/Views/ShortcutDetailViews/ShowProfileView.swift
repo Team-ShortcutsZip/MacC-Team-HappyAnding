@@ -15,34 +15,31 @@ struct ShowProfileView: View {
     
     @State var shortcuts: [Shortcuts] = []
     @State var curations: [Curation] = []
-    @Namespace var namespace
     @State var currentTab: Int = 0
-    private let tabItems = ["작성한 단축어", "작성한 추천 모음집"]
+    
+    @Namespace var namespace
+    
+    private let tabItems = [TextLiteral.showProfileViewShortcutTabTitle, TextLiteral.showProfileViewCurationTabTitle]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                GeometryReader { geo in
-                    let yOffset = geo.frame(in: .global).minY
-                    
-                    Color.White
-                        .frame(width: geo.size.width, height: 40 + (yOffset > 0 ? yOffset : 0))
-                        .offset(y: yOffset > 0 ? -yOffset : 0)
-                }
+                
+                StickyHeader(height: 40)
                 
                 //MARK: 프로필이미지 및 닉네임
                 VStack {
                     Image(systemName: "person.crop.circle.fill")
                         .font(.system(size: 72, weight: .medium))
                         .frame(width: 72, height: 72)
-                        .foregroundColor(.Gray3)
-                    Text(data.userInfo?.nickname ?? "user")
+                        .foregroundColor(.gray3)
+                    Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .Title1()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 160)
-                .background(Color.White)
+                .background(Color.shortcutsZipWhite)
                 
                 //MARK: 탭바 및 탭 내부 컨텐츠
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
@@ -53,8 +50,8 @@ struct ShowProfileView: View {
                 }
             }
         }
-        .navigationBarBackground { Color.White }
-        .background(Color.Background)
+        .navigationBarBackground { Color.shortcutsZipWhite }
+        .background(Color.shortcutsZipBackground)
         .toolbar(.visible, for: .tabBar)
         .onAppear {
             shortcuts = shortcutsZipViewModel.allShortcuts.filter { $0.author == self.data.userInfo?.id }
@@ -74,7 +71,7 @@ extension ShowProfileView {
         }
         .padding(.horizontal, 16)
         .frame(height: 36)
-        .background(Color.White)
+        .background(Color.shortcutsZipWhite)
     }
     
     private func tabBarItem(string: String, tab: Int) -> some View {
@@ -85,15 +82,15 @@ extension ShowProfileView {
                 if self.currentTab == tab {
                     Text(string)
                         .Headline()
-                        .foregroundColor(.Gray5)
-                    Color.Gray5
+                        .foregroundColor(.gray5)
+                    Color.gray5
                         .frame(height: 2)
                         .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
                     
                 } else {
                     Text(string)
                         .Body1()
-                        .foregroundColor(.Gray3)
+                        .foregroundColor(.gray3)
                     Color.clear
                         .frame(height: 2)
                 }
@@ -118,10 +115,10 @@ extension ShowProfileView {
                 case 0:
                     if shortcuts.isEmpty {
                         VStack {
-                            Text("작성한 단축어가 없습니다.")
+                            Text(TextLiteral.showProfileViewNoShortcuts)
                                 .padding(.top, 16)
                                 .Body2()
-                                .foregroundColor(.Gray4)
+                                .foregroundColor(.gray4)
                             Spacer()
                         }
                     }
@@ -143,10 +140,10 @@ extension ShowProfileView {
                 case 1:
                     if curations.isEmpty {
                         VStack{
-                            Text("작성한 추천 모음집이 없습니다.")
+                            Text(TextLiteral.showProfileViewNoCurations)
                                 .padding(.top, 16)
                                 .Body2()
-                                .foregroundColor(.Gray4)
+                                .foregroundColor(.gray4)
                             Spacer()
                         }
                     }
@@ -157,8 +154,8 @@ extension ShowProfileView {
                                                                       navigationParentView: .shortcuts)
                             NavigationLink(value: data) {
                                 UserCurationCell(curation: curation,
-                                                 navigationParentView: data.navigationParentView,
-                                                 lineLimit: 2)
+                                                 lineLimit: 2,
+                                                 navigationParentView: data.navigationParentView)
                             }
                         }
                         

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct UpdateShortcutView: View {
-    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @Binding var isUpdating: Bool
@@ -25,12 +24,12 @@ struct UpdateShortcutView: View {
                 Button(action: {
                     isUpdating.toggle()
                 }, label: {
-                    Text("취소")
-                        .foregroundColor(.Gray5)
+                    Text(TextLiteral.cancel)
+                        .foregroundColor(.gray5)
                 })
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("업데이트")
+                Text(TextLiteral.update)
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
@@ -41,8 +40,8 @@ struct UpdateShortcutView: View {
             .padding(.horizontal, 16)
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
-                                     title: "업데이트된 단축어 링크",
-                                     placeholder: "업데이트된 단축어 링크를 추가하세요",
+                                     title: TextLiteral.updateShortcutViewLinkTitle,
+                                     placeholder: TextLiteral.updateShortcutViewLinkPlaceholder,
                                      lengthLimit: 100,
                                      isDownloadLinkTextField: true,
                                      content: $updatedLink,
@@ -53,8 +52,8 @@ struct UpdateShortcutView: View {
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: false,
-                                     title: "업데이트 설명",
-                                     placeholder: "업데이트된 내용을 입력해주세요",
+                                     title: TextLiteral.updateShortcutViewDescriptionTitle,
+                                     placeholder: TextLiteral.updateShortcutViewDescriptionPlaceholder,
                                      lengthLimit: 50,
                                      isDownloadLinkTextField: false,
                                      content: $updateDescription,
@@ -71,11 +70,10 @@ struct UpdateShortcutView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .Primary : .Primary.opacity(0.13))
+                        .foregroundColor(isLinkValid && isDescriptionValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
-                    
-                    Text("업데이트")
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .Text_Button : .Text_Button_Disable)
+                    Text(TextLiteral.update)
+                        .foregroundColor(isLinkValid && isDescriptionValid ? .textButton : .textButtonDisable)
                         .Body1()
                 }
             })
@@ -83,6 +81,6 @@ struct UpdateShortcutView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
 }

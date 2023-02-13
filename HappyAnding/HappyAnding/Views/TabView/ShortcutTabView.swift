@@ -9,34 +9,34 @@ import SwiftUI
 import BackgroundTasks
 
 struct ShortcutTabView: View {
-    
     // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @Environment(\.scenePhase) private var phase
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @State private var randomCategories = Category.allCases.shuffled().prefix(2)
-    @State var isFolded = true
+    @StateObject var shortcutNavigation = ShortcutNavigation()
+    @StateObject var curationNavigation = CurationNavigation()
+    @StateObject var profileNavigation = ProfileNavigation()
     
     @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("selectedTab") var selectedTab = 1
+    
     @State private var isShortcutDeeplink = false
     @State private var isCurationDeeplink = false
     @State private var tempShortcutId = ""
     @State private var tempCurationId = ""
     
-    @StateObject var shortcutNavigation = ShortcutNavigation()
-    @StateObject var curationNavigation = CurationNavigation()
-    @StateObject var profileNavigation = ProfileNavigation()
-    @AppStorage("selectedTab") var selectedTab = 1
+    @State private var randomCategories = Category.allCases.shuffled().prefix(2)
+    @State var isFolded = true
     @State private var tappedTwice = false
     
     init() {
         let transparentAppearence = UITabBarAppearance()
         transparentAppearence.configureWithTransparentBackground()
         UITabBar.appearance().standardAppearance = transparentAppearence
-        UITabBar.appearance().barTintColor = UIColor(Color.White)
-        UITabBar.appearance().backgroundColor = UIColor(Color.White)
-        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.Gray2)
+        UITabBar.appearance().barTintColor = UIColor(Color.shortcutsZipWhite)
+        UITabBar.appearance().backgroundColor = UIColor(Color.shortcutsZipWhite)
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color.gray2)
         UITabBar.appearance().layer.borderColor = UIColor(Color.clear).cgColor
         UITabBar.appearance().clipsToBounds = true
     }
@@ -55,7 +55,7 @@ struct ShortcutTabView: View {
         ScrollViewReader { proxy in
             TabView(selection: handler) {
                 NavigationStack(path: $shortcutNavigation.navigationPath) {
-                    ExploreShortcutView(randomCategories: Array(randomCategories), isFolded: $isFolded)
+                    ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
                         .onChange(of: tappedTwice, perform: { tappedTwice in
                             guard tappedTwice else { return }
                             if shortcutNavigation.navigationPath.count > 0 {
@@ -85,7 +85,7 @@ struct ShortcutTabView: View {
                             ReadShortcutView(data: data)
                         }
                         .navigationDestination(for: Category.self) { category in
-                            ShortcutsListView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
+                            ListCategoryShortcutView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
                                               categoryName: category,
                                               navigationParentView: .shortcuts)
                         }
@@ -112,7 +112,7 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
-                        .navigationBarBackground ({ Color.Background })
+                        .navigationBarBackground ({ Color.shortcutsZipBackground })
                         .navigationDestination(for: NavigationProfile.self) { data in
                             ShowProfileView(data: data)
                         }
@@ -149,7 +149,7 @@ struct ShortcutTabView: View {
                             }
                             self.tappedTwice = false
                         })
-                        .navigationBarBackground ({ Color.Background })
+                        .navigationBarBackground ({ Color.shortcutsZipBackground })
                         .navigationDestination(for: NavigationProfile.self) { data in
                             ShowProfileView(data: data)
                         }
@@ -171,17 +171,6 @@ struct ShortcutTabView: View {
                     Label("프로필", systemImage: "person.crop.circle.fill")
                 }
                 .tag(3)
-            }
-            .sheet(isPresented: self.$isShortcutDeeplink) {
-                let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                                      navigationParentView: .myPage)
-                ReadShortcutView(data: data)
-            }
-            .sheet(isPresented: self.$isCurationDeeplink) {
-                if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
-                    let data = NavigationReadUserCurationType(userCuration: curation, navigationParentView: .myPage)
-                    ReadUserCurationView(data: data)
-                }
             }
             .onChange(of: phase) { newPhase in
                 switch newPhase {
@@ -212,6 +201,10 @@ struct ShortcutTabView: View {
         
         tempShortcutId  = shortcutIDfromURL
         isShortcutDeeplink = true
+        
+        let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
+                                              navigationParentView: .myPage)
+        navigateLink(data: data)
     }
     
     private func fetchCurationIdFromUrl(urlString: String) {
@@ -228,10 +221,28 @@ struct ShortcutTabView: View {
         
         guard let curationIDfromURL = dictionaryData["curationID"] else { return }
         
-        print("curationIDfromURL = \(curationIDfromURL)")
-        
         tempCurationId  = curationIDfromURL
         isCurationDeeplink = true
+        
+        if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
+            let data = NavigationReadUserCurationType(userCuration: curation,
+                                                      navigationParentView: .myPage)
+            navigateLink(data: data)
+        }
+    }
+    
+    private func navigateLink<T: Hashable> (data: T) {
+        
+        switch selectedTab {
+        case 1:
+            shortcutNavigation.navigationPath.append(data)
+        case 2:
+            curationNavigation.navigationPath.append(data)
+        case 3:
+            profileNavigation.navigationPath.append(data)
+        default:
+            break
+        }
     }
 }
 

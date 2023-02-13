@@ -62,7 +62,7 @@ class CustomShareViewController: UIViewController {
             extShortcutsView.view.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         }
         setupNavBar()
-        self.view.backgroundColor = UIColor.Background
+        self.view.backgroundColor = UIColor.shortcutsZipBackground
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -113,7 +113,7 @@ class CustomShareViewController: UIViewController {
         let cancelButton: UIButton = {
             let button = UIButton()
             button.setTitle("취소", for: .normal)
-            button.setTitleColor(UIColor.Gray4, for: .normal)
+            button.setTitleColor(UIColor.gray4, for: .normal)
             button.titleLabel?.font = UIFont.Body1
             button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
             
@@ -147,17 +147,17 @@ class CustomShareViewController: UIViewController {
         let customNavBarAppearance = UINavigationBarAppearance()
         
         customNavBarAppearance.configureWithOpaqueBackground()
-        customNavBarAppearance.backgroundColor = UIColor.Background
+        customNavBarAppearance.backgroundColor = UIColor.shortcutsZipBackground
         customNavBarAppearance.shadowColor = .clear
         
-        customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.Gray5]
-        customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.Gray5]
+        customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.gray5]
+        customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.gray5]
         
         let barButtonItemAppearance = UIBarButtonItemAppearance(style: .plain)
-        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.Primary, .font: UIFont.Headline]
-        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.PrimaryOpacity]
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.shortcutsZipPrimary, .font: UIFont.Headline]
+        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.shortcutsZipPrimaryOpacity]
         barButtonItemAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.label]
-        barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.Gray5]
+        barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.gray5]
         customNavBarAppearance.buttonAppearance = barButtonItemAppearance
         customNavBarAppearance.backButtonAppearance = barButtonItemAppearance
         customNavBarAppearance.doneButtonAppearance = barButtonItemAppearance

@@ -41,11 +41,11 @@ struct AdminCurationCell: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(adminCuration.title)
                     .Title1()
-                    .foregroundColor(.Text_curation)
+                    .foregroundColor(.textCuration)
                     .lineLimit(1)
                 Text(adminCuration.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                     .Body2()
-                    .foregroundColor(.Text_curation)
+                    .foregroundColor(.textCuration)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
             }

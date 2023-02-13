@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct ReadUserCurationView: View {
-    
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
+    
     @State var authorInformation: User? = nil
     
     @State var isWriting = false
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
+    
     @State var data: NavigationReadUserCurationType
     @State var index = 0
     
@@ -26,14 +27,7 @@ struct ReadUserCurationView: View {
         ScrollView(showsIndicators: false) {
             ZStack(alignment: .bottom) {
                 
-                GeometryReader { geo in
-                    let yOffset = geo.frame(in: .global).minY
-                    
-                    Color.White
-                        .frame(width: geo.size.width, height: 371 + (yOffset > 0 ? yOffset : 0))
-                        .offset(y: yOffset > 0 ? -yOffset : 0)
-                }
-                .frame(minHeight: 371)
+                StickyHeader(height: 371)
                 
                 VStack {
                     userInformation
@@ -43,7 +37,8 @@ struct ReadUserCurationView: View {
                     UserCurationCell(curation: data.userCuration, navigationParentView: data.navigationParentView)
                 }
             }
-            .background(Color.White)
+            .padding(.bottom, 8)
+            .background(Color.shortcutsZipWhite)
             .padding(.bottom, 12)
             
             VStack(spacing: 0){
@@ -60,7 +55,7 @@ struct ReadUserCurationView: View {
             .padding(.bottom, 44)
             
         }
-        .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+        .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
         .edgesIgnoringSafeArea([.top])
         .navigationBarTitleDisplayMode(.inline)
@@ -73,11 +68,11 @@ struct ReadUserCurationView: View {
             }
             .environmentObject(writeCurationNavigation)
         }
-        .alert("글 삭제", isPresented: $isTappedDeleteButton) {
+        .alert(TextLiteral.readUserCurationViewDeletionTitle, isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
                 self.isTappedDeleteButton.toggle()
             } label: {
-                Text("닫기")
+                Text(TextLiteral.cancel)
             }
             
             Button(role: .destructive) {
@@ -85,10 +80,10 @@ struct ReadUserCurationView: View {
                 shortcutsZipViewModel.curationsMadeByUser = shortcutsZipViewModel.curationsMadeByUser.filter { $0.id != self.data.userCuration.id }
                 presentation.wrappedValue.dismiss()
             } label: {
-                Text("삭제")
+                Text(TextLiteral.delete)
             }
         } message: {
-            Text("글을 삭제하시겠습니까?")
+            Text(TextLiteral.readUserCurationViewDeletionMessage)
         }
     }
     
@@ -100,11 +95,11 @@ struct ReadUserCurationView: View {
                         Image(systemName: "person.crop.circle.fill")
                             .font(.system(size: 28, weight: .medium))
                             .frame(width: 28, height: 28)
-                            .foregroundColor(.Gray3)
+                            .foregroundColor(.gray3)
                         
-                        Text(authorInformation?.nickname ?? "탈퇴한 사용자")
+                        Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
                             .Headline()
-                            .foregroundColor(.Gray4)
+                            .foregroundColor(.gray4)
                         Spacer()
                     }
                 }
@@ -113,7 +108,7 @@ struct ReadUserCurationView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 12)
                         .frame(height: 48)
-                        .foregroundColor(.Gray1)
+                        .foregroundColor(.gray1)
                         .padding(.horizontal, 16)
                 )
             }
@@ -151,7 +146,7 @@ extension ReadUserCurationView {
             }
         }, label: {
             Image(systemName: "ellipsis")
-                .foregroundColor(.Gray4)
+                .foregroundColor(.gray4)
         })
     }
     
@@ -159,7 +154,7 @@ extension ReadUserCurationView {
         Button {
             self.isWriting.toggle()
         } label: {
-            Label("편집", systemImage: "square.and.pencil")
+            Label(TextLiteral.edit, systemImage: "square.and.pencil")
         }
     }
     
@@ -167,8 +162,8 @@ extension ReadUserCurationView {
         Button(action: {
             shareCuration()
         }) {
-            Label("공유", systemImage: "square.and.arrow.up")
-                .foregroundColor(.Gray4)
+            Label(TextLiteral.share, systemImage: "square.and.arrow.up")
+                .foregroundColor(.gray4)
                 .fontWeight(.medium)
         }
     }
@@ -177,7 +172,7 @@ extension ReadUserCurationView {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
         }) {
-            Label("삭제", systemImage: "trash.fill")
+            Label(TextLiteral.delete, systemImage: "trash.fill")
         }
     }
     

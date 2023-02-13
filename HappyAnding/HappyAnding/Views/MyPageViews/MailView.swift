@@ -49,8 +49,8 @@ struct MailView: UIViewControllerRepresentable {
         vc.mailComposeDelegate = context.coordinator
         
         //이메일 수신자 및 제목 설정.
-        vc.setToRecipients(["shortcutszip@gmail.com"])
-        vc.setSubject("🎤 ShortcutsZip 개발자에게 문의드립니다")
+        vc.setToRecipients([TextLiteral.mailViewReceiver])
+        vc.setSubject(TextLiteral.mailViewSubject)
         return vc
     }
 

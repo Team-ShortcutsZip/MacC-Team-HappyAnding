@@ -19,12 +19,12 @@ struct ListShortcutView: View {
     var body: some View {
         if let shortcuts = data.shortcuts {
             if shortcuts.count == 0 {
-                Text("\(data.sectionType.rawValue)가 없습니다.")
+                Text("아직 \(data.sectionType.rawValue)가 없어요")
                     .Body2()
-                    .foregroundColor(Color.Gray4)
+                    .foregroundColor(Color.gray4)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
-                    .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                    .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
                     .navigationTitle(data.sectionType.rawValue)
                     .navigationBarTitleDisplayMode(.inline)
             } else {
@@ -47,19 +47,19 @@ struct ListShortcutView: View {
                             makeShortcutCellList(shortcutsZipViewModel.shortcutsMadeByUser)
                         }
                         Rectangle()
-                            .fill(Color.Background)
+                            .fill(Color.shortcutsZipBackground)
                             .frame(height: 44)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                     }
                 }
-                .listRowBackground(Color.Background)
+                .listRowBackground(Color.shortcutsZipBackground)
                 .listStyle(.plain)
-                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
                 .scrollContentBackground(.hidden)
                 .navigationTitle(data.sectionType.rawValue)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackground ({ Color.Background })
+                .navigationBarBackground ({ Color.shortcutsZipBackground })
             }
         }
     }
@@ -73,8 +73,8 @@ struct ListShortcutView: View {
 
             NavigationLink(value: navigationData) {
                 ShortcutCell(shortcut: shortcut,
-                             navigationParentView: data.navigationParentView,
-                             sectionType: data.sectionType)
+                             sectionType: data.sectionType,
+                             navigationParentView: data.navigationParentView)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
             }

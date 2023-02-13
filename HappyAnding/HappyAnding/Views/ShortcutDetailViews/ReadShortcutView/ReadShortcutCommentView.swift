@@ -9,23 +9,27 @@ import SwiftUI
 
 struct ReadShortcutCommentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    
+    @FocusState var isFocused: Bool
+    
     @Binding var addedComment: Comment                  //추가되는 댓글
     @Binding var comments: Comments                     //화면에 그려지는 댓글들
     @Binding var nestedCommentInfoText: String          //대댓글 작성 시 텍스트필드 위에 뜨는 작성자 정보
     @Binding var isClickCorrenction: Bool
+    
     @State var isTappedDeleteButton = false
-    @State var deletedComment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
-    @FocusState var isFocused: Bool
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+    @State var deletedComment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
     
     let shortcutID: String
     
     var body: some View {
         VStack(alignment: .leading) {
             if comments.comments.isEmpty {
-                Text("등록된 댓글이 없습니다")
+                Text(TextLiteral.readShortcutCommentViewNoComments)
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .padding(.top, 16)
                 
                 Spacer()
@@ -37,11 +41,11 @@ struct ReadShortcutCommentView: View {
             }
         }
         .padding(.top, 16)
-        .alert("댓글 삭제", isPresented: $isTappedDeleteButton) {
+        .alert(TextLiteral.readShortcutCommentViewDeletionTitle, isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
                 
             } label: {
-                Text("닫기")
+                Text(TextLiteral.cancel)
             }
             
             Button(role: .destructive) {
@@ -53,10 +57,10 @@ struct ReadShortcutCommentView: View {
                 
                 shortcutsZipViewModel.setData(model: comments)
             } label: {
-                Text("삭제")
+                Text(TextLiteral.delete)
             }
         } message: {
-            Text("답글도 함께 삭제됩니다. 댓글을 삭제하시겠습니까?")
+            Text(TextLiteral.readShortcutCommentViewDeletionMessage)
         }
     }
     
@@ -66,7 +70,7 @@ struct ReadShortcutCommentView: View {
             HStack(alignment: .top, spacing: 8) {
                 if comment.depth == 1 {
                     Image(systemName: "arrow.turn.down.right")
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     
@@ -77,11 +81,11 @@ struct ReadShortcutCommentView: View {
                         Image(systemName: "person.crop.circle.fill")
                             .font(.system(size: 24, weight: .medium))
                             .frame(width: 24, height: 24)
-                            .foregroundColor(.Gray3)
+                            .foregroundColor(.gray3)
                         
                         Text(comment.user_nickname)
                             .Body2()
-                            .foregroundColor(.Gray4)
+                            .foregroundColor(.gray4)
                     }
                     .padding(.bottom, 4)
                     
@@ -90,7 +94,7 @@ struct ReadShortcutCommentView: View {
                     
                     Text(comment.contents)
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     // MARK: Button
@@ -102,24 +106,23 @@ struct ReadShortcutCommentView: View {
                                 addedComment.depth = 1
                                 isFocused = true
                             } label: {
-                                Text("답글")
+                                Text(TextLiteral.readShortcutCommentViewReply)
                                     .Footnote()
-                                    .foregroundColor(.Gray4)
+                                    .foregroundColor(.gray4)
                             }
                         }
                         
                         if let user = shortcutsZipViewModel.userInfo {
                             if user.id == comment.user_id {
                                 Button {
-                                    print("수정")
                                     withAnimation(.easeInOut) {
                                         isClickCorrenction.toggle()
                                         addedComment = comment
                                     }
                                 } label: {
-                                    Text("수정")
+                                    Text(TextLiteral.readShortcutCommentViewEdit)
                                         .Footnote()
-                                        .foregroundColor(.Gray4)
+                                        .foregroundColor(.gray4)
                                 }
                                 
                                 
@@ -127,15 +130,15 @@ struct ReadShortcutCommentView: View {
                                     isTappedDeleteButton.toggle()
                                     deletedComment = comment
                                 } label: {
-                                    Text("삭제")
+                                    Text(TextLiteral.delete)
                                         .Footnote()
-                                        .foregroundColor(.Gray4)
+                                        .foregroundColor(.gray4)
                                 }
                             }
                         }
                     }
                     Divider()
-                        .background(Color.Gray1)
+                        .background(Color.gray1)
                 }
             }
             .padding(.bottom, 16)

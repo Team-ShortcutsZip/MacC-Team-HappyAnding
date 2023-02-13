@@ -21,6 +21,7 @@ class AppleAuthCoordinator: NSObject {
     
     var userAuth = UserAuth.shared
     var currentNonce: String?
+    
     let window: UIWindow?
     let shortcutZipViewModel = ShortcutsZipViewModel()
     let isTappedSignInButton: Bool
