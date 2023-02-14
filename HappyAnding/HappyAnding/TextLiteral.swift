@@ -178,7 +178,7 @@ enum TextLiteral {
     
     // MARK: - SettingView
     static let settingViewVersion: String = "버전 정보"
-    static let settingViewVersionNumber: String = "1.1.0"
+    static let settingViewVersionNumber: String = "1.2.2"
     static let settingViewOpensourceLicense: String = "오픈소스 라이선스"
     static let settingViewPrivacyPolicy: String = "개인정보 처리방침"
     static let settingViewPrivacyPolicyURL: String = "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd"
