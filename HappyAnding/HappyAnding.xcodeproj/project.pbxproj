@@ -86,7 +86,7 @@
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
 		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
-		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutTitleView.swift */; };
+		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */; };
 		A3FC4747292A61550058BF26 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC4746292A61550058BF26 /* FirebaseAnalytics */; };
 		A3FC4749292A61550058BF26 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC4748292A61550058BF26 /* FirebaseAuth */; };
 		A3FC474B292A61550058BF26 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC474A292A61550058BF26 /* FirebaseDatabase */; };
@@ -255,7 +255,7 @@
 		A3A6AD1B292763E2004C49DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3A6AD232927BA06004C49DC /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
-		A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionWriteShortcutTitleView.swift; sourceTree = "<group>"; };
+		A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionWriteShortcutView.swift; sourceTree = "<group>"; };
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		A3FF01852918552E00384211 /* AboutTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamView.swift; sourceTree = "<group>"; };
 		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
@@ -603,7 +603,7 @@
 				F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */,
 				A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */,
 				A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */,
-				A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutTitleView.swift */,
+				A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */,
 				F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */,
 				F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */,
 				F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */,
@@ -931,7 +931,7 @@
 				A3439AF529395A100043E273 /* UserAuth.swift in Sources */,
 				A31F1846292A638700AF4A82 /* (null) in Sources */,
 				F9DB8EB92939853D00516CE1 /* ShareExtensionValidationTextField.swift in Sources */,
-				A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutTitleView.swift in Sources */,
+				A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */,
 				A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */,
 				A31F1844292A637300AF4A82 /* Date+Extension.swift in Sources */,
 				A3FC4756292A61B60058BF26 /* CategoryModalView.swift in Sources */,

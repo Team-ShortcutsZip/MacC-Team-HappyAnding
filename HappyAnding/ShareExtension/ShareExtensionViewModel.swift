@@ -41,6 +41,6 @@ class ShareExtensionViewModel: ObservableObject {
     }
     
     func isLinkValid(content: String) -> Bool {
-        content.hasPrefix("https://www.icloud.com/shortcuts/")
+        content.hasPrefix(TextLiteral.validationCheckTextFieldPrefix)
     }
 }

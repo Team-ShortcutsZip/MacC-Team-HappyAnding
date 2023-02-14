@@ -51,7 +51,7 @@ struct ListCategoryShortcutView: View {
     
     var scrollHeader: some View {
         VStack {
-            Text(categoryName.fetchDescription())
+            Text(categoryName.fetchDescription().lineBreaking)
         }
         .foregroundColor(.gray5)
         .Body2()

@@ -71,23 +71,23 @@ enum TextLiteral {
     static let nicknameTextFieldDuplicateCheck: String = "중복확인"
     
     // MARK: - WriteShortcutTitleView
-    static let writeShortcutTitleViewNameTitle: String = "단축어 이름"
-    static let writeShortcutTitleViewNamePlaceholder: String = "단축어 이름을 입력하세요"
-    static let writeShortcutTitleViewLinkTitle: String = "단축어 링크"
-    static let writeShortcutTitleViewLinkPlaceholder: String = "단축어 링크를 입력하세요"
-    static let writeShortcutTitleViewOneLineTitle: String = "한 줄 설명"
-    static let writeShortcutTitleViewOneLinePlaceholder: String = "단축어의 핵심 기능을 입력하세요"
-    static let writeShortcutTitleViewMultiLineTitle: String = "상세 설명"
-    static let writeShortcutTitleViewMultiLinePlaceholder: String = "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력하세요"
-    static let writeShortcutTitleViewEdit: String = "단축어 편집"
-    static let writeShortcutTitleViewPost: String = "단축어 작성"
-    static let writeShortcutTitleViewCategoryTitle: String = "카테고리"
-    static let writeShortcutTitleViewCategoryDescription: String = "최대 3개"
-    static let writeShortcutTitleViewCategoryCell: String = "카테고리 선택"
-    static let writeShortcutTitleViewRequiredAppDescription: String = "선택"
-    static let writeShortcutTitleViewRequiredAppsTitle: String = "단축어 사용에 필요한 앱"
-    static let writeShortcutTitleViewRequiredAppInformation: String = "해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 입력해주세요"
-    static let writeShortcutTitleViewRequiredAppCell: String = "앱 추가"
+    static let writeShortcutViewNameTitle: String = "단축어 이름"
+    static let writeShortcutViewNamePlaceholder: String = "단축어 이름을 입력하세요"
+    static let writeShortcutViewLinkTitle: String = "단축어 링크"
+    static let writeShortcutViewLinkPlaceholder: String = "단축어 링크를 입력하세요"
+    static let writeShortcutViewOneLineTitle: String = "한 줄 설명"
+    static let writeShortcutViewOneLinePlaceholder: String = "단축어의 핵심 기능을 입력하세요"
+    static let writeShortcutViewMultiLineTitle: String = "상세 설명"
+    static let writeShortcutViewMultiLinePlaceholder: String = "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력하세요"
+    static let writeShortcutViewEdit: String = "단축어 편집"
+    static let writeShortcutViewPost: String = "단축어 작성"
+    static let writeShortcutViewCategoryTitle: String = "카테고리"
+    static let writeShortcutViewCategoryDescription: String = "최대 3개"
+    static let writeShortcutViewCategoryCell: String = "카테고리 선택"
+    static let writeShortcutViewRequiredAppDescription: String = "선택"
+    static let writeShortcutViewRequiredAppsTitle: String = "단축어 사용에 필요한 앱"
+    static let writeShortcutViewRequiredAppInformation: String = "해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 입력해주세요"
+    static let writeShortcutViewRequiredAppCell: String = "앱 추가"
     
     // MARK: - IconModalView
     static let iconModalViewTitle: String = "아이콘"
@@ -189,6 +189,12 @@ enum TextLiteral {
     static let settingViewLogoutMessage: String = "로그아웃 하시겠습니까?"
     static let settingViewWithdrawal: String = "탈퇴하기"
     
+    // MARK: - SignInWithAppleView
+    static let signInWithAppleViewTitle: String = "ShortcutsZip"
+    static let signInWithAppleViewSubTitle: String = "편리한 단축어 공유 플랫폼"
+    static let signInWithAppleViewSignInWithApple: String = "Apple로 로그인"
+    static let signInWithAppleViewUseWithoutSignIn: String = "로그인 없이 둘러보기"
+    
     // MARK: - MyPageView
     static let myPageViewTitle: String = "프로필"
     static let myPageViewMyCuration: String = "내가 작성한 추천 모음집"
@@ -212,4 +218,11 @@ enum TextLiteral {
     static let searchViewRecommendedKeyword: String = "추천 검색어"
     static let searchViewProposal: String = "단축어 제안하기"
     static let searchViewProposalURL: String = "https://docs.google.com/forms/d/e/1FAIpQLScQc3KeYjDGCE-C2YRU-Hwy2XNy5bt89KVX1OMUzRiySaMX1Q/viewform"
+    
+    //MARK: - CustomShareViewController
+    static let customShareViewControllerSignInAlertTitle: String = "로그인을 먼저 진행해주세요"
+    static let customShareViewControllerSignInAlertMessage: String = "이 기능은 로그인 후 사용할 수 있는 기능이에요"
+    static let customShareViewControllerLinkVaildAlertTitle: String = "잘못된 접근이에요"
+    static let customShareViewControllerLinkVaildAlertMessage: String = "해당 링크는 ShortcutsZip으로 공유할 수 없어요"
+    static let customShareViewControllerCheck: String = "확인"
 }
