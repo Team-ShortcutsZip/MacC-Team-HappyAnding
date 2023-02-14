@@ -11,12 +11,13 @@ import SwiftUI
 import FirebaseAuth
 
 struct SettingView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
+    @ObservedObject var webViewModel = WebViewModel()
     
     @AppStorage("signInStatus") var signInStatus = false
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
-    @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel()
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
     @State var isShowingMailView = false
@@ -48,13 +49,13 @@ struct SettingView: View {
             */
             
             // MARK: - 버전 정보
-            SettingCell(title: "버전정보", version: "1.2.0")
+            SettingCell(title: TextLiteral.settingViewVersion, version: TextLiteral.settingViewVersionNumber)
             
             
             // MARK: - 오픈소스 라이선스
             
             NavigationLink(value: NavigationLisence.first) {
-                SettingCell(title: "오픈소스 라이선스")
+                SettingCell(title: TextLiteral.settingViewOpensourceLicense)
             }
             
             
@@ -63,7 +64,7 @@ struct SettingView: View {
             Button {
                 self.isTappedPrivacyButton.toggle()
             } label: {
-                SettingCell(title: "개인정보처리방침")
+                SettingCell(title: TextLiteral.settingViewPrivacyPolicy)
             }
             
             
@@ -81,11 +82,11 @@ struct SettingView: View {
                 }
             }) {
                 if MFMailComposeViewController.canSendMail() {
-                    SettingCell(title: "개발자에게 연락하기")
+                    SettingCell(title: TextLiteral.settingViewContact)
                 }
                 //못 보내는 기기일 때 뜨는 것. 아예 지워도 될 것 같긴 한데 어떻게할까요. 못 보내는 기기의 기준이 확실치 않아서 일단 이렇게 둠.
                 else {
-                    SettingCell(title: "문의사항은 shortcutszip@gmail.com 으로 메일 주세요")
+                    SettingCell(title: TextLiteral.settingViewContactMessage)
                         .multilineTextAlignment(.leading)
                 }
             }
@@ -96,7 +97,7 @@ struct SettingView: View {
                 Button {
                     useWithoutSignIn = false
                 } label: {
-                    SettingCell(title: "로그인")
+                    SettingCell(title: TextLiteral.settingViewLogin)
                 }
                 
             } else {
@@ -104,27 +105,27 @@ struct SettingView: View {
                 Button {
                     self.isTappedLogOutButton.toggle()
                 } label: {
-                    SettingCell(title: "로그아웃")
+                    SettingCell(title: TextLiteral.settingViewLogout)
                 }
-                .alert("로그아웃", isPresented: $isTappedLogOutButton) {
+                .alert(TextLiteral.settingViewLogout, isPresented: $isTappedLogOutButton) {
                     Button(role: .cancel) {
                         
                     } label: {
-                        Text("닫기")
+                        Text(TextLiteral.cancel)
                     }
                     
                     Button(role: .destructive) {
                         logOut()
                     } label: {
-                        Text("로그아웃")
+                        Text(TextLiteral.settingViewLogout)
                     }
                 } message: {
-                    Text("로그아웃 하시겠습니까?")
+                    Text(TextLiteral.settingViewLogoutMessage)
                 }
                 
                 // MARK: - 회원탈퇴 버튼
                 NavigationLink(value: NavigationWithdrawal.first) {
-                    SettingCell(title: "탈퇴하기")
+                    SettingCell(title: TextLiteral.settingViewWithdrawal)
                 }
             }
             
@@ -138,7 +139,7 @@ struct SettingView: View {
             ZStack {
                 PrivacyPolicyView(viewModel: webViewModel,
                                   isTappedPrivacyButton: $isTappedPrivacyButton,
-                                  url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+                                  url: TextLiteral.settingViewPrivacyPolicyURL)
                     .environmentObject(webViewModel)
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
@@ -157,7 +158,7 @@ struct SettingView: View {
         }
         
         .padding(.horizontal, 16)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -169,6 +170,7 @@ struct SettingView: View {
             userAuth.signOut()
             self.signInStatus = false
             shortcutsZipViewModel.resetUser()
+            UserDefaults.shared.set(false, forKey: "isSignInForShareExtension")
         } catch {
             print(error.localizedDescription)
         }
@@ -184,7 +186,7 @@ struct SettingCell: View {
             if let version {Text(version)}
         }
         .Body1()
-        .foregroundColor(.Gray4)
+        .foregroundColor(.gray4)
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
     }

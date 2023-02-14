@@ -12,15 +12,15 @@ import SwiftUI
 struct UserCurationCell: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var curation: Curation
     @State var index = 0
-    let navigationParentView: NavigationParentView
+    
     var lineLimit: Int?
+    let navigationParentView: NavigationParentView
     
     var body: some View {
         ZStack {
-            //TODO: userCuration 모델에 nickname 파라미터 통합 필요
-            
             VStack (alignment: .leading, spacing: 0) {
                 
                 //MARK: - 단축어 아이콘 배열
@@ -28,13 +28,11 @@ struct UserCurationCell: View {
                     ForEach(shortcutsZipViewModel.userCurations[index].shortcuts.prefix(4), id: \.self) { shortcut in
                         ZStack {
                             Rectangle()
-                                .fill(Color.fetchGradient(
-                                    color: shortcut.color)
-                                )
+                                .fill(Color.fetchGradient(color: shortcut.color))
                                 .cornerRadius(8)
                                 .frame(width: 36, height: 36)
                             Image(systemName: shortcut.sfSymbol)
-                                .foregroundColor(Color.Text_icon)
+                                .foregroundColor(Color.textIcon)
                                 .font(.system(size: 15))
                         }
                     }
@@ -43,14 +41,14 @@ struct UserCurationCell: View {
                     if shortcutsZipViewModel.userCurations[index].shortcuts.count > 4 {
                         ZStack(alignment: .center) {
                             Rectangle()
-                                .fill(Color.Gray2)
+                                .fill(Color.gray2)
                                 .cornerRadius(8)
                                 .frame(width: 36, height: 36)
                             HStack(spacing: 0) {
                                 Image(systemName: "plus")
                                 Text("\(shortcutsZipViewModel.userCurations[index].shortcuts.count-4)")
                             }
-                            .foregroundColor(.Gray5)
+                            .foregroundColor(.gray5)
                             .Footnote()
                         }
                     }
@@ -62,13 +60,13 @@ struct UserCurationCell: View {
                 
                 Text(shortcutsZipViewModel.userCurations[index].title)
                     .Headline()
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(shortcutsZipViewModel.userCurations[index].subtitle.lineBreaking)
                     .Body2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
-                    .foregroundColor(Color.Gray5)
+                    .foregroundColor(Color.gray5)
                     .padding(.bottom, 20)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -78,10 +76,10 @@ struct UserCurationCell: View {
                 }
             }
             .padding(.horizontal, 24)
-            .background(Color.Background_list)
+            .background(Color.backgroudList)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.Background_list_border, lineWidth: 1)
+                    .strokeBorder(Color.backgroudListBorder, lineWidth: 1)
             )
             .frame(maxWidth: .infinity)
             .cornerRadius(12)

@@ -8,28 +8,31 @@
 import SwiftUI
 
 struct CategoryModalView: View {
+    
     @Binding var isShowingCategoryModal: Bool
     @Binding var selectedCategories: [String]
+    
+    var screenHeight = UIScreen.main.bounds.size.height
     
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         ZStack {
-            Color.Background
+            Color.shortcutsZipBackground
                 .ignoresSafeArea()
             VStack {
                 HStack(spacing: 0) {
                     Button {
                         self.isShowingCategoryModal = false
                     } label: {
-                        Text("닫기")
-                            .foregroundColor(.Gray5)
+                        Text(TextLiteral.close)
+                            .foregroundColor(.gray5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 16)
                     }
                     
-                    Text("카테고리")
-                        .font(.headline)
+                    Text(TextLiteral.categoryModalViewTitle)
+                        .Headline()
                         .frame(maxWidth: .infinity)
                     
                     Spacer()
@@ -37,7 +40,7 @@ struct CategoryModalView: View {
                 }
                 
                 Spacer()
-                    .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
+                    .frame(height: screenHeight * 0.7 * 0.04)
                 
                 LazyVGrid(columns: gridLayout, spacing: 12) {
                     ForEach(Category.allCases, id: \.self) { item in
@@ -47,18 +50,18 @@ struct CategoryModalView: View {
                 .padding(.horizontal, 16)
                 
                 Spacer()
-                    .frame(height: UIScreen.main.bounds.size.height * 0.7 * 0.04)
+                    .frame(height: screenHeight * 0.7 * 0.04)
                 
                 Button(action: {
                     isShowingCategoryModal = false
                 }, label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(!selectedCategories.isEmpty ? .Primary : .Primary .opacity(0.13) )
+                            .foregroundColor(!selectedCategories.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13) )
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
-                        Text("완료")
-                            .foregroundColor(!selectedCategories.isEmpty ? .Text_icon : .Text_Button_Disable)
+                        Text(TextLiteral.done)
+                            .foregroundColor(!selectedCategories.isEmpty ? .textIcon : .textButtonDisable)
                             .Body1()
                     }
                 })
@@ -85,14 +88,14 @@ struct CategoryModalView: View {
                 Text(item.translateName())
                     .Body2()
                     .tag(item.category)
-                    .foregroundColor(items.contains(item.category) ? Color.Category_Pick_Text : Color.Gray3)
+                    .foregroundColor(items.contains(item.category) ? Color.categoryPickText : Color.gray3)
                     .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(items.contains(item.category) ? Color.Category_Pick_Fill : .clear)
+                            .fill(items.contains(item.category) ? Color.categoryPickFill : .clear)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .strokeBorder(items.contains(item.category) ? Color.Primary : Color.Gray3, lineWidth: 1)
+                                    .strokeBorder(items.contains(item.category) ? Color.shortcutsZipPrimary : Color.gray3, lineWidth: 1)
                             )
                     )
                 

@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct ShortcutsListView: View {
+struct ListCategoryShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @Binding var shortcuts:[Shortcuts]
-    @State var navigationTitle = ""
     
+    @Binding var shortcuts:[Shortcuts]
+    
+    @State var navigationTitle = ""
     @State var isLastShortcut: Bool = false
     
     var categoryName: Category
@@ -36,18 +37,13 @@ struct ShortcutsListView: View {
                         .listRowSeparator(.hidden)
                     }
                 }
-                
-                Rectangle()
-                    .fill(Color.Background)
-                    .frame(height: 44)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
             }
+            .padding(.bottom, 44)
         }
         .navigationBarTitle(categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color.Background)
-        .navigationBarBackground ({ Color.Background })
+        .background(Color.shortcutsZipBackground)
+        .navigationBarBackground ({ Color.shortcutsZipBackground })
         .onAppear {
             self.shortcuts = shortcutsZipViewModel.shortcutsInCategory[categoryName.index]
         }
@@ -55,15 +51,15 @@ struct ShortcutsListView: View {
     
     var scrollHeader: some View {
         VStack {
-            Text(categoryName.fetchDescription())
+            Text(categoryName.fetchDescription().lineBreaking)
         }
-        .foregroundColor(.Gray5)
+        .foregroundColor(.gray5)
         .Body2()
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             Rectangle()
-                .foregroundColor(Color.Gray1)
+                .foregroundColor(Color.gray1)
                 .cornerRadius(12)
         )
         .padding(.vertical, 20)

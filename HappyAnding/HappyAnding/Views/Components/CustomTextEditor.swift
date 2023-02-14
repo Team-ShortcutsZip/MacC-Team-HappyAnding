@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct CustomTextEditor: UIViewRepresentable {
+    @FocusState var isFocused: Bool
+    
     @Binding var text: String
     @Binding var inputHeight: CGFloat
-    @FocusState var isFocused: Bool
     
     func makeUIView(context: UIViewRepresentableContext<CustomTextEditor>) -> UITextView {
         let textView = UITextView(frame: .zero)
         textView.delegate = context.coordinator
         textView.font = .Body2
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        textView.backgroundColor = UIColor(.Background)
+        textView.backgroundColor = UIColor(.shortcutsZipBackground)
         return textView
     }
     
@@ -30,9 +31,10 @@ struct CustomTextEditor: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, UITextViewDelegate {
+        @FocusState var isFocused: Bool
+        
         @Binding var text: String
         @Binding var inputHeight: CGFloat
-        @FocusState var isFocused: Bool
         
         let maxHeight: CGFloat = 272
         

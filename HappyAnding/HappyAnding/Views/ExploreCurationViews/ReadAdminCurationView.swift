@@ -21,24 +21,15 @@ import SwiftUI
  */
 
 struct ReadAdminCurationView: View {
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     let curation: Curation
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            GeometryReader { geo in
-                let yOffset = geo.frame(in: .global).minY
-                
-                Image(curation.background)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: geo.size.width, height: 304 + (yOffset > 0 ? yOffset : 0))
-                    .clipped()
-                    .offset(y: yOffset > 0 ? -yOffset : 0)
-            }
-            .frame(minHeight: 304)
-            .padding(.bottom, 20)
+            
+            StickyHeader(height: 304, image: curation.background)
+                .padding(.bottom, 20)
             
             titleAndSubtitle
                 .padding(.bottom, 8)
@@ -59,7 +50,7 @@ struct ReadAdminCurationView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         
         //TODO: 추후 공유 기능 추가 시 사용할 코드
         //            .toolbar {
@@ -69,7 +60,7 @@ struct ReadAdminCurationView: View {
         //                        //TODO: Share 버튼 눌렀을 때 Curation공유 링크 생성 및 actionSheet 나타내기
         //                    }) {
         //                        Image(systemName: "square.and.arrow.up")
-        //                            .foregroundColor(.Gray4)
+        //                            .foregroundColor(.gray4)
         //                    }
         //                }
         //            }
@@ -86,12 +77,10 @@ struct ReadAdminCurationView: View {
     var titleAndSubtitle: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text(curation.title)
-                    .Title2()
-                    .foregroundColor(.Gray5)
+                SubtitleTextView(text: curation.title)
                 Text(curation.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                     .Body2()
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
             }
             Spacer()
         }

@@ -22,11 +22,12 @@ import FirebaseAuth
  */
 
 struct WriteNicknameView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
+    
+    @ObservedObject var webViewModel = WebViewModel()
     
     @AppStorage("signInStatus") var signInStatus = false
-    @EnvironmentObject var userAuth: UserAuth
-    @ObservedObject var webViewModel = WebViewModel()
-    @EnvironmentObject var shortcutszipViewModel: ShortcutsZipViewModel
     
     @State var nickname: String = ""
     @State private var isTappedPrivacyButton = false
@@ -37,18 +38,18 @@ struct WriteNicknameView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            Text("닉네임을 입력해주세요")
+            Text(TextLiteral.writeNicknameViewHeadline)
                 .Title1()
-                .foregroundColor(.Gray5)
+                .foregroundColor(.gray5)
                 .padding(.top, 40)
             
             NicknameTextField(nickname: $nickname, isValid: $isValid)
 
             Spacer()
             
-            Text("개인정보처리방침")
+            Text(TextLiteral.settingViewPrivacyPolicy)
                 .Body2()
-                .foregroundColor(Color.Gray3)
+                .foregroundColor(Color.gray3)
                 .padding(.bottom, 12)
                 .frame(maxWidth: .infinity)
                 .onTapGesture {
@@ -59,12 +60,12 @@ struct WriteNicknameView: View {
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 44)
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         .sheet(isPresented: self.$isTappedPrivacyButton) {
             ZStack {
                 PrivacyPolicyView(viewModel: webViewModel,
                          isTappedPrivacyButton: $isTappedPrivacyButton,
-                         url: "https://noble-satellite-574.notion.site/60d8fa2f417c40cca35e9c784f74b7fd")
+                                  url: TextLiteral.settingViewPrivacyPolicyURL)
                     .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {
@@ -86,10 +87,10 @@ struct WriteNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValid ? .Primary : .Primary .opacity(0.13))
+                    .foregroundColor(isValid ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
                     .frame(height: 52)
-                Text("시작하기")
-                    .foregroundColor(isValid ? .Text_icon : .Text_Button_Disable)
+                Text(TextLiteral.writeNicknameViewStart)
+                    .foregroundColor(isValid ? .textIcon : .textButtonDisable)
                     .Body1()
             }
         })

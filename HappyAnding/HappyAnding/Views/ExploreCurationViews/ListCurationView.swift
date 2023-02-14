@@ -22,23 +22,24 @@ enum CurationType: String {
 struct ListCurationView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @State var data: NavigationListCurationType
     
     var body: some View {
         let titleString = data.type == .personalCuration ? (shortcutsZipViewModel.userInfo?.nickname ?? "") : ""
         if data.curation.count == 0 {
-            Text("\(titleString)\(data.type.rawValue)이(가) 없습니다.")
+            Text("아직 \(titleString)\(data.type.rawValue)이(가) 없어요")
                 .Body2()
-                .foregroundColor(Color.Gray4)
+                .foregroundColor(Color.gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.Background.ignoresSafeArea(.all, edges: .all))
+                .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
                 .navigationBarTitle("\(titleString)\(data.type.rawValue)")
                 .navigationBarTitleDisplayMode(.inline)
         } else {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     Rectangle()
-                        .fill(Color.Background)
+                        .fill(Color.shortcutsZipBackground)
                         .frame(height: 20)
                     switch data.type {
                     case .personalCuration:
@@ -49,14 +50,14 @@ struct ListCurationView: View {
                         makeCurationCellList(shortcutsZipViewModel.curationsMadeByUser)
                     }
                     Rectangle()
-                        .fill(Color.Background)
+                        .fill(Color.shortcutsZipBackground)
                         .frame(height: 32)
                 }
             }
             .scrollIndicators(.hidden)
             .listStyle(.plain)
-            .background(Color.Background.ignoresSafeArea(.all, edges: .all))
-            .navigationBarBackground ({ Color.Background })
+            .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
             .scrollContentBackground(.hidden)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(data.title ?? "")
@@ -65,18 +66,18 @@ struct ListCurationView: View {
     
     @ViewBuilder
     private func makeCurationCellList(_ curations: [Curation]) -> some View {
-        ForEach(curations, id: \.self) { curation in
+        ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
             
             let data = NavigationReadUserCurationType(userCuration: curation,
                                                       navigationParentView: self.data.navigationParentView)
             
             NavigationLink(value: data) {
                 UserCurationCell(curation: curation,
-                                 navigationParentView: self.data.navigationParentView,
-                                 lineLimit: 2)
+                                 lineLimit: 2,
+                                 navigationParentView: self.data.navigationParentView)
                 .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
-                .listRowBackground(Color.Background)
+                .listRowBackground(Color.shortcutsZipBackground)
             }
         }
     }

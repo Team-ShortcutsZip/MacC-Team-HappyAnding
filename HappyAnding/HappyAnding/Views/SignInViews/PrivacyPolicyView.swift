@@ -30,13 +30,13 @@ struct PrivacyPolicyView: View {
                 Button {
                     self.isTappedPrivacyButton = false
                 } label: {
-                    Text("닫기")
-                        .foregroundColor(.Gray5)
+                    Text(TextLiteral.close)
+                        .foregroundColor(.gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 16)
                 }
                 
-                Text("개인정보처리방침")
+                Text(TextLiteral.settingViewPrivacyPolicy)
                     .Headline()
                     .frame(maxWidth: .infinity)
                 
@@ -79,6 +79,7 @@ struct PrivacyPolicyContentView: UIViewRepresentable {
 extension PrivacyPolicyContentView {
     
     class Coordinator: NSObject, WKNavigationDelegate {
+        
         @ObservedObject private var webViewModel: WebViewModel
         
         private let parent: PrivacyPolicyContentView

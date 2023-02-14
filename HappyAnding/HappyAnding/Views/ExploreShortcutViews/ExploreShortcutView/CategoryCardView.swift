@@ -10,28 +10,24 @@ import SwiftUI
 struct CategoryCardView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @Binding var shortcuts: [Shortcuts]
+    
     let categoryName: Category
     let navigationParentView: NavigationParentView
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(categoryName.translateName())
-                    .Title2()
-                    .foregroundColor(Color.Gray5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                SubtitleTextView(text: categoryName.translateName())
                 
                 Spacer()
                 
                 NavigationLink(value: categoryName) {
-                    Text("더보기")
-                        .Footnote()
-                        .foregroundColor(Color.Gray4)
-                        .padding(.trailing, 16)
+                    MoreCaptionTextView(text: TextLiteral.more)
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
             ScrollView(.horizontal, showsIndicators: false) {
@@ -39,13 +35,15 @@ struct CategoryCardView: View {
                     if let shortcuts {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
                             if index < 7 {
-                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                      navigationParentView: self.navigationParentView)
+                                let data = NavigationReadShortcutType(
+                                    shortcutID: shortcut.id,
+                                    navigationParentView: self.navigationParentView)
                                 
                                 NavigationLink(value: data) {
-                                    ShortcutCardCell(categoryShortcutIcon: shortcut.sfSymbol,
-                                                     categoryShortcutName: shortcut.title,
-                                                     categoryShortcutColor: shortcut.color)
+                                    ShortcutCardCell(
+                                        categoryShortcutIcon: shortcut.sfSymbol,
+                                        categoryShortcutName: shortcut.title,
+                                        categoryShortcutColor: shortcut.color)
                                 }
                             }
                         }

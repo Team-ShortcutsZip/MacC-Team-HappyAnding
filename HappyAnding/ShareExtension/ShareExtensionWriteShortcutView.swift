@@ -1,5 +1,5 @@
 //
-//  ShareExtensionWriteShortcutTitleView.swift
+//  ShareExtensionWriteShortcutView.swift
 //  ShareExtension
 //
 //  Created by HanGyeongjun on 2022/11/22.
@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-
-
-struct ShareExtensionWriteShortcutTitleView: View {
+struct ShareExtensionWriteShortcutView: View {
     
     enum TextFieldType {
         case shortcutTitleText
@@ -28,7 +26,6 @@ struct ShareExtensionWriteShortcutTitleView: View {
     @State var isMultiLineValid = false
     @State var isShowingCategoryModal = false
     @State var isInfoButtonTouched: Bool = false
-    
     @State var isTextFocused = [Bool](repeating: false, count: 5)
     
     var body: some View {
@@ -43,7 +40,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
                 shortcutsRequiredApp
             }
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
         
         .onChange(of: shareExtensionViewModel.shortcut) { _ in
             let isDoneValid = shareExtensionViewModel.isDoneValid()
@@ -66,14 +63,14 @@ struct ShareExtensionWriteShortcutTitleView: View {
             if shareExtensionViewModel.shortcut.sfSymbol.isEmpty {
                 ZStack(alignment: .center) {
                     Rectangle()
-                        .fill(Color.Gray1)
+                        .fill(Color.gray1)
                         .cornerRadius(12.35)
                         .frame(width: 84, height: 84)
                     
                     Image(systemName: "plus")
                         .font(.system(size: 24))
                         .frame(width: 84, height: 84)
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
                 
             } else {
@@ -86,7 +83,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
                     Image(systemName: shareExtensionViewModel.shortcut.sfSymbol)
                         .font(.system(size: 32))
                         .frame(width: 84, height: 84)
-                        .foregroundColor(.Text_icon)
+                        .foregroundColor(.textIcon)
                 }
             }
         })
@@ -105,8 +102,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
     private var shortcutTitleText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: false,
-                                               title: "단축어 이름",
-                                               placeholder: "단축어 이름을 입력하세요",
+                                               title: TextLiteral.writeShortcutViewNameTitle,
+                                               placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
                                                lengthLimit: 20,
                                                isDownloadLinkTextField: false,
                                                content: $shareExtensionViewModel.shortcut.title,
@@ -119,8 +116,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
     private var shortcutLinkText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: false,
-                                               title: "단축어 링크",
-                                               placeholder: "단축어 링크를 추가하세요",
+                                               title: TextLiteral.writeShortcutViewLinkTitle,
+                                               placeholder: TextLiteral.writeShortcutViewLinkPlaceholder,
                                                lengthLimit: nil,
                                                isDownloadLinkTextField: true,
                                                content: $shareExtensionViewModel.shortcut.downloadLink[0],
@@ -134,8 +131,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
     private var shortcutSubtitleText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: false,
-                                               title: "한줄 설명",
-                                               placeholder: "해당 단축어의 핵심 기능을 작성해주세요",
+                                               title: TextLiteral.writeShortcutViewOneLineTitle,
+                                               placeholder: TextLiteral.writeShortcutViewOneLinePlaceholder,
                                                lengthLimit: 20,
                                                isDownloadLinkTextField: false,
                                                content: $shareExtensionViewModel.shortcut.subtitle,
@@ -149,8 +146,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
     private var shortcutDescriptionText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
                                                isMultipleLines: true,
-                                               title: "상세 설명",
-                                               placeholder: "단축어 사용법, 필수적으로 요구되는 사항 등 단축어를 이용하기 위해 필요한 정보를 입력해주세요",
+                                               title: TextLiteral.writeShortcutViewMultiLineTitle,
+                                               placeholder: TextLiteral.writeShortcutViewMultiLinePlaceholder,
                                                lengthLimit: 300,
                                                isDownloadLinkTextField: false,
                                                content: $shareExtensionViewModel.shortcut.description,
@@ -163,12 +160,12 @@ struct ShareExtensionWriteShortcutTitleView: View {
     private var shortcutCategory: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text("카테고리")
+                Text(TextLiteral.writeShortcutViewCategoryTitle)
                     .Headline()
-                    .foregroundColor(.Gray5)
-                Text("최대 3개")
+                    .foregroundColor(.gray5)
+                Text(TextLiteral.writeShortcutViewCategoryDescription)
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
                 Spacer()
             }
             .padding(.horizontal, 16)
@@ -188,23 +185,23 @@ struct ShareExtensionWriteShortcutTitleView: View {
                 }, label: {
                     HStack {
                         if selectedCategories.isEmpty {
-                            Text("카테고리 선택")
-                                .foregroundColor(.Gray2)
+                            Text(TextLiteral.writeShortcutViewCategoryCell)
+                                .foregroundColor(.gray2)
                                 .Body2()
                         } else {
                             Text(selectedCategories.map { String( Category(rawValue: $0)!.translateName()) }.joined(separator: ", "))
-                                .foregroundColor(.Gray4)
+                                .foregroundColor(.gray4)
                                 .Body2()
                                 .multilineTextAlignment(.leading)
                         }
                         Spacer()
                         Image(systemName: "chevron.forward")
-                            .foregroundColor(selectedCategories.isEmpty ? .Gray2 : .Gray4)
+                            .foregroundColor(selectedCategories.isEmpty ? .gray2 : .gray4)
                     }
                     .padding(.all, 16)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(selectedCategories.isEmpty ? Color.Gray2 : Color.Gray4, lineWidth: 1)
+                            .strokeBorder(selectedCategories.isEmpty ? Color.gray2 : Color.gray4, lineWidth: 1)
                     )
                 })
                 .sheet(isPresented: $isShowingCategoryModal) {
@@ -222,16 +219,16 @@ struct ShareExtensionWriteShortcutTitleView: View {
     private var shortcutsRequiredApp: some View {
         VStack {
             HStack(alignment: .bottom) {
-                Text("단축어 사용을 위해 필요한 앱")
+                Text(TextLiteral.writeShortcutViewRequiredAppsTitle)
                     .Headline()
-                    .foregroundColor(.Gray5)
-                Text("(선택)")
+                    .foregroundColor(.gray5)
+                Text(TextLiteral.writeShortcutViewRequiredAppDescription)
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
                     .frame(width: 20, height: 20)
-                    .foregroundColor(.Gray4)
+                    .foregroundColor(.gray4)
                     .onTapGesture {
                         isInfoButtonTouched.toggle()
                     }
@@ -244,16 +241,16 @@ struct ShareExtensionWriteShortcutTitleView: View {
                     ZStack(alignment: .center) {
                         RoundedRectangle(cornerRadius: 12)
                             .frame(maxWidth: .infinity, maxHeight: 68)
-                            .foregroundColor(.Gray5)
+                            .foregroundColor(.gray5)
                         HStack(alignment: .top) {
-                            Text("해당 단축어를 사용하기 위해 필수로 다운로드해야 하는 앱을 작성해 주세요")
+                            Text(TextLiteral.writeShortcutViewRequiredAppInformation)
                                 .Footnote()
-                                .foregroundColor(.Gray1)
+                                .foregroundColor(.gray1)
                                 .multilineTextAlignment(.leading)
                             Spacer()
                             Image(systemName: "xmark")
                                 .frame(width: 16, height: 16)
-                                .foregroundColor(.Gray1)
+                                .foregroundColor(.gray1)
                                 .onTapGesture {
                                     isInfoButtonTouched = false
                                 }
@@ -275,7 +272,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(relatedApps, id:\.self) { item in
-                        RelatedAppTag(item: item, items: $relatedApps)
+                        RelatedAppTag(items: $relatedApps, item: item)
                     }
                     
                     if isTextFieldShowing {
@@ -296,7 +293,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
                             .onSubmit {
                                 isTextFocused[4] = false
                             }
-                            .modifier(CellModifier(foregroundColor: Color.Gray4, strokeColor: Color.Primary))
+                            .modifier(CellModifier(foregroundColor: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
                     }
                     
                     Button(action: {
@@ -305,10 +302,10 @@ struct ShareExtensionWriteShortcutTitleView: View {
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
-                            Text("앱 추가")
+                            Text(TextLiteral.writeShortcutViewRequiredAppCell)
                         }
                     })
-                    .modifier(CellModifier(foregroundColor: Color.Gray2, strokeColor: Color.Gray2))
+                    .modifier(CellModifier(foregroundColor: Color.gray2, strokeColor: Color.gray2))
                 }
                 .padding(.leading, 16)
             }
@@ -316,8 +313,8 @@ struct ShareExtensionWriteShortcutTitleView: View {
         }
     }
     struct RelatedAppTag: View {
-        var item: String
         @Binding var items: [String]
+        var item: String
         
         var body: some View {
             HStack {
@@ -333,9 +330,9 @@ struct ShareExtensionWriteShortcutTitleView: View {
                     Image(systemName: "xmark")
                 })
             }
-            .modifier(CellModifier(foregroundColor: Color.Gray4,
-                                   backgroundColor: Color.Background,
-                                   strokeColor: Color.Gray4))
+            .modifier(CellModifier(foregroundColor: Color.gray4,
+                                   backgroundColor: Color.shortcutsZipBackground,
+                                   strokeColor: Color.gray4))
         }
     }
     struct CellModifier: ViewModifier {
@@ -369,7 +366,7 @@ struct ShareExtensionWriteShortcutTitleView: View {
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Gray4)
+                        .foregroundColor(.gray4)
                 }
             }
         }

@@ -31,11 +31,11 @@ struct NicknameTextField: View {
         var color: Color {
             switch self {
             case .focus:
-                return .Primary
+                return .shortcutsZipPrimary
             case .focusError:
-                return .red
+                return .shortcutsZipError
             case .notfocus:
-                return .Gray2
+                return .gray2
             }
         }
         
@@ -48,9 +48,9 @@ struct NicknameTextField: View {
         var message: String {
             switch self {
             case .length:
-                return "*닉네임은 최대 8글자까지 입력가능합니다."
+                return TextLiteral.nicknameTextFieldLength
             case .emoticon:
-                return "사용할 수 없는 문자가 포함되어 있습니다."
+                return TextLiteral.nicknameTextFieldEmoticon
             }
         }
     }
@@ -60,12 +60,12 @@ struct NicknameTextField: View {
     @FocusState var isFocused: Bool
     
     @Binding var nickname: String
+    @Binding var isValid: Bool
     
     @State var nicknameState = NicknameState.none
     @State var nicknameFocus = NicknameFocus.notfocus
     @State var nicknameError = NicknameError.length
     @State var isCheckedDuplicated = false
-    @Binding var isValid: Bool
     
     var initName = ""
     
@@ -79,11 +79,11 @@ struct NicknameTextField: View {
             if nicknameFocus == .focusError {
                 Text(nicknameError.message)
                     .Footnote()
-                    .foregroundColor(.red)
+                    .foregroundColor(.shortcutsZipError)
             } else {
-                Text("* 공백 없이 한글 ,숫자, 영문만 입력 가능")
+                Text(TextLiteral.nicknameTextFieldSpace)
                     .Footnote()
-                    .foregroundColor(.Gray3)
+                    .foregroundColor(.gray3)
             }
         }
         .onChange(of: nickname) { _ in
@@ -98,13 +98,13 @@ struct NicknameTextField: View {
         .onChange(of: nicknameState) { newValue in
             self.isValid = newValue == .success
         }
-        .alert("닉네임 중복 확인", isPresented: $isCheckedDuplicated) {
+        .alert(TextLiteral.nicknameTextFieldDuplicateTitle, isPresented: $isCheckedDuplicated) {
             Button {
             } label: {
-                Text(nicknameState == .success ? "확인" : "다시 입력하기")
+                Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessLabel : TextLiteral.nicknameTextFieldDuplicateFailLabel)
             }
         } message: {
-            Text(nicknameState == .success ? "사용 가능한 닉네임입니다" : "이미 사용 중인 닉네임입니다")
+            Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessMessage : TextLiteral.nicknameTextFieldDuplicateFailMessage)
         }
     }
     
@@ -112,13 +112,13 @@ struct NicknameTextField: View {
         HStack (spacing: 12) {
             
             HStack {
-                TextField("닉네임 (최대 8글자)", text: $nickname)
+                TextField(TextLiteral.nicknameTextFieldTitle, text: $nickname)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .focused($isFocused)
                     .frame(height: 52)
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
                     .padding(.horizontal, 16)
                     .onAppear { UIApplication.shared.hideKeyboard() }
                 
@@ -147,12 +147,12 @@ struct NicknameTextField: View {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Primary.opacity(0.13) : .Primary)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .shortcutsZipPrimary.opacity(0.13) : .shortcutsZipPrimary)
                         .frame(width: 80, height: 52)
                     
-                    Text("중복확인")
+                    Text(TextLiteral.nicknameTextFieldDuplicateCheck)
                         .Body1()
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .Text_Button_Disable : .Text_icon)
+                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .textButtonDisable : .textIcon)
                 }
             }
             .disabled(nicknameState != .none || nickname.isEmpty || initName == nickname)
@@ -167,18 +167,18 @@ struct NicknameTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                 }
             } else {
                 if nicknameState == .fail {
                     Image(systemName: "exclamationmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.red)
+                        .foregroundColor(.shortcutsZipError)
                         .onTapGesture { }
                 } else if nicknameState == .success {
                     Image(systemName: "checkmark.circle.fill")
                         .Body2()
-                        .foregroundColor(.Success)
+                        .foregroundColor(.shortcutsZipSuccess)
                         .onTapGesture { }
                 }
             }

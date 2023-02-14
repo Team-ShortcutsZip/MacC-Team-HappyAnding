@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignInWithAppleView: View {
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var userAuth: UserAuth
-        
-    @State private var appleLoginCoordinator: AppleAuthCoordinator?
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
+    
+    @State private var appleLoginCoordinator: AppleAuthCoordinator?
     
     var body: some View {
         
@@ -25,13 +28,13 @@ struct SignInWithAppleView: View {
             Image("logo")
                 .padding(.bottom, 28)
             
-            Text("ShortcutsZip")
+            Text(TextLiteral.signInWithAppleViewTitle)
                 .LargeTitle()
-                .foregroundColor(.Primary)
+                .foregroundColor(.shortcutsZipPrimary)
             
-            Text("단축어 생활의 시작")
+            Text(TextLiteral.signInWithAppleViewSubTitle)
                 .Body2()
-                .foregroundColor(.Gray3)
+                .foregroundColor(.gray3)
             
             Spacer()
             
@@ -42,30 +45,44 @@ struct SignInWithAppleView: View {
                     RoundedRectangle(cornerRadius: 12)
                         .padding(.horizontal, 16)
                         .frame(height: 52)
-                        .foregroundColor(.Gray5)
+                        .foregroundColor(.gray5)
                     
-                    Text("\(Image(systemName: "applelogo")) Apple로 로그인")
-                        .foregroundColor(.White)
+                    Label(TextLiteral.signInWithAppleViewSignInWithApple, systemImage: "applelogo")
+                        .foregroundColor(.shortcutsZipWhite)
                 }
                 .padding(.bottom, 8)
             })
             
             Button(action: {
+                setDefaultUserSetting()
                 useWithoutSignIn = true
             }, label: {
-                Text("로그인 없이 둘러보기")
+                Text(TextLiteral.signInWithAppleViewUseWithoutSignIn)
                     .Body2()
-                    .foregroundColor(.Gray5)
+                    .foregroundColor(.gray5)
             })
             .padding(.bottom, 12)
         }
-        .background(Color.Background)
+        .background(Color.shortcutsZipBackground)
     }
     
     func appleLogin() {
         appleLoginCoordinator = AppleAuthCoordinator(window: window, isTappedSignInButton: true)
         appleLoginCoordinator?.startSignInWithAppleFlow()
+            UserDefaults.shared.set(true, forKey: "isSignInForShareExtension")
     }
+    
+    private func setDefaultUserSetting() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            shortcutsZipViewModel.resetUser()
+            UserDefaults.shared.set(false, forKey: "isFirstLaunch")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
 }
 
 struct SignUpView_Previews: PreviewProvider {

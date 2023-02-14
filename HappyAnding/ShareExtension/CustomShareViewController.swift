@@ -29,10 +29,10 @@ class CustomShareViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(inEnabledDoneButton), name: NSNotification.Name(rawValue: "inEnabledDoneButton"), object: nil)
         
         //로그인 정보 empty 일 때
-        if  UserDefaults.shared.string(forKey: "ShareUserInfo") == nil {
-            let alert = UIAlertController(title: "로그인을 먼저 진행해주세요", message:
-                                            "이 기능은 로그인 후 사용할 수 있는 기능이에요", preferredStyle: .alert)
-            let action = UIAlertAction(title: "확인", style: .default) { _ in
+        if  UserDefaults.shared.string(forKey: "ShareUserInfo") == nil || UserDefaults.shared.bool(forKey: "isSignInForShareExtension") == false {
+            let alert = UIAlertController(title: TextLiteral.customShareViewControllerSignInAlertTitle, message:
+                                            TextLiteral.customShareViewControllerSignInAlertMessage, preferredStyle: .alert)
+            let action = UIAlertAction(title: TextLiteral.customShareViewControllerCheck, style: .default) { _ in
                 self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
             }
             alert.addAction(action)
@@ -43,8 +43,8 @@ class CustomShareViewController: UIViewController {
             
             //링크가 적절하지 않을 때
             if !self.shareExtensionViewModel.isLinkValid(content: "\(url)") {
-                let alert = UIAlertController(title: "잘못된 접근이에요", message:"해당 링크는 ShortcutsZip으로 공유할 수 없어요", preferredStyle: .alert)
-                let action = UIAlertAction(title: "확인", style: .default) { action in
+                let alert = UIAlertController(title: TextLiteral.customShareViewControllerLinkVaildAlertTitle, message: TextLiteral.customShareViewControllerLinkVaildAlertMessage, preferredStyle: .alert)
+                let action = UIAlertAction(title: TextLiteral.customShareViewControllerCheck, style: .default) { action in
                     self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
                 }
                 alert.addAction(action)
@@ -53,7 +53,7 @@ class CustomShareViewController: UIViewController {
             
             //익스텐션 뷰 뜸
             self.shareExtensionViewModel.shortcut.downloadLink.append("\(url)")
-            let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutTitleView(shareExtensionViewModel: self.shareExtensionViewModel))
+            let extShortcutsView = UIHostingController(rootView: ShareExtensionWriteShortcutView(shareExtensionViewModel: self.shareExtensionViewModel))
             self.view.addSubview(extShortcutsView.view)
             extShortcutsView.view.translatesAutoresizingMaskIntoConstraints = false
             extShortcutsView.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
@@ -62,7 +62,7 @@ class CustomShareViewController: UIViewController {
             extShortcutsView.view.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         }
         setupNavBar()
-        self.view.backgroundColor = UIColor.Background
+        self.view.backgroundColor = UIColor.shortcutsZipBackground
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -108,12 +108,12 @@ class CustomShareViewController: UIViewController {
             navigationController!.navigationBar.compactScrollEdgeAppearance = newNavBarAppearance
         }
         
-        self.navigationItem.title = "단축어 작성"
+        self.navigationItem.title = TextLiteral.writeShortcutViewPost
         
         let cancelButton: UIButton = {
             let button = UIButton()
-            button.setTitle("취소", for: .normal)
-            button.setTitleColor(UIColor.Gray4, for: .normal)
+            button.setTitle(TextLiteral.cancel, for: .normal)
+            button.setTitleColor(UIColor.gray4, for: .normal)
             button.titleLabel?.font = UIFont.Body1
             button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
             
@@ -122,7 +122,7 @@ class CustomShareViewController: UIViewController {
         itemCancel = UIBarButtonItem(customView: cancelButton)
         self.navigationItem.setLeftBarButton(itemCancel, animated: false)
         
-        itemDone = UIBarButtonItem(title: "업로드", style: .plain, target: self, action: #selector(doneAction))
+        itemDone = UIBarButtonItem(title: TextLiteral.upload, style: .plain, target: self, action: #selector(doneAction))
         self.navigationItem.setRightBarButton(itemDone, animated: false)
         
         itemDone.isEnabled = false
@@ -147,17 +147,17 @@ class CustomShareViewController: UIViewController {
         let customNavBarAppearance = UINavigationBarAppearance()
         
         customNavBarAppearance.configureWithOpaqueBackground()
-        customNavBarAppearance.backgroundColor = UIColor.Background
+        customNavBarAppearance.backgroundColor = UIColor.shortcutsZipBackground
         customNavBarAppearance.shadowColor = .clear
         
-        customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.Gray5]
-        customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.Gray5]
+        customNavBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.gray5]
+        customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.gray5]
         
         let barButtonItemAppearance = UIBarButtonItemAppearance(style: .plain)
-        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.Primary, .font: UIFont.Headline]
-        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.PrimaryOpacity]
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.shortcutsZipPrimary, .font: UIFont.Headline]
+        barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.shortcutsZipPrimaryOpacity]
         barButtonItemAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.label]
-        barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.Gray5]
+        barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.gray5]
         customNavBarAppearance.buttonAppearance = barButtonItemAppearance
         customNavBarAppearance.backButtonAppearance = barButtonItemAppearance
         customNavBarAppearance.doneButtonAppearance = barButtonItemAppearance
