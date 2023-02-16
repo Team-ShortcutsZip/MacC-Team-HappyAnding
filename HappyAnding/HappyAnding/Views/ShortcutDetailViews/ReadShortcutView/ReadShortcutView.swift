@@ -232,10 +232,11 @@ extension ReadShortcutView {
                         .foregroundColor(.gray4)
                 }
                 TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $commentText, axis: .vertical)
-                    .disabled(useWithoutSignIn == true)
+                    .disabled(useWithoutSignIn)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .Body2()
+                    .lineLimit((comment.depth == 1) && (!isClickCorrection) ? 2 : 4)
                     .focused($isFocused)
                     .onAppear(perform : UIApplication.shared.hideKeyboard)
                     .onTapGesture {/*터치영역구분을위한부분*/}
