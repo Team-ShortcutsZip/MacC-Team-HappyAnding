@@ -940,3 +940,50 @@ extension ShortcutsZipViewModel {
         setData(model: comments)
     }
 }
+
+//MARK: - 등급 관련 함수
+extension ShortcutsZipViewModel {
+    func checkShortcutGrade(userID: String) -> ShortcutGrade {
+        let count = allShortcuts.filter { $0.author == userID }.count
+        
+        if count < 1 {
+            return ShortcutGrade.level0
+        } else if count >= 1 && count < 5 {
+            return ShortcutGrade.level1
+        } else if count >= 5 && count < 10 {
+            return ShortcutGrade.level5
+        } else if count >= 10 && count < 25 {
+            return ShortcutGrade.level10
+        } else if count >= 25 && count > 50 {
+            return ShortcutGrade.level25
+        } else {
+            return ShortcutGrade.level50
+        }
+    }
+    
+    func fetchShortcutGradeImage(isBig: Bool, shortcutGrade: ShortcutGrade) -> Image {
+        switch shortcutGrade {
+        case .level0:
+            return Image(systemName: "person.crop.circle.fill")
+        case .level1:
+            return Image(isBig ? "level1Big" : "level1Small")
+        case .level5:
+            return Image(isBig ? "level5Big" : "level5Small")
+        case .level10:
+            return Image(isBig ? "level10Big" : "level10Small")
+        case .level25:
+            return Image(isBig ? "level25Big" : "level25Small")
+        case .level50:
+            return Image(isBig ? "level50Big" : "level50Small")
+        }
+    }
+}
+
+enum ShortcutGrade {
+    case level0
+    case level1
+    case level5
+    case level10
+    case level25
+    case level50
+}
