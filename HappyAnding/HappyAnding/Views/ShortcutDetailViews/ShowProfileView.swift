@@ -25,20 +25,24 @@ struct ShowProfileView: View {
         ScrollView {
             VStack(spacing: 0) {
                 
-                StickyHeader(height: 40)
+                StickyHeader(height: 24)
                 
                 //MARK: 프로필이미지 및 닉네임
-                VStack {
-                    Image(systemName: "person.crop.circle.fill")
-                        .font(.system(size: 72, weight: .medium))
-                        .frame(width: 72, height: 72)
-                        .foregroundColor(.gray3)
+                VStack(spacing: 8) {
+                    ZStack(alignment: .center) {
+                        Circle()
+                            .frame(width: 72, height: 72)
+                            .foregroundColor(.gray1)
+                        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: data.userInfo?.id ?? ""))
+                            .font(.system(size: 72, weight: .medium))
+                            .foregroundColor(.gray3)
+                    }
                     Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .Title1()
                         .foregroundColor(.gray5)
                 }
                 .frame(maxWidth: .infinity)
-                .frame(height: 160)
+                .padding(.bottom, 35)
                 .background(Color.shortcutsZipWhite)
                 
                 //MARK: 탭바 및 탭 내부 컨텐츠
