@@ -10,11 +10,14 @@ import SwiftUI
 struct MyShortcutCardListView: View {
     
     @Environment(\.loginAlertKey) var loginAlerter
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @StateObject var writeNavigation = WriteShortcutNavigation()
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
+    @State var isGradeAlertPresented = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
@@ -71,6 +74,16 @@ struct MyShortcutCardListView: View {
             NavigationRouter(content: writeShortcutView, path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
         }
+        .alert("새로운 뱃지 획득!", isPresented: $isGradeAlertPresented) {
+            Button(role: .cancel) {
+                
+            } label: {
+                Text(TextLiteral.close)
+            }
+        } message: {
+            shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: ShortcutGrade(rawValue: shortcutsZipViewModel.shortcutGrade) ?? .level0)
+        }
+
     }
     
     @ViewBuilder

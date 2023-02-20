@@ -19,6 +19,7 @@ import FirebaseAuth
 class ShortcutsZipViewModel: ObservableObject {
     
     @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("shortcutGrade") var shortcutGrade = ShortcutGrade.level0.rawValue
     
     @Published var userInfo: User?                              // 유저정보
     
@@ -97,6 +98,7 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         })
         refreshPersonalCurations()
+        shortcutGrade = checkShortcutGrade(userID: nil).rawValue
     }
     func initShortcut() {
         sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
@@ -943,8 +945,15 @@ extension ShortcutsZipViewModel {
 
 //MARK: - 등급 관련 함수
 extension ShortcutsZipViewModel {
-    func checkShortcutGrade(userID: String) -> ShortcutGrade {
-        let count = allShortcuts.filter { $0.author == userID }.count
+    
+    func checkShortcutGrade(userID: String?) -> ShortcutGrade {
+        var count = 0
+        
+        if let userID {
+            count = allShortcuts.filter { $0.author == userID }.count
+        } else {
+            count = shortcutsMadeByUser.count
+        }
         
         if count < 1 {
             return ShortcutGrade.level0
@@ -977,13 +986,28 @@ extension ShortcutsZipViewModel {
             return Image(isBig ? "level50Big" : "level50Small")
         }
     }
+    
+    func isShortcutUpgrade() -> Bool {
+        let currentGrade = checkShortcutGrade(userID: nil).rawValue
+        
+        if shortcutGrade < currentGrade {
+            shortcutGrade = currentGrade
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func updateShortcutGrade() {
+        shortcutGrade = checkShortcutGrade(userID: nil).rawValue
+    }
 }
 
-enum ShortcutGrade {
-    case level0
-    case level1
-    case level5
-    case level10
-    case level25
-    case level50
+enum ShortcutGrade: Int {
+    case level0 = 0
+    case level1 = 1
+    case level5 = 5
+    case level10 = 10
+    case level25 = 25
+    case level50 = 50
 }
