@@ -42,7 +42,7 @@ struct ReadShortcutContentView: View {
             
             HStack(spacing: 8) {
                 ForEach(shortcut.category, id: \.self) { categoryName in
-                    Text(Category(rawValue: categoryName)!.translateName())
+                    Text(Category(rawValue: categoryName)?.translateName() ?? "")
                         .Body2()
                         .foregroundColor(.gray5)
                 }
