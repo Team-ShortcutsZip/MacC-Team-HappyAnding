@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WrappingHStack
 
 struct ReadShortcutContentView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
@@ -45,21 +46,20 @@ struct ReadShortcutContentView: View {
                     .Body2()
                     .foregroundColor(Color.gray4)
                 
-                HStack(spacing: 8) {
-                    ForEach(content, id: \.self) { item in
-                        if Category.allCases.contains(where: { $0.rawValue == item }) {
-                            Text(Category(rawValue: item)?.translateName() ?? "")
-                                .Body2()
-                                .foregroundColor(Color.gray5)
-                        } else {
-                            Text(item)
-                                .Body2()
-                                .foregroundColor(Color.gray5)
-                        }
-                        if item != content.last {
-                            Text("|")
-                                .foregroundColor(Color.gray2)
-                        }
+                WrappingHStack(content, id: \.self, alignment: .leading, spacing: .constant(8), lineSpacing: 8) { item in
+                    if Category.allCases.contains(where: { $0.rawValue == item }) {
+                        Text(Category(rawValue: item)?.translateName() ?? "")
+                            .Body2()
+                            .padding(.trailing, 8)
+                            .foregroundColor(Color.gray5)
+                    } else {
+                        Text(item)
+                            .Body2()
+                            .padding(.trailing, 8)
+                            .foregroundColor(Color.gray5)
+                    }
+                    if item != content.last {
+                        Divider()
                     }
                 }
             }
