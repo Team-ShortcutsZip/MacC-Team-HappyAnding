@@ -33,12 +33,12 @@ struct SearchView: View {
                                 
                                 let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                                       navigationParentView: .shortcuts)
-                                NavigationLink(value: data) {
-                                    ShortcutCell(shortcut: shortcut,
-                                                 navigationParentView: NavigationParentView.shortcuts)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowSeparator(.hidden)
-                                }
+                                
+                                ShortcutCell(shortcut: shortcut,
+                                             navigationParentView: NavigationParentView.shortcuts)
+                                .navigationLinkRouter(data: data)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
                             }
                         }
                     }

@@ -45,11 +45,10 @@ struct ExploreShortcutView: View {
         .background(Color.shortcutsZipBackground)
         .toolbar {
             ToolbarItem {
-                NavigationLink(value: NavigationSearch.first) {
-                    Image(systemName: "magnifyingglass")
-                        .Headline()
-                        .foregroundColor(.gray5)
-                }
+                Image(systemName: "magnifyingglass")
+                    .Headline()
+                    .foregroundColor(.gray5)
+                    .navigationLinkRouter(data: NavigationSearch.first)
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })

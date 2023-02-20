@@ -127,10 +127,10 @@ extension ShowProfileView {
                         ForEach(shortcuts, id:\.self) { shortcut in
                             let data = NavigationReadShortcutType(shortcutID:shortcut.id,
                                                                   navigationParentView: .shortcuts)
-                            NavigationLink(value: data) {
-                                ShortcutCell(shortcut: shortcut,
-                                             navigationParentView: data.navigationParentView)
-                            }
+                            
+                            ShortcutCell(shortcut: shortcut,
+                                         navigationParentView: data.navigationParentView)
+                            .navigationLinkRouter(data: data)
                         }
                         
                         Spacer()
@@ -152,11 +152,10 @@ extension ShowProfileView {
                         ForEach(curations, id: \.self) { curation in
                             let data = NavigationReadUserCurationType(userCuration: curation,
                                                                       navigationParentView: .shortcuts)
-                            NavigationLink(value: data) {
-                                UserCurationCell(curation: curation,
-                                                 lineLimit: 2,
-                                                 navigationParentView: data.navigationParentView)
-                            }
+                            UserCurationCell(curation: curation,
+                                             lineLimit: 2,
+                                             navigationParentView: data.navigationParentView)
+                            .navigationLinkRouter(data: data)
                         }
                         
                         Spacer()

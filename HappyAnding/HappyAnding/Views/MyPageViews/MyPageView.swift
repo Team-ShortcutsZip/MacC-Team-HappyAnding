@@ -12,14 +12,6 @@ struct MyPageView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-
-    enum NavigationSettingView: Hashable, Equatable {
-        case first
-    }
-    
-    enum NavigationNicknameView: Hashable, Equatable {
-        case first
-    }
     
     var body: some View {
         ScrollView {
@@ -41,11 +33,10 @@ struct MyPageView: View {
                             .foregroundColor(.gray5)
                         
                         if !useWithoutSignIn {
-                            NavigationLink(value: NavigationNicknameView.first) {
-                                Image(systemName: "square.and.pencil")
-                                    .Title2()
-                                    .foregroundColor(.gray4)
-                            }
+                            Image(systemName: "square.and.pencil")
+                                .Title2()
+                                .foregroundColor(.gray4)
+                                .navigationLinkRouter(data: NavigationNicknameView.first)
                         }
                     }
                     Spacer()
@@ -84,21 +75,14 @@ struct MyPageView: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem {
-                NavigationLink(value: NavigationSettingView.first) {
-                    Image(systemName: "gearshape.fill")
-                        .Headline()
-                        .foregroundColor(.gray5)
-                }
+                Image(systemName: "gearshape.fill")
+                    .Headline()
+                    .foregroundColor(.gray5)
+                    .navigationLinkRouter(data: NavigationSettingView.first)
             }
         }
         .scrollIndicators(.hidden)
         .background(Color.shortcutsZipBackground)
-        .navigationDestination(for: NavigationNicknameView.self) { _ in
-            EditNicknameView()
-        }
-        .navigationDestination(for: NavigationSettingView.self) { _ in
-            SettingView()
-        }
     }
 }
 
@@ -112,32 +96,31 @@ struct MyPageShortcutListCell: View {
                                    navigationParentView: .myPage)
     }
     var body: some View {
-        NavigationLink(value: data) {
-            HStack() {
-                Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
-                    .Title2()
-                    .foregroundColor(.gray5)
-                    .padding(.trailing, 9)
-                Text("\(shortcuts.count)개")
-                    .Body2()
-                    .foregroundColor(Color.tagText)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill( Color.tagBackground )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))
-                    )
-                Spacer()
-                Image(systemName: "chevron.forward")
-                    .foregroundColor(.gray5)
-                    .font(Font(UIFont.systemFont(ofSize: 20, weight: .medium)))
-                
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 16)
+        HStack() {
+            Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
+                .Title2()
+                .foregroundColor(.gray5)
+                .padding(.trailing, 9)
+            Text("\(shortcuts.count)개")
+                .Body2()
+                .foregroundColor(Color.tagText)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 4)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill( Color.tagBackground )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))
+                )
+            Spacer()
+            Image(systemName: "chevron.forward")
+                .foregroundColor(.gray5)
+                .font(Font(UIFont.systemFont(ofSize: 20, weight: .medium)))
+            
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 16)
+        .navigationLinkRouter(data: data)
     }
 }

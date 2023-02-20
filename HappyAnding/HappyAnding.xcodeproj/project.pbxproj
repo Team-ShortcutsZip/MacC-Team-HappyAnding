@@ -18,6 +18,8 @@
 		4DAD6370292BCB1000ABF8C1 /* CategoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD636F292BCB1000ABF8C1 /* CategoryCardView.swift */; };
 		87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
 		872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */; };
+		8751B29929A32CC000C2B27E /* View+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751B29829A32CC000C2B27E /* View+Navigation.swift */; };
+		876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876B4F6E299E3D91009672D9 /* NavigationRouter.swift */; };
 		8788374A2920D549009B3F54 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878837492920D549009B3F54 /* Binding+Extension.swift */; };
 		8792478D2918CE450040D5C3 /* UINavigationContoller+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792478C2918CE450040D5C3 /* UINavigationContoller+Extension.swift */; };
 		8792479B291BDF820040D5C3 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792479A291BDF820040D5C3 /* SearchView.swift */; };
@@ -185,7 +187,9 @@
 		4DAD636F292BCB1000ABF8C1 /* CategoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCardView.swift; sourceTree = "<group>"; };
 		87276C372933F6AB00C92F4C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
+		8751B29829A32CC000C2B27E /* View+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Navigation.swift"; sourceTree = "<group>"; };
 		8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStackModel.swift; sourceTree = "<group>"; };
+		876B4F6E299E3D91009672D9 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		878837492920D549009B3F54 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		8792478C2918CE450040D5C3 /* UINavigationContoller+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationContoller+Extension.swift"; sourceTree = "<group>"; };
 		8792479A291BDF820040D5C3 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -502,6 +506,7 @@
 				A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */,
 				A3FF4F822979C09000FA9EEE /* LineBreaking+Extension.swift */,
 				F96D45BA29804057000C2441 /* EnvironmentValues+Extension.swift */,
+				8751B29829A32CC000C2B27E /* View+Navigation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -549,6 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				87E99C6F28F94EA6009B691F /* ShortcutTabView.swift */,
+				876B4F6E299E3D91009672D9 /* NavigationRouter.swift */,
 			);
 			path = TabView;
 			sourceTree = "<group>";
@@ -820,6 +826,7 @@
 			files = (
 				F9AC2BBA2935D34C00165820 /* Image+Extension.swift in Sources */,
 				F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */,
+				8751B29929A32CC000C2B27E /* View+Navigation.swift in Sources */,
 				F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */,
 				F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */,
 				F9131B6B2922D38D00868A0E /* Keyword.swift in Sources */,
@@ -846,6 +853,7 @@
 				F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */,
 				4D402E7B2979342800D9A825 /* RecentRegisteredView.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
+				876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */,
 				8795A16E292AB841004B765F /* View+Extension.swift in Sources */,
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
 				87E99CA728FFF23E009B691F /* ListCurationView.swift in Sources */,
@@ -1110,6 +1118,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1152,6 +1161,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

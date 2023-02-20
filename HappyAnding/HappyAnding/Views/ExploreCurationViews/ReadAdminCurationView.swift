@@ -38,10 +38,10 @@ struct ReadAdminCurationView: View {
                 ForEach(Array(curation.shortcuts.enumerated()), id: \.offset) { index, shortcut in
                     let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                           navigationParentView: .curations)
-                    NavigationLink(value: data) {
-                        ShortcutCell(shortcutCell: shortcut,
-                                     navigationParentView: .curations)
-                    }
+                    
+                    ShortcutCell(shortcutCell: shortcut,
+                                 navigationParentView: .curations)
+                    .navigationLinkRouter(data: data)
                 }
             }
             

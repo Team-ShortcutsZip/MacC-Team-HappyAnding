@@ -25,9 +25,8 @@ struct UserCurationListView: View {
                     .onTapGesture { }
                 Spacer()
                 
-                NavigationLink(value: data) {
-                    MoreCaptionTextView(text: TextLiteral.more)
-                }
+                MoreCaptionTextView(text: TextLiteral.more)
+                    .navigationLinkRouter(data: data)
             }
             .padding(.bottom, 12)
             .padding(.horizontal, 16)
@@ -59,21 +58,25 @@ struct UserCurationListView: View {
                 if index < 2 {
                     let data = NavigationReadUserCurationType(userCuration: curation,
                                                               navigationParentView: self.data.navigationParentView)
-                    NavigationLink(value: data) {
-                        UserCurationCell(curation: curation,
-                                         lineLimit: 2,
-                                         navigationParentView: self.data.navigationParentView)
-                    }
+                    UserCurationCell(curation: curation,
+                                     lineLimit: 2,
+                                     navigationParentView: self.data.navigationParentView)
+                    .navigationLinkRouter(data: data)
+                    
                 }
             }
         }
         .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .fullScreenCover(isPresented: $isWriting) {
-            NavigationStack(path: $writeCurationNavigation.navigationPath) {
-                WriteCurationSetView(isWriting: $isWriting, isEdit: false)
-            }
-            .environmentObject(writeCurationNavigation)
+            NavigationRouter(content: writeCurationView,
+                             path: $writeCurationNavigation.navigationPath)
         }
+    }
+    
+    @ViewBuilder
+    private func writeCurationView() -> some View {
+        WriteCurationSetView(isWriting: $isWriting, isEdit: false)
+            .environmentObject(writeCurationNavigation)
     }
 }
 
