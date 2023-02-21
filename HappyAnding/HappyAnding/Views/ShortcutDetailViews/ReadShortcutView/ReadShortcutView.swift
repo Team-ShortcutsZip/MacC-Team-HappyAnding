@@ -84,11 +84,20 @@ struct ReadShortcutView: View {
                     NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) {
                         notification in
                         withAnimation {
-                            if currentTab == 2 {
+                            if currentTab == 2 && !isClickCorrection && comment.depth == 0 {
                                 proxy.scrollTo(bottomID)
                             }
                         }
                     }
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) {
+                        notification in
+                        withAnimation {
+                            if currentTab == 2 && comment.depth == 0 && comments.comments.count == 1 {
+                                proxy.scrollTo(topID)
+                            }
+                        }
+                    }
+
                 }
             }
             .scrollDisabled(isClickCorrection)
@@ -209,7 +218,7 @@ struct ReadShortcutView: View {
                         isFocused.toggle()
                         isCancledCorrection.toggle()
                     }
-                    .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $isCancledCorrection) {
+                    .alert(TextLiteral.readShortcutViewDeleteFixesTitle, isPresented: $isCancledCorrection) {
                         Button(role: .cancel) {
                             isFocused.toggle()
                         } label: {
