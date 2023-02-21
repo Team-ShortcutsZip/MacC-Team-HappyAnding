@@ -108,7 +108,6 @@ struct ShortcutTabView: View {
                         }
                         self.tappedTwice = false
                     })
-                    .navigationBarBackground ({ Color.shortcutsZipBackground })
                     .environmentObject(profileNavigation)
                     .tabItem {
                         Label("프로필", systemImage: "person.crop.circle.fill")
@@ -133,18 +132,21 @@ struct ShortcutTabView: View {
     private func firstTab() -> some View {
         ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
             .modifierNavigation()
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
     }
     
     @ViewBuilder
     private func secondTab() -> some View {
         ExploreCurationView()
             .modifierNavigation()
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
     }
     
     @ViewBuilder
     private func thirdTab() -> some View {
         MyPageView()
             .modifierNavigation()
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
     }
     
     private func fetchShortcutIdFromUrl(urlString: String) {
