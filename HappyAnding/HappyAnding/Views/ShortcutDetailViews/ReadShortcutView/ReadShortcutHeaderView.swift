@@ -49,8 +49,8 @@ struct ReadShortcutHeaderView: View {
             shortcutsZipViewModel.fetchUser(userID: shortcut.author,
                                             isCurrentUser: false) { user in
                 userInformation = user
-                numberOfLike = shortcut.numberOfLike
             }
+            numberOfLike = shortcut.numberOfLike
         }
         .onDisappear { self.shortcut.numberOfLike = numberOfLike }
     }
