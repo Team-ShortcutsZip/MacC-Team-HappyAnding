@@ -184,13 +184,8 @@ struct ReadShortcutView: View {
                 Text(TextLiteral.readShortcutViewDeletionMessage)
             }
             .fullScreenCover(isPresented: $isEdit) {
-                NavigationStack(path: $writeNavigation.navigationPath) {
-                    if let shortcut = data.shortcut {
-                        WriteShortcutView(isWriting: $isEdit,
-                                          shortcut: shortcut,
-                                          isEdit: true)
-                    }
-                }
+                NavigationRouter(content: writeShortcutView,
+                                 path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
             }
             .fullScreenCover(isPresented: $isUpdating) {
