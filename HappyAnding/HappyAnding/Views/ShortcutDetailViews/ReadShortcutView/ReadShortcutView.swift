@@ -43,36 +43,61 @@ struct ReadShortcutView: View {
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     @FocusState private var isFocused: Bool
     @Namespace var namespace
+    @Namespace var topID
+    @Namespace var bottomID
     
     private let tabItems = [TextLiteral.readShortcutViewBasicTabTitle, TextLiteral.readShortcutViewVersionTabTitle, TextLiteral.readShortcutViewCommentTabTitle]
     
     var body: some View {
         ZStack {
-            ScrollView {
-                VStack(spacing: 0) {
-                    if data.shortcut != nil {
-                        StickyHeader(height: 40)
-                        
-                        // MARK: - 단축어 타이틀
-                        
-                        ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
-                            .frame(minHeight: 160)
-                            .padding(.bottom, 33)
-                            .background(Color.shortcutsZipWhite)
-                        
-                        
-                        // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
-                        
-                        LazyVStack(pinnedViews: [.sectionHeaders]) {
-                            Section(header: tabBarView
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(spacing: 0) {
+                        if data.shortcut != nil {
+                            StickyHeader(height: 40).id(topID)
+                            
+                            // MARK: - 단축어 타이틀
+                            
+                            ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
+                                .frame(minHeight: 160)
+                                .padding(.bottom, 33)
                                 .background(Color.shortcutsZipWhite)
-                            ) {
-                                detailInformationView
-                                    .padding(.top, 4)
-                                    .padding(.horizontal, 16)
+                            
+                            
+                            // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
+                            
+                            LazyVStack(pinnedViews: [.sectionHeaders]) {
+                                Section(header: tabBarView
+                                    .background(Color.shortcutsZipWhite)
+                                ) {
+                                    detailInformationView
+                                        .padding(.top, 4)
+                                        .padding(.horizontal, 16)
+                                }
+                            }
+                            
+                            HStack{}.id(bottomID)
+                        }
+                    }
+                }
+                .onAppear() {
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) {
+                        notification in
+                        withAnimation {
+                            if currentTab == 2 && !isClickCorrection && comment.depth == 0 {
+                                proxy.scrollTo(bottomID)
                             }
                         }
                     }
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) {
+                        notification in
+                        withAnimation {
+                            if currentTab == 2 && comment.depth == 0 && comments.comments.count == 1 {
+                                proxy.scrollTo(topID)
+                            }
+                        }
+                    }
+
                 }
             }
             .scrollDisabled(isClickCorrection)
@@ -173,13 +198,13 @@ struct ReadShortcutView: View {
                     .opacity(0.4)
                     .safeAreaInset(edge: .bottom, spacing: 0) {
                         textField
-                        .ignoresSafeArea(.keyboard)
-                        .focused($isFocused, equals: true)
-                        .task {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                isFocused = true
+                            .ignoresSafeArea(.keyboard)
+                            .focused($isFocused, equals: true)
+                            .task {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    isFocused = true
+                                }
                             }
-                        }
                     }
                     .onAppear() {
                         commentText = comment.contents
@@ -188,7 +213,7 @@ struct ReadShortcutView: View {
                         isFocused.toggle()
                         isCancledCorrection.toggle()
                     }
-                    .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $isCancledCorrection) {
+                    .alert(TextLiteral.readShortcutViewDeleteFixesTitle, isPresented: $isCancledCorrection) {
                         Button(role: .cancel) {
                             isFocused.toggle()
                         } label: {
@@ -237,10 +262,12 @@ extension ReadShortcutView {
                         .foregroundColor(.gray4)
                 }
                 TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $commentText, axis: .vertical)
-                    .disabled(useWithoutSignIn == true)
+                    .keyboardType(.twitter)
+                    .disabled(useWithoutSignIn)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .Body2()
+                    .lineLimit(comment.depth == 1 ? 2 : 4)
                     .focused($isFocused)
                     .onAppear(perform : UIApplication.shared.hideKeyboard)
                     .onTapGesture {/*터치영역구분을위한부분*/}
