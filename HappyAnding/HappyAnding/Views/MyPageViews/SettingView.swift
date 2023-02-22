@@ -25,14 +25,6 @@ struct SettingView: View {
     @State var isTappedSignOutButton = false
     @State var isTappedPrivacyButton = false
     
-    enum NavigationLisence: Hashable, Equatable {
-        case first
-    }
-    
-    enum NavigationWithdrawal: Hashable, Equatable {
-        case first
-    }
-    
     var body: some View {
         VStack(alignment: .leading) {
             
@@ -54,9 +46,8 @@ struct SettingView: View {
             
             // MARK: - 오픈소스 라이선스
             
-            NavigationLink(value: NavigationLisence.first) {
-                SettingCell(title: TextLiteral.settingViewOpensourceLicense)
-            }
+            SettingCell(title: TextLiteral.settingViewOpensourceLicense)
+                .navigationLinkRouter(data: NavigationLisence.first)
             
             
             // MARK: - 개인정보처리방침 모달뷰
@@ -124,9 +115,8 @@ struct SettingView: View {
                 }
                 
                 // MARK: - 회원탈퇴 버튼
-                NavigationLink(value: NavigationWithdrawal.first) {
-                    SettingCell(title: TextLiteral.settingViewWithdrawal)
-                }
+                SettingCell(title: TextLiteral.settingViewWithdrawal)
+                    .navigationLinkRouter(data: NavigationWithdrawal.first)
             }
             
             Spacer()
@@ -147,14 +137,6 @@ struct SettingView: View {
                     ProgressView()
                 }
             }
-        }
-        
-        .navigationDestination(for: NavigationLisence.self) { value in
-            LicenseView()
-        }
-        
-        .navigationDestination(for: NavigationWithdrawal.self) { _ in
-            WithdrawalView()
         }
         
         .padding(.horizontal, 16)

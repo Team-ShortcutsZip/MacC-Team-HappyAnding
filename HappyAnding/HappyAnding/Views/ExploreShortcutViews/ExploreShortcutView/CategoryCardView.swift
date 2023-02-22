@@ -23,9 +23,10 @@ struct CategoryCardView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: categoryName) {
-                    MoreCaptionTextView(text: TextLiteral.more)
-                }
+                MoreCaptionTextView(text: TextLiteral.more)
+                    .navigationLinkRouter(data: NavigationListCategoryShortcutType(shortcuts: [],
+                                                                                   categoryName: categoryName,
+                                                                                   navigationParentView: navigationParentView))
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
@@ -39,12 +40,11 @@ struct CategoryCardView: View {
                                     shortcutID: shortcut.id,
                                     navigationParentView: self.navigationParentView)
                                 
-                                NavigationLink(value: data) {
-                                    ShortcutCardCell(
-                                        categoryShortcutIcon: shortcut.sfSymbol,
-                                        categoryShortcutName: shortcut.title,
-                                        categoryShortcutColor: shortcut.color)
-                                }
+                                ShortcutCardCell(
+                                    categoryShortcutIcon: shortcut.sfSymbol,
+                                    categoryShortcutName: shortcut.title,
+                                    categoryShortcutColor: shortcut.color)
+                                .navigationLinkRouter(data: data)
                             }
                         }
                     }

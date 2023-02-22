@@ -21,23 +21,23 @@ struct RecentRegisteredView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: NavigationListShortcutType(sectionType: .recent,
-                                                                 shortcuts: shortcuts,
-                                                                 navigationParentView: .shortcuts)) {
-                    MoreCaptionTextView(text: TextLiteral.more)
-                }
+                MoreCaptionTextView(text: TextLiteral.more)
+                    .navigationLinkRouter(data: NavigationListShortcutType(sectionType: .recent,
+                                                                           shortcuts: shortcuts,
+                                                                           navigationParentView: .shortcuts))
+                
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    let data = NavigationReadShortcutType(shortcutID:shortcut.id,
+                    let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                           navigationParentView: self.navigationParentView)
-                    NavigationLink(value: data) {
-                        ShortcutCell(shortcut: shortcut,
-                                     navigationParentView: self.navigationParentView)
-                    }
+                    
+                    ShortcutCell(shortcut: shortcut,
+                                 navigationParentView: self.navigationParentView)
+                    .navigationLinkRouter(data: data)
                 }
             }
             .background(Color.shortcutsZipBackground)

@@ -71,14 +71,13 @@ struct ListCurationView: View {
             let data = NavigationReadUserCurationType(userCuration: curation,
                                                       navigationParentView: self.data.navigationParentView)
             
-            NavigationLink(value: data) {
-                UserCurationCell(curation: curation,
-                                 lineLimit: 2,
-                                 navigationParentView: self.data.navigationParentView)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.shortcutsZipBackground)
-            }
+            UserCurationCell(curation: curation,
+                             lineLimit: 2,
+                             navigationParentView: self.data.navigationParentView)
+            .navigationLinkRouter(data: data)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.shortcutsZipBackground)
         }
     }
 }
