@@ -49,7 +49,9 @@ struct SettingView: View {
              */
             
             // MARK: - 버전 정보
-            SettingCell(title: TextLiteral.settingViewVersion, version: getAppVersion())
+            if !getAppVersion().isEmpty {
+                SettingCell(title: TextLiteral.settingViewVersion, version: getAppVersion())
+            }
             
             
             // MARK: - 오픈소스 라이선스
@@ -170,12 +172,9 @@ struct SettingView: View {
     }
     
     private func getAppVersion() -> String {
-        if let info: [String: Any] = Bundle.main.infoDictionary,
-           let appVersion: String
-            = info["CFBundleShortVersionString"] as? String {
-            return appVersion
-        }
-        return "nil"
+        guard let info = Bundle.main.infoDictionary,
+              let appVersion = info["CFBundleShortVersionString"] as? String else { return "" }
+        return appVersion
     }
 }
 struct SettingCell: View {
