@@ -8,6 +8,8 @@
 import Foundation
 
 extension Date {
+    
+    /// Date를 yyyyMMddHHmmss 형태의 String으로 변환해주는 함수입니다.
     func getDate() -> String {
         let current = Date()
         let formatter = DateFormatter()
@@ -19,14 +21,4 @@ extension Date {
     }
 }
 
-extension String {
-    func getVersionUpdateDateFormat() -> String {
-        var date = self.substring(from: 0, to: 7)
-        let index1 = date.index(date.startIndex, offsetBy: 4)
-        let index2 = date.index(date.startIndex, offsetBy: 6)
-        date.insert(".", at: index2)
-        date.insert(".", at: index1)
-        
-        return date
-    }
-}
+

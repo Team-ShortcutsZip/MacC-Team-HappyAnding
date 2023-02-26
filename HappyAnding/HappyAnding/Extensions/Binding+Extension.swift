@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension Binding {
+    
+    /// Binding 변수가 Optional로 선언된 경우, 안전하게 Optional을 벗겨 리턴해주는 함수입나다.
     func unwrap<Wrapped>() -> Binding<Wrapped>? where Optional<Wrapped> == Value {
         guard let value = self.wrappedValue else { return nil }
         return Binding<Wrapped>(
@@ -18,12 +20,5 @@ extension Binding {
                 self.wrappedValue = value
             }
         )
-    }
-}
-
-extension Binding where Value == Int {
-    public func float() -> Binding<Float> {
-        return Binding<Float>(get:{ Float(self.wrappedValue) },
-            set: { self.wrappedValue = Int($0)})
     }
 }

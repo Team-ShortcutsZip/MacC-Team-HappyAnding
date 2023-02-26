@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Navigation의 Swipe Gesture를 위한 확장입니다.
 extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
         super.viewDidLoad()

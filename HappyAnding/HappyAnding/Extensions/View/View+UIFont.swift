@@ -1,39 +1,27 @@
 //
-//  Font+Extension.swift
+//  View+Font.swift
 //  HappyAnding
 //
-//  Created by 전지민 on 2022/10/21.
+//  Created by 이지원 on 2023/02/24.
 //
 
 import SwiftUI
 
-extension UIFont {
-    static var LargeTitle = UIFont.systemFont(ofSize: 26, weight: .heavy)
-    static var Title1 = UIFont.systemFont(ofSize: 22, weight: .bold)
-    static var Title2 = UIFont.systemFont(ofSize: 20, weight: .bold)
-    static var Headline = UIFont.systemFont(ofSize: 17, weight: .bold)
-    static var Body1 = UIFont.systemFont(ofSize: 17, weight: .regular)
-    static var Body2 = UIFont.systemFont(ofSize: 15, weight: .regular)
-    static var Subtitle = UIFont.systemFont(ofSize: 15, weight: .heavy)
-    static var Footnote = UIFont.systemFont(ofSize: 13, weight: .regular)
-    static var Sb = UIFont.systemFont(ofSize: 15, weight: .semibold)
-}
 
-//출처: https://stackoverflow.com/questions/61705184/how-to-set-line-height-for-a-single-line-text-in-swiftui
-struct FontWithLineHeight: ViewModifier {
-    let font: UIFont
-    let lineHeight: CGFloat
-
-    func body(content: Content) -> some View {
-        content
-            .font(Font(font))
-            .lineSpacing(lineHeight - font.lineHeight)
-            .padding(.vertical, (lineHeight - font.lineHeight) / 2)
-    }
-}
-
+// MARK: - extension
+/**
+ Font 적용을 위한 확장입니다.
+ 
+ - description:
+    - Text 또는 Image에서 사용할 수 있습니다.
+ 
+ # code:
+ 
+    Text("Hello World")
+        .LargeTitle()
+ 
+ */
 extension View {
-    //크기를 적용할 Text또는 Image에 Text().LargeTitle()과 같은 형식으로 사용해주세요
     func LargeTitle() -> some View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .LargeTitle, lineHeight: 38))
     }
@@ -62,3 +50,25 @@ extension View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Sb, lineHeight: 20))
     }
 }
+
+
+// MARK: - View Modifier
+
+/**
+ 자간을 위한 View Modifier입니다.
+ - remark:
+    [출처](https://stackoverflow.com/questions/61705184/how-to-set-line-height-for-a-single-line-text-in-swiftui)
+
+ */
+struct FontWithLineHeight: ViewModifier {
+    let font: UIFont
+    let lineHeight: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .font(Font(font))
+            .lineSpacing(lineHeight - font.lineHeight)
+            .padding(.vertical, (lineHeight - font.lineHeight) / 2)
+    }
+}
+
