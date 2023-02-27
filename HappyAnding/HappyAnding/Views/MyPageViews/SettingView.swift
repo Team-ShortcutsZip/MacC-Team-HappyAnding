@@ -55,9 +55,8 @@ struct SettingView: View {
             
             
             // MARK: - 오픈소스 라이선스
-            NavigationLink(value: NavigationLisence.first) {
-                SettingCell(title: TextLiteral.settingViewOpensourceLicense)
-            }
+            SettingCell(title: TextLiteral.settingViewOpensourceLicense)
+                .navigationLinkRouter(data: NavigationLisence.first)
             
             
             // MARK: - 개인정보처리방침 모달뷰
