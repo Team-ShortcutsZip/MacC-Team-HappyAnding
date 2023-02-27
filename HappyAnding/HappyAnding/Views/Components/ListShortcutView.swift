@@ -70,14 +70,11 @@ struct ListShortcutView: View {
             let navigationData = NavigationReadShortcutType(shortcut: shortcut,
                                                             shortcutID: shortcut.id,
                                                             navigationParentView: self.data.navigationParentView)
-
-            NavigationLink(value: navigationData) {
-                ShortcutCell(shortcut: shortcut,
-                             sectionType: data.sectionType,
-                             navigationParentView: data.navigationParentView)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-            }
+            ShortcutCell(shortcut: shortcut,
+                         sectionType: data.sectionType,
+                         navigationParentView: data.navigationParentView)
+            .navigationLinkRouter(data: navigationData)
+            
         }
     }
     
@@ -87,14 +84,12 @@ struct ListShortcutView: View {
             let navigationData = NavigationReadShortcutType(shortcut: shortcut,
                                                             shortcutID: shortcut.id,
                                                             navigationParentView: self.data.navigationParentView)
-            
-            NavigationLink(value: navigationData) {
-                ShortcutCell(shortcut: shortcut,
-                             rankNumber: index + 1,
-                             navigationParentView: data.navigationParentView)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-            }
+            ShortcutCell(shortcut: shortcut,
+                         rankNumber: index + 1,
+                         navigationParentView: data.navigationParentView)
+            .navigationLinkRouter(data: navigationData)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
         }
     }
 }

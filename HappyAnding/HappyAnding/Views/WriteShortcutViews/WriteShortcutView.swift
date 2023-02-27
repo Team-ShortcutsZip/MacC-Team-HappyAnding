@@ -94,7 +94,9 @@ struct WriteShortcutView: View {
                     
                     isWriting.toggle()
                     
-                    writeShortcutNavigation.navigationPath = .init()
+                    if #available(iOS 16.1, *) {
+                        writeShortcutNavigation.navigationPath = .init()
+                    }
                     
                 }, label: {
                     Text(TextLiteral.upload)

@@ -25,14 +25,6 @@ struct SettingView: View {
     @State var isTappedSignOutButton = false
     @State var isTappedPrivacyButton = false
     
-    enum NavigationLisence: Hashable, Equatable {
-        case first
-    }
-    
-    enum NavigationWithdrawal: Hashable, Equatable {
-        case first
-    }
-    
     var body: some View {
         VStack(alignment: .leading) {
             
@@ -120,9 +112,8 @@ struct SettingView: View {
                 }
                 
                 // MARK: - 회원탈퇴 버튼
-                NavigationLink(value: NavigationWithdrawal.first) {
-                    SettingCell(title: TextLiteral.settingViewWithdrawal)
-                }
+                SettingCell(title: TextLiteral.settingViewWithdrawal)
+                    .navigationLinkRouter(data: NavigationWithdrawal.first)
             }
             Spacer()
         }
@@ -141,14 +132,6 @@ struct SettingView: View {
                     ProgressView()
                 }
             }
-        }
-        
-        .navigationDestination(for: NavigationLisence.self) { value in
-            LicenseView()
-        }
-        
-        .navigationDestination(for: NavigationWithdrawal.self) { _ in
-            WithdrawalView()
         }
         
         .padding(.horizontal, 16)

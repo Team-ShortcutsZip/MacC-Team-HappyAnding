@@ -66,12 +66,11 @@ struct WriteCurationSetView: View {
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(value: Float(0.0)) {
-                    Text(TextLiteral.next)
-                        .Headline()
-                        .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
-                }
-                .disabled(curation.shortcuts.isEmpty)
+                Text(TextLiteral.next)
+                    .Headline()
+                    .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
+                    .navigationLinkRouter(data: Float(0.0))
+                    .disabled(curation.shortcuts.isEmpty)
             }
         }
         .navigationDestination(for: Float.self) { isEdit in

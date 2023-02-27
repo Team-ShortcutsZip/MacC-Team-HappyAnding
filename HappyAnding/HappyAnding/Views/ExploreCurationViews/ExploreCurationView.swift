@@ -73,9 +73,8 @@ struct adminCurationsFrameView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(adminCurations, id: \.id) { curation in
-                        NavigationLink(value: curation) {
-                            AdminCurationCell(adminCuration: curation)
-                        }
+                        AdminCurationCell(adminCuration: curation)
+                            .navigationLinkRouter(data: curation)
                     }
                 }
                 .padding(.leading, 16)

@@ -18,11 +18,10 @@ struct LovedShortcutView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: NavigationListShortcutType(sectionType: .popular,
-                                                                 shortcuts: shortcuts,
-                                                                 navigationParentView: .shortcuts)) {
-                    MoreCaptionTextView(text: TextLiteral.more)
-                }
+                MoreCaptionTextView(text: TextLiteral.more)
+                    .navigationLinkRouter(data: NavigationListShortcutType(sectionType: .popular,
+                                                                           shortcuts: shortcuts,
+                                                                           navigationParentView: .shortcuts))
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
@@ -33,10 +32,10 @@ struct LovedShortcutView: View {
                         let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                               navigationParentView: .shortcuts)
                         
-                        NavigationLink(value: data) {
-                            ShortcutCell(shortcut: shortcut,
-                                         navigationParentView: .shortcuts)
-                        }
+                        ShortcutCell(shortcut: shortcut,
+                                     navigationParentView: .shortcuts)
+                        .navigationLinkRouter(data: data)
+                        
                     }
                 }
             }

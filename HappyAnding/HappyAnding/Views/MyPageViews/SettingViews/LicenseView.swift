@@ -11,8 +11,8 @@ struct LicenseView: View {
     
     var body: some View {
         ScrollView {
-            LicenseCell(title: "[Firebase](https://github.com/firebase)", text: "License\nThe contents of this repository are licensed under the Apache License, version 2.0.\nYour use of Firebase is governed by the Terms of Service for Firebase Services.")
-            LicenseCell(title: "Apache License 2.0", text: readTextFile("apache.txt"))
+            LicenseCell(title: "[Firebase](https://github.com/firebase)", text: readTextFile("apache.txt"))
+            LicenseCell(title: "[Wrapping HStack](https://github.com/dkk/WrappingHStack)", text: readTextFile("wrappinghstack+license.txt"))
         }
         .background(Color.shortcutsZipBackground)
     }

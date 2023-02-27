@@ -32,9 +32,8 @@ struct MyShortcutCardListView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: data) {
-                    MoreCaptionTextView(text: TextLiteral.more)
-                }
+                MoreCaptionTextView(text: TextLiteral.more)
+                    .navigationLinkRouter(data: data)
             }
             .padding(.horizontal, 16)
             
@@ -56,11 +55,10 @@ struct MyShortcutCardListView: View {
                                 let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                                       navigationParentView: self.navigationParentView)
                                 
-                                NavigationLink(value: data) {
-                                    MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol,
-                                                       myShortcutName: shortcut.title,
-                                                       myShortcutColor: shortcut.color)
-                                }
+                                MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol,
+                                                   myShortcutName: shortcut.title,
+                                                   myShortcutColor: shortcut.color)
+                                .navigationLinkRouter(data: data)
                             }
                         }
                     }
@@ -70,10 +68,14 @@ struct MyShortcutCardListView: View {
         }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
-            NavigationStack(path: $writeNavigation.navigationPath) {
-                WriteShortcutView(isWriting: $isWriting, isEdit: false)
-            }
-            .environmentObject(writeNavigation)
+            NavigationRouter(content: writeShortcutView, path: $writeNavigation.navigationPath)
+                .environmentObject(writeNavigation)
         }
+    }
+    
+    @ViewBuilder
+    private func writeShortcutView() -> some View {
+        WriteShortcutView(isWriting: $isWriting, isEdit: false)
+            .modifierNavigation()
     }
 }
