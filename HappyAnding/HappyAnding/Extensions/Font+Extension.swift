@@ -19,10 +19,10 @@ extension UIFont {
     static var Sb = UIFont.systemFont(ofSize: 15, weight: .semibold)
     
     static var MediumIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
-    static var SmallIcon = UIFont.systemFont(ofSize: 14, weight: .regular)
-    static var LargeShortcutIcon = UIFont.systemFont(ofSize: 32, weight: .medium)
-    static var MediumShortcutIcon = UIFont.systemFont(ofSize: 26, weight: .medium)
-    static var SmallShortcutIcon = UIFont.systemFont(ofSize: 16, weight: .medium)
+    static var SmallIcon = UIFont.systemFont(ofSize: 15, weight: .regular)
+    static var LargeShortcutIcon = UIFont.systemFont(ofSize: 28, weight: .medium)
+    static var MediumShortcutIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
+    static var SmallShortcutIcon = UIFont.systemFont(ofSize: 15, weight: .medium)
 }
 
 //출처: https://stackoverflow.com/questions/61705184/how-to-set-line-height-for-a-single-line-text-in-swiftui

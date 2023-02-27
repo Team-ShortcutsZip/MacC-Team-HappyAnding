@@ -39,11 +39,12 @@ struct UserCurationListView: View {
                 }
             } label: {
                 
-                HStack(spacing: 7) {
+                HStack(spacing: 6) {
                     Image(systemName: "plus")
+                        .MediumIcon()
                     Text(TextLiteral.userCurationListViewAdd)
+                        .Headline()
                 }
-                .Headline()
                 .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity)
                 .frame(height: 64)

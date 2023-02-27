@@ -70,6 +70,7 @@ struct ReadShortcutCommentView: View {
             HStack(alignment: .top, spacing: 8) {
                 if comment.depth == 1 {
                     Image(systemName: "arrow.turn.down.right")
+                        .SmallIcon()
                         .foregroundColor(.gray4)
                 }
                 VStack(alignment: .leading, spacing: 8) {

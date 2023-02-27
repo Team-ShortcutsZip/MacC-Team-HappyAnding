@@ -50,7 +50,7 @@ struct WithdrawalView: View {
             
             HStack(spacing: 8) {
                 Image(systemName: isTappedCheckToggle ? "checkmark.square.fill" : "square")
-                    .Title2()
+                    .MediumIcon()
                     .foregroundColor(isTappedCheckToggle ? .shortcutsZipPrimary : .gray4)
                     .onTapGesture {
                         isTappedCheckToggle.toggle()
