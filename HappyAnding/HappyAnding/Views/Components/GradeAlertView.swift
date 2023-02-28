@@ -28,8 +28,10 @@ struct GradeAlertView: View {
                 .opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
-                    gradeAlerter.isPresented = false
-                    isShowing = false
+                    if isTextShowing {
+                        gradeAlerter.isPresented = false
+                        isShowing = false
+                    }
                 }
             
             xmark
@@ -71,7 +73,7 @@ struct GradeAlertView: View {
                 }
                 
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation(.easeIn(duration: 0.5)) {
                     isTextShowing = true
                 }
