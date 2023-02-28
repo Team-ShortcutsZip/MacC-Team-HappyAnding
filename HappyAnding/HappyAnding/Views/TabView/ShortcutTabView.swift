@@ -31,6 +31,10 @@ struct ShortcutTabView: View {
     @State var isFolded = true
     @State private var tappedTwice = false
     
+    @State private var firstTabID = UUID()
+    @State private var secondTabID = UUID()
+    @State private var thirdTabID = UUID()
+    
     init() {
         let transparentAppearence = UITabBarAppearance()
         transparentAppearence.configureWithTransparentBackground()
@@ -58,7 +62,7 @@ struct ShortcutTabView: View {
                 NavigationRouter(content: firstTab, path: $shortcutNavigation.navigationPath)
                     .onChange(of: tappedTwice) { tappedTwice in
                         guard tappedTwice else { return }
-                        scrollToBottomWithAnimation(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath)
+                        scrollToBottomWithAnimation(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath, viewID: &firstTabID)
                         self.tappedTwice = false
                     }
                     .onChange(of: isFolded) { _ in
@@ -76,7 +80,7 @@ struct ShortcutTabView: View {
                                  path: $curationNavigation.navigationPath)
                 .onChange(of: tappedTwice) { tappedTwice in
                     guard tappedTwice else { return }
-                    scrollToBottomWithAnimation(proxy, scrollID: 222, navigationPath: &curationNavigation.navigationPath)
+                    scrollToBottomWithAnimation(proxy, scrollID: 222, navigationPath: &curationNavigation.navigationPath, viewID: &secondTabID)
                     self.tappedTwice = false
                 }
                 .environmentObject(curationNavigation)
@@ -88,7 +92,7 @@ struct ShortcutTabView: View {
                 NavigationRouter(content: thirdTab, path: $profileNavigation.navigationPath)
                     .onChange(of: tappedTwice, perform: { tappedTwice in
                         guard tappedTwice else { return }
-                        scrollToBottomWithAnimation(proxy, scrollID: 333, navigationPath: &profileNavigation.navigationPath)
+                        scrollToBottomWithAnimation(proxy, scrollID: 333, navigationPath: &profileNavigation.navigationPath, viewID: &thirdTabID)
                         self.tappedTwice = false
                     })
                     .environmentObject(profileNavigation)
@@ -117,6 +121,7 @@ struct ShortcutTabView: View {
         ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
+            .id(firstTabID)
     }
     
     @ViewBuilder
@@ -124,6 +129,7 @@ struct ShortcutTabView: View {
         ExploreCurationView()
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
+            .id(secondTabID)
     }
     
     @ViewBuilder
@@ -131,6 +137,7 @@ struct ShortcutTabView: View {
         MyPageView()
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
+            .id(thirdTabID)
     }
     
     private func fetchShortcutIdFromUrl(urlString: String) {
@@ -202,21 +209,17 @@ struct ShortcutTabView_Previews: PreviewProvider {
 
 // TODO: - extension 컨벤션 머지 후 위치 수정
 extension View {
-    func scrollToBottomWithAnimation(_ proxy: ScrollViewProxy?, scrollID: Int, navigationPath: inout NavigationPath) {
-        guard let proxy = proxy else { return }
+    func scrollToBottomWithAnimation(_ proxy: ScrollViewProxy, scrollID: Int, navigationPath: inout NavigationPath, viewID: inout UUID) {
         if #available(iOS 16.1, *) {
             if navigationPath.count > 0 {
-                navigationPath.removeLast(navigationPath.count)
+                navigationPath = NavigationPath()
             } else {
                 withAnimation {
                     proxy.scrollTo(scrollID, anchor: .bottom)
                 }
             }
         } else {
-            withAnimation {
-                proxy.scrollTo(scrollID, anchor: .bottom)
-            }
-            NavigationUtil.popToRootView()
+            viewID = UUID()
         }
     }
 }
