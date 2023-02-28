@@ -61,13 +61,13 @@ struct GradeAlertView: View {
         }
         .onAppear() {
             index = shortcutsZipViewModel.shortcutGrade - 1
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 withAnimation(.spring(response: 0.7, dampingFraction: 0.3, blendDuration: 0)) {
                     offset = -245
                 }
                 
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 withAnimation(.easeIn(duration: 0.5)) {
                     isTextShowing = true
                 }
