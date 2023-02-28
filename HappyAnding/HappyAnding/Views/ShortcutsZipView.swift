@@ -25,9 +25,12 @@ struct ShortcutsZipView: View {
                 ShortcutTabView()
                     .environmentObject(userAuth)
                 
-                if gradeAlerter.isPresented {
-                    GradeAlertView()
+                if isGradeAlertShowing {
+                    GradeAlertView(isShowing: $isGradeAlertShowing)
                 }
+            }
+            .onChange(of: gradeAlerter.isPresented) { newValue in
+                isGradeAlertShowing = newValue
             }
         }  else {
             if useWithoutSignIn {

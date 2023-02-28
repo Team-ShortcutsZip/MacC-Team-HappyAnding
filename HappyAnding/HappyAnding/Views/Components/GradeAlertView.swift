@@ -11,6 +11,8 @@ struct GradeAlertView: View {
     @Environment(\.gradeAlertKey) var gradeAlerter
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @Binding var isShowing: Bool
+    
     @State var offset: CGFloat = 0
     @State var isTextShowing = false
     @State var index = 0
@@ -25,6 +27,10 @@ struct GradeAlertView: View {
             Color.black
                 .opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    gradeAlerter.isPresented = false
+                    isShowing = false
+                }
             
             xmark
             
@@ -80,6 +86,7 @@ struct GradeAlertView: View {
                 if isTextShowing {
                     Button {
                         gradeAlerter.isPresented = false
+                        isShowing = false
                     } label: {
                         Image(systemName: "xmark")
                             .foregroundColor(Color.gray5)
