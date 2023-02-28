@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ShortcutsZipView: View {
+    @Environment(\.gradeAlertKey) var gradeAlerter
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @StateObject var userAuth = UserAuth.shared
@@ -16,10 +17,18 @@ struct ShortcutsZipView: View {
     @AppStorage("isReauthenticated") var isReauthenticated = false
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
+    @State var isGradeAlertShowing = false
+    
     var body: some View {
         if signInStatus {
-            ShortcutTabView()
-                .environmentObject(userAuth)
+            ZStack {
+                ShortcutTabView()
+                    .environmentObject(userAuth)
+                
+                if gradeAlerter.isPresented {
+                    GradeAlertView()
+                }
+            }
         }  else {
             if useWithoutSignIn {
                 ShortcutTabView()

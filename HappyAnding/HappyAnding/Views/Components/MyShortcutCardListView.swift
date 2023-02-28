@@ -10,6 +10,7 @@ import SwiftUI
 struct MyShortcutCardListView: View {
     
     @Environment(\.loginAlertKey) var loginAlerter
+    @Environment(\.gradeAlertKey) var gradeAlerter
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @StateObject var writeNavigation = WriteShortcutNavigation()
@@ -74,16 +75,6 @@ struct MyShortcutCardListView: View {
             NavigationRouter(content: writeShortcutView, path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
         }
-        .alert("새로운 뱃지 획득!", isPresented: $isGradeAlertPresented) {
-            Button(role: .cancel) {
-                
-            } label: {
-                Text(TextLiteral.close)
-            }
-        } message: {
-            shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: ShortcutGrade(rawValue: shortcutsZipViewModel.shortcutGrade) ?? .level0)
-        }
-
     }
     
     @ViewBuilder
