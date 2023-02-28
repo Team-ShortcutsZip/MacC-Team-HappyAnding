@@ -15,3 +15,6 @@ struct LoginAlertKey: EnvironmentKey {
     static let defaultValue = Alerter()
 }
 
+struct GradeAlertKey: EnvironmentKey {
+    static let defaultValue = Alerter()
+}

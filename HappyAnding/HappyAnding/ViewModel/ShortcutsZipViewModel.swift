@@ -963,7 +963,7 @@ extension ShortcutsZipViewModel {
             return ShortcutGrade.level5
         } else if count >= 10 && count < 25 {
             return ShortcutGrade.level10
-        } else if count >= 25 && count > 50 {
+        } else if count >= 25 && count < 50 {
             return ShortcutGrade.level25
         } else {
             return ShortcutGrade.level50
@@ -1001,13 +1001,4 @@ extension ShortcutsZipViewModel {
     func updateShortcutGrade() {
         shortcutGrade = checkShortcutGrade(userID: nil).rawValue
     }
-}
-
-enum ShortcutGrade: Int {
-    case level0 = 0
-    case level1 = 1
-    case level5 = 5
-    case level10 = 10
-    case level25 = 25
-    case level50 = 50
 }
