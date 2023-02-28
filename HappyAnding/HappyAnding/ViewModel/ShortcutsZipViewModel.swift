@@ -998,6 +998,18 @@ extension ShortcutsZipViewModel {
         }
     }
     
+    func isShortcutDowngrade() -> Bool {
+        if shortcutsMadeByUser.count == 0 ||
+            shortcutsMadeByUser.count == 5 ||
+            shortcutsMadeByUser.count == 10 ||
+            shortcutsMadeByUser.count == 25 ||
+            shortcutsMadeByUser.count == 50 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func updateShortcutGrade() {
         shortcutGrade = checkShortcutGrade(userID: nil).rawValue
     }

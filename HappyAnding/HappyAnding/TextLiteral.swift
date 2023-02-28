@@ -103,6 +103,7 @@ enum TextLiteral {
     static let readShortcutViewCommentTabTitle: String = "댓글"
     static let readShortcutViewDeletionTitle: String = "단축어 삭제"
     static let readShortcutViewDeletionMessage: String = "단축어를 삭제하시겠어요?"
+    static let readShortcutViewDeletionMessageDowngrade: String = "단축어를 삭제하시겠어요? \n이 글을 삭제하면 등급이 내려가요."
     static let readShortcutViewDeleteFixes: String = "수정사항을 삭제하시겠어요?"
     static let readShortcutViewKeepFixes: String = "계속 작성"
     static let readShortcutViewCommentDescriptionBeforeLogin: String = "로그인 후 댓글을 작성할 수 있어요"

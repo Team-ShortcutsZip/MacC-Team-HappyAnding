@@ -26,9 +26,10 @@ struct ReadShortcutView: View {
     @State var isEdit = false
     @State var isUpdating = false
     
-    @State var isMyLike: Bool = false
+    @State var isMyLike = false
     @State var isFirstMyLike = false
     @State var isClickDownload = false
+    @State var isDowngrade = false
     
     @State var data: NavigationReadShortcutType
     @State var comments: Comments = Comments(id: "", comments: [])
@@ -157,7 +158,7 @@ struct ReadShortcutView: View {
                     Text(TextLiteral.delete)
                 }
             } message: {
-                Text(TextLiteral.readShortcutViewDeletionMessage)
+                Text(isDowngrade ? TextLiteral.readShortcutViewDeletionMessageDowngrade : TextLiteral.readShortcutViewDeletionMessage)
             }
             .fullScreenCover(isPresented: $isEdit) {
                 NavigationStack(path: $writeNavigation.navigationPath) {
@@ -352,7 +353,7 @@ extension ReadShortcutView {
     private var deleteButton: some View {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
-            // TODO: firebase delete function
+            isDowngrade = shortcutsZipViewModel.isShortcutDowngrade()
             
         }) {
             Label(TextLiteral.delete, systemImage: "trash.fill")
