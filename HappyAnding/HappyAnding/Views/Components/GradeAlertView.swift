@@ -27,12 +27,6 @@ struct GradeAlertView: View {
             Color.black
                 .opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    if isTextShowing {
-                        gradeAlerter.isPresented = false
-                        isShowing = false
-                    }
-                }
             
             xmark
             
