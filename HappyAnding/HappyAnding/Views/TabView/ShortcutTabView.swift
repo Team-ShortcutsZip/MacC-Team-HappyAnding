@@ -11,6 +11,7 @@ import BackgroundTasks
 struct ShortcutTabView: View {
     // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @Environment(\.scenePhase) private var phase
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
@@ -57,13 +58,7 @@ struct ShortcutTabView: View {
                 NavigationRouter(content: firstTab, path: $shortcutNavigation.navigationPath)
                     .onChange(of: tappedTwice) { tappedTwice in
                         guard tappedTwice else { return }
-                        if shortcutNavigation.navigationPath.count > 0 {
-                            shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
-                        } else {
-                            withAnimation {
-                                proxy.scrollTo(111, anchor: .bottom)
-                            }
-                        }
+                        scrollToBottomWithAnimation(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath)
                         self.tappedTwice = false
                     }
                     .onChange(of: isFolded) { _ in
@@ -81,13 +76,7 @@ struct ShortcutTabView: View {
                                  path: $curationNavigation.navigationPath)
                 .onChange(of: tappedTwice) { tappedTwice in
                     guard tappedTwice else { return }
-                    if curationNavigation.navigationPath.count > 0 {
-                        curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
-                    } else {
-                        withAnimation {
-                            proxy.scrollTo(222, anchor: .bottom)
-                        }
-                    }
+                    scrollToBottomWithAnimation(proxy, scrollID: 222, navigationPath: &curationNavigation.navigationPath)
                     self.tappedTwice = false
                 }
                 .environmentObject(curationNavigation)
@@ -99,13 +88,7 @@ struct ShortcutTabView: View {
                 NavigationRouter(content: thirdTab, path: $profileNavigation.navigationPath)
                     .onChange(of: tappedTwice, perform: { tappedTwice in
                         guard tappedTwice else { return }
-                        if profileNavigation.navigationPath.count > 0 {
-                            profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
-                        } else {
-                            withAnimation {
-                                proxy.scrollTo(333, anchor: .bottom)
-                            }
-                        }
+                        scrollToBottomWithAnimation(proxy, scrollID: 333, navigationPath: &profileNavigation.navigationPath)
                         self.tappedTwice = false
                     })
                     .environmentObject(profileNavigation)
@@ -125,6 +108,7 @@ struct ShortcutTabView: View {
                 fetchCurationIdFromUrl(urlString: url.absoluteString)
             }
         }
+        .background(Color.red)
     }
     
     
@@ -213,5 +197,26 @@ struct ShortcutTabView: View {
 struct ShortcutTabView_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutTabView()
+    }
+}
+
+// TODO: - extension 컨벤션 머지 후 위치 수정
+extension View {
+    func scrollToBottomWithAnimation(_ proxy: ScrollViewProxy?, scrollID: Int, navigationPath: inout NavigationPath) {
+        guard let proxy = proxy else { return }
+        if #available(iOS 16.1, *) {
+            if navigationPath.count > 0 {
+                navigationPath.removeLast(navigationPath.count)
+            } else {
+                withAnimation {
+                    proxy.scrollTo(scrollID, anchor: .bottom)
+                }
+            }
+        } else {
+            withAnimation {
+                proxy.scrollTo(scrollID, anchor: .bottom)
+            }
+            NavigationUtil.popToRootView()
+        }
     }
 }
