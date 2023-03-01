@@ -85,6 +85,7 @@
 		A3439B05293B48C20043E273 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3439B04293B48C20043E273 /* GoogleService-Info.plist */; };
 		A3439B06293B493F0043E273 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3439B04293B48C20043E273 /* GoogleService-Info.plist */; };
 		A34BF82829AF3D55009BC946 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34BF82729AF3D55009BC946 /* AnnouncementCell.swift */; };
+		A34BF82D29AFC34F009BC946 /* AboutUserGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34BF82C29AFC34F009BC946 /* AboutUserGradeView.swift */; };
 		A35DB3372927E8EB0011A28B /* CustomShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */; };
 		A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */; };
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
@@ -255,6 +256,7 @@
 		A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		A3439B04293B48C20043E273 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A34BF82729AF3D55009BC946 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
+		A34BF82C29AFC34F009BC946 /* AboutUserGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUserGradeView.swift; sourceTree = "<group>"; };
 		A35C39532936928200C4359F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareViewController.swift; sourceTree = "<group>"; };
 		A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareNavigationController.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				87E99C9C28FFF1FE009B691F /* ExploreCurationViews */,
 				87E99C9928FFF1DE009B691F /* WriteCurationViews */,
 				87E99C9D28FFF207009B691F /* MyPageViews */,
+				A34BF82929AFC308009BC946 /* FeatureViews */,
 				87E606AE291062D300C3DA13 /* SignInViews */,
 				8792479A291BDF820040D5C3 /* SearchView.swift */,
 				3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */,
@@ -607,6 +610,14 @@
 				A35C39532936928200C4359F /* GoogleService-Info.plist */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		A34BF82929AFC308009BC946 /* FeatureViews */ = {
+			isa = PBXGroup;
+			children = (
+				A34BF82C29AFC34F009BC946 /* AboutUserGradeView.swift */,
+			);
+			path = FeatureViews;
 			sourceTree = "<group>";
 		};
 		A3A6AD15292763E2004C49DC /* ShareExtension */ = {
@@ -846,6 +857,7 @@
 				A3FF0183291648A300384211 /* MailView.swift in Sources */,
 				A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */,
 				87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */,
+				A34BF82D29AFC34F009BC946 /* AboutUserGradeView.swift in Sources */,
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87CFD8492939187200F97B86 /* NicknameTextField.swift in Sources */,
 				4D3DBB962934E31A00DE8160 /* ShowProfileView.swift in Sources */,

@@ -14,6 +14,7 @@ struct ExploreShortcutView: View {
     @Binding var isFolded: Bool
     
     @State var isAnnouncementShow: Bool = true
+    @State var isTappedUserGradeButton = false
     
     let randomCategories: [Category]
     
@@ -22,10 +23,14 @@ struct ExploreShortcutView: View {
             VStack(spacing: 32){
                 
                 if isAnnouncementShow {
-                    AnnouncementCell(icon: "ShortcutGradeAnnouncement",
-                                     tagName: TextLiteral.announcementTag,
-                                     discription: TextLiteral.UserGradeTitle,
-                                     isAnnouncementShow: $isAnnouncementShow)
+                    Button {
+                        isTappedUserGradeButton = true
+                    } label: {
+                        AnnouncementCell(icon: "ShortcutGradeAnnouncement",
+                                         tagName: TextLiteral.announcementTag,
+                                         discription: TextLiteral.UserGradeDescription,
+                                         isAnnouncementShow: $isAnnouncementShow)
+                    }
                 }
                 
                 RecentRegisteredView(shortcuts: $shortcutsZipViewModel.allShortcuts,
@@ -62,6 +67,9 @@ struct ExploreShortcutView: View {
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
+        .sheet(isPresented: $isTappedUserGradeButton) {
+            AboutUserGradeView()
+        }
     }
 }
 

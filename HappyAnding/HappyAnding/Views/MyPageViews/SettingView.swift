@@ -20,6 +20,7 @@ struct SettingView: View {
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
+    @State var isTappedUserGradeButton = false
     @State var isShowingMailView = false
     @State var isTappedLogOutButton = false
     @State var isTappedSignOutButton = false
@@ -36,7 +37,11 @@ struct SettingView: View {
             divider
             
             //MARK: - 단축어 작성 등급
-            FunctionCell(title: TextLiteral.UserGradeTitle, tag: TextLiteral.announcementTag)
+            Button {
+                isTappedUserGradeButton = true
+            } label: {
+                FunctionCell(title: TextLiteral.UserGradeTitle, tag: TextLiteral.announcementTag)
+            }
             
             /*
              // TODO: 알림 기능
@@ -125,6 +130,10 @@ struct SettingView: View {
                     .navigationLinkRouter(data: NavigationWithdrawal.first)
             }
             Spacer()
+        }
+        
+        .sheet(isPresented: $isTappedUserGradeButton) {
+            AboutUserGradeView()
         }
         .sheet(isPresented: $isShowingMailView) {
             MailView(isShowing: self.$isShowingMailView, result: self.$result)
