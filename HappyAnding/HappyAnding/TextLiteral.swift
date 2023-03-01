@@ -226,4 +226,8 @@ enum TextLiteral {
     static let customShareViewControllerLinkVaildAlertTitle: String = "잘못된 접근이에요"
     static let customShareViewControllerLinkVaildAlertMessage: String = "해당 링크는 ShortcutsZip으로 공유할 수 없어요"
     static let customShareViewControllerCheck: String = "확인"
+    
+    //MARK: - GradeAlertView
+    static let gradeAlertMessage: String = "단축어 작성 레벨이 상승했어요!"
+    static let gradeAlertMessageBlank: String = ""
 }

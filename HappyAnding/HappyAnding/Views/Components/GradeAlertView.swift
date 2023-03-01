@@ -51,9 +51,9 @@ struct GradeAlertView: View {
                 .frame(maxHeight: 250)
                 .disabled(true)
                 
-                Text(isTextShowing ? "단축어 작성 레벨이 상승했어요!" : "")
+                Text(isTextShowing ? TextLiteral.gradeAlertMessage : TextLiteral.gradeAlertMessageBlank)
                     .Title1()
-                    .foregroundColor(Color.gray5)
+                    .foregroundColor(.gray5)
                     .padding(.bottom, 60)
                     .disabled(isTextShowing)
             }
@@ -85,7 +85,7 @@ struct GradeAlertView: View {
                         isShowing = false
                     } label: {
                         Image(systemName: "xmark")
-                            .foregroundColor(Color.gray5)
+                            .foregroundColor(.gray5)
                             .font(.system(size: 24, weight: .medium))
                     }
                 }
@@ -95,7 +95,7 @@ struct GradeAlertView: View {
             Spacer()
         }
         .frame(width: 358, height: 516)
-        .background(Color.white)
+        .background(Color.shortcutsZipWhite)
         .cornerRadius(12)
     }
 }
