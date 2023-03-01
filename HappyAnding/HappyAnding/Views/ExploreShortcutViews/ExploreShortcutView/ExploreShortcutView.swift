@@ -13,11 +13,21 @@ struct ExploreShortcutView: View {
     
     @Binding var isFolded: Bool
     
+    @State var isAnnouncementShow: Bool = true
+    
     let randomCategories: [Category]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 32){
+                
+                if isAnnouncementShow {
+                    AnnouncementCell(icon: "ShortcutGradeAnnouncement",
+                                     tagName: TextLiteral.announcementTag,
+                                     discription: TextLiteral.announcementDescription,
+                                     isAnnouncementShow: $isAnnouncementShow)
+                }
+                
                 RecentRegisteredView(shortcuts: $shortcutsZipViewModel.allShortcuts,
                                      navigationParentView: .shortcuts)
                 

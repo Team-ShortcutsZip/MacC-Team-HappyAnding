@@ -32,6 +32,10 @@ enum TextLiteral {
     // MARK: - ExploreShortcutView
     static let exploreShortcutViewTitle: String = "단축어 둘러보기"
     
+    //MARK: - announcementCell
+    static let announcementTag: String = "새로운 기능"
+    static let announcementDescription: String = "단축어 작성 등급 살펴보기"
+    
     // MARK: - RecentRegisteredView
     static let recentRegisteredViewTitle: String = "최신 단축어"
     
