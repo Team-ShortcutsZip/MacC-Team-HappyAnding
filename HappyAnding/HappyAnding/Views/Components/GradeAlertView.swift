@@ -33,7 +33,7 @@ struct GradeAlertView: View {
             VStack(spacing: 20) {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 60) {
-                        if index - 1 < 0 {
+                        if index < 1 {
                             Rectangle()
                                 .foregroundColor(Color.white)
                                 .frame(height: 198)
