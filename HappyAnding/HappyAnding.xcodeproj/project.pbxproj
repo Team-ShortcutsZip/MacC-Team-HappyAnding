@@ -1126,7 +1126,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfileForDev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfile_Dev_20230301;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1168,7 +1168,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfileForDev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfile_Dev_20230301;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1277,7 +1277,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtensionForDev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtProfile_Dev_20230301;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1309,7 +1309,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtensionForDev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtProfile_Dev_20230301;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
