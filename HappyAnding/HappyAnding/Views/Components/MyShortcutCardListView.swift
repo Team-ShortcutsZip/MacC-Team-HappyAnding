@@ -74,6 +74,9 @@ struct MyShortcutCardListView: View {
         .fullScreenCover(isPresented: $isWriting) {
             NavigationRouter(content: writeShortcutView, path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
+                .onDisappear() {
+                    gradeAlerter.isPresented = shortcutsZipViewModel.isShortcutUpgrade()
+                }
         }
     }
     
