@@ -24,7 +24,7 @@ struct ExploreShortcutView: View {
                 if isAnnouncementShow {
                     AnnouncementCell(icon: "ShortcutGradeAnnouncement",
                                      tagName: TextLiteral.announcementTag,
-                                     discription: TextLiteral.announcementDescription,
+                                     discription: TextLiteral.UserGradeTitle,
                                      isAnnouncementShow: $isAnnouncementShow)
                 }
                 

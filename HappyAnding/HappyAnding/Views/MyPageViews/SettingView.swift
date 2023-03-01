@@ -28,6 +28,16 @@ struct SettingView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
+            // MARK: - 버전 정보
+            if !getAppVersion().isEmpty {
+                SettingCell(title: TextLiteral.settingViewVersion, version: getAppVersion())
+            }
+            
+            divider
+            
+            //MARK: - 단축어 작성 등급
+            FunctionCell(title: TextLiteral.UserGradeTitle, tag: TextLiteral.announcementTag)
+            
             /*
              // TODO: 알림 기능
              Text("알림 설정")
@@ -40,11 +50,7 @@ struct SettingView: View {
              }
              */
             
-            // MARK: - 버전 정보
-            if !getAppVersion().isEmpty {
-                SettingCell(title: TextLiteral.settingViewVersion, version: getAppVersion())
-            }
-            
+            divider
             
             // MARK: - 오픈소스 라이선스
             SettingCell(title: TextLiteral.settingViewOpensourceLicense)
@@ -65,6 +71,7 @@ struct SettingView: View {
             //                SettingCell(title: "개발팀에 관하여")
             //            }
             
+            
             // MARK: - 개발자에게 연락하기 버튼
             Button(action : {
                 if MFMailComposeViewController.canSendMail() {
@@ -80,6 +87,8 @@ struct SettingView: View {
                 }
             }
             
+            divider
+            
             if useWithoutSignIn {
                 //MARK: - 로그인없이 둘러보기 시 로그인 버튼
                 Button {
@@ -87,7 +96,6 @@ struct SettingView: View {
                 } label: {
                     SettingCell(title: TextLiteral.settingViewLogin)
                 }
-                
             } else {
                 // MARK: - 로그아웃 버튼
                 Button {
@@ -110,6 +118,7 @@ struct SettingView: View {
                 } message: {
                     Text(TextLiteral.settingViewLogoutMessage)
                 }
+                
                 
                 // MARK: - 회원탈퇴 버튼
                 SettingCell(title: TextLiteral.settingViewWithdrawal)
@@ -139,6 +148,11 @@ struct SettingView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
+    var divider: some View {
+        Divider()
+            .background(Color.gray1)
+            .frame(width: UIScreen.main.bounds.size.width - 32)
+    }
     
     private func logOut() {
         let firebaseAuth = Auth.auth()
@@ -170,6 +184,36 @@ struct SettingCell: View {
         }
         .Body1()
         .foregroundColor(.gray4)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 16)
+    }
+}
+
+struct FunctionCell: View {
+    var title: String
+    var tag: String?
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .Body1()
+                .foregroundColor(.gray4)
+            Spacer()
+            if let tag {
+                Text(tag)
+                    .Body2()
+                    .foregroundColor(Color.tagText)
+                    .frame(height: 20)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(
+                        Capsule()
+                            .fill( Color.tagBackground )
+                            .overlay(
+                                Capsule()
+                                    .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))                        )
+            }
+        }
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
     }
