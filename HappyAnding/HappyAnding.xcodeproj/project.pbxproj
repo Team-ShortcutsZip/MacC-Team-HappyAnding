@@ -13,7 +13,7 @@
 		4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */; };
 		4D6A9EFF29A36E9C00D02522 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 4D6A9EFE29A36E9C00D02522 /* WrappingHStack */; };
 		4D6A9F0129A3A92F00D02522 /* wrappinghstack+license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A9F0029A3A92E00D02522 /* wrappinghstack+license.txt */; };
-		4D778A34290A53BA00C15AC4 /* Application+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D778A33290A53BA00C15AC4 /* Application+Keyboard.swift */; };
+		4D778A34290A53BA00C15AC4 /* UIApplication+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D778A33290A53BA00C15AC4 /* UIApplication+Keyboard.swift */; };
 		4D7D16072986BBD7008B3332 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D16062986BBD7008B3332 /* TextLiteral.swift */; };
 		4D7D16082986BBDE008B3332 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D16062986BBD7008B3332 /* TextLiteral.swift */; };
 		4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */; };
@@ -191,7 +191,7 @@
 		4D402E7A2979342800D9A825 /* RecentRegisteredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentRegisteredView.swift; sourceTree = "<group>"; };
 		4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		4D6A9F0029A3A92E00D02522 /* wrappinghstack+license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "wrappinghstack+license.txt"; sourceTree = "<group>"; };
-		4D778A33290A53BA00C15AC4 /* Application+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Application+Keyboard.swift"; sourceTree = "<group>"; };
+		4D778A33290A53BA00C15AC4 /* UIApplication+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Keyboard.swift"; sourceTree = "<group>"; };
 		4D7D16062986BBD7008B3332 /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextLiteral.swift; path = HappyAnding/TextLiteral.swift; sourceTree = SOURCE_ROOT; };
 		4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateShortcutView.swift; sourceTree = "<group>"; };
 		4DAD636F292BCB1000ABF8C1 /* CategoryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCardView.swift; sourceTree = "<group>"; };
@@ -531,7 +531,7 @@
 				87E99CC329014572009B691F /* Color+Extension.swift */,
 				8786B2EB29A7FAD2000B46A1 /* UIColor+Extension.swift */,
 				F99569172901DC4D0060AAEF /* UIFont+Extension.swift */,
-				4D778A33290A53BA00C15AC4 /* Application+Keyboard.swift */,
+				4D778A33290A53BA00C15AC4 /* UIApplication+Keyboard.swift */,
 				F9CAEF822914855900224B0A /* Date+String.swift */,
 				8792478C2918CE450040D5C3 /* UINavigationContoller+Gesture.swift */,
 				878837492920D549009B3F54 /* Binding+Extension.swift */,
@@ -882,7 +882,7 @@
 				A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */,
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
-				4D778A34290A53BA00C15AC4 /* Application+Keyboard.swift in Sources */,
+				4D778A34290A53BA00C15AC4 /* UIApplication+Keyboard.swift in Sources */,
 				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
 				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
 				8795A170292AB945004B765F /* UIScreen+Size.swift in Sources */,
