@@ -62,7 +62,7 @@ struct ShortcutTabView: View {
                 NavigationRouter(content: firstTab, path: $shortcutNavigation.navigationPath)
                     .onChange(of: tappedTwice) { tappedTwice in
                         guard tappedTwice else { return }
-                        scrollToBottomWithAnimation(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath, viewID: &firstTabID)
+                        didTappedTabViewItem(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath, viewID: &firstTabID)
                         self.tappedTwice = false
                     }
                     .onChange(of: isFolded) { _ in
@@ -80,7 +80,7 @@ struct ShortcutTabView: View {
                                  path: $curationNavigation.navigationPath)
                 .onChange(of: tappedTwice) { tappedTwice in
                     guard tappedTwice else { return }
-                    scrollToBottomWithAnimation(proxy, scrollID: 222, navigationPath: &curationNavigation.navigationPath, viewID: &secondTabID)
+                    didTappedTabViewItem(proxy, scrollID: 222, navigationPath: &curationNavigation.navigationPath, viewID: &secondTabID)
                     self.tappedTwice = false
                 }
                 .environmentObject(curationNavigation)
@@ -92,7 +92,7 @@ struct ShortcutTabView: View {
                 NavigationRouter(content: thirdTab, path: $profileNavigation.navigationPath)
                     .onChange(of: tappedTwice, perform: { tappedTwice in
                         guard tappedTwice else { return }
-                        scrollToBottomWithAnimation(proxy, scrollID: 333, navigationPath: &profileNavigation.navigationPath, viewID: &thirdTabID)
+                        didTappedTabViewItem(proxy, scrollID: 333, navigationPath: &profileNavigation.navigationPath, viewID: &thirdTabID)
                         self.tappedTwice = false
                     })
                     .environmentObject(profileNavigation)
@@ -209,15 +209,23 @@ struct ShortcutTabView_Previews: PreviewProvider {
 
 // TODO: - extension 컨벤션 머지 후 위치 수정
 extension View {
-    func scrollToBottomWithAnimation(_ proxy: ScrollViewProxy, scrollID: Int, navigationPath: inout NavigationPath, viewID: inout UUID) {
+    func didTappedTabViewItem(_ proxy: ScrollViewProxy, scrollID: Int, navigationPath: inout NavigationPath, viewID: inout UUID) {
+        
+        // MARK: Navigation Stack
         if #available(iOS 16.1, *) {
+            
+            // Root View로 이동
             if navigationPath.count > 0 {
                 navigationPath = NavigationPath()
+                
             } else {
+                // 최상단으로 이동
                 withAnimation {
                     proxy.scrollTo(scrollID, anchor: .bottom)
                 }
             }
+            
+            // MARK: Navigation View
         } else {
             viewID = UUID()
         }
