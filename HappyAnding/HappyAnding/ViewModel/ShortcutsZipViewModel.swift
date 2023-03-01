@@ -955,18 +955,19 @@ extension ShortcutsZipViewModel {
             count = shortcutsMadeByUser.count
         }
         
-        if count < 1 {
-            return ShortcutGrade.level0
-        } else if count >= 1 && count < 5 {
-            return ShortcutGrade.level1
-        } else if count >= 5 && count < 10 {
-            return ShortcutGrade.level5
-        } else if count >= 10 && count < 25 {
-            return ShortcutGrade.level10
-        } else if count >= 25 && count < 50 {
-            return ShortcutGrade.level25
-        } else {
-            return ShortcutGrade.level50
+        switch count {
+        case ..<1:
+            return .level0
+        case 1..<5:
+            return .level1
+        case 5..<10:
+            return .level5
+        case 10..<25:
+            return .level10
+        case 25..<50:
+            return .level25
+        default:
+            return .level50
         }
     }
     
