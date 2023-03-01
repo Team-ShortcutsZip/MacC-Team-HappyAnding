@@ -36,7 +36,7 @@ struct GradeAlertView: View {
                         if index < 1 {
                             Rectangle()
                                 .foregroundColor(Color.white)
-                                .frame(height: 198)
+                                .frame(width: 170, height: 198)
                         } else {
                             Image(gradeImage[index - 1])
                                 .resizable()
