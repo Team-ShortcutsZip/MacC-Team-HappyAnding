@@ -41,7 +41,7 @@ struct UserCurationListView: View {
                 
                 HStack(spacing: 6) {
                     Image(systemName: "plus")
-                        .MediumIcon()
+                        .mediumIcon()
                     Text(TextLiteral.userCurationListViewAdd)
                         .Headline()
                 }

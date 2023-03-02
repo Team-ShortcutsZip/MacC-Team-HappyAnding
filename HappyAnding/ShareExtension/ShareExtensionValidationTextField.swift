@@ -212,19 +212,19 @@ struct ShareExtensionValidationCheckTextField: View {
                 EmptyView()
             case .doneSuccess:
                 Image(systemName: "checkmark.circle.fill")
-                    .SmallIcon()
+                    .smallIcon()
                     .foregroundColor(.shortcutsZipSuccess)
                     .onTapGesture { }
             case .doneFail:
                 Image(systemName: "exclamationmark.circle.fill")
-                    .SmallIcon()
+                    .smallIcon()
                     .foregroundColor(.shortcutsZipError)
             case .inProgressSuccess:
                 Button {
                     content.removeAll()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .SmallIcon()
+                        .smallIcon()
                         .foregroundColor(.gray5)
                 }
             case .inProgressFail:
@@ -232,7 +232,7 @@ struct ShareExtensionValidationCheckTextField: View {
                     content.removeAll()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .SmallIcon()
+                        .smallIcon()
                         .foregroundColor(.gray5)
                 }
             }

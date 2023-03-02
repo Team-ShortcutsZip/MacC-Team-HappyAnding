@@ -161,7 +161,7 @@ struct IconModalView: View {
                     
                     if paletteColor == iconColor {
                         Image(systemName: "checkmark")
-                            .SmallIcon()
+                            .smallIcon()
                             .foregroundColor(.textIcon)
                     }
                 }

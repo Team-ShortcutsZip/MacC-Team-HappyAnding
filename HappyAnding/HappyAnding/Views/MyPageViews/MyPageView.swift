@@ -34,7 +34,7 @@ struct MyPageView: View {
                         
                         if !useWithoutSignIn {
                             Image(systemName: "square.and.pencil")
-                                .MediumIcon()
+                                .mediumIcon()
                                 .foregroundColor(.gray4)
                                 .navigationLinkRouter(data: NavigationNicknameView.first)
                         }
@@ -115,7 +115,7 @@ struct MyPageShortcutListCell: View {
                 )
             Spacer()
             Image(systemName: "chevron.forward")
-                .MediumIcon()
+                .mediumIcon()
                 .foregroundColor(.gray5)
             
         }

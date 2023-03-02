@@ -166,18 +166,18 @@ struct NicknameTextField: View {
                     nickname.removeAll()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .SmallIcon()
+                        .smallIcon()
                         .foregroundColor(.gray5)
                 }
             } else {
                 if nicknameState == .fail {
                     Image(systemName: "exclamationmark.circle.fill")
-                        .SmallIcon()
+                        .smallIcon()
                         .foregroundColor(.shortcutsZipError)
                         .onTapGesture { }
                 } else if nicknameState == .success {
                     Image(systemName: "checkmark.circle.fill")
-                        .SmallIcon()
+                        .smallIcon()
                         .foregroundColor(.shortcutsZipSuccess)
                         .onTapGesture { }
                 }

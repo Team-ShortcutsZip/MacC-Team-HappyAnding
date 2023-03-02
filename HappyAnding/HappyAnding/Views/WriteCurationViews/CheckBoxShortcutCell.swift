@@ -53,7 +53,7 @@ struct CheckBoxShortcutCell: View {
     
     var toggle: some View {
         Image(systemName: isShortcutTapped ? "checkmark.square.fill" : "square")
-            .SmallIcon()
+            .smallIcon()
             .foregroundColor(isShortcutTapped ? .shortcutsZipPrimary : .gray3)
             .padding(.leading, 20)
     }
@@ -67,7 +67,7 @@ struct CheckBoxShortcutCell: View {
                 .frame(width: 52, height: 52)
             
             Image(systemName: shortcutCell.sfSymbol)
-                .MediumShortcutIcon()
+                .mediumShortcutIcon()
                 .foregroundColor(.white)
         }
         .padding(.leading, 12)

@@ -59,7 +59,7 @@ struct ReadShortcutHeaderView: View {
     var icon: some View {
         VStack {
             Image(systemName: shortcut.sfSymbol)
-                .MediumShortcutIcon()
+                .mediumShortcutIcon()
                 .foregroundColor(Color.textIcon)
         }
         .frame(width: 52, height: 52)

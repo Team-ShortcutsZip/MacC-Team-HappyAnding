@@ -133,7 +133,7 @@ struct WriteShortcutView: View {
                     .cornerRadius(12.35)
                     .frame(width: 84, height: 84)
                 Image(systemName: !shortcut.sfSymbol.isEmpty ? shortcut.sfSymbol : "plus")
-                    .MediumIcon()
+                    .mediumIcon()
                     .frame(width: 84, height: 84)
                     .foregroundColor(!shortcut.sfSymbol.isEmpty ? .textIcon : .gray5)
             }
@@ -242,7 +242,7 @@ struct WriteShortcutView: View {
                         }
                         Spacer()
                         Image(systemName: "chevron.forward")
-                            .SmallIcon()
+                            .smallIcon()
                             .foregroundColor(selectedCategories.isEmpty ? .gray2 : .gray4)
                     }
                     .padding(.all, 16)
@@ -274,7 +274,7 @@ struct WriteShortcutView: View {
                     .foregroundColor(.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
-                    .SmallIcon()
+                    .smallIcon()
                     .foregroundColor(.gray4)
                     .onTapGesture {
                         isInfoButtonTouched.toggle()
@@ -296,7 +296,7 @@ struct WriteShortcutView: View {
                                 .multilineTextAlignment(.leading)
                             Spacer()
                             Image(systemName: "xmark")
-                                .SmallIcon()
+                                .smallIcon()
                                 .frame(width: 16, height: 16)
                                 .foregroundColor(.gray1)
                                 .onTapGesture {
@@ -350,7 +350,7 @@ struct WriteShortcutView: View {
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
-                                .SmallIcon()
+                                .smallIcon()
                             Text(TextLiteral.writeShortcutViewRequiredAppCell)
                         }
                     })
@@ -374,7 +374,7 @@ struct WriteShortcutView: View {
                     items.removeAll { $0 == item }
                 }, label: {
                     Image(systemName: "xmark")
-                        .SmallIcon()
+                        .smallIcon()
                 })
             }
             .modifier(CellModifier(foregroundColor: Color.gray4,
@@ -412,7 +412,7 @@ struct WriteShortcutView: View {
                     self.text = ""
                 }) {
                     Image(systemName: "xmark.circle.fill")
-                        .SmallIcon()
+                        .smallIcon()
                         .foregroundColor(.gray4)
                 }
             }

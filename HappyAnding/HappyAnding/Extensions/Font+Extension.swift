@@ -18,11 +18,11 @@ extension UIFont {
     static var Footnote = UIFont.systemFont(ofSize: 13, weight: .regular)
     static var Sb = UIFont.systemFont(ofSize: 15, weight: .semibold)
     
-    static var MediumIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
-    static var SmallIcon = UIFont.systemFont(ofSize: 15, weight: .regular)
-    static var LargeShortcutIcon = UIFont.systemFont(ofSize: 28, weight: .medium)
-    static var MediumShortcutIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
-    static var SmallShortcutIcon = UIFont.systemFont(ofSize: 15, weight: .medium)
+    static var mediumIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
+    static var smallIcon = UIFont.systemFont(ofSize: 15, weight: .regular)
+    static var largeShortcutIcon = UIFont.systemFont(ofSize: 28, weight: .medium)
+    static var mediumShortcutIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
+    static var smallShortcutIcon = UIFont.systemFont(ofSize: 15, weight: .medium)
 }
 
 //출처: https://stackoverflow.com/questions/61705184/how-to-set-line-height-for-a-single-line-text-in-swiftui
@@ -68,19 +68,19 @@ extension View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Sb, lineHeight: 20))
     }
     
-    func MediumIcon() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .MediumIcon, lineHeight: 24))
+    func mediumIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .mediumIcon, lineHeight: 24))
     }
-    func SmallIcon() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .SmallIcon, lineHeight: 16))
+    func smallIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .smallIcon, lineHeight: 16))
     }
-    func LargeShortcutIcon() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .LargeShortcutIcon, lineHeight: 36))
+    func largeShortcutIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .largeShortcutIcon, lineHeight: 36))
     }
-    func MediumShortcutIcon() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .MediumShortcutIcon, lineHeight: 30))
+    func mediumShortcutIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .mediumShortcutIcon, lineHeight: 30))
     }
-    func SmallShortcutIcon() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .SmallShortcutIcon, lineHeight: 20))
+    func smallShortcutIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .smallShortcutIcon, lineHeight: 20))
     }
 }

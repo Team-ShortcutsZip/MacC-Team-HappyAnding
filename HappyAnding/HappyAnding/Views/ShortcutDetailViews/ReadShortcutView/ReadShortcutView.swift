@@ -259,7 +259,7 @@ extension ReadShortcutView {
             HStack {
                 if comment.depth == 1 && !isClickCorrection {
                     Image(systemName: "arrow.turn.down.right")
-                        .SmallIcon()
+                        .smallIcon()
                         .foregroundColor(.gray4)
                 }
                 TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $commentText, axis: .vertical)
@@ -292,7 +292,7 @@ extension ReadShortcutView {
                     isFocused.toggle()
                 } label: {
                     Image(systemName: "paperplane.fill")
-                        .MediumIcon()
+                        .mediumIcon()
                         .foregroundColor(commentText == "" ? Color.gray2 : Color.gray5)
                 }
                 .disabled(commentText == "" ? true : false)
@@ -319,7 +319,7 @@ extension ReadShortcutView {
                 comment.depth = 0
             } label: {
                 Image(systemName: "xmark")
-                    .SmallIcon()
+                    .smallIcon()
                     .foregroundColor(.gray5)
             }
         }
@@ -352,7 +352,7 @@ extension ReadShortcutView {
             }
         }, label: {
             Image(systemName: "ellipsis")
-                .MediumIcon()
+                .mediumIcon()
                 .foregroundColor(.gray4)
         })
     }

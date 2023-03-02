@@ -11,7 +11,7 @@ extension Image {
     func setCellIcon() -> some View {
         self
             .foregroundColor(.gray4)
-            .MediumShortcutIcon()
+            .mediumShortcutIcon()
             .frame(height: 32)
     }
 }
