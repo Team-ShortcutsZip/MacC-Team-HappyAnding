@@ -86,9 +86,9 @@ struct ReadUserCurationView: View {
         ZStack {
             if let data = NavigationProfile(userInfo: self.authorInformation) {
                 HStack {
-                    Image(systemName: "person.crop.circle.fill")
-                        .font(.system(size: 28, weight: .medium))
-                        .frame(width: 28, height: 28)
+                    shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: authorInformation?.id ?? "!"))
+                        .font(.system(size: 24, weight: .medium))
+                        .frame(width: 24, height: 24)
                         .foregroundColor(.gray3)
                     
                     Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)

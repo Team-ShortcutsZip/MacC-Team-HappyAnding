@@ -18,6 +18,7 @@ struct HappyAndingApp: App {
     
     @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
     @StateObject var loginAlerter = Alerter()
+    @StateObject var gradeAlerter = Alerter()
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
