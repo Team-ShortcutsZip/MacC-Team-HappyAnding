@@ -13,6 +13,8 @@ struct MyPageView: View {
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
+    @State var isTappedUserGradeButton = false
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 32) {
@@ -21,11 +23,15 @@ struct MyPageView: View {
                 
                 HStack(spacing: 16) {
                     
-                    shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id ?? "!"))
-                        .font(.system(size: 60, weight: .medium))
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(.gray3)
-                        .id(333)
+                    Button {
+                        isTappedUserGradeButton = true
+                    } label: {
+                        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id ?? "!"))
+                            .font(.system(size: 60, weight: .medium))
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.gray3)
+                            .id(333)
+                    }
                     
                     HStack {
                         Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
@@ -80,6 +86,9 @@ struct MyPageView: View {
                     .foregroundColor(.gray5)
                     .navigationLinkRouter(data: NavigationSettingView.first)
             }
+        }
+        .sheet(isPresented: $isTappedUserGradeButton) {
+            AboutUserGradeView()
         }
         .scrollIndicators(.hidden)
         .background(Color.shortcutsZipBackground)
