@@ -971,6 +971,23 @@ extension ShortcutsZipViewModel {
         }
     }
     
+    func countShortcutsToNextGrade(numberOfShortcuts: Int) -> Int {
+        switch numberOfShortcuts {
+        case 0..<1:
+            return 1
+        case 1..<5:
+            return 5-numberOfShortcuts
+        case 5..<10:
+            return 10-numberOfShortcuts
+        case 10..<25:
+            return 25-numberOfShortcuts
+        case 25..<50:
+            return 50-numberOfShortcuts
+        default:
+            return 0
+        }
+    }
+    
     func fetchShortcutGradeImage(isBig: Bool, shortcutGrade: ShortcutGrade) -> Image {
         switch shortcutGrade {
         case .level0:
@@ -985,6 +1002,23 @@ extension ShortcutsZipViewModel {
             return Image(isBig ? "level25Big" : "level25Small")
         case .level50:
             return Image(isBig ? "level50Big" : "level50Small")
+        }
+    }
+    
+    func fetchShortcutGradeSuperImage(shortcutGrade: ShortcutGrade) -> Image {
+        switch shortcutGrade {
+        case .level0:
+            return Image(systemName: "person.crop.circle.fill")
+        case .level1:
+            return Image("level1Super")
+        case .level5:
+            return Image("level5Super")
+        case .level10:
+            return Image("level10Super")
+        case .level25:
+            return Image("level25Super")
+        case .level50:
+            return Image("level50Super")
         }
     }
     

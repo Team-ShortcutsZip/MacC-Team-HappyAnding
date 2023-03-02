@@ -82,10 +82,8 @@
 		A3439AF629395A3A0043E273 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
 		A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */; };
 		A3439AFC2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */; };
-		A3439B05293B48C20043E273 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3439B04293B48C20043E273 /* GoogleService-Info.plist */; };
-		A3439B06293B493F0043E273 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3439B04293B48C20043E273 /* GoogleService-Info.plist */; };
 		A34BF82829AF3D55009BC946 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34BF82729AF3D55009BC946 /* AnnouncementCell.swift */; };
-		A34BF82D29AFC34F009BC946 /* AboutUserGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34BF82C29AFC34F009BC946 /* AboutUserGradeView.swift */; };
+		A34BF82D29AFC34F009BC946 /* AboutShortcutGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34BF82C29AFC34F009BC946 /* AboutShortcutGradeView.swift */; };
 		A35DB3372927E8EB0011A28B /* CustomShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */; };
 		A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */; };
 		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
@@ -258,9 +256,8 @@
 		A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCategoryShortcutView.swift; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
-		A3439B04293B48C20043E273 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A34BF82729AF3D55009BC946 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
-		A34BF82C29AFC34F009BC946 /* AboutUserGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUserGradeView.swift; sourceTree = "<group>"; };
+		A34BF82C29AFC34F009BC946 /* AboutShortcutGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutShortcutGradeView.swift; sourceTree = "<group>"; };
 		A35C39532936928200C4359F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareViewController.swift; sourceTree = "<group>"; };
 		A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareNavigationController.swift; sourceTree = "<group>"; };
@@ -624,7 +621,7 @@
 		A34BF82929AFC308009BC946 /* FeatureViews */ = {
 			isa = PBXGroup;
 			children = (
-				A34BF82C29AFC34F009BC946 /* AboutUserGradeView.swift */,
+				A34BF82C29AFC34F009BC946 /* AboutShortcutGradeView.swift */,
 			);
 			path = FeatureViews;
 			sourceTree = "<group>";
@@ -867,7 +864,7 @@
 				A3FF0183291648A300384211 /* MailView.swift in Sources */,
 				A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */,
 				87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */,
-				A34BF82D29AFC34F009BC946 /* AboutUserGradeView.swift in Sources */,
+				A34BF82D29AFC34F009BC946 /* AboutShortcutGradeView.swift in Sources */,
 				87E99CC429014572009B691F /* Color+Extension.swift in Sources */,
 				87CFD8492939187200F97B86 /* NicknameTextField.swift in Sources */,
 				4D3DBB962934E31A00DE8160 /* ShowProfileView.swift in Sources */,

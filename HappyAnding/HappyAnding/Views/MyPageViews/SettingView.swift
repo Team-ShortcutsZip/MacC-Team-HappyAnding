@@ -40,7 +40,7 @@ struct SettingView: View {
             Button {
                 isTappedUserGradeButton = true
             } label: {
-                FunctionCell(title: TextLiteral.UserGradeTitle, tag: TextLiteral.announcementTag)
+                FunctionCell(title: TextLiteral.shortcutGradeTitle, tag: TextLiteral.announcementTag)
             }
             
             /*
@@ -133,7 +133,9 @@ struct SettingView: View {
         }
         
         .sheet(isPresented: $isTappedUserGradeButton) {
-            AboutUserGradeView()
+            AboutShortcutGradeView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $isShowingMailView) {
             MailView(isShowing: self.$isShowingMailView, result: self.$result)

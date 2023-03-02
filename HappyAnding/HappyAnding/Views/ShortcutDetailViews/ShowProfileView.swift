@@ -16,7 +16,6 @@ struct ShowProfileView: View {
     @State var shortcuts: [Shortcuts] = []
     @State var curations: [Curation] = []
     @State var currentTab: Int = 0
-    @State var isTappedUserGradeButton = false
     
     @Namespace var namespace
     
@@ -30,17 +29,13 @@ struct ShowProfileView: View {
                 
                 //MARK: 프로필이미지 및 닉네임
                 VStack(spacing: 8) {
-                    Button {
-                        isTappedUserGradeButton = true
-                    } label: {
-                        ZStack(alignment: .center) {
-                            Circle()
-                                .frame(width: 72, height: 72)
-                                .foregroundColor(.gray1)
-                            shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: data.userInfo?.id ?? ""))
-                                .font(.system(size: 72, weight: .medium))
-                                .foregroundColor(.gray3)
-                        }
+                    ZStack(alignment: .center) {
+                        Circle()
+                            .frame(width: 72, height: 72)
+                            .foregroundColor(.gray1)
+                        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: data.userInfo?.id ?? ""))
+                            .font(.system(size: 72, weight: .medium))
+                            .foregroundColor(.gray3)
                     }
                     Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .Title1()
@@ -62,9 +57,6 @@ struct ShowProfileView: View {
         .navigationBarBackground { Color.shortcutsZipWhite }
         .background(Color.shortcutsZipBackground)
         .toolbar(.visible, for: .tabBar)
-        .sheet(isPresented: $isTappedUserGradeButton) {
-            AboutUserGradeView()
-        }
         .onAppear {
             shortcuts = shortcutsZipViewModel.allShortcuts.filter { $0.author == self.data.userInfo?.id }
             curations = shortcutsZipViewModel.fetchCurationByAuthor(author: data.userInfo?.id ?? "")

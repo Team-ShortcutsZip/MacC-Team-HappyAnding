@@ -37,7 +37,8 @@ struct AnnouncementCell: View {
                                 .fill( Color.tagBackground )
                                 .overlay(
                                     Capsule()
-                                        .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))                        )
+                                        .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))
+                        )
                     Text(discription)
                         .Body2()
                         .foregroundColor(.gray5)

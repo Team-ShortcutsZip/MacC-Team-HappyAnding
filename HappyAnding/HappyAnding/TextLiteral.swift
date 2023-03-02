@@ -35,9 +35,16 @@ enum TextLiteral {
     //MARK: - announcementCell
     static let announcementTag: String = "새로운 기능"
     
-    //MARK: - UserGrade
-    static let UserGradeTitle: String = "단축어 작성 등급"
-    static let UserGradeDescription: String = "단축어 작성 등급 살펴보기"
+    //MARK: - ShortcutGrade
+    static let shortcutGradeTitle: String = "단축어 작성 등급"
+    static let shortcutGradeDescription: String = "단축어 작성 등급 살펴보기"
+    static let shortcutGradeCurrentLevel: String = "님의 단축어 작성 등급"
+    static let shortcutGradeHighestLevel: String = "최고 등급에 도달했어요"
+    static let shortcutGradeNumberOfShortcutsToNextLevelStart: String = "단축어를 "
+    static let shortcutGradeNumberOfShortcutsToNextLevelEnd: String = "개 더 작성하면 등급이 올라가요"
+
+    static let shortcutGradeAnnouncementSectionTitle: String = "단축어 작성 등급 안내"
+    static let shortcutGradeMaybeDownGrade: String = "단축어를 삭제하면 단축어 작성 등급이 내려갈 수 있어요."
     
     // MARK: - RecentRegisteredView
     static let recentRegisteredViewTitle: String = "최신 단축어"

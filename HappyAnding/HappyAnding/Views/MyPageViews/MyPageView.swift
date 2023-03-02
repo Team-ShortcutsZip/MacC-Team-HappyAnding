@@ -49,7 +49,7 @@ struct MyPageView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 16)
-                .padding(.top, 35)
+                .padding(.top, 16)
                 
                 //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                 
@@ -88,7 +88,9 @@ struct MyPageView: View {
             }
         }
         .sheet(isPresented: $isTappedUserGradeButton) {
-            AboutUserGradeView()
+            AboutShortcutGradeView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .scrollIndicators(.hidden)
         .background(Color.shortcutsZipBackground)

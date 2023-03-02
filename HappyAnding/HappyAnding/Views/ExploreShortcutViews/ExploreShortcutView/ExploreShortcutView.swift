@@ -11,9 +11,10 @@ struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @AppStorage("isAnnouncementShow") var isAnnouncementShow: Bool = true
+    
     @Binding var isFolded: Bool
     
-    @State var isAnnouncementShow: Bool = true
     @State var isTappedUserGradeButton = false
     
     let randomCategories: [Category]
@@ -28,7 +29,7 @@ struct ExploreShortcutView: View {
                     } label: {
                         AnnouncementCell(icon: "ShortcutGradeAnnouncement",
                                          tagName: TextLiteral.announcementTag,
-                                         discription: TextLiteral.UserGradeDescription,
+                                         discription: TextLiteral.shortcutGradeDescription,
                                          isAnnouncementShow: $isAnnouncementShow)
                     }
                 }
@@ -68,7 +69,9 @@ struct ExploreShortcutView: View {
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
         .sheet(isPresented: $isTappedUserGradeButton) {
-            AboutUserGradeView()
+            AboutShortcutGradeView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
     }
 }
