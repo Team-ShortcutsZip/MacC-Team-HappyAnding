@@ -30,7 +30,9 @@ struct ShortcutsZipView: View {
                 }
             }
             .onChange(of: gradeAlerter.isPresented) { newValue in
-                isGradeAlertShowing = newValue
+                withAnimation {
+                    isGradeAlertShowing = newValue
+                }
             }
         }  else {
             if useWithoutSignIn {
