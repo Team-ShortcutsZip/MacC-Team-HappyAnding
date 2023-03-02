@@ -117,6 +117,8 @@
 		F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */; };
 		F91A72C1299915C500CA135A /* MoreCaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91A72C0299915C500CA135A /* MoreCaptionTextView.swift */; };
 		F91A72C32999160E00CA135A /* Alerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91A72C22999160E00CA135A /* Alerter.swift */; };
+		F91F09DD29AE012600E04FA0 /* ShortcutGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */; };
+		F91F09DF29AE0B5E00E04FA0 /* GradeAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91F09DE29AE0B5E00E04FA0 /* GradeAlertView.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435C2907B19A00987819 /* FirebaseAnalytics */; };
 		F94B435F2907B19A00987819 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435E2907B19A00987819 /* FirebaseAuth */; };
@@ -131,6 +133,8 @@
 		F99569182901DC4D0060AAEF /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* Font+Extension.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
 		F9AC2BBA2935D34C00165820 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB92935D34C00165820 /* Image+Extension.swift */; };
+		F9BA11D329A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
+		F9BA11D429A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9CAEF832914855900224B0A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+Extension.swift */; };
 		F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */; };
 		F9DB8EB92939853D00516CE1 /* ShareExtensionValidationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */; };
@@ -277,6 +281,8 @@
 		F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipView.swift; sourceTree = "<group>"; };
 		F91A72C0299915C500CA135A /* MoreCaptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCaptionTextView.swift; sourceTree = "<group>"; };
 		F91A72C22999160E00CA135A /* Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerter.swift; sourceTree = "<group>"; };
+		F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutGrade.swift; sourceTree = "<group>"; };
+		F91F09DE29AE0B5E00E04FA0 /* GradeAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAlertView.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F96D45B62980301F000C2441 /* SubtitleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTextView.swift; sourceTree = "<group>"; };
 		F96D45BA29804057000C2441 /* EnvironmentValues+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Extension.swift"; sourceTree = "<group>"; };
@@ -287,6 +293,7 @@
 		F99569172901DC4D0060AAEF /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
 		F9AC2BB92935D34C00165820 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
+		F9BA11D229A389EA00176807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9CAEF822914855900224B0A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionValidationTextField.swift; sourceTree = "<group>"; };
 		F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCustomTextEditor.swift; sourceTree = "<group>"; };
@@ -350,7 +357,7 @@
 		87E99C6128F94EA6009B691F = {
 			isa = PBXGroup;
 			children = (
-				A3439B04293B48C20043E273 /* GoogleService-Info.plist */,
+				F9BA11D229A389EA00176807 /* GoogleService-Info.plist */,
 				87E99C6C28F94EA6009B691F /* HappyAnding */,
 				87E99C7D28F94EA8009B691F /* HappyAndingTests */,
 				87E99C8728F94EA8009B691F /* HappyAndingUITests */,
@@ -540,6 +547,7 @@
 				F91A72C0299915C500CA135A /* MoreCaptionTextView.swift */,
 				F96D45BC29816578000C2441 /* StickyHeader.swift */,
 				F91A72C22999160E00CA135A /* Alerter.swift */,
+				F91F09DE29AE0B5E00E04FA0 /* GradeAlertView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -556,6 +564,7 @@
 				8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */,
 				F9724BBE292755E400860F8A /* Comment.swift */,
 				F976E82B29368E0D0088BBA1 /* Version.swift */,
+				F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -810,7 +819,7 @@
 				4D6A9F0129A3A92F00D02522 /* wrappinghstack+license.txt in Resources */,
 				F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */,
 				F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */,
-				A3439B05293B48C20043E273 /* GoogleService-Info.plist in Resources */,
+				F9BA11D329A389EA00176807 /* GoogleService-Info.plist in Resources */,
 				87E99C7528F94EA8009B691F /* Preview Assets.xcassets in Resources */,
 				A3FF018A2918F8EF00384211 /* apache.txt in Resources */,
 			);
@@ -835,7 +844,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */,
-				A3439B06293B493F0043E273 /* GoogleService-Info.plist in Resources */,
+				F9BA11D429A389EA00176807 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,6 +855,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F91F09DD29AE012600E04FA0 /* ShortcutGrade.swift in Sources */,
 				F9AC2BBA2935D34C00165820 /* Image+Extension.swift in Sources */,
 				F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */,
 				8751B29929A32CC000C2B27E /* View+Navigation.swift in Sources */,
@@ -905,6 +915,7 @@
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
 				87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */,
+				F91F09DF29AE0B5E00E04FA0 /* GradeAlertView.swift in Sources */,
 				87E99CEC29080C30009B691F /* Curation.swift in Sources */,
 				F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,

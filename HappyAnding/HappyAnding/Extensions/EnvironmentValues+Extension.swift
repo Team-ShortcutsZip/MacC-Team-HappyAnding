@@ -12,4 +12,8 @@ extension EnvironmentValues {
         get { return self[LoginAlertKey.self] }
         set { self[LoginAlertKey.self] = newValue }
     }
+    var gradeAlertKey: Alerter {
+        get { return self[GradeAlertKey.self] }
+        set { self[GradeAlertKey.self] = newValue }
+    }
 }
