@@ -13,7 +13,7 @@ struct AboutShortcutGradeView: View {
     
     @State private var animationAmount = 0.0
     
-    let shortcutGrade: [ShortcutGrade] = [.level0, .level1, .level5, .level10, .level25, .level50]
+    let shortcutGrade: [ShortcutGrade] = [.level0, .level1, .level2, .level3, .level4, .level5]
     
     var body: some View {
         ScrollView {
@@ -129,7 +129,7 @@ struct ExplainGradeCell: View {
     var gradeDescription: String
     
     var body: some View {
-        HStack {
+        HStack(spacing: 16) {
             ZStack(alignment: .center) {
                 Circle()
                     .frame(width: 72, height: 72)

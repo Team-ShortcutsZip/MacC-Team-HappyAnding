@@ -19,7 +19,6 @@ struct ExploreCurationView: View {
                 
                 //앱 큐레이션
                 adminCurationsFrameView(adminCurations: shortcutsZipViewModel.adminCurations)
-//                    .padding(.top, 20)
                 
                 //사용자를 위한 모음집
                 if !useWithoutSignIn {

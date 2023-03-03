@@ -26,7 +26,7 @@ struct AnnouncementCell: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(tagName)
-                        .Body2()
+                        .Footnote()
                         .fontWeight(.bold)
                         .foregroundColor(Color.tagText)
                         .frame(height: 20)
@@ -41,6 +41,7 @@ struct AnnouncementCell: View {
                         )
                     Text(discription)
                         .Body2()
+                        .fontWeight(.semibold)
                         .foregroundColor(.gray5)
                         .lineLimit(1)
                 }

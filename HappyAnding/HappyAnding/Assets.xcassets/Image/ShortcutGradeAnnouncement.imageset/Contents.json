@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ShortcutGradeAnnouncement 4.png",
+      "filename" : "ShortcutGradeAnnouncement 2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ShortcutGradeAnnouncement 3.png",
+      "filename" : "ShortcutGradeAnnouncement 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ShortcutGradeAnnouncement 2.png",
+      "filename" : "ShortcutGradeAnnouncement.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

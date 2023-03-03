@@ -10,10 +10,10 @@ import Foundation
 enum ShortcutGrade: Int {
     case level0 = 0
     case level1 = 1
-    case level5 = 2
-    case level10 = 3
-    case level25 = 4
-    case level50 = 5
+    case level2 = 2
+    case level3 = 3
+    case level4 = 4
+    case level5 = 5
     
     ///레벨 이름
     func fetchTitle() -> String {
@@ -22,13 +22,13 @@ enum ShortcutGrade: Int {
             return "Level 0"
         case.level1:
             return "Level 1"
-        case.level5:
+        case.level2:
             return "Level 2"
-        case.level10:
+        case.level3:
             return "Level 3"
-        case.level25:
+        case.level4:
             return "Level 4"
-        case.level50:
+        case.level5:
             return "Level 5"
         }
     }
@@ -40,13 +40,13 @@ enum ShortcutGrade: Int {
             return "person.crop.circle.fill"
         case.level1:
             return "level1Big"
-        case.level5:
+        case.level2:
             return "level5Big"
-        case.level10:
+        case.level3:
             return "level10Big"
-        case.level25:
+        case.level4:
             return "level25Big"
-        case.level50:
+        case.level5:
             return "level50Big"
         }
     }
@@ -58,13 +58,13 @@ enum ShortcutGrade: Int {
             return "기본 레벨이에요"
         case.level1:
             return "단축어를 1개 작성하면 얻어요"
-        case.level5:
+        case.level2:
             return "단축어를 5개 작성하면 얻어요"
-        case.level10:
+        case.level3:
             return "단축어를 10개 작성하면 얻어요"
-        case.level25:
+        case.level4:
             return "단축어를 25개 작성하면 얻어요"
-        case.level50:
+        case.level5:
             return "단축어를 50개 작성하면 얻어요"
         }
     }
