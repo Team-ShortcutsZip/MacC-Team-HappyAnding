@@ -33,7 +33,7 @@ struct UserCurationCell: View {
                                 .frame(width: 36, height: 36)
                             Image(systemName: shortcut.sfSymbol)
                                 .foregroundColor(Color.textIcon)
-                                .font(.system(size: 15))
+                                .smallShortcutIcon()
                         }
                     }
                     
@@ -46,10 +46,11 @@ struct UserCurationCell: View {
                                 .frame(width: 36, height: 36)
                             HStack(spacing: 0) {
                                 Image(systemName: "plus")
+                                    .smallIcon()
                                 Text("\(shortcutsZipViewModel.userCurations[index].shortcuts.count-4)")
+                                    .Footnote()
                             }
                             .foregroundColor(.gray5)
-                            .Footnote()
                         }
                     }
                 }

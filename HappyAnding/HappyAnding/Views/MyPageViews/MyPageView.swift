@@ -34,7 +34,7 @@ struct MyPageView: View {
                         
                         if !useWithoutSignIn {
                             Image(systemName: "square.and.pencil")
-                                .Title2()
+                                .mediumIcon()
                                 .foregroundColor(.gray4)
                                 .navigationLinkRouter(data: NavigationNicknameView.first)
                         }
@@ -115,8 +115,8 @@ struct MyPageShortcutListCell: View {
                 )
             Spacer()
             Image(systemName: "chevron.forward")
+                .mediumIcon()
                 .foregroundColor(.gray5)
-                .font(Font(UIFont.systemFont(ofSize: 20, weight: .medium)))
             
         }
         .frame(maxWidth: .infinity, alignment: .leading)

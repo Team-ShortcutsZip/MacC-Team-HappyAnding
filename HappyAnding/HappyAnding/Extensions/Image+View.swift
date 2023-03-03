@@ -13,7 +13,7 @@ extension Image {
     func setCellIcon() -> some View {
         self
             .foregroundColor(.gray4)
-            .font(.system(size: 24, weight: .medium))
+            .mediumShortcutIcon()
             .frame(height: 32)
     }
 }

@@ -4,7 +4,6 @@
 //
 //  Created by 이지원 on 2023/02/24.
 //
-
 import SwiftUI
 
 
@@ -49,16 +48,30 @@ extension View {
     func Sb() -> some View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Sb, lineHeight: 20))
     }
+    
+    func mediumIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .mediumIcon, lineHeight: 24))
+    }
+    func smallIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .smallIcon, lineHeight: 16))
+    }
+    func largeShortcutIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .largeShortcutIcon, lineHeight: 36))
+    }
+    func mediumShortcutIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .mediumShortcutIcon, lineHeight: 30))
+    }
+    func smallShortcutIcon() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .smallShortcutIcon, lineHeight: 20))
+    }
 }
 
 
 // MARK: - View Modifier
-
 /**
  자간을 위한 View Modifier입니다.
  - remark:
     [출처](https://stackoverflow.com/questions/61705184/how-to-set-line-height-for-a-single-line-text-in-swiftui)
-
  */
 struct FontWithLineHeight: ViewModifier {
     let font: UIFont

@@ -1,10 +1,3 @@
-//
-//  Font+Extension.swift
-//  HappyAnding
-//
-//  Created by 전지민 on 2022/10/21.
-//
-
 import SwiftUI
 
 extension UIFont {
@@ -17,4 +10,10 @@ extension UIFont {
     static var Subtitle = UIFont.systemFont(ofSize: 15, weight: .heavy)
     static var Footnote = UIFont.systemFont(ofSize: 13, weight: .regular)
     static var Sb = UIFont.systemFont(ofSize: 15, weight: .semibold)
+    
+    static var mediumIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
+    static var smallIcon = UIFont.systemFont(ofSize: 15, weight: .regular)
+    static var largeShortcutIcon = UIFont.systemFont(ofSize: 28, weight: .medium)
+    static var mediumShortcutIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
+    static var smallShortcutIcon = UIFont.systemFont(ofSize: 15, weight: .medium)
 }
