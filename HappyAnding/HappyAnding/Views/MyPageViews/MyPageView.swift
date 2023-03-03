@@ -21,7 +21,7 @@ struct MyPageView: View {
                 
                 HStack(spacing: 16) {
                     
-                    Image(systemName: "person.crop.circle.fill")
+                    shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id ?? "!"))
                         .font(.system(size: 60, weight: .medium))
                         .frame(width: 60, height: 60)
                         .foregroundColor(.gray3)

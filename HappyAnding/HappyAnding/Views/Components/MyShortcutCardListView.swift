@@ -10,11 +10,15 @@ import SwiftUI
 struct MyShortcutCardListView: View {
     
     @Environment(\.loginAlertKey) var loginAlerter
+    @Environment(\.gradeAlertKey) var gradeAlerter
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @StateObject var writeNavigation = WriteShortcutNavigation()
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
+    @State var isGradeAlertPresented = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
@@ -70,6 +74,9 @@ struct MyShortcutCardListView: View {
         .fullScreenCover(isPresented: $isWriting) {
             NavigationRouter(content: writeShortcutView, path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
+                .onDisappear() {
+                    gradeAlerter.isPresented = shortcutsZipViewModel.isShortcutUpgrade()
+                }
         }
     }
     
