@@ -20,11 +20,10 @@ struct DownloadRankView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: NavigationListShortcutType(sectionType: .download,
-                                                                 shortcuts: shortcuts,
-                                                                 navigationParentView: .shortcuts)) {
-                    MoreCaptionTextView(text: TextLiteral.more)
-                }
+                MoreCaptionTextView(text: TextLiteral.more)
+                    .navigationLinkRouter(data: NavigationListShortcutType(sectionType: .download,
+                                                                           shortcuts: shortcuts,
+                                                                           navigationParentView: .shortcuts))
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
@@ -33,11 +32,11 @@ struct DownloadRankView: View {
                 if index < 3 {
                     let data = NavigationReadShortcutType(shortcutID:shortcut.id,
                                                           navigationParentView: self.navigationParentView)
-                    NavigationLink(value: data) {
-                        ShortcutCell(shortcut: shortcut,
-                                     rankNumber: index + 1,
-                                     navigationParentView: self.navigationParentView)
-                    }
+                    
+                    ShortcutCell(shortcut: shortcut,
+                                 rankNumber: index + 1,
+                                 navigationParentView: self.navigationParentView)
+                    .navigationLinkRouter(data: data)
                 }
             }
             .background(Color.shortcutsZipBackground)

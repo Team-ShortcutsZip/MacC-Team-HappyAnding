@@ -11,6 +11,7 @@ import BackgroundTasks
 struct ShortcutTabView: View {
     // TODO: StateObject로 선언할 수 있는 다른 로직 구현해보기
     @Environment(\.scenePhase) private var phase
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userAuth: UserAuth
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
@@ -29,6 +30,10 @@ struct ShortcutTabView: View {
     @State private var randomCategories = Category.allCases.shuffled().prefix(2)
     @State var isFolded = true
     @State private var tappedTwice = false
+    
+    @State private var firstTabID = UUID()
+    @State private var secondTabID = UUID()
+    @State private var thirdTabID = UUID()
     
     init() {
         let transparentAppearence = UITabBarAppearance()
@@ -54,81 +59,29 @@ struct ShortcutTabView: View {
     var body: some View {
         ScrollViewReader { proxy in
             TabView(selection: handler) {
-                NavigationStack(path: $shortcutNavigation.navigationPath) {
-                    ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
-                        .onChange(of: tappedTwice, perform: { tappedTwice in
-                            guard tappedTwice else { return }
-                            if shortcutNavigation.navigationPath.count > 0 {
-                                shortcutNavigation.navigationPath.removeLast(shortcutNavigation.navigationPath.count)
-                            } else {
-                                withAnimation {
-                                    proxy.scrollTo(111, anchor: .bottom)
-                                }
-                            }
-                            self.tappedTwice = false
-                        })
-                        .onChange(of: isFolded) { _ in
-                            withAnimation {
-                                proxy.scrollTo(999, anchor: .bottom)
-                            }
+                NavigationRouter(content: firstTab, path: $shortcutNavigation.navigationPath)
+                    .onChange(of: tappedTwice) { tappedTwice in
+                        guard tappedTwice else { return }
+                        didTappedTabViewItem(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath, viewID: &firstTabID)
+                        self.tappedTwice = false
+                    }
+                    .onChange(of: isFolded) { _ in
+                        withAnimation {
+                            proxy.scrollTo(999, anchor: .bottom)
                         }
-                        .navigationDestination(for: NavigationProfile.self) { data in
-                            ShowProfileView(data: data)
-                        }
-                        .navigationDestination(for: NavigationSearch.self) { _ in
-                            SearchView()
-                        }
-                        .navigationDestination(for: NavigationListShortcutType.self) { data in
-                            ListShortcutView(data: data)
-                        }
-                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-                            ReadShortcutView(data: data)
-                        }
-                        .navigationDestination(for: Category.self) { category in
-                            ListCategoryShortcutView(shortcuts: $shortcutsZipViewModel.shortcutsInCategory[category.index],
-                                              categoryName: category,
-                                              navigationParentView: .shortcuts)
-                        }
-                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-                            ReadUserCurationView(data: data)
-                        }
-                }
-                .environmentObject(shortcutNavigation)
-                .tabItem {
-                    Label("단축어", systemImage: "square.stack.3d.up.fill")
-                }
-                .tag(1)
+                    }
+                    .environmentObject(shortcutNavigation)
+                    .tabItem {
+                        Label("단축어", systemImage: "square.stack.3d.up.fill")
+                    }
+                    .tag(1)
                 
-                NavigationStack(path: $curationNavigation.navigationPath) {
-                    ExploreCurationView()
-                        .onChange(of: tappedTwice, perform: { tappedTwice in
-                            guard tappedTwice else { return }
-                            if curationNavigation.navigationPath.count > 0 {
-                                curationNavigation.navigationPath.removeLast(curationNavigation.navigationPath.count)
-                            } else {
-                                withAnimation {
-                                    proxy.scrollTo(222, anchor: .bottom)
-                                }
-                            }
-                            self.tappedTwice = false
-                        })
-                        .navigationBarBackground ({ Color.shortcutsZipBackground })
-                        .navigationDestination(for: NavigationProfile.self) { data in
-                            ShowProfileView(data: data)
-                        }
-                        .navigationDestination(for: Curation.self) { data in
-                            ReadAdminCurationView(curation: data)
-                        }
-                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-                            ReadUserCurationView(data: data)
-                        }
-                        .navigationDestination(for: NavigationListCurationType.self) { data in
-                            ListCurationView(data: data)
-                        }
-                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-                            ReadShortcutView(data: data)
-                        }
-                    
+                NavigationRouter(content: secondTab,
+                                 path: $curationNavigation.navigationPath)
+                .onChange(of: tappedTwice) { tappedTwice in
+                    guard tappedTwice else { return }
+                    didTappedTabViewItem(proxy, scrollID: 222, navigationPath: &curationNavigation.navigationPath, viewID: &secondTabID)
+                    self.tappedTwice = false
                 }
                 .environmentObject(curationNavigation)
                 .tabItem {
@@ -136,41 +89,17 @@ struct ShortcutTabView: View {
                 }
                 .tag(2)
                 
-                NavigationStack(path: $profileNavigation.navigationPath) {
-                    MyPageView()
-                        .onChange(of: tappedTwice, perform: { tappedTwice in
-                            guard tappedTwice else { return }
-                            if profileNavigation.navigationPath.count > 0 {
-                                profileNavigation.navigationPath.removeLast(profileNavigation.navigationPath.count)
-                            } else {
-                                withAnimation {
-                                    proxy.scrollTo(333, anchor: .bottom)
-                                }
-                            }
-                            self.tappedTwice = false
-                        })
-                        .navigationBarBackground ({ Color.shortcutsZipBackground })
-                        .navigationDestination(for: NavigationProfile.self) { data in
-                            ShowProfileView(data: data)
-                        }
-                        .navigationDestination(for: NavigationListShortcutType.self) { data in
-                            ListShortcutView(data: data)
-                        }
-                        .navigationDestination(for: NavigationReadShortcutType.self) { data in
-                            ReadShortcutView(data: data)
-                        }
-                        .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-                            ReadUserCurationView(data: data)
-                        }
-                        .navigationDestination(for: NavigationListCurationType.self) { data in
-                            ListCurationView(data: data)
-                        }
-                }
-                .environmentObject(profileNavigation)
-                .tabItem {
-                    Label("프로필", systemImage: "person.crop.circle.fill")
-                }
-                .tag(3)
+                NavigationRouter(content: thirdTab, path: $profileNavigation.navigationPath)
+                    .onChange(of: tappedTwice, perform: { tappedTwice in
+                        guard tappedTwice else { return }
+                        didTappedTabViewItem(proxy, scrollID: 333, navigationPath: &profileNavigation.navigationPath, viewID: &thirdTabID)
+                        self.tappedTwice = false
+                    })
+                    .environmentObject(profileNavigation)
+                    .tabItem {
+                        Label("프로필", systemImage: "person.crop.circle.fill")
+                    }
+                    .tag(3)
             }
             .onChange(of: phase) { newPhase in
                 switch newPhase {
@@ -183,6 +112,32 @@ struct ShortcutTabView: View {
                 fetchCurationIdFromUrl(urlString: url.absoluteString)
             }
         }
+        .background(Color.red)
+    }
+    
+    
+    @ViewBuilder
+    private func firstTab() -> some View {
+        ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
+            .modifierNavigation()
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
+            .id(firstTabID)
+    }
+    
+    @ViewBuilder
+    private func secondTab() -> some View {
+        ExploreCurationView()
+            .modifierNavigation()
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
+            .id(secondTabID)
+    }
+    
+    @ViewBuilder
+    private func thirdTab() -> some View {
+        MyPageView()
+            .modifierNavigation()
+            .navigationBarBackground ({ Color.shortcutsZipBackground })
+            .id(thirdTabID)
     }
     
     private func fetchShortcutIdFromUrl(urlString: String) {
@@ -249,5 +204,30 @@ struct ShortcutTabView: View {
 struct ShortcutTabView_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutTabView()
+    }
+}
+
+// TODO: - extension 컨벤션 머지 후 위치 수정
+extension View {
+    func didTappedTabViewItem(_ proxy: ScrollViewProxy, scrollID: Int, navigationPath: inout NavigationPath, viewID: inout UUID) {
+        
+        // MARK: Navigation Stack
+        if #available(iOS 16.1, *) {
+            
+            // Root View로 이동
+            if navigationPath.count > 0 {
+                navigationPath = NavigationPath()
+                
+            } else {
+                // 최상단으로 이동
+                withAnimation {
+                    proxy.scrollTo(scrollID, anchor: .bottom)
+                }
+            }
+            
+            // MARK: Navigation View
+        } else {
+            viewID = UUID()
+        }
     }
 }

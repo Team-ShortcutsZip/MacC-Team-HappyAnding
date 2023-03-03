@@ -19,6 +19,7 @@ import FirebaseAuth
 class ShortcutsZipViewModel: ObservableObject {
     
     @AppStorage("signInStatus") var signInStatus = false
+    @AppStorage("shortcutGrade") var shortcutGrade = ShortcutGrade.level0.rawValue
     
     @Published var userInfo: User?                              // 유저정보
     
@@ -97,6 +98,7 @@ class ShortcutsZipViewModel: ObservableObject {
             }
         })
         refreshPersonalCurations()
+        shortcutGrade = checkShortcutGrade(userID: nil).rawValue
     }
     func initShortcut() {
         sortedShortcutsByDownload = allShortcuts.sorted(by: {$0.numberOfDownload > $1.numberOfDownload})
@@ -938,5 +940,104 @@ extension ShortcutsZipViewModel {
         var comments = fetchComment(shortcutID: shortcutID)
         comments.comments.removeAll(where: { $0.bundle_id == bundleID })
         setData(model: comments)
+    }
+}
+
+//MARK: - 등급 관련 함수
+extension ShortcutsZipViewModel {
+    
+    func checkShortcutGrade(userID: String?) -> ShortcutGrade {
+        var count = 0
+        
+        if let userID {
+            count = allShortcuts.filter { $0.author == userID }.count
+        } else {
+            count = shortcutsMadeByUser.count
+        }
+        
+        switch count {
+        case ..<1:
+            return .level0
+        case 1..<5:
+            return .level1
+        case 5..<10:
+            return .level2
+        case 10..<25:
+            return .level3
+        case 25..<50:
+            return .level4
+        default:
+            return .level5
+        }
+    }
+    
+    func countShortcutsToNextGrade(numberOfShortcuts: Int) -> Int {
+        switch numberOfShortcuts {
+        case 0..<1:
+            return 1
+        case 1..<5:
+            return 5-numberOfShortcuts
+        case 5..<10:
+            return 10-numberOfShortcuts
+        case 10..<25:
+            return 25-numberOfShortcuts
+        case 25..<50:
+            return 50-numberOfShortcuts
+        default:
+            return 0
+        }
+    }
+    
+    func fetchShortcutGradeImage(isBig: Bool, shortcutGrade: ShortcutGrade) -> Image {
+        switch shortcutGrade {
+        case .level0:
+            return Image(systemName: "person.crop.circle.fill")
+        case .level1:
+            return Image(isBig ? "level1Big" : "level1Small")
+        case .level2:
+            return Image(isBig ? "level5Big" : "level5Small")
+        case .level3:
+            return Image(isBig ? "level10Big" : "level10Small")
+        case .level4:
+            return Image(isBig ? "level25Big" : "level25Small")
+        case .level5:
+            return Image(isBig ? "level50Big" : "level50Small")
+        }
+    }
+    
+    func fetchShortcutGradeSuperImage(shortcutGrade: ShortcutGrade) -> Image {
+        switch shortcutGrade {
+        case .level0:
+            return Image(systemName: "person.crop.circle.fill")
+        case .level1:
+            return Image("level1Super")
+        case .level2:
+            return Image("level5Super")
+        case .level3:
+            return Image("level10Super")
+        case .level4:
+            return Image("level25Super")
+        case .level5:
+            return Image("level50Super")
+        }
+    }
+    
+    func isShortcutUpgrade() -> Bool {
+        let currentGrade = checkShortcutGrade(userID: nil).rawValue
+        
+        if shortcutGrade < currentGrade {
+            shortcutGrade = currentGrade
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func isShortcutDowngrade() -> Bool {
+        [1, 5, 10, 25, 50].contains(shortcutsMadeByUser.count)
+    }
+    
+    func updateShortcutGrade() {
+        shortcutGrade = checkShortcutGrade(userID: nil).rawValue
     }
 }

@@ -45,11 +45,10 @@ struct ReadUserCurationView: View {
                 ForEach(shortcutsZipViewModel.userCurations[index].shortcuts, id: \.self) { shortcut in
                     let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                           navigationParentView: self.data.navigationParentView)
+                    ShortcutCell(shortcutCell: shortcut,
+                                 navigationParentView: self.data.navigationParentView)
+                    .navigationLinkRouter(data: data)
                     
-                    NavigationLink(value: data) {
-                        ShortcutCell(shortcutCell: shortcut,
-                                     navigationParentView: self.data.navigationParentView)
-                    }
                 }
             }
             .padding(.bottom, 44)
@@ -61,12 +60,8 @@ struct ReadUserCurationView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: readCurationViewButtonByUser())
         .fullScreenCover(isPresented: $isWriting) {
-            NavigationStack(path: $writeCurationNavigation.navigationPath) {
-                WriteCurationSetView(isWriting: $isWriting,
-                                     curation: shortcutsZipViewModel.userCurations[index],
-                                     isEdit: true)
-            }
-            .environmentObject(writeCurationNavigation)
+            NavigationRouter(content: editView, path: $writeCurationNavigation.navigationPath)
+                .environmentObject(writeCurationNavigation)
         }
         .alert(TextLiteral.readUserCurationViewDeletionTitle, isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
@@ -90,18 +85,16 @@ struct ReadUserCurationView: View {
     var userInformation: some View {
         ZStack {
             if let data = NavigationProfile(userInfo: self.authorInformation) {
-                NavigationLink(value: data) {
-                    HStack {
-                        Image(systemName: "person.crop.circle.fill")
-                            .font(.system(size: 28, weight: .medium))
-                            .frame(width: 28, height: 28)
-                            .foregroundColor(.gray3)
-                        
-                        Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
-                            .Headline()
-                            .foregroundColor(.gray4)
-                        Spacer()
-                    }
+                HStack {
+                    shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: authorInformation?.id ?? "!"))
+                        .font(.system(size: 24, weight: .medium))
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.gray3)
+                    
+                    Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
+                        .Headline()
+                        .foregroundColor(.gray4)
+                    Spacer()
                 }
                 .disabled(authorInformation == nil)
                 .padding(.horizontal, 30)
@@ -111,6 +104,7 @@ struct ReadUserCurationView: View {
                         .foregroundColor(.gray1)
                         .padding(.horizontal, 16)
                 )
+                .navigationLinkRouter(data: data)
             }
         }
         .onAppear {
@@ -122,6 +116,13 @@ struct ReadUserCurationView: View {
                 self.index = index
             }
         }
+    }
+    
+    @ViewBuilder
+    private func editView() -> some View {
+        WriteCurationSetView(isWriting: $isWriting,
+                             curation: shortcutsZipViewModel.userCurations[index],
+                             isEdit: true)
     }
 }
 

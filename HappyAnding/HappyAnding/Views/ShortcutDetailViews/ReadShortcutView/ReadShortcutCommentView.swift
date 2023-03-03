@@ -70,6 +70,7 @@ struct ReadShortcutCommentView: View {
             HStack(alignment: .top, spacing: 8) {
                 if comment.depth == 1 {
                     Image(systemName: "arrow.turn.down.right")
+                        .smallIcon()
                         .foregroundColor(.gray4)
                 }
                 VStack(alignment: .leading, spacing: 8) {
@@ -78,7 +79,7 @@ struct ReadShortcutCommentView: View {
                     
                     HStack(spacing: 8) {
                         
-                        Image(systemName: "person.crop.circle.fill")
+                        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: comment.user_id ))
                             .font(.system(size: 24, weight: .medium))
                             .frame(width: 24, height: 24)
                             .foregroundColor(.gray3)

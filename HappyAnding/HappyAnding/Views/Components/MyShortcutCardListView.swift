@@ -10,11 +10,15 @@ import SwiftUI
 struct MyShortcutCardListView: View {
     
     @Environment(\.loginAlertKey) var loginAlerter
+    @Environment(\.gradeAlertKey) var gradeAlerter
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @StateObject var writeNavigation = WriteShortcutNavigation()
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
+    @State var isGradeAlertPresented = false
     
     var shortcuts: [Shortcuts]?
     var data: NavigationListShortcutType {
@@ -32,9 +36,8 @@ struct MyShortcutCardListView: View {
                 
                 Spacer()
                 
-                NavigationLink(value: data) {
-                    MoreCaptionTextView(text: TextLiteral.more)
-                }
+                MoreCaptionTextView(text: TextLiteral.more)
+                    .navigationLinkRouter(data: data)
             }
             .padding(.horizontal, 16)
             
@@ -56,11 +59,10 @@ struct MyShortcutCardListView: View {
                                 let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                                       navigationParentView: self.navigationParentView)
                                 
-                                NavigationLink(value: data) {
-                                    MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol,
-                                                       myShortcutName: shortcut.title,
-                                                       myShortcutColor: shortcut.color)
-                                }
+                                MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol,
+                                                   myShortcutName: shortcut.title,
+                                                   myShortcutColor: shortcut.color)
+                                .navigationLinkRouter(data: data)
                             }
                         }
                     }
@@ -70,10 +72,17 @@ struct MyShortcutCardListView: View {
         }
         .navigationBarTitleDisplayMode(.automatic)
         .fullScreenCover(isPresented: $isWriting) {
-            NavigationStack(path: $writeNavigation.navigationPath) {
-                WriteShortcutView(isWriting: $isWriting, isEdit: false)
-            }
-            .environmentObject(writeNavigation)
+            NavigationRouter(content: writeShortcutView, path: $writeNavigation.navigationPath)
+                .environmentObject(writeNavigation)
+                .onDisappear() {
+                    gradeAlerter.isPresented = shortcutsZipViewModel.isShortcutUpgrade()
+                }
         }
+    }
+    
+    @ViewBuilder
+    private func writeShortcutView() -> some View {
+        WriteShortcutView(isWriting: $isWriting, isEdit: false)
+            .modifierNavigation()
     }
 }

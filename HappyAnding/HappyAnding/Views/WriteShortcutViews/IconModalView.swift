@@ -91,7 +91,7 @@ struct IconModalView: View {
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
                 
                 Image(systemName: iconSymbol)
-                    .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
+                    .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32, weight: .medium))
                     .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
                     .foregroundColor(.textIcon)
             }
@@ -161,6 +161,7 @@ struct IconModalView: View {
                     
                     if paletteColor == iconColor {
                         Image(systemName: "checkmark")
+                            .smallIcon()
                             .foregroundColor(.textIcon)
                     }
                 }

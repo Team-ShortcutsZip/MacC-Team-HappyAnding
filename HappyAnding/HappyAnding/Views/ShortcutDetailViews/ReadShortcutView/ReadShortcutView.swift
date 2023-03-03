@@ -26,9 +26,10 @@ struct ReadShortcutView: View {
     @State var isEdit = false
     @State var isUpdating = false
     
-    @State var isMyLike: Bool = false
+    @State var isMyLike = false
     @State var isFirstMyLike = false
     @State var isClickDownload = false
+    @State var isDowngrade = false
     
     @State var data: NavigationReadShortcutType
     @State var comments: Comments = Comments(id: "", comments: [])
@@ -43,36 +44,61 @@ struct ReadShortcutView: View {
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     @FocusState private var isFocused: Bool
     @Namespace var namespace
+    @Namespace var topID
+    @Namespace var bottomID
     
     private let tabItems = [TextLiteral.readShortcutViewBasicTabTitle, TextLiteral.readShortcutViewVersionTabTitle, TextLiteral.readShortcutViewCommentTabTitle]
     
     var body: some View {
         ZStack {
-            ScrollView {
-                VStack(spacing: 0) {
-                    if data.shortcut != nil {
-                        StickyHeader(height: 40)
-                        
-                        // MARK: - 단축어 타이틀
-                        
-                        ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
-                            .frame(minHeight: 160)
-                            .padding(.bottom, 33)
-                            .background(Color.shortcutsZipWhite)
-                        
-                        
-                        // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
-                        
-                        LazyVStack(pinnedViews: [.sectionHeaders]) {
-                            Section(header: tabBarView
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(spacing: 0) {
+                        if data.shortcut != nil {
+                            StickyHeader(height: 40).id(topID)
+                            
+                            // MARK: - 단축어 타이틀
+                            
+                            ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
+                                .frame(minHeight: 160)
+                                .padding(.bottom, 33)
                                 .background(Color.shortcutsZipWhite)
-                            ) {
-                                detailInformationView
-                                    .padding(.top, 4)
-                                    .padding(.horizontal, 16)
+                            
+                            
+                            // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
+                            
+                            LazyVStack(pinnedViews: [.sectionHeaders]) {
+                                Section(header: tabBarView
+                                    .background(Color.shortcutsZipWhite)
+                                ) {
+                                    detailInformationView
+                                        .padding(.top, 4)
+                                        .padding(.horizontal, 16)
+                                }
+                            }
+                            
+                            HStack{}.id(bottomID)
+                        }
+                    }
+                }
+                .onAppear() {
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) {
+                        notification in
+                        withAnimation {
+                            if currentTab == 2 && !isClickCorrection && comment.depth == 0 {
+                                proxy.scrollTo(bottomID)
                             }
                         }
                     }
+                    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) {
+                        notification in
+                        withAnimation {
+                            if currentTab == 2 && comment.depth == 0 && comments.comments.count == 1 {
+                                proxy.scrollTo(topID)
+                            }
+                        }
+                    }
+
                 }
             }
             .scrollDisabled(isClickCorrection)
@@ -150,22 +176,18 @@ struct ReadShortcutView: View {
                         shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
                         shortcutsZipViewModel.deleteData(model: shortcut)
                         shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
+                        shortcutsZipViewModel.updateShortcutGrade()
                         self.presentation.wrappedValue.dismiss()
                     }
                 } label: {
                     Text(TextLiteral.delete)
                 }
             } message: {
-                Text(TextLiteral.readShortcutViewDeletionMessage)
+                Text(isDowngrade ? TextLiteral.readShortcutViewDeletionMessageDowngrade : TextLiteral.readShortcutViewDeletionMessage)
             }
             .fullScreenCover(isPresented: $isEdit) {
-                NavigationStack(path: $writeNavigation.navigationPath) {
-                    if let shortcut = data.shortcut {
-                        WriteShortcutView(isWriting: $isEdit,
-                                               shortcut: shortcut,
-                                               isEdit: true)
-                    }
-                }
+                NavigationRouter(content: writeShortcutView,
+                                 path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
             }
             .fullScreenCover(isPresented: $isUpdating) {
@@ -178,13 +200,13 @@ struct ReadShortcutView: View {
                     .opacity(0.4)
                     .safeAreaInset(edge: .bottom, spacing: 0) {
                         textField
-                        .ignoresSafeArea(.keyboard)
-                        .focused($isFocused, equals: true)
-                        .task {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                isFocused = true
+                            .ignoresSafeArea(.keyboard)
+                            .focused($isFocused, equals: true)
+                            .task {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    isFocused = true
+                                }
                             }
-                        }
                     }
                     .onAppear() {
                         commentText = comment.contents
@@ -193,7 +215,7 @@ struct ReadShortcutView: View {
                         isFocused.toggle()
                         isCancledCorrection.toggle()
                     }
-                    .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $isCancledCorrection) {
+                    .alert(TextLiteral.readShortcutViewDeleteFixesTitle, isPresented: $isCancledCorrection) {
                         Button(role: .cancel) {
                             isFocused.toggle()
                         } label: {
@@ -216,6 +238,16 @@ struct ReadShortcutView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    private func writeShortcutView() -> some View {
+        
+        if let shortcut = data.shortcut {
+            WriteShortcutView(isWriting: $isEdit,
+                              shortcut: shortcut,
+                              isEdit: true)
+        }
+    }
 }
 
 extension ReadShortcutView {
@@ -229,13 +261,16 @@ extension ReadShortcutView {
             HStack {
                 if comment.depth == 1 && !isClickCorrection {
                     Image(systemName: "arrow.turn.down.right")
+                        .smallIcon()
                         .foregroundColor(.gray4)
                 }
                 TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $commentText, axis: .vertical)
-                    .disabled(useWithoutSignIn == true)
+                    .keyboardType(.twitter)
+                    .disabled(useWithoutSignIn)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .Body2()
+                    .lineLimit(comment.depth == 1 ? 2 : 4)
                     .focused($isFocused)
                     .onAppear(perform : UIApplication.shared.hideKeyboard)
                     .onTapGesture {/*터치영역구분을위한부분*/}
@@ -259,6 +294,7 @@ extension ReadShortcutView {
                     isFocused.toggle()
                 } label: {
                     Image(systemName: "paperplane.fill")
+                        .mediumIcon()
                         .foregroundColor(commentText == "" ? Color.gray2 : Color.gray5)
                 }
                 .disabled(commentText == "" ? true : false)
@@ -285,7 +321,7 @@ extension ReadShortcutView {
                 comment.depth = 0
             } label: {
                 Image(systemName: "xmark")
-                    .font(Font(UIFont.systemFont(ofSize: 17, weight: .medium)))
+                    .smallIcon()
                     .foregroundColor(.gray5)
             }
         }
@@ -318,6 +354,7 @@ extension ReadShortcutView {
             }
         }, label: {
             Image(systemName: "ellipsis")
+                .mediumIcon()
                 .foregroundColor(.gray4)
         })
     }
@@ -351,7 +388,7 @@ extension ReadShortcutView {
     private var deleteButton: some View {
         Button(role: .destructive, action: {
             isTappedDeleteButton.toggle()
-            // TODO: firebase delete function
+            isDowngrade = shortcutsZipViewModel.isShortcutDowngrade()
             
         }) {
             Label(TextLiteral.delete, systemImage: "trash.fill")

@@ -11,13 +11,29 @@ struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @AppStorage("isAnnouncementShow") var isAnnouncementShow: Bool = true
+    
     @Binding var isFolded: Bool
+    
+    @State var isTappedUserGradeButton = false
     
     let randomCategories: [Category]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 32){
+                
+                if isAnnouncementShow {
+                    Button {
+                        isTappedUserGradeButton = true
+                    } label: {
+                        AnnouncementCell(icon: "ShortcutGradeAnnouncement",
+                                         tagName: TextLiteral.announcementTag,
+                                         discription: TextLiteral.shortcutGradeDescription,
+                                         isAnnouncementShow: $isAnnouncementShow)
+                    }
+                }
+                
                 RecentRegisteredView(shortcuts: $shortcutsZipViewModel.allShortcuts,
                                      navigationParentView: .shortcuts)
                 
@@ -45,14 +61,18 @@ struct ExploreShortcutView: View {
         .background(Color.shortcutsZipBackground)
         .toolbar {
             ToolbarItem {
-                NavigationLink(value: NavigationSearch.first) {
-                    Image(systemName: "magnifyingglass")
-                        .Headline()
-                        .foregroundColor(.gray5)
-                }
+                Image(systemName: "magnifyingglass")
+                    .Headline()
+                    .foregroundColor(.gray5)
+                    .navigationLinkRouter(data: NavigationSearch.first)
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
+        .sheet(isPresented: $isTappedUserGradeButton) {
+            AboutShortcutGradeView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
     }
 }
 

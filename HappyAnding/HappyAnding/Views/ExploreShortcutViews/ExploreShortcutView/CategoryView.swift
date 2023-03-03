@@ -34,10 +34,16 @@ struct CategoryView: View {
             
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                 ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
+                    
+                    let data = NavigationListCategoryShortcutType(shortcuts: [],
+                                                                  categoryName: value,
+                                                                  navigationParentView: .shortcuts)
+                    
                     if index < categoryIndex {
-                        NavigationLink(value: value) {
-                            CategoryCellView(categoryName: value.translateName())
-                        }
+                        
+                        CategoryCellView(categoryName: value.translateName())
+                            .navigationLinkRouter(data: data)
+                        
                     }
                 }
             }

@@ -19,7 +19,6 @@ struct ExploreCurationView: View {
                 
                 //앱 큐레이션
                 adminCurationsFrameView(adminCurations: shortcutsZipViewModel.adminCurations)
-                    .padding(.top, 20)
                 
                 //사용자를 위한 모음집
                 if !useWithoutSignIn {
@@ -73,9 +72,8 @@ struct adminCurationsFrameView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(adminCurations, id: \.id) { curation in
-                        NavigationLink(value: curation) {
-                            AdminCurationCell(adminCuration: curation)
-                        }
+                        AdminCurationCell(adminCuration: curation)
+                            .navigationLinkRouter(data: curation)
                     }
                 }
                 .padding(.leading, 16)

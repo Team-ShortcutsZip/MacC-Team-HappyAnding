@@ -32,6 +32,20 @@ enum TextLiteral {
     // MARK: - ExploreShortcutView
     static let exploreShortcutViewTitle: String = "단축어 둘러보기"
     
+    //MARK: - announcementCell
+    static let announcementTag: String = "새로운 기능"
+    
+    //MARK: - ShortcutGrade
+    static let shortcutGradeTitle: String = "단축어 작성 등급"
+    static let shortcutGradeDescription: String = "단축어 작성 등급 살펴보기"
+    static let shortcutGradeCurrentLevel: String = "님의 단축어 작성 등급"
+    static let shortcutGradeHighestLevel: String = "최고 등급에 도달했어요"
+    static let shortcutGradeNumberOfShortcutsToNextLevelStart: String = "단축어를 "
+    static let shortcutGradeNumberOfShortcutsToNextLevelEnd: String = "개 더 작성하면 등급이 올라가요"
+
+    static let shortcutGradeAnnouncementSectionTitle: String = "단축어 작성 등급 안내"
+    static let shortcutGradeMaybeDownGrade: String = "단축어를 삭제하면 단축어 작성 등급이 내려갈 수 있어요."
+    
     // MARK: - RecentRegisteredView
     static let recentRegisteredViewTitle: String = "최신 단축어"
     
@@ -103,6 +117,8 @@ enum TextLiteral {
     static let readShortcutViewCommentTabTitle: String = "댓글"
     static let readShortcutViewDeletionTitle: String = "단축어 삭제"
     static let readShortcutViewDeletionMessage: String = "단축어를 삭제하시겠어요?"
+    static let readShortcutViewDeletionMessageDowngrade: String = "단축어를 삭제하시겠어요? \n이 글을 삭제하면 등급이 내려가요."
+    static let readShortcutViewDeleteFixesTitle: String = "수정사항 삭제"
     static let readShortcutViewDeleteFixes: String = "수정사항을 삭제하시겠어요?"
     static let readShortcutViewKeepFixes: String = "계속 작성"
     static let readShortcutViewCommentDescriptionBeforeLogin: String = "로그인 후 댓글을 작성할 수 있어요"
@@ -225,4 +241,8 @@ enum TextLiteral {
     static let customShareViewControllerLinkVaildAlertTitle: String = "잘못된 접근이에요"
     static let customShareViewControllerLinkVaildAlertMessage: String = "해당 링크는 ShortcutsZip으로 공유할 수 없어요"
     static let customShareViewControllerCheck: String = "확인"
+    
+    //MARK: - GradeAlertView
+    static let gradeAlertMessage: String = "단축어 작성 레벨이 상승했어요!"
+    static let gradeAlertMessageBlank: String = ""
 }

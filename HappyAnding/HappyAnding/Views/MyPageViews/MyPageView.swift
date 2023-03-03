@@ -12,14 +12,8 @@ struct MyPageView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-
-    enum NavigationSettingView: Hashable, Equatable {
-        case first
-    }
     
-    enum NavigationNicknameView: Hashable, Equatable {
-        case first
-    }
+    @State var isTappedUserGradeButton = false
     
     var body: some View {
         ScrollView {
@@ -29,11 +23,15 @@ struct MyPageView: View {
                 
                 HStack(spacing: 16) {
                     
-                    Image(systemName: "person.crop.circle.fill")
-                        .font(.system(size: 60, weight: .medium))
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(.gray3)
-                        .id(333)
+                    Button {
+                        isTappedUserGradeButton = true
+                    } label: {
+                        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id ?? "!"))
+                            .font(.system(size: 60, weight: .medium))
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.gray3)
+                            .id(333)
+                    }
                     
                     HStack {
                         Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
@@ -41,18 +39,17 @@ struct MyPageView: View {
                             .foregroundColor(.gray5)
                         
                         if !useWithoutSignIn {
-                            NavigationLink(value: NavigationNicknameView.first) {
-                                Image(systemName: "square.and.pencil")
-                                    .Title2()
-                                    .foregroundColor(.gray4)
-                            }
+                            Image(systemName: "square.and.pencil")
+                                .mediumIcon()
+                                .foregroundColor(.gray4)
+                                .navigationLinkRouter(data: NavigationNicknameView.first)
                         }
                     }
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 16)
-                .padding(.top, 35)
+                .padding(.top, 16)
                 
                 //TODO: - 각 뷰에 해당하는 단축어 목록 전달하도록 변경 필요
                 
@@ -84,21 +81,19 @@ struct MyPageView: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem {
-                NavigationLink(value: NavigationSettingView.first) {
-                    Image(systemName: "gearshape.fill")
-                        .Headline()
-                        .foregroundColor(.gray5)
-                }
+                Image(systemName: "gearshape.fill")
+                    .Headline()
+                    .foregroundColor(.gray5)
+                    .navigationLinkRouter(data: NavigationSettingView.first)
             }
+        }
+        .sheet(isPresented: $isTappedUserGradeButton) {
+            AboutShortcutGradeView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .scrollIndicators(.hidden)
         .background(Color.shortcutsZipBackground)
-        .navigationDestination(for: NavigationNicknameView.self) { _ in
-            EditNicknameView()
-        }
-        .navigationDestination(for: NavigationSettingView.self) { _ in
-            SettingView()
-        }
     }
 }
 
@@ -112,32 +107,31 @@ struct MyPageShortcutListCell: View {
                                    navigationParentView: .myPage)
     }
     var body: some View {
-        NavigationLink(value: data) {
-            HStack() {
-                Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
-                    .Title2()
-                    .foregroundColor(.gray5)
-                    .padding(.trailing, 9)
-                Text("\(shortcuts.count)개")
-                    .Body2()
-                    .foregroundColor(Color.tagText)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 4)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill( Color.tagBackground )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))
-                    )
-                Spacer()
-                Image(systemName: "chevron.forward")
-                    .foregroundColor(.gray5)
-                    .font(Font(UIFont.systemFont(ofSize: 20, weight: .medium)))
-                
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 16)
+        HStack() {
+            Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
+                .Title2()
+                .foregroundColor(.gray5)
+                .padding(.trailing, 9)
+            Text("\(shortcuts.count)개")
+                .Body2()
+                .foregroundColor(Color.tagText)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 4)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill( Color.tagBackground )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))
+                )
+            Spacer()
+            Image(systemName: "chevron.forward")
+                .mediumIcon()
+                .foregroundColor(.gray5)
+            
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 16)
+        .navigationLinkRouter(data: data)
     }
 }

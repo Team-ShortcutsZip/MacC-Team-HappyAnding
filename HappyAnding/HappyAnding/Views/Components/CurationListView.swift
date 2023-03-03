@@ -20,11 +20,12 @@ struct CurationListView: View {
             ForEach(data.curation.prefix(2), id: \.self) { curation in
                 let data = NavigationReadUserCurationType(userCuration: curation,
                                                           navigationParentView: self.data.navigationParentView)
-                NavigationLink(value: data) {
-                    UserCurationCell(curation: curation,
-                                     lineLimit: 2,
-                                     navigationParentView: self.data.navigationParentView)
-                }
+                
+                UserCurationCell(curation: curation,
+                                 lineLimit: 2,
+                                 navigationParentView: self.data.navigationParentView)
+                .navigationLinkRouter(data: data)
+                
             }
         }
         .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
@@ -49,9 +50,8 @@ struct CurationListView: View {
             }
             Spacer()
             
-            NavigationLink(value: data) {
-                MoreCaptionTextView(text: TextLiteral.more)
-            }
+            MoreCaptionTextView(text: TextLiteral.more)
+                .navigationLinkRouter(data: data)
         }
         .padding(.bottom, 12)
         .padding(.horizontal, 16)

@@ -49,8 +49,8 @@ struct ReadShortcutHeaderView: View {
             shortcutsZipViewModel.fetchUser(userID: shortcut.author,
                                             isCurrentUser: false) { user in
                 userInformation = user
-                numberOfLike = shortcut.numberOfLike
             }
+            numberOfLike = shortcut.numberOfLike
         }
         .onDisappear { self.shortcut.numberOfLike = numberOfLike }
     }
@@ -59,7 +59,7 @@ struct ReadShortcutHeaderView: View {
     var icon: some View {
         VStack {
             Image(systemName: shortcut.sfSymbol)
-                .Title2()
+                .mediumShortcutIcon()
                 .foregroundColor(Color.textIcon)
         }
         .frame(width: 52, height: 52)
@@ -90,37 +90,36 @@ struct ReadShortcutHeaderView: View {
     var userInfo: some View {
         ZStack {
             if let data = NavigationProfile(userInfo: self.userInformation) {
-                NavigationLink(value: data) {
-                    HStack(spacing: 8) {
-                        
-                        Image(systemName: "person.crop.circle.fill")
-                            .font(.system(size: 24, weight: .medium))
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(.gray3)
-                            .padding(.leading, 16)
-                        
-                        Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
-                            .Body2()
-                            .foregroundColor(.gray4)
-                        
-                        Spacer()
-                            .frame(maxWidth: .infinity)
-                        
-                        
-                        // TODO: 신고기능
-                        
-                        /*
-                         Image(systemName: "light.beacon.max.fill")
-                         .Headline()
-                         .foregroundColor(.gray5)
-                         .padding(.trailing, 16)
-                         .onTapGesture {
-                         print("Tapped!")
-                         }
-                         */
-                        
-                    }
+                HStack(spacing: 8) {
+                    
+                    shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: userInformation?.id ?? "!"))
+                        .font(.system(size: 24, weight: .medium))
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.gray3)
+                        .padding(.leading, 16)
+                    
+                    Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
+                        .Body2()
+                        .foregroundColor(.gray4)
+                    
+                    Spacer()
+                        .frame(maxWidth: .infinity)
+                    
+                    
+                    // TODO: 신고기능
+                    
+                    /*
+                     Image(systemName: "light.beacon.max.fill")
+                     .Headline()
+                     .foregroundColor(.gray5)
+                     .padding(.trailing, 16)
+                     .onTapGesture {
+                     print("Tapped!")
+                     }
+                     */
+                    
                 }
+                .navigationLinkRouter(data: data)
                 .disabled(userInformation == nil)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity, maxHeight: 44)

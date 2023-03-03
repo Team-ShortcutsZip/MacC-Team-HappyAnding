@@ -20,47 +20,49 @@ struct SettingView: View {
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     @State var result: Result<MFMailComposeResult, Error>? = nil
+    @State var isTappedUserGradeButton = false
     @State var isShowingMailView = false
     @State var isTappedLogOutButton = false
     @State var isTappedSignOutButton = false
     @State var isTappedPrivacyButton = false
     
-    enum NavigationLisence: Hashable, Equatable {
-        case first
-    }
-    
-    enum NavigationWithdrawal: Hashable, Equatable {
-        case first
-    }
-    
     var body: some View {
         VStack(alignment: .leading) {
             
+            // MARK: - 버전 정보
+            if !getAppVersion().isEmpty {
+                SettingCell(title: TextLiteral.settingViewVersion, version: getAppVersion())
+            }
+            
+            divider
+            
+            //MARK: - 단축어 작성 등급
+            Button {
+                isTappedUserGradeButton = true
+            } label: {
+                FunctionCell(title: TextLiteral.shortcutGradeTitle, tag: TextLiteral.announcementTag)
+            }
+            
             /*
              // TODO: 알림 기능
-            Text("알림 설정")
-                .padding(.top, 16)
-                .padding(.bottom, 12)
+             Text("알림 설정")
+             .padding(.top, 16)
+             .padding(.bottom, 12)
+             
+             //TODO: 화면 연결 필요
+             NavigationLink(destination: EmptyView()) {
+             SettingCell(title: "알림 및 소리")
+             }
+             */
             
-            //TODO: 화면 연결 필요
-            NavigationLink(destination: EmptyView()) {
-                SettingCell(title: "알림 및 소리")
-            }
-            */
-            
-            // MARK: - 버전 정보
-            SettingCell(title: TextLiteral.settingViewVersion, version: TextLiteral.settingViewVersionNumber)
-            
+            divider
             
             // MARK: - 오픈소스 라이선스
-            
-            NavigationLink(value: NavigationLisence.first) {
-                SettingCell(title: TextLiteral.settingViewOpensourceLicense)
-            }
+            SettingCell(title: TextLiteral.settingViewOpensourceLicense)
+                .navigationLinkRouter(data: NavigationLisence.first)
             
             
             // MARK: - 개인정보처리방침 모달뷰
-            
             Button {
                 self.isTappedPrivacyButton.toggle()
             } label: {
@@ -70,12 +72,12 @@ struct SettingView: View {
             
             // MARK: - 개발팀에 관하여 버튼
             //TODO: Halogen의 꿈. 추후 스프린트 시 완성되면 적용 예정
-//            NavigationLink(destination: AboutTeamView()) {
-//                SettingCell(title: "개발팀에 관하여")
-//            }
+            //            NavigationLink(destination: AboutTeamView()) {
+            //                SettingCell(title: "개발팀에 관하여")
+            //            }
+            
             
             // MARK: - 개발자에게 연락하기 버튼
-            
             Button(action : {
                 if MFMailComposeViewController.canSendMail() {
                     self.isShowingMailView.toggle()
@@ -84,14 +86,14 @@ struct SettingView: View {
                 if MFMailComposeViewController.canSendMail() {
                     SettingCell(title: TextLiteral.settingViewContact)
                 }
-                //못 보내는 기기일 때 뜨는 것. 아예 지워도 될 것 같긴 한데 어떻게할까요. 못 보내는 기기의 기준이 확실치 않아서 일단 이렇게 둠.
                 else {
                     SettingCell(title: TextLiteral.settingViewContactMessage)
                         .multilineTextAlignment(.leading)
                 }
             }
             
-            //로그인없이 둘러보기 여부에 따라 보여지는 버튼 다르게 표시
+            divider
+            
             if useWithoutSignIn {
                 //MARK: - 로그인없이 둘러보기 시 로그인 버튼
                 Button {
@@ -99,7 +101,6 @@ struct SettingView: View {
                 } label: {
                     SettingCell(title: TextLiteral.settingViewLogin)
                 }
-                
             } else {
                 // MARK: - 로그아웃 버튼
                 Button {
@@ -123,38 +124,34 @@ struct SettingView: View {
                     Text(TextLiteral.settingViewLogoutMessage)
                 }
                 
+                
                 // MARK: - 회원탈퇴 버튼
-                NavigationLink(value: NavigationWithdrawal.first) {
-                    SettingCell(title: TextLiteral.settingViewWithdrawal)
-                }
+                SettingCell(title: TextLiteral.settingViewWithdrawal)
+                    .navigationLinkRouter(data: NavigationWithdrawal.first)
             }
-            
             Spacer()
+        }
+        
+        .sheet(isPresented: $isTappedUserGradeButton) {
+            AboutShortcutGradeView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $isShowingMailView) {
             MailView(isShowing: self.$isShowingMailView, result: self.$result)
         }
-        
         .sheet(isPresented: self.$isTappedPrivacyButton) {
             ZStack {
                 PrivacyPolicyView(viewModel: webViewModel,
                                   isTappedPrivacyButton: $isTappedPrivacyButton,
                                   url: TextLiteral.settingViewPrivacyPolicyURL)
-                    .environmentObject(webViewModel)
-                    .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
+                .environmentObject(webViewModel)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
                 if webViewModel.isLoading {
                     ProgressView()
                 }
             }
-        }
-        
-        .navigationDestination(for: NavigationLisence.self) { value in
-            LicenseView()
-        }
-        
-        .navigationDestination(for: NavigationWithdrawal.self) { _ in
-            WithdrawalView()
         }
         
         .padding(.horizontal, 16)
@@ -162,6 +159,11 @@ struct SettingView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
+    var divider: some View {
+        Divider()
+            .background(Color.gray1)
+            .frame(width: UIScreen.main.bounds.size.width - 32)
+    }
     
     private func logOut() {
         let firebaseAuth = Auth.auth()
@@ -174,6 +176,12 @@ struct SettingView: View {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    private func getAppVersion() -> String {
+        guard let info = Bundle.main.infoDictionary,
+              let appVersion = info["CFBundleShortVersionString"] as? String else { return "" }
+        return appVersion
     }
 }
 struct SettingCell: View {
@@ -190,7 +198,36 @@ struct SettingCell: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
     }
+}
+
+struct FunctionCell: View {
+    var title: String
+    var tag: String?
     
+    var body: some View {
+        HStack {
+            Text(title)
+                .Body1()
+                .foregroundColor(.gray4)
+            Spacer()
+            if let tag {
+                Text(tag)
+                    .Body2()
+                    .foregroundColor(Color.tagText)
+                    .frame(height: 20)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(
+                        Capsule()
+                            .fill( Color.tagBackground )
+                            .overlay(
+                                Capsule()
+                                    .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))                        )
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 16)
+    }
 }
 
 struct SettingView_Previews: PreviewProvider {
