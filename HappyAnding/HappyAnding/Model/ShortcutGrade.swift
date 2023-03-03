@@ -57,15 +57,15 @@ enum ShortcutGrade: Int {
         case.level0:
             return "기본 레벨이에요"
         case.level1:
-            return "단축어를 1개 작성하면 얻어요"
+            return "단축어를 1개 작성하면 달성해요"
         case.level2:
-            return "단축어를 5개 작성하면 얻어요"
+            return "단축어를 5개 작성하면 달성해요"
         case.level3:
-            return "단축어를 10개 작성하면 얻어요"
+            return "단축어를 10개 작성하면 달성해요"
         case.level4:
-            return "단축어를 25개 작성하면 얻어요"
+            return "단축어를 25개 작성하면 달성해요"
         case.level5:
-            return "단축어를 50개 작성하면 얻어요"
+            return "단축어를 50개 작성하면 달성해요"
         }
     }
 }
