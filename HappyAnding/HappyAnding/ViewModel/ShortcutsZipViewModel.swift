@@ -961,13 +961,30 @@ extension ShortcutsZipViewModel {
         case 1..<5:
             return .level1
         case 5..<10:
-            return .level5
+            return .level2
         case 10..<25:
-            return .level10
+            return .level3
         case 25..<50:
-            return .level25
+            return .level4
         default:
-            return .level50
+            return .level5
+        }
+    }
+    
+    func countShortcutsToNextGrade(numberOfShortcuts: Int) -> Int {
+        switch numberOfShortcuts {
+        case 0..<1:
+            return 1
+        case 1..<5:
+            return 5-numberOfShortcuts
+        case 5..<10:
+            return 10-numberOfShortcuts
+        case 10..<25:
+            return 25-numberOfShortcuts
+        case 25..<50:
+            return 50-numberOfShortcuts
+        default:
+            return 0
         }
     }
     
@@ -977,14 +994,31 @@ extension ShortcutsZipViewModel {
             return Image(systemName: "person.crop.circle.fill")
         case .level1:
             return Image(isBig ? "level1Big" : "level1Small")
-        case .level5:
+        case .level2:
             return Image(isBig ? "level5Big" : "level5Small")
-        case .level10:
+        case .level3:
             return Image(isBig ? "level10Big" : "level10Small")
-        case .level25:
+        case .level4:
             return Image(isBig ? "level25Big" : "level25Small")
-        case .level50:
+        case .level5:
             return Image(isBig ? "level50Big" : "level50Small")
+        }
+    }
+    
+    func fetchShortcutGradeSuperImage(shortcutGrade: ShortcutGrade) -> Image {
+        switch shortcutGrade {
+        case .level0:
+            return Image(systemName: "person.crop.circle.fill")
+        case .level1:
+            return Image("level1Super")
+        case .level2:
+            return Image("level5Super")
+        case .level3:
+            return Image("level10Super")
+        case .level4:
+            return Image("level25Super")
+        case .level5:
+            return Image("level50Super")
         }
     }
     
