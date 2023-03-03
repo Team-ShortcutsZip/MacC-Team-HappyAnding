@@ -8,7 +8,9 @@
 import SwiftUI
 import Foundation
  
+/// 외부 영역을 터치했을 때, 키보드를 숨기기 위한 확장입니다.
 extension UIApplication {
+
     func hideKeyboard() {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene

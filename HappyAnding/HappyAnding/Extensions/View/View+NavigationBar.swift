@@ -1,18 +1,30 @@
 //
-//  Navigationbar+Extension.swift
+//  View+NavigationBar.swift
 //  HappyAnding
 //
-//  Created by 전지민 on 2022/10/25.
+//  Created by 이지원 on 2023/02/24.
 //
 
 import SwiftUI
 
+// MARK: - View extension
+public extension View {
+    func navigationBarBackground<Background: View>(@ViewBuilder _ background: @escaping () -> Background) -> some View {
+        modifier(NavigationBarColorModifier(background: background))
+    }
+}
+
+
+
+// MARK: - View Modifier
+
 /**
  네비게이션바 아이템 색상을 변경하기 위한 클래스 입니다.
  맨 처음 뷰가 선언되는 시점에 Theme.navigationBarColors() 를 선언하여 사용해주세요.
+ 
+ - remark:
+    - [출처](https://velog.io/@whale/SwiftUI-NavigationBar-Background-%EC%A1%B0%EC%A0%88%ED%95%98%EA%B8%B0)
 */
-
-//출처: https://velog.io/@whale/SwiftUI-NavigationBar-Background-%EC%A1%B0%EC%A0%88%ED%95%98%EA%B8%B0
 struct NavigationBarColorModifier<Background>: ViewModifier where Background: View {
     
     let background: () -> Background
@@ -52,7 +64,7 @@ struct NavigationBarColorModifier<Background>: ViewModifier where Background: Vi
     }
 
     func body(content: Content) -> some View {
-        // Color(UIColor.secondarySystemBackground)
+        
         ZStack {
             content
             VStack {
@@ -63,11 +75,5 @@ struct NavigationBarColorModifier<Background>: ViewModifier where Background: Vi
                 Spacer() // to move the navigation bar to top
             }
         }
-    }
-}
-
-public extension View {
-    func navigationBarBackground<Background: View>(@ViewBuilder _ background: @escaping () -> Background) -> some View {
-        modifier(NavigationBarColorModifier(background: background))
     }
 }

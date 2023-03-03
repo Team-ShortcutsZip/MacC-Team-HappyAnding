@@ -68,7 +68,7 @@ struct ShareExtensionWriteShortcutView: View {
                         .frame(width: 84, height: 84)
                     
                     Image(systemName: "plus")
-                        .font(.system(size: 24))
+                        .mediumIcon()
                         .frame(width: 84, height: 84)
                         .foregroundColor(.gray5)
                 }
@@ -81,7 +81,7 @@ struct ShareExtensionWriteShortcutView: View {
                         .frame(width: 84, height: 84)
                     
                     Image(systemName: shareExtensionViewModel.shortcut.sfSymbol)
-                        .font(.system(size: 32))
+                        .mediumIcon()
                         .frame(width: 84, height: 84)
                         .foregroundColor(.textIcon)
                 }
@@ -196,6 +196,7 @@ struct ShareExtensionWriteShortcutView: View {
                         }
                         Spacer()
                         Image(systemName: "chevron.forward")
+                            .smallIcon()
                             .foregroundColor(selectedCategories.isEmpty ? .gray2 : .gray4)
                     }
                     .padding(.all, 16)
@@ -227,6 +228,7 @@ struct ShareExtensionWriteShortcutView: View {
                     .foregroundColor(.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
+                    .smallIcon()
                     .frame(width: 20, height: 20)
                     .foregroundColor(.gray4)
                     .onTapGesture {
@@ -302,6 +304,7 @@ struct ShareExtensionWriteShortcutView: View {
                     }, label: {
                         HStack {
                             Image(systemName: "plus")
+                                .smallIcon()
                             Text(TextLiteral.writeShortcutViewRequiredAppCell)
                         }
                     })
@@ -328,6 +331,7 @@ struct ShareExtensionWriteShortcutView: View {
                     items.removeAll { $0 == item }
                 }, label: {
                     Image(systemName: "xmark")
+                        .smallIcon()
                 })
             }
             .modifier(CellModifier(foregroundColor: Color.gray4,
@@ -365,7 +369,7 @@ struct ShareExtensionWriteShortcutView: View {
                     self.text = ""
                 }) {
                     Image(systemName: "xmark.circle.fill")
-                        .Body2()
+                        .smallIcon()
                         .foregroundColor(.gray4)
                 }
             }
