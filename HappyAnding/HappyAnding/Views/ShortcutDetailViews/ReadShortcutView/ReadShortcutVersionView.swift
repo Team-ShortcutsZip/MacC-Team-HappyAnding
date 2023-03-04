@@ -19,20 +19,19 @@ struct ReadShortcutVersionView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-        if shortcut.updateDescription.count == 1 {
-            Text(TextLiteral.readShortcutVersionViewNoUpdates)
-                .Body2()
-                .foregroundColor(.gray4)
-                .padding(.top, 16)
-            
-            Spacer()
-                .frame(maxHeight: .infinity)
-            
-        } else {
-            Text(TextLiteral.readShortcutVersionViewUpdateContent)
+            if shortcut.updateDescription.count == 1 {
+                Text(TextLiteral.readShortcutVersionViewNoUpdates)
                     .Body2()
                     .foregroundColor(.gray4)
-            
+                    .padding(.top, 16)
+                
+                Spacer()
+                    .frame(maxHeight: .infinity)
+                
+            } else {
+                Text(TextLiteral.readShortcutVersionViewUpdateContent)
+                    .Body2()
+                    .foregroundColor(.gray4)
                 ForEach(Array(zip(shortcut.updateDescription, shortcut.updateDescription.indices)), id: \.0) { data, index in
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
@@ -75,7 +74,6 @@ struct ReadShortcutVersionView: View {
                     }
                 }
                 Spacer()
-                    .frame(maxHeight: .infinity)
             }
         }
         .padding(.top, 16)
