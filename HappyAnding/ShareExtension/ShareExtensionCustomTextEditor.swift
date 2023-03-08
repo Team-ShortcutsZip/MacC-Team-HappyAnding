@@ -17,7 +17,7 @@ struct ShareExtensionCustomTextEditor: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<ShareExtensionCustomTextEditor>) -> UITextView {
         let textView = UITextView(frame: .zero)
         textView.delegate = context.coordinator
-        textView.font = .Body2
+        textView.font = .shortcutsZipBody2
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.backgroundColor = UIColor(.shortcutsZipBackground)
         return textView

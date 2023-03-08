@@ -161,10 +161,10 @@ struct ShareExtensionWriteShortcutView: View {
         VStack {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewCategoryTitle)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(.gray5)
                 Text(TextLiteral.writeShortcutViewCategoryDescription)
-                    .Footnote()
+                    .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
                 Spacer()
             }
@@ -187,11 +187,11 @@ struct ShareExtensionWriteShortcutView: View {
                         if selectedCategories.isEmpty {
                             Text(TextLiteral.writeShortcutViewCategoryCell)
                                 .foregroundColor(.gray2)
-                                .Body2()
+                                .shortcutsZipBody2()
                         } else {
                             Text(selectedCategories.map { String( Category(rawValue: $0)!.translateName()) }.joined(separator: ", "))
                                 .foregroundColor(.gray4)
-                                .Body2()
+                                .shortcutsZipBody2()
                                 .multilineTextAlignment(.leading)
                         }
                         Spacer()
@@ -221,10 +221,10 @@ struct ShareExtensionWriteShortcutView: View {
         VStack {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewRequiredAppsTitle)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(.gray5)
                 Text(TextLiteral.writeShortcutViewRequiredAppDescription)
-                    .Footnote()
+                    .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
@@ -246,7 +246,7 @@ struct ShareExtensionWriteShortcutView: View {
                             .foregroundColor(.gray5)
                         HStack(alignment: .top) {
                             Text(TextLiteral.writeShortcutViewRequiredAppInformation)
-                                .Footnote()
+                                .shortcutsZipFootnote()
                                 .foregroundColor(.gray1)
                                 .multilineTextAlignment(.leading)
                             Spacer()
@@ -346,7 +346,7 @@ struct ShareExtensionWriteShortcutView: View {
         
         public func body(content: Content) -> some View {
             content
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(foregroundColor)
                 .frame(height: 52)
                 .padding(.horizontal)

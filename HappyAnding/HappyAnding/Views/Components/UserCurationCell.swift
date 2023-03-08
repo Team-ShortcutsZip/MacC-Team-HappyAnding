@@ -48,7 +48,7 @@ struct UserCurationCell: View {
                                 Image(systemName: "plus")
                                     .smallIcon()
                                 Text("\(shortcutsZipViewModel.userCurations[index].shortcuts.count-4)")
-                                    .Footnote()
+                                    .shortcutsZipFootnote()
                             }
                             .foregroundColor(.gray5)
                         }
@@ -60,11 +60,11 @@ struct UserCurationCell: View {
                 //MARK: - curation title, subtitle
                 
                 Text(shortcutsZipViewModel.userCurations[index].title)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(Color.gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(shortcutsZipViewModel.userCurations[index].subtitle.lineBreaking)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
                     .foregroundColor(Color.gray5)

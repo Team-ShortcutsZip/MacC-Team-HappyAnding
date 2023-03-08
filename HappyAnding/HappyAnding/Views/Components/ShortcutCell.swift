@@ -112,16 +112,16 @@ struct ShortcutCell: View {
         VStack(alignment: .leading, spacing: 0) {
             if rankNumber != -1 {
                 Text("\(rankNumber)")
-                    .Subtitle()
+                    .shortcutsZipSubtitle()
                     .foregroundColor(.gray4)
                     .padding(0)
             }
             Text(shortcutCell.title)
-                .Headline()
+                .shortcutsZipHeadline()
                 .foregroundColor(.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle.lineBreaking)
-                .Footnote()
+                .shortcutsZipFootnote()
                 .foregroundColor(.gray3)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)

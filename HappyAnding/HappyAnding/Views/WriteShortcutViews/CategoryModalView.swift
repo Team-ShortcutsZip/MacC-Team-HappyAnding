@@ -32,7 +32,7 @@ struct CategoryModalView: View {
                     }
                     
                     Text(TextLiteral.categoryModalViewTitle)
-                        .Headline()
+                        .shortcutsZipHeadline()
                         .frame(maxWidth: .infinity)
                     
                     Spacer()
@@ -62,7 +62,7 @@ struct CategoryModalView: View {
                         
                         Text(TextLiteral.done)
                             .foregroundColor(!selectedCategories.isEmpty ? .textIcon : .textButtonDisable)
-                            .Body1()
+                            .shortcutsZipBody1()
                     }
                 })
                 .disabled(selectedCategories.isEmpty)
@@ -86,7 +86,7 @@ struct CategoryModalView: View {
                 }
             }, label: {
                 Text(item.translateName())
-                    .Body2()
+                    .shortcutsZipBody2()
                     .tag(item.category)
                     .foregroundColor(items.contains(item.category) ? Color.categoryPickText : Color.gray3)
                     .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)

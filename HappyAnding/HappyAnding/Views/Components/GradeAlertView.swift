@@ -52,7 +52,7 @@ struct GradeAlertView: View {
                 .disabled(true)
                 
                 Text(isTextShowing ? TextLiteral.gradeAlertMessage : TextLiteral.gradeAlertMessageBlank)
-                    .Title1()
+                    .shortcutsZipTitle1()
                     .foregroundColor(.gray5)
                     .padding(.bottom, 60)
                     .disabled(isTextShowing)

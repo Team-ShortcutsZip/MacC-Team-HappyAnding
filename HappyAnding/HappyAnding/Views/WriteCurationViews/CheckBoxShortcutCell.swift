@@ -77,11 +77,11 @@ struct CheckBoxShortcutCell: View {
         
         VStack(alignment: .leading, spacing: 4) {
             Text(shortcutCell.title)
-                .Headline()
+                .shortcutsZipHeadline()
                 .foregroundColor(.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle)
-                .Footnote()
+                .shortcutsZipFootnote()
                 .foregroundColor(.gray3)
                 .lineLimit(2)
         }

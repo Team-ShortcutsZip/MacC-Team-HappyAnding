@@ -48,7 +48,7 @@ struct ListCategoryShortcutView: View {
             Text(data.categoryName.fetchDescription().lineBreaking)
         }
         .foregroundColor(.gray5)
-        .Body2()
+        .shortcutsZipBody2()
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(

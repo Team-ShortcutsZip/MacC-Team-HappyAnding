@@ -62,7 +62,7 @@ struct ExploreShortcutView: View {
         .toolbar {
             ToolbarItem {
                 Image(systemName: "magnifyingglass")
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(.gray5)
                     .navigationLinkRouter(data: NavigationSearch.first)
             }

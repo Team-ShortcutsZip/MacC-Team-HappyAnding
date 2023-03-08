@@ -43,7 +43,7 @@ struct UserCurationListView: View {
                     Image(systemName: "plus")
                         .mediumIcon()
                     Text(TextLiteral.userCurationListViewAdd)
-                        .Headline()
+                        .shortcutsZipHeadline()
                 }
                 .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity)

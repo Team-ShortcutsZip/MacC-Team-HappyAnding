@@ -20,7 +20,7 @@ struct MyShortcutCardView: View {
                 .foregroundColor(Color.textIcon)
                 .frame(width: 30.0, height: 30.0)
             Text(myShortcutName)
-                .Subtitle()
+                .shortcutsZipSubtitle()
                 .multilineTextAlignment(.leading)
                 .foregroundColor(Color.textIcon)
                 .lineLimit(3)
