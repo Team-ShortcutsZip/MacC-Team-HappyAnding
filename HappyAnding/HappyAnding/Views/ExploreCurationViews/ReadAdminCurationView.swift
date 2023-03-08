@@ -79,7 +79,7 @@ struct ReadAdminCurationView: View {
             VStack(alignment: .leading, spacing: 4) {
                 SubtitleTextView(text: curation.title)
                 Text(curation.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray4)
             }
             Spacer()

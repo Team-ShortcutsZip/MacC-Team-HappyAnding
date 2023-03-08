@@ -18,7 +18,7 @@ struct EditNicknameView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(TextLiteral.editNicknameViewHeadline)
-                .Title1()
+                .shortcutsZipTitle1()
                 .foregroundColor(.gray5)
                 .padding(.top, 40)
             
@@ -64,7 +64,7 @@ struct EditNicknameView: View {
                     .frame(height: 52)
                 Text(TextLiteral.done)
                     .foregroundColor(isValid ? .textIcon : .textButtonDisable)
-                    .Body1()
+                    .shortcutsZipBody1()
             }
         })
         .disabled(!isValid)

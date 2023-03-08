@@ -73,13 +73,13 @@ struct SearchView: View {
             Text(TextLiteral.searchViewRecommendedKeyword)
                 .padding(.leading, 16)
                 .padding(.top, 12)
-                .Headline()
+                .shortcutsZipHeadline()
             
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(keywords.keyword, id: \.self) { keyword in
                         Text(keyword)
-                            .Body2()
+                            .shortcutsZipBody2()
                             .foregroundColor(Color.gray4)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
@@ -102,7 +102,7 @@ struct SearchView: View {
     var proposeView: some View {
         VStack(alignment: .center) {
             Text("\'\(searchText)\'의 결과가 없어요.\n원하는 단축어가 있다면 제안해보세요!").multilineTextAlignment(.center)
-                .Body1()
+                .shortcutsZipBody1()
                 .foregroundColor(Color.gray4)
             
             Link(destination: URL(string: TextLiteral.searchViewProposalURL)!) {

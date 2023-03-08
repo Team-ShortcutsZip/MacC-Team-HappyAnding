@@ -63,7 +63,7 @@ struct WriteCurationInfoView: View {
                     writeCurationNavigation.navigationPath = .init()
                 } label: {
                     Text(TextLiteral.upload)
-                        .Headline()
+                        .shortcutsZipHeadline()
                         .foregroundColor(isIncomplete ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                 }
                 .disabled(isIncomplete)

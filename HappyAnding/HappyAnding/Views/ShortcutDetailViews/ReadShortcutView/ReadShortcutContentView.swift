@@ -43,18 +43,18 @@ struct ReadShortcutContentView: View {
         var body: some View {
             VStack(alignment: .leading) {
                 Text(title)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(Color.gray4)
                 
                 WrappingHStack(content, id: \.self, alignment: .leading, spacing: .constant(8), lineSpacing: 8) { item in
                     if Category.allCases.contains(where: { $0.rawValue == item }) {
                         Text(Category(rawValue: item)?.translateName() ?? "")
-                            .Body2()
+                            .shortcutsZipBody2()
                             .padding(.trailing, 8)
                             .foregroundColor(Color.gray5)
                     } else {
                         Text(item)
-                            .Body2()
+                            .shortcutsZipBody2()
                             .padding(.trailing, 8)
                             .foregroundColor(Color.gray5)
                     }
@@ -78,11 +78,11 @@ private struct ReusableTextView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(Color.gray4)
             if let contents {
                 Text(contents)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(Color.gray5)
                     .lineLimit(nil)
             }
@@ -90,7 +90,7 @@ private struct ReusableTextView: View {
                 ForEach(contentsArray, id: \.self) {
                     content in
                     Text(content)
-                        .Body2()
+                        .shortcutsZipBody2()
                         .foregroundColor(Color.gray5)
                         .lineLimit(nil)
                 }

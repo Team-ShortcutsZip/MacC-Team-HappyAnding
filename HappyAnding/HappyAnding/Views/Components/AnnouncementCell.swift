@@ -26,7 +26,7 @@ struct AnnouncementCell: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(tagName)
-                        .Footnote()
+                        .shortcutsZipFootnote()
                         .fontWeight(.bold)
                         .foregroundColor(Color.tagText)
                         .frame(height: 20)
@@ -40,7 +40,7 @@ struct AnnouncementCell: View {
                                         .strokeBorder(Color.shortcutsZipPrimary, lineWidth: 1))
                         )
                     Text(discription)
-                        .Body2()
+                        .shortcutsZipBody2()
                         .fontWeight(.semibold)
                         .foregroundColor(.gray5)
                         .lineLimit(1)
@@ -52,7 +52,7 @@ struct AnnouncementCell: View {
                     isAnnouncementShow = false
                 } label: {
                     Image(systemName: "xmark")
-                        .Body1()
+                        .shortcutsZipBody1()
                         .foregroundColor(.gray4)
                         .frame(width: 24, height: 24)
                 }

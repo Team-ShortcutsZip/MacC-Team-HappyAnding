@@ -13,12 +13,12 @@ struct AboutTeamView: View {
             
             VStack {
                 Text("Team Happy ANDing")
-                    .Title1()
+                    .shortcutsZipTitle1()
                     .foregroundColor(Color.gray5)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 16)
                 Text("안녕하세요. ShortcutsZip의 개발팀 Team Happy ANDing입니다. ")
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(Color.gray3)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 16)

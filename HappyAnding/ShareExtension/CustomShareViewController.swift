@@ -114,7 +114,7 @@ class CustomShareViewController: UIViewController {
             let button = UIButton()
             button.setTitle(TextLiteral.cancel, for: .normal)
             button.setTitleColor(UIColor.gray4, for: .normal)
-            button.titleLabel?.font = UIFont.Body1
+            button.titleLabel?.font = UIFont.shortcutsZipBody1
             button.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
             
             return button
@@ -154,7 +154,7 @@ class CustomShareViewController: UIViewController {
         customNavBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.gray5]
         
         let barButtonItemAppearance = UIBarButtonItemAppearance(style: .plain)
-        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.shortcutsZipPrimary, .font: UIFont.Headline]
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.shortcutsZipPrimary, .font: UIFont.shortcutsZipHeadline]
         barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.shortcutsZipPrimaryOpacity]
         barButtonItemAppearance.highlighted.titleTextAttributes = [.foregroundColor: UIColor.label]
         barButtonItemAppearance.focused.titleTextAttributes = [.foregroundColor: UIColor.gray5]

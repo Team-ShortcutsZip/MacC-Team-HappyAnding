@@ -70,7 +70,7 @@ struct IconModalView: View {
                 }
                 
                 Text(TextLiteral.iconModalViewTitle)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .frame(maxWidth: .infinity)
                 
                 Spacer()
@@ -98,7 +98,7 @@ struct IconModalView: View {
             .padding(.bottom, 24)
             
             Text(TextLiteral.iconModalViewColor)
-                .Subtitle()
+                .shortcutsZipSubtitle()
                 .padding(.leading, 16)
                 .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -111,7 +111,7 @@ struct IconModalView: View {
             .padding(.bottom, 24)
             
             Text(TextLiteral.iconModalViewIcon)
-                .Subtitle()
+                .shortcutsZipSubtitle()
                 .padding(.leading, 16)
                 .foregroundColor(.gray4)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -134,7 +134,7 @@ struct IconModalView: View {
                     
                     Text(TextLiteral.done)
                         .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .textButton : .textButtonDisable )
-                        .Body1()
+                        .shortcutsZipBody1()
                 }
             })
             .disabled(iconColor.isEmpty || iconSymbol.isEmpty)

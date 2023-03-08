@@ -1,15 +1,15 @@
 import SwiftUI
 
 extension UIFont {
-    static var LargeTitle = UIFont.systemFont(ofSize: 26, weight: .heavy)
-    static var Title1 = UIFont.systemFont(ofSize: 22, weight: .bold)
-    static var Title2 = UIFont.systemFont(ofSize: 20, weight: .bold)
-    static var Headline = UIFont.systemFont(ofSize: 17, weight: .bold)
-    static var Body1 = UIFont.systemFont(ofSize: 17, weight: .regular)
-    static var Body2 = UIFont.systemFont(ofSize: 15, weight: .regular)
-    static var Subtitle = UIFont.systemFont(ofSize: 15, weight: .heavy)
-    static var Footnote = UIFont.systemFont(ofSize: 13, weight: .regular)
-    static var Sb = UIFont.systemFont(ofSize: 15, weight: .semibold)
+    static var shortcutsZipLargeTitle = UIFont.systemFont(ofSize: 26, weight: .heavy)
+    static var shortcutsZipTitle1 = UIFont.systemFont(ofSize: 22, weight: .bold)
+    static var shortcutsZipTitle2 = UIFont.systemFont(ofSize: 20, weight: .bold)
+    static var shortcutsZipHeadline = UIFont.systemFont(ofSize: 17, weight: .bold)
+    static var shortcutsZipBody1 = UIFont.systemFont(ofSize: 17, weight: .regular)
+    static var shortcutsZipBody2 = UIFont.systemFont(ofSize: 15, weight: .regular)
+    static var shortcutsZipSubtitle = UIFont.systemFont(ofSize: 15, weight: .heavy)
+    static var shortcutsZipFootnote = UIFont.systemFont(ofSize: 13, weight: .regular)
+    static var shortcutsZipSb = UIFont.systemFont(ofSize: 15, weight: .semibold)
     
     static var mediumIcon = UIFont.systemFont(ofSize: 20, weight: .medium)
     static var smallIcon = UIFont.systemFont(ofSize: 15, weight: .regular)

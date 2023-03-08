@@ -40,11 +40,11 @@ struct AdminCurationCell: View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(adminCuration.title)
-                    .Title1()
+                    .shortcutsZipTitle1()
                     .foregroundColor(.textCuration)
                     .lineLimit(1)
                 Text(adminCuration.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.textCuration)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
