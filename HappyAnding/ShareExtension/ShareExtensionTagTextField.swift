@@ -21,7 +21,7 @@ struct ShareExtensionTagTextField: UIViewRepresentable {
 
     public func makeUIView(context: Context) -> UITextField {
         let view = UITextField()
-        view.font = .Body2
+        view.font = .shortcutsZipBody2
         view.textColor = UIColor.gray4
         view.addTarget(context.coordinator, action: #selector(Coordinator.textViewDidChange), for: .editingChanged)
         view.delegate = context.coordinator

@@ -128,7 +128,7 @@ struct ReadShortcutView: View {
                                     }
                                 } label: {
                                     Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
-                                        .Body1()
+                                        .shortcutsZipBody1()
                                         .foregroundColor(Color.textIcon)
                                         .padding()
                                         .frame(maxWidth: .infinity)
@@ -269,7 +269,7 @@ extension ReadShortcutView {
                     .disabled(useWithoutSignIn)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .lineLimit(comment.depth == 1 ? 2 : 4)
                     .focused($isFocused)
                     .onAppear(perform : UIApplication.shared.hideKeyboard)
@@ -313,7 +313,7 @@ extension ReadShortcutView {
     var nestedCommentInfo: some View {
         HStack {
             Text("@ \(nestedCommentInfoText)")
-                .Footnote()
+                .shortcutsZipFootnote()
                 .foregroundColor(.gray5)
             Spacer()
             Button {
@@ -479,7 +479,7 @@ extension ReadShortcutView {
                 
                 if self.currentTab == tab {
                     Text(string)
-                        .Headline()
+                        .shortcutsZipHeadline()
                         .foregroundColor(.gray5)
                     Color.gray5
                         .frame(height: 2)
@@ -487,7 +487,7 @@ extension ReadShortcutView {
                     
                 } else {
                     Text(string)
-                        .Body1()
+                        .shortcutsZipBody1()
                         .foregroundColor(.gray3)
                     Color.clear.frame(height: 2)
                 }

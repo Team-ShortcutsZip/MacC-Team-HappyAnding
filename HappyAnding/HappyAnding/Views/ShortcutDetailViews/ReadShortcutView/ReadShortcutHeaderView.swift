@@ -32,12 +32,12 @@ struct ReadShortcutHeaderView: View {
             }
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(shortcut.title)")
-                    .Title1()
+                    .shortcutsZipTitle1()
                     .foregroundColor(Color.gray5)
                     .fixedSize(horizontal: false, vertical: true)
                 
                 Text("\(shortcut.subtitle)")
-                    .Body1()
+                    .shortcutsZipBody1()
                     .foregroundColor(Color.gray3)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -70,7 +70,7 @@ struct ReadShortcutHeaderView: View {
     // MARK: 좋아요 버튼
     var likeButton: some View {
         Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(numberOfLike)")
-            .Body2()
+            .shortcutsZipBody2()
             .padding(10)
             .foregroundColor(isMyLike ? Color.textIcon : Color.gray4)
             .background(isMyLike ? Color.shortcutsZipPrimary : Color.gray1)
@@ -99,7 +99,7 @@ struct ReadShortcutHeaderView: View {
                         .padding(.leading, 16)
                     
                     Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
-                        .Body2()
+                        .shortcutsZipBody2()
                         .foregroundColor(.gray4)
                     
                     Spacer()

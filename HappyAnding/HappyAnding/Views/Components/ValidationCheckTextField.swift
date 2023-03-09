@@ -88,7 +88,7 @@ struct ValidationCheckTextField: View {
                 
                 if let lengthLimit {
                     Text("\(content.count)/\(lengthLimit)")
-                        .Body2()
+                        .shortcutsZipBody2()
                         .foregroundColor(.gray4)
                         .padding(.trailing, 16)
                 }
@@ -114,7 +114,7 @@ struct ValidationCheckTextField: View {
             HStack {
                 if isExceeded {
                     Text(textFieldError.message)
-                        .Body2()
+                        .shortcutsZipBody2()
                         .foregroundColor(.shortcutsZipError)
                         .padding(.leading)
                 }
@@ -131,13 +131,13 @@ struct ValidationCheckTextField: View {
     var textFieldTitle: some View {
         HStack {
             Text(title)
-                .Headline()
+                .shortcutsZipHeadline()
                 .foregroundColor(.gray5)
                 .padding(.leading, 16)
             
             if textType.isOptional {
                 Text(TextLiteral.validationCheckTextFieldOption)
-                    .Footnote()
+                    .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
             }
         }
@@ -149,7 +149,7 @@ struct ValidationCheckTextField: View {
             .focused($isFocused)
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
-            .Body2()
+            .shortcutsZipBody2()
             .frame(height: 24)
             .padding(16)
             .onAppear {
@@ -179,7 +179,7 @@ struct ValidationCheckTextField: View {
             
             if content.isEmpty && !isFocused {
                 Text(placeholder)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
                     .padding(16)

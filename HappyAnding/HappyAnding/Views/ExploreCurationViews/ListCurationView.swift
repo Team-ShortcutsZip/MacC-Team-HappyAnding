@@ -29,7 +29,7 @@ struct ListCurationView: View {
         let titleString = data.type == .personalCuration ? (shortcutsZipViewModel.userInfo?.nickname ?? "") : ""
         if data.curation.count == 0 {
             Text("아직 \(titleString)\(data.type.rawValue)이(가) 없어요")
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(Color.gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))

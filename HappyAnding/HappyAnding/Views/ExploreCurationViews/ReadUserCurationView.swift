@@ -92,7 +92,7 @@ struct ReadUserCurationView: View {
                         .foregroundColor(.gray3)
                     
                     Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
-                        .Headline()
+                        .shortcutsZipHeadline()
                         .foregroundColor(.gray4)
                     Spacer()
                 }

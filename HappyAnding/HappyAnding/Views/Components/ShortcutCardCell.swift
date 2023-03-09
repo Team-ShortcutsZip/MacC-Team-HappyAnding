@@ -21,7 +21,7 @@ struct ShortcutCardCell: View {
             Text(categoryShortcutName)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
-                .Headline()
+                .shortcutsZipHeadline()
                 .foregroundColor(Color.textIcon)
             Spacer()
         }

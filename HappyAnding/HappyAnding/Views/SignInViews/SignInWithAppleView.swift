@@ -29,11 +29,11 @@ struct SignInWithAppleView: View {
                 .padding(.bottom, 28)
             
             Text(TextLiteral.signInWithAppleViewTitle)
-                .LargeTitle()
+                .shortcutsZipLargeTitle()
                 .foregroundColor(.shortcutsZipPrimary)
             
             Text(TextLiteral.signInWithAppleViewSubTitle)
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(.gray3)
             
             Spacer()
@@ -58,7 +58,7 @@ struct SignInWithAppleView: View {
                 useWithoutSignIn = true
             }, label: {
                 Text(TextLiteral.signInWithAppleViewUseWithoutSignIn)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray5)
             })
             .padding(.bottom, 12)

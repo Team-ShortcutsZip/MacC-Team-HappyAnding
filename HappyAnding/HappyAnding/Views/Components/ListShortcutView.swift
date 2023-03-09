@@ -20,7 +20,7 @@ struct ListShortcutView: View {
         if let shortcuts = data.shortcuts {
             if shortcuts.count == 0 {
                 Text("아직 \(data.sectionType.rawValue)가 없어요")
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(Color.gray4)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 

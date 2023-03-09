@@ -36,7 +36,7 @@ struct WriteCurationSetView: View {
             if shortcutCells.isEmpty {
                 Spacer()
                 Text(TextLiteral.writeCurationSetViewNoShortcuts)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray4)
                     .multilineTextAlignment(.center)
                 Spacer()
@@ -60,14 +60,14 @@ struct WriteCurationSetView: View {
                     self.isWriting.toggle()
                 } label: {
                     Text(TextLiteral.cancel)
-                        .Body1()
+                        .shortcutsZipBody1()
                         .foregroundColor(.gray4)
                 }
             }
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 Text(TextLiteral.next)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                     .navigationLinkRouter(data: Float(0.0))
                     .disabled(curation.shortcuts.isEmpty)
@@ -85,14 +85,14 @@ struct WriteCurationSetView: View {
     var listHeader: some View {
         HStack(alignment: .bottom, spacing: 8) {
             Text(TextLiteral.writeCurationSetViewSelectionTitle)
-                .Sb()
+                .shortcutsZipSb()
                 .foregroundColor(.gray5)
             Text(TextLiteral.writeCurationSetViewSelectionDescription)
-                .Footnote()
+                .shortcutsZipFootnote()
                 .foregroundColor(.gray3)
             Spacer()
             Text("\(curation.shortcuts.count)개")
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(.shortcutsZipPrimary)
         }
         .padding(.horizontal, 16)
@@ -117,7 +117,7 @@ struct WriteCurationSetView: View {
     var infomation: some View {
         Text(TextLiteral.writeCurationSetViewSelectionInformation)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .Body2()
+            .shortcutsZipBody2()
             .foregroundColor(.gray5)
             .padding(.all, 16)
             .background(

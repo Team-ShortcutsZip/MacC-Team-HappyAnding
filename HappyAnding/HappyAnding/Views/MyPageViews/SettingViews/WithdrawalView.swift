@@ -29,19 +29,19 @@ struct WithdrawalView: View {
         VStack(alignment: .leading) {
             
             Text(TextLiteral.withdrawalViewHeadline)
-                .Title2()
+                .shortcutsZipTitle2()
                 .foregroundColor(.gray5)
                 .multilineTextAlignment(.leading)
                 .padding(.vertical, 32)
             
             ForEach(0..<signOutTitle.count, id: \.self) { index in
                 Text(signOutTitle[index])
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray5)
                     .padding(.bottom, 8)
                 
                 Text(signOutDescription[index])
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray3)
                     .padding(.bottom, 16)
             }
@@ -56,7 +56,7 @@ struct WithdrawalView: View {
                         isTappedCheckToggle.toggle()
                     }
                 Text(TextLiteral.withdrawalViewAgree)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray4)
                     .multilineTextAlignment(.leading)
                     .onTapGesture {
@@ -77,7 +77,7 @@ struct WithdrawalView: View {
                     
                     Text(TextLiteral.withdrawalViewButton)
                         .foregroundColor(isTappedCheckToggle ? .textButton : .textButtonDisable )
-                        .Body1()
+                        .shortcutsZipBody1()
                 }
             }
             .disabled(!isTappedCheckToggle)
