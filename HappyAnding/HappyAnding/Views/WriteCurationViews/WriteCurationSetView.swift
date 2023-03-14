@@ -10,6 +10,7 @@ import SwiftUI
 struct WriteCurationSetView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     
     @Binding var isWriting: Bool
     
@@ -67,17 +68,11 @@ struct WriteCurationSetView: View {
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 Text(TextLiteral.next)
+                    .navigationLinkRouter(data: WriteCurationInfoType(curation: curation, deletedShortcutCells: deletedShortcutCells, isEdit: isEdit), isPresented: $isWriting)
                     .shortcutsZipHeadline()
                     .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
-                    .navigationLinkRouter(data: Float(0.0))
                     .disabled(curation.shortcuts.isEmpty)
             }
-        }
-        .navigationDestination(for: Float.self) { isEdit in
-            WriteCurationInfoView(curation: $curation,
-                                  isWriting: self.$isWriting,
-                                  deletedShortcutCells: $deletedShortcutCells,
-                                  isEdit: self.isEdit)
         }
     }
     
@@ -131,7 +126,6 @@ struct WriteCurationSetView: View {
 
 struct WriteCurationSetView_Previews: PreviewProvider {
     static var previews: some View {
-        WriteCurationSetView(isWriting: .constant(false),
-                             isEdit: false)
+        WriteCurationSetView(isWriting: .constant(false), isEdit: false)
     }
 }
