@@ -21,32 +21,32 @@ import SwiftUI
  
  */
 extension View {
-    func LargeTitle() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .LargeTitle, lineHeight: 38))
+    func shortcutsZipLargeTitle() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipLargeTitle, lineHeight: 38))
     }
-    func Title1() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Title1, lineHeight: 32))
+    func shortcutsZipTitle1() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipTitle1, lineHeight: 32))
     }
-    func Title2() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Title2, lineHeight: 28))
+    func shortcutsZipTitle2() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipTitle2, lineHeight: 28))
     }
-    func Headline() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Headline, lineHeight: 22))
+    func shortcutsZipHeadline() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipHeadline, lineHeight: 22))
     }
-    func Body1() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Body1, lineHeight: 22))
+    func shortcutsZipBody1() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipBody1, lineHeight: 22))
     }
-    func Body2() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Body2, lineHeight: 20))
+    func shortcutsZipBody2() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipBody2, lineHeight: 20))
     }
-    func Subtitle() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Subtitle, lineHeight: 20))
+    func shortcutsZipSubtitle() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipSubtitle, lineHeight: 20))
     }
-    func Footnote() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Footnote, lineHeight: 18))
+    func shortcutsZipFootnote() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipFootnote, lineHeight: 18))
     }
-    func Sb() -> some View {
-        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .Sb, lineHeight: 20))
+    func shortcutsZipSb() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: .shortcutsZipSb, lineHeight: 20))
     }
     
     func mediumIcon() -> some View {

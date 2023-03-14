@@ -74,7 +74,7 @@ struct UpdateShortcutView: View {
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     Text(TextLiteral.update)
                         .foregroundColor(isLinkValid && isDescriptionValid ? .textButton : .textButtonDisable)
-                        .Body1()
+                        .shortcutsZipBody1()
                 }
             })
             .disabled(!isLinkValid || !isDescriptionValid)

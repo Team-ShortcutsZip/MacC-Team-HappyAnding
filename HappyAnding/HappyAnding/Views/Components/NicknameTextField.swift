@@ -78,11 +78,11 @@ struct NicknameTextField: View {
             
             if nicknameFocus == .focusError {
                 Text(nicknameError.message)
-                    .Footnote()
+                    .shortcutsZipFootnote()
                     .foregroundColor(.shortcutsZipError)
             } else {
                 Text(TextLiteral.nicknameTextFieldSpace)
-                    .Footnote()
+                    .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
             }
         }
@@ -117,7 +117,7 @@ struct NicknameTextField: View {
                     .textInputAutocapitalization(.never)
                     .focused($isFocused)
                     .frame(height: 52)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray5)
                     .padding(.horizontal, 16)
                     .onAppear { UIApplication.shared.hideKeyboard() }
@@ -151,7 +151,7 @@ struct NicknameTextField: View {
                         .frame(width: 80, height: 52)
                     
                     Text(TextLiteral.nicknameTextFieldDuplicateCheck)
-                        .Body1()
+                        .shortcutsZipBody1()
                         .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .textButtonDisable : .textIcon)
                 }
             }

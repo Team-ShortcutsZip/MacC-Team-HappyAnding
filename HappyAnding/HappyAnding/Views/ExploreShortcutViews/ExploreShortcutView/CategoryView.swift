@@ -66,7 +66,7 @@ struct CategoryCellView: View {
             .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
             .overlay {
                 Text(categoryName)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(Color.gray5)
             }
     }

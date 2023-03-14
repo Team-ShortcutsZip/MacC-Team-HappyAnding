@@ -28,7 +28,7 @@ struct ReadShortcutCommentView: View {
         VStack(alignment: .leading) {
             if comments.comments.isEmpty {
                 Text(TextLiteral.readShortcutCommentViewNoComments)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray4)
                     .padding(.top, 16)
                 
@@ -85,7 +85,7 @@ struct ReadShortcutCommentView: View {
                             .foregroundColor(.gray3)
                         
                         Text(comment.user_nickname)
-                            .Body2()
+                            .shortcutsZipBody2()
                             .foregroundColor(.gray4)
                     }
                     .padding(.bottom, 4)
@@ -94,7 +94,7 @@ struct ReadShortcutCommentView: View {
                     // MARK: 댓글 내용
                     
                     Text(comment.contents)
-                        .Body2()
+                        .shortcutsZipBody2()
                         .foregroundColor(.gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -108,7 +108,7 @@ struct ReadShortcutCommentView: View {
                                 isFocused = true
                             } label: {
                                 Text(TextLiteral.readShortcutCommentViewReply)
-                                    .Footnote()
+                                    .shortcutsZipFootnote()
                                     .foregroundColor(.gray4)
                             }
                         }
@@ -122,7 +122,7 @@ struct ReadShortcutCommentView: View {
                                     }
                                 } label: {
                                     Text(TextLiteral.readShortcutCommentViewEdit)
-                                        .Footnote()
+                                        .shortcutsZipFootnote()
                                         .foregroundColor(.gray4)
                                 }
                                 
@@ -132,7 +132,7 @@ struct ReadShortcutCommentView: View {
                                     deletedComment = comment
                                 } label: {
                                     Text(TextLiteral.delete)
-                                        .Footnote()
+                                        .shortcutsZipFootnote()
                                         .foregroundColor(.gray4)
                                 }
                             }

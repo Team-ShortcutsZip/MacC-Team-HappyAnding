@@ -92,7 +92,7 @@ struct ReadUserCurationView: View {
                         .foregroundColor(.gray3)
                     
                     Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
-                        .Headline()
+                        .shortcutsZipHeadline()
                         .foregroundColor(.gray4)
                     Spacer()
                 }
@@ -117,12 +117,16 @@ struct ReadUserCurationView: View {
             }
         }
     }
-    
+     
     @ViewBuilder
     private func editView() -> some View {
         WriteCurationSetView(isWriting: $isWriting,
-                             curation: shortcutsZipViewModel.userCurations[index],
-                             isEdit: true)
+                             curation: shortcutsZipViewModel.userCurations[index]
+                             ,isEdit: true
+        )
+        .navigationDestination(for: WriteCurationInfoType.self) { data in
+            WriteCurationInfoView(data: data, isWriting: $isWriting)
+        }
     }
 }
 

@@ -193,7 +193,7 @@ struct SettingCell: View {
             Spacer()
             if let version {Text(version)}
         }
-        .Body1()
+        .shortcutsZipBody1()
         .foregroundColor(.gray4)
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
@@ -207,12 +207,12 @@ struct FunctionCell: View {
     var body: some View {
         HStack {
             Text(title)
-                .Body1()
+                .shortcutsZipBody1()
                 .foregroundColor(.gray4)
             Spacer()
             if let tag {
                 Text(tag)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(Color.tagText)
                     .frame(height: 20)
                     .padding(.horizontal, 8)

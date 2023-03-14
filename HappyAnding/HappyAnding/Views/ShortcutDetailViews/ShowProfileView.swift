@@ -38,7 +38,7 @@ struct ShowProfileView: View {
                             .foregroundColor(.gray3)
                     }
                     Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
-                        .Title1()
+                        .shortcutsZipTitle1()
                         .foregroundColor(.gray5)
                 }
                 .frame(maxWidth: .infinity)
@@ -85,7 +85,7 @@ extension ShowProfileView {
             VStack {
                 if self.currentTab == tab {
                     Text(string)
-                        .Headline()
+                        .shortcutsZipHeadline()
                         .foregroundColor(.gray5)
                     Color.gray5
                         .frame(height: 2)
@@ -93,7 +93,7 @@ extension ShowProfileView {
                     
                 } else {
                     Text(string)
-                        .Body1()
+                        .shortcutsZipBody1()
                         .foregroundColor(.gray3)
                     Color.clear
                         .frame(height: 2)
@@ -121,7 +121,7 @@ extension ShowProfileView {
                         VStack {
                             Text(TextLiteral.showProfileViewNoShortcuts)
                                 .padding(.top, 16)
-                                .Body2()
+                                .shortcutsZipBody2()
                                 .foregroundColor(.gray4)
                             Spacer()
                         }
@@ -146,7 +146,7 @@ extension ShowProfileView {
                         VStack{
                             Text(TextLiteral.showProfileViewNoCurations)
                                 .padding(.top, 16)
-                                .Body2()
+                                .shortcutsZipBody2()
                                 .foregroundColor(.gray4)
                             Spacer()
                         }

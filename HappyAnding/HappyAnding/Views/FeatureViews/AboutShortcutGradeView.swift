@@ -41,7 +41,7 @@ struct AboutShortcutGradeView: View {
         VStack(alignment: .center, spacing: 12) {
             
             Text((shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser) + TextLiteral.shortcutGradeCurrentLevel)
-                .Body1()
+                .shortcutsZipBody1()
                 .fontWeight(.bold)
                 .foregroundColor(.gray5)
                 .frame(width: UIScreen.screenWidth - 32)
@@ -72,7 +72,7 @@ struct AboutShortcutGradeView: View {
             .padding(.all, 20)
             
             Text("\(shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id).fetchTitle())")
-                .Title1()
+                .shortcutsZipTitle1()
                 .foregroundColor(.tagText)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 4)
@@ -87,7 +87,7 @@ struct AboutShortcutGradeView: View {
             Text(shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id).rawValue == 5 ?
                  TextLiteral.shortcutGradeHighestLevel :
                     TextLiteral.shortcutGradeNumberOfShortcutsToNextLevelStart + "\(shortcutsZipViewModel.countShortcutsToNextGrade(numberOfShortcuts: shortcutsZipViewModel.shortcutsMadeByUser.count))" + TextLiteral.shortcutGradeNumberOfShortcutsToNextLevelEnd)
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(.gray5)
                 .frame(width: UIScreen.screenWidth - 32)
                 .padding(.top, 8)
@@ -104,7 +104,7 @@ struct AboutShortcutGradeView: View {
     var ExplainGrade: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(TextLiteral.shortcutGradeAnnouncementSectionTitle)
-                .Title2()
+                .shortcutsZipTitle2()
                 .foregroundColor(.gray5)
             
             ForEach(shortcutGrade.filter{ $0 != .level0 }, id: \.self) { grade in
@@ -114,7 +114,7 @@ struct AboutShortcutGradeView: View {
             }
             
             Text(TextLiteral.shortcutGradeMaybeDownGrade)
-                .Footnote()
+                .shortcutsZipFootnote()
                 .foregroundColor(.gray3)
                 .padding(.top, 8)
         }
@@ -139,11 +139,11 @@ struct ExplainGradeCell: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(gradeName)
-                    .Body1()
+                    .shortcutsZipBody1()
                     .fontWeight(.bold)
                     .foregroundColor(.gray5)
                 Text(gradeDescription)
-                    .Body2()
+                    .shortcutsZipBody2()
                     .foregroundColor(.gray5)
             }
             Spacer()

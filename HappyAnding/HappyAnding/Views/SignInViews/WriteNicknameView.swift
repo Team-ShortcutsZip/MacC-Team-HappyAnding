@@ -39,7 +39,7 @@ struct WriteNicknameView: View {
         VStack(alignment: .leading) {
             
             Text(TextLiteral.writeNicknameViewHeadline)
-                .Title1()
+                .shortcutsZipTitle1()
                 .foregroundColor(.gray5)
                 .padding(.top, 40)
             
@@ -48,7 +48,7 @@ struct WriteNicknameView: View {
             Spacer()
             
             Text(TextLiteral.settingViewPrivacyPolicy)
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(Color.gray3)
                 .padding(.bottom, 12)
                 .frame(maxWidth: .infinity)
@@ -91,7 +91,7 @@ struct WriteNicknameView: View {
                     .frame(height: 52)
                 Text(TextLiteral.writeNicknameViewStart)
                     .foregroundColor(isValid ? .textIcon : .textButtonDisable)
-                    .Body1()
+                    .shortcutsZipBody1()
             }
         })
         .disabled(!isValid)

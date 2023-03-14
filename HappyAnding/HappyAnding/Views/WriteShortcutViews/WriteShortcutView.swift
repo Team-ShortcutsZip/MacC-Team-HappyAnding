@@ -65,7 +65,7 @@ struct WriteShortcutView: View {
                     self.presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text(TextLiteral.cancel)
-                        .Body1()
+                        .shortcutsZipBody1()
                         .foregroundColor(.gray5)
                 }
             }
@@ -100,7 +100,7 @@ struct WriteShortcutView: View {
                     
                 }, label: {
                     Text(TextLiteral.upload)
-                        .Headline()
+                        .shortcutsZipHeadline()
                         .foregroundColor(.shortcutsZipPrimary)
                         .opacity(isUnavailableUploadButton() ? 0.3 : 1)
                 })
@@ -207,10 +207,10 @@ struct WriteShortcutView: View {
         VStack {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewCategoryTitle)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(.gray5)
                 Text(TextLiteral.writeShortcutViewCategoryDescription)
-                    .Footnote()
+                    .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
                 Spacer()
             }
@@ -233,11 +233,11 @@ struct WriteShortcutView: View {
                         if selectedCategories.isEmpty {
                             Text(TextLiteral.writeShortcutViewCategoryCell)
                                 .foregroundColor(.gray2)
-                                .Body2()
+                                .shortcutsZipBody2()
                         } else {
                             Text(selectedCategories.map { Category(rawValue: $0)!.translateName() }.joined(separator: ", "))
                                 .foregroundColor(.gray4)
-                                .Body2()
+                                .shortcutsZipBody2()
                                 .multilineTextAlignment(.leading)
                         }
                         Spacer()
@@ -267,10 +267,10 @@ struct WriteShortcutView: View {
         VStack {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewRequiredAppsTitle)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(.gray5)
                 Text(TextLiteral.writeShortcutViewRequiredAppDescription)
-                    .Footnote()
+                    .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
@@ -291,7 +291,7 @@ struct WriteShortcutView: View {
                             .foregroundColor(.gray5)
                         HStack(alignment: .top) {
                             Text(TextLiteral.writeShortcutViewRequiredAppInformation)
-                                .Footnote()
+                                .shortcutsZipFootnote()
                                 .foregroundColor(.gray1)
                                 .multilineTextAlignment(.leading)
                             Spacer()
@@ -389,7 +389,7 @@ struct WriteShortcutView: View {
         
         public func body(content: Content) -> some View {
             content
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(foregroundColor)
                 .frame(height: 52)
                 .padding(.horizontal)

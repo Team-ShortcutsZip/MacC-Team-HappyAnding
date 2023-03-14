@@ -35,7 +35,7 @@ struct MyPageView: View {
                     
                     HStack {
                         Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
-                            .Title1()
+                            .shortcutsZipTitle1()
                             .foregroundColor(.gray5)
                         
                         if !useWithoutSignIn {
@@ -82,7 +82,7 @@ struct MyPageView: View {
         .toolbar {
             ToolbarItem {
                 Image(systemName: "gearshape.fill")
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .foregroundColor(.gray5)
                     .navigationLinkRouter(data: NavigationSettingView.first)
             }
@@ -109,11 +109,11 @@ struct MyPageShortcutListCell: View {
     var body: some View {
         HStack() {
             Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
-                .Title2()
+                .shortcutsZipTitle2()
                 .foregroundColor(.gray5)
                 .padding(.trailing, 9)
             Text("\(shortcuts.count)개")
-                .Body2()
+                .shortcutsZipBody2()
                 .foregroundColor(Color.tagText)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 4)

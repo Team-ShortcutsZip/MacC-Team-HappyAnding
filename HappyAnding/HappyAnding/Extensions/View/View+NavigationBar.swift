@@ -34,7 +34,7 @@ struct NavigationBarColorModifier<Background>: ViewModifier where Background: Vi
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.clear
         appearance.shadowColor = .clear
-        appearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.gray5)]
+        appearance.largeTitleTextAttributes = [.font : UIFont.shortcutsZipLargeTitle, .foregroundColor: UIColor(.gray5)]
         //back button color 지정
         let backItemAppearance = UIBarButtonItemAppearance()
         backItemAppearance.normal.titleTextAttributes = [
@@ -51,7 +51,7 @@ struct NavigationBarColorModifier<Background>: ViewModifier where Background: Vi
         scrollAppearance.configureWithDefaultBackground()
         scrollAppearance.backgroundColor = UIColor(Color.shortcutsZipWhite)
         scrollAppearance.shadowColor = .clear
-        scrollAppearance.largeTitleTextAttributes = [.font : UIFont.LargeTitle, .foregroundColor: UIColor(.gray5)]
+        scrollAppearance.largeTitleTextAttributes = [.font : UIFont.shortcutsZipLargeTitle, .foregroundColor: UIColor(.gray5)]
         scrollAppearance.backButtonAppearance = backItemAppearance
         scrollAppearance.setBackIndicatorImage(image, transitionMaskImage: image)
         

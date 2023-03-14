@@ -37,7 +37,7 @@ struct PrivacyPolicyView: View {
                 }
                 
                 Text(TextLiteral.settingViewPrivacyPolicy)
-                    .Headline()
+                    .shortcutsZipHeadline()
                     .frame(maxWidth: .infinity)
                 
                 Spacer()
