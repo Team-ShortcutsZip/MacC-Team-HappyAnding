@@ -12,9 +12,8 @@ struct WriteCurationInfoView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     
-    @Binding var curation: Curation
+    @State var data: WriteCurationInfoType
     @Binding var isWriting: Bool
-    @Binding var deletedShortcutCells: [ShortcutCellModel]
     
     @State var isValidTitle = false
     @State var isValidDescription = false
@@ -22,8 +21,6 @@ struct WriteCurationInfoView: View {
     private var isIncomplete: Bool {
         !(isValidTitle && isValidDescription)
     }
-    
-    let isEdit: Bool
     
     var body: some View {
         VStack(spacing: 24) {
@@ -35,7 +32,7 @@ struct WriteCurationInfoView: View {
                                      placeholder: TextLiteral.writeCurationInfoViewNamePlaceholder,
                                      lengthLimit: 20,
                                      isDownloadLinkTextField: false,
-                                     content: $curation.title,
+                                     content: $data.curation.title,
                                      isValid: $isValidTitle)
             .padding(.top, 12)
             
@@ -46,8 +43,8 @@ struct WriteCurationInfoView: View {
                                      lengthLimit: 40,
                                      isDownloadLinkTextField: false,
                                      inputHeight: 72,
-                                     content: Binding(get: {curation.subtitle},
-                                                      set: {curation.subtitle = $0}),
+                                     content: Binding(get: {data.curation.subtitle},
+                                                      set: {data.curation.subtitle = $0}),
                                      isValid: $isValidDescription)
             
             Spacer()
@@ -57,10 +54,12 @@ struct WriteCurationInfoView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     
-                    shortcutsZipViewModel.addCuration(curation: curation, isEdit: isEdit, deletedShortcutCells: deletedShortcutCells)
+                    shortcutsZipViewModel.addCuration(curation: data.curation, isEdit: data.isEdit, deletedShortcutCells: data.deletedShortcutCells)
                     
                     self.isWriting.toggle()
-                    writeCurationNavigation.navigationPath = .init()
+                    if #available(iOS 16.1, *) {
+                        writeCurationNavigation.navigationPath = .init()
+                    }
                 } label: {
                     Text(TextLiteral.upload)
                         .shortcutsZipHeadline()
@@ -70,7 +69,7 @@ struct WriteCurationInfoView: View {
             }
         }
         .background(Color.shortcutsZipBackground)
-        .navigationBarTitle(isEdit ? TextLiteral.writeCurationInfoViewEdit : TextLiteral.wrietCurationInfoViewPost)
+        .navigationBarTitle(data.isEdit ? TextLiteral.writeCurationInfoViewEdit : TextLiteral.wrietCurationInfoViewPost)
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }
