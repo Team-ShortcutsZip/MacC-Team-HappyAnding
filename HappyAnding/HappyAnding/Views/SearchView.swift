@@ -13,6 +13,8 @@ struct SearchView: View {
     @Environment(\.dismissSearch) private var dismissSearch
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @FocusState private var isFocused: Bool
+    
     @State var keywords: Keyword = Keyword(keyword: [String]())
     @State var isSearched: Bool = false
     @State var searchText: String = ""
@@ -20,6 +22,9 @@ struct SearchView: View {
     
     var body: some View {
         VStack {
+            
+            searchTextfield
+            
             if !isSearched {
                 recommendKeyword
                 Spacer()
@@ -48,7 +53,6 @@ struct SearchView: View {
         .onAppear() {
             self.keywords = shortcutsZipViewModel.keywords
         }
-        .searchable(text: $searchText, prompt: TextLiteral.searchViewPrompt)
         .onSubmit(of: .search, runSearch)
         .onChange(of: searchText) { _ in
             didChangedSearchText()
@@ -68,11 +72,35 @@ struct SearchView: View {
         isSearched = true
     }
     
+    var searchTextfield: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray5)
+            TextField(TextLiteral.searchViewPrompt, text: $searchText)
+                .shortcutsZipBody1()
+                .accentColor(.gray5)
+                .disableAutocorrection(true)
+                .onChange(of: searchText) { _ in
+                    // TODO: 수정 필요
+                    didChangedSearchText()
+                }
+                .focused($isFocused)
+                .task {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        isFocused = true
+                    }
+                }
+        }
+        .padding(11)
+        .background(Color.gray1)
+        .cornerRadius(12)
+        .padding(EdgeInsets(top: 12, leading: 16, bottom: 20, trailing: 16))
+    }
+    
     var recommendKeyword: some View {
         VStack(alignment: .leading) {
             Text(TextLiteral.searchViewRecommendedKeyword)
                 .padding(.leading, 16)
-                .padding(.top, 12)
                 .shortcutsZipHeadline()
             
             ScrollView(.horizontal) {
