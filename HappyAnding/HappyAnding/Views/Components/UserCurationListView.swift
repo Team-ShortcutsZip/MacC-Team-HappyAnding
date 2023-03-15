@@ -71,13 +71,18 @@ struct UserCurationListView: View {
         .fullScreenCover(isPresented: $isWriting) {
             NavigationRouter(content: writeCurationView,
                              path: $writeCurationNavigation.navigationPath)
+            .environmentObject(writeCurationNavigation)
         }
     }
     
     @ViewBuilder
     private func writeCurationView() -> some View {
-        WriteCurationSetView(isWriting: $isWriting, isEdit: false)
-            .environmentObject(writeCurationNavigation)
+        WriteCurationSetView(isWriting: $isWriting
+                             , isEdit: false
+        )
+        .navigationDestination(for: WriteCurationInfoType.self) { data in
+            WriteCurationInfoView(data: data, isWriting: $isWriting)
+        }
     }
 }
 

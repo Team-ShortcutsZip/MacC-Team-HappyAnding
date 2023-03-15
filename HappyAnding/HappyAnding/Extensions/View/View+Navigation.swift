@@ -46,11 +46,34 @@ extension View {
         }
     }
     
+    @ViewBuilder
+    func navigationLinkRouter<T: Hashable>(data: T, isPresented: Binding<Bool>) -> some View {
+        if #available(iOS 16.1, *) {
+            NavigationLink(value: data) {
+                self
+            }
+        } else {
+            NavigationLink(destination: getDestination(data: data, isPresented: isPresented)) {
+                self
+            }
+        }
+    }
+    
     
     /**
      Naivagion View의 Destination 확인을 위해 필요한 View Builder입니다.
      새로운 뷰가 추가되면, Stack에서 사용하는 데이터 타입과 목적지를 넣어주세요
      */
+    @ViewBuilder
+    func getDestination<T: Hashable>(data: T, isPresented: Binding<Bool>) -> some View {
+        switch data {
+        case is WriteCurationInfoType:
+            WriteCurationInfoView(data: data as! WriteCurationInfoType, isWriting: isPresented)
+        default:
+            EmptyView()
+        }
+    }
+    
     @ViewBuilder
     func getDestination<T: Hashable>(data: T) -> some View {
         switch data {
