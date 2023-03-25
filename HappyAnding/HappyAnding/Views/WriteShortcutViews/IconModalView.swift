@@ -66,112 +66,126 @@ struct IconModalView: View {
     ]
     
     var body: some View {
-        VStack {
-            HStack(spacing: 0) {
-                Button {
-                    self.isShowingIconModal = false
-                } label: {
-                    Text(TextLiteral.close)
-                        .foregroundColor(.gray5)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 16)
-                }
-                
-                Text(TextLiteral.iconModalViewTitle)
-                    .shortcutsZipHeadline()
-                    .frame(maxWidth: .infinity)
-                
-                Spacer()
-                    .frame(maxWidth: .infinity)
-            }
-            .padding(.vertical, 24)
-            
-            ScrollView(.vertical) {
-                ZStack(alignment: .center) {
-                    Rectangle()
-                        .fill(Color.gray1)
-                        .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
-                        .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
-                    
-                    Rectangle()
-                        .fill(Color.fetchGradient(color: iconColor))
-                        .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
-                        .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
-                    
-                    Image(systemName: iconSymbol)
-                        .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
-                        .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
-                        .foregroundColor(.textIcon)
-                }
-                .padding(.bottom, 24)
-                
-                Text(TextLiteral.iconModalViewColor)
-                    .shortcutsZipSubtitle()
-                    .padding(.horizontal, 16)
-                    .foregroundColor(.gray4)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                LazyVGrid(columns: gridLayout, spacing: 12) {
-                    ForEach(colors, id: \.self) { item in
-                        ColorCell(iconColor: $iconColor, paletteColor: item)
+        ScrollViewReader { proxy in
+            VStack {
+                HStack(spacing: 0) {
+                    Button {
+                        self.isShowingIconModal = false
+                    } label: {
+                        Text(TextLiteral.close)
+                            .foregroundColor(.gray5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 16)
                     }
+                    
+                    Text(TextLiteral.iconModalViewTitle)
+                        .shortcutsZipHeadline()
+                        .frame(maxWidth: .infinity)
+                    
+                    Spacer()
+                        .frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 24)
+                .padding(.vertical, 24)
                 
-                Text(TextLiteral.iconModalViewIcon)
-                    .shortcutsZipSubtitle()
-                    .padding(.horizontal, 16)
-                    .foregroundColor(.gray4)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                ScrollView(.horizontal) {
-                    HStack {
-                        ForEach(symbols.keys.sorted(), id: \.self) { item in
-                            Button(action: {
-                                selectedCategory = item
-                            }, label: {
-                                Text(item)
-                                    .shortcutsZipBody2()
-                                    .foregroundColor(Color.shortcutsZipWhite)
-                            })
-                            .buttonStyle(.bordered)
-                            .background(item == selectedCategory ? Color.gray3 : Color.gray1)
-                            .cornerRadius(12)
+                ScrollView(.vertical) {
+                    ZStack(alignment: .center) {
+                        Rectangle()
+                            .fill(Color.gray1)
+                            .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
+                            .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
+                        
+                        Rectangle()
+                            .fill(Color.fetchGradient(color: iconColor))
+                            .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
+                            .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
+                        
+                        Image(systemName: iconSymbol)
+                            .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
+                            .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
+                            .foregroundColor(.textIcon)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Text(TextLiteral.iconModalViewColor)
+                        .shortcutsZipSubtitle()
+                        .padding(.horizontal, 16)
+                        .foregroundColor(.gray4)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    LazyVGrid(columns: gridLayout, spacing: 12) {
+                        ForEach(colors, id: \.self) { item in
+                            ColorCell(iconColor: $iconColor, paletteColor: item)
                         }
                     }
-                    .frame(maxHeight: .infinity)
-                }
-                .padding(.horizontal, 16)
-                
-                LazyVGrid(columns: gridLayout, spacing: 12) {
-                    ForEach(symbols[selectedCategory] ?? [], id: \.self) { item in
-                        SymbolCell(iconSymbol: $iconSymbol, paletteSymbol: item)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 24)
+                    
+                    Text(TextLiteral.iconModalViewIcon)
+                        .shortcutsZipSubtitle()
+                        .padding(.horizontal, 16)
+                        .foregroundColor(.gray4)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    LazyVStack(pinnedViews: [.sectionHeaders]) {
+                        Section(header: ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(symbols.keys.sorted(), id: \.self) { key in
+                                    Button(action: {
+                                        selectedCategory = key
+                                        proxy.scrollTo(key, anchor: .top)
+                                    }, label: {
+                                        Text(key)
+                                            .shortcutsZipBody2()
+                                            .foregroundColor(Color.shortcutsZipWhite)
+                                    })
+                                    .buttonStyle(.bordered)
+                                    .background(key == selectedCategory ? Color.gray3 : Color.gray1)
+                                    .cornerRadius(12)
+                                }
+                            }
+                            .frame(maxHeight: .infinity)
+                        }
+                            .padding(.horizontal, 16)
+                        ) {
+                            ForEach(symbols.keys.sorted(), id: \.self) { key in
+                                Text(key)
+                                    .shortcutsZipBody2()
+                                    .foregroundColor(Color.gray4)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .id(key)
+                                
+                                LazyVGrid(columns: gridLayout, spacing: 12) {
+                                    ForEach(symbols[key] ?? [], id: \.self) { value in
+                                        SymbolCell(iconSymbol: $iconSymbol, paletteSymbol: value)
+                                    }
+                                }
+                            }
+                            .padding(.horizontal, 16)
+                        }
                     }
                 }
+                
+                Spacer()
+                
+                Button(action: {
+                    isShowingIconModal = false
+                }, label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
+                            .frame(maxWidth: .infinity, maxHeight: 52)
+                        
+                        Text(TextLiteral.done)
+                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .textButton : .textButtonDisable)
+                            .shortcutsZipBody1()
+                    }
+                })
+                .disabled(iconColor.isEmpty || iconSymbol.isEmpty)
                 .padding(.horizontal, 16)
+                .padding(.bottom, 24)
             }
-            
-            Spacer()
-            
-            Button(action: {
-                isShowingIconModal = false
-            }, label: {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
-                        .frame(maxWidth: .infinity, maxHeight: 52)
-                    
-                    Text(TextLiteral.done)
-                        .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .textButton : .textButtonDisable )
-                        .shortcutsZipBody1()
-                }
-            })
-            .disabled(iconColor.isEmpty || iconSymbol.isEmpty)
-            .padding(.horizontal, 16)
-            .padding(.bottom, 24)
+            .background(Color.shortcutsZipBackground)
         }
-        .background(Color.shortcutsZipBackground)
     }
     
     struct ColorCell: View {
