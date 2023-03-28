@@ -147,14 +147,14 @@ struct IconModalView: View {
                             ScrollView(.horizontal) {
                                 HStack {
                                     ForEach(categories, id: \.self) { key in
-                                        Button(action: {
+                                        Button {
                                             selectedCategory = key
                                             proxy.scrollTo(key, anchor: .top)
-                                        }, label: {
+                                        } label: {
                                             Text(key)
                                                 .shortcutsZipBody2()
                                                 .foregroundColor(Color.shortcutsZipWhite)
-                                        })
+                                        }
                                         .buttonStyle(.bordered)
                                         .background(key == selectedCategory ? Color.gray3 : Color.gray1)
                                         .cornerRadius(12)
@@ -167,9 +167,9 @@ struct IconModalView: View {
                     .padding(.horizontal, 16)
                 }
                 
-                Button(action: {
+                Button {
                     isShowingIconModal = false
-                }, label: {
+                } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
                             .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
@@ -179,7 +179,7 @@ struct IconModalView: View {
                             .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .textButton : .textButtonDisable)
                             .shortcutsZipBody1()
                     }
-                })
+                }
                 .disabled(iconColor.isEmpty || iconSymbol.isEmpty)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
@@ -198,9 +198,9 @@ struct IconModalView: View {
         let paletteColor: String
         
         var body: some View {
-            Button(action: {
+            Button {
                 iconColor = paletteColor
-            }, label: {
+            } label: {
                 ZStack {
                     Rectangle()
                         .fill(Color.fetchGradient(color: paletteColor))
@@ -213,7 +213,7 @@ struct IconModalView: View {
                             .foregroundColor(.textIcon)
                     }
                 }
-            })
+            }
         }
     }
     
@@ -223,9 +223,9 @@ struct IconModalView: View {
         let paletteSymbol: String
         
         var body: some View {
-            Button(action: {
+            Button {
                 iconSymbol = paletteSymbol
-            }, label: {
+            } label: {
                 ZStack(alignment: .center) {
                     Rectangle()
                         .fill(paletteSymbol == iconSymbol ? Color.gray1 : Color.clear)
@@ -235,7 +235,7 @@ struct IconModalView: View {
                     Image(systemName: paletteSymbol)
                         .foregroundColor(paletteSymbol == iconSymbol ? Color.gray5 : Color.gray3)
                 }
-            })
+            }
         }
     }
 }
