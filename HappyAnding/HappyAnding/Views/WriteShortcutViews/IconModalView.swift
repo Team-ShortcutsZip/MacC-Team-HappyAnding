@@ -13,7 +13,8 @@ struct IconModalView: View {
     @Binding var iconColor: String
     @Binding var iconSymbol: String
     
-    @State var selectedCategory = "개인정보 보호 및 보안"
+    @State var selectedCategory = ""
+    @State var categories: [String] = []
     
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
@@ -127,31 +128,13 @@ struct IconModalView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
-                        Section(header: ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(symbols.keys.sorted(), id: \.self) { key in
-                                    Button(action: {
-                                        selectedCategory = key
-                                        proxy.scrollTo(key, anchor: .top)
-                                    }, label: {
-                                        Text(key)
-                                            .shortcutsZipBody2()
-                                            .foregroundColor(Color.shortcutsZipWhite)
-                                    })
-                                    .buttonStyle(.bordered)
-                                    .background(key == selectedCategory ? Color.gray3 : Color.gray1)
-                                    .cornerRadius(12)
-                                }
-                            }
-                            .frame(maxHeight: .infinity)
-                        }
-                            .padding(.horizontal, 16)
-                        ) {
-                            ForEach(symbols.keys.sorted(), id: \.self) { key in
+                        Section {
+                            ForEach(categories, id: \.self) { key in
                                 Text(key)
                                     .shortcutsZipBody2()
                                     .foregroundColor(Color.gray4)
                                     .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 12)
                                     .id(key)
                                 
                                 LazyVGrid(columns: gridLayout, spacing: 12) {
@@ -160,12 +143,29 @@ struct IconModalView: View {
                                     }
                                 }
                             }
-                            .padding(.horizontal, 16)
+                        } header: {
+                            ScrollView(.horizontal) {
+                                HStack {
+                                    ForEach(categories, id: \.self) { key in
+                                        Button(action: {
+                                            selectedCategory = key
+                                            proxy.scrollTo(key, anchor: .top)
+                                        }, label: {
+                                            Text(key)
+                                                .shortcutsZipBody2()
+                                                .foregroundColor(Color.shortcutsZipWhite)
+                                        })
+                                        .buttonStyle(.bordered)
+                                        .background(key == selectedCategory ? Color.gray3 : Color.gray1)
+                                        .cornerRadius(12)
+                                    }
+                                }
+                                .frame(maxHeight: .infinity)
+                            }
                         }
                     }
+                    .padding(.horizontal, 16)
                 }
-                
-                Spacer()
                 
                 Button(action: {
                     isShowingIconModal = false
@@ -185,6 +185,10 @@ struct IconModalView: View {
                 .padding(.bottom, 24)
             }
             .background(Color.shortcutsZipBackground)
+        }
+        .onAppear {
+            categories = Array(symbols.keys)
+            selectedCategory = categories[0]
         }
     }
     
