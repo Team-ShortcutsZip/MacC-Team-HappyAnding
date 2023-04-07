@@ -33,19 +33,17 @@ struct CategoryCardView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    if let shortcuts {
-                        ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
-                            if index < 7 {
-                                let data = NavigationReadShortcutType(
-                                    shortcutID: shortcut.id,
-                                    navigationParentView: self.navigationParentView)
-                                
-                                ShortcutCardCell(
-                                    categoryShortcutIcon: shortcut.sfSymbol,
-                                    categoryShortcutName: shortcut.title,
-                                    categoryShortcutColor: shortcut.color)
-                                .navigationLinkRouter(data: data)
-                            }
+                    ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
+                        if index < 7 {
+                            let data = NavigationReadShortcutType(
+                                shortcutID: shortcut.id,
+                                navigationParentView: self.navigationParentView)
+                            
+                            ShortcutCardCell(
+                                categoryShortcutIcon: shortcut.sfSymbol,
+                                categoryShortcutName: shortcut.title,
+                                categoryShortcutColor: shortcut.color)
+                            .navigationLinkRouter(data: data)
                         }
                     }
                 }
