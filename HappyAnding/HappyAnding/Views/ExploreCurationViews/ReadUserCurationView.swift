@@ -104,7 +104,7 @@ struct ReadUserCurationView: View {
                     .foregroundColor(.gray1)
                     .padding(.horizontal, 16)
             )
-            .navigationLinkRouter(data: data)
+            .navigationLinkRouter(data: NavigationProfile(userInfo: self.authorInformation))
         }
         .onAppear {
             shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author,
