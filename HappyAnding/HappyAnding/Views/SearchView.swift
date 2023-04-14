@@ -14,11 +14,13 @@ struct SearchView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @FocusState private var isFocused: Bool
+    @State private var isKeyboardFocused = false
     
     @State var keywords: Keyword = Keyword(keyword: [String]())
     @State var isSearched: Bool = false
     @State var searchText: String = ""
     @State var shortcutResults = Set<Shortcuts>()
+    
     
     var body: some View {
         VStack {
@@ -66,6 +68,12 @@ struct SearchView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.shortcutsZipBackground)
         .navigationBarBackground ({ Color.shortcutsZipBackground })
+        .onChange(of: isFocused) { newValue in
+            withAnimation {
+                isKeyboardFocused = newValue
+            }
+            
+        }
     }
     
     private func runSearch() {
@@ -73,27 +81,40 @@ struct SearchView: View {
     }
     
     var searchTextfield: some View {
-        HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray5)
-            TextField(TextLiteral.searchViewPrompt, text: $searchText)
-                .shortcutsZipBody1()
-                .accentColor(.gray5)
-                .disableAutocorrection(true)
-                .onChange(of: searchText) { _ in
-                    // TODO: 수정 필요
-                    didChangedSearchText()
-                }
-                .focused($isFocused)
-                .task {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        isFocused = true
+        HStack(alignment: .center, spacing: 8) {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray5)
+                TextField(TextLiteral.searchViewPrompt, text: $searchText)
+                    .shortcutsZipBody1()
+                    .accentColor(.gray5)
+                    .disableAutocorrection(true)
+                    .onChange(of: searchText) { _ in
+                        // TODO: 수정 필요
+                        didChangedSearchText()
+                    }
+                    .focused($isFocused)
+                    .task {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            isFocused = true
+                        }
+                    }
+                    .shortcutsZipBody1()
+            }
+            .padding(11)
+            .background(Color.gray1)
+            .cornerRadius(12)
+            
+            if isKeyboardFocused {
+                Button("취소") {
+                    withAnimation {
+                        isKeyboardFocused = false
+                        isFocused = false
                     }
                 }
+                .foregroundColor(.shortcutsZipPrimary)
+            }
         }
-        .padding(11)
-        .background(Color.gray1)
-        .cornerRadius(12)
         .padding(EdgeInsets(top: 12, leading: 16, bottom: 20, trailing: 16))
     }
     
