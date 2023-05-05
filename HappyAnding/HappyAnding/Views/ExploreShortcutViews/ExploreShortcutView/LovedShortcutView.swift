@@ -26,20 +26,17 @@ struct LovedShortcutView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
             
-            if let shortcuts {
-                ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
-                    if index < 3 {
-                        let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                              navigationParentView: .shortcuts)
-                        
-                        ShortcutCell(shortcut: shortcut,
-                                     navigationParentView: .shortcuts)
-                        .navigationLinkRouter(data: data)
-                        
-                    }
+            ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
+                if index < 3 {
+                    let data = NavigationReadShortcutType(shortcutID: shortcut.id,
+                                                          navigationParentView: .shortcuts)
+                    
+                    ShortcutCell(shortcut: shortcut,
+                                 navigationParentView: .shortcuts)
+                    .navigationLinkRouter(data: data)
+                    
                 }
             }
-            
         }
         .background(Color.shortcutsZipBackground)
     }
