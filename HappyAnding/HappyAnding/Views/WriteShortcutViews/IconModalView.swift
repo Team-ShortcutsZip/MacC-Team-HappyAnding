@@ -92,17 +92,20 @@ struct IconModalView: View {
                     ZStack(alignment: .center) {
                         Rectangle()
                             .fill(Color.gray1)
-                            .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
-                            .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
+                            .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
                         
                         Rectangle()
                             .fill(Color.fetchGradient(color: iconColor))
-                            .cornerRadius(UIScreen.main.bounds.size.height > 700 ? 20 : 12.35)
-                            .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
+                            .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
                         
                         Image(systemName: iconSymbol)
-                            .font(.system(size: UIScreen.main.bounds.size.height > 700 ? 48 : 32))
-                            .frame(width: UIScreen.main.bounds.size.height > 700 ? 136 : 84, height: UIScreen.main.bounds.size.height > 700 ? 136 : 84)
+                            .font(.system(size: UIScreen.screenHeight > 700 ? 48 : 32))
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
                             .foregroundColor(.textIcon)
                     }
                     .padding(.bottom, 24)
