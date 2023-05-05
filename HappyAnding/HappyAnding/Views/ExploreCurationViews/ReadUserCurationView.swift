@@ -84,17 +84,34 @@ struct ReadUserCurationView: View {
     
     var userInformation: some View {
         ZStack {
-            HStack {
-                shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: authorInformation?.id ?? "!"))
-                    .font(.system(size: 24, weight: .medium))
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.gray3)
-                
-                Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
-                    .shortcutsZipHeadline()
-                    .foregroundColor(.gray4)
-                
-                Spacer()
+            if let data = NavigationProfile(userInfo: self.authorInformation) {
+                HStack {
+                    shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: authorInformation?.id ?? "!"))
+                        .font(.system(size: 24, weight: .medium))
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.gray3)
+                    
+                    Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
+                        .shortcutsZipBody2()
+                        .foregroundColor(.gray4)
+                    
+                    if authorInformation?.nickname != nil {
+                        Image(systemName: "chevron.right")
+                            .shortcutsZipFootnote()
+                            .foregroundColor(.gray4)
+                    }
+                    
+                    Spacer()
+                }
+                .disabled(authorInformation == nil)
+                .padding(.horizontal, 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .frame(height: 48)
+                        .foregroundColor(.gray1)
+                        .padding(.horizontal, 16)
+                )
+                .navigationLinkRouter(data: data)
             }
             .disabled(authorInformation == nil)
             .padding(.horizontal, 30)
