@@ -14,7 +14,6 @@ struct SearchView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @FocusState private var isFocused: Bool
-    @State private var isKeyboardFocused = false
     
     @State var keywords: Keyword = Keyword(keyword: [String]())
     @State var isSearched: Bool = false
@@ -68,12 +67,6 @@ struct SearchView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.shortcutsZipBackground)
         .navigationBarBackground ({ Color.shortcutsZipBackground })
-        .onChange(of: isFocused) { newValue in
-            withAnimation {
-                isKeyboardFocused = newValue
-            }
-            
-        }
     }
     
     private func runSearch() {
@@ -104,16 +97,6 @@ struct SearchView: View {
             .padding(11)
             .background(Color.gray1)
             .cornerRadius(12)
-            
-            if isKeyboardFocused {
-                Button("취소") {
-                    withAnimation {
-                        isKeyboardFocused = false
-                        isFocused = false
-                    }
-                }
-                .foregroundColor(.shortcutsZipPrimary)
-            }
         }
         .padding(EdgeInsets(top: 12, leading: 16, bottom: 20, trailing: 16))
     }
