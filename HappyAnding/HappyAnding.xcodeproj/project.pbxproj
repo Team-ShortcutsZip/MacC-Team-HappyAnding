@@ -137,6 +137,7 @@
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
 		F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* UIFont+Extension.swift */; };
+		F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
 		F9BA11D329A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9BA11D429A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
@@ -298,6 +299,7 @@
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewModel.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCell.swift; sourceTree = "<group>"; };
 		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
 		F9AC2BB92935D34C00165820 /* Image+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+View.swift"; sourceTree = "<group>"; };
 		F9BA11D229A389EA00176807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 				F96D45BC29816578000C2441 /* StickyHeader.swift */,
 				F91A72C22999160E00CA135A /* Alerter.swift */,
 				F91F09DE29AE0B5E00E04FA0 /* GradeAlertView.swift */,
+				F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -906,6 +909,7 @@
 				4D778A34290A53BA00C15AC4 /* UIApplication+Keyboard.swift in Sources */,
 				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
 				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
+				F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */,
 				8795A170292AB945004B765F /* UIScreen+Size.swift in Sources */,
 				A04ACB0A29041CD8004A85A6 /* DownloadRankView.swift in Sources */,
 				4DAD6370292BCB1000ABF8C1 /* CategoryCardView.swift in Sources */,
