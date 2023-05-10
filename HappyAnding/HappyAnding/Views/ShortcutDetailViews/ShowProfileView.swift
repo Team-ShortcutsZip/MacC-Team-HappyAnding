@@ -41,12 +41,9 @@ struct ShowProfileView: View {
                                 .frame(width: 72, height: 72)
                                 .foregroundColor(.gray1)
                             shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: data.userInfo?.id ?? ""))
-                                .font(.system(size: 72, weight: .medium))
-                                .foregroundColor(.gray3)
                                 .rotation3DEffect(
                                     .degrees(animationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
                         }
-                        .clipShape(Circle())
                     }
                     Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .shortcutsZipTitle1()
