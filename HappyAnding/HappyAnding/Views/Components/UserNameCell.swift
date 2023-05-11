@@ -34,19 +34,21 @@ struct UserNameCell: View {
                 .shortcutsZipBody2()
                 .foregroundColor(.gray4)
             
+            Spacer()
+            
             if userInformation?.nickname != nil {
                 Image(systemName: "chevron.right")
                     .shortcutsZipFootnote()
                     .foregroundColor(.gray4)
             }
             
-            Spacer()
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(.gray1)
+                .frame(height: 48)
         )
         .navigationLinkRouter(data: NavigationProfile(userInfo: self.userInformation))
         .disabled(self.userInformation == nil)
