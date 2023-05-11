@@ -28,6 +28,7 @@ struct UserNameCell: View {
         HStack {
             gradeImage
                 .font(.system(size: 24, weight: .medium))
+                .frame(width: 24, height: 24)
                 .foregroundColor(.gray3)
             
             Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
@@ -48,7 +49,6 @@ struct UserNameCell: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(.gray1)
-                .frame(height: 48)
         )
         .navigationLinkRouter(data: NavigationProfile(userInfo: self.userInformation))
         .disabled(self.userInformation == nil)
