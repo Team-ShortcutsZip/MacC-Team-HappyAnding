@@ -86,7 +86,8 @@ struct IconModalView: View {
                     Spacer()
                         .frame(maxWidth: .infinity)
                 }
-                .padding(.vertical, 24)
+                .padding(.top, 24)
+                .padding(.bottom, 8)
                 
                 ScrollView(.vertical) {
                     ZStack(alignment: .center) {
@@ -108,7 +109,7 @@ struct IconModalView: View {
                             .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
                             .foregroundColor(.textIcon)
                     }
-                    .padding(.bottom, 24)
+                    .padding(.vertical, 24)
                     
                     Text(TextLiteral.iconModalViewColor)
                         .shortcutsZipSubtitle()
@@ -146,29 +147,41 @@ struct IconModalView: View {
                                     }
                                 }
                             }
+                            .padding(.horizontal, 16)
                         } header: {
                             ScrollView(.horizontal) {
                                 HStack {
                                     ForEach(categories, id: \.self) { key in
                                         Button {
                                             selectedCategory = key
-                                            proxy.scrollTo(key, anchor: .top)
+                                            withAnimation() {
+                                                proxy.scrollTo(key, anchor: .top)
+                                            }
                                         } label: {
                                             Text(key)
                                                 .shortcutsZipBody2()
-                                                .foregroundColor(Color.shortcutsZipWhite)
+                                                .padding(.horizontal, 12)
+                                                .padding(.vertical, 6)
+                                                .foregroundColor(Color.gray4)
+                                                .background(key == selectedCategory ? Color.tagBackground : nil)
+                                                .clipShape(Capsule())
+                                                .overlay(
+                                                    Capsule()
+                                                        .strokeBorder(key == selectedCategory ? Color.tagBackground : Color.gray4, lineWidth: 1)
+                                                )
                                         }
-                                        .buttonStyle(.bordered)
-                                        .background(key == selectedCategory ? Color.gray3 : Color.gray1)
-                                        .cornerRadius(12)
                                     }
                                 }
                                 .frame(maxHeight: .infinity)
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 8)
                             }
+                            .background(Color.shortcutsZipBackground)
+                            .scrollIndicators(.hidden)
                         }
                     }
-                    .padding(.horizontal, 16)
                 }
+                .scrollIndicators(.hidden)
                 
                 Button {
                     isShowingIconModal = false
