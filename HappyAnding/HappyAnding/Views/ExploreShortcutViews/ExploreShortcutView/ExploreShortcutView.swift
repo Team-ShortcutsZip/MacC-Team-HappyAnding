@@ -21,8 +21,7 @@ struct ExploreShortcutView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 32){
-                
+            VStack(spacing: 32) {
                 if isAnnouncementShow {
                     Button {
                         isTappedUserGradeButton = true
@@ -32,6 +31,7 @@ struct ExploreShortcutView: View {
                                          discription: TextLiteral.shortcutGradeDescription,
                                          isAnnouncementShow: $isAnnouncementShow)
                     }
+                    .id(000)
                 }
                 
                 RecentRegisteredView(shortcuts: $shortcutsZipViewModel.allShortcuts,

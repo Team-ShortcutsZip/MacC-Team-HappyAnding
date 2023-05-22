@@ -126,6 +126,7 @@ struct ReadShortcutHeaderView: View {
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(Color.gray1, lineWidth: 1)
             }
+            
         }
     }
 }
