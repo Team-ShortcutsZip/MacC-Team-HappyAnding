@@ -61,7 +61,7 @@ struct ReadShortcutView: View {
                             
                             ReadShortcutHeaderView(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
                                 .frame(minHeight: 160)
-                                .padding(.bottom, 33)
+                                .padding(.bottom, 20)
                                 .background(Color.shortcutsZipWhite)
                             
                             

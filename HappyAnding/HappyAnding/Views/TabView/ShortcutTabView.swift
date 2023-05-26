@@ -112,7 +112,6 @@ struct ShortcutTabView: View {
                 fetchCurationIdFromUrl(urlString: url.absoluteString)
             }
         }
-        .background(Color.red)
     }
     
     

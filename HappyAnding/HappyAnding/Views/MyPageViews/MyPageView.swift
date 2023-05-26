@@ -33,18 +33,10 @@ struct MyPageView: View {
                             .id(333)
                     }
                     
-                    HStack {
-                        Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
-                            .shortcutsZipTitle1()
-                            .foregroundColor(.gray5)
-                        
-                        if !useWithoutSignIn {
-                            Image(systemName: "square.and.pencil")
-                                .mediumIcon()
-                                .foregroundColor(.gray4)
-                                .navigationLinkRouter(data: NavigationNicknameView.first)
-                        }
-                    }
+                    Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
+                        .shortcutsZipTitle1()
+                        .foregroundColor(.gray5)
+                    
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)

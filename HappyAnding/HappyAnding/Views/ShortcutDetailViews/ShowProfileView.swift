@@ -17,6 +17,8 @@ struct ShowProfileView: View {
     @State var curations: [Curation] = []
     @State var currentTab: Int = 0
     
+    @State private var animationAmount = 0.0
+    
     @Namespace var namespace
     
     private let tabItems = [TextLiteral.showProfileViewShortcutTabTitle, TextLiteral.showProfileViewCurationTabTitle]
@@ -29,13 +31,19 @@ struct ShowProfileView: View {
                 
                 //MARK: 프로필이미지 및 닉네임
                 VStack(spacing: 8) {
-                    ZStack(alignment: .center) {
-                        Circle()
-                            .frame(width: 72, height: 72)
-                            .foregroundColor(.gray1)
-                        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: data.userInfo?.id ?? ""))
-                            .font(.system(size: 72, weight: .medium))
-                            .foregroundColor(.gray3)
+                    Button {
+                        withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
+                            self.animationAmount += 360
+                        }
+                    } label: {
+                        ZStack(alignment: .center) {
+                            Circle()
+                                .frame(width: 72, height: 72)
+                                .foregroundColor(.gray1)
+                            shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: data.userInfo?.id ?? ""))
+                                .rotation3DEffect(
+                                    .degrees(animationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
+                        }
                     }
                     Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .shortcutsZipTitle1()
@@ -60,6 +68,9 @@ struct ShowProfileView: View {
         .onAppear {
             shortcuts = shortcutsZipViewModel.allShortcuts.filter { $0.author == self.data.userInfo?.id }
             curations = shortcutsZipViewModel.fetchCurationByAuthor(author: data.userInfo?.id ?? "")
+            withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
+                self.animationAmount += 360
+            }
         }
     }
 }
