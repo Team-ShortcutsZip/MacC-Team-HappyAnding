@@ -54,12 +54,21 @@ struct WriteShortcutView: View {
                     shortcutTitleText
                         .id("title")
                         .focused($focusedField, equals: "title")
+                        .onSubmit {
+                            focusedField = "link"
+                        }
                     shortcutLinkText
                         .id("link")
                         .focused($focusedField, equals: "link")
+                        .onSubmit {
+                            focusedField = "subtitle"
+                        }
                     shortcutSubtitleText
                         .id("subtitle")
                         .focused($focusedField, equals: "subtitle")
+                        .onSubmit {
+                            focusedField = "description"
+                        }
                     shortcutDescriptionText
                         .id("description")
                         .focused($focusedField, equals: "description")
