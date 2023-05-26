@@ -13,7 +13,7 @@ struct WriteShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
     
-    @FocusState var isFocused: String?
+    @FocusState var focusedField: String?
     
     @Binding var isWriting: Bool
     
@@ -53,25 +53,25 @@ struct WriteShortcutView: View {
                     iconModalView
                     shortcutTitleText
                         .id("title")
-                        .focused($isFocused, equals: "title")
+                        .focused($focusedField, equals: "title")
                     shortcutLinkText
                         .id("link")
-                        .focused($isFocused, equals: "link")
+                        .focused($focusedField, equals: "link")
                     shortcutSubtitleText
                         .id("subtitle")
-                        .focused($isFocused, equals: "subtitle")
+                        .focused($focusedField, equals: "subtitle")
                     shortcutDescriptionText
                         .id("description")
-                        .focused($isFocused, equals: "description")
+                        .focused($focusedField, equals: "description")
                     shortcutCategory
                     shortcutsRequiredApp
                         .id("requiredapp")
-                        .focused($isFocused, equals: "requiredapp")
+                        .focused($focusedField, equals: "requiredapp")
                 }
             }
             .ignoresSafeArea(.keyboard)
             .scrollDismissesKeyboard(.interactively)
-            .onChange(of: isFocused) { id in
+            .onChange(of: focusedField) { id in
                 withAnimation {
                     proxy.scrollTo(id, anchor: .center)
                 }
