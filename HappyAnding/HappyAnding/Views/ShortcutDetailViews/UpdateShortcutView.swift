@@ -10,6 +10,8 @@ import SwiftUI
 struct UpdateShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
+    @FocusState var focusedField: String?
+    
     @Binding var isUpdating: Bool
     @Binding var shortcut: Shortcuts?
     
@@ -47,6 +49,9 @@ struct UpdateShortcutView: View {
                                      content: $updatedLink,
                                      isValid: $isLinkValid
             )
+            .onSubmit {
+                focusedField = "updateDescription"
+            }
             .onAppear(perform : UIApplication.shared.hideKeyboard)
             .padding(.top, 30)
             
@@ -59,6 +64,7 @@ struct UpdateShortcutView: View {
                                      content: $updateDescription,
                                      isValid: $isDescriptionValid
             )
+            .focused($focusedField, equals: "updateDescription")
             
             Spacer()
             
