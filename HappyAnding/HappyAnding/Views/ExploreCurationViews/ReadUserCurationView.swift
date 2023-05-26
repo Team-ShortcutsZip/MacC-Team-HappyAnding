@@ -27,12 +27,11 @@ struct ReadUserCurationView: View {
         ScrollView(showsIndicators: false) {
             ZStack(alignment: .bottom) {
                 
-                StickyHeader(height: 371)
+                StickyHeader(height: 100)
                 
-                VStack {
+                VStack(spacing: 16) {
                     userInformation
-                        .padding(.top, 103)
-                        .padding(.bottom, 22)
+                        .padding(EdgeInsets(top: 103, leading: 16, bottom: 0, trailing: 16))
                     
                     UserCurationCell(curation: data.userCuration, navigationParentView: data.navigationParentView)
                 }
@@ -84,27 +83,7 @@ struct ReadUserCurationView: View {
     
     var userInformation: some View {
         ZStack {
-            HStack {
-                shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: authorInformation?.id ?? "!"))
-                    .font(.system(size: 24, weight: .medium))
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.gray3)
-                
-                Text(authorInformation?.nickname ?? TextLiteral.withdrawnUser)
-                    .shortcutsZipHeadline()
-                    .foregroundColor(.gray4)
-                
-                Spacer()
-            }
-            .disabled(authorInformation == nil)
-            .padding(.horizontal, 30)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .frame(height: 48)
-                    .foregroundColor(.gray1)
-                    .padding(.horizontal, 16)
-            )
-            .navigationLinkRouter(data: NavigationProfile(userInfo: self.authorInformation))
+            UserNameCell(userInformation: self.authorInformation, gradeImage: shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: authorInformation?.id ?? "!")))
         }
         .onAppear {
             shortcutsZipViewModel.fetchUser(userID: self.data.userCuration.author,
