@@ -95,7 +95,7 @@ struct ReadUserCurationView: View {
             }
         }
     }
-     
+    
     @ViewBuilder
     private func editView() -> some View {
         WriteCurationSetView(isWriting: $isWriting,

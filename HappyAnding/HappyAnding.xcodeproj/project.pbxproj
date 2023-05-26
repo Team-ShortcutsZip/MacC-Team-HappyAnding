@@ -18,6 +18,7 @@
 		4D7D16082986BBDE008B3332 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D16062986BBD7008B3332 /* TextLiteral.swift */; };
 		4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */; };
 		4DAD6370292BCB1000ABF8C1 /* CategoryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD636F292BCB1000ABF8C1 /* CategoryCardView.swift */; };
+		4DF62DD52A0550ED00A8B377 /* UIScreen+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16F292AB945004B765F /* UIScreen+Size.swift */; };
 		87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
 		872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */; };
 		8751B29929A32CC000C2B27E /* View+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751B29829A32CC000C2B27E /* View+Navigation.swift */; };
@@ -1026,6 +1027,7 @@
 				8786B2ED29A7FAFA000B46A1 /* UIColor+Extension.swift in Sources */,
 				A3FC475B292A61CE0058BF26 /* Category.swift in Sources */,
 				A35DB3372927E8EB0011A28B /* CustomShareViewController.swift in Sources */,
+				4DF62DD52A0550ED00A8B377 /* UIScreen+Size.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
