@@ -31,10 +31,9 @@ struct LovedShortcutView: View {
                     let data = NavigationReadShortcutType(shortcutID: shortcut.id,
                                                           navigationParentView: .shortcuts)
                     
-
                     ShortcutCell(shortcut: shortcut,
                                  navigationParentView: .shortcuts)
-                    .navigationLinkRouter(data: data)                    
+                    .navigationLinkRouter(data: data)
                 }
             }
         }

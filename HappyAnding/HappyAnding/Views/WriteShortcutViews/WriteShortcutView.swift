@@ -13,6 +13,8 @@ struct WriteShortcutView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
     
+    @FocusState var isFocused: String?
+    
     @Binding var isWriting: Bool
     
     @State var isInfoButtonTouched = false
@@ -45,66 +47,85 @@ struct WriteShortcutView: View {
     let isEdit: Bool
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 32){
-                iconModalView
-                shortcutTitleText
-                shortcutLinkText
-                shortcutSubtitleText
-                shortcutDescriptionText
-                shortcutCategory
-                shortcutsRequiredApp
-            }
-        }
-        .background(Color.shortcutsZipBackground)
-        .navigationTitle(isEdit ? TextLiteral.writeShortcutViewEdit : TextLiteral.writeShortcutViewPost)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    self.presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text(TextLiteral.cancel)
-                        .shortcutsZipBody1()
-                        .foregroundColor(.gray5)
+        ScrollViewReader { proxy in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 32) {
+                    iconModalView
+                    shortcutTitleText
+                        .id("title")
+                        .focused($isFocused, equals: "title")
+                    shortcutLinkText
+                        .id("link")
+                        .focused($isFocused, equals: "link")
+                    shortcutSubtitleText
+                        .id("subtitle")
+                        .focused($isFocused, equals: "subtitle")
+                    shortcutDescriptionText
+                        .id("description")
+                        .focused($isFocused, equals: "description")
+                    shortcutCategory
+                    shortcutsRequiredApp
+                        .id("requiredapp")
+                        .focused($isFocused, equals: "requiredapp")
                 }
             }
-            
-            // MARK: -업로드 버튼
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    if let index = shortcutsZipViewModel.allShortcuts.firstIndex(where: {$0.id == shortcut.id}) {
-                        shortcutsZipViewModel.allShortcuts[index] = shortcut
+            .ignoresSafeArea(.keyboard)
+            .scrollDismissesKeyboard(.interactively)
+            .onChange(of: isFocused) { id in
+                withAnimation {
+                    proxy.scrollTo(id, anchor: .center)
+                }
+            }
+            .background(Color.shortcutsZipBackground)
+            .navigationTitle(isEdit ? TextLiteral.writeShortcutViewEdit : TextLiteral.writeShortcutViewPost)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text(TextLiteral.cancel)
+                            .shortcutsZipBody1()
+                            .foregroundColor(.gray5)
                     }
-                    
-                    shortcut.author = shortcutsZipViewModel.currentUser()
-                    if isEdit {
-                        //단축어 수정
-                        //뷰모델의 카테고리별 단축어 목록에서 정보 수정 및 해당 단축어가 포함된 큐레이션 수정
-                        shortcutsZipViewModel.updateShortcut(existingCategory: existingCategory, newCategory: shortcut.category, shortcut: shortcut)
+                }
+                
+                // MARK: -업로드 버튼
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        if let index = shortcutsZipViewModel.allShortcuts.firstIndex(where: {$0.id == shortcut.id}) {
+                            shortcutsZipViewModel.allShortcuts[index] = shortcut
+                        }
                         
-                    } else {
-                        //새로운 단축어 생성 및 저장
-                        // 뷰모델에 추가
-                        shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
+                        shortcut.author = shortcutsZipViewModel.currentUser()
+                        if isEdit {
+                            //단축어 수정
+                            //뷰모델의 카테고리별 단축어 목록에서 정보 수정 및 해당 단축어가 포함된 큐레이션 수정
+                            shortcutsZipViewModel.updateShortcut(existingCategory: existingCategory, newCategory: shortcut.category, shortcut: shortcut)
+                            
+                        } else {
+                            //새로운 단축어 생성 및 저장
+                            // 뷰모델에 추가
+                            shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
+                            
+                        }
+                        // 서버에 추가 또는 수정
+                        shortcutsZipViewModel.setData(model: shortcut)
                         
-                    }
-                    // 서버에 추가 또는 수정
-                    shortcutsZipViewModel.setData(model: shortcut)
-                    
-                    isWriting.toggle()
-                    
-                    if #available(iOS 16.1, *) {
-                        writeShortcutNavigation.navigationPath = .init()
-                    }
-                    
-                }, label: {
-                    Text(TextLiteral.upload)
-                        .shortcutsZipHeadline()
-                        .foregroundColor(.shortcutsZipPrimary)
-                        .opacity(isUnavailableUploadButton() ? 0.3 : 1)
-                })
-                .disabled(isUnavailableUploadButton())
+                        isWriting.toggle()
+                        
+                        if #available(iOS 16.1, *) {
+                            writeShortcutNavigation.navigationPath = .init()
+                        }
+                        
+                    }, label: {
+                        Text(TextLiteral.upload)
+                            .shortcutsZipHeadline()
+                            .foregroundColor(.shortcutsZipPrimary)
+                            .opacity(isUnavailableUploadButton() ? 0.3 : 1)
+                    })
+                    .disabled(isUnavailableUploadButton())
+                }
             }
         }
     }
