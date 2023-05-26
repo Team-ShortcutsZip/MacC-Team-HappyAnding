@@ -181,21 +181,6 @@ extension ShowProfileView {
                 }
             }
             .animation(.easeInOut, value: currentTab)
-            .gesture(
-                DragGesture(minimumDistance: 20, coordinateSpace: .global)
-                    .onEnded { value in
-                        let horizontalAmount = value.translation.width
-                        let verticalAmount = value.translation.height
-                        
-                        if abs(horizontalAmount) > abs(verticalAmount) {
-                            if horizontalAmount < 0 {
-                                currentTab += 1
-                            } else {
-                                currentTab -= 1
-                            }
-                        }
-                    }
-            )
         }
     }
 }

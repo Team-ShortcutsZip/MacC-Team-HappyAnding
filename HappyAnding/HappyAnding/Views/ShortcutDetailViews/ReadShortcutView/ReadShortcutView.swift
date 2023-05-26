@@ -419,7 +419,7 @@ extension ReadShortcutView {
                     Color.clear.tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(minHeight: UIScreen.screenHeight / 2 - 50)
+                .frame(minHeight: UIScreen.screenHeight / 2)
                 
                 switch(currentTab) {
                 case 0:
@@ -437,25 +437,7 @@ extension ReadShortcutView {
                     EmptyView()
                 }
             }
-            
-            .animation(.easeInOut, value: currentTab)
-            .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
-                .onEnded { value in
-                    let horizontalAmount = value.translation.width
-                    let verticalAmount = value.translation.height
-                    
-                    if abs(horizontalAmount) > abs(verticalAmount) {
-                        if horizontalAmount < 0 {
-                            if currentTab < 2 {
-                                currentTab += 1
-                            }
-                        } else {
-                            if currentTab > 0 {
-                                currentTab -= 1
-                            }
-                        }
-                    }
-                })
+//            .animation(.easeInOut, value: currentTab)
         }
     }
     
