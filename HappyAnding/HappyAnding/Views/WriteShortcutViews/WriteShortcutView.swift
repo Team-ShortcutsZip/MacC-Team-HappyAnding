@@ -60,32 +60,32 @@ struct WriteShortcutView: View {
                 VStack(spacing: 32) {
                     iconModalView
                     shortcutTitleText
-                        .id("title")
+                        .id(FocusableField.title)
                         .focused($focusedField, equals: .title)
                         .onSubmit {
                             focusedField = .link
                         }
                         .submitLabel(.next)
                     shortcutLinkText
-                        .id("link")
+                        .id(FocusableField.link)
                         .focused($focusedField, equals: .link)
                         .onSubmit {
                             focusedField = .subtitle
                         }
                         .submitLabel(.next)
                     shortcutSubtitleText
-                        .id("subtitle")
+                        .id(FocusableField.subtitle)
                         .focused($focusedField, equals: .subtitle)
                         .onSubmit {
                             focusedField = .description
                         }
                         .submitLabel(.next)
                     shortcutDescriptionText
-                        .id("description")
+                        .id(FocusableField.description)
                         .focused($focusedField, equals: .description)
                     shortcutCategory
                     shortcutsRequiredApp
-                        .id("requiredapp")
+                        .id(FocusableField.requiredApp)
                         .focused($focusedField, equals: .requiredApp)
                 }
             }
