@@ -32,7 +32,7 @@ struct SettingView: View {
             
             // MARK: - 버전 정보
             SettingCell(title: TextLiteral.settingViewVersion)
-                .navigationLinkRouter(data: NavigationVersionCheck.first)
+                .navigationLinkRouter(data: NavigationCheckVersion.first)
             
             if !useWithoutSignIn {
                 divider

@@ -1,5 +1,5 @@
 //
-//  VersionCheckView.swift
+//  CheckVersionView.swift
 //  HappyAnding
 //
 //  Created by 이지원 on 2023/05/27.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VersionCheckView: View {
+struct CheckVersionView: View {
     @State private var isAnimating = false
     @State private var currentVersion = ""
     @State private var latestVersion = "" {
@@ -93,8 +93,8 @@ struct VersionCheckView: View {
     }
 }
 
-struct VersionCheckView_Previews: PreviewProvider {
+struct CheckVersionView_Previews: PreviewProvider {
     static var previews: some View {
-        VersionCheckView()
+        CheckVersionView()
     }
 }

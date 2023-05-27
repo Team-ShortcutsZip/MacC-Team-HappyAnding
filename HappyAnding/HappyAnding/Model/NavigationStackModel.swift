@@ -93,6 +93,6 @@ enum NavigationWithdrawal: Hashable, Equatable {
     case first
 }
 
-enum NavigationVersionCheck: Hashable, Equatable {
+enum NavigationCheckVersion: Hashable, Equatable {
     case first
 }
