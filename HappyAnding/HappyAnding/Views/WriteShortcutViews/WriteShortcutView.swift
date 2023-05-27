@@ -9,11 +9,19 @@ import SwiftUI
 
 struct WriteShortcutView: View {
     
+    enum FocusableField: Hashable {
+        case title
+        case link
+        case subtitle
+        case description
+        case requiredApp
+    }
+    
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
     
-    @FocusState var focusedField: String?
+    @FocusState var focusedField: FocusableField?
     
     @Binding var isWriting: Bool
     
@@ -53,29 +61,32 @@ struct WriteShortcutView: View {
                     iconModalView
                     shortcutTitleText
                         .id("title")
-                        .focused($focusedField, equals: "title")
+                        .focused($focusedField, equals: .title)
                         .onSubmit {
-                            focusedField = "link"
+                            focusedField = .link
                         }
+                        .submitLabel(.next)
                     shortcutLinkText
                         .id("link")
-                        .focused($focusedField, equals: "link")
+                        .focused($focusedField, equals: .link)
                         .onSubmit {
-                            focusedField = "subtitle"
+                            focusedField = .subtitle
                         }
+                        .submitLabel(.next)
                     shortcutSubtitleText
                         .id("subtitle")
-                        .focused($focusedField, equals: "subtitle")
+                        .focused($focusedField, equals: .subtitle)
                         .onSubmit {
-                            focusedField = "description"
+                            focusedField = .description
                         }
+                        .submitLabel(.next)
                     shortcutDescriptionText
                         .id("description")
-                        .focused($focusedField, equals: "description")
+                        .focused($focusedField, equals: .description)
                     shortcutCategory
                     shortcutsRequiredApp
                         .id("requiredapp")
-                        .focused($focusedField, equals: "requiredapp")
+                        .focused($focusedField, equals: .requiredApp)
                 }
             }
             .ignoresSafeArea(.keyboard)

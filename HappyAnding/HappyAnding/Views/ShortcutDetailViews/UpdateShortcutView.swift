@@ -52,6 +52,7 @@ struct UpdateShortcutView: View {
             .onSubmit {
                 focusedField = "updateDescription"
             }
+            .submitLabel(.next)
             .onAppear(perform : UIApplication.shared.hideKeyboard)
             .padding(.top, 30)
             

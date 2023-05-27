@@ -40,6 +40,7 @@ struct WriteCurationInfoView: View {
             .onSubmit {
                 focusedField = "curationDescription"
             }
+            .submitLabel(.next)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: true,
