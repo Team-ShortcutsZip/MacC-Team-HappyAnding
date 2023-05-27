@@ -33,6 +33,7 @@ struct SettingView: View {
             // MARK: - 버전 정보
             if !getAppVersion().isEmpty {
                 SettingCell(title: TextLiteral.settingViewVersion, version: getAppVersion())
+                    .navigationLinkRouter(data: NavigationVersionCheck.first)
             }
             
             if !useWithoutSignIn {
