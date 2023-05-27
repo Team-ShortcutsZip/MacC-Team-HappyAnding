@@ -9,6 +9,21 @@ import SwiftUI
 
 struct VersionCheckView: View {
     @State private var isAnimating = false
+    @State private var currentVersion = ""
+    @State private var latestVersion = "" {
+        didSet {
+            if currentVersion == latestVersion {
+                versionInformation = TextLiteral.checkVersionViewLatestVersion
+                buttonText = TextLiteral.checkVersionViewGoToReview
+            } else {
+                versionInformation = TextLiteral.checkVersionViewNewVersion
+                buttonText = TextLiteral.checkVersionViewGoToDownload
+            }
+        }
+    }
+    @State private var versionInformation = ""
+    @State private var buttonText = ""
+    
     private let animationAxis: Double = 1.0
     private let degree: Double = 5.0
     
@@ -18,7 +33,7 @@ struct VersionCheckView: View {
             Spacer()
             
             VStack(spacing: 50) {
-                Text("새로운 ShortcutsZip이 나왔어요")
+                Text(versionInformation)
                     .shortcutsZipHeadline()
                     .foregroundColor(.gray5)
                 
@@ -30,7 +45,7 @@ struct VersionCheckView: View {
                     .rotation3DEffect(.degrees(isAnimating ? degree : -degree), axis: (x: 0, y: animationAxis, z: 0))
                     .animation(.easeInOut(duration: 2).repeatForever().delay(1), value: isAnimating)
                 
-                Text("1.0.0/1.2.3")
+                Text("\(currentVersion) / \(latestVersion)")
                     .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
             }
@@ -38,14 +53,15 @@ struct VersionCheckView: View {
             Spacer()
             
             Button {
-                print("tapped")
+                guard let url = URL(string: TextLiteral.appStoreUrl) else { return }
+                UIApplication.shared.open(url)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(.shortcutsZipPrimary)
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
-                    Text("만나러 가기")
+                    Text(buttonText)
                         .shortcutsZipBody1()
                         .foregroundColor(.textButton)
                 }
@@ -56,8 +72,23 @@ struct VersionCheckView: View {
             withAnimation {
                 isAnimating.toggle()
             }
+            getAppVersion()
+            getLatestVersion()
         }
         .padding(.horizontal, 16)
+        .navigationTitle(TextLiteral.settingViewVersion)
+    }
+    
+    private func getAppVersion() {
+        guard let info = Bundle.main.infoDictionary,
+              let appVersion = info["CFBundleShortVersionString"] as? String else { return }
+        self.currentVersion = appVersion
+    }
+    
+    private func getLatestVersion() {
+        CheckUpdateVersion.share.fetchVersion { version, _ in
+            self.latestVersion = version.latestVersion
+        }
     }
 }
 
