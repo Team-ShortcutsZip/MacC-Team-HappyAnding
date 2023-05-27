@@ -183,7 +183,7 @@ struct SettingView: View {
     var divider: some View {
         Divider()
             .background(Color.gray1)
-            .frame(width: UIScreen.main.bounds.size.width - 32)
+            .frame(width: UIScreen.screenWidth - 32)
     }
     
     private func logOut() {

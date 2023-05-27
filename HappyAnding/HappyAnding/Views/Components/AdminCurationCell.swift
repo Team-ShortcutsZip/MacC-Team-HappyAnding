@@ -31,7 +31,7 @@ struct AdminCurationCell: View {
             titleAndSubtitle
                 .padding([.horizontal, .bottom], 24)
         }
-        .frame(width: UIScreen.main.bounds.width-32, height: 284)
+        .frame(width: UIScreen.screenWidth - 32, height: 284)
         .padding(.trailing, 8.0)
     }
     
