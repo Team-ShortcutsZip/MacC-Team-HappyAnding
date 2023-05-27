@@ -68,16 +68,12 @@ struct ReadShortcutView: View {
                             // MARK: - 탭뷰 (기본 정보, 버전 정보, 댓글)
                             
                             LazyVStack(pinnedViews: [.sectionHeaders]) {
-                                Section(header: tabBarView
-                                    .background(Color.shortcutsZipWhite)
-                                ) {
+                                Section(header: tabBarView) {
                                     detailInformationView
                                         .padding(.top, 4)
                                         .padding(.horizontal, 16)
                                 }
                             }
-                            
-                            HStack{}.id(bottomID)
                         }
                     }
                 }
@@ -419,7 +415,7 @@ extension ReadShortcutView {
                     Color.clear.tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .frame(minHeight: UIScreen.screenHeight / 2 - 50)
+                .frame(minHeight: UIScreen.screenHeight / 2)
                 
                 switch(currentTab) {
                 case 0:
@@ -437,25 +433,7 @@ extension ReadShortcutView {
                     EmptyView()
                 }
             }
-            
             .animation(.easeInOut, value: currentTab)
-            .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
-                .onEnded { value in
-                    let horizontalAmount = value.translation.width
-                    let verticalAmount = value.translation.height
-                    
-                    if abs(horizontalAmount) > abs(verticalAmount) {
-                        if horizontalAmount < 0 {
-                            if currentTab < 2 {
-                                currentTab += 1
-                            }
-                        } else {
-                            if currentTab > 0 {
-                                currentTab -= 1
-                            }
-                        }
-                    }
-                })
         }
     }
     
@@ -468,6 +446,7 @@ extension ReadShortcutView {
         }
         .padding(.horizontal, 16)
         .frame(height: 36)
+        .background(Color.shortcutsZipWhite)
     }
     
     private func tabBarItem(string: String, tab: Int) -> some View {
@@ -475,8 +454,6 @@ extension ReadShortcutView {
             self.currentTab = tab
         } label: {
             VStack {
-                Spacer()
-                
                 if self.currentTab == tab {
                     Text(string)
                         .shortcutsZipHeadline()
