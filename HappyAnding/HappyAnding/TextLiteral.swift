@@ -205,6 +205,12 @@ enum TextLiteral {
     static let settingViewLogoutMessage: String = "로그아웃 하시겠습니까?"
     static let settingViewWithdrawal: String = "탈퇴하기"
     
+    // MARK: - CheckVersionView
+    static let checkVersionViewNewVersion = "새로운 ShortcutsZip이 나왔어요"
+    static let checkVersionViewLatestVersion = "이미 최신 버전을 사용하고 있어요"
+    static let checkVersionViewGoToDownload = "만나러 가기"
+    static let checkVersionViewGoToReview = "리뷰 남기러 가기"
+    
     // MARK: - SignInWithAppleView
     static let signInWithAppleViewTitle: String = "ShortcutsZip"
     static let signInWithAppleViewSubTitle: String = "편리한 단축어 공유 플랫폼"

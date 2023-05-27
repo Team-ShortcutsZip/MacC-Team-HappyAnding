@@ -31,9 +31,8 @@ struct SettingView: View {
         ScrollView() {
             
             // MARK: - 버전 정보
-            if !getAppVersion().isEmpty {
-                SettingCell(title: TextLiteral.settingViewVersion, version: getAppVersion())
-            }
+            SettingCell(title: TextLiteral.settingViewVersion)
+                .navigationLinkRouter(data: NavigationCheckVersion.first)
             
             if !useWithoutSignIn {
                 divider
@@ -198,21 +197,13 @@ struct SettingView: View {
             print(error.localizedDescription)
         }
     }
-    
-    private func getAppVersion() -> String {
-        guard let info = Bundle.main.infoDictionary,
-              let appVersion = info["CFBundleShortVersionString"] as? String else { return "" }
-        return appVersion
-    }
 }
 struct SettingCell: View {
     var title: String
-    var version: String?
     var body: some View {
         HStack {
             Text(title)
             Spacer()
-            if let version {Text(version)}
         }
         .shortcutsZipBody1()
         .foregroundColor(.gray4)
