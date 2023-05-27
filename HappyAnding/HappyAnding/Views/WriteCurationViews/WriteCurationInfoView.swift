@@ -9,10 +9,14 @@ import SwiftUI
 
 struct WriteCurationInfoView: View {
     
+    enum FocusableField: Hashable {
+        case curationDescription
+    }
+    
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     
-    @FocusState var focusedField: String?
+    @FocusState var focusedField: FocusableField?
     
     @State var data: WriteCurationInfoType
     @Binding var isWriting: Bool
@@ -38,7 +42,7 @@ struct WriteCurationInfoView: View {
                                      isValid: $isValidTitle)
             .padding(.top, 12)
             .onSubmit {
-                focusedField = "curationDescription"
+                focusedField = .curationDescription
             }
             .submitLabel(.next)
             
@@ -52,7 +56,7 @@ struct WriteCurationInfoView: View {
                                      content: Binding(get: {data.curation.subtitle},
                                                       set: {data.curation.subtitle = $0}),
                                      isValid: $isValidDescription)
-            .focused($focusedField, equals: "curationDescription")
+            .focused($focusedField, equals: .curationDescription)
             
             Spacer()
                 .frame(maxHeight: .infinity)
