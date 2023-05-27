@@ -25,29 +25,29 @@ struct VersionCheckView: View {
     @State private var buttonText = ""
     
     private let animationAxis: Double = 1.0
-    private let degree: Double = 5.0
+    private let degree: Double = 4.0
     
     var body: some View {
         VStack {
             
             Spacer()
             
-            VStack(spacing: 50) {
-                Text(versionInformation)
-                    .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
-                
+            VStack(spacing: 52) {
                 Image("versionAppIcon")
                     .cornerRadius(33)
-                    .shadow(color: .black.opacity(0.3), radius: 10, x: 10, y: 20)
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 0)
                     .rotation3DEffect(.degrees(isAnimating ? degree : -degree), axis: (x: animationAxis, y: 0, z:  0))
-                    .animation(.easeInOut(duration: 2).repeatForever(), value: isAnimating)
+                    .animation(.easeInOut(duration: 4).repeatForever(), value: isAnimating)
                     .rotation3DEffect(.degrees(isAnimating ? degree : -degree), axis: (x: 0, y: animationAxis, z: 0))
-                    .animation(.easeInOut(duration: 2).repeatForever().delay(1), value: isAnimating)
+                    .animation(.easeInOut(duration: 4).repeatForever().delay(1), value: isAnimating)
                 
                 Text("\(currentVersion) / \(latestVersion)")
                     .shortcutsZipFootnote()
                     .foregroundColor(.gray3)
+                
+                Text(versionInformation)
+                    .shortcutsZipHeadline()
+                    .foregroundColor(.gray5)
             }
             
             Spacer()
@@ -76,6 +76,7 @@ struct VersionCheckView: View {
             getLatestVersion()
         }
         .padding(.horizontal, 16)
+        .background(Color.shortcutsZipBackground)
         .navigationTitle(TextLiteral.settingViewVersion)
     }
     
