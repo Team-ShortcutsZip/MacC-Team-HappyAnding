@@ -89,11 +89,12 @@ struct WriteShortcutView: View {
                         .focused($focusedField, equals: .requiredApp)
                 }
             }
-            .ignoresSafeArea(.keyboard)
             .scrollDismissesKeyboard(.interactively)
             .onChange(of: focusedField) { id in
-                withAnimation {
-                    proxy.scrollTo(id, anchor: .center)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation {
+                        proxy.scrollTo(id, anchor: .bottom)
+                    }
                 }
             }
             .background(Color.shortcutsZipBackground)
