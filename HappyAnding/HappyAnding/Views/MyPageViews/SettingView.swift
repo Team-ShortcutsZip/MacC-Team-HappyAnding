@@ -63,7 +63,7 @@ struct SettingView: View {
                 Button {
                     isTappedUserGradeButton = true
                 } label: {
-                    FunctionCell(title: TextLiteral.shortcutGradeTitle, tag: TextLiteral.announcementTag)
+                    FunctionCell(title: TextLiteral.shortcutGradeTitle)
                 }
             }
             

@@ -33,7 +33,7 @@ enum TextLiteral {
     static let exploreShortcutViewTitle: String = "단축어 둘러보기"
     
     //MARK: - announcementCell
-    static let announcementTag: String = "새로운 기능"
+    static let newFeatureTag: String = "새로운 기능"
     
     //MARK: - ShortcutGrade
     static let shortcutGradeTitle: String = "단축어 작성 등급"

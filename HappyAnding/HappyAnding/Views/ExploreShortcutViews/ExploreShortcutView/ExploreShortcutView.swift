@@ -11,7 +11,8 @@ struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @AppStorage("isAnnouncementShow") var isAnnouncementShow: Bool = true
+    @AppStorage("isAnnouncementShow") var isAnnouncementShow: Bool = false
+//    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = true
     
     @Binding var isFolded: Bool
     
@@ -27,7 +28,7 @@ struct ExploreShortcutView: View {
                         isTappedUserGradeButton = true
                     } label: {
                         AnnouncementCell(icon: "ShortcutGradeAnnouncement",
-                                         tagName: TextLiteral.announcementTag,
+                                         tagName: TextLiteral.newFeatureTag,
                                          discription: TextLiteral.shortcutGradeDescription,
                                          isAnnouncementShow: $isAnnouncementShow)
                     }
