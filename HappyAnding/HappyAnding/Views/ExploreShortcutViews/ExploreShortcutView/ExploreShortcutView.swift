@@ -11,26 +11,26 @@ struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @AppStorage("isAnnouncementShow") var isAnnouncementShow: Bool = false
-//    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = true
+//    @AppStorage("isAnnouncementShow") var isAnnouncementShow: Bool = false
+    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = true
     
     @Binding var isFolded: Bool
     
-    @State var isTappedUserGradeButton = false
+    @State var isTappedAnnouncementCell = false
     
     let randomCategories: [Category]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 32) {
-                if isAnnouncementShow {
+                if isUpdateAnnnouncementShow {
                     Button {
-                        isTappedUserGradeButton = true
+                        isTappedAnnouncementCell = true
                     } label: {
-                        AnnouncementCell(icon: "ShortcutGradeAnnouncement",
-                                         tagName: TextLiteral.newFeatureTag,
-                                         discription: TextLiteral.shortcutGradeDescription,
-                                         isAnnouncementShow: $isAnnouncementShow)
+                        AnnouncementCell(icon: "updateAppIcon",
+                                         tagName: TextLiteral.updateTag,
+                                         discription: TextLiteral.updateCellDescription,
+                                         isAnnouncementShow: $isUpdateAnnnouncementShow)
                     }
                     .id(000)
                 }
@@ -69,8 +69,8 @@ struct ExploreShortcutView: View {
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
-        .sheet(isPresented: $isTappedUserGradeButton) {
-            AboutShortcutGradeView()
+        .sheet(isPresented: $isTappedAnnouncementCell) {
+            UpdateInfoView()
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
         }

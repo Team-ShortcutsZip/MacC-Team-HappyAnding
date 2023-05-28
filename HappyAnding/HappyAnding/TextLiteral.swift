@@ -34,6 +34,10 @@ enum TextLiteral {
     
     //MARK: - announcementCell
     static let newFeatureTag: String = "새로운 기능"
+    static let updateTag: String = "업데이트"
+    
+    //MARK: - updateCell
+    static let updateCellDescription: String = "업데이트된 내용 살펴보기"
     
     //MARK: - ShortcutGrade
     static let shortcutGradeTitle: String = "단축어 작성 등급"
