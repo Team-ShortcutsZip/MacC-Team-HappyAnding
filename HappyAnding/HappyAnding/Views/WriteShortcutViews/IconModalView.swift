@@ -162,12 +162,12 @@ struct IconModalView: View {
                                                 .shortcutsZipBody2()
                                                 .padding(.horizontal, 12)
                                                 .padding(.vertical, 6)
-                                                .foregroundColor(Color.gray4)
-                                                .background(key == selectedCategory ? Color.tagBackground : nil)
+                                                .foregroundColor(key == selectedCategory ? Color.tagText : Color.gray4)
+                                                .background(key == selectedCategory ? Color.shortcutsZipBackground : nil)
                                                 .clipShape(Capsule())
                                                 .overlay(
                                                     Capsule()
-                                                        .strokeBorder(key == selectedCategory ? Color.tagBackground : Color.gray4, lineWidth: 1)
+                                                        .strokeBorder(key == selectedCategory ? Color.shortcutsZipPrimary : Color.gray4, lineWidth: 1)
                                                 )
                                         }
                                     }
