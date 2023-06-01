@@ -29,7 +29,7 @@ struct ShortcutTabView: View {
     
     @State private var randomCategories = Category.allCases.shuffled().prefix(2)
     @State var isFolded = true
-    @State private var tappedTwice = false
+    @State private var twiceTappedTab = 0
     
     @State private var firstTabID = UUID()
     @State private var secondTabID = UUID()
@@ -50,7 +50,7 @@ struct ShortcutTabView: View {
         get: { self.selectedTab },
         set: {
             if $0 == self.selectedTab {
-                tappedTwice = true
+                twiceTappedTab = $0
             }
             self.selectedTab = $0
         }
@@ -60,10 +60,17 @@ struct ShortcutTabView: View {
         ScrollViewReader { proxy in
             TabView(selection: handler) {
                 NavigationRouter(content: firstTab, path: $shortcutNavigation.navigationPath)
-                    .onChange(of: tappedTwice) { tappedTwice in
-                        guard tappedTwice else { return }
-                        didTappedTabViewItem(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath, viewID: &firstTabID)
-                        self.tappedTwice = false
+                    .onChange(of: twiceTappedTab) { twiceTappedTab in
+                        guard (twiceTappedTab != 0) else { return }
+                        if twiceTappedTab == 1 {
+                            didTappedTabViewItem(proxy, scrollID: 000, navigationPath: &shortcutNavigation.navigationPath, viewID: &firstTabID)
+                            didTappedTabViewItem(proxy, scrollID: 111, navigationPath: &shortcutNavigation.navigationPath, viewID: &firstTabID)
+                        } else if twiceTappedTab == 2 {
+                            didTappedTabViewItem(proxy, scrollID: 222, navigationPath: &shortcutNavigation.navigationPath, viewID: &secondTabID)
+                        } else {
+                            didTappedTabViewItem(proxy, scrollID: 333, navigationPath: &shortcutNavigation.navigationPath, viewID: &thirdTabID)
+                        }
+                        self.twiceTappedTab = 0
                     }
                     .onChange(of: isFolded) { _ in
                         withAnimation {
@@ -76,25 +83,14 @@ struct ShortcutTabView: View {
                     }
                     .tag(1)
                 
-                NavigationRouter(content: secondTab,
-                                 path: $curationNavigation.navigationPath)
-                .onChange(of: tappedTwice) { tappedTwice in
-                    guard tappedTwice else { return }
-                    didTappedTabViewItem(proxy, scrollID: 222, navigationPath: &curationNavigation.navigationPath, viewID: &secondTabID)
-                    self.tappedTwice = false
-                }
-                .environmentObject(curationNavigation)
-                .tabItem {
-                    Label("추천모음집", systemImage: "folder.fill")
-                }
-                .tag(2)
+                NavigationRouter(content: secondTab, path: $curationNavigation.navigationPath)
+                    .environmentObject(curationNavigation)
+                    .tabItem {
+                        Label("추천모음집", systemImage: "folder.fill")
+                    }
+                    .tag(2)
                 
                 NavigationRouter(content: thirdTab, path: $profileNavigation.navigationPath)
-                    .onChange(of: tappedTwice, perform: { tappedTwice in
-                        guard tappedTwice else { return }
-                        didTappedTabViewItem(proxy, scrollID: 333, navigationPath: &profileNavigation.navigationPath, viewID: &thirdTabID)
-                        self.tappedTwice = false
-                    })
                     .environmentObject(profileNavigation)
                     .tabItem {
                         Label("프로필", systemImage: "person.crop.circle.fill")
@@ -112,7 +108,6 @@ struct ShortcutTabView: View {
                 fetchCurationIdFromUrl(urlString: url.absoluteString)
             }
         }
-        .background(Color.red)
     }
     
     

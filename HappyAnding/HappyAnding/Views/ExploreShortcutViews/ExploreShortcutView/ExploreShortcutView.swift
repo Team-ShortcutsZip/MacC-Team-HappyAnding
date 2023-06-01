@@ -11,27 +11,28 @@ struct ExploreShortcutView: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @AppStorage("isAnnouncementShow") var isAnnouncementShow: Bool = true
+    // TODO: 추후 UpdateInfoView 제작 시 true로 변경해서 cell 보이게 하기
+    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = false
     
     @Binding var isFolded: Bool
     
-    @State var isTappedUserGradeButton = false
+    @State var isTappedAnnouncementCell = false
     
     let randomCategories: [Category]
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 32){
-                
-                if isAnnouncementShow {
+            VStack(spacing: 32) {
+                if isUpdateAnnnouncementShow {
                     Button {
-                        isTappedUserGradeButton = true
+                        isTappedAnnouncementCell = true
                     } label: {
-                        AnnouncementCell(icon: "ShortcutGradeAnnouncement",
-                                         tagName: TextLiteral.announcementTag,
-                                         discription: TextLiteral.shortcutGradeDescription,
-                                         isAnnouncementShow: $isAnnouncementShow)
+                        AnnouncementCell(icon: "updateAppIcon",
+                                         tagName: TextLiteral.updateTag,
+                                         discription: TextLiteral.updateCellDescription,
+                                         isAnnouncementShow: $isUpdateAnnnouncementShow)
                     }
+                    .id(000)
                 }
                 
                 RecentRegisteredView(shortcuts: $shortcutsZipViewModel.allShortcuts,
@@ -68,8 +69,8 @@ struct ExploreShortcutView: View {
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
-        .sheet(isPresented: $isTappedUserGradeButton) {
-            AboutShortcutGradeView()
+        .sheet(isPresented: $isTappedAnnouncementCell) {
+            UpdateInfoView()
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
         }

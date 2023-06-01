@@ -92,3 +92,7 @@ enum NavigationLisence: Hashable, Equatable {
 enum NavigationWithdrawal: Hashable, Equatable {
     case first
 }
+
+enum NavigationCheckVersion: Hashable, Equatable {
+    case first
+}

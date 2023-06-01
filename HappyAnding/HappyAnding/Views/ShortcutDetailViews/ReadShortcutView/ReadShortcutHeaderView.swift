@@ -41,7 +41,7 @@ struct ReadShortcutHeaderView: View {
                     .foregroundColor(Color.gray3)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            userInfo
+            UserNameCell(userInformation: userInformation, gradeImage: shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: userInformation?.id ?? "!")))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
@@ -84,50 +84,5 @@ struct ReadShortcutHeaderView: View {
                     loginAlerter.isPresented = true
                 }
             }
-    }
-    
-    // MARK: - 유저 정보
-    var userInfo: some View {
-        ZStack {
-            if let data = NavigationProfile(userInfo: self.userInformation) {
-                HStack(spacing: 8) {
-                    
-                    shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: userInformation?.id ?? "!"))
-                        .font(.system(size: 24, weight: .medium))
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.gray3)
-                        .padding(.leading, 16)
-                    
-                    Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
-                        .shortcutsZipBody2()
-                        .foregroundColor(.gray4)
-                    
-                    Spacer()
-                        .frame(maxWidth: .infinity)
-                    
-                    
-                    // TODO: 신고기능
-                    
-                    /*
-                     Image(systemName: "light.beacon.max.fill")
-                     .Headline()
-                     .foregroundColor(.gray5)
-                     .padding(.trailing, 16)
-                     .onTapGesture {
-                     print("Tapped!")
-                     }
-                     */
-                    
-                }
-                .navigationLinkRouter(data: data)
-                .disabled(userInformation == nil)
-                .padding(.vertical, 10)
-                .frame(maxWidth: .infinity, maxHeight: 44)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.gray1, lineWidth: 1)
-                }
-            }
-        }
     }
 }

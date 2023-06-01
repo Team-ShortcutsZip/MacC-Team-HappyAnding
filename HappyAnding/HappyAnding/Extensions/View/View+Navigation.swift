@@ -101,6 +101,8 @@ extension View {
             LicenseView()
         case is NavigationWithdrawal:
             WithdrawalView()
+        case is CheckVersionView:
+            CheckVersionView()
         default:
             EmptyView()
         }
@@ -150,6 +152,9 @@ struct NavigationViewModifier: ViewModifier {
             }
             .navigationDestination(for: NavigationNicknameView.self) { _ in
                 EditNicknameView()
+            }
+            .navigationDestination(for: NavigationCheckVersion.self) { _ in
+                CheckVersionView()
             }
     }
 }

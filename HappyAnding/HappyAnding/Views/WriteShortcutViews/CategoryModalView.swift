@@ -12,7 +12,7 @@ struct CategoryModalView: View {
     @Binding var isShowingCategoryModal: Bool
     @Binding var selectedCategories: [String]
     
-    var screenHeight = UIScreen.main.bounds.size.height
+    var screenHeight = UIScreen.screenHeight
     
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -89,7 +89,7 @@ struct CategoryModalView: View {
                     .shortcutsZipBody2()
                     .tag(item.category)
                     .foregroundColor(items.contains(item.category) ? Color.categoryPickText : Color.gray3)
-                    .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height * 0.7 * 0.08)
+                    .frame(maxWidth: .infinity, minHeight: UIScreen.screenHeight * 0.7 * 0.08)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
                             .fill(items.contains(item.category) ? Color.categoryPickFill : .clear)

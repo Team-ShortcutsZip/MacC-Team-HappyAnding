@@ -33,7 +33,11 @@ enum TextLiteral {
     static let exploreShortcutViewTitle: String = "단축어 둘러보기"
     
     //MARK: - announcementCell
-    static let announcementTag: String = "새로운 기능"
+    static let newFeatureTag: String = "새로운 기능"
+    static let updateTag: String = "업데이트"
+    
+    //MARK: - updateCell
+    static let updateCellDescription: String = "업데이트된 내용 살펴보기"
     
     //MARK: - ShortcutGrade
     static let shortcutGradeTitle: String = "단축어 작성 등급"
@@ -204,6 +208,12 @@ enum TextLiteral {
     static let settingViewLogout: String = "로그아웃"
     static let settingViewLogoutMessage: String = "로그아웃 하시겠습니까?"
     static let settingViewWithdrawal: String = "탈퇴하기"
+    
+    // MARK: - CheckVersionView
+    static let checkVersionViewNewVersion = "새로운 ShortcutsZip이 나왔어요"
+    static let checkVersionViewLatestVersion = "이미 최신 버전을 사용하고 있어요"
+    static let checkVersionViewGoToDownload = "만나러 가기"
+    static let checkVersionViewGoToReview = "리뷰 남기러 가기"
     
     // MARK: - SignInWithAppleView
     static let signInWithAppleViewTitle: String = "ShortcutsZip"

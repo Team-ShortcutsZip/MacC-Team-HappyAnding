@@ -12,6 +12,8 @@ struct WriteCurationInfoView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
     
+    @FocusState var isDescriptionFieldFocused: Bool
+    
     @State var data: WriteCurationInfoType
     @Binding var isWriting: Bool
     
@@ -35,6 +37,10 @@ struct WriteCurationInfoView: View {
                                      content: $data.curation.title,
                                      isValid: $isValidTitle)
             .padding(.top, 12)
+            .onSubmit {
+                isDescriptionFieldFocused = true
+            }
+            .submitLabel(.next)
             
             ValidationCheckTextField(textType: .mandatory,
                                      isMultipleLines: true,
@@ -46,6 +52,7 @@ struct WriteCurationInfoView: View {
                                      content: Binding(get: {data.curation.subtitle},
                                                       set: {data.curation.subtitle = $0}),
                                      isValid: $isValidDescription)
+            .focused($isDescriptionFieldFocused)
             
             Spacer()
                 .frame(maxHeight: .infinity)
