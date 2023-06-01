@@ -101,6 +101,7 @@
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
 		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
+		A3C404D62A23D0E800C3BA75 /* UpdateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C404D52A23D0E800C3BA75 /* UpdateInfoView.swift */; };
 		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */; };
 		A3FC4747292A61550058BF26 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC4746292A61550058BF26 /* FirebaseAnalytics */; };
 		A3FC4749292A61550058BF26 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC4748292A61550058BF26 /* FirebaseAuth */; };
@@ -282,6 +283,7 @@
 		A3A6AD1B292763E2004C49DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3A6AD232927BA06004C49DC /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
+		A3C404D52A23D0E800C3BA75 /* UpdateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInfoView.swift; sourceTree = "<group>"; };
 		A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionWriteShortcutView.swift; sourceTree = "<group>"; };
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		A3FF01852918552E00384211 /* AboutTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTeamView.swift; sourceTree = "<group>"; };
@@ -656,6 +658,7 @@
 			isa = PBXGroup;
 			children = (
 				A34BF82C29AFC34F009BC946 /* AboutShortcutGradeView.swift */,
+				A3C404D52A23D0E800C3BA75 /* UpdateInfoView.swift */,
 			);
 			path = FeatureViews;
 			sourceTree = "<group>";
@@ -931,6 +934,7 @@
 				87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */,
 				87E606B829114FB200C3DA13 /* UserAuth.swift in Sources */,
 				8786B33E29ABA5A9000B46A1 /* View+Shape.swift in Sources */,
+				A3C404D62A23D0E800C3BA75 /* UpdateInfoView.swift in Sources */,
 				F91A72C1299915C500CA135A /* MoreCaptionTextView.swift in Sources */,
 				4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */,
 				87E99C9F28FFF21B009B691F /* SettingView.swift in Sources */,
