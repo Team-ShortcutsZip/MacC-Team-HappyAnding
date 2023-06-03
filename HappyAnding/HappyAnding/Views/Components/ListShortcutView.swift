@@ -19,13 +19,13 @@ struct ListShortcutView: View {
     var body: some View {
         if let shortcuts = data.shortcuts {
             if shortcuts.count == 0 {
-                Text("아직 \(data.sectionType.rawValue)가 없어요")
+                Text("아직 \(data.sectionType.title)가 없어요")
                     .shortcutsZipBody2()
                     .foregroundColor(Color.gray4)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                     .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
-                    .navigationTitle(data.sectionType.rawValue)
+                    .navigationTitle(data.sectionType.title)
                     .navigationBarTitleDisplayMode(.inline)
             } else {
                 ScrollView {
@@ -57,7 +57,7 @@ struct ListShortcutView: View {
                 .listStyle(.plain)
                 .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
                 .scrollContentBackground(.hidden)
-                .navigationTitle(data.sectionType.rawValue)
+                .navigationTitle(data.sectionType.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackground ({ Color.shortcutsZipBackground })
             }

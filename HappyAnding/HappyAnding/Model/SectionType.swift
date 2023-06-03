@@ -7,12 +7,45 @@
 
 import Foundation
 
-enum SectionType: String {
-    case recent = "최신 단축어"
-    case download = "다운로드 순위"
-    case popular = "사랑받는 단축어"
-    case myShortcut = "내가 작성한 단축어"
-    case myLovingShortcut = "좋아요한 단축어"
-    case myDownloadShortcut = "다운로드한 단축어"
+enum SectionType {
+    case recent
+    case download
+    case popular
+    case myShortcut
+    case myLovingShortcut
+    case myDownloadShortcut
+    
+    var title: String {
+        switch self {
+        case .recent:
+            return TextLiteral.recentRegisteredViewTitle
+        case .download:
+            return TextLiteral.downloadRankViewTitle
+        case .popular:
+            return TextLiteral.lovedShortcutViewTitle
+        case .myShortcut:
+            return TextLiteral.myShortcutCardListViewTitle
+        case .myLovingShortcut:
+            return TextLiteral.myPageViewLikedShortcuts
+        case .myDownloadShortcut:
+            return TextLiteral.myPageViewDownloadedShortcuts
+        }
+    }
+    
+    func filteredShortcuts(from viewModel: ShortcutsZipViewModel) -> [Shortcuts] {
+        switch self {
+        case .recent:
+            return viewModel.allShortcuts
+        case .download:
+            return viewModel.sortedShortcutsByDownload
+        case .myShortcut:
+            return viewModel.shortcutsMadeByUser
+        case .popular:
+            return viewModel.sortedShortcutsByLike
+        case .myLovingShortcut:
+            return viewModel.shortcutsUserLiked
+        case .myDownloadShortcut:
+            return viewModel.shortcutsUserDownloaded
+        }
+    }
 }
-
