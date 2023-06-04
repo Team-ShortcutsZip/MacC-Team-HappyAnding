@@ -113,7 +113,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func firstTab() -> some View {
-        ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
+        ExploreShortcutView(isCategoryCellViewFolded: $isFolded, randomCategories: Array(randomCategories))
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(firstTabID)
