@@ -54,12 +54,12 @@ struct ExploreShortcutView: View {
                         Spacer()
                                         
                         Button(action: {
-                            self.isFolded.toggle()
+                            self.isCategoryCellViewFolded.toggle()
                         }, label: {
-                            MoreCaptionTextView(text: isFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
+                            MoreCaptionTextView(text: isCategoryCellViewFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
                         })
-                        .onChange(of: isFolded) { _ in
-                            categoryIndex = isFolded ? 6 : 12
+                        .onChange(of: isCategoryCellViewFolded) { _ in
+                            numberOfDisplayedCategories = isCategoryCellViewFolded ? 6 : 12
                         }
                     }
                     .padding(.horizontal, 16)
@@ -71,7 +71,7 @@ struct ExploreShortcutView: View {
                                                                           categoryName: value,
                                                                           navigationParentView: .shortcuts)
                             
-                            if index < categoryIndex {
+                            if index < numberOfDisplayedCategories {
                                 
                                 categoryCellView(with: value.translateName())
                                     .navigationLinkRouter(data: data)
@@ -115,7 +115,7 @@ extension ExploreShortcutView {
     @ViewBuilder
     private func sectionView(with sectionType: SectionType) -> some View {
         
-        let shortcuts = sectionType.filteredShortcuts(from: shortcutsZipViewModel)
+        let shortcuts = sectionType.filterShortcuts(from: shortcutsZipViewModel)
         
         VStack(spacing: 0) {
             HStack {
@@ -202,7 +202,7 @@ extension ExploreShortcutView {
 
 struct ExploreShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ExploreShortcutView(isFolded: .constant(true), randomCategories: [Category.lifestyle, Category.utility])
+        ExploreShortcutView(isCategoryCellViewFolded: .constant(true), randomCategories: [Category.lifestyle, Category.utility])
     }
 }
 
