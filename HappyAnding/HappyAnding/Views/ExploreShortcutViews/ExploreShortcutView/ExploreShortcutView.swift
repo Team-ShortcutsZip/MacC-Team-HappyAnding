@@ -186,7 +186,7 @@ extension ExploreShortcutView {
     }
     
     @ViewBuilder
-    func categoryCellView(with categoryName: String) -> some View {
+    private func categoryCellView(with categoryName: String) -> some View {
         RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
             .strokeBorder(Color.gray1, lineWidth: 1)
             .background(Color.shortcutsZipWhite)
