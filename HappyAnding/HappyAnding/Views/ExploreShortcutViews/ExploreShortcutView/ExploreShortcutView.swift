@@ -14,7 +14,7 @@ struct ExploreShortcutView: View {
     // TODO: 추후 UpdateInfoView 제작 시 true로 변경해서 cell 보이게 하기
     @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = false
     
-    @Binding var isFolded: Bool
+    @Binding var isCategoryCellViewFolded: Bool
     
     @State var isTappedAnnouncementCell = false
     @State private var categoryIndex = 6
