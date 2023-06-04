@@ -17,7 +17,7 @@ struct ExploreShortcutView: View {
     @Binding var isCategoryCellViewFolded: Bool
     
     @State var isTappedAnnouncementCell = false
-    @State private var categoryIndex = 6
+    @State private var numberOfDisplayedCategories = 6
     
     let randomCategories: [Category]
     
