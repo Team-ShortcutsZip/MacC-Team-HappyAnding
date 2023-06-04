@@ -115,7 +115,7 @@ extension ExploreShortcutView {
     @ViewBuilder
     private func sectionView(with sectionType: SectionType) -> some View {
         
-        lazy var shortcuts = sectionType.filteredShortcuts(from: shortcutsZipViewModel)
+        let shortcuts = sectionType.filteredShortcuts(from: shortcutsZipViewModel)
         
         VStack(spacing: 0) {
             HStack {
