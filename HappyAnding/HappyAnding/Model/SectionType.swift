@@ -32,7 +32,7 @@ enum SectionType {
         }
     }
     
-    func filteredShortcuts(from viewModel: ShortcutsZipViewModel) -> [Shortcuts] {
+    func filterShortcuts(from viewModel: ShortcutsZipViewModel) -> [Shortcuts] {
         switch self {
         case .recent:
             return viewModel.allShortcuts
