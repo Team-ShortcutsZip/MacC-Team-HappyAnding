@@ -83,8 +83,8 @@ extension View {
             ReadShortcutView(data: data as! NavigationReadShortcutType)
         case is NavigationReadUserCurationType:
             ReadUserCurationView(data: data as! NavigationReadUserCurationType)
-        case is NavigationListCurationType:
-            ListCurationView(data: data as! NavigationListCurationType)
+        case is CurationType:
+            ListCurationView(curationType: data as! CurationType)
         case is NavigationProfile:
             ShowProfileView(data: data as! NavigationProfile)
         case is NavigationSearch:
@@ -126,8 +126,8 @@ struct NavigationViewModifier: ViewModifier {
             .navigationDestination(for: NavigationReadUserCurationType.self) { data in
                 ReadUserCurationView(data: data)
             }
-            .navigationDestination(for: NavigationListCurationType.self) { data in
-                ListCurationView(data: data)
+            .navigationDestination(for: CurationType.self) { data in
+                ListCurationView(curationType: data)
             }
             .navigationDestination(for: NavigationReadShortcutType.self) { data in
                 ReadShortcutView(data: data)

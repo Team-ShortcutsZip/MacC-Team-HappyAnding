@@ -34,10 +34,7 @@ struct NavigationListCurationType: Identifiable, Hashable {
     var id = UUID().uuidString
     
     var type: CurationType
-    var title: String?
-    var isAllUser: Bool
     let navigationParentView: NavigationParentView
-    var curation: [Curation]
 }
 
 struct NavigationProfile: Identifiable, Hashable {
