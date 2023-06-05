@@ -1,5 +1,5 @@
 //
-//  ReadUserCurationView.swift
+//  ReadCurationView.swift
 //  HappyAnding
 //
 //  Created by HanGyeongjun on 2022/10/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ReadUserCurationView: View {
+struct ReadCurationView: View {
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
@@ -136,7 +136,7 @@ struct ReadUserCurationView: View {
 }
 
 
-extension ReadUserCurationView {
+extension ReadCurationView {
     
     @ViewBuilder
     private func readCurationViewButtonByUser() -> some View {
