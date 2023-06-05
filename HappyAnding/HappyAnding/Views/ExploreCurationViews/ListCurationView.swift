@@ -68,8 +68,8 @@ struct ListCurationView: View {
     private func makeCurationCellList(_ curations: [Curation]) -> some View {
         ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
             
-            let data = NavigationReadUserCurationType(userCuration: curation,
-                                                      navigationParentView: .curations)
+            let data = NavigationReadCurationType(curation: curation,
+                                                  navigationParentView: .curations)
             
             UserCurationCell(curation: curation,
                              lineLimit: 2,

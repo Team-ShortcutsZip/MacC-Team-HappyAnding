@@ -53,7 +53,10 @@ struct ExploreCurationView: View {
                 HStack(spacing: 0) {
                     ForEach(shortcutsZipViewModel.adminCurations, id: \.id) { curation in
                         AdminCurationCell(adminCuration: curation)
-                            .navigationLinkRouter(data: curation)
+                            .navigationLinkRouter(data: NavigationReadCurationType(isAdmin: true,
+                                                                                   curation: curation,
+                                                                                   navigationParentView: .curations))
+
                     }
                 }
                 .padding(.leading, 16)
@@ -92,8 +95,8 @@ struct ExploreCurationView: View {
 
             // MARK: - 셀 2개 + 더보기 버튼
             ForEach(curation.prefix(2), id: \.self) { curation in
-                let data = NavigationReadUserCurationType(userCuration: curation,
-                                                          navigationParentView: .curations)
+                let data = NavigationReadCurationType(curation: curation,
+                                                      navigationParentView: .curations)
                 
                 UserCurationCell(curation: curation,
                                  lineLimit: 2,

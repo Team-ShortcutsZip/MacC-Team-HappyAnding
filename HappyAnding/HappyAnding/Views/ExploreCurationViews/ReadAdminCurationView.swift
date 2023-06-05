@@ -51,19 +51,6 @@ struct ReadAdminCurationView: View {
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
         .background(Color.shortcutsZipBackground)
-        
-        //TODO: 추후 공유 기능 추가 시 사용할 코드
-        //            .toolbar {
-        //                ToolbarItem(placement: .navigationBarTrailing) {
-        //                    Button(action: {
-        //                        //TODO: 네비게이션 연결 후 코드 지우기.
-        //                        //TODO: Share 버튼 눌렀을 때 Curation공유 링크 생성 및 actionSheet 나타내기
-        //                    }) {
-        //                        Image(systemName: "square.and.arrow.up")
-        //                            .foregroundColor(.gray4)
-        //                    }
-        //                }
-        //            }
     }
     
     ///최상단의 썸네일 이미지 영역입니다.
