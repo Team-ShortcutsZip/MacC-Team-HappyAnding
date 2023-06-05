@@ -122,6 +122,10 @@ struct ReadCurationView: View {
             }
         }
     }
+}
+
+
+extension ReadCurationView {
     
     @ViewBuilder
     private func editView() -> some View {
@@ -133,10 +137,6 @@ struct ReadCurationView: View {
             WriteCurationInfoView(data: data, isWriting: $isWriting)
         }
     }
-}
-
-
-extension ReadCurationView {
     
     @ViewBuilder
     private func readCurationViewButtonByUser() -> some View {
