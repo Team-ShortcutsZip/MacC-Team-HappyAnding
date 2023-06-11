@@ -542,7 +542,6 @@ extension ReadShortcutView {
         
         @Binding var shortcut: Shortcuts
         
-        let profileImage: String = "person.crop.circle"
         
         var body: some View {
             VStack(alignment: .leading, spacing: 24) {
