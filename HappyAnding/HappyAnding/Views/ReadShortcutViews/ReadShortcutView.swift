@@ -55,10 +55,6 @@ struct ReadShortcutView: View {
                             
                             /// 단축어 타이틀
                             ReadShortcutViewHeader(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
-                                .frame(minHeight: 160)
-                                .padding(.bottom, 20)
-                                .background(Color.shortcutsZipWhite)
-                            
                             
                             /// 탭뷰 (기본 정보, 버전 정보, 댓글)
                             LazyVStack(pinnedViews: [.sectionHeaders]) {
@@ -521,8 +517,10 @@ extension ReadShortcutView {
                 /// 단축어 작성자 닉네임
                 UserNameCell(userInformation: userInformation, gradeImage: shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: userInformation?.id ?? "!")))
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, minHeight: 160, alignment: .leading)
+            .padding(.bottom, 20)
             .padding(.horizontal, 16)
+            .background(Color.shortcutsZipWhite)
             .onAppear {
                 shortcutsZipViewModel.fetchUser(userID: shortcut.author,
                                                 isCurrentUser: false) { user in
