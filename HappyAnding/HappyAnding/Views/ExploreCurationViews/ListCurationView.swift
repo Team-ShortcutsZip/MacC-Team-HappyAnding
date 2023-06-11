@@ -39,14 +39,11 @@ struct ListCurationView: View {
             } else {
                 ScrollView {
                     LazyVStack(spacing: 0) {
-                        Rectangle()
-                            .fill(Color.shortcutsZipBackground)
+                        Spacer()
                             .frame(height: 20)
-                        
                         makeCurationCellList(curations)
                         
-                        Rectangle()
-                            .fill(Color.shortcutsZipBackground)
+                        Spacer()
                             .frame(height: 32)
                     }
                 }
