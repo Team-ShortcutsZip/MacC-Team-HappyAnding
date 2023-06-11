@@ -77,7 +77,6 @@ struct ExploreCurationView: View {
 
             HStack(alignment: .bottom) {
                 SubtitleTextView(text: sectionTitle)
-                    .onTapGesture { }
                 
                 Spacer()
                 
