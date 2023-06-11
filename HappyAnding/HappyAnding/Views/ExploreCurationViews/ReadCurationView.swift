@@ -14,12 +14,10 @@ struct ReadCurationView: View {
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
     
     @State var authorInformation: User? = nil
-    
     @State var isWriting = false
     @State var isTappedEditButton = false
     @State var isTappedShareButton = false
     @State var isTappedDeleteButton = false
-    
     @State var data: NavigationReadCurationType
     @State var index = 0
     
@@ -47,7 +45,7 @@ struct ReadCurationView: View {
         }
         .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .scrollContentBackground(.hidden)
-        .edgesIgnoringSafeArea([.top])
+        .edgesIgnoringSafeArea(.top)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: readCurationViewButtonByUser())
         .fullScreenCover(isPresented: $isWriting) {
@@ -92,7 +90,7 @@ struct ReadCurationView: View {
     
     var adminCuration: some View {
         VStack {
-            StickyHeader(height: 304, image:  data.curation.background)
+            StickyHeader(height: 304, image: data.curation.background)
                 .padding(.bottom, 20)
             
             HStack {
