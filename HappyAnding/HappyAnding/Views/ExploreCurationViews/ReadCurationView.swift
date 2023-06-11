@@ -52,7 +52,7 @@ struct ReadCurationView: View {
             NavigationRouter(content: editView, path: $writeCurationNavigation.navigationPath)
                 .environmentObject(writeCurationNavigation)
         }
-        .alert(TextLiteral.readUserCurationViewDeletionTitle, isPresented: $isTappedDeleteButton) {
+        .alert(TextLiteral.readCurationViewDeletionTitle, isPresented: $isTappedDeleteButton) {
             Button(role: .cancel) {
                 self.isTappedDeleteButton.toggle()
             } label: {
@@ -67,7 +67,7 @@ struct ReadCurationView: View {
                 Text(TextLiteral.delete)
             }
         } message: {
-            Text(TextLiteral.readUserCurationViewDeletionMessage)
+            Text(TextLiteral.readCurationViewDeletionMessage)
         }
     }
     
