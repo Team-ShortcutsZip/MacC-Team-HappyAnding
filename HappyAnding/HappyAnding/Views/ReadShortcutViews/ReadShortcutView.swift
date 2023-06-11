@@ -412,7 +412,7 @@ extension ReadShortcutView {
             Label(TextLiteral.delete, systemImage: "trash.fill")
         }
     }
-
+    
     // MARK: - 탭바
     
     private var tabBarView: some View {
@@ -773,7 +773,7 @@ extension ReadShortcutView {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
                         /// 답글, 수정, 삭제 버튼
-                        HStack(spacing: 16) {
+                        HStack(spacing: 0) {
                             if !useWithoutSignIn {
                                 Button {
                                     nestedCommentTarget = comment.user_nickname
@@ -784,6 +784,7 @@ extension ReadShortcutView {
                                     Text(TextLiteral.readShortcutCommentViewReply)
                                         .shortcutsZipFootnote()
                                         .foregroundColor(.gray4)
+                                        .frame(width: 32, height: 24)
                                 }
                             }
                             
@@ -798,8 +799,8 @@ extension ReadShortcutView {
                                         Text(TextLiteral.readShortcutCommentViewEdit)
                                             .shortcutsZipFootnote()
                                             .foregroundColor(.gray4)
+                                            .frame(width: 32, height: 24)
                                     }
-                                    
                                     
                                     Button {
                                         isDeletingComment.toggle()
@@ -808,6 +809,7 @@ extension ReadShortcutView {
                                         Text(TextLiteral.delete)
                                             .shortcutsZipFootnote()
                                             .foregroundColor(.gray4)
+                                            .frame(width: 32, height: 24)
                                     }
                                 }
                             }
