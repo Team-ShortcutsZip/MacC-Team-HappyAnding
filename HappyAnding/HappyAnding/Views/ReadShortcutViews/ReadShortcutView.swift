@@ -562,19 +562,6 @@ extension ReadShortcutView {
                     splitList(title: TextLiteral.readShortcutContentViewRequiredApps, content: shortcut.requiredApp)
                 }
                 
-                // TODO: - delete or not?
-                if !shortcut.shortcutRequirements.isEmpty {
-                    VStack(alignment: .leading) {
-                        Text(TextLiteral.readShortcutContentViewRequirements)
-                            .shortcutsZipBody2()
-                            .foregroundColor(Color.gray4)
-                        Text(shortcut.shortcutRequirements)
-                            .shortcutsZipBody2()
-                            .foregroundColor(Color.gray5)
-                            .lineLimit(nil)
-                    }
-                }
-                
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
