@@ -23,10 +23,11 @@ struct NavigationReadShortcutType: Identifiable, Hashable {
     let navigationParentView: NavigationParentView
 }
 
-struct NavigationReadUserCurationType: Identifiable, Hashable {
+struct NavigationReadCurationType: Identifiable, Hashable {
     var id = UUID().uuidString
     
-    var userCuration: Curation
+    var isAdmin: Bool = false
+    let curation: Curation
     let navigationParentView: NavigationParentView
 }
 
@@ -34,10 +35,7 @@ struct NavigationListCurationType: Identifiable, Hashable {
     var id = UUID().uuidString
     
     var type: CurationType
-    var title: String?
-    var isAllUser: Bool
     let navigationParentView: NavigationParentView
-    var curation: [Curation]
 }
 
 struct NavigationProfile: Identifiable, Hashable {

@@ -165,8 +165,8 @@ extension ShowProfileView {
                     
                     VStack(spacing: 0) {
                         ForEach(curations, id: \.self) { curation in
-                            let data = NavigationReadUserCurationType(userCuration: curation,
-                                                                      navigationParentView: .shortcuts)
+                            let data = NavigationReadCurationType(curation: curation,
+                                                                  navigationParentView: .shortcuts)
                             UserCurationCell(curation: curation,
                                              lineLimit: 2,
                                              navigationParentView: data.navigationParentView)

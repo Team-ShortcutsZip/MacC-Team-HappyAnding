@@ -163,9 +163,9 @@ enum TextLiteral {
     static let exploreCurationViewAdminCurations: String = "숏컷집 추천 모음집"
     static let exploreCurationViewUserCurations: String = "사용자 추천 모음집"
     
-    // MARK: - ReadUserCurationView
-    static let readUserCurationViewDeletionTitle: String = "추천 모음집 삭제"
-    static let readUserCurationViewDeletionMessage: String = "추천 모음집을 삭제하시겠어요?"
+    // MARK: - ReadCurationView
+    static let readCurationViewDeletionTitle: String = "추천 모음집 삭제"
+    static let readCurationViewDeletionMessage: String = "추천 모음집을 삭제하시겠어요?"
     
     // MARK: - WriteCurationSetView
     static let writeCurationSetViewNoShortcuts: String = "아직 선택할 수 있는 단축어가 없어요\n단축어를 업로드하거나 좋아요를 눌러주세요"

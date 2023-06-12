@@ -19,6 +19,7 @@
 		4DF62DD52A0550ED00A8B377 /* UIScreen+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16F292AB945004B765F /* UIScreen+Size.swift */; };
 		87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
 		872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */; };
+		872B5D3D2A2E0FF9008DCC57 /* CurationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */; };
 		8751B29929A32CC000C2B27E /* View+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751B29829A32CC000C2B27E /* View+Navigation.swift */; };
 		876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876B4F6E299E3D91009672D9 /* NavigationRouter.swift */; };
 		8786B2E229A7F93B000B46A1 /* View+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8786B2E129A7F93B000B46A1 /* View+UIFont.swift */; };
@@ -92,10 +93,9 @@
 		A35DB3372927E8EB0011A28B /* CustomShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */; };
 		A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */; };
 		A365209B29B1F26C00E9B07A /* Image+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB92935D34C00165820 /* Image+View.swift */; };
-		A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadUserCurationView.swift */; };
+		A3766B232904330300708F83 /* ReadCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3766B222904330300708F83 /* ReadCurationView.swift */; };
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
 		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B263692909DFD200829DE1 /* CurationListView.swift */; };
 		A3C404D62A23D0E800C3BA75 /* UpdateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C404D52A23D0E800C3BA75 /* UpdateInfoView.swift */; };
 		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */; };
 		A3FC4747292A61550058BF26 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC4746292A61550058BF26 /* FirebaseAnalytics */; };
@@ -140,7 +140,6 @@
 		F9BA11D329A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9BA11D429A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9CAEF832914855900224B0A /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+String.swift */; };
-		F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */; };
 		F9DB8EB92939853D00516CE1 /* ShareExtensionValidationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */; };
 		F9DB8EBB293986E100516CE1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
 		F9DB8EBD293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */; };
@@ -197,6 +196,7 @@
 		4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateShortcutView.swift; sourceTree = "<group>"; };
 		87276C372933F6AB00C92F4C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
+		872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationType.swift; sourceTree = "<group>"; };
 		8751B29829A32CC000C2B27E /* View+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Navigation.swift"; sourceTree = "<group>"; };
 		8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStackModel.swift; sourceTree = "<group>"; };
 		876B4F6E299E3D91009672D9 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
@@ -232,7 +232,6 @@
 		87E99C9E28FFF21B009B691F /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		87E99CA028FFF225009B691F /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		87E99CA228FFF22E009B691F /* ExploreCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCurationView.swift; sourceTree = "<group>"; };
-		87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAdminCurationView.swift; sourceTree = "<group>"; };
 		87E99CA628FFF23E009B691F /* ListCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCurationView.swift; sourceTree = "<group>"; };
 		87E99CA828FFF24F009B691F /* ExploreShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreShortcutView.swift; path = ExploreShortcutView/ExploreShortcutView.swift; sourceTree = "<group>"; };
 		87E99CAC28FFF261009B691F /* ReadShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutView.swift; sourceTree = "<group>"; };
@@ -267,12 +266,11 @@
 		A35C39532936928200C4359F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A35DB3362927E8EB0011A28B /* CustomShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareViewController.swift; sourceTree = "<group>"; };
 		A35DB3382927E9630011A28B /* CustomShareNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShareNavigationController.swift; sourceTree = "<group>"; };
-		A3766B222904330300708F83 /* ReadUserCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadUserCurationView.swift; sourceTree = "<group>"; };
+		A3766B222904330300708F83 /* ReadCurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadCurationView.swift; sourceTree = "<group>"; };
 		A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCardCell.swift; sourceTree = "<group>"; };
 		A3A6AD14292763E2004C49DC /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A6AD1B292763E2004C49DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3A6AD232927BA06004C49DC /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
-		A3B263692909DFD200829DE1 /* CurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationListView.swift; sourceTree = "<group>"; };
 		A3C404D52A23D0E800C3BA75 /* UpdateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInfoView.swift; sourceTree = "<group>"; };
 		A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionWriteShortcutView.swift; sourceTree = "<group>"; };
 		A3FF0182291648A300384211 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
@@ -510,8 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				87E99CA228FFF22E009B691F /* ExploreCurationView.swift */,
-				87E99CA428FFF238009B691F /* ReadAdminCurationView.swift */,
-				A3766B222904330300708F83 /* ReadUserCurationView.swift */,
+				A3766B222904330300708F83 /* ReadCurationView.swift */,
 				87E99CA628FFF23E009B691F /* ListCurationView.swift */,
 			);
 			path = ExploreCurationViews;
@@ -562,7 +559,6 @@
 				87E99CCC290145CC009B691F /* AdminCurationCell.swift */,
 				87E99CD22901465F009B691F /* ValidationCheckTextField.swift */,
 				F94B432D2907088400987819 /* UserCurationListView.swift */,
-				A3B263692909DFD200829DE1 /* CurationListView.swift */,
 				87276C372933F6AB00C92F4C /* CustomTextEditor.swift */,
 				87CFD8482939187200F97B86 /* NicknameTextField.swift */,
 				F96D45B62980301F000C2441 /* SubtitleTextView.swift */,
@@ -588,6 +584,7 @@
 				F9724BBE292755E400860F8A /* Comment.swift */,
 				F976E82B29368E0D0088BBA1 /* Version.swift */,
 				F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */,
+				872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -871,7 +868,6 @@
 				F91F09DD29AE012600E04FA0 /* ShortcutGrade.swift in Sources */,
 				F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */,
 				8751B29929A32CC000C2B27E /* View+Navigation.swift in Sources */,
-				F9CAEF8429148CDD00224B0A /* ReadAdminCurationView.swift in Sources */,
 				F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */,
 				F9131B6B2922D38D00868A0E /* Keyword.swift in Sources */,
 				F94B432E2907088400987819 /* UserCurationListView.swift in Sources */,
@@ -891,7 +887,7 @@
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* UIApplication+Keyboard.swift in Sources */,
-				A3766B232904330300708F83 /* ReadUserCurationView.swift in Sources */,
+				A3766B232904330300708F83 /* ReadCurationView.swift in Sources */,
 				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
 				F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */,
 				8795A170292AB945004B765F /* UIScreen+Size.swift in Sources */,
@@ -903,7 +899,6 @@
 				87E99CA728FFF23E009B691F /* ListCurationView.swift in Sources */,
 				F9CAEF832914855900224B0A /* Date+String.swift in Sources */,
 				87E606B629114F7D00C3DA13 /* WriteNicknameView.swift in Sources */,
-				A3B2636A2909DFD200829DE1 /* CurationListView.swift in Sources */,
 				4D7D16072986BBD7008B3332 /* TextLiteral.swift in Sources */,
 				87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */,
 				87E606B829114FB200C3DA13 /* UserAuth.swift in Sources */,
@@ -956,6 +951,7 @@
 				F9724BBF292755E400860F8A /* Comment.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
 				A0F822B729164D2300AF4448 /* ListCategoryShortcutView.swift in Sources */,
+				872B5D3D2A2E0FF9008DCC57 /* CurationType.swift in Sources */,
 				4D3DBB88292E67E600DE8160 /* EditNicknameView.swift in Sources */,
 				87E99CE82907C6E6009B691F /* Shortcuts.swift in Sources */,
 				A34BF83529B1BA13009BC946 /* String+Formatter.swift in Sources */,
