@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// 설정 탭 - 내가 작성한 단축어
 struct UserCurationListView: View {
     @Environment(\.loginAlertKey) var loginAlert
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
@@ -16,7 +17,7 @@ struct UserCurationListView: View {
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isWriting = false
-    @State var data: NavigationListCurationType
+    @State var data: CurationType
     
     var body: some View {
         VStack(spacing: 0) {
@@ -57,11 +58,11 @@ struct UserCurationListView: View {
             ForEach(Array(shortcutsZipViewModel.curationsMadeByUser.enumerated()), id: \.offset) { index, curation in
 
                 if index < 2 {
-                    let data = NavigationReadUserCurationType(userCuration: curation,
-                                                              navigationParentView: self.data.navigationParentView)
+                    let data = NavigationReadCurationType(curation: curation,
+                                                              navigationParentView: .curations)
                     UserCurationCell(curation: curation,
                                      lineLimit: 2,
-                                     navigationParentView: self.data.navigationParentView)
+                                     navigationParentView: .curations)
                     .navigationLinkRouter(data: data)
                     
                 }

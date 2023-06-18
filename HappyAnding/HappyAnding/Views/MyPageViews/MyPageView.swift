@@ -51,13 +51,8 @@ struct MyPageView: View {
                                        navigationParentView: .myPage)
                 
                 // MARK: - 내가 작성한 큐레이션
-                
-                UserCurationListView(data: NavigationListCurationType(type: .myCuration,
-                                                                      title: TextLiteral.myPageViewMyCuration,
-                                                                      isAllUser: false,
-                                                                      navigationParentView: .myPage,
-                                                                      curation: shortcutsZipViewModel.curationsMadeByUser))
-                .frame(maxWidth: .infinity)
+                UserCurationListView(data: CurationType.myCuration)
+                    .frame(maxWidth: .infinity)
                 
                 // MARK: - 좋아요한 단축어
                 
