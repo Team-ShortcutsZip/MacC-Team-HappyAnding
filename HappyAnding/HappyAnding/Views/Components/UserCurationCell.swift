@@ -14,7 +14,6 @@ struct UserCurationCell: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @State var curation: Curation
-    @State var index = 0
     
     var lineLimit: Int?
     let navigationParentView: NavigationParentView
@@ -25,7 +24,7 @@ struct UserCurationCell: View {
                 
                 //MARK: - 단축어 아이콘 배열
                 HStack {
-                    ForEach(shortcutsZipViewModel.userCurations[index].shortcuts.prefix(4), id: \.self) { shortcut in
+                    ForEach(curation.shortcuts.prefix(4), id: \.self) { shortcut in
                         ZStack {
                             Rectangle()
                                 .fill(Color.fetchGradient(color: shortcut.color))
@@ -38,7 +37,7 @@ struct UserCurationCell: View {
                     }
                     
                     //단축어가 4개 이상인 경우에만 그리는 아이콘
-                    if shortcutsZipViewModel.userCurations[index].shortcuts.count > 4 {
+                    if curation.shortcuts.count > 4 {
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Color.gray2)
@@ -47,7 +46,7 @@ struct UserCurationCell: View {
                             HStack(spacing: 0) {
                                 Image(systemName: "plus")
                                     .smallIcon()
-                                Text("\(shortcutsZipViewModel.userCurations[index].shortcuts.count-4)")
+                                Text("\(curation.shortcuts.count-4)")
                                     .shortcutsZipFootnote()
                             }
                             .foregroundColor(.gray5)
@@ -59,22 +58,17 @@ struct UserCurationCell: View {
                 
                 //MARK: - curation title, subtitle
                 
-                Text(shortcutsZipViewModel.userCurations[index].title)
+                Text(curation.title)
                     .shortcutsZipHeadline()
                     .foregroundColor(Color.gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(shortcutsZipViewModel.userCurations[index].subtitle.lineBreaking)
+                Text(curation.subtitle.lineBreaking)
                     .shortcutsZipBody2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
                     .foregroundColor(Color.gray5)
                     .padding(.bottom, 20)
                     .fixedSize(horizontal: false, vertical: true)
-            }
-            .onAppear() {
-                if let index = shortcutsZipViewModel.userCurations.firstIndex(of: curation) {
-                    self.index = index
-                }
             }
             .padding(.horizontal, 24)
             .background(Color.backgroudList)
