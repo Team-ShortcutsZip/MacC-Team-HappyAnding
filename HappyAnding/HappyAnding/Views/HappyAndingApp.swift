@@ -16,7 +16,7 @@ struct HappyAndingApp: App {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.openURL) private var openURL
     
-    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
+    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel.share
     @StateObject var loginAlerter = Alerter()
     @StateObject var gradeAlerter = Alerter()
     
