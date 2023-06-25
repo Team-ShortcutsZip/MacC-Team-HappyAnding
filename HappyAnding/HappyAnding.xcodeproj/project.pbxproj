@@ -33,11 +33,11 @@
 		8786B33C29ABA588000B46A1 /* View+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8786B33B29ABA588000B46A1 /* View+Gesture.swift */; };
 		8786B33E29ABA5A9000B46A1 /* View+Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8786B33D29ABA5A9000B46A1 /* View+Shape.swift */; };
 		8788374A2920D549009B3F54 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878837492920D549009B3F54 /* Binding+Extension.swift */; };
+		8788E19D2A475AB3007C3852 /* ListCurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788E19C2A475AB3007C3852 /* ListCurationViewModel.swift */; };
+		8788E1A02A48408F007C3852 /* ExploreCurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8788E19F2A48408F007C3852 /* ExploreCurationViewModel.swift */; };
 		8792478D2918CE450040D5C3 /* UINavigationContoller+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792478C2918CE450040D5C3 /* UINavigationContoller+Gesture.swift */; };
 		8792479B291BDF820040D5C3 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8792479A291BDF820040D5C3 /* SearchView.swift */; };
 		8795A170292AB945004B765F /* UIScreen+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16F292AB945004B765F /* UIScreen+Size.swift */; };
-		8795A172292ABFDE004B765F /* ReadShortcutVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A171292ABFDE004B765F /* ReadShortcutVersionView.swift */; };
-		8795A174292ACA50004B765F /* ReadShortcutCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A173292ACA50004B765F /* ReadShortcutCommentView.swift */; };
 		87B47F3B2A3DC2740009E75F /* ReadCurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B47F3A2A3DC2740009E75F /* ReadCurationViewModel.swift */; };
 		87CFD8492939187200F97B86 /* NicknameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CFD8482939187200F97B86 /* NicknameTextField.swift */; };
 		87DBFB062A2127C0000CC442 /* CheckVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DBFB052A2127C0000CC442 /* CheckVersionView.swift */; };
@@ -206,11 +206,11 @@
 		8786B33B29ABA588000B46A1 /* View+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Gesture.swift"; sourceTree = "<group>"; };
 		8786B33D29ABA5A9000B46A1 /* View+Shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Shape.swift"; sourceTree = "<group>"; };
 		878837492920D549009B3F54 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
+		8788E19C2A475AB3007C3852 /* ListCurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCurationViewModel.swift; sourceTree = "<group>"; };
+		8788E19F2A48408F007C3852 /* ExploreCurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCurationViewModel.swift; sourceTree = "<group>"; };
 		8792478C2918CE450040D5C3 /* UINavigationContoller+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationContoller+Gesture.swift"; sourceTree = "<group>"; };
 		8792479A291BDF820040D5C3 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		8795A16F292AB945004B765F /* UIScreen+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Size.swift"; sourceTree = "<group>"; };
-		8795A171292ABFDE004B765F /* ReadShortcutVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutVersionView.swift; sourceTree = "<group>"; };
-		8795A173292ACA50004B765F /* ReadShortcutCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutCommentView.swift; sourceTree = "<group>"; };
 		87B47F3A2A3DC2740009E75F /* ReadCurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadCurationViewModel.swift; sourceTree = "<group>"; };
 		87CFD8482939187200F97B86 /* NicknameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameTextField.swift; sourceTree = "<group>"; };
 		87DBFB052A2127C0000CC442 /* CheckVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckVersionView.swift; sourceTree = "<group>"; };
@@ -360,6 +360,16 @@
 				8786B2E129A7F93B000B46A1 /* View+UIFont.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		8788E19E2A483FDF007C3852 /* ExploreCurationViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				87B47F3A2A3DC2740009E75F /* ReadCurationViewModel.swift */,
+				8788E19C2A475AB3007C3852 /* ListCurationViewModel.swift */,
+				8788E19F2A48408F007C3852 /* ExploreCurationViewModel.swift */,
+			);
+			path = ExploreCurationViewModels;
 			sourceTree = "<group>";
 		};
 		87E606AE291062D300C3DA13 /* SignInViews */ = {
@@ -599,10 +609,10 @@
 		A0F822AA2910B8B900AF4448 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8788E19E2A483FDF007C3852 /* ExploreCurationViewModels */,
 				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
 				4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */,
 				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
-				87B47F3A2A3DC2740009E75F /* ReadCurationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -888,6 +898,7 @@
 				4D7D16072986BBD7008B3332 /* TextLiteral.swift in Sources */,
 				87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */,
 				87E606B829114FB200C3DA13 /* UserAuth.swift in Sources */,
+				8788E1A02A48408F007C3852 /* ExploreCurationViewModel.swift in Sources */,
 				8786B33E29ABA5A9000B46A1 /* View+Shape.swift in Sources */,
 				A3C404D62A23D0E800C3BA75 /* UpdateInfoView.swift in Sources */,
 				F91A72C1299915C500CA135A /* MoreCaptionTextView.swift in Sources */,
@@ -910,6 +921,7 @@
 				87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */,
 				F91F09DF29AE0B5E00E04FA0 /* GradeAlertView.swift in Sources */,
 				87E99CEC29080C30009B691F /* Curation.swift in Sources */,
+				8788E19D2A475AB3007C3852 /* ListCurationViewModel.swift in Sources */,
 				F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */,
