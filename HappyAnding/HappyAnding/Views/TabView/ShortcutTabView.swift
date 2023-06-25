@@ -121,7 +121,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func secondTab() -> some View {
-        ExploreCurationView()
+        ExploreCurationView(viewModel: ExploreCurationViewModel())
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(secondTabID)
