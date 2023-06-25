@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-final class ExploreCurationViewModel: ObservableObject {
+final class ReadCurationViewModel: ObservableObject {
     var shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     @Published var isWriting = false

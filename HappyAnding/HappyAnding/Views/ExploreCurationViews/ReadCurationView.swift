@@ -10,7 +10,7 @@ import SwiftUI
 struct ReadCurationView: View {
     @Environment(\.presentationMode) var presentation: Binding<PresentationMode>
     @StateObject var writeCurationNavigation = WriteCurationNavigation()
-    @StateObject var viewModel: ExploreCurationViewModel
+    @StateObject var viewModel: ReadCurationViewModel
     
     var body: some View {
         ScrollView(showsIndicators: false) {
