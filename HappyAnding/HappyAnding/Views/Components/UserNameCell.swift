@@ -31,9 +31,15 @@ struct UserNameCell: View {
                 .frame(width: 24, height: 24)
                 .foregroundColor(.gray3)
             
-            Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
-                .shortcutsZipBody2()
-                .foregroundColor(.gray4)
+            if let userInformation, !userInformation.nickname.isEmpty {
+                Text(userInformation.nickname)
+                    .shortcutsZipBody2()
+                    .foregroundColor(.gray4)
+            } else {
+                Text(TextLiteral.withdrawnUser)
+                    .shortcutsZipBody2()
+                    .foregroundColor(.gray4)
+            }
             
             Spacer()
             
