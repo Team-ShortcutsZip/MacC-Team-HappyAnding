@@ -19,9 +19,10 @@ final class ReadCurationViewModel: ObservableObject {
     @Published var gradeImage = Image(systemName: "person.crop.circle.fill")
     @Published private(set) var isAdmin = false
     
-    init(data: NavigationReadCurationType) {
-        self.curation = data.curation
+    init(data: Curation) {
+        self.curation = data
         self.authInformation = User()
+        self.isAdmin = curation.isAdmin
         fetchUserGrade()
     }
     

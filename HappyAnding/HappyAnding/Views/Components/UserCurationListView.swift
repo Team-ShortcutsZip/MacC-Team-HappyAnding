@@ -59,12 +59,10 @@ struct UserCurationListView: View {
             ForEach(Array(shortcutsZipViewModel.curationsMadeByUser.enumerated()), id: \.offset) { index, curation in
 
                 if index < 2 {
-                    let data = NavigationReadCurationType(curation: curation,
-                                                              navigationParentView: .curations)
                     UserCurationCell(curation: curation,
                                      lineLimit: 2,
                                      navigationParentView: .curations)
-                    .navigationLinkRouter(data: data)
+                    .navigationLinkRouter(data: curation)
                     
                 }
             }

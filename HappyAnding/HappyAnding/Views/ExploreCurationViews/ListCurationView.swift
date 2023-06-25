@@ -51,14 +51,10 @@ struct ListCurationView: View {
     private func makeCurationCellList(_ curations: [Curation]) -> some View {
         ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
             
-            // TODO: ReadcurationViewModels과 통합
-            let data = NavigationReadCurationType(curation: curation,
-                                                  navigationParentView: .curations)
-            
             UserCurationCell(curation: curation,
                              lineLimit: 2,
                              navigationParentView: .curations)
-            .navigationLinkRouter(data: data)
+            .navigationLinkRouter(data: curation)
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
             .listRowBackground(Color.shortcutsZipBackground)

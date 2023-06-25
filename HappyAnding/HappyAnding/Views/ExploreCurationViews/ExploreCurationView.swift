@@ -46,9 +46,7 @@ struct ExploreCurationView: View {
                 HStack(spacing: 0) {
                     ForEach(viewModel.adminCurationList, id: \.id) { curation in
                         AdminCurationCell(adminCuration: curation)
-                            .navigationLinkRouter(data: NavigationReadCurationType(isAdmin: true,
-                                                                                   curation: curation,
-                                                                                   navigationParentView: .curations))
+                            .navigationLinkRouter(data: curation)
                     }
                 }
                 .padding(.trailing, 8)
@@ -74,13 +72,11 @@ struct ExploreCurationView: View {
             .padding(.horizontal, 16)
 
             ForEach(viewModel.getCurationList(with:sectionType).prefix(2), id: \.self) { curation in
-                let data = NavigationReadCurationType(curation: curation,
-                                                      navigationParentView: .curations)
                 
                 UserCurationCell(curation: curation,
                                  lineLimit: 2,
                                  navigationParentView: .curations)
-                .navigationLinkRouter(data: data)
+                .navigationLinkRouter(data: curation)
             }
         }
     }
