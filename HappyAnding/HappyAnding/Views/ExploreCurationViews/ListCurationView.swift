@@ -15,23 +15,12 @@ import SwiftUI
 
 struct ListCurationView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
-    @State var curationType: CurationType
-    @State var curations = [Curation]()
-    
-    private var sectionTitle: String {
-        if curationType == .personalCuration {
-            return (shortcutsZipViewModel.userInfo?.nickname ?? "") + curationType.title
-        } else {
-            return curationType.title
-        }
-    }
+    @StateObject var viewModel: ListCurationViewModel
     
     var body: some View {
         VStack {
-            if curations.isEmpty {
-                Text("아직 \(sectionTitle)\(sectionTitle.contains("단축어") ? "가" : "이") 없어요")
+            if viewModel.curationList.isEmpty {
+                Text(viewModel.getEmptyContentsWording())
                     .shortcutsZipBody2()
                     .foregroundColor(Color.gray4)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -41,7 +30,7 @@ struct ListCurationView: View {
                     LazyVStack(spacing: 0) {
                         Spacer()
                             .frame(height: 20)
-                        makeCurationCellList(curations)
+                        makeCurationCellList(viewModel.curationList)
                         
                         Spacer()
                             .frame(height: 32)
@@ -55,16 +44,14 @@ struct ListCurationView: View {
         .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
         .navigationBarBackground ({ Color.shortcutsZipBackground })
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(sectionTitle)
-        .onAppear {
-            curations = curationType.filterCuration(from: shortcutsZipViewModel)
-        }
+        .navigationTitle(viewModel.sectionTitle)
     }
     
     @ViewBuilder
     private func makeCurationCellList(_ curations: [Curation]) -> some View {
         ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
             
+            // TODO: ReadcurationViewModels과 통합
             let data = NavigationReadCurationType(curation: curation,
                                                   navigationParentView: .curations)
             
