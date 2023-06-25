@@ -77,10 +77,10 @@ struct UserCurationListView: View {
     
     @ViewBuilder
     private func writeCurationView() -> some View {
-        WriteCurationSetView(isWriting: $isWriting, curation: $curation, isEdit: false)
-        .navigationDestination(for: WriteCurationInfoType.self) { data in
-            WriteCurationInfoView(data: data, isWriting: $isWriting)
-        }
+        WriteCurationSetView(viewModel: WriteCurationViewModel())
+            .navigationDestination(for: WriteCurationViewModel.self) { data in
+                WriteCurationInfoView(viewModel: data)
+            }
     }
 }
 

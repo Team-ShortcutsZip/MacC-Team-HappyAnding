@@ -9,19 +9,7 @@ import SwiftUI
 
 struct WriteCurationSetView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
-    
-    @Binding var isWriting: Bool
-    
-    @State var shortcutCells = [ShortcutCellModel]()
-    @State var isSelected = false
-    @Binding var curation: Curation
-    @State var isTappedQuestionMark: Bool = false
-    @State var deletedShortcutCells = [ShortcutCellModel]()
-    
-    let isEdit: Bool
-    
+    @StateObject var viewModel: WriteCurationViewModel    
     var body: some View {
         VStack {
             ProgressView(value: 1, total: 2)
@@ -29,7 +17,7 @@ struct WriteCurationSetView: View {
             
             listHeader
             infomation
-            if shortcutCells.isEmpty {
+            if viewModel.shortcutCells.isEmpty {
                 Spacer()
                 Text(TextLiteral.writeCurationSetViewNoShortcuts)
                     .shortcutsZipBody2()
@@ -42,31 +30,28 @@ struct WriteCurationSetView: View {
             }
         }
         .background(Color.shortcutsZipBackground)
-        .navigationTitle(isEdit ? TextLiteral.writeCurationSetViewEdit : TextLiteral.writeCurationSetViewPost)
+        .navigationTitle(viewModel.isEdit ? TextLiteral.writeCurationSetViewEdit : TextLiteral.writeCurationSetViewPost)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            self.shortcutCells = shortcutsZipViewModel.fetchShortcutMakeCuration().sorted { $0.title < $1.title }
-            if isEdit {
-                deletedShortcutCells = curation.shortcuts
-            }
+            viewModel.fetchMakeCuration()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    self.isWriting.toggle()
+                    viewModel.isWriting.toggle()
                 } label: {
                     Text(TextLiteral.cancel)
                         .shortcutsZipBody1()
                         .foregroundColor(.gray4)
                 }
             }
-            
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 Text(TextLiteral.next)
-                    .navigationLinkRouter(data: WriteCurationInfoType(curation: curation, deletedShortcutCells: deletedShortcutCells, isEdit: isEdit), isPresented: $isWriting)
+                    .navigationLinkRouter(data: viewModel, isPresented: $viewModel.isWriting)
                     .shortcutsZipHeadline()
-                    .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
-                    .disabled(curation.shortcuts.isEmpty)
+                    .foregroundColor(viewModel.curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
+                    .disabled(viewModel.curation.shortcuts.isEmpty)
             }
         }
     }
@@ -81,7 +66,7 @@ struct WriteCurationSetView: View {
                 .shortcutsZipFootnote()
                 .foregroundColor(.gray3)
             Spacer()
-            Text("\(curation.shortcuts.count)개")
+            Text("\(viewModel.curation.shortcuts.count)개")
                 .shortcutsZipBody2()
                 .foregroundColor(.shortcutsZipPrimary)
         }
@@ -92,11 +77,11 @@ struct WriteCurationSetView: View {
     var shortcutList: some View {
         
         ScrollView {
-            ForEach(Array(shortcutCells)) { shortcut in
+            ForEach(Array(viewModel.shortcutCells)) { shortcut in
                 CheckBoxShortcutCell(
-                    selectedShortcutCells: $curation.shortcuts, isShortcutTapped: curation.shortcuts.contains(shortcut),
-                    shortcutCell: shortcut
-                )
+                    selectedShortcutCells: $viewModel.curation.shortcuts,
+                    isShortcutTapped: $viewModel.curation.shortcuts.contains{$0.id == shortcut.id},
+                    shortcutCell: shortcut)
             }
         }
         .frame(maxWidth: .infinity)
