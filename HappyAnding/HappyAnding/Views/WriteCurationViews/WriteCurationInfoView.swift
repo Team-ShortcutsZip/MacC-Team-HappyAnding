@@ -8,21 +8,9 @@
 import SwiftUI
 
 struct WriteCurationInfoView: View {
-    
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var writeCurationNavigation: WriteCurationNavigation
+    @StateObject var viewModel: WriteCurationViewModel
     
     @FocusState var isDescriptionFieldFocused: Bool
-    
-    @State var data: WriteCurationInfoType
-    @Binding var isWriting: Bool
-    
-    @State var isValidTitle = false
-    @State var isValidDescription = false
-    
-    private var isIncomplete: Bool {
-        !(isValidTitle && isValidDescription)
-    }
     
     var body: some View {
         VStack(spacing: 24) {
@@ -34,8 +22,8 @@ struct WriteCurationInfoView: View {
                                      placeholder: TextLiteral.writeCurationInfoViewNamePlaceholder,
                                      lengthLimit: 20,
                                      isDownloadLinkTextField: false,
-                                     content: $data.curation.title,
-                                     isValid: $isValidTitle)
+                                     content: $viewModel.curation.title,
+                                     isValid: $viewModel.isValidTitle)
             .padding(.top, 12)
             .onSubmit {
                 isDescriptionFieldFocused = true
@@ -49,9 +37,8 @@ struct WriteCurationInfoView: View {
                                      lengthLimit: 40,
                                      isDownloadLinkTextField: false,
                                      inputHeight: 72,
-                                     content: Binding(get: {data.curation.subtitle},
-                                                      set: {data.curation.subtitle = $0}),
-                                     isValid: $isValidDescription)
+                                     content: $viewModel.curation.subtitle,
+                                     isValid: $viewModel.isValidDescription)
             .focused($isDescriptionFieldFocused)
             
             Spacer()
@@ -60,23 +47,17 @@ struct WriteCurationInfoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    
-                    shortcutsZipViewModel.addCuration(curation: data.curation, isEdit: data.isEdit, deletedShortcutCells: data.deletedShortcutCells)
-                    
-                    self.isWriting.toggle()
-                    if #available(iOS 16.1, *) {
-                        writeCurationNavigation.navigationPath = .init()
-                    }
+                    viewModel.addCuration()
                 } label: {
                     Text(TextLiteral.upload)
                         .shortcutsZipHeadline()
-                        .foregroundColor(isIncomplete ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
+                        .foregroundColor(viewModel.isIncomplete ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                 }
-                .disabled(isIncomplete)
+                .disabled(viewModel.isIncomplete)
             }
         }
         .background(Color.shortcutsZipBackground)
-        .navigationBarTitle(data.isEdit ? TextLiteral.writeCurationInfoViewEdit : TextLiteral.wrietCurationInfoViewPost)
+        .navigationBarTitle(viewModel.isEdit ? TextLiteral.writeCurationInfoViewEdit : TextLiteral.wrietCurationInfoViewPost)
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
 }
