@@ -14,9 +14,8 @@ final class ReadCurationViewModel: ObservableObject {
     @Published var isWriting = false
     @Published var isTappedDeleteButton = false
     @Published var curation: Curation
-    @Published var shortcuts = [ShortcutCellModel]()
-    @Published var authInformation: User
-    @Published var gradeImage = Image(systemName: "person.crop.circle.fill")
+    @Published private(set) var authInformation: User
+    @Published private(set) var gradeImage = Image(systemName: "person.crop.circle.fill")
     @Published private(set) var isAdmin = false
     
     init(data: Curation) {

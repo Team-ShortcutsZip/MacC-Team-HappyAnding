@@ -67,7 +67,7 @@ struct ReadCurationView: View {
             StickyHeader(height: 100)
             
             VStack(spacing: 16) {
-                userInformation
+                UserNameCell(userInformation: viewModel.authInformation, gradeImage: viewModel.gradeImage)
                     .padding(EdgeInsets(top: 103, leading: 16, bottom: 0, trailing: 16))
                 
                 UserCurationCell(curation: viewModel.curation, navigationParentView: .curations)
@@ -96,11 +96,6 @@ struct ReadCurationView: View {
             .padding(.bottom, 8)
         }
     }
-    var userInformation: some View {
-        ZStack {
-            UserNameCell(userInformation: viewModel.authInformation, gradeImage: viewModel.gradeImage)
-        }
-    }
 }
 
 
@@ -109,8 +104,8 @@ extension ReadCurationView {
     @ViewBuilder
     private func editView() -> some View {
         WriteCurationSetView(isWriting: $viewModel.isWriting,
-                             curation: $viewModel.curation
-                             ,isEdit: true
+                             curation: $viewModel.curation,
+                             isEdit: true
         )
         .navigationDestination(for: WriteCurationInfoType.self) { data in
             WriteCurationInfoView(data: data, isWriting: $viewModel.isWriting)
