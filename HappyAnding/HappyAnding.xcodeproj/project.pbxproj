@@ -372,6 +372,41 @@
 			path = ExploreCurationViewModels;
 			sourceTree = "<group>";
 		};
+		8788E1A12A484518007C3852 /* ExploreShortcutViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ExploreShortcutViewModels;
+			sourceTree = "<group>";
+		};
+		8788E1A22A484528007C3852 /* WriteShortcutViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WriteShortcutViewModels;
+			sourceTree = "<group>";
+		};
+		8788E1A32A484533007C3852 /* ReadShortcutViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ReadShortcutViewModels;
+			sourceTree = "<group>";
+		};
+		8788E1A42A484542007C3852 /* WriteCurationViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WriteCurationViewModels;
+			sourceTree = "<group>";
+		};
+		8788E1A52A48456E007C3852 /* MyPageViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MyPageViewModels;
+			sourceTree = "<group>";
+		};
 		87E606AE291062D300C3DA13 /* SignInViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -609,7 +644,12 @@
 		A0F822AA2910B8B900AF4448 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8788E1A12A484518007C3852 /* ExploreShortcutViewModels */,
+				8788E1A22A484528007C3852 /* WriteShortcutViewModels */,
+				8788E1A32A484533007C3852 /* ReadShortcutViewModels */,
 				8788E19E2A483FDF007C3852 /* ExploreCurationViewModels */,
+				8788E1A42A484542007C3852 /* WriteCurationViewModels */,
+				8788E1A52A48456E007C3852 /* MyPageViewModels */,
 				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
 				4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */,
 				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
