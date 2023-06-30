@@ -90,7 +90,7 @@ extension View {
         case is NavigationSearch:
             SearchView()
         case is NavigationListCategoryShortcutType:
-            ListCategoryShortcutView(data: data as!  NavigationListCategoryShortcutType)
+            ListCategoryShortcutView(viewModel: ListCategoryShortcutViewModel(data: data as!  NavigationListCategoryShortcutType))
         case is NavigationNicknameView:
             EditNicknameView()
         case is NavigationSettingView:
@@ -131,7 +131,7 @@ struct NavigationViewModifier: ViewModifier {
                 ListShortcutView(viewModel: ListShortcutViewModel(data: data))
             }
             .navigationDestination(for: NavigationListCategoryShortcutType.self) { data in
-                ListCategoryShortcutView(data: data)
+                ListCategoryShortcutView(viewModel: ListCategoryShortcutViewModel(data: data))
             }
             .navigationDestination(for: NavigationLisence.self) { value in
                 LicenseView()

@@ -1,5 +1,5 @@
 //
-//  ShortcutsListView.swift
+//  ListCategoryShortcutView.swift
 //  HappyAnding
 //
 //  Created by KiWoong Hong on 2022/11/05.
@@ -9,11 +9,7 @@ import SwiftUI
 
 struct ListCategoryShortcutView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
-    @State var navigationTitle = ""
-    @State var isLastShortcut: Bool = false
-    @State var data: NavigationListCategoryShortcutType
+    @StateObject var viewModel: ListCategoryShortcutViewModel
     
     var body: some View {
         ScrollView {
@@ -21,12 +17,12 @@ struct ListCategoryShortcutView: View {
             scrollHeader
             
             LazyVStack(spacing: 0) {
-                ForEach(data.shortcuts, id: \.self) { shortcut in
+                ForEach(viewModel.shortcuts, id: \.self) { shortcut in
                     let data = NavigationReadShortcutType(shortcut: shortcut,
                                                           shortcutID: shortcut.id,
-                                                          navigationParentView: self.data.navigationParentView)
+                                                          navigationParentView: .shortcuts)
                     ShortcutCell(shortcut: shortcut,
-                                 navigationParentView: self.data.navigationParentView)
+                                 navigationParentView: .shortcuts)
                     .navigationLinkRouter(data: data)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
@@ -34,18 +30,15 @@ struct ListCategoryShortcutView: View {
             }
             .padding(.bottom, 44)
         }
-        .navigationBarTitle(data.categoryName.translateName())
+        .navigationBarTitle(viewModel.categoryName.translateName())
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.shortcutsZipBackground)
         .navigationBarBackground ({ Color.shortcutsZipBackground })
-        .onAppear {
-            self.data.shortcuts = shortcutsZipViewModel.shortcutsInCategory[data.categoryName.index]
-        }
     }
     
     var scrollHeader: some View {
         VStack {
-            Text(data.categoryName.fetchDescription().lineBreaking)
+            Text(viewModel.categoryName.fetchDescription().lineBreaking)
         }
         .foregroundColor(.gray5)
         .shortcutsZipBody2()
