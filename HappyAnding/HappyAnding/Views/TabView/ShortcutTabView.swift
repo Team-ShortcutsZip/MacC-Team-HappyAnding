@@ -27,6 +27,7 @@ struct ShortcutTabView: View {
     @State private var tempShortcutId = ""
     @State private var tempCurationId = ""
     
+    @State private var randomCategories = Category.allCases.shuffled().prefix(2)
     @State private var twiceTappedTab = 0
     
     @State private var firstTabID = UUID()
@@ -106,7 +107,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func firstTab() -> some View {
-        ExploreShortcutView(viewModel: ExploreShortcutViewModel())
+        ExploreShortcutView(viewModel: ExploreShortcutViewModel(), randomCategories: Array(randomCategories))
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(firstTabID)

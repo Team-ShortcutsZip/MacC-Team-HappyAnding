@@ -14,6 +14,8 @@ struct ExploreShortcutView: View {
     // TODO: 추후 UpdateInfoView 제작 시 true로 변경해서 cell 보이게 하기
     @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = false
     
+    let randomCategories: [Category]
+    
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -33,11 +35,11 @@ struct ExploreShortcutView: View {
                     sectionView(with: .recent)
                         .id(111)
                     
-                    categoryCardView(with: viewModel.randomCategories[0])
+                    categoryCardView(with: randomCategories[0])
                     
                     sectionView(with: .download)
                     
-                    categoryCardView(with: viewModel.randomCategories[1])
+                    categoryCardView(with: randomCategories[1])
                     
                     sectionView(with: .popular)
                     

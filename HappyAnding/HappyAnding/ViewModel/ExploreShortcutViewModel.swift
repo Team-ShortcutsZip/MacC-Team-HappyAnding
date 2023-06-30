@@ -14,7 +14,6 @@ final class ExploreShortcutViewModel: ObservableObject {
     @Published private(set) var isCategoryCellViewFolded = true
     @Published var isTappedAnnouncementCell = false
     @Published private(set) var numberOfDisplayedCategories = 6
-    @Published private(set) var randomCategories = Category.allCases.shuffled().prefix(2)
     
     func changeNumberOfCategories() {
         isCategoryCellViewFolded.toggle()
