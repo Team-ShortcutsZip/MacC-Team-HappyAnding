@@ -24,6 +24,9 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
     
     //좋아요 + 내가 작성한 단축어 목록
     @Published var shortcutCells = [ShortcutCellModel]()
+    //CheckboxShortcutCell 선택 여부 저장
+    @Published var isShortcutsTapped: [Bool] = []
+    
     //모음집 편집 시 전달받는 기존 모음집 정보
     @Published var curation = Curation(title: "", subtitle: "", isAdmin: false, background: "", author: "", shortcuts: [ShortcutCellModel]())
     
@@ -41,9 +44,7 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
         !(isValidTitle && isValidDescription)
     }
     
-    init() {
-        
-    }
+    init() { }
     
     init(data: Curation) {
         self.curation = data
@@ -54,6 +55,14 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
         if isEdit {
             deletedShortcutCells = curation.shortcuts
         }
+        
+        //isShortcutsTapped 초기화
+        isShortcutsTapped = [Bool](repeating: false, count: shortcutCells.count)
+        for shortcut in curation.shortcuts {
+            if let index = shortcutCells.firstIndex(of: shortcut) {
+                isShortcutsTapped[index] = true
+            }
+        }
     }
     
     func addCuration() {
@@ -62,6 +71,23 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
         self.isWriting.toggle()
         if #available(iOS 16.1, *) {
             writeCurationNavigation.navigationPath = .init()
+        }
+    }
+    
+    func checkboxCellTapGesture(idx: Int) {
+        if isShortcutsTapped[idx] {
+            isShortcutsTapped[idx] = false
+            // TODO: 현재는 name을 기준으로 검색중, id로 검색해서 삭제해야함 / Shortcuts 자체를 배열에 저장해야함
+            
+            if let index = curation.shortcuts.firstIndex(of: shortcutCells[idx]) {
+                curation.shortcuts.remove(at: index)
+            }
+        }
+        else {
+            if curation.shortcuts.count < 10 {
+                curation.shortcuts.append(shortcutCells[idx])
+                isShortcutsTapped[idx] = true
+            }
         }
     }
 }

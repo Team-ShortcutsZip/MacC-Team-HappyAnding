@@ -9,11 +9,9 @@ import SwiftUI
 
 struct CheckBoxShortcutCell: View {
     
-    @Binding var selectedShortcutCells: [ShortcutCellModel]
-    
-    @State var isShortcutTapped: Bool = false
-    
-    let shortcutCell: ShortcutCellModel
+    @StateObject var viewModel: WriteCurationViewModel
+
+    let idx: Int
     
     var body: some View {
         
@@ -31,30 +29,16 @@ struct CheckBoxShortcutCell: View {
             .padding(.horizontal, 16)
         }
         .onTapGesture {
-            if isShortcutTapped {
-                isShortcutTapped = false
-                
-                // TODO: 현재는 name을 기준으로 검색중, id로 검색해서 삭제해야함 / Shortcuts 자체를 배열에 저장해야함
-                
-                if let index = selectedShortcutCells.firstIndex(of: shortcutCell) {
-                    selectedShortcutCells.remove(at: index)
-                }
-            }
-            else {
-                if selectedShortcutCells.count < 10 {
-                    isShortcutTapped = true
-                    selectedShortcutCells.append(shortcutCell)
-                }
-            }
+            viewModel.checkboxCellTapGesture(idx: idx)
         }
         .padding(.top, 0)
         .background(Color.shortcutsZipBackground)
     }
     
     var toggle: some View {
-        Image(systemName: isShortcutTapped ? "checkmark.square.fill" : "square")
+        Image(systemName: viewModel.isShortcutsTapped[idx] ? "checkmark.square.fill" : "square")
             .smallIcon()
-            .foregroundColor(isShortcutTapped ? .shortcutsZipPrimary : .gray3)
+            .foregroundColor(viewModel.isShortcutsTapped[idx] ? .shortcutsZipPrimary : .gray3)
             .padding(.leading, 20)
     }
     
@@ -62,11 +46,11 @@ struct CheckBoxShortcutCell: View {
         
         ZStack(alignment: .center) {
             Rectangle()
-                .fill(Color.fetchGradient(color: shortcutCell.color))
+                .fill(Color.fetchGradient(color: viewModel.shortcutCells[idx].color))
                 .cornerRadius(8)
                 .frame(width: 52, height: 52)
             
-            Image(systemName: shortcutCell.sfSymbol)
+            Image(systemName: viewModel.shortcutCells[idx].sfSymbol)
                 .mediumShortcutIcon()
                 .foregroundColor(.white)
         }
@@ -76,11 +60,11 @@ struct CheckBoxShortcutCell: View {
     var shortcutInfo: some View {
         
         VStack(alignment: .leading, spacing: 4) {
-            Text(shortcutCell.title)
+            Text(viewModel.shortcutCells[idx].title)
                 .shortcutsZipHeadline()
                 .foregroundColor(.gray5)
                 .lineLimit(1)
-            Text(shortcutCell.subtitle)
+            Text(viewModel.shortcutCells[idx].subtitle)
                 .shortcutsZipFootnote()
                 .foregroundColor(.gray3)
                 .lineLimit(2)
@@ -92,15 +76,10 @@ struct CheckBoxShortcutCell: View {
     var background: some View {
         
         RoundedRectangle(cornerRadius: 12)
-            .fill(isShortcutTapped ? Color.shortcutsZipWhite : Color.backgroudList)
+            .fill(viewModel.isShortcutsTapped[idx] ? Color.shortcutsZipWhite : Color.backgroudList)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(isShortcutTapped ? Color.shortcutsZipPrimary : Color.backgroudListBorder)
+                    .strokeBorder(viewModel.isShortcutsTapped[idx] ? Color.shortcutsZipPrimary : Color.backgroudListBorder)
             )
-    }}
-
-//struct CheckBoxShortcutCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CheckBoxShortcutCell(color: "Blue", sfSymbol: "books.vertical.fill", name: "ShortcutsTitle", description: "DescriptionDescription")
-//    }
-//}
+    }
+}
