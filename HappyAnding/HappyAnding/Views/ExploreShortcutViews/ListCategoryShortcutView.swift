@@ -30,7 +30,7 @@ struct ListCategoryShortcutView: View {
             }
             .padding(.bottom, 44)
         }
-        .navigationBarTitle(viewModel.categoryName.translateName())
+        .navigationBarTitle(viewModel.category.translateName())
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.shortcutsZipBackground)
         .navigationBarBackground ({ Color.shortcutsZipBackground })
@@ -38,7 +38,7 @@ struct ListCategoryShortcutView: View {
     
     var scrollHeader: some View {
         VStack {
-            Text(viewModel.categoryName.fetchDescription().lineBreaking)
+            Text(viewModel.category.fetchDescription().lineBreaking)
         }
         .foregroundColor(.gray5)
         .shortcutsZipBody2()

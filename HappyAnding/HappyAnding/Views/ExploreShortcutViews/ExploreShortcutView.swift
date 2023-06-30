@@ -58,9 +58,7 @@ struct ExploreShortcutView: View {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                             ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                                 
-                                let data = NavigationListCategoryShortcutType(shortcuts: [],
-                                                                              categoryName: value,
-                                                                              navigationParentView: .shortcuts)
+                                let data = value
                                 
                                 if index < viewModel.numberOfDisplayedCategories {
                                     
@@ -152,9 +150,7 @@ extension ExploreShortcutView {
                 Spacer()
                 
                 MoreCaptionTextView(text: TextLiteral.more)
-                    .navigationLinkRouter(data: NavigationListCategoryShortcutType(shortcuts: [],
-                                                                                   categoryName: category,
-                                                                                   navigationParentView: .shortcuts))
+                    .navigationLinkRouter(data: category)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)

@@ -12,11 +12,11 @@ final class ListCategoryShortcutViewModel: ObservableObject {
     var shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     @Published private(set) var shortcuts: [Shortcuts] = []
-    @Published private(set) var categoryName: Category = .business
+    @Published private(set) var category: Category = .business
     
-    init(data: NavigationListCategoryShortcutType) {
-        shortcuts = shortcutsZipViewModel.shortcutsInCategory[data.categoryName.index]
-        categoryName = data.categoryName
+    init(data: Category) {
+        shortcuts = shortcutsZipViewModel.shortcutsInCategory[data.index]
+        category = data
     }
     
 }

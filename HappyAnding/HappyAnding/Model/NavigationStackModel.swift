@@ -21,15 +21,6 @@ struct NavigationProfile: Identifiable, Hashable {
     var userInfo: User?
 }
 
-struct NavigationListCategoryShortcutType: Identifiable, Hashable {
-    
-    var id = UUID().uuidString
-    
-    var shortcuts: [Shortcuts]
-    var categoryName: Category
-    var navigationParentView: NavigationParentView
-}
-
 struct WriteCurationInfoType: Identifiable, Hashable {
     
     var id = UUID().uuidString
