@@ -121,9 +121,7 @@ extension ExploreShortcutView {
                 Spacer()
                 
                 MoreCaptionTextView(text: TextLiteral.more)
-                    .navigationLinkRouter(data: NavigationListShortcutType(sectionType: sectionType,
-                                                                           shortcuts: shortcuts,
-                                                                           navigationParentView: .shortcuts))
+                    .navigationLinkRouter(data: sectionType)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)

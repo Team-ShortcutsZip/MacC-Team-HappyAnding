@@ -21,11 +21,6 @@ struct MyShortcutCardListView: View {
     @State var isGradeAlertPresented = false
     
     var shortcuts: [Shortcuts]?
-    var data: NavigationListShortcutType {
-        NavigationListShortcutType(sectionType: .myShortcut,
-                                   shortcuts: self.shortcuts,
-                                   navigationParentView: self.navigationParentView)
-    }
     
     let navigationParentView: NavigationParentView
     
@@ -37,7 +32,7 @@ struct MyShortcutCardListView: View {
                 Spacer()
                 
                 MoreCaptionTextView(text: TextLiteral.more)
-                    .navigationLinkRouter(data: data)
+                    .navigationLinkRouter(data: SectionType.myShortcut)
             }
             .padding(.horizontal, 16)
             

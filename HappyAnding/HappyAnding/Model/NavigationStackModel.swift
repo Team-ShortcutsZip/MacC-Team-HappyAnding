@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-struct NavigationListShortcutType: Identifiable, Hashable {
-    var id = UUID().uuidString
-    
-    var sectionType: SectionType
-    var shortcuts: [Shortcuts]?
-    let navigationParentView: NavigationParentView
-}
-
 struct NavigationReadShortcutType: Identifiable, Hashable {
     var id = UUID().uuidString
 

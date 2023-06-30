@@ -28,7 +28,7 @@ struct ListShortcutView: View {
                 LazyVStack(spacing: 0) {
                     
                     //TODO: 무한 스크롤을 위한 업데이트 함수 필요
-                    makeShortcutCellList(viewModel.fetchShortcutsBySectionType())
+                    makeShortcutCellList(viewModel.shortcuts)
                     
                     Rectangle()
                         .fill(Color.shortcutsZipBackground)
