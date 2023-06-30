@@ -9,83 +9,80 @@ import SwiftUI
 
 struct ExploreShortcutView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var viewModel: ExploreShortcutViewModel
     
     // TODO: 추후 UpdateInfoView 제작 시 true로 변경해서 cell 보이게 하기
     @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = false
     
-    @Binding var isCategoryCellViewFolded: Bool
-    
-    @State var isTappedAnnouncementCell = false
-    @State private var numberOfDisplayedCategories = 6
-    
-    let randomCategories: [Category]
-    
     var body: some View {
-        ScrollView {
-            VStack(spacing: 32) {
-                if isUpdateAnnnouncementShow {
-                    Button {
-                        isTappedAnnouncementCell = true
-                    } label: {
-                        AnnouncementCell(icon: "updateAppIcon",
-                                         tagName: TextLiteral.updateTag,
-                                         discription: TextLiteral.updateCellDescription,
-                                         isAnnouncementShow: $isUpdateAnnnouncementShow)
-                    }
-                    .id(000)
-                }
-                
-                sectionView(with: .recent)
-                    .id(111)
-                
-                categoryCardView(with: randomCategories[0])
-
-                sectionView(with: .download)
-                
-                categoryCardView(with: randomCategories[1])
-                
-                sectionView(with: .popular)
-                
-                VStack {
-                    HStack {
-                        SubtitleTextView(text: TextLiteral.categoryViewTitle)
-                        
-                        Spacer()
-                                        
-                        Button(action: {
-                            self.isCategoryCellViewFolded.toggle()
-                        }, label: {
-                            MoreCaptionTextView(text: isCategoryCellViewFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
-                        })
-                        .onChange(of: isCategoryCellViewFolded) { _ in
-                            numberOfDisplayedCategories = isCategoryCellViewFolded ? 6 : 12
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 32) {
+                    if isUpdateAnnnouncementShow {
+                        Button {
+                            viewModel.isShowingAnnouncement()
+                        } label: {
+                            AnnouncementCell(icon: "updateAppIcon",
+                                             tagName: TextLiteral.updateTag,
+                                             discription: TextLiteral.updateCellDescription,
+                                             isAnnouncementShow: $isUpdateAnnnouncementShow)
                         }
+                        .id(000)
                     }
-                    .padding(.horizontal, 16)
                     
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                        ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
+                    sectionView(with: .recent)
+                        .id(111)
+                    
+                    categoryCardView(with: viewModel.randomCategories[0])
+                    
+                    sectionView(with: .download)
+                    
+                    categoryCardView(with: viewModel.randomCategories[1])
+                    
+                    sectionView(with: .popular)
+                    
+                    VStack {
+                        HStack {
+                            SubtitleTextView(text: TextLiteral.categoryViewTitle)
                             
-                            let data = NavigationListCategoryShortcutType(shortcuts: [],
-                                                                          categoryName: value,
-                                                                          navigationParentView: .shortcuts)
+                            Spacer()
                             
-                            if index < numberOfDisplayedCategories {
-                                
-                                categoryCellView(with: value.translateName())
-                                    .navigationLinkRouter(data: data)
-                                
+                            Button {
+                                viewModel.changeNumberOfCategories()
+                            } label: {
+                                MoreCaptionTextView(text: viewModel.isCategoryCellViewFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
                             }
                         }
+                        .padding(.horizontal, 16)
+                        
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                            ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
+                                
+                                let data = NavigationListCategoryShortcutType(shortcuts: [],
+                                                                              categoryName: value,
+                                                                              navigationParentView: .shortcuts)
+                                
+                                if index < viewModel.numberOfDisplayedCategories {
+                                    
+                                    categoryCellView(with: value.translateName())
+                                        .navigationLinkRouter(data: data)
+                                    
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 16)
+                        .id(999)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 16)
-                    .id(999)
+                }
+                .padding(.top, 20)
+                .padding(.bottom, 44)
+            }
+            .onChange(of: viewModel.isCategoryCellViewFolded) { _ in
+                withAnimation {
+                    proxy.scrollTo(999, anchor: .bottom)
                 }
             }
-            .padding(.top, 20)
-            .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
         .navigationBarTitle(TextLiteral.exploreShortcutViewTitle)
@@ -100,7 +97,7 @@ struct ExploreShortcutView: View {
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
-        .sheet(isPresented: $isTappedAnnouncementCell) {
+        .sheet(isPresented: $viewModel.isTappedAnnouncementCell) {
             UpdateInfoView()
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
@@ -115,7 +112,7 @@ extension ExploreShortcutView {
     @ViewBuilder
     private func sectionView(with sectionType: SectionType) -> some View {
         
-        let shortcuts = sectionType.filterShortcuts(from: shortcutsZipViewModel)
+        let shortcuts = sectionType.filterShortcuts(from: viewModel.shortcutsZipViewModel)
         
         VStack(spacing: 0) {
             HStack {
@@ -151,11 +148,11 @@ extension ExploreShortcutView {
         
         VStack(spacing: 0) {
             HStack {
-
+                
                 SubtitleTextView(text: category.translateName())
-
+                
                 Spacer()
-
+                
                 MoreCaptionTextView(text: TextLiteral.more)
                     .navigationLinkRouter(data: NavigationListCategoryShortcutType(shortcuts: [],
                                                                                    categoryName: category,
@@ -163,21 +160,19 @@ extension ExploreShortcutView {
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
-
+            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(Array((shortcutsZipViewModel.shortcutsInCategory[randomCategories[0].index].enumerated())), id: \.offset) { index, shortcut in
-                        if index < 7 {
-                            let data = NavigationReadShortcutType(
-                                shortcutID: shortcut.id,
-                                navigationParentView: .shortcuts)
-
-                            ShortcutCardCell(
-                                categoryShortcutIcon: shortcut.sfSymbol,
-                                categoryShortcutName: shortcut.title,
-                                categoryShortcutColor: shortcut.color)
-                            .navigationLinkRouter(data: data)
-                        }
+                    ForEach(viewModel.fetchShortcutsByCategories(category: category).prefix(7), id: \.self) { shortcut in
+                        let data = NavigationReadShortcutType(
+                            shortcutID: shortcut.id,
+                            navigationParentView: .shortcuts)
+                        
+                        ShortcutCardCell(
+                            categoryShortcutIcon: shortcut.sfSymbol,
+                            categoryShortcutName: shortcut.title,
+                            categoryShortcutColor: shortcut.color)
+                        .navigationLinkRouter(data: data)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -197,12 +192,6 @@ extension ExploreShortcutView {
                     .shortcutsZipBody2()
                     .foregroundColor(Color.gray5)
             }
-    }
-}
-
-struct ExploreShortcutView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExploreShortcutView(isCategoryCellViewFolded: .constant(true), randomCategories: [Category.lifestyle, Category.utility])
     }
 }
 
