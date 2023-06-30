@@ -60,19 +60,4 @@ struct ListShortcutView: View {
             
         }
     }
-    
-    @ViewBuilder
-    private func makeIndexShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
-        ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-            let navigationData = NavigationReadShortcutType(shortcut: shortcut,
-                                                            shortcutID: shortcut.id,
-                                                            navigationParentView: .shortcuts)
-            ShortcutCell(shortcut: shortcut,
-                         rankNumber: index + 1,
-                         navigationParentView: .shortcuts)
-            .navigationLinkRouter(data: navigationData)
-            .listRowInsets(EdgeInsets())
-            .listRowSeparator(.hidden)
-        }
-    }
 }

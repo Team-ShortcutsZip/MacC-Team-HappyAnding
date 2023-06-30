@@ -12,9 +12,10 @@ struct ListCategoryShortcutView: View {
     @StateObject var viewModel: ListCategoryShortcutViewModel
     
     var body: some View {
+        
         ScrollView {
             
-            scrollHeader
+            categoryHeader
             
             LazyVStack(spacing: 0) {
                 ForEach(viewModel.shortcuts, id: \.self) { shortcut in
@@ -36,10 +37,8 @@ struct ListCategoryShortcutView: View {
         .navigationBarBackground ({ Color.shortcutsZipBackground })
     }
     
-    var scrollHeader: some View {
-        VStack {
-            Text(viewModel.category.fetchDescription().lineBreaking)
-        }
+    var categoryHeader: some View {
+        Text(viewModel.category.fetchDescription().lineBreaking)
         .foregroundColor(.gray5)
         .shortcutsZipBody2()
         .padding(16)

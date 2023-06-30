@@ -58,12 +58,10 @@ struct ExploreShortcutView: View {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                             ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
                                 
-                                let data = value
-                                
                                 if index < viewModel.numberOfDisplayedCategories {
                                     
                                     categoryCellView(with: value.translateName())
-                                        .navigationLinkRouter(data: data)
+                                        .navigationLinkRouter(data: value)
                                     
                                 }
                             }
