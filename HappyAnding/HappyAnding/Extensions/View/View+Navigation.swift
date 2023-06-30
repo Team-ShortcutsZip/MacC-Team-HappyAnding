@@ -78,7 +78,7 @@ extension View {
     func getDestination<T: Hashable>(data: T) -> some View {
         switch data {
         case is NavigationListShortcutType:
-            ListShortcutView(data: data as! NavigationListShortcutType)
+            ListShortcutView(viewModel: ListShortcutViewModel(data: data as! NavigationListShortcutType))
         case is NavigationReadShortcutType:
             ReadShortcutView(data: data as! NavigationReadShortcutType)
         case is Curation:
@@ -128,7 +128,7 @@ struct NavigationViewModifier: ViewModifier {
                 ReadShortcutView(data: data)
             }
             .navigationDestination(for: NavigationListShortcutType.self) { data in
-                ListShortcutView(data: data)
+                ListShortcutView(viewModel: ListShortcutViewModel(data: data))
             }
             .navigationDestination(for: NavigationListCategoryShortcutType.self) { data in
                 ListCategoryShortcutView(data: data)

@@ -18,6 +18,7 @@
 		4D7D16072986BBD7008B3332 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D16062986BBD7008B3332 /* TextLiteral.swift */; };
 		4D7D16082986BBDE008B3332 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D16062986BBD7008B3332 /* TextLiteral.swift */; };
 		4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */; };
+		4DF15D732A4ECC7D0014F854 /* ListShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF15D722A4ECC7D0014F854 /* ListShortcutViewModel.swift */; };
 		4DF62DD52A0550ED00A8B377 /* UIScreen+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16F292AB945004B765F /* UIScreen+Size.swift */; };
 		87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
 		872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */; };
@@ -196,6 +197,7 @@
 		4D778A33290A53BA00C15AC4 /* UIApplication+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Keyboard.swift"; sourceTree = "<group>"; };
 		4D7D16062986BBD7008B3332 /* TextLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextLiteral.swift; path = HappyAnding/TextLiteral.swift; sourceTree = SOURCE_ROOT; };
 		4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateShortcutView.swift; sourceTree = "<group>"; };
+		4DF15D722A4ECC7D0014F854 /* ListShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListShortcutViewModel.swift; sourceTree = "<group>"; };
 		87276C372933F6AB00C92F4C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationType.swift; sourceTree = "<group>"; };
@@ -656,6 +658,7 @@
 				4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */,
 				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
 				4D061BB92A475EE800F76835 /* ExploreShortcutViewModel.swift */,
+				4DF15D722A4ECC7D0014F854 /* ListShortcutViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -926,6 +929,7 @@
 				A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */,
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
+				4DF15D732A4ECC7D0014F854 /* ListShortcutViewModel.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* UIApplication+Keyboard.swift in Sources */,
 				A3766B232904330300708F83 /* ReadCurationView.swift in Sources */,
 				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
