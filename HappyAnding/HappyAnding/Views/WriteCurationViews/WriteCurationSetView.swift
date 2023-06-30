@@ -77,11 +77,8 @@ struct WriteCurationSetView: View {
     var shortcutList: some View {
         
         ScrollView {
-            ForEach(Array(viewModel.shortcutCells)) { shortcut in
-                CheckBoxShortcutCell(
-                    selectedShortcutCells: $viewModel.curation.shortcuts,
-                    isShortcutTapped: $viewModel.curation.shortcuts.contains{$0.id == shortcut.id},
-                    shortcutCell: shortcut)
+            ForEach(Array(viewModel.shortcutCells.enumerated()), id: \.offset) { index, shortcut in
+                CheckBoxShortcutCell(viewModel: viewModel, idx: index)
             }
         }
         .frame(maxWidth: .infinity)
