@@ -74,19 +74,19 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
         }
     }
     
-    func checkboxCellTapGesture(idx: Int) {
-        if isShortcutsTapped[idx] {
-            isShortcutsTapped[idx] = false
+    func checkboxCellTapGesture(index: Int) {
+        if isShortcutsTapped[index] {
+            isShortcutsTapped[index] = false
             // TODO: 현재는 name을 기준으로 검색중, id로 검색해서 삭제해야함 / Shortcuts 자체를 배열에 저장해야함
             
-            if let index = curation.shortcuts.firstIndex(of: shortcutCells[idx]) {
-                curation.shortcuts.remove(at: index)
+            if let firstIndex = curation.shortcuts.firstIndex(of: shortcutCells[index]) {
+                curation.shortcuts.remove(at: firstIndex)
             }
         }
         else {
             if curation.shortcuts.count < 10 {
-                curation.shortcuts.append(shortcutCells[idx])
-                isShortcutsTapped[idx] = true
+                curation.shortcuts.append(shortcutCells[index])
+                isShortcutsTapped[index] = true
             }
         }
     }

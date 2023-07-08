@@ -78,7 +78,7 @@ struct WriteCurationSetView: View {
         
         ScrollView {
             ForEach(Array(viewModel.shortcutCells.enumerated()), id: \.offset) { index, shortcut in
-                CheckBoxShortcutCell(viewModel: viewModel, idx: index)
+                checkBoxShortcutCell(viewModel: viewModel, index: index)
             }
         }
         .frame(maxWidth: .infinity)
@@ -98,5 +98,62 @@ struct WriteCurationSetView: View {
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 20)
+    }
+    
+    @ViewBuilder
+    private func checkBoxShortcutCell(viewModel: WriteCurationViewModel, index: Int) -> some View {
+        
+        ZStack {
+            Color.shortcutsZipBackground
+            
+            HStack {
+                Image(systemName: viewModel.isShortcutsTapped[index] ? "checkmark.square.fill" : "square")
+                    .smallIcon()
+                    .foregroundColor(viewModel.isShortcutsTapped[index] ? .shortcutsZipPrimary : .gray3)
+                    .padding(.leading, 20)
+                
+                ZStack(alignment: .center) {
+                    Rectangle()
+                        .fill(Color.fetchGradient(color: viewModel.shortcutCells[index].color))
+                        .cornerRadius(8)
+                        .frame(width: 52, height: 52)
+                    
+                    Image(systemName: viewModel.shortcutCells[index].sfSymbol)
+                        .mediumShortcutIcon()
+                        .foregroundColor(.white)
+                }
+                .padding(.leading, 12)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(viewModel.shortcutCells[index].title)
+                        .shortcutsZipHeadline()
+                        .foregroundColor(.gray5)
+                        .lineLimit(1)
+                    Text(viewModel.shortcutCells[index].subtitle)
+                        .shortcutsZipFootnote()
+                        .foregroundColor(.gray3)
+                        .lineLimit(2)
+                }
+                .padding(.leading, 12)
+                .padding(.trailing, 20)
+                
+                Spacer()
+            }
+            .padding(.vertical, 20)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(viewModel.isShortcutsTapped[index] ? Color.shortcutsZipWhite : Color.backgroudList)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(viewModel.isShortcutsTapped[index] ? Color.shortcutsZipPrimary : Color.backgroudListBorder)
+                    )
+            )
+            .padding(.horizontal, 16)
+        }
+        .onTapGesture {
+            viewModel.checkboxCellTapGesture(index: index)
+        }
+        .padding(.top, 0)
+        .background(Color.shortcutsZipBackground)
     }
 }
