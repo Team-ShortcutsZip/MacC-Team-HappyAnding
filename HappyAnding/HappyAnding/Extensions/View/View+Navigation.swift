@@ -85,8 +85,8 @@ extension View {
             ReadCurationView(viewModel: ReadCurationViewModel(data: data as! Curation))
         case is CurationType:
             ListCurationView(viewModel: ListCurationViewModel(data: data as! CurationType))
-        case is NavigationProfile:
-            ShowProfileView(data: data as! NavigationProfile)
+        case is User:
+            ShowProfileView(viewModel: ShowProfileViewModel(data: data as! User))
         case is NavigationSearch:
             SearchView()
         case is NavigationListCategoryShortcutType:
@@ -115,8 +115,8 @@ struct NavigationViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
         
-            .navigationDestination(for: NavigationProfile.self) { data in
-                ShowProfileView(data: data)
+            .navigationDestination(for: User?.self) { data in
+                ShowProfileView(viewModel: ShowProfileViewModel(data: data ?? User()))
             }
             .navigationDestination(for: Curation.self) { data in
                 ReadCurationView(viewModel: ReadCurationViewModel(data: data))

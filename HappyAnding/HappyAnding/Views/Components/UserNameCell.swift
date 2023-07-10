@@ -56,7 +56,7 @@ struct UserNameCell: View {
             RoundedRectangle(cornerRadius: 12)
                 .foregroundColor(.gray1)
         )
-        .navigationLinkRouter(data: NavigationProfile(userInfo: self.userInformation))
+        .navigationLinkRouter(data: self.userInformation)
         .disabled(self.userInformation == nil)
     }
 }

@@ -9,46 +9,46 @@ import SwiftUI
 
 struct ShowProfileView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
-    @State var data: NavigationProfile
-    
-    @State var shortcuts: [Shortcuts] = []
-    @State var curations: [Curation] = []
-    @State var currentTab: Int = 0
-    
-    @State private var animationAmount = 0.0
+    @StateObject var viewModel: ShowProfileViewModel
     
     @Namespace var namespace
-    
+        
     private let tabItems = [TextLiteral.showProfileViewShortcutTabTitle, TextLiteral.showProfileViewCurationTabTitle]
     
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                
                 StickyHeader(height: 24)
                 
                 //MARK: 프로필이미지 및 닉네임
                 VStack(spacing: 8) {
                     Button {
                         withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
-                            self.animationAmount += 360
+                            viewModel.animationAmount += 360
                         }
                     } label: {
-                        ZStack(alignment: .center) {
-                            Circle()
+                        if viewModel.shortcuts.isEmpty {
+                            viewModel.userGrade
+                                .resizable()
                                 .frame(width: 72, height: 72)
-                                .foregroundColor(.gray1)
-                            shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: data.userInfo?.id ?? ""))
-                                .rotation3DEffect(
-                                    .degrees(animationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
+                                .foregroundColor(.gray3)
+                        } else {
+                            ZStack(alignment: .center) {
+                                Circle()
+                                    .frame(width: 72, height: 72)
+                                    .foregroundColor(.gray1)
+                                viewModel.userGrade
+                                    .rotation3DEffect(
+                                        .degrees(viewModel.animationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
+                            }
                         }
                     }
-                    Text(data.userInfo?.nickname ?? TextLiteral.defaultUser)
+                    
+                    Text(viewModel.user.nickname)
                         .shortcutsZipTitle1()
                         .foregroundColor(.gray5)
                 }
+                .disabled(viewModel.shortcuts.isEmpty)
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, 35)
                 .background(Color.shortcutsZipWhite)
@@ -66,16 +66,11 @@ struct ShowProfileView: View {
         .background(Color.shortcutsZipBackground)
         .toolbar(.visible, for: .tabBar)
         .onAppear {
-            shortcuts = shortcutsZipViewModel.allShortcuts.filter { $0.author == self.data.userInfo?.id }
-            curations = shortcutsZipViewModel.fetchCurationByAuthor(author: data.userInfo?.id ?? "")
             withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
-                self.animationAmount += 360
+                viewModel.animationAmount += 360
             }
         }
     }
-}
-
-extension ShowProfileView {
     
     //MARK: 탭바
     var tabBarView: some View {
@@ -91,10 +86,10 @@ extension ShowProfileView {
     
     private func tabBarItem(string: String, tab: Int) -> some View {
         Button {
-            self.currentTab = tab
+            viewModel.currentTab = tab
         } label: {
             VStack {
-                if self.currentTab == tab {
+                if viewModel.currentTab == tab {
                     Text(string)
                         .shortcutsZipHeadline()
                         .foregroundColor(.gray5)
@@ -110,7 +105,7 @@ extension ShowProfileView {
                         .frame(height: 2)
                 }
             }
-            .animation(.spring(), value: currentTab)
+            .animation(.spring(), value: viewModel.currentTab)
         }
         .buttonStyle(.plain)
     }
@@ -119,16 +114,16 @@ extension ShowProfileView {
     var profileContentView: some View {
         VStack {
             ZStack {
-                TabView(selection: self.$currentTab) {
+                TabView(selection: $viewModel.currentTab) {
                     Color.clear.tag(0)
                     Color.clear.tag(1)
                 }
                 .frame(minHeight: UIScreen.screenHeight / 2)
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 
-                switch(currentTab) {
+                switch(viewModel.currentTab) {
                 case 0:
-                    if shortcuts.isEmpty {
+                    if viewModel.shortcuts.isEmpty {
                         VStack {
                             Text(TextLiteral.showProfileViewNoShortcuts)
                                 .padding(.top, 16)
@@ -139,7 +134,7 @@ extension ShowProfileView {
                     }
                     
                     VStack(spacing: 0) {
-                        ForEach(shortcuts, id:\.self) { shortcut in
+                        ForEach(viewModel.shortcuts, id:\.self) { shortcut in
                             let data = NavigationReadShortcutType(shortcutID:shortcut.id,
                                                                   navigationParentView: .shortcuts)
                             
@@ -153,7 +148,7 @@ extension ShowProfileView {
                     }
                     .padding(.bottom, 44)
                 case 1:
-                    if curations.isEmpty {
+                    if viewModel.curations.isEmpty {
                         VStack{
                             Text(TextLiteral.showProfileViewNoCurations)
                                 .padding(.top, 16)
@@ -179,7 +174,7 @@ extension ShowProfileView {
                     EmptyView()
                 }
             }
-            .animation(.easeInOut, value: currentTab)
+            .animation(.easeInOut, value: viewModel.currentTab)
         }
     }
 }
