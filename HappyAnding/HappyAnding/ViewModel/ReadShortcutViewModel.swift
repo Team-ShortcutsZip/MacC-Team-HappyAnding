@@ -106,6 +106,7 @@ final class ReadShortcutViewModel: ObservableObject {
         shortcutsZipViewModel.setData(model: comments)
         commentText = ""
         comment = comment.resetComment()
+        self.comments.comments = comments.fetchSortedComment()
     }
     
     func cancelNestedComment() {
@@ -146,5 +147,9 @@ final class ReadShortcutViewModel: ObservableObject {
         }
         
         shortcutsZipViewModel.setData(model: comments)
+    }
+    
+    func fetchUserGrade(id: String) -> Image {
+        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: id))
     }
 }

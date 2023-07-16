@@ -642,7 +642,7 @@ extension ReadShortcutView {
                         /// 유저 정보
                         HStack(spacing: 8) {
                             
-                            shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: comment.user_id ))
+                            viewModel.fetchUserGrade(id: comment.user_id)
                                 .font(.system(size: 24, weight: .medium))
                                 .frame(width: 24, height: 24)
                                 .foregroundColor(.gray3)
@@ -652,7 +652,6 @@ extension ReadShortcutView {
                                 .foregroundColor(.gray4)
                         }
                         .padding(.bottom, 4)
-                        
                         
                         /// 댓글 내용
                         Text(comment.contents)
