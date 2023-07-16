@@ -13,6 +13,7 @@ final class ReadShortcutViewModel: ObservableObject {
     
     @Published var shortcut: Shortcuts
     
+    /// ReadShortcutView
     @Published var isDeletingShortcut = false
     @Published var isEditingShortcut = false
     @Published var isUpdatingShortcut = false
@@ -31,6 +32,15 @@ final class ReadShortcutViewModel: ObservableObject {
     @Published var isEditingComment = false
     @Published var isUndoingCommentEdit = false
     
+    /// ReadShortcutViewHeader
+    @Published var userInformation: User? = nil
+    @Published var numberOfLike = 0
+    @Published var userGrade = Image(systemName: "person.crop.circle.fill")
+    
+    /// ReadShortcutCommentView
+    @Published var isDeletingComment = false
+    @Published var deletedComment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
+    
     /// UpdateShortcutView
     @Published var updatedLink = ""
     @Published var updateDescription = ""
@@ -42,17 +52,22 @@ final class ReadShortcutViewModel: ObservableObject {
         self.isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.id)
         self.isMyFirstLike = isMyLike
         self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.id)
+        shortcutsZipViewModel.fetchUser(userID: data.author,
+                                        isCurrentUser: false) { user in
+            self.userInformation = user
+        }
+        self.userGrade = shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: userInformation?.id ?? "!"))
+        self.numberOfLike = data.numberOfLike
     }
     
     func checkIfDownloaded() {
         if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
             shortcut.numberOfDownload += 1
         }
-        self.isDownloadingShortcut = true
     }
     
-    func updateNumberOfDownload() {
-        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
+    func updateNumberOfDownload(index: Int) {
+        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
     }
     
     func onViewDissapear() {
@@ -121,5 +136,15 @@ final class ReadShortcutViewModel: ObservableObject {
                                                     updateLink: updatedLink)
         self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcut.id) ?? shortcut
         isUpdatingShortcut.toggle()
+    }
+    
+    func deleteComment() {
+        if deletedComment.depth == 0 {
+            comments.comments.removeAll(where: { $0.bundle_id == deletedComment.bundle_id})
+        } else {
+            comments.comments.removeAll(where: { $0.id == deletedComment.id})
+        }
+        
+        shortcutsZipViewModel.setData(model: comments)
     }
 }

@@ -32,7 +32,7 @@ struct ReadShortcutView: View {
                         StickyHeader(height: 40)
                         
                         /// 단축어 타이틀
-                        ReadShortcutViewHeader(shortcut: $viewModel.shortcut, isMyLike: $viewModel.isMyLike)
+                        ReadShortcutViewHeader(viewModel: self.viewModel)
                         
                         /// 탭뷰 (기본 정보, 버전 정보, 댓글)
                         LazyVStack(pinnedViews: [.sectionHeaders]) {
@@ -51,17 +51,12 @@ struct ReadShortcutView: View {
                                     
                                     switch viewModel.currentTab {
                                     case 0:
-                                        ReadShortcutContentView(shortcut: $viewModel.shortcut)
+                                        ReadShortcutContentView(viewModel: self.viewModel)
                                     case 1:
-                                        ReadShortcutVersionView(shortcut: $viewModel.shortcut, isUpdating: $viewModel.isUpdatingShortcut)
+                                        ReadShortcutVersionView(viewModel: self.viewModel)
                                     case 2:
-                                        ReadShortcutCommentView(isFocused: _isFocused,
-                                                                newComment: $viewModel.comment,
-                                                                comments: $viewModel.comments,
-                                                                nestedCommentTarget: $viewModel.nestedCommentTarget,
-                                                                isEditingComment: $viewModel.isEditingComment,
-                                                                shortcutID: viewModel.shortcut.id)
-                                        .id(bottomID)
+                                        ReadShortcutCommentView(viewModel: self.viewModel)
+                                            .id(bottomID)
                                     default:
                                         EmptyView()
                                     }
@@ -103,9 +98,10 @@ struct ReadShortcutView: View {
                                 if !useWithoutSignIn {
                                     if let url = URL(string: viewModel.shortcut.downloadLink[0]) {
                                         viewModel.checkIfDownloaded()
+                                        viewModel.isDownloadingShortcut = true
                                         openURL(url)
                                     }
-                                    viewModel.updateNumberOfDownload()
+                                    viewModel.updateNumberOfDownload(index: 0)
                                 } else {
                                     loginAlerter.isPresented = true
                                 }
@@ -384,13 +380,9 @@ extension ReadShortcutView {
         @Environment(\.loginAlertKey) var loginAlerter
         @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
         
+        @StateObject var viewModel: ReadShortcutViewModel
+        
         @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-        
-        @Binding var shortcut: Shortcuts
-        @Binding var isMyLike: Bool
-        
-        @State var userInformation: User? = nil
-        @State var numberOfLike = 0
         
         var body: some View {
             VStack(alignment: .leading, spacing: 16) {
@@ -398,27 +390,27 @@ extension ReadShortcutView {
                     
                     /// 단축어 아이콘
                     VStack {
-                        Image(systemName: shortcut.sfSymbol)
+                        Image(systemName: viewModel.shortcut.sfSymbol)
                             .mediumShortcutIcon()
                             .foregroundColor(Color.textIcon)
                     }
                     .frame(width: 52, height: 52)
-                    .background(Color.fetchGradient(color: shortcut.color))
+                    .background(Color.fetchGradient(color: viewModel.shortcut.color))
                     .cornerRadius(8)
                     
                     Spacer()
                     
                     /// 좋아요 버튼
-                    Text("\(isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(numberOfLike)")
+                    Text("\(viewModel.isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(viewModel.numberOfLike)")
                         .shortcutsZipBody2()
                         .padding(10)
-                        .foregroundColor(isMyLike ? Color.textIcon : Color.gray4)
-                        .background(isMyLike ? Color.shortcutsZipPrimary : Color.gray1)
+                        .foregroundColor(viewModel.isMyLike ? Color.textIcon : Color.gray4)
+                        .background(viewModel.isMyLike ? Color.shortcutsZipPrimary : Color.gray1)
                         .cornerRadius(12)
                         .onTapGesture {
                             if !useWithoutSignIn {
-                                isMyLike.toggle()
-                                numberOfLike += isMyLike ? 1 : -1
+                                viewModel.isMyLike.toggle()
+                                viewModel.numberOfLike += viewModel.isMyLike ? 1 : -1
                             } else {
                                 loginAlerter.isPresented = true
                             }
@@ -427,34 +419,24 @@ extension ReadShortcutView {
                 
                 /// 단축어 이름, 한 줄 설명
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("\(shortcut.title)")
+                    Text("\(viewModel.shortcut.title)")
                         .shortcutsZipTitle1()
                         .foregroundColor(Color.gray5)
                         .fixedSize(horizontal: false, vertical: true)
                     
-                    Text("\(shortcut.subtitle)")
+                    Text("\(viewModel.shortcut.subtitle)")
                         .shortcutsZipBody1()
                         .foregroundColor(Color.gray3)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 
                 /// 단축어 작성자 닉네임
-                UserNameCell(userInformation: userInformation, gradeImage: shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: userInformation?.id ?? "!")))
+                UserNameCell(userInformation: viewModel.userInformation, gradeImage: viewModel.userGrade)
             }
             .frame(maxWidth: .infinity, minHeight: 160, alignment: .leading)
             .padding(.bottom, 20)
             .padding(.horizontal, 16)
             .background(Color.shortcutsZipWhite)
-            .onAppear {
-                shortcutsZipViewModel.fetchUser(userID: shortcut.author,
-                                                isCurrentUser: false) { user in
-                    userInformation = user
-                }
-                numberOfLike = shortcut.numberOfLike
-            }
-            .onDisappear {
-                self.shortcut.numberOfLike = numberOfLike
-            }
         }
     }
     
@@ -462,8 +444,7 @@ extension ReadShortcutView {
     
     struct ReadShortcutContentView: View {
         
-        @Binding var shortcut: Shortcuts
-        
+        @StateObject var viewModel: ReadShortcutViewModel
         
         var body: some View {
             VStack(alignment: .leading, spacing: 24) {
@@ -472,16 +453,16 @@ extension ReadShortcutView {
                     Text(TextLiteral.readShortcutContentViewDescription)
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray4)
-                    Text(shortcut.description)
+                    Text(viewModel.shortcut.description)
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray5)
                         .lineLimit(nil)
                 }
                 
-                splitList(title: TextLiteral.readShortcutContentViewCategory, content: shortcut.category)
+                splitList(title: TextLiteral.readShortcutContentViewCategory, content: viewModel.shortcut.category)
                 
-                if !shortcut.requiredApp.isEmpty {
-                    splitList(title: TextLiteral.readShortcutContentViewRequiredApps, content: shortcut.requiredApp)
+                if !viewModel.shortcut.requiredApp.isEmpty {
+                    splitList(title: TextLiteral.readShortcutContentViewRequiredApps, content: viewModel.shortcut.requiredApp)
                 }
                 
                 Spacer()
@@ -527,15 +508,14 @@ extension ReadShortcutView {
         @Environment(\.loginAlertKey) var loginAlerter
         @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
         
-        @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
+        @StateObject var viewModel: ReadShortcutViewModel
         
-        @Binding var shortcut: Shortcuts
-        @Binding var isUpdating: Bool
+        @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
         
         var body: some View {
             VStack(alignment: .leading, spacing: 16) {
                 
-                if shortcut.updateDescription.count == 1 {
+                if viewModel.shortcut.updateDescription.count == 1 {
                     Text(TextLiteral.readShortcutVersionViewNoUpdates)
                         .shortcutsZipBody2()
                         .foregroundColor(.gray4)
@@ -556,16 +536,16 @@ extension ReadShortcutView {
         
         private var versionView: some View {
             
-            ForEach(Array(zip(shortcut.updateDescription, shortcut.updateDescription.indices)), id: \.0) { data, index in
+            ForEach(Array(zip(viewModel.shortcut.updateDescription, viewModel.shortcut.updateDescription.indices)), id: \.0) { data, index in
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Text("Ver \(shortcut.updateDescription.count - index).0")
+                        Text("Ver \(viewModel.shortcut.updateDescription.count - index).0")
                             .shortcutsZipBody2()
                             .foregroundColor(.gray5)
                         
                         Spacer()
                         
-                        Text(shortcut.date[index].getVersionUpdateDateFormat())
+                        Text(viewModel.shortcut.date[index].getVersionUpdateDateFormat())
                             .shortcutsZipBody2()
                             .foregroundColor(.gray3)
                     }
@@ -579,11 +559,9 @@ extension ReadShortcutView {
                     if index != 0 {
                         Button {
                             if !useWithoutSignIn {
-                                if let url = URL(string: shortcut.downloadLink[index]) {
-                                    if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
-                                        shortcut.numberOfDownload += 1
-                                    }
-                                    shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
+                                if let url = URL(string: viewModel.shortcut.downloadLink[index]) {
+                                    viewModel.checkIfDownloaded()
+                                    viewModel.updateNumberOfDownload(index: index)
                                     openURL(url)
                                 }
                             } else {
@@ -609,24 +587,16 @@ extension ReadShortcutView {
         
         @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
         
+        @StateObject var viewModel: ReadShortcutViewModel
+        
         @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
         
         @FocusState var isFocused: Bool
         
-        @Binding var newComment: Comment                    /// 추가되는 댓글
-        @Binding var comments: Comments                     /// 화면에 나타나는 모든 댓글
-        @Binding var nestedCommentTarget: String            /// 대댓글 작성 시 텍스트필드 위에 뜨는 작성자 정보
-        @Binding var isEditingComment: Bool
-        
-        @State var isDeletingComment = false
-        @State var deletedComment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
-        
-        let shortcutID: String
-        
         var body: some View {
             VStack(alignment: .leading) {
                 
-                if comments.comments.isEmpty {
+                if viewModel.comments.comments.isEmpty {
                     Text(TextLiteral.readShortcutCommentViewNoComments)
                         .shortcutsZipBody2()
                         .foregroundColor(.gray4)
@@ -639,7 +609,7 @@ extension ReadShortcutView {
                     .frame(maxHeight: .infinity)
             }
             .padding(.top, 16)
-            .alert(TextLiteral.readShortcutCommentViewDeletionTitle, isPresented: $isDeletingComment) {
+            .alert(TextLiteral.readShortcutCommentViewDeletionTitle, isPresented: $viewModel.isDeletingComment) {
                 Button(role: .cancel) {
                     
                 } label: {
@@ -647,13 +617,7 @@ extension ReadShortcutView {
                 }
                 
                 Button(role: .destructive) {
-                    if deletedComment.depth == 0 {
-                        comments.comments.removeAll(where: { $0.bundle_id == deletedComment.bundle_id})
-                    } else {
-                        comments.comments.removeAll(where: { $0.id == deletedComment.id})
-                    }
-                    
-                    shortcutsZipViewModel.setData(model: comments)
+                    viewModel.deleteComment()
                 } label: {
                     Text(TextLiteral.delete)
                 }
@@ -664,7 +628,7 @@ extension ReadShortcutView {
         
         private var commentView: some View {
             
-            ForEach(comments.comments, id: \.self) { comment in
+            ForEach(viewModel.comments.comments, id: \.self) { comment in
                 
                 HStack(alignment: .top, spacing: 8) {
                     if comment.depth == 1 {
@@ -700,9 +664,9 @@ extension ReadShortcutView {
                         HStack(spacing: 0) {
                             if !useWithoutSignIn {
                                 Button {
-                                    nestedCommentTarget = comment.user_nickname
-                                    newComment.bundle_id = comment.bundle_id
-                                    newComment.depth = 1
+                                    viewModel.nestedCommentTarget = comment.user_nickname
+                                    viewModel.comment.bundle_id = comment.bundle_id
+                                    viewModel.comment.depth = 1
                                     isFocused = true
                                 } label: {
                                     Text(TextLiteral.readShortcutCommentViewReply)
@@ -716,8 +680,8 @@ extension ReadShortcutView {
                                 if user.id == comment.user_id {
                                     Button {
                                         withAnimation(.easeInOut) {
-                                            isEditingComment.toggle()
-                                            newComment = comment
+                                            viewModel.isEditingComment.toggle()
+                                            viewModel.comment = comment
                                         }
                                     } label: {
                                         Text(TextLiteral.readShortcutCommentViewEdit)
@@ -727,8 +691,8 @@ extension ReadShortcutView {
                                     }
                                     
                                     Button {
-                                        isDeletingComment.toggle()
-                                        deletedComment = comment
+                                        viewModel.isDeletingComment.toggle()
+                                        viewModel.deletedComment = comment
                                     } label: {
                                         Text(TextLiteral.delete)
                                             .shortcutsZipFootnote()
