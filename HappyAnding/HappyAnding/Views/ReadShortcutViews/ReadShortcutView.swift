@@ -14,28 +14,8 @@ struct ReadShortcutView: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.loginAlertKey) var loginAlerter
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
+    @StateObject var viewModel: ReadShortcutViewModel
     @StateObject var writeNavigation = WriteShortcutNavigation()
-    
-    @State var isDeletingShortcut = false
-    @State var isEditingShortcut = false
-    @State var isUpdatingShortcut = false
-    
-    @State var isMyLike = false
-    @State var isMyFirstLike = false
-    @State var isDownloadingShortcut = false
-    @State var isDowngradingUserLevel = false
-    
-    @State var currentTab: Int = 0
-    @State var data: NavigationReadShortcutType
-    @State var comments: Comments = Comments(id: "", comments: [])
-    @State var comment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
-    @State var nestedCommentTarget: String = ""
-    @State var commentText = ""
-    
-    @State var isEditingComment = false
-    @State var isUndoingCommentEdit = false
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     @FocusState private var isFocused: Bool
@@ -49,18 +29,18 @@ struct ReadShortcutView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(spacing: 0) {
-                        if data.shortcut != nil {
+                        if viewModel.shortcut != nil {
                             
                             StickyHeader(height: 40)
                             
                             /// 단축어 타이틀
-                            ReadShortcutViewHeader(shortcut: $data.shortcut.unwrap()!, isMyLike: $isMyLike)
+                            ReadShortcutViewHeader(shortcut: $viewModel.shortcut, isMyLike: $viewModel.isMyLike)
                             
                             /// 탭뷰 (기본 정보, 버전 정보, 댓글)
                             LazyVStack(pinnedViews: [.sectionHeaders]) {
                                 Section(header: tabBarView) {
                                     ZStack {
-                                        TabView(selection: self.$currentTab) {
+                                        TabView(selection: $viewModel.currentTab) {
                                             Color.clear
                                                 .tag(0)
                                             Color.clear
@@ -71,24 +51,24 @@ struct ReadShortcutView: View {
                                         .tabViewStyle(.page(indexDisplayMode: .never))
                                         .frame(minHeight: UIScreen.screenHeight / 2)
                                         
-                                        switch currentTab {
+                                        switch viewModel.currentTab {
                                         case 0:
-                                            ReadShortcutContentView(shortcut: $data.shortcut.unwrap()!)
+                                            ReadShortcutContentView(shortcut: $viewModel.shortcut)
                                         case 1:
-                                            ReadShortcutVersionView(shortcut: $data.shortcut.unwrap()!, isUpdating: $isUpdatingShortcut)
+                                            ReadShortcutVersionView(shortcut: $viewModel.shortcut, isUpdating: $viewModel.isUpdatingShortcut)
                                         case 2:
                                             ReadShortcutCommentView(isFocused: _isFocused,
-                                                                    newComment: $comment,
-                                                                    comments: $comments,
-                                                                    nestedCommentTarget: $nestedCommentTarget,
-                                                                    isEditingComment: $isEditingComment,
-                                                                    shortcutID: data.shortcutID)
+                                                                    newComment: $viewModel.comment,
+                                                                    comments: $viewModel.comments,
+                                                                    nestedCommentTarget: $viewModel.nestedCommentTarget,
+                                                                    isEditingComment: $viewModel.isEditingComment,
+                                                                    shortcutID: viewModel.shortcut.id)
                                             .id(bottomID)
                                         default:
                                             EmptyView()
                                         }
                                     }
-                                    .animation(.easeInOut, value: currentTab)
+                                    .animation(.easeInOut, value: viewModel.currentTab)
                                     .padding(.top, 4)
                                     .padding(.horizontal, 16)
                                 }
@@ -100,14 +80,14 @@ struct ReadShortcutView: View {
                     NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) {
                         notification in
                         withAnimation {
-                            if currentTab == 2 && !isEditingComment && comment.depth == 0 {
+                            if viewModel.currentTab == 2 && !viewModel.isEditingComment && viewModel.comment.depth == 0 {
                                 proxy.scrollTo(bottomID, anchor: .bottom)
                             }
                         }
                     }
                 }
             }
-            .scrollDisabled(isEditingComment)
+            .scrollDisabled(viewModel.isEditingComment)
             .background(Color.shortcutsZipBackground)
             .navigationBarBackground ({ Color.shortcutsZipWhite })
             .navigationBarTitleDisplayMode(NavigationBarItem.TitleDisplayMode.inline)
@@ -117,33 +97,28 @@ struct ReadShortcutView: View {
                 
                 /// Safe Area에 고정된 댓글창, 다운로드 버튼
                 VStack {
-                    if !isEditingComment {
-                        if currentTab == 2 {
+                    if !viewModel.isEditingComment {
+                        if viewModel.currentTab == 2 {
                             commentTextField
                         }
                         if !isFocused {
-                            if let shortcut = data.shortcut {
-                                Button {
-                                    if !useWithoutSignIn {
-                                        if let url = URL(string: shortcut.downloadLink[0]) {
-                                            if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == data.shortcutID })) == nil {
-                                                data.shortcut?.numberOfDownload += 1
-                                            }
-                                            isDownloadingShortcut = true
-                                            openURL(url)
-                                        }
-                                        shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
-                                    } else {
-                                        loginAlerter.isPresented = true
+                            Button {
+                                if !useWithoutSignIn {
+                                    if let url = URL(string: viewModel.shortcut.downloadLink[0]) {
+                                        viewModel.checkIfDownloaded()
+                                        openURL(url)
                                     }
-                                } label: {
-                                    Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(shortcut.numberOfDownload)")
-                                        .shortcutsZipBody1()
-                                        .foregroundColor(Color.textIcon)
-                                        .padding()
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color.shortcutsZipPrimary)
+                                    viewModel.updateNumberOfDownload()
+                                } else {
+                                    loginAlerter.isPresented = true
                                 }
+                            } label: {
+                                Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(viewModel.shortcut.numberOfDownload)")
+                                    .shortcutsZipBody1()
+                                    .foregroundColor(Color.textIcon)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.shortcutsZipPrimary)
                             }
                         }
                     }
@@ -152,58 +127,45 @@ struct ReadShortcutView: View {
             }
             .onAppear {
                 UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
-                data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
-                isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.shortcutID)
-                isMyFirstLike = isMyLike
-                self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
             }
-            .onChange(of: isEditingShortcut || isUpdatingShortcut) { _ in
-                if !isEditingShortcut || !isUpdatingShortcut {
-                    data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
-                }
-            }
-            .onChange(of: shortcutsZipViewModel.allComments) { _ in
-                self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
-            }
+//            .onChange(of: viewModel.isEditingShortcut || viewModel.isUpdatingShortcut) { _ in
+//                if !isEditingShortcut || !isUpdatingShortcut {
+//                    data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
+//                }
+//            }
+//            .onChange(of: viewModel.shortcutsZipViewModel.allComments) { _ in
+//                self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
+//            }
             .onDisappear {
-                if let shortcut = data.shortcut {
-                    if isMyLike != isMyFirstLike {
-                        shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
-                    }
-                }
+                viewModel.onViewDissapear()
             }
-            .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $isDeletingShortcut) {
+            .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $viewModel.isDeletingShortcut) {
                 Button(role: .cancel) {
                 } label: {
                     Text(TextLiteral.cancel)
                 }
                 
                 Button(role: .destructive) {
-                    if let shortcut = data.shortcut {
-                        shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
-                        shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
-                        shortcutsZipViewModel.deleteData(model: shortcut)
-                        shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
-                        shortcutsZipViewModel.updateShortcutGrade()
-                        self.presentation.wrappedValue.dismiss()
-                    }
+                    viewModel.deleteShortcut()
+                    self.presentation.wrappedValue.dismiss()
                 } label: {
                     Text(TextLiteral.delete)
                 }
             } message: {
-                Text(isDowngradingUserLevel ? TextLiteral.readShortcutViewDeletionMessageDowngrade : TextLiteral.readShortcutViewDeletionMessage)
+                Text(viewModel.isDowngradingUserLevel ? TextLiteral.readShortcutViewDeletionMessageDowngrade : TextLiteral.readShortcutViewDeletionMessage)
             }
-            .fullScreenCover(isPresented: $isEditingShortcut) {
+            .fullScreenCover(isPresented: $viewModel.isEditingShortcut) {
                 NavigationRouter(content: writeShortcutView,
                                  path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
             }
-            .fullScreenCover(isPresented: $isUpdatingShortcut) {
-                UpdateShortcutView(isUpdating: $isUpdatingShortcut, shortcut: $data.shortcut)
+            //TODO: update shortcut
+            .fullScreenCover(isPresented: $viewModel.isUpdatingShortcut) {
+                UpdateShortcutView(isUpdating: $viewModel.isUpdatingShortcut, shortcut: $viewModel.shortcut)
             }
             
             /// 댓글 수정할 때 뒷 배경을 어둡게 만들기 위한 뷰
-            if isEditingComment {
+            if viewModel.isEditingComment {
                 Color.black
                     .ignoresSafeArea()
                     .opacity(0.4)
@@ -218,13 +180,13 @@ struct ReadShortcutView: View {
                             }
                     }
                     .onAppear {
-                        commentText = comment.contents
+                        viewModel.commentText = viewModel.comment.contents
                     }
                     .onTapGesture(count: 1) {
                         isFocused.toggle()
-                        isUndoingCommentEdit.toggle()
+                        viewModel.isUndoingCommentEdit.toggle()
                     }
-                    .alert(TextLiteral.readShortcutViewDeleteFixesTitle, isPresented: $isUndoingCommentEdit) {
+                    .alert(TextLiteral.readShortcutViewDeleteFixesTitle, isPresented: $viewModel.isUndoingCommentEdit) {
                         Button(role: .cancel) {
                             isFocused.toggle()
                         } label: {
@@ -233,9 +195,7 @@ struct ReadShortcutView: View {
                         
                         Button(role: .destructive) {
                             withAnimation(.easeInOut) {
-                                isEditingComment.toggle()
-                                comment = comment.resetComment()
-                                commentText = ""
+                                viewModel.cancelEditingComment()
                             }
                         } label: {
                             Text(TextLiteral.delete)
@@ -250,11 +210,9 @@ struct ReadShortcutView: View {
     @ViewBuilder
     private func writeShortcutView() -> some View {
         
-        if let shortcut = data.shortcut {
-            WriteShortcutView(isWriting: $isEditingShortcut,
-                              shortcut: shortcut,
-                              isEdit: true)
-        }
+        WriteShortcutView(isWriting: $viewModel.isEditingShortcut,
+                          shortcut: viewModel.shortcut,
+                          isEdit: true)
     }
 }
 
@@ -265,57 +223,43 @@ extension ReadShortcutView {
     private var commentTextField: some View {
         
         VStack(spacing: 0) {
-            if comment.depth == 1 && !isEditingComment {
+            if viewModel.comment.depth == 1 && !viewModel.isEditingComment {
                 nestedCommentTargetView
             }
             HStack {
-                if comment.depth == 1 && !isEditingComment {
+                if viewModel.comment.depth == 1 && !viewModel.isEditingComment {
                     Image(systemName: "arrow.turn.down.right")
                         .smallIcon()
                         .foregroundColor(.gray4)
                 }
-                TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $commentText, axis: .vertical)
+                TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $viewModel.commentText, axis: .vertical)
                     .keyboardType(.twitter)
                     .disabled(useWithoutSignIn)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .shortcutsZipBody2()
-                    .lineLimit(comment.depth == 1 ? 2 : 4)
+                    .lineLimit(viewModel.comment.depth == 1 ? 2 : 4)
                     .focused($isFocused)
                     .onAppear {
                         UIApplication.shared.hideKeyboard()
                     }
                 
                 Button {
-                    if !isEditingComment {
-                        comment.contents = commentText
-                        comment.date = Date().getDate()
-                        comment.user_id = shortcutsZipViewModel.userInfo!.id
-                        comment.user_nickname = shortcutsZipViewModel.userInfo!.nickname
-                        comments.comments.append(comment)
-                    } else {
-                        if let index = comments.comments.firstIndex(where: { $0.id == comment.id }) {
-                            comments.comments[index].contents = commentText
-                        }
-                        isEditingComment = false
-                    }
-                    shortcutsZipViewModel.setData(model: comments)
-                    commentText = ""
-                    comment = comment.resetComment()
+                    viewModel.postComment()
                     isFocused.toggle()
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .mediumIcon()
-                        .foregroundColor(commentText == "" ? Color.gray2 : Color.gray5)
+                        .foregroundColor(viewModel.commentText == "" ? Color.gray2 : Color.gray5)
                 }
-                .disabled(commentText == "" ? true : false)
+                .disabled(viewModel.commentText == "" ? true : false)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             .background(
                 Rectangle()
                     .fill(Color.gray1)
-                    .cornerRadius(12 ,corners: (comment.depth == 1) && (!isEditingComment) ? [.bottomLeft, .bottomRight] : .allCorners)
+                    .cornerRadius(12 ,corners: (viewModel.comment.depth == 1) && (!viewModel.isEditingComment) ? [.bottomLeft, .bottomRight] : .allCorners)
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 20)
@@ -325,15 +269,14 @@ extension ReadShortcutView {
     private var nestedCommentTargetView: some View {
         
         HStack {
-            Text("@ \(nestedCommentTarget)")
+            Text("@ \(viewModel.nestedCommentTarget)")
                 .shortcutsZipFootnote()
                 .foregroundColor(.gray5)
             
             Spacer()
             
             Button {
-                comment.bundle_id = "\(Date().getDate())_\(UUID().uuidString)"
-                comment.depth = 0
+                viewModel.cancelNestedComment()
             } label: {
                 Image(systemName: "xmark")
                     .smallIcon()
@@ -354,7 +297,7 @@ extension ReadShortcutView {
     
     @ViewBuilder
     private func readShortcutViewNavigationBarItems() -> some View {
-        if self.data.shortcut?.author == shortcutsZipViewModel.currentUser() {
+        if viewModel.checkAuthor() {
             Menu {
                 Section {
                     editButton
@@ -374,7 +317,7 @@ extension ReadShortcutView {
     
     private var editButton: some View {
         Button {
-            isEditingShortcut.toggle()
+            viewModel.isEditingShortcut.toggle()
         } label: {
             Label(TextLiteral.edit, systemImage: "square.and.pencil")
         }
@@ -382,7 +325,7 @@ extension ReadShortcutView {
     
     private var updateButton: some View {
         Button {
-            isUpdatingShortcut.toggle()
+            viewModel.isUpdatingShortcut.toggle()
         } label: {
             Label(TextLiteral.update, systemImage: "clock.arrow.circlepath")
         }
@@ -390,13 +333,7 @@ extension ReadShortcutView {
     
     private var shareButton: some View {
         Button {
-            if let shortcut = data.shortcut {
-                guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
-                let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                guard let window = windowScene?.windows.first else { return }
-                window.rootViewController?.present(activityVC, animated: true, completion: nil)
-            }
+            viewModel.shareShortcut()
         } label: {
             Label(TextLiteral.share, systemImage: "square.and.arrow.up")
                 .foregroundColor(.gray4)
@@ -406,8 +343,7 @@ extension ReadShortcutView {
     
     private var deleteButton: some View {
         Button(role: .destructive) {
-            isDeletingShortcut.toggle()
-            isDowngradingUserLevel = shortcutsZipViewModel.isShortcutDowngrade()
+            viewModel.checkDowngrade()
         } label: {
             Label(TextLiteral.delete, systemImage: "trash.fill")
         }
@@ -428,10 +364,10 @@ extension ReadShortcutView {
     
     private func tabBarItem(string: String, tab: Int) -> some View {
         Button {
-            self.currentTab = tab
+            viewModel.currentTab = tab
         } label: {
             VStack {
-                if self.currentTab == tab {
+                if viewModel.currentTab == tab {
                     Text(string)
                         .shortcutsZipHeadline()
                         .foregroundColor(.gray5)
@@ -446,7 +382,7 @@ extension ReadShortcutView {
                     Color.clear.frame(height: 2)
                 }
             }
-            .animation(.spring(), value: currentTab)
+            .animation(.spring(), value: viewModel.currentTab)
         }
         .buttonStyle(.plain)
     }

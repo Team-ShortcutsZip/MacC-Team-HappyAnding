@@ -135,12 +135,9 @@ struct ShowProfileView: View {
                     
                     VStack(spacing: 0) {
                         ForEach(viewModel.shortcuts, id:\.self) { shortcut in
-                            let data = NavigationReadShortcutType(shortcutID:shortcut.id,
-                                                                  navigationParentView: .shortcuts)
-                            
                             ShortcutCell(shortcut: shortcut,
-                                         navigationParentView: data.navigationParentView)
-                            .navigationLinkRouter(data: data)
+                                         navigationParentView: .shortcuts)
+                            .navigationLinkRouter(data: shortcut)
                         }
                         
                         Spacer()

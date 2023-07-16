@@ -14,7 +14,7 @@ struct UpdateShortcutView: View {
     @FocusState var isDescriptionFieldFocused: Bool
     
     @Binding var isUpdating: Bool
-    @Binding var shortcut: Shortcuts?
+    @Binding var shortcut: Shortcuts
     
     @State var updatedLink = ""
     @State var updateDescription = ""
@@ -72,9 +72,9 @@ struct UpdateShortcutView: View {
             Spacer()
             
             Button(action: {
-                if let shortcut {
-                    shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut, updateDescription: updateDescription, updateLink: updatedLink)
-                }
+                shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut,
+                                                            updateDescription: updateDescription,
+                                                            updateLink: updatedLink)
                 isUpdating.toggle()
             }, label: {
                 ZStack {

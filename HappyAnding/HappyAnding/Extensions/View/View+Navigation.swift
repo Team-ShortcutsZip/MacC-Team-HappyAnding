@@ -79,8 +79,8 @@ extension View {
         switch data {
         case is NavigationListShortcutType:
             ListShortcutView(data: data as! NavigationListShortcutType)
-        case is NavigationReadShortcutType:
-            ReadShortcutView(data: data as! NavigationReadShortcutType)
+        case is Shortcuts:
+            ReadShortcutView(viewModel: ReadShortcutViewModel(data: data as! Shortcuts))
         case is Curation:
             ReadCurationView(viewModel: ReadCurationViewModel(data: data as! Curation))
         case is CurationType:
@@ -124,8 +124,8 @@ struct NavigationViewModifier: ViewModifier {
             .navigationDestination(for: CurationType.self) { data in
                 ListCurationView(viewModel: ListCurationViewModel(data: data))
             }
-            .navigationDestination(for: NavigationReadShortcutType.self) { data in
-                ReadShortcutView(data: data)
+            .navigationDestination(for: Shortcuts.self) { data in
+                ReadShortcutView(viewModel: ReadShortcutViewModel(data: data))
             }
             .navigationDestination(for: NavigationListShortcutType.self) { data in
                 ListShortcutView(data: data)

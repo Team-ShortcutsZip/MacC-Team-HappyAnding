@@ -15,13 +15,6 @@ struct NavigationListShortcutType: Identifiable, Hashable {
     let navigationParentView: NavigationParentView
 }
 
-struct NavigationReadShortcutType: Identifiable, Hashable {
-    var id = UUID().uuidString
-
-    var shortcut: Shortcuts?
-    let shortcutID: String
-    let navigationParentView: NavigationParentView
-}
 
 struct NavigationProfile: Identifiable, Hashable {
     var id = UUID().uuidString
