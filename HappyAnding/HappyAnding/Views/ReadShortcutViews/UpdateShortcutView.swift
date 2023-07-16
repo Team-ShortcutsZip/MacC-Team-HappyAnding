@@ -9,23 +9,15 @@ import SwiftUI
 
 struct UpdateShortcutView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var viewModel: ReadShortcutViewModel
     
     @FocusState var isDescriptionFieldFocused: Bool
-    
-    @Binding var isUpdating: Bool
-    @Binding var shortcut: Shortcuts
-    
-    @State var updatedLink = ""
-    @State var updateDescription = ""
-    @State var isLinkValid = false
-    @State var isDescriptionValid = false
     
     var body: some View {
         VStack {
             HStack {
                 Button(action: {
-                    isUpdating.toggle()
+                    viewModel.isUpdatingShortcut.toggle()
                 }, label: {
                     Text(TextLiteral.cancel)
                         .foregroundColor(.gray5)
@@ -48,8 +40,8 @@ struct UpdateShortcutView: View {
                                      placeholder: TextLiteral.updateShortcutViewLinkPlaceholder,
                                      lengthLimit: 100,
                                      isDownloadLinkTextField: true,
-                                     content: $updatedLink,
-                                     isValid: $isLinkValid
+                                     content: $viewModel.updatedLink,
+                                     isValid: $viewModel.isLinkValid
             )
             .onSubmit {
                 isDescriptionFieldFocused = true
@@ -64,29 +56,26 @@ struct UpdateShortcutView: View {
                                      placeholder: TextLiteral.updateShortcutViewDescriptionPlaceholder,
                                      lengthLimit: 50,
                                      isDownloadLinkTextField: false,
-                                     content: $updateDescription,
-                                     isValid: $isDescriptionValid
+                                     content: $viewModel.updateDescription,
+                                     isValid: $viewModel.isDescriptionValid
             )
             .focused($isDescriptionFieldFocused)
             
             Spacer()
             
             Button(action: {
-                shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut,
-                                                            updateDescription: updateDescription,
-                                                            updateLink: updatedLink)
-                isUpdating.toggle()
+                viewModel.updateShortcut()
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
+                        .foregroundColor(viewModel.isLinkValid && viewModel.isDescriptionValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     Text(TextLiteral.update)
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .textButton : .textButtonDisable)
+                        .foregroundColor(viewModel.isLinkValid && viewModel.isDescriptionValid ? .textButton : .textButtonDisable)
                         .shortcutsZipBody1()
                 }
             })
-            .disabled(!isLinkValid || !isDescriptionValid)
+            .disabled(!viewModel.isLinkValid || !viewModel.isDescriptionValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }

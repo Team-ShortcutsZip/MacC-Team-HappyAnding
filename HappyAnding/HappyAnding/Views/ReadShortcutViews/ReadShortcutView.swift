@@ -29,49 +29,46 @@ struct ReadShortcutView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(spacing: 0) {
-                        if viewModel.shortcut != nil {
-                            
-                            StickyHeader(height: 40)
-                            
-                            /// 단축어 타이틀
-                            ReadShortcutViewHeader(shortcut: $viewModel.shortcut, isMyLike: $viewModel.isMyLike)
-                            
-                            /// 탭뷰 (기본 정보, 버전 정보, 댓글)
-                            LazyVStack(pinnedViews: [.sectionHeaders]) {
-                                Section(header: tabBarView) {
-                                    ZStack {
-                                        TabView(selection: $viewModel.currentTab) {
-                                            Color.clear
-                                                .tag(0)
-                                            Color.clear
-                                                .tag(1)
-                                            Color.clear
-                                                .tag(2)
-                                        }
-                                        .tabViewStyle(.page(indexDisplayMode: .never))
-                                        .frame(minHeight: UIScreen.screenHeight / 2)
-                                        
-                                        switch viewModel.currentTab {
-                                        case 0:
-                                            ReadShortcutContentView(shortcut: $viewModel.shortcut)
-                                        case 1:
-                                            ReadShortcutVersionView(shortcut: $viewModel.shortcut, isUpdating: $viewModel.isUpdatingShortcut)
-                                        case 2:
-                                            ReadShortcutCommentView(isFocused: _isFocused,
-                                                                    newComment: $viewModel.comment,
-                                                                    comments: $viewModel.comments,
-                                                                    nestedCommentTarget: $viewModel.nestedCommentTarget,
-                                                                    isEditingComment: $viewModel.isEditingComment,
-                                                                    shortcutID: viewModel.shortcut.id)
-                                            .id(bottomID)
-                                        default:
-                                            EmptyView()
-                                        }
+                        StickyHeader(height: 40)
+                        
+                        /// 단축어 타이틀
+                        ReadShortcutViewHeader(shortcut: $viewModel.shortcut, isMyLike: $viewModel.isMyLike)
+                        
+                        /// 탭뷰 (기본 정보, 버전 정보, 댓글)
+                        LazyVStack(pinnedViews: [.sectionHeaders]) {
+                            Section(header: tabBarView) {
+                                ZStack {
+                                    TabView(selection: $viewModel.currentTab) {
+                                        Color.clear
+                                            .tag(0)
+                                        Color.clear
+                                            .tag(1)
+                                        Color.clear
+                                            .tag(2)
                                     }
-                                    .animation(.easeInOut, value: viewModel.currentTab)
-                                    .padding(.top, 4)
-                                    .padding(.horizontal, 16)
+                                    .tabViewStyle(.page(indexDisplayMode: .never))
+                                    .frame(minHeight: UIScreen.screenHeight / 2)
+                                    
+                                    switch viewModel.currentTab {
+                                    case 0:
+                                        ReadShortcutContentView(shortcut: $viewModel.shortcut)
+                                    case 1:
+                                        ReadShortcutVersionView(shortcut: $viewModel.shortcut, isUpdating: $viewModel.isUpdatingShortcut)
+                                    case 2:
+                                        ReadShortcutCommentView(isFocused: _isFocused,
+                                                                newComment: $viewModel.comment,
+                                                                comments: $viewModel.comments,
+                                                                nestedCommentTarget: $viewModel.nestedCommentTarget,
+                                                                isEditingComment: $viewModel.isEditingComment,
+                                                                shortcutID: viewModel.shortcut.id)
+                                        .id(bottomID)
+                                    default:
+                                        EmptyView()
+                                    }
                                 }
+                                .animation(.easeInOut, value: viewModel.currentTab)
+                                .padding(.top, 4)
+                                .padding(.horizontal, 16)
                             }
                         }
                     }
@@ -128,14 +125,6 @@ struct ReadShortcutView: View {
             .onAppear {
                 UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
             }
-//            .onChange(of: viewModel.isEditingShortcut || viewModel.isUpdatingShortcut) { _ in
-//                if !isEditingShortcut || !isUpdatingShortcut {
-//                    data.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.shortcutID)
-//                }
-//            }
-//            .onChange(of: viewModel.shortcutsZipViewModel.allComments) { _ in
-//                self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.shortcutID)
-//            }
             .onDisappear {
                 viewModel.onViewDissapear()
             }
@@ -159,9 +148,8 @@ struct ReadShortcutView: View {
                                  path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
             }
-            //TODO: update shortcut
             .fullScreenCover(isPresented: $viewModel.isUpdatingShortcut) {
-                UpdateShortcutView(isUpdating: $viewModel.isUpdatingShortcut, shortcut: $viewModel.shortcut)
+                UpdateShortcutView(viewModel: self.viewModel)
             }
             
             /// 댓글 수정할 때 뒷 배경을 어둡게 만들기 위한 뷰

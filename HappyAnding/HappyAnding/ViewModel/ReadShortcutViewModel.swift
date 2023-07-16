@@ -31,6 +31,12 @@ final class ReadShortcutViewModel: ObservableObject {
     @Published var isEditingComment = false
     @Published var isUndoingCommentEdit = false
     
+    /// UpdateShortcutView
+    @Published var updatedLink = ""
+    @Published var updateDescription = ""
+    @Published var isLinkValid = false
+    @Published var isDescriptionValid = false
+    
     init(data: Shortcuts) {
         self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.id) ?? data
         self.isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.id)
@@ -107,5 +113,13 @@ final class ReadShortcutViewModel: ObservableObject {
     func checkDowngrade() {
         isDeletingShortcut.toggle()
         isDowngradingUserLevel = shortcutsZipViewModel.isShortcutDowngrade()
+    }
+    
+    func updateShortcut() {
+        shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut,
+                                                    updateDescription: updateDescription,
+                                                    updateLink: updatedLink)
+        self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcut.id) ?? shortcut
+        isUpdatingShortcut.toggle()
     }
 }
