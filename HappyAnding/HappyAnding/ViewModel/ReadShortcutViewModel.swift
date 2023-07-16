@@ -70,7 +70,7 @@ final class ReadShortcutViewModel: ObservableObject {
         shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: index)
     }
     
-    func onViewDissapear() {
+    func onViewDisappear() {
         if isMyLike != isMyFirstLike {
             shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
         }

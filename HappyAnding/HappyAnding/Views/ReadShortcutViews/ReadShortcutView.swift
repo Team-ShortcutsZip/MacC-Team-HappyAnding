@@ -122,7 +122,7 @@ struct ReadShortcutView: View {
                 UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
             }
             .onDisappear {
-                viewModel.onViewDissapear()
+                viewModel.onViewDisappear()
             }
             .alert(TextLiteral.readShortcutViewDeletionTitle, isPresented: $viewModel.isDeletingShortcut) {
                 Button(role: .cancel) {
