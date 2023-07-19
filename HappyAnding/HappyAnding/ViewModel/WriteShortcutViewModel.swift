@@ -18,11 +18,12 @@ final class WriteShortcutViewModel: ObservableObject {
     @Published var isInfoButtonTouched = false
     
     @Published var isShowingIconModal = false
+    @Published var isShowingCategoryModal = false
+    
     @Published var isNameValid = false
     @Published var isLinkValid = false
     @Published var isOneLineValid = false
     @Published var isMultiLineValid = false
-    @Published var isShowingCategoryModal = false
     @Published var isRequirementValid = false
     
     @Published var existingCategory: [String] = []
@@ -41,6 +42,9 @@ final class WriteShortcutViewModel: ObservableObject {
                                     shortcutRequirements: "",
                                     downloadLink: [""],
                                     curationIDs: [String]())
+    
+    @Published var isTextFieldShowing = false
+    @Published var relatedApp = ""
     
     let isEdit: Bool
     

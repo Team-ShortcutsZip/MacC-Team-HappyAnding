@@ -18,9 +18,7 @@ struct WriteShortcutView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    
     @FocusState var focusedField: FocusableField?
-    
     @StateObject var viewModel: WriteShortcutViewModel
     
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
@@ -109,14 +107,13 @@ struct WriteShortcutView: View {
         }, label: {
             ZStack(alignment: .center) {
                 Rectangle()
-                    .fill(!viewModel.shortcut.sfSymbol.isEmpty ? Color.fetchGradient(color: viewModel.shortcut.color) : Color.fetchDefualtGradient())
+                    .fill(!viewModel.shortcut.sfSymbol.isEmpty ? Color.fetchGradient(color: viewModel.shortcut.color) : Color.fetchDefaultGradient())
                     .cornerRadius(12.35)
-                    .frame(width: 84, height: 84)
                 Image(systemName: !viewModel.shortcut.sfSymbol.isEmpty ? viewModel.shortcut.sfSymbol : "plus")
                     .mediumIcon()
-                    .frame(width: 84, height: 84)
                     .foregroundColor(!viewModel.shortcut.sfSymbol.isEmpty ? .textIcon : .gray5)
             }
+            .frame(width: 84, height: 84)
         })
         .sheet(isPresented: $viewModel.isShowingIconModal) {
             IconModalView(
@@ -268,7 +265,7 @@ struct WriteShortcutView: View {
             }
             .padding(.horizontal, 16)
             ZStack(alignment: .top) {
-                relatedAppList(relatedApps: $viewModel.shortcut.requiredApp)
+                relatedAppList(viewModel: viewModel)
                     .padding(.bottom, 44)
                 if viewModel.isInfoButtonTouched {
                     ZStack(alignment: .center) {
@@ -299,39 +296,36 @@ struct WriteShortcutView: View {
     struct relatedAppList: View {
         @FocusState private var isFocused: Bool
         
-        @Binding var relatedApps: [String]
-        
-        @State var isTextFieldShowing = false
-        @State var relatedApp = ""
+        @StateObject var viewModel: WriteShortcutViewModel
         
         var body: some View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
-                    ForEach(relatedApps, id:\.self) { item in
-                        RelatedAppTag(items: $relatedApps, item: item)
+                    ForEach(viewModel.shortcut.requiredApp, id:\.self) { item in
+                        RelatedAppTag(viewModel: viewModel, item: item)
                     }
                     
-                    if isTextFieldShowing {
-                        TextField("", text: $relatedApp)
-                            .modifier(ClearButton(text: $relatedApp))
+                    if viewModel.isTextFieldShowing {
+                        TextField("", text: $viewModel.relatedApp)
+                            .modifier(ClearButton(text: $viewModel.relatedApp))
                             .focused($isFocused)
                             .onAppear {
                                 isFocused = true
                             }
                             .onChange(of: isFocused) { _ in
                                 if !isFocused {
-                                    if !relatedApp.isEmpty {
-                                        relatedApps.append(relatedApp)
-                                        relatedApp = ""
+                                    if !viewModel.relatedApp.isEmpty {
+                                        viewModel.shortcut.requiredApp.append(viewModel.relatedApp)
+                                        viewModel.relatedApp = ""
                                     }
-                                    isTextFieldShowing = false
+                                    viewModel.isTextFieldShowing = false
                                 }
                             }
                             .modifier(CellModifier(foregroundColor: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
                     }
                     
                     Button(action: {
-                        isTextFieldShowing = true
+                        viewModel.isTextFieldShowing = true
                         isFocused = true
                     }, label: {
                         HStack {
@@ -348,7 +342,7 @@ struct WriteShortcutView: View {
         }
     }
     struct RelatedAppTag: View {
-        @Binding var items: [String]
+        @StateObject var viewModel: WriteShortcutViewModel
         
         var item: String
         
@@ -357,7 +351,7 @@ struct WriteShortcutView: View {
                 Text(item)
                 
                 Button(action: {
-                    items.removeAll { $0 == item }
+                    viewModel.shortcut.requiredApp.removeAll { $0 == item }
                 }, label: {
                     Image(systemName: "xmark")
                         .smallIcon()
