@@ -197,9 +197,9 @@ struct ReadShortcutView: View {
     @ViewBuilder
     private func writeShortcutView() -> some View {
         
-        WriteShortcutView(isWriting: $viewModel.isEditingShortcut,
-                          shortcut: viewModel.shortcut,
-                          isEdit: true)
+        if let shortcut = data.shortcut {
+            WriteShortcutView(viewModel: WriteShortcutViewModel(isWriting: isEditingShortcut, isEdit: true, shortcut: viewModel.shortcut))
+        }
     }
 }
 

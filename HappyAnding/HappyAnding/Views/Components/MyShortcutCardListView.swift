@@ -74,7 +74,7 @@ struct MyShortcutCardListView: View {
     
     @ViewBuilder
     private func writeShortcutView() -> some View {
-        WriteShortcutView(isWriting: $isWriting, isEdit: false)
+        WriteShortcutView(viewModel: WriteShortcutViewModel(isWriting: isWriting, isEdit: false))
             .modifierNavigation()
     }
 }
