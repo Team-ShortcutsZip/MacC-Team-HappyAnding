@@ -9,9 +9,9 @@ import SwiftUI
 
 final class ReadShortcutViewModel: ObservableObject {
     
-    var shortcutsZipViewModel = ShortcutsZipViewModel.share
+    private let shortcutsZipViewModel = ShortcutsZipViewModel.share
     
-    @Published var shortcut: Shortcuts
+    @Published private(set) var shortcut: Shortcuts
     
     /// ReadShortcutView
     @Published var isDeletingShortcut = false
@@ -35,7 +35,7 @@ final class ReadShortcutViewModel: ObservableObject {
     /// ReadShortcutViewHeader
     @Published var userInformation: User? = nil
     @Published var numberOfLike = 0
-    @Published var userGrade = Image(systemName: "person.crop.circle.fill")
+    @Published private(set) var userGrade = Image(systemName: "person.crop.circle.fill")
     
     /// ReadShortcutCommentView
     @Published var isDeletingComment = false
@@ -151,5 +151,9 @@ final class ReadShortcutViewModel: ObservableObject {
     
     func fetchUserGrade(id: String) -> Image {
         shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: id))
+    }
+    
+    func refreshShortcut() {
+        self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcut.id) ?? shortcut
     }
 }

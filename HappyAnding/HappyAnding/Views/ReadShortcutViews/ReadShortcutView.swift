@@ -143,6 +143,9 @@ struct ReadShortcutView: View {
                 NavigationRouter(content: writeShortcutView,
                                  path: $writeNavigation.navigationPath)
                 .environmentObject(writeNavigation)
+                .onDisappear {
+                    viewModel.refreshShortcut()
+                }
             }
             .fullScreenCover(isPresented: $viewModel.isUpdatingShortcut) {
                 UpdateShortcutView(viewModel: self.viewModel)
