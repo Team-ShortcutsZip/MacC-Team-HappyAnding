@@ -772,6 +772,12 @@ extension ReadShortcutView {
                             Text(comment.user_nickname)
                                 .shortcutsZipBody2()
                                 .foregroundColor(.gray4)
+                            
+                            Spacer()
+                            
+                            Text(comment.date.getVersionUpdateDateFormat())
+                                .shortcutsZipFootnote()
+                                .foregroundColor(.gray4)
                         }
                         .padding(.bottom, 4)
                         
