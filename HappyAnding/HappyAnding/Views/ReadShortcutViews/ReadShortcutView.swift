@@ -781,12 +781,12 @@ extension ReadShortcutView {
                         }
                         .padding(.bottom, 4)
                         
-                        
                         /// 댓글 내용
                         Text(comment.contents)
                             .shortcutsZipBody2()
                             .foregroundColor(.gray5)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 4)
                         
                         /// 답글, 수정, 삭제 버튼
                         HStack(spacing: 0) {
