@@ -554,6 +554,16 @@ extension ReadShortcutView {
                         .lineLimit(nil)
                 }
                 
+                VStack(alignment: .leading) {
+                    Text(TextLiteral.readShortcutContentViewPostedDate)
+                        .shortcutsZipBody2()
+                        .foregroundColor(Color.gray4)
+                    Text(shortcut.date.first?.getVersionUpdateDateFormat() ?? "")
+                        .shortcutsZipBody2()
+                        .foregroundColor(Color.gray5)
+                        .lineLimit(nil)
+                }
+                
                 splitList(title: TextLiteral.readShortcutContentViewCategory, content: shortcut.category)
                 
                 if !shortcut.requiredApp.isEmpty {
