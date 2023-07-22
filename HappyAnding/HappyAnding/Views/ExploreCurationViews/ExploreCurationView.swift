@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ExploreCurationView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
+    @StateObject var viewModel: ExploreCurationViewModel
     @AppStorage("useWithoutSignIn") var useWithoutSignIn = false
     
     var body: some View {
@@ -27,9 +26,6 @@ struct ExploreCurationView: View {
             }
             .padding(.top, 20)
             .padding(.bottom, 44)
-            .onChange(of: shortcutsZipViewModel.userCurations) { _ in
-                shortcutsZipViewModel.refreshPersonalCurations()
-            }
         }
         .navigationBarTitle(TextLiteral.exploreCurationViewTitle)
         .navigationBarTitleDisplayMode(.large)
@@ -48,11 +44,9 @@ struct ExploreCurationView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
-                    ForEach(shortcutsZipViewModel.adminCurations, id: \.id) { curation in
+                    ForEach(viewModel.adminCurationList, id: \.id) { curation in
                         AdminCurationCell(adminCuration: curation)
-                            .navigationLinkRouter(data: NavigationReadCurationType(isAdmin: true,
-                                                                                   curation: curation,
-                                                                                   navigationParentView: .curations))
+                            .navigationLinkRouter(data: curation)
                     }
                 }
                 .padding(.trailing, 8)
@@ -64,19 +58,10 @@ struct ExploreCurationView: View {
     @ViewBuilder
     private func sectionView(with sectionType: CurationType) -> some View {
         
-        let curations = sectionType.filterCuration(from: shortcutsZipViewModel)
-        var sectionTitle: String {
-            if sectionType == .personalCuration {
-                return (shortcutsZipViewModel.userInfo?.nickname ?? "") + sectionType.title
-            } else {
-                return sectionType.title
-            }
-        }
-        
         VStack(spacing: 0) {
 
             HStack(alignment: .bottom) {
-                SubtitleTextView(text: sectionTitle)
+                SubtitleTextView(text: viewModel.getSectionTitle(with: sectionType))
                 
                 Spacer()
                 
@@ -86,14 +71,12 @@ struct ExploreCurationView: View {
             .padding(.bottom, 12)
             .padding(.horizontal, 16)
 
-            ForEach(curations.prefix(2), id: \.self) { curation in
-                let data = NavigationReadCurationType(curation: curation,
-                                                      navigationParentView: .curations)
+            ForEach(viewModel.getCurationList(with:sectionType).prefix(2), id: \.self) { curation in
                 
                 UserCurationCell(curation: curation,
                                  lineLimit: 2,
                                  navigationParentView: .curations)
-                .navigationLinkRouter(data: data)
+                .navigationLinkRouter(data: curation)
             }
         }
     }

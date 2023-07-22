@@ -165,12 +165,11 @@ extension ShowProfileView {
                     
                     VStack(spacing: 0) {
                         ForEach(curations, id: \.self) { curation in
-                            let data = NavigationReadCurationType(curation: curation,
-                                                                  navigationParentView: .shortcuts)
+                            // TODO: navigation parent view 삭제
                             UserCurationCell(curation: curation,
                                              lineLimit: 2,
-                                             navigationParentView: data.navigationParentView)
-                            .navigationLinkRouter(data: data)
+                                             navigationParentView: .curations)
+                            .navigationLinkRouter(data: curation)
                         }
                         
                         Spacer()

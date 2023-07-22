@@ -81,10 +81,10 @@ extension View {
             ListShortcutView(data: data as! NavigationListShortcutType)
         case is NavigationReadShortcutType:
             ReadShortcutView(data: data as! NavigationReadShortcutType)
-        case is NavigationReadCurationType:
-            ReadCurationView(data: data as! NavigationReadCurationType)
+        case is Curation:
+            ReadCurationView(viewModel: ReadCurationViewModel(data: data as! Curation))
         case is CurationType:
-            ListCurationView(curationType: data as! CurationType)
+            ListCurationView(viewModel: ListCurationViewModel(data: data as! CurationType))
         case is NavigationProfile:
             ShowProfileView(data: data as! NavigationProfile)
         case is NavigationSearch:
@@ -118,11 +118,11 @@ struct NavigationViewModifier: ViewModifier {
             .navigationDestination(for: NavigationProfile.self) { data in
                 ShowProfileView(data: data)
             }
-            .navigationDestination(for: NavigationReadCurationType.self) { data in
-                ReadCurationView(data: data)
+            .navigationDestination(for: Curation.self) { data in
+                ReadCurationView(viewModel: ReadCurationViewModel(data: data))
             }
             .navigationDestination(for: CurationType.self) { data in
-                ListCurationView(curationType: data)
+                ListCurationView(viewModel: ListCurationViewModel(data: data))
             }
             .navigationDestination(for: NavigationReadShortcutType.self) { data in
                 ReadShortcutView(data: data)

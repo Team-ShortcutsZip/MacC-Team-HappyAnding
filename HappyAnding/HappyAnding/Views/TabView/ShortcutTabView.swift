@@ -121,7 +121,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func secondTab() -> some View {
-        ExploreCurationView()
+        ExploreCurationView(viewModel: ExploreCurationViewModel())
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(secondTabID)
@@ -175,9 +175,7 @@ struct ShortcutTabView: View {
         isCurationDeeplink = true
         
         if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
-            let data = NavigationReadCurationType(curation: curation,
-                                                  navigationParentView: .myPage)
-            navigateLink(data: data)
+            navigateLink(data: curation)
         }
     }
     

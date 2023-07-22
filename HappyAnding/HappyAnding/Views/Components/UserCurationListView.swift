@@ -18,6 +18,7 @@ struct UserCurationListView: View {
     
     @State var isWriting = false
     @State var data: CurationType
+    @State var curation = Curation()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -58,12 +59,10 @@ struct UserCurationListView: View {
             ForEach(Array(shortcutsZipViewModel.curationsMadeByUser.enumerated()), id: \.offset) { index, curation in
 
                 if index < 2 {
-                    let data = NavigationReadCurationType(curation: curation,
-                                                              navigationParentView: .curations)
                     UserCurationCell(curation: curation,
                                      lineLimit: 2,
                                      navigationParentView: .curations)
-                    .navigationLinkRouter(data: data)
+                    .navigationLinkRouter(data: curation)
                     
                 }
             }
@@ -78,9 +77,7 @@ struct UserCurationListView: View {
     
     @ViewBuilder
     private func writeCurationView() -> some View {
-        WriteCurationSetView(isWriting: $isWriting
-                             , isEdit: false
-        )
+        WriteCurationSetView(isWriting: $isWriting, curation: $curation, isEdit: false)
         .navigationDestination(for: WriteCurationInfoType.self) { data in
             WriteCurationInfoView(data: data, isWriting: $isWriting)
         }

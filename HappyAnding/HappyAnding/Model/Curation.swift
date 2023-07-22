@@ -22,6 +22,28 @@ struct Curation: Identifiable, Equatable, Codable, Hashable {
         let data = (try? JSONEncoder().encode(self)) ?? Data()
         return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
     }
+    
+    init(title: String, subtitle: String, isAdmin: Bool, background: String, author: String, shortcuts: [ShortcutCellModel]) {
+        self.id = UUID().uuidString
+        self.title = title
+        self.subtitle = subtitle
+        self.dateTime = Date().getDate()
+        self.isAdmin = isAdmin
+        self.background = background
+        self.author = author
+        self.shortcuts = shortcuts
+    }
+    
+    init() {
+        self.id = UUID().uuidString
+        self.title = ""
+        self.subtitle = ""
+        self.dateTime = Date().getDate()
+        self.isAdmin = false
+        self.background = ""
+        self.author = ""
+        self.shortcuts = []
+    }
 }
 
 struct ShortcutCellModel: Identifiable, Codable, Equatable, Hashable {
