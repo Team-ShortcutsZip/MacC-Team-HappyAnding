@@ -8,7 +8,7 @@
 import Foundation
 
 final class ExploreCurationViewModel: ObservableObject {
-    var shortcutsZipViewModel = ShortcutsZipViewModel.share
+    private let shortcutsZipViewModel = ShortcutsZipViewModel.share
     @Published var adminCurationList = [Curation]()
     @Published var personalCurationList = [Curation]()
     @Published var userCurationList = [Curation]()
