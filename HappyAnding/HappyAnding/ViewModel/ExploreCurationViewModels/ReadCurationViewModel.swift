@@ -9,7 +9,7 @@ import SwiftUI
 
 
 final class ReadCurationViewModel: ObservableObject {
-    var shortcutsZipViewModel = ShortcutsZipViewModel.share
+    private let shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     @Published var isWriting = false
     @Published var isTappedDeleteButton = false
