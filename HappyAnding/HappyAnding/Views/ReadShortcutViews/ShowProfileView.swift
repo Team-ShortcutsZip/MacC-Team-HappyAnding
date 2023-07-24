@@ -12,7 +12,7 @@ struct ShowProfileView: View {
     @StateObject var viewModel: ShowProfileViewModel
     
     @Namespace var namespace
-        
+    
     private let tabItems = [TextLiteral.showProfileViewShortcutTabTitle, TextLiteral.showProfileViewCurationTabTitle]
     
     var body: some View {
@@ -24,7 +24,7 @@ struct ShowProfileView: View {
                 VStack(spacing: 8) {
                     Button {
                         withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
-                            viewModel.animationAmount += 360
+                            viewModel.profileDidTap()
                         }
                     } label: {
                         if viewModel.shortcuts.isEmpty {
@@ -67,7 +67,7 @@ struct ShowProfileView: View {
         .toolbar(.visible, for: .tabBar)
         .onAppear {
             withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
-                viewModel.animationAmount += 360
+                viewModel.profileDidTap()
             }
         }
     }
@@ -76,7 +76,7 @@ struct ShowProfileView: View {
     var tabBarView: some View {
         HStack(spacing: 20) {
             ForEach(Array(zip(self.tabItems.indices, self.tabItems)), id: \.0) { index, name in
-                tabBarItem(string: name, tab: index)
+                tabBarItem(title: name, tabID: index)
             }
         }
         .padding(.horizontal, 16)
@@ -84,13 +84,13 @@ struct ShowProfileView: View {
         .background(Color.shortcutsZipWhite)
     }
     
-    private func tabBarItem(string: String, tab: Int) -> some View {
+    private func tabBarItem(title: String, tabID: Int) -> some View {
         Button {
-            viewModel.currentTab = tab
+            viewModel.moveTab(to: tabID)
         } label: {
             VStack {
-                if viewModel.currentTab == tab {
-                    Text(string)
+                if viewModel.currentTab == tabID {
+                    Text(title)
                         .shortcutsZipHeadline()
                         .foregroundColor(.gray5)
                     Color.gray5
@@ -98,7 +98,7 @@ struct ShowProfileView: View {
                         .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
                     
                 } else {
-                    Text(string)
+                    Text(title)
                         .shortcutsZipBody1()
                         .foregroundColor(.gray3)
                     Color.clear
