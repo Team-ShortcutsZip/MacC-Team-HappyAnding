@@ -15,8 +15,8 @@ final class ListShortcutViewModel: ObservableObject {
     @Published private(set) var sectionType: SectionType = .download
     
     init(data: SectionType) {
-        sectionType = data
-        shortcuts = fetchShortcutsBySectionType()
+        self.sectionType = data
+        self.shortcuts = fetchShortcutsBySectionType()
     }
     
     func fetchShortcutsBySectionType() -> [Shortcuts] {

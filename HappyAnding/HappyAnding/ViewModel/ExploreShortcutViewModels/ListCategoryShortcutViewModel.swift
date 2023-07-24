@@ -15,8 +15,8 @@ final class ListCategoryShortcutViewModel: ObservableObject {
     @Published private(set) var category: Category = .business
     
     init(data: Category) {
-        shortcuts = shortcutsZipViewModel.shortcutsInCategory[data.index]
-        category = data
+        self.shortcuts = shortcutsZipViewModel.shortcutsInCategory[data.index]
+        self.category = data
     }
     
 }

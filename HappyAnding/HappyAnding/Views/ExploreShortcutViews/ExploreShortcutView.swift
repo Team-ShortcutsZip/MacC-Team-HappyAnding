@@ -22,7 +22,7 @@ struct ExploreShortcutView: View {
                 VStack(spacing: 32) {
                     if isUpdateAnnnouncementShow {
                         Button {
-                            viewModel.isShowingAnnouncement()
+                            viewModel.announcementCellDidTap()
                         } label: {
                             AnnouncementCell(icon: "updateAppIcon",
                                              tagName: TextLiteral.updateTag,
@@ -50,7 +50,7 @@ struct ExploreShortcutView: View {
                             Spacer()
                             
                             Button {
-                                viewModel.changeNumberOfCategories()
+                                viewModel.changeDisplayedCategories()
                             } label: {
                                 MoreCaptionTextView(text: viewModel.isCategoryCellViewFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
                             }
@@ -95,7 +95,7 @@ struct ExploreShortcutView: View {
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
-        .sheet(isPresented: $viewModel.isTappedAnnouncementCell) {
+        .sheet(isPresented: $viewModel.isAnnouncementCellShowing) {
             UpdateInfoView()
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)

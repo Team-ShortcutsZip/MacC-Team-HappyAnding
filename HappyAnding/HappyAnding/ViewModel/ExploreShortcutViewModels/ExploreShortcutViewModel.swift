@@ -12,23 +12,23 @@ final class ExploreShortcutViewModel: ObservableObject {
     private let shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     @Published private(set) var isCategoryCellViewFolded = true
-    @Published var isTappedAnnouncementCell = false
+    @Published var isAnnouncementCellShowing = false
     @Published private(set) var numberOfDisplayedCategories = 6
     
-    func changeNumberOfCategories() {
-        isCategoryCellViewFolded.toggle()
-        numberOfDisplayedCategories = isCategoryCellViewFolded ? 6 : 12
+    func changeDisplayedCategories() {
+        self.isCategoryCellViewFolded.toggle()
+        self.numberOfDisplayedCategories = isCategoryCellViewFolded ? 6 : 12
     }
     
-    func isShowingAnnouncement() {
-        isTappedAnnouncementCell = true
+    func announcementCellDidTap() {
+        self.isAnnouncementCellShowing = true
     }
     
     func fetchShortcuts(by category: Category) -> [Shortcuts] {
-        shortcutsZipViewModel.shortcutsInCategory[category.index]
+        self.shortcutsZipViewModel.shortcutsInCategory[category.index]
     }
     
     func fetchShortcuts(by sectionType: SectionType) -> [Shortcuts] {
-        sectionType.filterShortcuts(from: shortcutsZipViewModel)
+        sectionType.filterShortcuts(from: self.shortcutsZipViewModel)
     }
 }
