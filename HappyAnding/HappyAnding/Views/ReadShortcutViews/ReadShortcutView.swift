@@ -330,7 +330,7 @@ extension ReadShortcutView {
     
     private var deleteButton: some View {
         Button(role: .destructive) {
-            viewModel.checkDowngrade()
+            viewModel.checkDowngrading()
         } label: {
             Label(TextLiteral.delete, systemImage: "trash.fill")
         }
@@ -341,7 +341,7 @@ extension ReadShortcutView {
     private var tabBarView: some View {
         HStack(spacing: 20) {
             ForEach(Array(zip(self.tabItems.indices, self.tabItems)), id: \.0) { index, name in
-                tabBarItem(string: name, tab: index)
+                tabBarItem(title: name, tabID: index)
             }
         }
         .padding(.horizontal, 16)
@@ -349,13 +349,13 @@ extension ReadShortcutView {
         .background(Color.shortcutsZipWhite)
     }
     
-    private func tabBarItem(string: String, tab: Int) -> some View {
+    private func tabBarItem(title: String, tabID: Int) -> some View {
         Button {
-            viewModel.currentTab = tab
+            viewModel.moveTab(to: tabID)
         } label: {
             VStack {
-                if viewModel.currentTab == tab {
-                    Text(string)
+                if viewModel.currentTab == tabID {
+                    Text(title)
                         .shortcutsZipHeadline()
                         .foregroundColor(.gray5)
                     Color.gray5
@@ -363,7 +363,7 @@ extension ReadShortcutView {
                         .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
                     
                 } else {
-                    Text(string)
+                    Text(title)
                         .shortcutsZipBody1()
                         .foregroundColor(.gray3)
                     Color.clear.frame(height: 2)
@@ -434,7 +434,7 @@ extension ReadShortcutView {
                 }
                 
                 /// 단축어 작성자 닉네임
-                UserNameCell(userInformation: viewModel.userInformation, gradeImage: viewModel.userGrade)
+                UserNameCell(userInformation: viewModel.author, gradeImage: viewModel.userGrade)
             }
             .frame(maxWidth: .infinity, minHeight: 160, alignment: .leading)
             .padding(.bottom, 20)
@@ -666,9 +666,7 @@ extension ReadShortcutView {
                         HStack(spacing: 0) {
                             if !useWithoutSignIn {
                                 Button {
-                                    viewModel.nestedCommentTarget = comment.user_nickname
-                                    viewModel.comment.bundle_id = comment.bundle_id
-                                    viewModel.comment.depth = 1
+                                    viewModel.setReply(to: comment)
                                     isFocused = true
                                 } label: {
                                     Text(TextLiteral.readShortcutCommentViewReply)

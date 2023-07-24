@@ -19,13 +19,13 @@ final class ReadShortcutViewModel: ObservableObject {
     @Published var isUpdatingShortcut = false
     
     @Published var isMyLike = false
-    @Published var isMyFirstLike = false
+    @Published private var isMyFirstLike = false
     @Published var isDownloadingShortcut = false
-    @Published var isDowngradingUserLevel = false
+    @Published private(set) var isDowngradingUserLevel = false
     
     @Published var currentTab: Int = 0
-    @Published var comments: Comments = Comments(id: "", comments: [])
-    @Published var comment: Comment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
+    @Published private(set) var comments: Comments = Comments()
+    @Published var comment: Comment = Comment()
     @Published var nestedCommentTarget: String = ""
     @Published var commentText = ""
     
@@ -33,13 +33,13 @@ final class ReadShortcutViewModel: ObservableObject {
     @Published var isUndoingCommentEdit = false
     
     // ReadShortcutViewHeader
-    @Published var userInformation: User
+    @Published private(set) var author: User
     @Published var numberOfLike = 0
     @Published private(set) var userGrade = Image(systemName: "person.crop.circle.fill")
     
     // ReadShortcutCommentView
     @Published var isDeletingComment = false
-    @Published var deletedComment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
+    @Published var deletedComment = Comment()
     
     // UpdateShortcutView
     @Published var updatedLink = ""
@@ -47,24 +47,38 @@ final class ReadShortcutViewModel: ObservableObject {
     @Published var isLinkValid = false
     @Published var isDescriptionValid = false
     
+    var isUpdateValid: Bool {
+        isLinkValid && isDescriptionValid
+    }
+    
     init(data: Shortcuts) {
-        self.userInformation = User()
+        self.author = User()
         self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.id) ?? data
         self.isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.id)
         self.isMyFirstLike = isMyLike
         self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.id)
         self.numberOfLike = data.numberOfLike
-        fetchUser()
+        fetchAuthor()
     }
     
-    private func fetchUser() {
+    private func fetchAuthor() {
         shortcutsZipViewModel.fetchUser(userID: shortcut.author,
                                         isCurrentUser: false) { user in
-            self.userInformation = user
-            let grade = self.shortcutsZipViewModel.checkShortcutGrade(userID: self.userInformation.id)
+            self.author = user
+            let grade = self.shortcutsZipViewModel.checkShortcutGrade(userID: self.author.id)
             let image = self.shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: grade)
             self.userGrade = image
         }
+    }
+    
+    func moveTab(to tab: Int) {
+        self.currentTab = tab
+    }
+    
+    func setReply(to comment: Comment) {
+        self.nestedCommentTarget = comment.user_nickname
+        self.comment.bundle_id = comment.bundle_id
+        self.comment.depth = 1
     }
     
     func checkIfDownloaded() {
@@ -133,7 +147,7 @@ final class ReadShortcutViewModel: ObservableObject {
         window.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
     
-    func checkDowngrade() {
+    func checkDowngrading() {
         isDeletingShortcut.toggle()
         isDowngradingUserLevel = shortcutsZipViewModel.isShortcutDowngrade()
     }

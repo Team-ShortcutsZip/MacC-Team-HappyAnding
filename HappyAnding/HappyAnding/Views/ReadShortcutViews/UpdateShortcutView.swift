@@ -16,12 +16,12 @@ struct UpdateShortcutView: View {
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
+                Button {
                     viewModel.isUpdatingShortcut.toggle()
-                }, label: {
+                } label: {
                     Text(TextLiteral.cancel)
                         .foregroundColor(.gray5)
-                })
+                }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Text(TextLiteral.update)
@@ -47,7 +47,7 @@ struct UpdateShortcutView: View {
                 isDescriptionFieldFocused = true
             }
             .submitLabel(.next)
-            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            .onAppear(perform: UIApplication.shared.hideKeyboard)
             .padding(.top, 30)
             
             ValidationCheckTextField(textType: .mandatory,
@@ -63,19 +63,19 @@ struct UpdateShortcutView: View {
             
             Spacer()
             
-            Button(action: {
+            Button {
                 viewModel.updateShortcut()
-            }, label: {
+            } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(viewModel.isLinkValid && viewModel.isDescriptionValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
+                        .foregroundColor(viewModel.isUpdateValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     Text(TextLiteral.update)
-                        .foregroundColor(viewModel.isLinkValid && viewModel.isDescriptionValid ? .textButton : .textButtonDisable)
+                        .foregroundColor(viewModel.isUpdateValid ? .textButton : .textButtonDisable)
                         .shortcutsZipBody1()
                 }
-            })
-            .disabled(!viewModel.isLinkValid || !viewModel.isDescriptionValid)
+            }
+            .disabled(!viewModel.isUpdateValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }
