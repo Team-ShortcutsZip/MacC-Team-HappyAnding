@@ -9,7 +9,7 @@ import SwiftUI
 
 final class ExploreShortcutViewModel: ObservableObject {
     
-    var shortcutsZipViewModel = ShortcutsZipViewModel.share
+    private let shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     @Published private(set) var isCategoryCellViewFolded = true
     @Published var isTappedAnnouncementCell = false
@@ -24,7 +24,11 @@ final class ExploreShortcutViewModel: ObservableObject {
         isTappedAnnouncementCell = true
     }
     
-    func fetchShortcutsByCategories(category: Category) -> [Shortcuts] {
+    func fetchShortcuts(by category: Category) -> [Shortcuts] {
         shortcutsZipViewModel.shortcutsInCategory[category.index]
+    }
+    
+    func fetchShortcuts(by sectionType: SectionType) -> [Shortcuts] {
+        sectionType.filterShortcuts(from: shortcutsZipViewModel)
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 final class ListCategoryShortcutViewModel: ObservableObject {
     
-    var shortcutsZipViewModel = ShortcutsZipViewModel.share
+    private let shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     @Published private(set) var shortcuts: [Shortcuts] = []
     @Published private(set) var category: Category = .business

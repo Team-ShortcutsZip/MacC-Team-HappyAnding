@@ -9,11 +9,10 @@ import SwiftUI
 
 final class ListShortcutViewModel: ObservableObject {
     
-    var shortcutsZipViewModel = ShortcutsZipViewModel.share
+    private let shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     @Published private(set) var shortcuts: [Shortcuts] = []
     @Published private(set) var sectionType: SectionType = .download
-    
     
     init(data: SectionType) {
         sectionType = data

@@ -110,7 +110,7 @@ extension ExploreShortcutView {
     @ViewBuilder
     private func sectionView(with sectionType: SectionType) -> some View {
         
-        let shortcuts = sectionType.filterShortcuts(from: viewModel.shortcutsZipViewModel)
+        let shortcuts = viewModel.fetchShortcuts(by: sectionType)
         
         VStack(spacing: 0) {
             HStack {
@@ -157,7 +157,7 @@ extension ExploreShortcutView {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(viewModel.fetchShortcutsByCategories(category: category).prefix(7), id: \.self) { shortcut in
+                    ForEach(viewModel.fetchShortcuts(by: category).prefix(7), id: \.self) { shortcut in
                         let data = NavigationReadShortcutType(
                             shortcutID: shortcut.id,
                             navigationParentView: .shortcuts)
