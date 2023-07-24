@@ -393,6 +393,8 @@
 		8788E1A32A484533007C3852 /* ReadShortcutViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				4D93D0742A61D0D10042CBA8 /* ReadShortcutViewModel.swift */,
+				4D93D06E2A5956E60042CBA8 /* ShowProfileViewModel.swift */,
 			);
 			path = ReadShortcutViewModels;
 			sourceTree = "<group>";
@@ -657,8 +659,6 @@
 				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
 				4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */,
 				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
-				4D93D06E2A5956E60042CBA8 /* ShowProfileViewModel.swift */,
-				4D93D0742A61D0D10042CBA8 /* ReadShortcutViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

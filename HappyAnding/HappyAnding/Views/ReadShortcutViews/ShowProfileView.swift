@@ -156,7 +156,7 @@ struct ShowProfileView: View {
                     }
                     
                     VStack(spacing: 0) {
-                        ForEach(curations, id: \.self) { curation in
+                        ForEach(viewModel.curations, id: \.self) { curation in
                             // TODO: navigation parent view 삭제
                             UserCurationCell(curation: curation,
                                              lineLimit: 2,

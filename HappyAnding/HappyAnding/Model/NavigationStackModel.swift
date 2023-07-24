@@ -15,13 +15,6 @@ struct NavigationListShortcutType: Identifiable, Hashable {
     let navigationParentView: NavigationParentView
 }
 
-
-struct NavigationProfile: Identifiable, Hashable {
-    var id = UUID().uuidString
-    
-    var userInfo: User?
-}
-
 struct NavigationListCategoryShortcutType: Identifiable, Hashable {
     
     var id = UUID().uuidString
@@ -59,7 +52,6 @@ enum NavigationSettingView: Hashable, Equatable {
 enum NavigationNicknameView: Hashable, Equatable {
     case first
 }
-
 
 enum NavigationLisence: Hashable, Equatable {
     case first
