@@ -13,7 +13,7 @@ final class ReadShortcutViewModel: ObservableObject {
     
     @Published private(set) var shortcut: Shortcuts
     
-    /// ReadShortcutView
+    // ReadShortcutView
     @Published var isDeletingShortcut = false
     @Published var isEditingShortcut = false
     @Published var isUpdatingShortcut = false
@@ -32,32 +32,39 @@ final class ReadShortcutViewModel: ObservableObject {
     @Published var isEditingComment = false
     @Published var isUndoingCommentEdit = false
     
-    /// ReadShortcutViewHeader
-    @Published var userInformation: User? = nil
+    // ReadShortcutViewHeader
+    @Published var userInformation: User
     @Published var numberOfLike = 0
     @Published private(set) var userGrade = Image(systemName: "person.crop.circle.fill")
     
-    /// ReadShortcutCommentView
+    // ReadShortcutCommentView
     @Published var isDeletingComment = false
     @Published var deletedComment = Comment(user_nickname: "", user_id: "", date: "", depth: 0, contents: "")
     
-    /// UpdateShortcutView
+    // UpdateShortcutView
     @Published var updatedLink = ""
     @Published var updateDescription = ""
     @Published var isLinkValid = false
     @Published var isDescriptionValid = false
     
     init(data: Shortcuts) {
+        self.userInformation = User()
         self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.id) ?? data
         self.isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.id)
         self.isMyFirstLike = isMyLike
         self.comments = shortcutsZipViewModel.fetchComment(shortcutID: data.id)
-        shortcutsZipViewModel.fetchUser(userID: data.author,
+        self.numberOfLike = data.numberOfLike
+        fetchUser()
+    }
+    
+    private func fetchUser() {
+        shortcutsZipViewModel.fetchUser(userID: shortcut.author,
                                         isCurrentUser: false) { user in
             self.userInformation = user
+            let grade = self.shortcutsZipViewModel.checkShortcutGrade(userID: self.userInformation.id)
+            let image = self.shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: grade)
+            self.userGrade = image
         }
-        self.userGrade = shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: userInformation?.id ?? "!"))
-        self.numberOfLike = data.numberOfLike
     }
     
     func checkIfDownloaded() {

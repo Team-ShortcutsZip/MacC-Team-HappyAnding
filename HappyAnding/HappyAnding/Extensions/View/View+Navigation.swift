@@ -115,8 +115,8 @@ struct NavigationViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
         
-            .navigationDestination(for: User?.self) { data in
-                ShowProfileView(viewModel: ShowProfileViewModel(data: data ?? User()))
+            .navigationDestination(for: User.self) { data in
+                ShowProfileView(viewModel: ShowProfileViewModel(data: data))
             }
             .navigationDestination(for: Curation.self) { data in
                 ReadCurationView(viewModel: ReadCurationViewModel(data: data))
