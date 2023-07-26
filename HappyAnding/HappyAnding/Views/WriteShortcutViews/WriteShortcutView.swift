@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LinkPresentation
 
 struct WriteShortcutView: View {
     
@@ -38,6 +39,9 @@ struct WriteShortcutView: View {
     @State var existingCategory: [String] = []
     @State var newCategory: [String] = []
     
+    @State private var metadata: LPLinkMetadata? = nil
+    @State private var isFetchingMetadata = false
+    
     @State var shortcut = Shortcuts(sfSymbol: "",
                                     color: "",
                                     title: "",
@@ -53,6 +57,7 @@ struct WriteShortcutView: View {
                                     curationIDs: [String]())
     
     let isEdit: Bool
+    let metadataProvider = LPMetadataProvider()
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -63,6 +68,25 @@ struct WriteShortcutView: View {
                         .id(FocusableField.link)
                         .focused($focusedField, equals: .link)
                         .onSubmit {
+                            
+                            guard !isFetchingMetadata else { return }
+                            
+                            isFetchingMetadata = true
+                            let metadataProvider = LPMetadataProvider()
+                            metadataProvider.startFetchingMetadata(for: URL(string: shortcut.downloadLink[0])!) { metadata, error in
+                                DispatchQueue.main.async {
+                                    isFetchingMetadata = false
+                                    
+                                    if error != nil {
+                                        return
+                                    }
+                                    
+                                    if shortcut.title == "" && isLinkValid {
+                                        shortcut.title = (metadata?.title!)!
+                                    }
+                                }
+                            }
+                            
                             focusedField = .title
                         }
                         .submitLabel(.next)
