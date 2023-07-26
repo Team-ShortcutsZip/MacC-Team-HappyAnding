@@ -10,8 +10,8 @@ import SwiftUI
 struct WriteShortcutView: View {
     
     enum FocusableField: Hashable {
-        case title
         case link
+        case title
         case subtitle
         case description
         case requiredApp
@@ -59,16 +59,16 @@ struct WriteShortcutView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 32) {
                     iconModalView
-                    shortcutTitleText
-                        .id(FocusableField.title)
-                        .focused($focusedField, equals: .title)
-                        .onSubmit {
-                            focusedField = .link
-                        }
-                        .submitLabel(.next)
                     shortcutLinkText
                         .id(FocusableField.link)
                         .focused($focusedField, equals: .link)
+                        .onSubmit {
+                            focusedField = .title
+                        }
+                        .submitLabel(.next)
+                    shortcutTitleText
+                        .id(FocusableField.title)
+                        .focused($focusedField, equals: .title)
                         .onSubmit {
                             focusedField = .subtitle
                         }
@@ -191,6 +191,19 @@ struct WriteShortcutView: View {
         .padding(.bottom, 32)
     }
     
+    //MARK: -단축어 링크
+    private var shortcutLinkText: some View {
+        ValidationCheckTextField(textType: .mandatory,
+                                 isMultipleLines: false,
+                                 title: TextLiteral.writeShortcutViewLinkTitle,
+                                 placeholder: TextLiteral.writeShortcutViewLinkPlaceholder,
+                                 lengthLimit: nil,
+                                 isDownloadLinkTextField: true,
+                                 content: $shortcut.downloadLink[0],
+                                 isValid: $isLinkValid
+        )
+    }
+    
     //MARK: -단축어 이름
     private var shortcutTitleText: some View {
         ValidationCheckTextField(textType: .mandatory,
@@ -203,19 +216,6 @@ struct WriteShortcutView: View {
                                  isValid: $isNameValid
         )
         .onAppear(perform : UIApplication.shared.hideKeyboard)
-    }
-    
-    //MARK: -단축어 링크
-    private var shortcutLinkText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: TextLiteral.writeShortcutViewLinkTitle,
-                                 placeholder: TextLiteral.writeShortcutViewLinkPlaceholder,
-                                 lengthLimit: nil,
-                                 isDownloadLinkTextField: true,
-                                 content: $shortcut.downloadLink[0],
-                                 isValid: $isLinkValid
-        )
     }
     
     //MARK: -한줄 설명
