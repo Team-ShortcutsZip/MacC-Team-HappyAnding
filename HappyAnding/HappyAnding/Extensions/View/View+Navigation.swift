@@ -77,8 +77,8 @@ extension View {
     @ViewBuilder
     func getDestination<T: Hashable>(data: T) -> some View {
         switch data {
-        case is NavigationListShortcutType:
-            ListShortcutView(data: data as! NavigationListShortcutType)
+        case is SectionType:
+            ListShortcutView(viewModel: ListShortcutViewModel(data: data as! SectionType))
         case is Shortcuts:
             ReadShortcutView(viewModel: ReadShortcutViewModel(data: data as! Shortcuts))
         case is Curation:
@@ -89,8 +89,8 @@ extension View {
             ShowProfileView(viewModel: ShowProfileViewModel(data: data as! User))
         case is NavigationSearch:
             SearchView()
-        case is NavigationListCategoryShortcutType:
-            ListCategoryShortcutView(data: data as!  NavigationListCategoryShortcutType)
+        case is Category:
+            ListCategoryShortcutView(viewModel: ListCategoryShortcutViewModel(data: data as! Category))
         case is NavigationNicknameView:
             EditNicknameView()
         case is NavigationSettingView:
@@ -127,11 +127,11 @@ struct NavigationViewModifier: ViewModifier {
             .navigationDestination(for: Shortcuts.self) { data in
                 ReadShortcutView(viewModel: ReadShortcutViewModel(data: data))
             }
-            .navigationDestination(for: NavigationListShortcutType.self) { data in
-                ListShortcutView(data: data)
+            .navigationDestination(for: SectionType.self) { data in
+                ListShortcutView(viewModel: ListShortcutViewModel(data: data))
             }
-            .navigationDestination(for: NavigationListCategoryShortcutType.self) { data in
-                ListCategoryShortcutView(data: data)
+            .navigationDestination(for: Category.self) { data in
+                ListCategoryShortcutView(viewModel: ListCategoryShortcutViewModel(data: data))
             }
             .navigationDestination(for: NavigationLisence.self) { value in
                 LicenseView()
