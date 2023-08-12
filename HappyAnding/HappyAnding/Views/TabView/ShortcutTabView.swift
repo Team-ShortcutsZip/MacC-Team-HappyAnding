@@ -146,8 +146,7 @@ struct ShortcutTabView: View {
         tempShortcutId  = shortcutIDfromURL
         isShortcutDeeplink = true
         
-        let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                              navigationParentView: .myPage)
+        let data = shortcutsZipViewModel.fetchShortcutDetail(id: tempShortcutId)
         navigateLink(data: data)
     }
     

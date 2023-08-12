@@ -22,12 +22,11 @@ struct ReadCurationView: View {
             }
             
             VStack(spacing: 0) {
-                ForEach($viewModel.curation.shortcuts, id: \.self) { shortcut in
-                    let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                          navigationParentView: .curations)
-                    ShortcutCell(shortcutCell: shortcut.wrappedValue,
+                ForEach(viewModel.curation.shortcuts, id: \.self) { shortcutCellModel in
+                    
+                    ShortcutCell(shortcutCell: shortcutCellModel,
                                  navigationParentView: .curations)
-                    .navigationLinkRouter(data: data)
+                    .navigationLinkRouter(data: viewModel.fetchShortcut(from: shortcutCellModel))
                     
                 }
             }

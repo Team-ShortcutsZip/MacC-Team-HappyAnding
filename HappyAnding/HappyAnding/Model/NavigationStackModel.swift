@@ -7,20 +7,6 @@
 
 import SwiftUI
 
-struct NavigationReadShortcutType: Identifiable, Hashable {
-    var id = UUID().uuidString
-
-    var shortcut: Shortcuts?
-    let shortcutID: String
-    let navigationParentView: NavigationParentView
-}
-
-struct NavigationProfile: Identifiable, Hashable {
-    var id = UUID().uuidString
-    
-    var userInfo: User?
-}
-
 struct WriteCurationInfoType: Identifiable, Hashable {
     
     var id = UUID().uuidString
@@ -49,7 +35,6 @@ enum NavigationSettingView: Hashable, Equatable {
 enum NavigationNicknameView: Hashable, Equatable {
     case first
 }
-
 
 enum NavigationLisence: Hashable, Equatable {
     case first

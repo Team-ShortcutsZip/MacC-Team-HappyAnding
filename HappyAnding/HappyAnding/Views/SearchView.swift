@@ -37,12 +37,9 @@ struct SearchView: View {
                         VStack(spacing: 0) {
                             ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
                                 
-                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                      navigationParentView: .shortcuts)
-                                
                                 ShortcutCell(shortcut: shortcut,
                                              navigationParentView: NavigationParentView.shortcuts)
-                                .navigationLinkRouter(data: data)
+                                .navigationLinkRouter(data: shortcut)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
                             }

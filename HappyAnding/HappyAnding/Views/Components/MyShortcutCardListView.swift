@@ -51,13 +51,10 @@ struct MyShortcutCardListView: View {
                     if let shortcuts {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
                             if index < 7 {
-                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                      navigationParentView: self.navigationParentView)
-                                
                                 MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol,
                                                    myShortcutName: shortcut.title,
                                                    myShortcutColor: shortcut.color)
-                                .navigationLinkRouter(data: data)
+                                .navigationLinkRouter(data: shortcut)
                             }
                         }
                     }

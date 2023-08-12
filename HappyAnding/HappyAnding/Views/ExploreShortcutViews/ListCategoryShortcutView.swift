@@ -24,7 +24,7 @@ struct ListCategoryShortcutView: View {
                         .navigationLinkRouter(data: shortcut)
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
-                    
+                                                          
                 }
             }
             .padding(.bottom, 44)
