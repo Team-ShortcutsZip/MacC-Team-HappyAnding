@@ -67,13 +67,11 @@ struct ListShortcutView: View {
     @ViewBuilder
     private func makeShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
         ForEach(shortcuts, id: \.self) { shortcut in
-            let navigationData = NavigationReadShortcutType(shortcut: shortcut,
-                                                            shortcutID: shortcut.id,
-                                                            navigationParentView: self.data.navigationParentView)
+            
             ShortcutCell(shortcut: shortcut,
                          sectionType: data.sectionType,
                          navigationParentView: data.navigationParentView)
-            .navigationLinkRouter(data: navigationData)
+            .navigationLinkRouter(data: shortcut)
             
         }
     }
@@ -81,13 +79,11 @@ struct ListShortcutView: View {
     @ViewBuilder
     private func makeIndexShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
         ForEach(Array(shortcuts.enumerated()), id: \.offset) { index, shortcut in
-            let navigationData = NavigationReadShortcutType(shortcut: shortcut,
-                                                            shortcutID: shortcut.id,
-                                                            navigationParentView: self.data.navigationParentView)
+            
             ShortcutCell(shortcut: shortcut,
                          rankNumber: index + 1,
                          navigationParentView: data.navigationParentView)
-            .navigationLinkRouter(data: navigationData)
+            .navigationLinkRouter(data: shortcut)
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
         }

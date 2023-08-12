@@ -9,27 +9,19 @@ import SwiftUI
 
 struct UpdateShortcutView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var viewModel: ReadShortcutViewModel
     
     @FocusState var isDescriptionFieldFocused: Bool
-    
-    @Binding var isUpdating: Bool
-    @Binding var shortcut: Shortcuts?
-    
-    @State var updatedLink = ""
-    @State var updateDescription = ""
-    @State var isLinkValid = false
-    @State var isDescriptionValid = false
     
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    isUpdating.toggle()
-                }, label: {
+                Button {
+                    viewModel.isUpdatingShortcut.toggle()
+                } label: {
                     Text(TextLiteral.cancel)
                         .foregroundColor(.gray5)
-                })
+                }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Text(TextLiteral.update)
@@ -48,14 +40,14 @@ struct UpdateShortcutView: View {
                                      placeholder: TextLiteral.updateShortcutViewLinkPlaceholder,
                                      lengthLimit: 100,
                                      isDownloadLinkTextField: true,
-                                     content: $updatedLink,
-                                     isValid: $isLinkValid
+                                     content: $viewModel.updatedLink,
+                                     isValid: $viewModel.isLinkValid
             )
             .onSubmit {
                 isDescriptionFieldFocused = true
             }
             .submitLabel(.next)
-            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            .onAppear(perform: UIApplication.shared.hideKeyboard)
             .padding(.top, 30)
             
             ValidationCheckTextField(textType: .mandatory,
@@ -64,29 +56,26 @@ struct UpdateShortcutView: View {
                                      placeholder: TextLiteral.updateShortcutViewDescriptionPlaceholder,
                                      lengthLimit: 50,
                                      isDownloadLinkTextField: false,
-                                     content: $updateDescription,
-                                     isValid: $isDescriptionValid
+                                     content: $viewModel.updateDescription,
+                                     isValid: $viewModel.isDescriptionValid
             )
             .focused($isDescriptionFieldFocused)
             
             Spacer()
             
-            Button(action: {
-                if let shortcut {
-                    shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut, updateDescription: updateDescription, updateLink: updatedLink)
-                }
-                isUpdating.toggle()
-            }, label: {
+            Button {
+                viewModel.updateShortcut()
+            } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
+                        .foregroundColor(viewModel.isUpdateValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     Text(TextLiteral.update)
-                        .foregroundColor(isLinkValid && isDescriptionValid ? .textButton : .textButtonDisable)
+                        .foregroundColor(viewModel.isUpdateValid ? .textButton : .textButtonDisable)
                         .shortcutsZipBody1()
                 }
-            })
-            .disabled(!isLinkValid || !isDescriptionValid)
+            }
+            .disabled(!viewModel.isUpdateValid)
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
         }

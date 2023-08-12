@@ -52,5 +52,9 @@ final class ReadCurationViewModel: ObservableObject {
         guard let window = windowScene?.windows.first else { return }
         window.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
+    
+    func fetchShortcut(from shortcutCellModel: ShortcutCellModel) -> Shortcuts {
+        shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCellModel.id) ?? Shortcuts()
+    }
 }
 
