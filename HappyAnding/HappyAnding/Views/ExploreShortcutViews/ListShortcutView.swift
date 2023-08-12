@@ -52,8 +52,8 @@ struct ListShortcutView: View {
         ForEach(shortcuts, id: \.self) { shortcut in
             
             ShortcutCell(shortcut: shortcut,
-                         sectionType: data.sectionType,
-                         navigationParentView: data.navigationParentView)
+                         sectionType: viewModel.sectionType,
+                         navigationParentView: .shortcuts)
             .navigationLinkRouter(data: shortcut)
             
         }

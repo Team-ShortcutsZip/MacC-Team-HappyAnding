@@ -18,13 +18,13 @@ struct ListCategoryShortcutView: View {
             categoryHeader
             
             LazyVStack(spacing: 0) {
-                ForEach(data.shortcuts, id: \.self) { shortcut in
+                ForEach(viewModel.shortcuts, id: \.self) { shortcut in
                     
-                    ShortcutCell(shortcut: shortcut,
-                                 navigationParentView: self.data.navigationParentView)
-                    .navigationLinkRouter(data: shortcut)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                    ShortcutCell(shortcut: shortcut, navigationParentView: .shortcuts)
+                        .navigationLinkRouter(data: shortcut)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                                                          
                 }
             }
             .padding(.bottom, 44)

@@ -126,13 +126,11 @@ extension ExploreShortcutView {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    let data = NavigationReadShortcutType(shortcutID:shortcut.id,
-                                                          navigationParentView: .shortcuts)
                     
                     ShortcutCell(shortcut: shortcut,
                                  rankNumber: index + 1,
                                  navigationParentView: .shortcuts)
-                    .navigationLinkRouter(data: data)
+                    .navigationLinkRouter(data: shortcut)
                 }
             }
             .background(Color.shortcutsZipBackground)
@@ -158,15 +156,11 @@ extension ExploreShortcutView {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(viewModel.fetchShortcuts(by: category).prefix(7), id: \.self) { shortcut in
-                        let data = NavigationReadShortcutType(
-                            shortcutID: shortcut.id,
-                            navigationParentView: .shortcuts)
                         
-                        ShortcutCardCell(
-                            categoryShortcutIcon: shortcut.sfSymbol,
-                            categoryShortcutName: shortcut.title,
-                            categoryShortcutColor: shortcut.color)
-                        .navigationLinkRouter(data: data)
+                        ShortcutCardCell(categoryShortcutIcon: shortcut.sfSymbol,
+                                         categoryShortcutName: shortcut.title,
+                                         categoryShortcutColor: shortcut.color)
+                        .navigationLinkRouter(data: shortcut)
                     }
                 }
                 .padding(.horizontal, 16)
