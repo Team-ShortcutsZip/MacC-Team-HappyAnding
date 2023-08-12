@@ -50,13 +50,11 @@ struct ListShortcutView: View {
     @ViewBuilder
     private func makeShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
         ForEach(shortcuts, id: \.self) { shortcut in
-            let navigationData = NavigationReadShortcutType(shortcut: shortcut,
-                                                            shortcutID: shortcut.id,
-                                                            navigationParentView: .shortcuts)
+            
             ShortcutCell(shortcut: shortcut,
                          sectionType: viewModel.sectionType,
                          navigationParentView: .shortcuts)
-            .navigationLinkRouter(data: navigationData)
+            .navigationLinkRouter(data: shortcut)
             
         }
     }
