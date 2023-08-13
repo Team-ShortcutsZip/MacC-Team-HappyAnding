@@ -80,6 +80,9 @@ struct UserCurationListView: View {
         WriteCurationSetView(isWriting: $isWriting, viewModel: WriteCurationViewModel())
             .navigationDestination(for: WriteCurationViewModel.self) { data in
                 WriteCurationInfoView(viewModel: data, isWriting: $isWriting)
+                    .onDisappear() {
+                        writeCurationNavigation.navigationPath = NavigationPath()
+                    }
             }
     }
 }
