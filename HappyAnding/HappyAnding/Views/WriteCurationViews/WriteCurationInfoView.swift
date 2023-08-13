@@ -48,6 +48,7 @@ struct WriteCurationInfoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    isDescriptionFieldFocused = false
                     viewModel.addCuration()
                     self.isWriting.toggle()
                 } label: {

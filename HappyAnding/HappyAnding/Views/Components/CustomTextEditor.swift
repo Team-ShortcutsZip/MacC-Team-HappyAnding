@@ -54,7 +54,9 @@ struct CustomTextEditor: UIViewRepresentable {
         }
         
         func textViewDidChangeSelection(_ textView: UITextView) {
-            self.text = textView.text ?? ""
+            DispatchQueue.main.async {
+                self.text = textView.text ?? ""
+            }
         }
         
         func textViewDidBeginEditing(_ textView: UITextView) {
