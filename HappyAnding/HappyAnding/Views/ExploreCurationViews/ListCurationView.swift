@@ -51,7 +51,7 @@ struct ListCurationView: View {
     private func makeCurationCellList(_ curations: [Curation]) -> some View {
         ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
             
-            UserCurationCell(curation: curation,
+            UserCurationCell(curation: .constant(curation),
                              lineLimit: 2,
                              navigationParentView: .curations)
             .navigationLinkRouter(data: curation)

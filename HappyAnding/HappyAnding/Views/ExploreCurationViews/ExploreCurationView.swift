@@ -73,7 +73,7 @@ struct ExploreCurationView: View {
 
             ForEach(viewModel.getCurationList(with:sectionType).prefix(2), id: \.self) { curation in
                 
-                UserCurationCell(curation: curation,
+                UserCurationCell(curation: .constant(curation),
                                  lineLimit: 2,
                                  navigationParentView: .curations)
                 .navigationLinkRouter(data: curation)

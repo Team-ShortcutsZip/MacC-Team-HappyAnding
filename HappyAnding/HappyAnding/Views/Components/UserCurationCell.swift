@@ -13,7 +13,7 @@ struct UserCurationCell: View {
     
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
-    @State var curation: Curation
+    @Binding var curation: Curation
     
     var lineLimit: Int?
     let navigationParentView: NavigationParentView

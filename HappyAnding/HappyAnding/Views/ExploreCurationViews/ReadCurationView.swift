@@ -41,6 +41,9 @@ struct ReadCurationView: View {
         .fullScreenCover(isPresented: $viewModel.isWriting) {
             NavigationRouter(content: editView, path: $writeCurationNavigation.navigationPath)
                 .environmentObject(writeCurationNavigation)
+                .onDisappear() {
+                    viewModel.fetchCuration()
+                }
         }
         .alert(TextLiteral.readCurationViewDeletionTitle, isPresented: $viewModel.isTappedDeleteButton) {
             Button(role: .cancel) {
@@ -69,7 +72,7 @@ struct ReadCurationView: View {
                 UserNameCell(userInformation: viewModel.authInformation, gradeImage: viewModel.gradeImage)
                     .padding(EdgeInsets(top: 103, leading: 16, bottom: 0, trailing: 16))
                 
-                UserCurationCell(curation: viewModel.curation, navigationParentView: .curations)
+                UserCurationCell(curation: $viewModel.curation, navigationParentView: .curations)
             }
         }
         .padding(.bottom, 8)
