@@ -29,13 +29,12 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
     //모음집 편집 시 전달받는 기존 모음집 정보
     @Published var curation = Curation(title: "", subtitle: "", isAdmin: false, background: "", author: "", shortcuts: [ShortcutCellModel]())
     
-    @Published var isTappedQuestionMark = false
     //기존 선택 -> 편집 시 선택 해제 되어 기존 모음집 정보에서 삭제해야할 단축어 배열
     @Published var deletedShortcutCells = [ShortcutCellModel]()
     
     
     //WriteCurationInfo
-    @Published var writeCurationNavigation = WriteCurationNavigation()
+//    @Published var writeCurationNavigation = WriteCurationNavigation()
     @Published var isValidTitle = false
     @Published var isValidDescription = false
     
@@ -66,10 +65,6 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
     
     func addCuration() {
         shortcutsZipViewModel.addCuration(curation: curation, isEdit: isEdit, deletedShortcutCells: deletedShortcutCells)
-        
-        if #available(iOS 16.1, *) {
-            writeCurationNavigation.navigationPath = .init()
-        }
     }
     
     func checkboxCellTapGesture(index: Int) {
