@@ -53,6 +53,13 @@ final class ReadCurationViewModel: ObservableObject {
         window.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
     
+    func fetchCuration() {
+        if let index = shortcutsZipViewModel.userCurations.firstIndex(where: {$0.id == self.curation.id}) {
+            self.curation = shortcutsZipViewModel.userCurations[index]
+            print("curation", self.curation)
+        }
+    }
+    
     func fetchShortcut(from shortcutCellModel: ShortcutCellModel) -> Shortcuts {
         shortcutsZipViewModel.fetchShortcutDetail(id: shortcutCellModel.id) ?? Shortcuts()
     }
