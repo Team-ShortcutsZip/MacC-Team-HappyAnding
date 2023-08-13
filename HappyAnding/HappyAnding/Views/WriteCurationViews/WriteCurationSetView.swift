@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WriteCurationSetView: View {
     
-    @StateObject var viewModel: WriteCurationViewModel    
+    @StateObject var viewModel: WriteCurationViewModel
     var body: some View {
         VStack {
             ProgressView(value: 1, total: 2)
