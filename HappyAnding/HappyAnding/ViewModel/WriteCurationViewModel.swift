@@ -19,7 +19,6 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
     private var shortcutsZipViewModel = ShortcutsZipViewModel.share
     
     //WriteCurationSet
-    @Published var isWriting = false
     @Published var isEdit = false
     
     //좋아요 + 내가 작성한 단축어 목록
@@ -68,7 +67,6 @@ final class WriteCurationViewModel: ObservableObject, Hashable {
     func addCuration() {
         shortcutsZipViewModel.addCuration(curation: curation, isEdit: isEdit, deletedShortcutCells: deletedShortcutCells)
         
-        self.isWriting.toggle()
         if #available(iOS 16.1, *) {
             writeCurationNavigation.navigationPath = .init()
         }

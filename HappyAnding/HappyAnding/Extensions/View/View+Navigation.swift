@@ -68,7 +68,7 @@ extension View {
     func getDestination<T: Hashable>(data: T, isPresented: Binding<Bool>) -> some View {
         switch data {
         case is WriteCurationViewModel:
-            WriteCurationInfoView(viewModel: data as! WriteCurationViewModel)
+            WriteCurationInfoView(viewModel: data as! WriteCurationViewModel, isWriting: isPresented)
         default:
             EmptyView()
         }

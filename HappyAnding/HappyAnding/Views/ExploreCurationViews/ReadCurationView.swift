@@ -102,9 +102,9 @@ extension ReadCurationView {
     
     @ViewBuilder
     private func editView() -> some View {
-        WriteCurationSetView(viewModel: WriteCurationViewModel(data: data.curation))
+        WriteCurationSetView(isWriting: $viewModel.isWriting, viewModel: WriteCurationViewModel(data: viewModel.curation))
             .navigationDestination(for: WriteCurationViewModel.self) { data in
-                WriteCurationInfoView(viewModel: data)
+                WriteCurationInfoView(viewModel: data, isWriting: $viewModel.isWriting)
         }
     }
     

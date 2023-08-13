@@ -23,7 +23,7 @@ struct UserCurationListView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .bottom) {
-                SubtitleTextView(text: data.title ?? "")
+                SubtitleTextView(text: data.title )
                     .onTapGesture { }
                 Spacer()
                 
@@ -77,9 +77,9 @@ struct UserCurationListView: View {
     
     @ViewBuilder
     private func writeCurationView() -> some View {
-        WriteCurationSetView(viewModel: WriteCurationViewModel())
+        WriteCurationSetView(isWriting: $isWriting, viewModel: WriteCurationViewModel())
             .navigationDestination(for: WriteCurationViewModel.self) { data in
-                WriteCurationInfoView(viewModel: data)
+                WriteCurationInfoView(viewModel: data, isWriting: $isWriting)
             }
     }
 }

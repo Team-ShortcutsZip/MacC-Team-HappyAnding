@@ -9,7 +9,8 @@ import SwiftUI
 
 struct WriteCurationInfoView: View {
     @StateObject var viewModel: WriteCurationViewModel
-    
+    @Binding var isWriting: Bool
+
     @FocusState var isDescriptionFieldFocused: Bool
     
     var body: some View {
@@ -48,6 +49,7 @@ struct WriteCurationInfoView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     viewModel.addCuration()
+                    self.isWriting.toggle()
                 } label: {
                     Text(TextLiteral.upload)
                         .shortcutsZipHeadline()

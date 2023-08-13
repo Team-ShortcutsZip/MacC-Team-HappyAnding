@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WriteCurationSetView: View {
     
+    @Binding var isWriting: Bool
     @StateObject var viewModel: WriteCurationViewModel
     var body: some View {
         VStack {
@@ -38,7 +39,7 @@ struct WriteCurationSetView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    viewModel.isWriting.toggle()
+                    self.isWriting.toggle()
                 } label: {
                     Text(TextLiteral.cancel)
                         .shortcutsZipBody1()
@@ -48,7 +49,7 @@ struct WriteCurationSetView: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 Text(TextLiteral.next)
-                    .navigationLinkRouter(data: viewModel, isPresented: $viewModel.isWriting)
+                    .navigationLinkRouter(data: viewModel, isPresented: $isWriting)
                     .shortcutsZipHeadline()
                     .foregroundColor(viewModel.curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
                     .disabled(viewModel.curation.shortcuts.isEmpty)
