@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct WriteCurationInfoType: Identifiable, Hashable {
-    
-    var id = UUID().uuidString
-    
-    var curation: Curation
-    var deletedShortcutCells: [ShortcutCellModel]
-    var isEdit: Bool
-}
-
 enum NavigationSearch: Hashable, Equatable {
     case first
 }
