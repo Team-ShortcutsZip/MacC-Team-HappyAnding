@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CategoryModalView: View {
     
-    @StateObject var viewModel: WriteShortcutModalViewModel
+    @Binding var isShowingCategoryModal: Bool
+    @Binding var selectedCategories: [String]
     
     private let screenHeight = UIScreen.screenHeight
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
@@ -21,7 +22,7 @@ struct CategoryModalView: View {
             VStack {
                 HStack(spacing: 0) {
                     Button {
-                        viewModel.isShowingCategoryModal = false
+                        self.isShowingCategoryModal = false
                     } label: {
                         Text(TextLiteral.close)
                             .foregroundColor(.gray5)
@@ -42,7 +43,7 @@ struct CategoryModalView: View {
                 
                 LazyVGrid(columns: gridLayout, spacing: 12) {
                     ForEach(Category.allCases, id: \.self) { item in
-                        CategoryButton(item: item, items: $viewModel.selectedCategories)
+                        CategoryButton(item: item, items: $selectedCategories)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -51,19 +52,19 @@ struct CategoryModalView: View {
                     .frame(height: screenHeight * 0.7 * 0.04)
                 
                 Button(action: {
-                    viewModel.isShowingCategoryModal = false
+                    isShowingCategoryModal = false
                 }, label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(!viewModel.selectedCategories.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13) )
+                            .foregroundColor(!selectedCategories.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13) )
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text(TextLiteral.done)
-                            .foregroundColor(!viewModel.selectedCategories.isEmpty ? .textIcon : .textButtonDisable)
+                            .foregroundColor(!selectedCategories.isEmpty ? .textIcon : .textButtonDisable)
                             .shortcutsZipBody1()
                     }
                 })
-                .disabled(viewModel.selectedCategories.isEmpty)
+                .disabled(selectedCategories.isEmpty)
                 .padding(.horizontal, 16)
             }
         }
@@ -99,11 +100,5 @@ struct CategoryModalView: View {
                 
             })
         }
-    }
-}
-
-struct CategoryModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryModalView(viewModel: WriteShortcutModalViewModel(isShowingIconModal: false, isShowingCategoryModal: true, iconColor: "", iconSymbol: ""))
     }
 }

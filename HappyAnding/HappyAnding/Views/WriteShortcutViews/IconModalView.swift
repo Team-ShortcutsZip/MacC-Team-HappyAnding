@@ -11,6 +11,10 @@ struct IconModalView: View {
     
     @StateObject var viewModel: WriteShortcutModalViewModel
     
+    @Binding var isShowingIconModal: Bool
+    @Binding var iconColor: String
+    @Binding var iconSymbol: String
+    
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -18,7 +22,7 @@ struct IconModalView: View {
             VStack {
                 HStack(spacing: 0) {
                     Button {
-                        viewModel.isShowingIconModal = false
+                        self.isShowingIconModal = false
                     } label: {
                         Text(TextLiteral.close)
                             .foregroundColor(.gray5)
@@ -45,12 +49,12 @@ struct IconModalView: View {
                             .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
                         
                         Rectangle()
-                            .fill(Color.fetchGradient(color: viewModel.iconColor))
+                            .fill(Color.fetchGradient(color: iconColor))
                             .aspectRatio(contentMode: .fit)
                             .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
                             .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
                         
-                        Image(systemName: viewModel.iconSymbol)
+                        Image(systemName: iconSymbol)
                             .font(.system(size: UIScreen.screenHeight > 700 ? 48 : 32))
                             .aspectRatio(contentMode: .fit)
                             .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
@@ -66,7 +70,7 @@ struct IconModalView: View {
                     
                     LazyVGrid(columns: gridLayout, spacing: 12) {
                         ForEach(viewModel.colors, id: \.self) { item in
-                            ColorCell(iconColor: $viewModel.iconColor, paletteColor: item)
+                            ColorCell(iconColor: $iconColor, paletteColor: item)
                         }
                     }
                     .padding(.horizontal, 16)
@@ -87,10 +91,10 @@ struct IconModalView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.top, 12)
                                     .id(key)
-                                
+
                                 LazyVGrid(columns: gridLayout, spacing: 12) {
                                     ForEach(viewModel.symbols[key] ?? [], id: \.self) { value in
-                                        SymbolCell(iconSymbol: $viewModel.iconSymbol, paletteSymbol: value)
+                                        SymbolCell(iconSymbol: $iconSymbol, paletteSymbol: value)
                                     }
                                 }
                             }
@@ -131,19 +135,19 @@ struct IconModalView: View {
                 .scrollIndicators(.hidden)
                 
                 Button {
-                    viewModel.isShowingIconModal = false
+                    self.isShowingIconModal = false
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(!viewModel.iconColor.isEmpty && !viewModel.iconSymbol.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
+                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text(TextLiteral.done)
-                            .foregroundColor(!viewModel.iconColor.isEmpty && !viewModel.iconSymbol.isEmpty ? .textButton : .textButtonDisable)
+                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .textButton : .textButtonDisable)
                             .shortcutsZipBody1()
                     }
                 }
-                .disabled(viewModel.iconColor.isEmpty || viewModel.iconSymbol.isEmpty)
+                .disabled(iconColor.isEmpty || iconSymbol.isEmpty)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
             }
@@ -200,11 +204,5 @@ struct IconModalView: View {
                 }
             }
         }
-    }
-}
-
-struct IconModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        IconModalView(viewModel: WriteShortcutModalViewModel(isShowingIconModal: true, isShowingCategoryModal: false, iconColor: "Red", iconSymbol: "system"))
     }
 }

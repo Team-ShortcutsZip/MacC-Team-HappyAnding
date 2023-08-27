@@ -85,7 +85,7 @@ struct WriteShortcutView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         viewModel.uploadShortcut()
-                        
+                        self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text(TextLiteral.upload)
                             .shortcutsZipHeadline()
@@ -117,10 +117,10 @@ struct WriteShortcutView: View {
         })
         .sheet(isPresented: $viewModel.isShowingIconModal) {
             IconModalView(
-                viewModel: WriteShortcutModalViewModel(isShowingIconModal: viewModel.isShowingIconModal,
-                                                       isShowingCategoryModal: false,
-                                                       iconColor: viewModel.shortcut.color,
-                                                       iconSymbol: viewModel.shortcut.sfSymbol))
+                viewModel: WriteShortcutModalViewModel(),
+                isShowingIconModal: $viewModel.isShowingIconModal,
+                iconColor: $viewModel.shortcut.color,
+                iconSymbol: $viewModel.shortcut.sfSymbol)
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
@@ -232,10 +232,8 @@ struct WriteShortcutView: View {
                 })
                 .sheet(isPresented: $isShowingCategoryModal) {
                     CategoryModalView(
-                        viewModel: WriteShortcutModalViewModel(isShowingIconModal: false,
-                                                               isShowingCategoryModal:isShowingCategoryModal,
-                                                               iconColor: "",
-                                                               iconSymbol: ""))
+                        isShowingCategoryModal: $isShowingCategoryModal,
+                        selectedCategories: $selectedCategories )
                         .presentationDetents([.fraction(0.7)])
                         .presentationDragIndicator(.visible)
                 }

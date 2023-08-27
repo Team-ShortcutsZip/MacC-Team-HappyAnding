@@ -13,8 +13,6 @@ final class WriteShortcutViewModel: ObservableObject {
     var shortcutsZipViewModel = ShortcutsZipViewModel.share
     var writeShortcutNavigation = WriteShortcutNavigation()
     
-    @Published var isWriting: Bool
-    
     @Published var isInfoButtonTouched = false
     
     @Published var isShowingIconModal = false
@@ -49,13 +47,11 @@ final class WriteShortcutViewModel: ObservableObject {
     let isEdit: Bool
     
     
-    init(isWriting: Bool, isEdit: Bool){
-        self.isWriting = isWriting
+    init(isEdit: Bool){
         self.isEdit = isEdit
     }
     
-    init(isWriting: Bool, isEdit: Bool, shortcut: Shortcuts){
-        self.isWriting = isWriting
+    init(isEdit: Bool, shortcut: Shortcuts){
         self.isEdit = isEdit
         self.shortcut = shortcut
     }
@@ -75,12 +71,9 @@ final class WriteShortcutViewModel: ObservableObject {
             //새로운 단축어 생성 및 저장
             // 뷰모델에 추가
             shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
-            
         }
         // 서버에 추가 또는 수정
         shortcutsZipViewModel.setData(model: shortcut)
-        
-        isWriting.toggle()
         
         if #available(iOS 16.1, *) {
             writeShortcutNavigation.navigationPath = .init()

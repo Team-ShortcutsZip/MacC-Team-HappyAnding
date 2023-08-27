@@ -13,22 +13,6 @@ final class WriteShortcutModalViewModel: ObservableObject {
     @Published var selectedCategory = ""
     @Published var categories: [String] = []
     
-    @Published var isShowingIconModal: Bool
-    @Published var isShowingCategoryModal: Bool
-    
-    @Published var iconColor: String
-    @Published var iconSymbol: String
-    
-    
-    @Published var selectedCategories: [String] = []
-    
-    init(isShowingIconModal: Bool, isShowingCategoryModal: Bool, iconColor: String, iconSymbol: String) {
-        self.isShowingIconModal = isShowingIconModal
-        self.isShowingCategoryModal = isShowingCategoryModal
-        self.iconColor = iconColor
-        self.iconSymbol = iconSymbol
-    }
-    
     let symbols = [
         "기호": ["square.2.layers.3d", "barcode", "qrcode", "square.and.arrow.down.fill", "square.and.arrow.up.fill", "info.circle.fill", "face.smiling", "xmark.square", "doc.richtext", "square.grid.2x2.fill", "ellipsis", "checklist", "square.grid.4x3.fill", "rays", "circle.dotted", "peacesign", "airplayaudio", "airplayvideo", "music.note.list", "music.note", "waveform.path", "slowmo", "timelapse", "plus.square.fill.on.square.fill", "qrcode.viewfinder"],
         "연결": ["chart.bar.fill", "externaldrive.connected.to.line.below.fill", "network", "icloud.fill", "dot.radiowaves.right", "dot.radiowaves.up.forward", "wifi"],

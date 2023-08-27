@@ -88,10 +88,10 @@ struct ShareExtensionWriteShortcutView: View {
             }
         })
         .sheet(isPresented: $isShowingIconModal) {
-            IconModalView(viewModel: WriteShortcutModalViewModel(isShowingIconModal: isShowingIconModal,
-                                                                 isShowingCategoryModal: false,
-                                                                 iconColor: shareExtensionViewModel.shortcut.color,
-                                                                 iconSymbol: shareExtensionViewModel.shortcut.sfSymbol))
+            IconModalView(viewModel: WriteShortcutModalViewModel(),
+                          isShowingIconModal: $isShowingIconModal,
+                          iconColor: $shareExtensionViewModel.shortcut.color,
+                          iconSymbol: $shareExtensionViewModel.shortcut.sfSymbol)
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
@@ -206,15 +206,14 @@ struct ShareExtensionWriteShortcutView: View {
                             .strokeBorder(selectedCategories.isEmpty ? Color.gray2 : Color.gray4, lineWidth: 1)
                     )
                 })
-                .sheet(isPresented: $isShowingCategoryModal) {
-                    CategoryModalView(viewModel: WriteShortcutModalViewModel(isShowingIconModal: false,
-                                                                             isShowingCategoryModal: isShowingCategoryModal,
-                                                                             iconColor: "",
-                                                                             iconSymbol: "")
-                    )
-                    .presentationDetents([.fraction(0.7)])
-                    .presentationDragIndicator(.visible)
-                }
+//                .sheet(isPresented: $isShowingCategoryModal) {
+//                    CategoryModalView(viewModel: WriteShortcutModalViewModel(isShowingCategoryModal: isShowingCategoryModal),
+//                                      isShowingCategoryModal: $isShowingCategoryModal,
+//                                      selectedCategories: $shareExtensionViewModel.shortcut.category
+//                    )
+//                    .presentationDetents([.fraction(0.7)])
+//                    .presentationDragIndicator(.visible)
+//                }
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
