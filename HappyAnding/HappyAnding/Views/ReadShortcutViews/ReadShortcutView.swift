@@ -456,6 +456,7 @@ extension ReadShortcutView {
                     Text(.init(viewModel.shortcut.description))
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray5)
+                        .tint(.shortcutsZipPrimary)
                         .lineLimit(nil)
                 }
                 
