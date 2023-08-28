@@ -12,8 +12,7 @@ struct CategoryModalView: View {
     @Binding var isShowingCategoryModal: Bool
     @Binding var selectedCategories: [String]
     
-    var screenHeight = UIScreen.screenHeight
-    
+    private let screenHeight = UIScreen.screenHeight
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -101,11 +100,5 @@ struct CategoryModalView: View {
                 
             })
         }
-    }
-}
-
-struct CategoryModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryModalView(isShowingCategoryModal: .constant(true), selectedCategories: .constant(["finance"]))
     }
 }

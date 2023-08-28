@@ -18,41 +18,11 @@ struct WriteShortcutView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    @EnvironmentObject var writeShortcutNavigation: WriteShortcutNavigation
-    
     @FocusState var focusedField: FocusableField?
+    @StateObject var viewModel: WriteShortcutViewModel
     
-    @Binding var isWriting: Bool
+    private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
-    @State var isInfoButtonTouched = false
-    
-    @State var isShowingIconModal = false
-    @State var isNameValid = false
-    @State var isLinkValid = false
-    @State var isOneLineValid = false
-    @State var isMultiLineValid = false
-    @State var isShowingCategoryModal = false
-    @State var isRequirementValid = false
-    
-    @State var existingCategory: [String] = []
-    @State var newCategory: [String] = []
-    
-    @State var shortcut = Shortcuts(sfSymbol: "",
-                                    color: "",
-                                    title: "",
-                                    subtitle: "",
-                                    description: "",
-                                    category: [String](),
-                                    requiredApp: [String](),
-                                    numberOfLike: 0,
-                                    numberOfDownload: 0,
-                                    author: "",
-                                    shortcutRequirements: "",
-                                    downloadLink: [""],
-                                    curationIDs: [String]())
-    
-    let isEdit: Bool
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -98,7 +68,7 @@ struct WriteShortcutView: View {
                 }
             }
             .background(Color.shortcutsZipBackground)
-            .navigationTitle(isEdit ? TextLiteral.writeShortcutViewEdit : TextLiteral.writeShortcutViewPost)
+            .navigationTitle(viewModel.isEdit ? TextLiteral.writeShortcutViewEdit : TextLiteral.writeShortcutViewPost)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -114,76 +84,43 @@ struct WriteShortcutView: View {
                 // MARK: -업로드 버튼
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        if let index = shortcutsZipViewModel.allShortcuts.firstIndex(where: {$0.id == shortcut.id}) {
-                            shortcutsZipViewModel.allShortcuts[index] = shortcut
-                        }
-                        
-                        shortcut.author = shortcutsZipViewModel.currentUser()
-                        if isEdit {
-                            //단축어 수정
-                            //뷰모델의 카테고리별 단축어 목록에서 정보 수정 및 해당 단축어가 포함된 큐레이션 수정
-                            shortcutsZipViewModel.updateShortcut(existingCategory: existingCategory, newCategory: shortcut.category, shortcut: shortcut)
-                            
-                        } else {
-                            //새로운 단축어 생성 및 저장
-                            // 뷰모델에 추가
-                            shortcutsZipViewModel.shortcutsMadeByUser.insert(shortcut, at: 0)
-                            
-                        }
-                        // 서버에 추가 또는 수정
-                        shortcutsZipViewModel.setData(model: shortcut)
-                        
-                        isWriting.toggle()
-                        
-                        if #available(iOS 16.1, *) {
-                            writeShortcutNavigation.navigationPath = .init()
-                        }
-                        
+                        viewModel.uploadShortcut()
+                        self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text(TextLiteral.upload)
                             .shortcutsZipHeadline()
                             .foregroundColor(.shortcutsZipPrimary)
-                            .opacity(isUnavailableUploadButton() ? 0.3 : 1)
+                            .opacity(viewModel.isUnavailableUploadButton() ? 0.3 : 1)
                     })
-                    .disabled(isUnavailableUploadButton())
+                    .disabled(viewModel.isUnavailableUploadButton())
                 }
             }
         }
     }
     
-    private func isUnavailableUploadButton() -> Bool {
-        shortcut.color.isEmpty ||
-        shortcut.sfSymbol.isEmpty ||
-        shortcut.title.isEmpty ||
-        !isNameValid ||
-        shortcut.downloadLink.isEmpty ||
-        !isLinkValid ||
-        shortcut.subtitle.isEmpty ||
-        !isOneLineValid ||
-        shortcut.description.isEmpty ||
-        !isMultiLineValid || shortcut.category.isEmpty
-    }
+    
     
     //MARK: -아이콘 모달 버튼
     private var iconModalView: some View {
         Button(action: {
-            isShowingIconModal = true
+            viewModel.isShowingIconModal = true
         }, label: {
             ZStack(alignment: .center) {
                 Rectangle()
-                    .fill(!shortcut.sfSymbol.isEmpty ? Color.fetchGradient(color: shortcut.color) : Color.fetchDefualtGradient())
+                    .fill(!viewModel.shortcut.sfSymbol.isEmpty ? Color.fetchGradient(color: viewModel.shortcut.color) : Color.fetchDefaultGradient())
                     .cornerRadius(12.35)
-                    .frame(width: 84, height: 84)
-                Image(systemName: !shortcut.sfSymbol.isEmpty ? shortcut.sfSymbol : "plus")
+                Image(systemName: !viewModel.shortcut.sfSymbol.isEmpty ? viewModel.shortcut.sfSymbol : "plus")
                     .mediumIcon()
-                    .frame(width: 84, height: 84)
-                    .foregroundColor(!shortcut.sfSymbol.isEmpty ? .textIcon : .gray5)
+                    .foregroundColor(!viewModel.shortcut.sfSymbol.isEmpty ? .textIcon : .gray5)
             }
+            .frame(width: 84, height: 84)
         })
-        .sheet(isPresented: $isShowingIconModal) {
-            IconModalView(isShowingIconModal: $isShowingIconModal,
-                          iconColor: $shortcut.color,
-                          iconSymbol: $shortcut.sfSymbol)
+        .sheet(isPresented: $viewModel.isShowingIconModal) {
+            IconModalView(
+                viewModel: WriteShortcutModalViewModel(),
+                isShowingIconModal: $viewModel.isShowingIconModal,
+                iconColor: $viewModel.shortcut.color,
+                iconSymbol: $viewModel.shortcut.sfSymbol)
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
@@ -199,8 +136,8 @@ struct WriteShortcutView: View {
                                  placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
                                  lengthLimit: 20,
                                  isDownloadLinkTextField: false,
-                                 content: $shortcut.title,
-                                 isValid: $isNameValid
+                                 content: $viewModel.shortcut.title,
+                                 isValid: $viewModel.isNameValid
         )
         .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
@@ -213,8 +150,8 @@ struct WriteShortcutView: View {
                                  placeholder: TextLiteral.writeShortcutViewLinkPlaceholder,
                                  lengthLimit: nil,
                                  isDownloadLinkTextField: true,
-                                 content: $shortcut.downloadLink[0],
-                                 isValid: $isLinkValid
+                                 content: $viewModel.shortcut.downloadLink[0],
+                                 isValid: $viewModel.isLinkValid
         )
     }
     
@@ -226,8 +163,8 @@ struct WriteShortcutView: View {
                                  placeholder: TextLiteral.writeShortcutViewOneLinePlaceholder,
                                  lengthLimit: 20,
                                  isDownloadLinkTextField: false,
-                                 content: $shortcut.subtitle,
-                                 isValid: $isOneLineValid
+                                 content: $viewModel.shortcut.subtitle,
+                                 isValid: $viewModel.isOneLineValid
         )
     }
     
@@ -239,8 +176,8 @@ struct WriteShortcutView: View {
                                  placeholder: TextLiteral.writeShortcutViewMultiLinePlaceholder,
                                  lengthLimit: 300,
                                  isDownloadLinkTextField: false,
-                                 content: $shortcut.description,
-                                 isValid: $isMultiLineValid
+                                 content: $viewModel.shortcut.description,
+                                 isValid: $viewModel.isMultiLineValid
         )
     }
     
@@ -258,7 +195,7 @@ struct WriteShortcutView: View {
             }
             .padding(.horizontal, 16)
             
-            categoryList(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $shortcut.category)
+            categoryList(isShowingCategoryModal: $viewModel.isShowingCategoryModal, selectedCategories: $viewModel.shortcut.category)
                 .padding(.top, 2)
         }
     }
@@ -294,7 +231,9 @@ struct WriteShortcutView: View {
                     )
                 })
                 .sheet(isPresented: $isShowingCategoryModal) {
-                    CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
+                    CategoryModalView(
+                        isShowingCategoryModal: $isShowingCategoryModal,
+                        selectedCategories: $selectedCategories )
                         .presentationDetents([.fraction(0.7)])
                         .presentationDragIndicator(.visible)
                 }
@@ -319,14 +258,14 @@ struct WriteShortcutView: View {
                     .smallIcon()
                     .foregroundColor(.gray4)
                     .onTapGesture {
-                        isInfoButtonTouched.toggle()
+                        viewModel.isInfoButtonTouched.toggle()
                     }
             }
             .padding(.horizontal, 16)
             ZStack(alignment: .top) {
-                relatedAppList(relatedApps: $shortcut.requiredApp)
+                relatedAppList(viewModel: viewModel)
                     .padding(.bottom, 44)
-                if isInfoButtonTouched {
+                if viewModel.isInfoButtonTouched {
                     ZStack(alignment: .center) {
                         RoundedRectangle(cornerRadius: 12)
                             .frame(maxWidth: .infinity, maxHeight: 68)
@@ -342,7 +281,7 @@ struct WriteShortcutView: View {
                                 .frame(width: 16, height: 16)
                                 .foregroundColor(.gray1)
                                 .onTapGesture {
-                                    isInfoButtonTouched = false
+                                    viewModel.isInfoButtonTouched = false
                                 }
                         }
                         .padding(.horizontal, 20)
@@ -355,39 +294,36 @@ struct WriteShortcutView: View {
     struct relatedAppList: View {
         @FocusState private var isFocused: Bool
         
-        @Binding var relatedApps: [String]
-        
-        @State var isTextFieldShowing = false
-        @State var relatedApp = ""
+        @StateObject var viewModel: WriteShortcutViewModel
         
         var body: some View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
-                    ForEach(relatedApps, id:\.self) { item in
-                        RelatedAppTag(items: $relatedApps, item: item)
+                    ForEach(viewModel.shortcut.requiredApp, id:\.self) { item in
+                        RelatedAppTag(viewModel: viewModel, item: item)
                     }
                     
-                    if isTextFieldShowing {
-                        TextField("", text: $relatedApp)
-                            .modifier(ClearButton(text: $relatedApp))
+                    if viewModel.isTextFieldShowing {
+                        TextField("", text: $viewModel.relatedApp)
+                            .modifier(ClearButton(text: $viewModel.relatedApp))
                             .focused($isFocused)
                             .onAppear {
                                 isFocused = true
                             }
                             .onChange(of: isFocused) { _ in
                                 if !isFocused {
-                                    if !relatedApp.isEmpty {
-                                        relatedApps.append(relatedApp)
-                                        relatedApp = ""
+                                    if !viewModel.relatedApp.isEmpty {
+                                        viewModel.shortcut.requiredApp.append(viewModel.relatedApp)
+                                        viewModel.relatedApp = ""
                                     }
-                                    isTextFieldShowing = false
+                                    viewModel.isTextFieldShowing = false
                                 }
                             }
                             .modifier(CellModifier(foregroundColor: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
                     }
                     
                     Button(action: {
-                        isTextFieldShowing = true
+                        viewModel.isTextFieldShowing = true
                         isFocused = true
                     }, label: {
                         HStack {
@@ -404,7 +340,7 @@ struct WriteShortcutView: View {
         }
     }
     struct RelatedAppTag: View {
-        @Binding var items: [String]
+        @StateObject var viewModel: WriteShortcutViewModel
         
         var item: String
         
@@ -413,7 +349,7 @@ struct WriteShortcutView: View {
                 Text(item)
                 
                 Button(action: {
-                    items.removeAll { $0 == item }
+                    viewModel.shortcut.requiredApp.removeAll { $0 == item }
                 }, label: {
                     Image(systemName: "xmark")
                         .smallIcon()
@@ -424,7 +360,7 @@ struct WriteShortcutView: View {
                                    strokeColor: Color.gray4))
         }
     }
-    struct CellModifier: ViewModifier {
+    private struct CellModifier: ViewModifier {
         @State var foregroundColor: Color
         @State var backgroundColor = Color.clear
         @State var strokeColor: Color

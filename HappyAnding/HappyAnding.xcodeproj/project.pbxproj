@@ -127,6 +127,8 @@
 		F91A72C32999160E00CA135A /* Alerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91A72C22999160E00CA135A /* Alerter.swift */; };
 		F91F09DD29AE012600E04FA0 /* ShortcutGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */; };
 		F91F09DF29AE0B5E00E04FA0 /* GradeAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91F09DE29AE0B5E00E04FA0 /* GradeAlertView.swift */; };
+		F92766552A61A032009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92766542A61A032009C4EC2 /* WriteShortcutModalViewModel.swift */; };
+		F92766562A61A0E5009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92766542A61A032009C4EC2 /* WriteShortcutModalViewModel.swift */; };
 		F94B432E2907088400987819 /* UserCurationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94B432D2907088400987819 /* UserCurationListView.swift */; };
 		F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435C2907B19A00987819 /* FirebaseAnalytics */; };
 		F94B435F2907B19A00987819 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F94B435E2907B19A00987819 /* FirebaseAuth */; };
@@ -141,6 +143,7 @@
 		F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* UIFont+Extension.swift */; };
 		F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
+		F9AFF6E32A59153B00FFFFAD /* WriteShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AFF6E22A59153B00FFFFAD /* WriteShortcutViewModel.swift */; };
 		F9BA11D329A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9BA11D429A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9CAEF832914855900224B0A /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+String.swift */; };
@@ -292,6 +295,7 @@
 		F91A72C22999160E00CA135A /* Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerter.swift; sourceTree = "<group>"; };
 		F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutGrade.swift; sourceTree = "<group>"; };
 		F91F09DE29AE0B5E00E04FA0 /* GradeAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAlertView.swift; sourceTree = "<group>"; };
+		F92766542A61A032009C4EC2 /* WriteShortcutModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteShortcutModalViewModel.swift; sourceTree = "<group>"; };
 		F94B432D2907088400987819 /* UserCurationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationListView.swift; sourceTree = "<group>"; };
 		F96D45B62980301F000C2441 /* SubtitleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTextView.swift; sourceTree = "<group>"; };
 		F96D45BA29804057000C2441 /* EnvironmentValues+Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Alerter.swift"; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 		F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCell.swift; sourceTree = "<group>"; };
 		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
 		F9AC2BB92935D34C00165820 /* Image+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+View.swift"; sourceTree = "<group>"; };
+		F9AFF6E22A59153B00FFFFAD /* WriteShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteShortcutViewModel.swift; sourceTree = "<group>"; };
 		F9BA11D229A389EA00176807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9CAEF822914855900224B0A /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionValidationTextField.swift; sourceTree = "<group>"; };
@@ -668,6 +673,8 @@
 				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
 				4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */,
 				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
+				F9AFF6E22A59153B00FFFFAD /* WriteShortcutViewModel.swift */,
+				F92766542A61A032009C4EC2 /* WriteShortcutModalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -945,6 +952,7 @@
 				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
 				F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */,
 				8795A170292AB945004B765F /* UIScreen+Size.swift in Sources */,
+				F9AFF6E32A59153B00FFFFAD /* WriteShortcutViewModel.swift in Sources */,
 				8786B2E629A7F987000B46A1 /* String+Date.swift in Sources */,
 				F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */,
 				4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */,
@@ -992,6 +1000,7 @@
 				87E99CCD290145CC009B691F /* AdminCurationCell.swift in Sources */,
 				8786B2E229A7F93B000B46A1 /* View+UIFont.swift in Sources */,
 				87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */,
+				F92766552A61A032009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */,
 				A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */,
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
 				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
@@ -1039,6 +1048,7 @@
 				A3439AF529395A100043E273 /* UserAuth.swift in Sources */,
 				A31F1846292A638700AF4A82 /* (null) in Sources */,
 				F9DB8EB92939853D00516CE1 /* ShareExtensionValidationTextField.swift in Sources */,
+				F92766562A61A0E5009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */,
 				8786B2EA29A7F9E7000B46A1 /* View+NavigationBar.swift in Sources */,
 				A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */,
 				A35DB3392927E9630011A28B /* CustomShareNavigationController.swift in Sources */,
