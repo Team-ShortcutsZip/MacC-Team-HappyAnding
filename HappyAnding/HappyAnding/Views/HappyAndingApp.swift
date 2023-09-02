@@ -138,11 +138,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
-        
-        print(userInfo)
+        Messaging.messaging().appDidReceiveMessage(userInfo)
         
         completionHandler(UIBackgroundFetchResult.newData)
     }
@@ -162,8 +158,6 @@ extension AppDelegate: MessagingDelegate {
         
         // TODO: If necessary send token to application server.
         
-        print("================== 토큰 =========================")
-        print(dataDict)
     }
 }
 
@@ -176,13 +170,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo = notification.request.content.userInfo
         
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
-        
-        
-        print(userInfo)
-        
+        // 알림 수신 정보를 애널리틱스에 전달
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+                
         completionHandler([[.banner, .badge, .sound]])
     }
     
@@ -192,11 +182,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo = response.notification.request.content.userInfo
         
-        if let messageID = userInfo[gcmMessageIDKey] {
-            print("Message ID: \(messageID)")
-        }
-        
-        print(userInfo)
+        Messaging.messaging().appDidReceiveMessage(userInfo)
         
         completionHandler()
     }
