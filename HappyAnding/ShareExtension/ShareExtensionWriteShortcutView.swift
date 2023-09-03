@@ -143,17 +143,24 @@ struct ShareExtensionWriteShortcutView: View {
     
     //MARK: -단축어 이름
     private var shortcutTitleText: some View {
-        ShareExtensionValidationCheckTextField(textType: .mandatory,
-                                               isMultipleLines: false,
-                                               title: TextLiteral.writeShortcutViewNameTitle,
-                                               placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
-                                               lengthLimit: 20,
-                                               isDownloadLinkTextField: false,
-                                               content: $shareExtensionViewModel.shortcut.title,
-                                               isValid: $isNameValid,
-                                               isFocused: $isTextFocused,
-                                               index: 1
-        )
+        VStack(alignment: .leading) {
+            ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                                   isMultipleLines: false,
+                                                   title: TextLiteral.writeShortcutViewNameTitle,
+                                                   placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
+                                                   lengthLimit: 20,
+                                                   isDownloadLinkTextField: false,
+                                                   content: $shareExtensionViewModel.shortcut.title,
+                                                   isValid: $isNameValid,
+                                                   isFocused: $isTextFocused,
+                                                   index: 1
+            )
+            if isFetchingMetadata {
+                ProgressView()
+                    .frame(width: 20, height: 20)
+                    .padding(.horizontal, 16)
+            }
+        }
     }
     
     //MARK: -한줄 설명

@@ -230,16 +230,24 @@ struct WriteShortcutView: View {
     
     //MARK: -단축어 이름
     private var shortcutTitleText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: TextLiteral.writeShortcutViewNameTitle,
-                                 placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
-                                 lengthLimit: 20,
-                                 isDownloadLinkTextField: false,
-                                 content: $shortcut.title,
-                                 isValid: $isNameValid
-        )
-        .onAppear(perform : UIApplication.shared.hideKeyboard)
+        VStack(alignment: .leading) {
+            ValidationCheckTextField(textType: .mandatory,
+                                     isMultipleLines: false,
+                                     title: TextLiteral.writeShortcutViewNameTitle,
+                                     placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
+                                     lengthLimit: 20,
+                                     isDownloadLinkTextField: false,
+                                     content: $shortcut.title,
+                                     isValid: $isNameValid
+            )
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            if isFetchingMetadata {
+                ProgressView()
+                    .frame(width: 20, height: 20)
+                    .padding(.horizontal, 16)
+            }
+        }
+
     }
     
     //MARK: -한줄 설명
