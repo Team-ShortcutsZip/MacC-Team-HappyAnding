@@ -40,27 +40,28 @@ struct IconModalView: View {
                 .padding(.top, 24)
                 .padding(.bottom, 8)
                 
+                ZStack(alignment: .center) {
+                    Rectangle()
+                        .fill(Color.gray1)
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
+                        .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
+                    
+                    Rectangle()
+                        .fill(Color.fetchGradient(color: iconColor))
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
+                        .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
+                    
+                    Image(systemName: iconSymbol)
+                        .font(.system(size: UIScreen.screenHeight > 700 ? 48 : 32))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
+                        .foregroundColor(.textIcon)
+                }
+                .padding(.vertical, 24)
+                
                 ScrollView(.vertical) {
-                    ZStack(alignment: .center) {
-                        Rectangle()
-                            .fill(Color.gray1)
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
-                            .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
-                        
-                        Rectangle()
-                            .fill(Color.fetchGradient(color: iconColor))
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
-                            .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
-                        
-                        Image(systemName: iconSymbol)
-                            .font(.system(size: UIScreen.screenHeight > 700 ? 48 : 32))
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
-                            .foregroundColor(.textIcon)
-                    }
-                    .padding(.vertical, 24)
                     
                     Text(TextLiteral.iconModalViewColor)
                         .shortcutsZipSubtitle()
@@ -114,7 +115,7 @@ struct IconModalView: View {
                                                 .padding(.horizontal, 12)
                                                 .padding(.vertical, 6)
                                                 .foregroundColor(key == viewModel.selectedCategory ? Color.tagText : Color.gray4)
-                                                .background(key == viewModel.selectedCategory ? Color.shortcutsZipBackground : nil)
+                                                .background(key == viewModel.selectedCategory ? Color.tagBackground : nil)
                                                 .clipShape(Capsule())
                                                 .overlay(
                                                     Capsule()
