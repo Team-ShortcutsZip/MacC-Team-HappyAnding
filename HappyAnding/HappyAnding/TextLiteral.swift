@@ -136,7 +136,7 @@ enum TextLiteral {
     static let readShortcutContentViewRequirements: String = "단축어 사용을 위한 요구사항"
     
     // MARK: - ReadShortcutVersionView
-    static let readShortcutVersionViewNoUpdates: String = "업데이트된 버전이 없어요"
+    static let readShortcutVersionViewNoUpdates: String = "최신 버전의 단축어에요"
     static let readShortcutVersionViewUpdateContent: String = "업데이트 내용"
     static let readShortcutVersionViewDownloadPreviousVersion: String = "이전 버전 다운로드"
     

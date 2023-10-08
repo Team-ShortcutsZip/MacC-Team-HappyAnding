@@ -555,17 +555,6 @@ extension ReadShortcutView {
                         .lineLimit(nil)
                 }
                 
-                VStack(alignment: .leading) {
-                    Text(TextLiteral.readShortcutContentViewPostedDate)
-                        .shortcutsZipBody2()
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.gray6)
-                    Text(shortcut.date.first?.getVersionUpdateDateFormat() ?? "")
-                        .shortcutsZipBody2()
-                        .foregroundColor(Color.gray5)
-                        .lineLimit(nil)
-                }
-                
                 splitList(title: TextLiteral.readShortcutContentViewCategory, content: shortcut.category)
                 
                 if !shortcut.requiredApp.isEmpty {
@@ -573,7 +562,6 @@ extension ReadShortcutView {
                 }
                 
                 Spacer()
-//                    .frame(maxHeight: .infinity)
             }
             .padding(.top, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -625,10 +613,21 @@ extension ReadShortcutView {
             VStack(alignment: .leading, spacing: 16) {
                 
                 if shortcut.updateDescription.count == 1 {
+                    HStack {
+                        Text("Ver 1.0")
+                            .shortcutsZipBody2()
+                            .foregroundColor(.gray5)
+                        
+                        Spacer()
+                        
+                        Text(shortcut.date.first?.getVersionUpdateDateFormat() ?? "")
+                            .shortcutsZipBody2()
+                            .foregroundColor(.gray3)
+                    }
+
                     Text(TextLiteral.readShortcutVersionViewNoUpdates)
                         .shortcutsZipBody2()
                         .foregroundColor(.gray4)
-                        .padding(.top, 16)
                 } else {
                     Text(TextLiteral.readShortcutVersionViewUpdateContent)
                         .shortcutsZipBody2()
