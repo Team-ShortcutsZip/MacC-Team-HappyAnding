@@ -542,12 +542,13 @@ extension ReadShortcutView {
         
         
         var body: some View {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 32) {
                 
                 VStack(alignment: .leading) {
                     Text(TextLiteral.readShortcutContentViewDescription)
                         .shortcutsZipBody2()
-                        .foregroundColor(Color.gray4)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.gray6)
                     Text(shortcut.description)
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray5)
@@ -557,7 +558,8 @@ extension ReadShortcutView {
                 VStack(alignment: .leading) {
                     Text(TextLiteral.readShortcutContentViewPostedDate)
                         .shortcutsZipBody2()
-                        .foregroundColor(Color.gray4)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.gray6)
                     Text(shortcut.date.first?.getVersionUpdateDateFormat() ?? "")
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray5)
@@ -571,7 +573,7 @@ extension ReadShortcutView {
                 }
                 
                 Spacer()
-                    .frame(maxHeight: .infinity)
+//                    .frame(maxHeight: .infinity)
             }
             .padding(.top, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -583,7 +585,8 @@ extension ReadShortcutView {
                 
                 Text(title)
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.gray4)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.gray6)
                 
                 WrappingHStack(content, id: \.self, alignment: .leading, spacing: .constant(8), lineSpacing: 8) { item in
                     if Category.allCases.contains(where: { $0.rawValue == item }) {
