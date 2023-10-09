@@ -67,26 +67,37 @@ struct WriteShortcutView: View {
                     shortcutLinkText
                         .id(FocusableField.link)
                         .focused($focusedField, equals: .link)
-                        .onSubmit {
-                            
+                    
+                        .onChange(of: self.shortcut.downloadLink[0]) { newDownloadLink in
                             guard !isFetchingMetadata else { return }
                             
-                            isFetchingMetadata = true
-                            let metadataProvider = LPMetadataProvider()
-                            metadataProvider.startFetchingMetadata(for: URL(string: shortcut.downloadLink[0])!) { metadata, error in
-                                DispatchQueue.main.async {
-                                    isFetchingMetadata = false
-                                    
-                                    if error != nil {
-                                        return
-                                    }
-                                    
-                                    if shortcut.title == "" && isLinkValid {
-                                        shortcut.title = (metadata?.title!)!
-                                    }
-                                }
+                            guard !newDownloadLink.isEmpty, newDownloadLink.hasPrefix(TextLiteral.validationCheckTextFieldPrefix) else {
+                                return
                             }
                             
+                            isFetchingMetadata = true
+                            
+                            if let downloadURL = URL(string: newDownloadLink) {
+                                let metadataProvider = LPMetadataProvider()
+                                metadataProvider.startFetchingMetadata(for: downloadURL) { metadata, error in
+                                    DispatchQueue.main.async {
+                                        isFetchingMetadata = false
+                                        if error != nil {
+                                            return
+                                        }
+                                        if shortcut.title.isEmpty && isLinkValid {
+                                            if let metadataTitle = metadata?.title {
+                                                shortcut.title = metadataTitle
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                return
+                            }
+                        }
+                    
+                        .onSubmit {
                             focusedField = .title
                         }
                         .submitLabel(.next)
