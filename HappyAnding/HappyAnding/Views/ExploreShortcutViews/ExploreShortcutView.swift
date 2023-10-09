@@ -21,19 +21,6 @@ struct ExploreShortcutView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                
-                VStack(spacing: 20) {
-                    Button("SUCCESS") { hapticManager.notification(type: .success) }
-                    Button("WARNING") { hapticManager.notification(type: .warning) }
-                    Button("ERROR") { hapticManager.notification(type: .error) }
-                    Divider()
-                    Button("SOFT") { hapticManager.impact(style: .soft) }
-                    Button("LIGHT") { hapticManager.impact(style: .light) }
-                    Button("MEDIUM") { hapticManager.impact(style: .medium) }
-                    Button("RIGID") { hapticManager.impact(style: .rigid) }
-                    Button("HEAVY") { hapticManager.impact(style: .heavy) }
-                }
-                
                 VStack(spacing: 32) {
                     if isUpdateAnnnouncementShow {
                         Button {
