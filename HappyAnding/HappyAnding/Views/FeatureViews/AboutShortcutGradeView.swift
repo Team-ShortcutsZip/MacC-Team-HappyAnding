@@ -15,6 +15,8 @@ struct AboutShortcutGradeView: View {
     
     let shortcutGrade: [ShortcutGrade] = [.level0, .level1, .level2, .level3, .level4, .level5]
     
+    private let hapticManager = HapticManager.instance
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: 32) {
@@ -47,6 +49,7 @@ struct AboutShortcutGradeView: View {
                 .frame(width: UIScreen.screenWidth - 32)
             
             Button {
+                hapticManager.impact(style: .rigid)
                 withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
                     self.animationAmount += 360
                 }

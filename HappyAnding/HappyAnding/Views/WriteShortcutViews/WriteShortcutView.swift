@@ -21,6 +21,8 @@ struct WriteShortcutView: View {
     @FocusState var focusedField: FocusableField?
     @StateObject var viewModel: WriteShortcutViewModel
     
+    private let hapticManager = HapticManager.instance
+
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     
@@ -85,6 +87,7 @@ struct WriteShortcutView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         viewModel.uploadShortcut()
+                        hapticManager.notification(type: .success)
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text(TextLiteral.upload)

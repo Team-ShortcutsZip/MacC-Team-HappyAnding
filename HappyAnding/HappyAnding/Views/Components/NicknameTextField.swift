@@ -69,6 +69,8 @@ struct NicknameTextField: View {
     
     var initName = ""
     
+    private let hapticManager = HapticManager.instance
+
     var body: some View {
         
         VStack(alignment: .leading, spacing: 8) {
@@ -80,6 +82,9 @@ struct NicknameTextField: View {
                 Text(nicknameError.message)
                     .shortcutsZipFootnote()
                     .foregroundColor(.shortcutsZipError)
+                    .onAppear() {
+                        hapticManager.notification(type: .error)
+                    }
             } else {
                 Text(TextLiteral.nicknameTextFieldSpace)
                     .shortcutsZipFootnote()

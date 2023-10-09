@@ -77,6 +77,8 @@ struct ValidationCheckTextField: View {
     
     @FocusState private var isFocused: Bool
     
+    private let hapticManager = HapticManager.instance
+
     var body: some View {
         VStack {
             
@@ -117,6 +119,9 @@ struct ValidationCheckTextField: View {
                         .shortcutsZipBody2()
                         .foregroundColor(.shortcutsZipError)
                         .padding(.leading)
+                        .onAppear() {
+                            hapticManager.notification(type: .error)
+                        }
                 }
                 
                 Spacer()

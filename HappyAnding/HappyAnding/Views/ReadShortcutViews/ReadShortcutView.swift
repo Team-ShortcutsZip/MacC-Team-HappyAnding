@@ -23,6 +23,7 @@ struct ReadShortcutView: View {
     @Namespace var bottomID
     
     private let tabItems = [TextLiteral.readShortcutViewBasicTabTitle, TextLiteral.readShortcutViewVersionTabTitle, TextLiteral.readShortcutViewCommentTabTitle]
+    private let hapticManager = HapticManager.instance
     
     var body: some View {
         ZStack {
@@ -101,6 +102,7 @@ struct ReadShortcutView: View {
                                         viewModel.isDownloadingShortcut = true
                                         openURL(url)
                                     }
+                                    hapticManager.notification(type: .success)
                                     viewModel.updateNumberOfDownload(index: 0)
                                 } else {
                                     loginAlerter.isPresented = true
@@ -384,6 +386,8 @@ extension ReadShortcutView {
         
         @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
         
+        private let hapticManager = HapticManager.instance
+        
         var body: some View {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
@@ -411,6 +415,7 @@ extension ReadShortcutView {
                             if !useWithoutSignIn {
                                 viewModel.isMyLike.toggle()
                                 viewModel.numberOfLike += viewModel.isMyLike ? 1 : -1
+                                hapticManager.impact(style: .rigid)
                             } else {
                                 loginAlerter.isPresented = true
                             }

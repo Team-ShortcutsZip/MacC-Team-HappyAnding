@@ -13,6 +13,8 @@ struct UpdateShortcutView: View {
     
     @FocusState var isDescriptionFieldFocused: Bool
     
+    private let hapticManager = HapticManager.instance
+    
     var body: some View {
         VStack {
             HStack {
@@ -65,6 +67,7 @@ struct UpdateShortcutView: View {
             
             Button {
                 viewModel.updateShortcut()
+                hapticManager.notification(type: .success)
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
