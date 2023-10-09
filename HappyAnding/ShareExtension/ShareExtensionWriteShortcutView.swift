@@ -62,8 +62,8 @@ struct ShareExtensionWriteShortcutView: View {
                         return
                     }
                     
-                    if shareExtensionViewModel.shortcut.title == "" && isLinkValid {
-                        shareExtensionViewModel.shortcut.title = (metadata?.title!)!
+                    if shareExtensionViewModel.shortcut.title.isEmpty && isLinkValid {
+                        shareExtensionViewModel.shortcut.title = String((metadata?.title!.prefix(20))!)
                     }
                 }
             }

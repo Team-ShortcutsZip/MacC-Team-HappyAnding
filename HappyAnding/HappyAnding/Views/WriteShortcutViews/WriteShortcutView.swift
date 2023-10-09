@@ -87,7 +87,7 @@ struct WriteShortcutView: View {
                                         }
                                         if shortcut.title.isEmpty && isLinkValid {
                                             if let metadataTitle = metadata?.title {
-                                                shortcut.title = metadataTitle
+                                                shortcut.title = String(metadataTitle.prefix(20))
                                             }
                                         }
                                     }
