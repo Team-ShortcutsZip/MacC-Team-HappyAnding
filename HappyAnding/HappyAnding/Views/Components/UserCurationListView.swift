@@ -23,7 +23,7 @@ struct UserCurationListView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .bottom) {
-                SubtitleTextView(text: data.title ?? "")
+                SubtitleTextView(text: data.title.isEmpty ? "" : data.title)
                     .onTapGesture { }
                 Spacer()
                 
