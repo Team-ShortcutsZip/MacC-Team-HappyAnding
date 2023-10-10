@@ -88,11 +88,6 @@ struct MyPageShortcutListCell: View {
     var type: SectionType
     let shortcuts: [Shortcuts]
     
-    var data: NavigationListShortcutType {
-        NavigationListShortcutType(sectionType: self.type,
-                                   shortcuts: self.shortcuts,
-                                   navigationParentView: .myPage)
-    }
     var body: some View {
         HStack() {
             Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
@@ -119,6 +114,6 @@ struct MyPageShortcutListCell: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
-        .navigationLinkRouter(data: data)
+        .navigationLinkRouter(data: self.type)
     }
 }

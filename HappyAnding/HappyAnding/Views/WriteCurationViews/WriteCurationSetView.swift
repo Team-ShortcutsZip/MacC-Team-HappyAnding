@@ -16,12 +16,7 @@ struct WriteCurationSetView: View {
     
     @State var shortcutCells = [ShortcutCellModel]()
     @State var isSelected = false
-    @State var curation = Curation(title: "",
-                                   subtitle: "",
-                                   isAdmin: false,
-                                   background: "White",
-                                   author: "",
-                                   shortcuts: [ShortcutCellModel]())
+    @Binding var curation: Curation
     @State var isTappedQuestionMark: Bool = false
     @State var deletedShortcutCells = [ShortcutCellModel]()
     
@@ -121,11 +116,5 @@ struct WriteCurationSetView: View {
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 20)
-    }
-}
-
-struct WriteCurationSetView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteCurationSetView(isWriting: .constant(false), isEdit: false)
     }
 }
