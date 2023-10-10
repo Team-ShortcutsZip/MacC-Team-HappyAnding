@@ -453,9 +453,10 @@ extension ReadShortcutView {
                     Text(TextLiteral.readShortcutContentViewDescription)
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray4)
-                    Text(viewModel.shortcut.description)
+                    Text(.init(viewModel.shortcut.description))
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray5)
+                        .tint(.shortcutsZipPrimary)
                         .lineLimit(nil)
                 }
                 
@@ -464,9 +465,7 @@ extension ReadShortcutView {
                 if !viewModel.shortcut.requiredApp.isEmpty {
                     splitList(title: TextLiteral.readShortcutContentViewRequiredApps, content: viewModel.shortcut.requiredApp)
                 }
-                
                 Spacer()
-                    .frame(maxHeight: .infinity)
             }
             .padding(.top, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
