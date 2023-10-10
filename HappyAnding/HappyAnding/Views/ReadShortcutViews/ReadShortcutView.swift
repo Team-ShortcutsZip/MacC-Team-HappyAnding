@@ -447,12 +447,13 @@ extension ReadShortcutView {
         @StateObject var viewModel: ReadShortcutViewModel
         
         var body: some View {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 32) {
                 
                 VStack(alignment: .leading) {
                     Text(TextLiteral.readShortcutContentViewDescription)
                         .shortcutsZipBody2()
-                        .foregroundColor(Color.gray4)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.gray6)
                     Text(.init(viewModel.shortcut.description))
                         .shortcutsZipBody2()
                         .foregroundColor(Color.gray5)
@@ -477,7 +478,8 @@ extension ReadShortcutView {
                 
                 Text(title)
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.gray4)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.gray6)
                 
                 WrappingHStack(content, id: \.self, alignment: .leading, spacing: .constant(8), lineSpacing: 8) { item in
                     if Category.allCases.contains(where: { $0.rawValue == item }) {
@@ -515,10 +517,20 @@ extension ReadShortcutView {
             VStack(alignment: .leading, spacing: 16) {
                 
                 if viewModel.shortcut.updateDescription.count == 1 {
+                    HStack {
+                        Text("Ver 1.0")
+                            .shortcutsZipBody2()
+                            .foregroundColor(.gray5)
+                        
+                        Spacer()
+                        
+                        Text(viewModel.shortcut.date.first?.getVersionUpdateDateFormat() ?? "")
+                            .shortcutsZipBody2()
+                            .foregroundColor(.gray3)
+                    }
                     Text(TextLiteral.readShortcutVersionViewNoUpdates)
                         .shortcutsZipBody2()
                         .foregroundColor(.gray4)
-                        .padding(.top, 16)
                 } else {
                     Text(TextLiteral.readShortcutVersionViewUpdateContent)
                         .shortcutsZipBody2()
@@ -649,6 +661,12 @@ extension ReadShortcutView {
                             Text(comment.user_nickname)
                                 .shortcutsZipBody2()
                                 .foregroundColor(.gray4)
+                            
+                            Spacer()
+                            
+                            Text(comment.date.getVersionUpdateDateFormat())
+                                .shortcutsZipFootnote()
+                                .foregroundColor(.gray4)
                         }
                         .padding(.bottom, 4)
                         
@@ -657,6 +675,7 @@ extension ReadShortcutView {
                             .shortcutsZipBody2()
                             .foregroundColor(.gray5)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 4)
                         
                         /// 답글, 수정, 삭제 버튼
                         HStack(spacing: 0) {

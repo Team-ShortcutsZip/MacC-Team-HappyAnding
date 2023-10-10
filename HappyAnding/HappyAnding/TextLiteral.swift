@@ -130,12 +130,13 @@ enum TextLiteral {
     
     // MARK: - ReadShortcutContentView
     static let readShortcutContentViewDescription: String = "단축어 설명"
+    static let readShortcutContentViewPostedDate: String = "작성 날짜"
     static let readShortcutContentViewCategory: String = "카테고리"
     static let readShortcutContentViewRequiredApps: String = "단축어 사용에 필요한 앱"
     static let readShortcutContentViewRequirements: String = "단축어 사용을 위한 요구사항"
     
     // MARK: - ReadShortcutVersionView
-    static let readShortcutVersionViewNoUpdates: String = "업데이트된 버전이 없어요"
+    static let readShortcutVersionViewNoUpdates: String = "최신 버전의 단축어에요"
     static let readShortcutVersionViewUpdateContent: String = "업데이트 내용"
     static let readShortcutVersionViewDownloadPreviousVersion: String = "이전 버전 다운로드"
     
