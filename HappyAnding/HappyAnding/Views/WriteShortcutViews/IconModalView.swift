@@ -42,13 +42,9 @@ struct IconModalView: View {
                 
                 ZStack(alignment: .center) {
                     Rectangle()
-                        .fill(Color.gray1)
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
-                        .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
-                    
-                    Rectangle()
-                        .fill(Color.fetchGradient(color: iconColor))
+                        .foregroundStyle(iconColor.isEmpty
+                                         ? LinearGradient(colors: [Color.gray1, Color.gray2], startPoint: .topLeading, endPoint: .bottomTrailing)
+                                         : Color.fetchGradient(color: iconColor))
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(UIScreen.screenHeight > 700 ? 20 : 12.35)
                         .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
