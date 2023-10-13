@@ -126,11 +126,16 @@ extension ExploreShortcutView {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    
-                    ShortcutCell(shortcut: shortcut,
-                                 rankNumber: index + 1,
-                                 navigationParentView: .shortcuts)
-                    .navigationLinkRouter(data: shortcut)
+                    if (sectionType == .download) {
+                        ShortcutCell(shortcut: shortcut,
+                                     rankNumber: index + 1,
+                                     navigationParentView: .shortcuts)
+                        .navigationLinkRouter(data: shortcut)
+                    } else {
+                        ShortcutCell(shortcut: shortcut,
+                                     navigationParentView: .shortcuts)
+                        .navigationLinkRouter(data: shortcut)
+                    }
                 }
             }
             .background(Color.shortcutsZipBackground)
