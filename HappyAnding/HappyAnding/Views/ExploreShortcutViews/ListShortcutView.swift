@@ -30,12 +30,9 @@ struct ListShortcutView: View {
                     //TODO: 무한 스크롤을 위한 업데이트 함수 필요
                     makeShortcutCellList(viewModel.shortcuts)
                     
-                    Rectangle()
-                        .fill(Color.shortcutsZipBackground)
-                        .frame(height: 44)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
                 }
+                .padding(.top, 16)
+                .padding(.bottom, 44)
             }
             .listRowBackground(Color.shortcutsZipBackground)
             .listStyle(.plain)
