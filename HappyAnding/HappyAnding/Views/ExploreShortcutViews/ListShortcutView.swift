@@ -48,17 +48,10 @@ struct ListShortcutView: View {
     private func makeShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
         ForEach(shortcuts.indices, id: \.self) { index in
             let shortcut = shortcuts[index]
-            
-            if (viewModel.sectionType == .download) {
-                ShortcutCell(shortcut: shortcut,
-                             rankNumber: index + 1,
-                             navigationParentView: .shortcuts)
-                .navigationLinkRouter(data: shortcut)
-            } else {
-                ShortcutCell(shortcut: shortcut,
-                             navigationParentView: .shortcuts)
-                .navigationLinkRouter(data: shortcut)
-            }
+            ShortcutCell(shortcut: shortcut,
+                         rankNumber: (viewModel.sectionType == .download) ? index : nil,
+                         navigationParentView: .shortcuts)
+            .navigationLinkRouter(data: shortcut)
         }
     }
 }

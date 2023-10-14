@@ -47,7 +47,7 @@ struct ShortcutCell: View {
     )
     
     var shortcut: Shortcuts?
-    var rankNumber: Int = -1
+    var rankNumber: Int?
     var sectionType: SectionType?
     let navigationParentView: NavigationParentView
     
@@ -110,8 +110,8 @@ struct ShortcutCell: View {
     var shortcutInfo: some View {
         
         VStack(alignment: .leading, spacing: 0) {
-            if rankNumber != -1 {
-                Text("\(rankNumber)")
+            if (rankNumber != nil) {
+                Text(String(rankNumber! + 1))
                     .shortcutsZipSubtitle()
                     .foregroundColor(.gray4)
                     .padding(0)
