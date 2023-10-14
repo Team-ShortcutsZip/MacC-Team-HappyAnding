@@ -917,8 +917,9 @@ extension ShortcutsZipViewModel {
     
     func fetchComment(shortcutID: String) -> Comments {
         if let index = allComments.firstIndex(where: {$0.id == shortcutID}) {
-            allComments[index].comments = allComments[index].fetchSortedComment()
-            return allComments[index]
+            var allComments = self.allComments[index]
+            allComments.comments = allComments.fetchSortedComment()
+            return allComments
         }
         return Comments(id: shortcutID, comments: [])
     }

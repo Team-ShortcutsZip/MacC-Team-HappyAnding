@@ -116,7 +116,8 @@ struct ShareExtensionWriteShortcutView: View {
             }
         })
         .sheet(isPresented: $isShowingIconModal) {
-            IconModalView(isShowingIconModal: $isShowingIconModal,
+            IconModalView(viewModel: WriteShortcutModalViewModel(),
+                          isShowingIconModal: $isShowingIconModal,
                           iconColor: $shareExtensionViewModel.shortcut.color,
                           iconSymbol: $shareExtensionViewModel.shortcut.sfSymbol)
             .presentationDetents([.large])
@@ -242,9 +243,10 @@ struct ShareExtensionWriteShortcutView: View {
                     )
                 })
                 .sheet(isPresented: $isShowingCategoryModal) {
-                    CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal, selectedCategories: $selectedCategories)
-                        .presentationDetents([.fraction(0.7)])
-                        .presentationDragIndicator(.visible)
+                    CategoryModalView(isShowingCategoryModal: $isShowingCategoryModal,
+                                      selectedCategories: $selectedCategories)
+                    .presentationDetents([.fraction(0.7)])
+                    .presentationDragIndicator(.visible)
                 }
             }
             .padding(.horizontal, 16)

@@ -28,7 +28,6 @@ struct ShortcutTabView: View {
     @State private var tempCurationId = ""
     
     @State private var randomCategories = Category.allCases.shuffled().prefix(2)
-    @State var isFolded = true
     @State private var twiceTappedTab = 0
     
     @State private var firstTabID = UUID()
@@ -72,11 +71,6 @@ struct ShortcutTabView: View {
                         }
                         self.twiceTappedTab = 0
                     }
-                    .onChange(of: isFolded) { _ in
-                        withAnimation {
-                            proxy.scrollTo(999, anchor: .bottom)
-                        }
-                    }
                     .environmentObject(shortcutNavigation)
                     .tabItem {
                         Label("단축어", systemImage: "square.stack.3d.up.fill")
@@ -113,7 +107,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func firstTab() -> some View {
-        ExploreShortcutView(isCategoryCellViewFolded: $isFolded, randomCategories: Array(randomCategories))
+        ExploreShortcutView(viewModel: ExploreShortcutViewModel(), randomCategories: Array(randomCategories))
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(firstTabID)
@@ -152,8 +146,7 @@ struct ShortcutTabView: View {
         tempShortcutId  = shortcutIDfromURL
         isShortcutDeeplink = true
         
-        let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                              navigationParentView: .myPage)
+        let data = shortcutsZipViewModel.fetchShortcutDetail(id: tempShortcutId)
         navigateLink(data: data)
     }
     
