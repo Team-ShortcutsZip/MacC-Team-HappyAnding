@@ -28,7 +28,7 @@ struct AnnouncementCell: View {
                     Text(tagName)
                         .shortcutsZipFootnote()
                         .fontWeight(.bold)
-                        .foregroundColor(Color.tagText)
+                        .foregroundStyle(Color.tagText)
                         .frame(height: 20)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
@@ -42,7 +42,7 @@ struct AnnouncementCell: View {
                     Text(discription)
                         .shortcutsZipBody2()
                         .fontWeight(.semibold)
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                         .lineLimit(1)
                 }
                 
@@ -53,7 +53,7 @@ struct AnnouncementCell: View {
                 } label: {
                     Image(systemName: "xmark")
                         .shortcutsZipBody1()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                         .frame(width: 24, height: 24)
                 }
             }

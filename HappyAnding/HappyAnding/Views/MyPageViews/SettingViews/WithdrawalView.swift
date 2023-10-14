@@ -30,19 +30,19 @@ struct WithdrawalView: View {
             
             Text(TextLiteral.withdrawalViewHeadline)
                 .shortcutsZipTitle2()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .multilineTextAlignment(.leading)
                 .padding(.vertical, 32)
             
             ForEach(0..<signOutTitle.count, id: \.self) { index in
                 Text(signOutTitle[index])
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .padding(.bottom, 8)
                 
                 Text(signOutDescription[index])
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
                     .padding(.bottom, 16)
             }
             
@@ -51,13 +51,13 @@ struct WithdrawalView: View {
             HStack(spacing: 8) {
                 Image(systemName: isTappedCheckToggle ? "checkmark.square.fill" : "square")
                     .mediumIcon()
-                    .foregroundColor(isTappedCheckToggle ? .shortcutsZipPrimary : .gray4)
+                    .foregroundStyle(isTappedCheckToggle ? Color.shortcutsZipPrimary : Color.gray4)
                     .onTapGesture {
                         isTappedCheckToggle.toggle()
                     }
                 Text(TextLiteral.withdrawalViewAgree)
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
                     .multilineTextAlignment(.leading)
                     .onTapGesture {
                         self.isTappedCheckToggle.toggle()
@@ -72,11 +72,11 @@ struct WithdrawalView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(isTappedCheckToggle ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
+                        .foregroundStyle(isTappedCheckToggle ? Color.shortcutsZipPrimary : Color.shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text(TextLiteral.withdrawalViewButton)
-                        .foregroundColor(isTappedCheckToggle ? .textButton : .textButtonDisable )
+                        .foregroundStyle(isTappedCheckToggle ? Color.textButton : Color.textButtonDisable )
                         .shortcutsZipBody1()
                 }
             }

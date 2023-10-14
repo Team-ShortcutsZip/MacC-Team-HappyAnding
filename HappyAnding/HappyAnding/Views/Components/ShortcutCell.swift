@@ -102,7 +102,7 @@ struct ShortcutCell: View {
             
             Image(systemName: shortcutCell.sfSymbol)
                 .mediumShortcutIcon()
-                .foregroundColor(.textIcon)
+                .foregroundStyle(Color.textIcon)
         }
         .padding(.leading, 20)
     }
@@ -113,16 +113,16 @@ struct ShortcutCell: View {
             if rankNumber != -1 {
                 Text("\(rankNumber)")
                     .shortcutsZipSubtitle()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
                     .padding(0)
             }
             Text(shortcutCell.title)
                 .shortcutsZipHeadline()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle.lineBreaking)
                 .shortcutsZipFootnote()
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
         }

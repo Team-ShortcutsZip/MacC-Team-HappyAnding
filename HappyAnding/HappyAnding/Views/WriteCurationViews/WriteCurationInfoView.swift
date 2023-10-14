@@ -70,7 +70,7 @@ struct WriteCurationInfoView: View {
                 } label: {
                     Text(TextLiteral.upload)
                         .shortcutsZipHeadline()
-                        .foregroundColor(isIncomplete ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
+                        .foregroundStyle(isIncomplete ? Color.shortcutsZipPrimary.opacity(0.3) : Color.shortcutsZipPrimary)
                 }
                 .disabled(isIncomplete)
             }

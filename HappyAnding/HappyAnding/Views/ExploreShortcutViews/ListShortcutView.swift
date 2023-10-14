@@ -17,7 +17,7 @@ struct ListShortcutView: View {
         if viewModel.shortcuts.count == 0 {
             Text("아직 \(viewModel.sectionType.title)가 없어요")
                 .shortcutsZipBody2()
-                .foregroundColor(Color.gray4)
+                .foregroundStyle(Color.gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
                 .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))

@@ -37,13 +37,13 @@ struct ListCategoryShortcutView: View {
     
     var categoryHeader: some View {
         Text(viewModel.category.fetchDescription().lineBreaking)
-        .foregroundColor(.gray5)
+        .foregroundStyle(Color.gray5)
         .shortcutsZipBody2()
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             Rectangle()
-                .foregroundColor(Color.gray1)
+                .fill(Color.gray1)
                 .cornerRadius(12)
         )
         .padding(.vertical, 20)

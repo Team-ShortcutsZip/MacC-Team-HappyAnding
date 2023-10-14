@@ -25,7 +25,7 @@ struct CategoryModalView: View {
                         self.isShowingCategoryModal = false
                     } label: {
                         Text(TextLiteral.close)
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 16)
                     }
@@ -56,11 +56,11 @@ struct CategoryModalView: View {
                 }, label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(!selectedCategories.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13) )
+                            .fill(!selectedCategories.isEmpty ? Color.shortcutsZipPrimary : Color.shortcutsZipPrimary.opacity(0.13) )
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text(TextLiteral.done)
-                            .foregroundColor(!selectedCategories.isEmpty ? .textIcon : .textButtonDisable)
+                            .foregroundStyle(!selectedCategories.isEmpty ? Color.textIcon : Color.textButtonDisable)
                             .shortcutsZipBody1()
                     }
                 })
@@ -87,7 +87,7 @@ struct CategoryModalView: View {
                 Text(item.translateName())
                     .shortcutsZipBody2()
                     .tag(item.category)
-                    .foregroundColor(items.contains(item.category) ? Color.categoryPickText : Color.gray3)
+                    .foregroundStyle(items.contains(item.category) ? Color.categoryPickText : Color.gray3)
                     .frame(maxWidth: .infinity, minHeight: UIScreen.screenHeight * 0.7 * 0.08)
                     .background(
                         RoundedRectangle(cornerRadius: 12)

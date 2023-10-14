@@ -206,7 +206,7 @@ struct SettingCell: View {
             Spacer()
         }
         .shortcutsZipBody1()
-        .foregroundColor(.gray4)
+        .foregroundStyle(Color.gray4)
         .padding(.horizontal, 12)
         .padding(.vertical, 16)
     }
@@ -220,12 +220,12 @@ struct FunctionCell: View {
         HStack {
             Text(title)
                 .shortcutsZipBody1()
-                .foregroundColor(.gray4)
+                .foregroundStyle(Color.gray4)
             Spacer()
             if let tag {
                 Text(tag)
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.tagText)
+                    .foregroundStyle(Color.tagText)
                     .frame(height: 20)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 2)

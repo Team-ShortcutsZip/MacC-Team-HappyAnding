@@ -40,7 +40,7 @@ struct WriteNicknameView: View {
             
             Text(TextLiteral.writeNicknameViewHeadline)
                 .shortcutsZipTitle1()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .padding(.top, 40)
             
             NicknameTextField(nickname: $nickname, isValid: $isValid)
@@ -49,7 +49,7 @@ struct WriteNicknameView: View {
             
             Text(TextLiteral.settingViewPrivacyPolicy)
                 .shortcutsZipBody2()
-                .foregroundColor(Color.gray3)
+                .foregroundStyle(Color.gray3)
                 .padding(.bottom, 12)
                 .frame(maxWidth: .infinity)
                 .onTapGesture {
@@ -87,10 +87,10 @@ struct WriteNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValid ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
+                    .fill(isValid ? Color.shortcutsZipPrimary : Color.shortcutsZipPrimary.opacity(0.13))
                     .frame(height: 52)
                 Text(TextLiteral.writeNicknameViewStart)
-                    .foregroundColor(isValid ? .textIcon : .textButtonDisable)
+                    .foregroundStyle(isValid ? Color.textIcon : Color.textButtonDisable)
                     .shortcutsZipBody1()
             }
         })

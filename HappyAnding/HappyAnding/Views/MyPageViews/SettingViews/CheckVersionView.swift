@@ -43,11 +43,11 @@ struct CheckVersionView: View {
                 
                 Text("\(currentVersion) / \(latestVersion)")
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
                 
                 Text(versionInformation)
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
             }
             
             Spacer()
@@ -58,12 +58,12 @@ struct CheckVersionView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(.shortcutsZipPrimary)
+                        .fill(Color.shortcutsZipPrimary)
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     
                     Text(buttonText)
                         .shortcutsZipBody1()
-                        .foregroundColor(.textButton)
+                        .foregroundStyle(Color.textButton)
                 }
                 .padding(.bottom, 44)
             }
