@@ -39,31 +39,27 @@ struct WriteShortcutView: View {
                         .focused($focusedField, equals: .link)
                     
                         .onChange(of: self.viewModel.shortcut.downloadLink[0]) { newDownloadLink in
-                            guard !isFetchingMetadata else { return }
-                            
-                            guard !newDownloadLink.isEmpty, newDownloadLink.hasPrefix(TextLiteral.validationCheckTextFieldPrefix) else {
-                                return
-                            }
+                            guard !isFetchingMetadata,
+                                  !newDownloadLink.isEmpty,
+                                  newDownloadLink.hasPrefix(TextLiteral.validationCheckTextFieldPrefix) else { return }
                             
                             isFetchingMetadata = true
                             
-                            if let downloadURL = URL(string: newDownloadLink) {
-                                let metadataProvider = LPMetadataProvider()
-                                metadataProvider.startFetchingMetadata(for: downloadURL) { metadata, error in
-                                    DispatchQueue.main.async {
-                                        isFetchingMetadata = false
-                                        if error != nil {
-                                            return
-                                        }
-                                        if viewModel.shortcut.title.isEmpty && viewModel.isLinkValid {
-                                            if let metadataTitle = metadata?.title {
-                                                viewModel.shortcut.title = String(metadataTitle.prefix(20))
-                                            }
+                            guard let downloadURL = URL(string: newDownloadLink) else { return }
+                            
+                            let metadataProvider = LPMetadataProvider()
+                            metadataProvider.startFetchingMetadata(for: downloadURL) { metadata, error in
+                                DispatchQueue.main.async {
+                                    isFetchingMetadata = false
+                                    if error != nil {
+                                        return
+                                    }
+                                    if viewModel.shortcut.title.isEmpty && viewModel.isLinkValid {
+                                        if let metadataTitle = metadata?.title {
+                                            viewModel.shortcut.title = String(metadataTitle.prefix(20))
                                         }
                                     }
                                 }
-                            } else {
-                                return
                             }
                         }
                     
