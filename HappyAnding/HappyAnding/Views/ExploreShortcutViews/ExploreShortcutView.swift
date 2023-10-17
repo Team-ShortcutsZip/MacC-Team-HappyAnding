@@ -16,8 +16,6 @@ struct ExploreShortcutView: View {
     
     let randomCategories: [Category]
     
-    private let hapticManager = HapticManager.instance
-
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
