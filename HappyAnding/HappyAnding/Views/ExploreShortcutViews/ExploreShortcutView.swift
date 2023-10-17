@@ -126,9 +126,8 @@ extension ExploreShortcutView {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    
                     ShortcutCell(shortcut: shortcut,
-                                 rankNumber: index + 1,
+                                 rankNumber: (sectionType == .download) ? index : nil,
                                  navigationParentView: .shortcuts)
                     .navigationLinkRouter(data: shortcut)
                 }
