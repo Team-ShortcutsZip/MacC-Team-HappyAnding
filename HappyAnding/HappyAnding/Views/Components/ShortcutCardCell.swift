@@ -14,19 +14,20 @@ struct ShortcutCardCell: View {
     let categoryShortcutColor: String
         
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             Image(systemName: categoryShortcutIcon)
                 .mediumShortcutIcon()
                 .foregroundStyle(Color.textIcon)
-            Text(categoryShortcutName)
+                .padding(.bottom, 4)
+            Text(categoryShortcutName.lineBreaking)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
                 .shortcutsZipHeadline()
                 .foregroundStyle(Color.textIcon)
             Spacer()
         }
-        .padding(12)
-        .frame(width: 168, height: 104, alignment: .leading)
+        .padding(.all, 12)
+        .frame(width: 168, height: 112, alignment: .leading)
         .background(Color.fetchGradient(color: categoryShortcutColor))
         .cornerRadius(12)
     }
