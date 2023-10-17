@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import LinkPresentation
 
 struct WriteShortcutView: View {
     
     enum FocusableField: Hashable {
-        case title
         case link
+        case title
         case subtitle
         case description
         case requiredApp
@@ -21,24 +22,54 @@ struct WriteShortcutView: View {
     @FocusState var focusedField: FocusableField?
     @StateObject var viewModel: WriteShortcutViewModel
     
-    private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    @State private var metadata: LPLinkMetadata? = nil
+    @State private var isFetchingMetadata = false
     
+    let metadataProvider = LPMetadataProvider()
+    
+    private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 32) {
                     iconModalView
-                    shortcutTitleText
-                        .id(FocusableField.title)
-                        .focused($focusedField, equals: .title)
-                        .onSubmit {
-                            focusedField = .link
-                        }
-                        .submitLabel(.next)
                     shortcutLinkText
                         .id(FocusableField.link)
                         .focused($focusedField, equals: .link)
+                    
+                        .onChange(of: self.viewModel.shortcut.downloadLink[0]) { newDownloadLink in
+                            guard !isFetchingMetadata,
+                                  !newDownloadLink.isEmpty,
+                                  newDownloadLink.hasPrefix(TextLiteral.validationCheckTextFieldPrefix) else { return }
+                            
+                            isFetchingMetadata = true
+                            
+                            guard let downloadURL = URL(string: newDownloadLink) else { return }
+                            
+                            let metadataProvider = LPMetadataProvider()
+                            metadataProvider.startFetchingMetadata(for: downloadURL) { metadata, error in
+                                DispatchQueue.main.async {
+                                    isFetchingMetadata = false
+                                    if error != nil {
+                                        return
+                                    }
+                                    if viewModel.shortcut.title.isEmpty && viewModel.isLinkValid {
+                                        if let metadataTitle = metadata?.title {
+                                            viewModel.shortcut.title = String(metadataTitle.prefix(20))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    
+                        .onSubmit {
+                            focusedField = .title
+                        }
+                        .submitLabel(.next)
+                    shortcutTitleText
+                        .id(FocusableField.title)
+                        .focused($focusedField, equals: .title)
                         .onSubmit {
                             focusedField = .subtitle
                         }
@@ -128,20 +159,6 @@ struct WriteShortcutView: View {
         .padding(.bottom, 32)
     }
     
-    //MARK: -단축어 이름
-    private var shortcutTitleText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: TextLiteral.writeShortcutViewNameTitle,
-                                 placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
-                                 lengthLimit: 20,
-                                 isDownloadLinkTextField: false,
-                                 content: $viewModel.shortcut.title,
-                                 isValid: $viewModel.isNameValid
-        )
-        .onAppear(perform : UIApplication.shared.hideKeyboard)
-    }
-    
     //MARK: -단축어 링크
     private var shortcutLinkText: some View {
         ValidationCheckTextField(textType: .mandatory,
@@ -153,6 +170,28 @@ struct WriteShortcutView: View {
                                  content: $viewModel.shortcut.downloadLink[0],
                                  isValid: $viewModel.isLinkValid
         )
+    }
+    
+    //MARK: -단축어 이름
+    private var shortcutTitleText: some View {
+        VStack(alignment: .leading) {
+            ValidationCheckTextField(textType: .mandatory,
+                                     isMultipleLines: false,
+                                     title: TextLiteral.writeShortcutViewNameTitle,
+                                     placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
+                                     lengthLimit: 20,
+                                     isDownloadLinkTextField: false,
+                                     content: $viewModel.shortcut.title,
+                                     isValid: $viewModel.isNameValid
+            )
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            if isFetchingMetadata {
+                ProgressView()
+                    .frame(width: 20, height: 20)
+                    .padding(.horizontal, 16)
+            }
+        }
+
     }
     
     //MARK: -한줄 설명

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LinkPresentation
 
 struct ShareExtensionWriteShortcutView: View {
     
@@ -28,12 +29,17 @@ struct ShareExtensionWriteShortcutView: View {
     @State var isInfoButtonTouched: Bool = false
     @State var isTextFocused = [Bool](repeating: false, count: 5)
     
+    @State private var metadata: LPLinkMetadata? = nil
+    @State private var isFetchingMetadata = false
+    
+    let metadataProvider = LPMetadataProvider()
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 32){
                 iconModalView
-                shortcutTitleText
                 shortcutLinkText.disabled(true)
+                shortcutTitleText
                 shortcutSubtitleText
                 shortcutDescriptionText
                 shortcutCategory
@@ -41,6 +47,28 @@ struct ShareExtensionWriteShortcutView: View {
             }
         }
         .background(Color.shortcutsZipBackground)
+        
+        .onAppear() {
+            
+            guard !isFetchingMetadata else { return }
+            
+            isFetchingMetadata = true
+            let metadataProvider = LPMetadataProvider()
+            metadataProvider.startFetchingMetadata(for: URL(string: shareExtensionViewModel.shortcut.downloadLink[0])!) { metadata, error in
+                DispatchQueue.main.async {
+                    isFetchingMetadata = false
+                    
+                    if error != nil {
+                        return
+                    }
+                    
+                    if shareExtensionViewModel.shortcut.title.isEmpty && isLinkValid {
+                        shareExtensionViewModel.shortcut.title = String((metadata?.title!.prefix(20))!)
+                    }
+                }
+            }
+            
+        }
         
         .onChange(of: shareExtensionViewModel.shortcut) { _ in
             let isDoneValid = shareExtensionViewModel.isDoneValid()
@@ -99,20 +127,6 @@ struct ShareExtensionWriteShortcutView: View {
         .padding(.bottom, 32)
     }
     
-    //MARK: -단축어 이름
-    private var shortcutTitleText: some View {
-        ShareExtensionValidationCheckTextField(textType: .mandatory,
-                                               isMultipleLines: false,
-                                               title: TextLiteral.writeShortcutViewNameTitle,
-                                               placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
-                                               lengthLimit: 20,
-                                               isDownloadLinkTextField: false,
-                                               content: $shareExtensionViewModel.shortcut.title,
-                                               isValid: $isNameValid,
-                                               isFocused: $isTextFocused, index: 0
-        )
-    }
-    
     //MARK: -단축어 링크
     private var shortcutLinkText: some View {
         ShareExtensionValidationCheckTextField(textType: .mandatory,
@@ -124,8 +138,30 @@ struct ShareExtensionWriteShortcutView: View {
                                                content: $shareExtensionViewModel.shortcut.downloadLink[0],
                                                isValid: $isLinkValid,
                                                isFocused: $isTextFocused,
-                                               index: 1
+                                               index: 0
         )
+    }
+    
+    //MARK: -단축어 이름
+    private var shortcutTitleText: some View {
+        VStack(alignment: .leading) {
+            ShareExtensionValidationCheckTextField(textType: .mandatory,
+                                                   isMultipleLines: false,
+                                                   title: TextLiteral.writeShortcutViewNameTitle,
+                                                   placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
+                                                   lengthLimit: 20,
+                                                   isDownloadLinkTextField: false,
+                                                   content: $shareExtensionViewModel.shortcut.title,
+                                                   isValid: $isNameValid,
+                                                   isFocused: $isTextFocused,
+                                                   index: 1
+            )
+            if isFetchingMetadata {
+                ProgressView()
+                    .frame(width: 20, height: 20)
+                    .padding(.horizontal, 16)
+            }
+        }
     }
     
     //MARK: -한줄 설명
