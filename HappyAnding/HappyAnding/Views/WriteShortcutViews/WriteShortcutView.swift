@@ -77,7 +77,7 @@ struct WriteShortcutView: View {
                     } label: {
                         Text(TextLiteral.cancel)
                             .shortcutsZipBody1()
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                     }
                 }
                 
@@ -89,7 +89,7 @@ struct WriteShortcutView: View {
                     }, label: {
                         Text(TextLiteral.upload)
                             .shortcutsZipHeadline()
-                            .foregroundColor(.shortcutsZipPrimary)
+                            .foregroundStyle(Color.shortcutsZipPrimary)
                             .opacity(viewModel.isUnavailableUploadButton() ? 0.3 : 1)
                     })
                     .disabled(viewModel.isUnavailableUploadButton())
@@ -111,7 +111,7 @@ struct WriteShortcutView: View {
                     .cornerRadius(12.35)
                 Image(systemName: !viewModel.shortcut.sfSymbol.isEmpty ? viewModel.shortcut.sfSymbol : "plus")
                     .mediumIcon()
-                    .foregroundColor(!viewModel.shortcut.sfSymbol.isEmpty ? .textIcon : .gray5)
+                    .foregroundStyle(!viewModel.shortcut.sfSymbol.isEmpty ? Color.textIcon : Color.gray5)
             }
             .frame(width: 84, height: 84)
         })
@@ -187,10 +187,10 @@ struct WriteShortcutView: View {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewCategoryTitle)
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                 Text(TextLiteral.writeShortcutViewCategoryDescription)
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
                 Spacer()
             }
             .padding(.horizontal, 16)
@@ -211,18 +211,18 @@ struct WriteShortcutView: View {
                     HStack {
                         if selectedCategories.isEmpty {
                             Text(TextLiteral.writeShortcutViewCategoryCell)
-                                .foregroundColor(.gray2)
+                                .foregroundStyle(Color.gray2)
                                 .shortcutsZipBody2()
                         } else {
                             Text(selectedCategories.map { Category(rawValue: $0)!.translateName() }.joined(separator: ", "))
-                                .foregroundColor(.gray4)
+                                .foregroundStyle(Color.gray4)
                                 .shortcutsZipBody2()
                                 .multilineTextAlignment(.leading)
                         }
                         Spacer()
                         Image(systemName: "chevron.forward")
                             .smallIcon()
-                            .foregroundColor(selectedCategories.isEmpty ? .gray2 : .gray4)
+                            .foregroundStyle(selectedCategories.isEmpty ? Color.gray2 : Color.gray4)
                     }
                     .padding(.all, 16)
                     .overlay(
@@ -249,14 +249,14 @@ struct WriteShortcutView: View {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewRequiredAppsTitle)
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                 Text(TextLiteral.writeShortcutViewRequiredAppDescription)
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
                     .smallIcon()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
                     .onTapGesture {
                         viewModel.isInfoButtonTouched.toggle()
                     }
@@ -268,18 +268,18 @@ struct WriteShortcutView: View {
                 if viewModel.isInfoButtonTouched {
                     ZStack(alignment: .center) {
                         RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.gray5)
                             .frame(maxWidth: .infinity, maxHeight: 68)
-                            .foregroundColor(.gray5)
                         HStack(alignment: .top) {
                             Text(TextLiteral.writeShortcutViewRequiredAppInformation)
                                 .shortcutsZipFootnote()
-                                .foregroundColor(.gray1)
+                                .foregroundStyle(Color.gray1)
                                 .multilineTextAlignment(.leading)
                             Spacer()
                             Image(systemName: "xmark")
                                 .smallIcon()
                                 .frame(width: 16, height: 16)
-                                .foregroundColor(.gray1)
+                                .foregroundStyle(Color.gray1)
                                 .onTapGesture {
                                     viewModel.isInfoButtonTouched = false
                                 }
@@ -319,7 +319,7 @@ struct WriteShortcutView: View {
                                     viewModel.isTextFieldShowing = false
                                 }
                             }
-                            .modifier(CellModifier(foregroundColor: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
+                            .modifier(CellModifier(foregroundStyle: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
                     }
                     
                     Button(action: {
@@ -332,7 +332,7 @@ struct WriteShortcutView: View {
                             Text(TextLiteral.writeShortcutViewRequiredAppCell)
                         }
                     })
-                    .modifier(CellModifier(foregroundColor: Color.gray2, strokeColor: Color.gray2))
+                    .modifier(CellModifier(foregroundStyle: Color.gray2, strokeColor: Color.gray2))
                 }
                 .padding(.leading, 16)
             }
@@ -355,20 +355,20 @@ struct WriteShortcutView: View {
                         .smallIcon()
                 })
             }
-            .modifier(CellModifier(foregroundColor: Color.gray4,
+            .modifier(CellModifier(foregroundStyle: Color.gray4,
                                    backgroundColor: Color.shortcutsZipBackground,
                                    strokeColor: Color.gray4))
         }
     }
     private struct CellModifier: ViewModifier {
-        @State var foregroundColor: Color
+        @State var foregroundStyle: Color
         @State var backgroundColor = Color.clear
         @State var strokeColor: Color
         
         public func body(content: Content) -> some View {
             content
                 .shortcutsZipBody2()
-                .foregroundColor(foregroundColor)
+                .foregroundStyle(foregroundStyle)
                 .frame(height: 52)
                 .padding(.horizontal)
                 .background(
@@ -391,7 +391,7 @@ struct WriteShortcutView: View {
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .smallIcon()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                 }
             }
         }

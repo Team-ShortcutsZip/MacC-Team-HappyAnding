@@ -25,7 +25,7 @@ struct IconModalView: View {
                         self.isShowingIconModal = false
                     } label: {
                         Text(TextLiteral.close)
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 16)
                     }
@@ -53,7 +53,7 @@ struct IconModalView: View {
                         .font(.system(size: UIScreen.screenHeight > 700 ? 48 : 32))
                         .aspectRatio(contentMode: .fit)
                         .frame(height: UIScreen.screenHeight > 700 ? 136 : 84)
-                        .foregroundColor(.textIcon)
+                        .foregroundStyle(Color.textIcon)
                 }
                 .padding(.vertical, 24)
                 
@@ -62,7 +62,7 @@ struct IconModalView: View {
                     Text(TextLiteral.iconModalViewColor)
                         .shortcutsZipSubtitle()
                         .padding(.horizontal, 16)
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     LazyVGrid(columns: gridLayout, spacing: 12) {
@@ -76,7 +76,7 @@ struct IconModalView: View {
                     Text(TextLiteral.iconModalViewIcon)
                         .shortcutsZipSubtitle()
                         .padding(.horizontal, 16)
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
@@ -84,7 +84,7 @@ struct IconModalView: View {
                             ForEach(viewModel.categories, id: \.self) { key in
                                 Text(key)
                                     .shortcutsZipBody2()
-                                    .foregroundColor(Color.gray4)
+                                    .foregroundStyle(Color.gray4)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.top, 12)
                                     .id(key)
@@ -110,7 +110,7 @@ struct IconModalView: View {
                                                 .shortcutsZipBody2()
                                                 .padding(.horizontal, 12)
                                                 .padding(.vertical, 6)
-                                                .foregroundColor(key == viewModel.selectedCategory ? Color.tagText : Color.gray4)
+                                                .foregroundStyle(key == viewModel.selectedCategory ? Color.tagText : Color.gray4)
                                                 .background(key == viewModel.selectedCategory ? Color.tagBackground : nil)
                                                 .clipShape(Capsule())
                                                 .overlay(
@@ -136,11 +136,11 @@ struct IconModalView: View {
                 } label: {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
+                            .foregroundStyle(!iconColor.isEmpty && !iconSymbol.isEmpty ? Color.shortcutsZipPrimary : Color.shortcutsZipPrimary.opacity(0.13))
                             .frame(maxWidth: .infinity, maxHeight: 52)
                         
                         Text(TextLiteral.done)
-                            .foregroundColor(!iconColor.isEmpty && !iconSymbol.isEmpty ? .textButton : .textButtonDisable)
+                            .foregroundStyle(!iconColor.isEmpty && !iconSymbol.isEmpty ? Color.textButton : Color.textButtonDisable)
                             .shortcutsZipBody1()
                     }
                 }
@@ -174,7 +174,7 @@ struct IconModalView: View {
                     if paletteColor == iconColor {
                         Image(systemName: "checkmark")
                             .smallIcon()
-                            .foregroundColor(.textIcon)
+                            .foregroundStyle(Color.textIcon)
                     }
                 }
             }
@@ -197,7 +197,7 @@ struct IconModalView: View {
                         .frame(width: 36, height: 36)
                     
                     Image(systemName: paletteSymbol)
-                        .foregroundColor(paletteSymbol == iconSymbol ? Color.gray5 : Color.gray3)
+                        .foregroundStyle(paletteSymbol == iconSymbol ? Color.gray5 : Color.gray3)
                 }
             }
         }

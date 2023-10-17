@@ -14,12 +14,12 @@ struct AboutTeamView: View {
             VStack {
                 Text("Team Happy ANDing")
                     .shortcutsZipTitle1()
-                    .foregroundColor(Color.gray5)
+                    .foregroundStyle(Color.gray5)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 16)
                 Text("안녕하세요. ShortcutsZip의 개발팀 Team Happy ANDing입니다. ")
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.gray3)
+                    .foregroundStyle(Color.gray3)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 16)
             }
@@ -41,8 +41,8 @@ struct AboutTeamView: View {
     var devCard: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
+                .fill(Color.gray2)
                 .frame(height: 200)
-                .foregroundColor(Color.gray2)
                 .contextMenu{
                     Button {
                         // Add this item to a list of favorites.

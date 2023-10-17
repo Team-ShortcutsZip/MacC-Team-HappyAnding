@@ -31,12 +31,12 @@ struct ShowProfileView: View {
                             viewModel.userGrade
                                 .resizable()
                                 .frame(width: 72, height: 72)
-                                .foregroundColor(.gray3)
+                                .foregroundStyle(Color.gray3)
                         } else {
                             ZStack(alignment: .center) {
                                 Circle()
+                                    .fill(Color.gray1)
                                     .frame(width: 72, height: 72)
-                                    .foregroundColor(.gray1)
                                 viewModel.userGrade
                                     .rotation3DEffect(
                                         .degrees(viewModel.animationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
@@ -46,7 +46,7 @@ struct ShowProfileView: View {
                     
                     Text(viewModel.user.nickname)
                         .shortcutsZipTitle1()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                 }
                 .disabled(viewModel.shortcuts.isEmpty)
                 .frame(maxWidth: .infinity)
@@ -92,7 +92,7 @@ struct ShowProfileView: View {
                 if viewModel.currentTab == tabID {
                     Text(title)
                         .shortcutsZipHeadline()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                     Color.gray5
                         .frame(height: 2)
                         .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
@@ -100,7 +100,7 @@ struct ShowProfileView: View {
                 } else {
                     Text(title)
                         .shortcutsZipBody1()
-                        .foregroundColor(.gray3)
+                        .foregroundStyle(Color.gray3)
                     Color.clear
                         .frame(height: 2)
                 }
@@ -128,7 +128,7 @@ struct ShowProfileView: View {
                             Text(TextLiteral.showProfileViewNoShortcuts)
                                 .padding(.top, 16)
                                 .shortcutsZipBody2()
-                                .foregroundColor(.gray4)
+                                .foregroundStyle(Color.gray4)
                             Spacer()
                         }
                     }
@@ -150,7 +150,7 @@ struct ShowProfileView: View {
                             Text(TextLiteral.showProfileViewNoCurations)
                                 .padding(.top, 16)
                                 .shortcutsZipBody2()
-                                .foregroundColor(.gray4)
+                                .foregroundStyle(Color.gray4)
                             Spacer()
                         }
                     }

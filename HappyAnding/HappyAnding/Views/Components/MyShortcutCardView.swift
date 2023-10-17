@@ -17,12 +17,12 @@ struct MyShortcutCardView: View {
         VStack(alignment: .leading, spacing: 4) {
             Image(systemName: myShortcutIcon)
                 .mediumShortcutIcon()
-                .foregroundColor(Color.textIcon)
+                .foregroundStyle(Color.textIcon)
                 .frame(width: 30.0, height: 30.0)
             Text(myShortcutName)
                 .shortcutsZipSubtitle()
                 .multilineTextAlignment(.leading)
-                .foregroundColor(Color.textIcon)
+                .foregroundStyle(Color.textIcon)
                 .lineLimit(3)
             Spacer()
         }
@@ -39,7 +39,7 @@ struct AddMyShortcutCardView: View {
         VStack {
             Image(systemName: "plus")
                 .mediumShortcutIcon()
-                .foregroundColor(Color.gray4)
+                .foregroundStyle(Color.gray4)
         }
         .padding()
         .frame(width: 107, height: 144)

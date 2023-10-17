@@ -87,7 +87,7 @@ struct ReadCurationView: View {
                     SubtitleTextView(text: viewModel.curation.title)
                     Text(viewModel.curation.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                         .shortcutsZipBody2()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                 }
                 Spacer()
             }
@@ -129,7 +129,7 @@ extension ReadCurationView {
             }
         } label: {
             Image(systemName: "ellipsis")
-                .foregroundColor(.gray4)
+                .foregroundStyle(Color.gray4)
         }
     }
     
@@ -146,7 +146,7 @@ extension ReadCurationView {
             viewModel.shareCuration()
         } label: {
             Label(TextLiteral.share, systemImage: "square.and.arrow.up")
-                .foregroundColor(.gray4)
+                .foregroundStyle(Color.gray4)
                 .fontWeight(.medium)
         }
     }

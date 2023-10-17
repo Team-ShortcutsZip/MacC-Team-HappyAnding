@@ -90,7 +90,7 @@ struct ExploreShortcutView: View {
             ToolbarItem {
                 Image(systemName: "magnifyingglass")
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .navigationLinkRouter(data: NavigationSearch.first)
             }
         }
@@ -178,7 +178,7 @@ extension ExploreShortcutView {
             .overlay {
                 Text(categoryName)
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.gray5)
+                    .foregroundStyle(Color.gray5)
             }
     }
 }

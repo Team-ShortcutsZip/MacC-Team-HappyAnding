@@ -29,16 +29,16 @@ struct UserNameCell: View {
             gradeImage
                 .font(.system(size: 24, weight: .medium))
                 .frame(width: 24, height: 24)
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
             
             if !userInformation.nickname.isEmpty {
                 Text(userInformation.nickname)
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
             } else {
                 Text(TextLiteral.withdrawnUser)
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
             }
             
             Spacer()
@@ -46,7 +46,7 @@ struct UserNameCell: View {
             if !userInformation.id.isEmpty {
                 Image(systemName: "chevron.right")
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
             }
             
         }
@@ -54,7 +54,7 @@ struct UserNameCell: View {
         .padding(.vertical, 10)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.gray1)
+                .fill(Color.gray1)
         )
         .navigationLinkRouter(data: self.userInformation)
         .disabled(self.userInformation.id.isEmpty)

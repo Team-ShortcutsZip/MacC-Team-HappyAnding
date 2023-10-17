@@ -20,7 +20,7 @@ struct UpdateShortcutView: View {
                     viewModel.isUpdatingShortcut.toggle()
                 } label: {
                     Text(TextLiteral.cancel)
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -68,10 +68,10 @@ struct UpdateShortcutView: View {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(viewModel.isUpdateValid ? .shortcutsZipPrimary : .shortcutsZipPrimary.opacity(0.13))
+                        .fill(viewModel.isUpdateValid ? Color.shortcutsZipPrimary : Color.shortcutsZipPrimary.opacity(0.13))
                         .frame(maxWidth: .infinity, maxHeight: 52)
                     Text(TextLiteral.update)
-                        .foregroundColor(viewModel.isUpdateValid ? .textButton : .textButtonDisable)
+                        .foregroundStyle(viewModel.isUpdateValid ? Color.textButton : Color.textButtonDisable)
                         .shortcutsZipBody1()
                 }
             }

@@ -41,11 +41,11 @@ struct AdminCurationCell: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(adminCuration.title)
                     .shortcutsZipTitle1()
-                    .foregroundColor(.textCuration)
+                    .foregroundStyle(Color.textCuration)
                     .lineLimit(1)
                 Text(adminCuration.subtitle.replacingOccurrences(of: "\\n", with: "\n"))
                     .shortcutsZipBody2()
-                    .foregroundColor(.textCuration)
+                    .foregroundStyle(Color.textCuration)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
             }
@@ -60,7 +60,7 @@ struct AdminCurationCell: View {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
             Rectangle()
-                .foregroundColor(.white)
+                .foregroundStyle(Color.white)
                 .opacity(0.4)
         }
         .frame(height: 284)

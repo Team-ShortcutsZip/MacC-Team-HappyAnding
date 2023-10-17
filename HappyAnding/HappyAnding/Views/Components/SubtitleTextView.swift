@@ -14,7 +14,7 @@ struct SubtitleTextView: View {
     var body: some View {
         Text(text)
             .shortcutsZipTitle2()
-            .foregroundColor(Color.gray5)
+            .foregroundStyle(Color.gray5)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

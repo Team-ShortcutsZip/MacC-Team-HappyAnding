@@ -43,7 +43,7 @@ struct AboutShortcutGradeView: View {
             Text((shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser) + TextLiteral.shortcutGradeCurrentLevel)
                 .shortcutsZipBody1()
                 .fontWeight(.bold)
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .frame(width: UIScreen.screenWidth - 32)
             
             Button {
@@ -56,7 +56,7 @@ struct AboutShortcutGradeView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .fontWeight(.medium)
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                         .frame(width: 120, height: 120)
                         .rotation3DEffect(
                             .degrees(animationAmount), axis: (x: 0.0, y: 1.0, z: 0.0))
@@ -73,7 +73,7 @@ struct AboutShortcutGradeView: View {
             
             Text("\(shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id).fetchTitle())")
                 .shortcutsZipTitle1()
-                .foregroundColor(.tagText)
+                .foregroundStyle(Color.tagText)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 4)
                 .background(
@@ -88,14 +88,14 @@ struct AboutShortcutGradeView: View {
                  TextLiteral.shortcutGradeHighestLevel :
                     TextLiteral.shortcutGradeNumberOfShortcutsToNextLevelStart + "\(shortcutsZipViewModel.countShortcutsToNextGrade(numberOfShortcuts: shortcutsZipViewModel.shortcutsMadeByUser.count))" + TextLiteral.shortcutGradeNumberOfShortcutsToNextLevelEnd)
                 .shortcutsZipBody2()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .frame(width: UIScreen.screenWidth - 32)
                 .padding(.top, 8)
         }
         .padding(.vertical, 20)
         .background {
             RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.gray1)
+                .fill(Color.gray1)
         }
         .padding(.horizontal, 16)
     }
@@ -105,7 +105,7 @@ struct AboutShortcutGradeView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text(TextLiteral.shortcutGradeAnnouncementSectionTitle)
                 .shortcutsZipTitle2()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
             
             ForEach(shortcutGrade.filter{ $0 != .level0 }, id: \.self) { grade in
                 ExplainGradeCell(gradeIcon: grade.fetchIcon(),
@@ -115,7 +115,7 @@ struct AboutShortcutGradeView: View {
             
             Text(TextLiteral.shortcutGradeMaybeDownGrade)
                 .shortcutsZipFootnote()
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
                 .padding(.top, 8)
         }
         .padding(.horizontal, 16)
@@ -132,8 +132,8 @@ struct ExplainGradeCell: View {
         HStack(spacing: 16) {
             ZStack(alignment: .center) {
                 Circle()
+                    .fill(Color.gray1)
                     .frame(width: 72, height: 72)
-                    .foregroundColor(.gray1)
                 Image(gradeIcon)
             }
             
@@ -141,10 +141,10 @@ struct ExplainGradeCell: View {
                 Text(gradeName)
                     .shortcutsZipBody1()
                     .fontWeight(.bold)
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                 Text(gradeDescription)
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
             }
             Spacer()
         }

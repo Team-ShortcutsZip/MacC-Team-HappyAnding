@@ -47,7 +47,7 @@ struct UserCurationListView: View {
                     Text(TextLiteral.userCurationListViewAdd)
                         .shortcutsZipHeadline()
                 }
-                .foregroundColor(.gray4)
+                .foregroundStyle(Color.gray4)
                 .frame(maxWidth: .infinity)
                 .frame(height: 64)
                 .background(Color.backgroundPlus)
