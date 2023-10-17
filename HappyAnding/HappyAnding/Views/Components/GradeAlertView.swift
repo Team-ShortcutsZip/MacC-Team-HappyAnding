@@ -36,7 +36,7 @@ struct GradeAlertView: View {
                     VStack(spacing: 60) {
                         if index < 1 {
                             Rectangle()
-                                .foregroundColor(Color.white)
+                                .fill(Color.white)
                                 .frame(width: 170, height: 198)
                         } else {
                             Image(gradeImage[index - 1])
@@ -54,7 +54,7 @@ struct GradeAlertView: View {
                 
                 Text(isTextShowing ? TextLiteral.gradeAlertMessage : TextLiteral.gradeAlertMessageBlank)
                     .shortcutsZipTitle1()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .padding(.bottom, 60)
                     .disabled(isTextShowing)
             }
@@ -87,7 +87,7 @@ struct GradeAlertView: View {
                         isShowing = false
                     } label: {
                         Image(systemName: "xmark")
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                             .font(.system(size: 24, weight: .medium))
                     }
                 }

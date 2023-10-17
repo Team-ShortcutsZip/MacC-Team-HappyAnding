@@ -36,7 +36,7 @@ struct HappyAndingApp: App {
                 ZStack {
                     Color.shortcutsZipPrimary.ignoresSafeArea()
                     Text("ShortcutsZip")
-                        .foregroundColor(Color.white)
+                        .foregroundStyle(Color.white)
                         .font(.system(size: 26, weight: .bold))
                         .frame(maxHeight: .infinity)
                         .ignoresSafeArea()

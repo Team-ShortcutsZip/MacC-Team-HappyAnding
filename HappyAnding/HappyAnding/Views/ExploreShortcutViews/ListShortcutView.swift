@@ -17,7 +17,7 @@ struct ListShortcutView: View {
         if viewModel.shortcuts.count == 0 {
             Text("아직 \(viewModel.sectionType.title)가 없어요")
                 .shortcutsZipBody2()
-                .foregroundColor(Color.gray4)
+                .foregroundStyle(Color.gray4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             
                 .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
@@ -30,12 +30,9 @@ struct ListShortcutView: View {
                     //TODO: 무한 스크롤을 위한 업데이트 함수 필요
                     makeShortcutCellList(viewModel.shortcuts)
                     
-                    Rectangle()
-                        .fill(Color.shortcutsZipBackground)
-                        .frame(height: 44)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
                 }
+                .padding(.top, 16)
+                .padding(.bottom, 44)
             }
             .listRowBackground(Color.shortcutsZipBackground)
             .listStyle(.plain)
@@ -49,13 +46,12 @@ struct ListShortcutView: View {
     
     @ViewBuilder
     private func makeShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
-        ForEach(shortcuts, id: \.self) { shortcut in
-            
+        ForEach(shortcuts.indices, id: \.self) { index in
+            let shortcut = shortcuts[index]
             ShortcutCell(shortcut: shortcut,
-                         sectionType: viewModel.sectionType,
+                         rankNumber: (viewModel.sectionType == .download) ? index : nil,
                          navigationParentView: .shortcuts)
             .navigationLinkRouter(data: shortcut)
-            
         }
     }
 }

@@ -22,7 +22,7 @@ struct ListCurationView: View {
             if viewModel.curationList.isEmpty {
                 Text(viewModel.getEmptyContentsWording())
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.gray4)
+                    .foregroundStyle(Color.gray4)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
             } else {

@@ -23,7 +23,7 @@ struct UserCurationListView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .bottom) {
-                SubtitleTextView(text: data.title ?? "")
+                SubtitleTextView(text: data.title.isEmpty ? "" : data.title)
                     .onTapGesture { }
                 Spacer()
                 
@@ -47,7 +47,7 @@ struct UserCurationListView: View {
                     Text(TextLiteral.userCurationListViewAdd)
                         .shortcutsZipHeadline()
                 }
-                .foregroundColor(.gray4)
+                .foregroundStyle(Color.gray4)
                 .frame(maxWidth: .infinity)
                 .frame(height: 64)
                 .background(Color.backgroundPlus)

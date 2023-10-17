@@ -110,7 +110,7 @@ struct ReadShortcutView: View {
                             } label: {
                                 Text("다운로드 | \(Image(systemName: "arrow.down.app.fill")) \(viewModel.shortcut.numberOfDownload)")
                                     .shortcutsZipBody1()
-                                    .foregroundColor(Color.textIcon)
+                                    .foregroundStyle(Color.textIcon)
                                     .padding()
                                     .frame(maxWidth: .infinity)
                                     .background(Color.shortcutsZipPrimary)
@@ -216,7 +216,7 @@ extension ReadShortcutView {
                 if viewModel.comment.depth == 1 && !viewModel.isEditingComment {
                     Image(systemName: "arrow.turn.down.right")
                         .smallIcon()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                 }
                 TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $viewModel.commentText, axis: .vertical)
                     .keyboardType(.twitter)
@@ -236,7 +236,7 @@ extension ReadShortcutView {
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .mediumIcon()
-                        .foregroundColor(viewModel.commentText == "" ? Color.gray2 : Color.gray5)
+                        .foregroundStyle(viewModel.commentText == "" ? Color.gray2 : Color.gray5)
                 }
                 .disabled(viewModel.commentText == "" ? true : false)
             }
@@ -257,7 +257,7 @@ extension ReadShortcutView {
         HStack {
             Text("@ \(viewModel.nestedCommentTarget)")
                 .shortcutsZipFootnote()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
             
             Spacer()
             
@@ -266,7 +266,7 @@ extension ReadShortcutView {
             } label: {
                 Image(systemName: "xmark")
                     .smallIcon()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
             }
         }
         .padding(.horizontal, 16)
@@ -294,7 +294,7 @@ extension ReadShortcutView {
             } label: {
                 Image(systemName: "ellipsis")
                     .mediumIcon()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
             }
         } else {
             shareButton
@@ -322,7 +322,7 @@ extension ReadShortcutView {
             viewModel.shareShortcut()
         } label: {
             Label(TextLiteral.share, systemImage: "square.and.arrow.up")
-                .foregroundColor(.gray4)
+                .foregroundStyle(Color.gray4)
                 .fontWeight(.medium)
         }
     }
@@ -356,7 +356,7 @@ extension ReadShortcutView {
                 if viewModel.currentTab == tabID {
                     Text(title)
                         .shortcutsZipHeadline()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                     Color.gray5
                         .frame(height: 2)
                         .matchedGeometryEffect(id: "underline", in: namespace, properties: .frame)
@@ -364,7 +364,7 @@ extension ReadShortcutView {
                 } else {
                     Text(title)
                         .shortcutsZipBody1()
-                        .foregroundColor(.gray3)
+                        .foregroundStyle(Color.gray3)
                     Color.clear.frame(height: 2)
                 }
             }
@@ -396,7 +396,7 @@ extension ReadShortcutView {
                     VStack {
                         Image(systemName: viewModel.shortcut.sfSymbol)
                             .mediumShortcutIcon()
-                            .foregroundColor(Color.textIcon)
+                            .foregroundStyle(Color.textIcon)
                     }
                     .frame(width: 52, height: 52)
                     .background(Color.fetchGradient(color: viewModel.shortcut.color))
@@ -408,7 +408,7 @@ extension ReadShortcutView {
                     Text("\(viewModel.isMyLike ? Image(systemName: "heart.fill") : Image(systemName: "heart")) \(viewModel.numberOfLike)")
                         .shortcutsZipBody2()
                         .padding(10)
-                        .foregroundColor(viewModel.isMyLike ? Color.textIcon : Color.gray4)
+                        .foregroundStyle(viewModel.isMyLike ? Color.textIcon : Color.gray4)
                         .background(viewModel.isMyLike ? Color.shortcutsZipPrimary : Color.gray1)
                         .cornerRadius(12)
                         .onTapGesture {
@@ -426,12 +426,12 @@ extension ReadShortcutView {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("\(viewModel.shortcut.title)")
                         .shortcutsZipTitle1()
-                        .foregroundColor(Color.gray5)
+                        .foregroundStyle(Color.gray5)
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Text("\(viewModel.shortcut.subtitle)")
                         .shortcutsZipBody1()
-                        .foregroundColor(Color.gray3)
+                        .foregroundStyle(Color.gray3)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 
@@ -452,15 +452,17 @@ extension ReadShortcutView {
         @StateObject var viewModel: ReadShortcutViewModel
         
         var body: some View {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 32) {
                 
                 VStack(alignment: .leading) {
                     Text(TextLiteral.readShortcutContentViewDescription)
                         .shortcutsZipBody2()
-                        .foregroundColor(Color.gray4)
-                    Text(viewModel.shortcut.description)
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.gray6)
+                    Text(.init(viewModel.shortcut.description))
                         .shortcutsZipBody2()
-                        .foregroundColor(Color.gray5)
+                        .foregroundStyle(Color.gray5)
+                        .tint(.shortcutsZipPrimary)
                         .lineLimit(nil)
                 }
                 
@@ -469,9 +471,7 @@ extension ReadShortcutView {
                 if !viewModel.shortcut.requiredApp.isEmpty {
                     splitList(title: TextLiteral.readShortcutContentViewRequiredApps, content: viewModel.shortcut.requiredApp)
                 }
-                
                 Spacer()
-                    .frame(maxHeight: .infinity)
             }
             .padding(.top, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -483,19 +483,20 @@ extension ReadShortcutView {
                 
                 Text(title)
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.gray4)
+                    .fontWeight(.bold)
+                    .foregroundStyle(Color.gray6)
                 
                 WrappingHStack(content, id: \.self, alignment: .leading, spacing: .constant(8), lineSpacing: 8) { item in
                     if Category.allCases.contains(where: { $0.rawValue == item }) {
                         Text(Category(rawValue: item)?.translateName() ?? "")
                             .shortcutsZipBody2()
                             .padding(.trailing, 8)
-                            .foregroundColor(Color.gray5)
+                            .foregroundStyle(Color.gray5)
                     } else {
                         Text(item)
                             .shortcutsZipBody2()
                             .padding(.trailing, 8)
-                            .foregroundColor(Color.gray5)
+                            .foregroundStyle(Color.gray5)
                     }
                     if item != content.last {
                         Divider()
@@ -521,14 +522,24 @@ extension ReadShortcutView {
             VStack(alignment: .leading, spacing: 16) {
                 
                 if viewModel.shortcut.updateDescription.count == 1 {
+                    HStack {
+                        Text("Ver 1.0")
+                            .shortcutsZipBody2()
+                            .foregroundStyle(Color.gray5)
+                        
+                        Spacer()
+                        
+                        Text(viewModel.shortcut.date.first?.getVersionUpdateDateFormat() ?? "")
+                            .shortcutsZipBody2()
+                            .foregroundStyle(Color.gray3)
+                    }
                     Text(TextLiteral.readShortcutVersionViewNoUpdates)
                         .shortcutsZipBody2()
-                        .foregroundColor(.gray4)
-                        .padding(.top, 16)
+                        .foregroundStyle(Color.gray4)
                 } else {
                     Text(TextLiteral.readShortcutVersionViewUpdateContent)
                         .shortcutsZipBody2()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                     
                     versionView
                 }
@@ -546,19 +557,19 @@ extension ReadShortcutView {
                     HStack {
                         Text("Ver \(viewModel.shortcut.updateDescription.count - index).0")
                             .shortcutsZipBody2()
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                         
                         Spacer()
                         
                         Text(viewModel.shortcut.date[index].getVersionUpdateDateFormat())
                             .shortcutsZipBody2()
-                            .foregroundColor(.gray3)
+                            .foregroundStyle(Color.gray3)
                     }
                     
                     if data.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
                         Text(data)
                             .shortcutsZipBody2()
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                     }
                     
                     if index != 0 {
@@ -575,12 +586,12 @@ extension ReadShortcutView {
                         } label: {
                             Text(TextLiteral.readShortcutVersionViewDownloadPreviousVersion)
                                 .shortcutsZipBody2()
-                                .foregroundColor(.shortcutsZipPrimary)
+                                .foregroundStyle(Color.shortcutsZipPrimary)
                         }
                     }
                     
                     Divider()
-                        .foregroundColor(.gray1)
+                        .foregroundStyle(Color.gray1)
                 }
             }
         }
@@ -604,7 +615,7 @@ extension ReadShortcutView {
                 if viewModel.comments.comments.isEmpty {
                     Text(TextLiteral.readShortcutCommentViewNoComments)
                         .shortcutsZipBody2()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                         .padding(.top, 16)
                 } else {
                     commentView
@@ -639,7 +650,7 @@ extension ReadShortcutView {
                     if comment.depth == 1 {
                         Image(systemName: "arrow.turn.down.right")
                             .smallIcon()
-                            .foregroundColor(.gray4)
+                            .foregroundStyle(Color.gray4)
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
@@ -650,19 +661,26 @@ extension ReadShortcutView {
                             viewModel.fetchUserGrade(id: comment.user_id)
                                 .font(.system(size: 24, weight: .medium))
                                 .frame(width: 24, height: 24)
-                                .foregroundColor(.gray3)
+                                .foregroundStyle(Color.gray3)
                             
                             Text(comment.user_nickname)
                                 .shortcutsZipBody2()
-                                .foregroundColor(.gray4)
+                                .foregroundStyle(Color.gray4)
+                            
+                            Spacer()
+                            
+                            Text(comment.date.getVersionUpdateDateFormat())
+                                .shortcutsZipFootnote()
+                                .foregroundStyle(Color.gray4)
                         }
                         .padding(.bottom, 4)
                         
                         /// 댓글 내용
                         Text(comment.contents)
                             .shortcutsZipBody2()
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 4)
                         
                         /// 답글, 수정, 삭제 버튼
                         HStack(spacing: 0) {
@@ -673,7 +691,7 @@ extension ReadShortcutView {
                                 } label: {
                                     Text(TextLiteral.readShortcutCommentViewReply)
                                         .shortcutsZipFootnote()
-                                        .foregroundColor(.gray4)
+                                        .foregroundStyle(Color.gray4)
                                         .frame(width: 32, height: 24)
                                 }
                             }
@@ -688,7 +706,7 @@ extension ReadShortcutView {
                                     } label: {
                                         Text(TextLiteral.readShortcutCommentViewEdit)
                                             .shortcutsZipFootnote()
-                                            .foregroundColor(.gray4)
+                                            .foregroundStyle(Color.gray4)
                                             .frame(width: 32, height: 24)
                                     }
                                     
@@ -698,7 +716,7 @@ extension ReadShortcutView {
                                     } label: {
                                         Text(TextLiteral.delete)
                                             .shortcutsZipFootnote()
-                                            .foregroundColor(.gray4)
+                                            .foregroundStyle(Color.gray4)
                                             .frame(width: 32, height: 24)
                                     }
                                 }

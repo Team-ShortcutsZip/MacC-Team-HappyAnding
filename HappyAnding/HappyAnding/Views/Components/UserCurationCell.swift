@@ -31,7 +31,7 @@ struct UserCurationCell: View {
                                 .cornerRadius(8)
                                 .frame(width: 36, height: 36)
                             Image(systemName: shortcut.sfSymbol)
-                                .foregroundColor(Color.textIcon)
+                                .foregroundStyle(Color.textIcon)
                                 .smallShortcutIcon()
                         }
                     }
@@ -49,7 +49,7 @@ struct UserCurationCell: View {
                                 Text("\(curation.shortcuts.count-4)")
                                     .shortcutsZipFootnote()
                             }
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                         }
                     }
                 }
@@ -60,13 +60,13 @@ struct UserCurationCell: View {
                 
                 Text(curation.title)
                     .shortcutsZipHeadline()
-                    .foregroundColor(Color.gray5)
+                    .foregroundStyle(Color.gray5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(curation.subtitle.lineBreaking)
                     .shortcutsZipBody2()
                     .multilineTextAlignment(.leading)
                     .lineLimit(lineLimit)
-                    .foregroundColor(Color.gray5)
+                    .foregroundStyle(Color.gray5)
                     .padding(.bottom, 20)
                     .fixedSize(horizontal: false, vertical: true)
             }

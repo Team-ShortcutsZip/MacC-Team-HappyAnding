@@ -19,7 +19,7 @@ struct EditNicknameView: View {
         VStack(alignment: .leading) {
             Text(TextLiteral.editNicknameViewHeadline)
                 .shortcutsZipTitle1()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .padding(.top, 40)
             
             NicknameTextField(nickname: $nickname, isValid: $isValid, initName: self.user?.nickname ?? "")
@@ -60,10 +60,10 @@ struct EditNicknameView: View {
         }, label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(isValid ? .shortcutsZipPrimary : .shortcutsZipPrimary .opacity(0.13))
+                    .fill(isValid ? Color.shortcutsZipPrimary : Color.shortcutsZipPrimary.opacity(0.13))
                     .frame(height: 52)
                 Text(TextLiteral.done)
-                    .foregroundColor(isValid ? .textIcon : .textButtonDisable)
+                    .foregroundStyle(isValid ? Color.textIcon : Color.textButtonDisable)
                     .shortcutsZipBody1()
             }
         })

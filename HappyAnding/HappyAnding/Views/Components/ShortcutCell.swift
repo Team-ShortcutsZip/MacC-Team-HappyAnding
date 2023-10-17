@@ -47,7 +47,7 @@ struct ShortcutCell: View {
     )
     
     var shortcut: Shortcuts?
-    var rankNumber: Int = -1
+    var rankNumber: Int?
     var sectionType: SectionType?
     let navigationParentView: NavigationParentView
     private let hapticManager = HapticManager.instance
@@ -104,7 +104,7 @@ struct ShortcutCell: View {
             
             Image(systemName: shortcutCell.sfSymbol)
                 .mediumShortcutIcon()
-                .foregroundColor(.textIcon)
+                .foregroundStyle(Color.textIcon)
         }
         .padding(.leading, 20)
     }
@@ -112,19 +112,19 @@ struct ShortcutCell: View {
     var shortcutInfo: some View {
         
         VStack(alignment: .leading, spacing: 0) {
-            if rankNumber != -1 {
-                Text("\(rankNumber)")
+            if let rankNumber {
+                Text(String(rankNumber + 1))
                     .shortcutsZipSubtitle()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
                     .padding(0)
             }
             Text(shortcutCell.title)
                 .shortcutsZipHeadline()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle.lineBreaking)
                 .shortcutsZipFootnote()
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
         }

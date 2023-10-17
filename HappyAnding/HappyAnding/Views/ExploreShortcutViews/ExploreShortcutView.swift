@@ -92,7 +92,7 @@ struct ExploreShortcutView: View {
             ToolbarItem {
                 Image(systemName: "magnifyingglass")
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .navigationLinkRouter(data: NavigationSearch.first)
             }
         }
@@ -128,9 +128,8 @@ extension ExploreShortcutView {
             
             ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
                 if index < 3 {
-                    
                     ShortcutCell(shortcut: shortcut,
-                                 rankNumber: index + 1,
+                                 rankNumber: (sectionType == .download) ? index : nil,
                                  navigationParentView: .shortcuts)
                     .navigationLinkRouter(data: shortcut)
                 }
@@ -180,7 +179,7 @@ extension ExploreShortcutView {
             .overlay {
                 Text(categoryName)
                     .shortcutsZipBody2()
-                    .foregroundColor(Color.gray5)
+                    .foregroundStyle(Color.gray5)
             }
     }
 }

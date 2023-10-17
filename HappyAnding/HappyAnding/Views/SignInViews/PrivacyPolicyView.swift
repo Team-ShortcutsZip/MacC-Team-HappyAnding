@@ -31,7 +31,7 @@ struct PrivacyPolicyView: View {
                     self.isTappedPrivacyButton = false
                 } label: {
                     Text(TextLiteral.close)
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 16)
                 }

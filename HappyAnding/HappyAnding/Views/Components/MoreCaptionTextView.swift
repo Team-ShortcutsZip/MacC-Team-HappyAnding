@@ -14,6 +14,6 @@ struct MoreCaptionTextView: View {
     var body: some View {
         Text(text)
             .shortcutsZipFootnote()
-            .foregroundColor(Color.gray4)
+            .foregroundStyle(Color.gray4)
     }
 }

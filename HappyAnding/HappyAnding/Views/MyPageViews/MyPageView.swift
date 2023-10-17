@@ -29,13 +29,13 @@ struct MyPageView: View {
                         shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id ?? "!"))
                             .font(.system(size: 60, weight: .medium))
                             .frame(width: 60, height: 60)
-                            .foregroundColor(.gray3)
+                            .foregroundStyle(Color.gray3)
                             .id(333)
                     }
                     
                     Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .shortcutsZipTitle1()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                     
                     Spacer()
                 }
@@ -70,7 +70,7 @@ struct MyPageView: View {
             ToolbarItem {
                 Image(systemName: "gearshape.fill")
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .navigationLinkRouter(data: NavigationSettingView.first)
             }
         }
@@ -92,11 +92,11 @@ struct MyPageShortcutListCell: View {
         HStack() {
             Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
                 .shortcutsZipTitle2()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .padding(.trailing, 9)
             Text("\(shortcuts.count)개")
                 .shortcutsZipBody2()
-                .foregroundColor(Color.tagText)
+                .foregroundStyle(Color.tagText)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 4)
                 .background(
@@ -109,7 +109,7 @@ struct MyPageShortcutListCell: View {
             Spacer()
             Image(systemName: "chevron.forward")
                 .mediumIcon()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
             
         }
         .frame(maxWidth: .infinity, alignment: .leading)

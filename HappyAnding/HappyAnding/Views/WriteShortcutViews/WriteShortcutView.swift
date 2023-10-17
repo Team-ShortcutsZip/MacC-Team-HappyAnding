@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import LinkPresentation
 
 struct WriteShortcutView: View {
     
     enum FocusableField: Hashable {
-        case title
         case link
+        case title
         case subtitle
         case description
         case requiredApp
@@ -21,26 +22,56 @@ struct WriteShortcutView: View {
     @FocusState var focusedField: FocusableField?
     @StateObject var viewModel: WriteShortcutViewModel
     
+    @State private var metadata: LPLinkMetadata? = nil
+    @State private var isFetchingMetadata = false
+    
+    let metadataProvider = LPMetadataProvider()
+    
     private let hapticManager = HapticManager.instance
 
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 32) {
                     iconModalView
-                    shortcutTitleText
-                        .id(FocusableField.title)
-                        .focused($focusedField, equals: .title)
-                        .onSubmit {
-                            focusedField = .link
-                        }
-                        .submitLabel(.next)
                     shortcutLinkText
                         .id(FocusableField.link)
                         .focused($focusedField, equals: .link)
+                    
+                        .onChange(of: self.viewModel.shortcut.downloadLink[0]) { newDownloadLink in
+                            guard !isFetchingMetadata,
+                                  !newDownloadLink.isEmpty,
+                                  newDownloadLink.hasPrefix(TextLiteral.validationCheckTextFieldPrefix) else { return }
+                            
+                            isFetchingMetadata = true
+                            
+                            guard let downloadURL = URL(string: newDownloadLink) else { return }
+                            
+                            let metadataProvider = LPMetadataProvider()
+                            metadataProvider.startFetchingMetadata(for: downloadURL) { metadata, error in
+                                DispatchQueue.main.async {
+                                    isFetchingMetadata = false
+                                    if error != nil {
+                                        return
+                                    }
+                                    if viewModel.shortcut.title.isEmpty && viewModel.isLinkValid {
+                                        if let metadataTitle = metadata?.title {
+                                            viewModel.shortcut.title = String(metadataTitle.prefix(20))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    
+                        .onSubmit {
+                            focusedField = .title
+                        }
+                        .submitLabel(.next)
+                    shortcutTitleText
+                        .id(FocusableField.title)
+                        .focused($focusedField, equals: .title)
                         .onSubmit {
                             focusedField = .subtitle
                         }
@@ -79,7 +110,7 @@ struct WriteShortcutView: View {
                     } label: {
                         Text(TextLiteral.cancel)
                             .shortcutsZipBody1()
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                     }
                 }
                 
@@ -92,7 +123,7 @@ struct WriteShortcutView: View {
                     }, label: {
                         Text(TextLiteral.upload)
                             .shortcutsZipHeadline()
-                            .foregroundColor(.shortcutsZipPrimary)
+                            .foregroundStyle(Color.shortcutsZipPrimary)
                             .opacity(viewModel.isUnavailableUploadButton() ? 0.3 : 1)
                     })
                     .disabled(viewModel.isUnavailableUploadButton())
@@ -114,7 +145,7 @@ struct WriteShortcutView: View {
                     .cornerRadius(12.35)
                 Image(systemName: !viewModel.shortcut.sfSymbol.isEmpty ? viewModel.shortcut.sfSymbol : "plus")
                     .mediumIcon()
-                    .foregroundColor(!viewModel.shortcut.sfSymbol.isEmpty ? .textIcon : .gray5)
+                    .foregroundStyle(!viewModel.shortcut.sfSymbol.isEmpty ? Color.textIcon : Color.gray5)
             }
             .frame(width: 84, height: 84)
         })
@@ -131,20 +162,6 @@ struct WriteShortcutView: View {
         .padding(.bottom, 32)
     }
     
-    //MARK: -단축어 이름
-    private var shortcutTitleText: some View {
-        ValidationCheckTextField(textType: .mandatory,
-                                 isMultipleLines: false,
-                                 title: TextLiteral.writeShortcutViewNameTitle,
-                                 placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
-                                 lengthLimit: 20,
-                                 isDownloadLinkTextField: false,
-                                 content: $viewModel.shortcut.title,
-                                 isValid: $viewModel.isNameValid
-        )
-        .onAppear(perform : UIApplication.shared.hideKeyboard)
-    }
-    
     //MARK: -단축어 링크
     private var shortcutLinkText: some View {
         ValidationCheckTextField(textType: .mandatory,
@@ -156,6 +173,28 @@ struct WriteShortcutView: View {
                                  content: $viewModel.shortcut.downloadLink[0],
                                  isValid: $viewModel.isLinkValid
         )
+    }
+    
+    //MARK: -단축어 이름
+    private var shortcutTitleText: some View {
+        VStack(alignment: .leading) {
+            ValidationCheckTextField(textType: .mandatory,
+                                     isMultipleLines: false,
+                                     title: TextLiteral.writeShortcutViewNameTitle,
+                                     placeholder: TextLiteral.writeShortcutViewNamePlaceholder,
+                                     lengthLimit: 20,
+                                     isDownloadLinkTextField: false,
+                                     content: $viewModel.shortcut.title,
+                                     isValid: $viewModel.isNameValid
+            )
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            if isFetchingMetadata {
+                ProgressView()
+                    .frame(width: 20, height: 20)
+                    .padding(.horizontal, 16)
+            }
+        }
+
     }
     
     //MARK: -한줄 설명
@@ -190,10 +229,10 @@ struct WriteShortcutView: View {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewCategoryTitle)
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                 Text(TextLiteral.writeShortcutViewCategoryDescription)
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
                 Spacer()
             }
             .padding(.horizontal, 16)
@@ -214,18 +253,18 @@ struct WriteShortcutView: View {
                     HStack {
                         if selectedCategories.isEmpty {
                             Text(TextLiteral.writeShortcutViewCategoryCell)
-                                .foregroundColor(.gray2)
+                                .foregroundStyle(Color.gray2)
                                 .shortcutsZipBody2()
                         } else {
                             Text(selectedCategories.map { Category(rawValue: $0)!.translateName() }.joined(separator: ", "))
-                                .foregroundColor(.gray4)
+                                .foregroundStyle(Color.gray4)
                                 .shortcutsZipBody2()
                                 .multilineTextAlignment(.leading)
                         }
                         Spacer()
                         Image(systemName: "chevron.forward")
                             .smallIcon()
-                            .foregroundColor(selectedCategories.isEmpty ? .gray2 : .gray4)
+                            .foregroundStyle(selectedCategories.isEmpty ? Color.gray2 : Color.gray4)
                     }
                     .padding(.all, 16)
                     .overlay(
@@ -252,14 +291,14 @@ struct WriteShortcutView: View {
             HStack(alignment: .bottom) {
                 Text(TextLiteral.writeShortcutViewRequiredAppsTitle)
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                 Text(TextLiteral.writeShortcutViewRequiredAppDescription)
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
                 Spacer()
                 Image(systemName: "info.circle.fill")
                     .smallIcon()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
                     .onTapGesture {
                         viewModel.isInfoButtonTouched.toggle()
                     }
@@ -271,18 +310,18 @@ struct WriteShortcutView: View {
                 if viewModel.isInfoButtonTouched {
                     ZStack(alignment: .center) {
                         RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.gray5)
                             .frame(maxWidth: .infinity, maxHeight: 68)
-                            .foregroundColor(.gray5)
                         HStack(alignment: .top) {
                             Text(TextLiteral.writeShortcutViewRequiredAppInformation)
                                 .shortcutsZipFootnote()
-                                .foregroundColor(.gray1)
+                                .foregroundStyle(Color.gray1)
                                 .multilineTextAlignment(.leading)
                             Spacer()
                             Image(systemName: "xmark")
                                 .smallIcon()
                                 .frame(width: 16, height: 16)
-                                .foregroundColor(.gray1)
+                                .foregroundStyle(Color.gray1)
                                 .onTapGesture {
                                     viewModel.isInfoButtonTouched = false
                                 }
@@ -322,7 +361,7 @@ struct WriteShortcutView: View {
                                     viewModel.isTextFieldShowing = false
                                 }
                             }
-                            .modifier(CellModifier(foregroundColor: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
+                            .modifier(CellModifier(foregroundStyle: Color.gray4, strokeColor: Color.shortcutsZipPrimary))
                     }
                     
                     Button(action: {
@@ -335,7 +374,7 @@ struct WriteShortcutView: View {
                             Text(TextLiteral.writeShortcutViewRequiredAppCell)
                         }
                     })
-                    .modifier(CellModifier(foregroundColor: Color.gray2, strokeColor: Color.gray2))
+                    .modifier(CellModifier(foregroundStyle: Color.gray2, strokeColor: Color.gray2))
                 }
                 .padding(.leading, 16)
             }
@@ -358,20 +397,20 @@ struct WriteShortcutView: View {
                         .smallIcon()
                 })
             }
-            .modifier(CellModifier(foregroundColor: Color.gray4,
+            .modifier(CellModifier(foregroundStyle: Color.gray4,
                                    backgroundColor: Color.shortcutsZipBackground,
                                    strokeColor: Color.gray4))
         }
     }
     private struct CellModifier: ViewModifier {
-        @State var foregroundColor: Color
+        @State var foregroundStyle: Color
         @State var backgroundColor = Color.clear
         @State var strokeColor: Color
         
         public func body(content: Content) -> some View {
             content
                 .shortcutsZipBody2()
-                .foregroundColor(foregroundColor)
+                .foregroundStyle(foregroundStyle)
                 .frame(height: 52)
                 .padding(.horizontal)
                 .background(
@@ -394,7 +433,7 @@ struct WriteShortcutView: View {
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .smallIcon()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                 }
             }
         }
