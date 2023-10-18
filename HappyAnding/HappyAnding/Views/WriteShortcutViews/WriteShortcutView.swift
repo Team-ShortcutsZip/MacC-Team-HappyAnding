@@ -27,6 +27,8 @@ struct WriteShortcutView: View {
     
     let metadataProvider = LPMetadataProvider()
     
+    private let hapticManager = HapticManager.instance
+
     private let gridLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -116,6 +118,7 @@ struct WriteShortcutView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         viewModel.uploadShortcut()
+                        hapticManager.notification(type: .success)
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text(TextLiteral.upload)

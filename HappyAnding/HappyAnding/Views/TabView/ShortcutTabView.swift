@@ -45,9 +45,12 @@ struct ShortcutTabView: View {
         UITabBar.appearance().clipsToBounds = true
     }
     
+    private let hapticManager = HapticManager.instance
+    
     var handler: Binding<Int> { Binding(
         get: { self.selectedTab },
         set: {
+            hapticManager.impact(style: .light)
             if $0 == self.selectedTab {
                 twiceTappedTab = $0
             }

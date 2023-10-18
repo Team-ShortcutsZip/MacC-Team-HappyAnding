@@ -21,7 +21,8 @@ struct GradeAlertView: View {
     var delayTime = 0.5
     
     let gradeImage = ["level1Super", "level5Super", "level10Super", "level25Super", "level50Super"]
-    
+    private let hapticManager = HapticManager.instance
+
     var body: some View {
         ZStack {
             Color.black
@@ -60,6 +61,7 @@ struct GradeAlertView: View {
             .padding(.top, 66)
         }
         .onAppear() {
+            hapticManager.notification(type: .success)
             index = shortcutsZipViewModel.shortcutGrade - 1
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 withAnimation(.spring(response: 0.7, dampingFraction: 0.3, blendDuration: 0)) {

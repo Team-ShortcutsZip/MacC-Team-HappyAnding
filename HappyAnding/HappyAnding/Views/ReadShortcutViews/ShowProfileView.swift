@@ -14,6 +14,7 @@ struct ShowProfileView: View {
     @Namespace var namespace
     
     private let tabItems = [TextLiteral.showProfileViewShortcutTabTitle, TextLiteral.showProfileViewCurationTabTitle]
+    private let hapticManager = HapticManager.instance
     
     var body: some View {
         ScrollView {
@@ -23,6 +24,7 @@ struct ShowProfileView: View {
                 //MARK: 프로필이미지 및 닉네임
                 VStack(spacing: 8) {
                     Button {
+                        hapticManager.impact(style: .rigid)
                         withAnimation(.interpolatingSpring(stiffness: 10, damping: 3)) {
                             viewModel.profileDidTap()
                         }
