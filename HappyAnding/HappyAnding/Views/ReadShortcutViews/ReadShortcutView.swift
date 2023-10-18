@@ -217,7 +217,7 @@ extension ReadShortcutView {
                         .foregroundStyle(Color.gray4)
                 }
                 TextField(useWithoutSignIn ? TextLiteral.readShortcutViewCommentDescriptionBeforeLogin : TextLiteral.readShortcutViewCommentDescription, text: $viewModel.commentText, axis: .vertical)
-                    .keyboardType(.twitter)
+                    .keyboardType(.default)
                     .disabled(useWithoutSignIn)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
@@ -671,9 +671,11 @@ extension ReadShortcutView {
                         .padding(.bottom, 4)
                         
                         /// 댓글 내용
-                        Text(comment.contents)
+                        Text(.init(comment.contents))
+                            .textSelection(.enabled)
                             .shortcutsZipBody2()
                             .foregroundStyle(Color.gray5)
+                            .tint(.shortcutsZipPrimary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 4)
                         
