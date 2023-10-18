@@ -12,7 +12,7 @@ struct ExploreShortcutView: View {
     @StateObject var viewModel: ExploreShortcutViewModel
     
     // TODO: 추후 UpdateInfoView 제작 시 true로 변경해서 cell 보이게 하기
-    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = false
+    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = true
     
     let randomCategories: [Category]
     
@@ -24,10 +24,11 @@ struct ExploreShortcutView: View {
                         Button {
                             viewModel.announcementCellDidTap()
                         } label: {
-                            AnnouncementCell(icon: "updateAppIcon",
+                            AnnouncementCell(isAnnouncementShow: $isUpdateAnnnouncementShow,
+                                             icon: "updateAppIcon",
                                              tagName: TextLiteral.updateTag,
-                                             discription: TextLiteral.updateCellDescription,
-                                             isAnnouncementShow: $isUpdateAnnnouncementShow)
+                                             title: TextLiteral.updateCellDescription,
+                                             isCanDismiss: true)
                         }
                         .id(000)
                     }
