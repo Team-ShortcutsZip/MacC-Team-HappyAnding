@@ -11,7 +11,6 @@ struct ExploreShortcutView: View {
     
     @StateObject var viewModel: ExploreShortcutViewModel
     
-    // TODO: 추후 UpdateInfoView 제작 시 true로 변경해서 cell 보이게 하기
     @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = true
     
     let randomCategories: [Category]
@@ -20,17 +19,20 @@ struct ExploreShortcutView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 32) {
+                    
                     if isUpdateAnnnouncementShow {
                         Button {
-                            viewModel.announcementCellDidTap()
+                            isUpdateAnnnouncementShow = false
+//                            viewModel.announcementCellDidTap()
                         } label: {
                             AnnouncementCell(isAnnouncementShow: $isUpdateAnnnouncementShow,
                                              icon: "updateAppIcon",
-                                             tagName: TextLiteral.updateTag,
+                                             tagName: TextLiteral.appUpdateTag,
                                              title: TextLiteral.updateCellDescription,
                                              isCanDismiss: true)
+                            .navigationLinkRouter(data: NavigationUpdateInfo.first)
+                            .id(000)
                         }
-                        .id(000)
                     }
                     
                     sectionView(with: .recent)
@@ -96,11 +98,6 @@ struct ExploreShortcutView: View {
             }
         }
         .navigationBarBackground ({ Color.shortcutsZipBackground })
-        .sheet(isPresented: $viewModel.isAnnouncementCellShowing) {
-            UpdateInfoView()
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-        }
     }
     
 }

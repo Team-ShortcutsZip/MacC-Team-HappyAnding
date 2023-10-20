@@ -66,7 +66,7 @@ struct AnnouncementCell: View {
                 Spacer()
                 if isCanDismiss {
                     Button {
-                        isAnnouncementShow = false
+                        self.isAnnouncementShow = false
                     } label: {
                         Image(systemName: "xmark")
                             .shortcutsZipBody1()
