@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct UpdateInfoView: View {
+    
+    @State var isShowFormView = false
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 52) {
@@ -30,7 +33,26 @@ struct UpdateInfoView: View {
                                  image: nil,
                                  description: "이제 단축어를 업데이트하지 않아도 언제 업로드 된 단축어인지 알 수 있어요. 댓글에도 날짜가 표시되어서 내 단축어에 달린 최근 댓글에 빠르게 피드백 할 수 있답니다.")
                 
-                footer()
+//                footer(isButtonToggle: isShowFormView)
+                VStack(alignment: .center, spacing: 20) {
+                    Text(TextLiteral.updateInfoViewFooterTitle)
+                        .shortcutsZipTitle2()
+                        .foregroundStyle(Color.gray6)
+                        .multilineTextAlignment(.center)
+                    Button {
+                        isShowFormView.toggle()
+                    } label: {
+                        Text(TextLiteral.updateInfoViewComment)
+                            .shortcutsZipBody1()
+                            .fontWeight(.semibold)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 12)
+                            .foregroundStyle(Color.textButton)
+                            .background(Color.shortcutsZipPrimary)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
+                }
+                .frame(maxWidth: .infinity)
                 
             }
             .padding(.bottom, 44)
@@ -38,6 +60,12 @@ struct UpdateInfoView: View {
         .edgesIgnoringSafeArea(.top)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.shortcutsZipBackground)
+        .sheet(isPresented: self.$isShowFormView) {
+            ShortcutsZipFormView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+
     }
     
     //MARK: - Header
@@ -82,9 +110,6 @@ struct UpdateInfoView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .cornerRadius(16)
-                    .onLongPressGesture {
-                        copyImageToClipboard(imageName: image)
-                    }
             }
             Text(description.lineBreaking)
                 .shortcutsZipBody2()
@@ -103,7 +128,7 @@ struct UpdateInfoView: View {
                 .foregroundStyle(Color.gray6)
                 .multilineTextAlignment(.center)
             Button {
-                //TODO: ShortcutsZipFormView 띄우는 로직 추가
+//                isButtonToggle.toggle()
             } label: {
                 Text(TextLiteral.updateInfoViewComment)
                     .shortcutsZipBody1()
@@ -117,13 +142,6 @@ struct UpdateInfoView: View {
         }
         .frame(maxWidth: .infinity)
     }
-    
-    private func copyImageToClipboard(imageName: String) {
-        if let image = UIImage(named: imageName) {
-            UIPasteboard.general.image = image
-        }
-    }
-
 }
 
 struct UpdateInfoView_Previews: PreviewProvider {
