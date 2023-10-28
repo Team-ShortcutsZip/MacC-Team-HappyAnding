@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct UpdateInfoView: View {
+    @Environment(\.loginAlertKey) var loginAlerter
+    
+    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
     
     @State var isShowFormView = false
     
@@ -33,14 +36,17 @@ struct UpdateInfoView: View {
                                  image: nil,
                                  description: "이제 단축어를 업데이트하지 않아도 언제 업로드 된 단축어인지 알 수 있어요. 댓글에도 날짜가 표시되어서 내 단축어에 달린 최근 댓글에 빠르게 피드백 할 수 있답니다.")
                 
-//                footer(isButtonToggle: isShowFormView)
                 VStack(alignment: .center, spacing: 20) {
                     Text(TextLiteral.updateInfoViewFooterTitle)
                         .shortcutsZipTitle2()
                         .foregroundStyle(Color.gray6)
                         .multilineTextAlignment(.center)
                     Button {
-                        isShowFormView.toggle()
+                        if !useWithoutSignIn {
+                            isShowFormView.toggle()
+                        } else {
+                            loginAlerter.isPresented = true
+                        }
                     } label: {
                         Text(TextLiteral.updateInfoViewComment)
                             .shortcutsZipBody1()
@@ -117,30 +123,6 @@ struct UpdateInfoView: View {
                 .multilineTextAlignment(.leading)
         }
         .padding(.horizontal, 20)
-    }
-    
-    //MARK: - Footer
-    @ViewBuilder
-    private func footer() -> some View {
-        VStack(alignment: .center, spacing: 20) {
-            Text(TextLiteral.updateInfoViewFooterTitle)
-                .shortcutsZipTitle2()
-                .foregroundStyle(Color.gray6)
-                .multilineTextAlignment(.center)
-            Button {
-//                isButtonToggle.toggle()
-            } label: {
-                Text(TextLiteral.updateInfoViewComment)
-                    .shortcutsZipBody1()
-                    .fontWeight(.semibold)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
-                    .foregroundStyle(Color.textButton)
-                    .background(Color.shortcutsZipPrimary)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-            }
-        }
-        .frame(maxWidth: .infinity)
     }
 }
 

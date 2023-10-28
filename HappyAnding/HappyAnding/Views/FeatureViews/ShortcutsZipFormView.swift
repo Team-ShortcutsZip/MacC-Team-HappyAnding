@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct ShortcutsZipFormView: View {
-    
+        
     enum Field: Hashable {
         case text
     }
     
+    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    
     @FocusState var focusState: Bool
     @State var formText: String = ""
+    @State var isFormSendSuccess: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -26,25 +29,52 @@ struct ShortcutsZipFormView: View {
                     Text("기능 제안, 칭찬 등 무엇이든 작성해주세요")
                         .shortcutsZipHeadline()
                         .foregroundStyle(Color.gray4)
-                    TextField("답변 입력하기", text: $formText, axis: .vertical)
-                        .shortcutsZipBody1()
-                        .padding(.all, 12)
-                        .background( Color.gray1 )
-                        .cornerRadius(12, corners: .allCorners)
-                        .lineLimit(5)
-                        .focused($focusState, equals: true)
+                    
+                    if (isFormSendSuccess) {
+                        HStack {
+                            Spacer()
+                            VStack(alignment: .center, spacing: 16) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .largeShortcutIcon()
+                                    .foregroundStyle(Color.shortcutsZipSuccess)
+                                Text("소중한 의견을 잘 전달했어요")
+                                    .shortcutsZipHeadline()
+                                    .foregroundStyle(Color.gray4)
+                            }
+                            .padding(.all, 16)
+                            .background( Color.gray1 )
+                            .cornerRadius(16)
+                            Spacer()
+                        }
+                    } else {
+                        TextField("답변 입력하기", text: $formText, axis: .vertical)
+                            .shortcutsZipBody1()
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 16)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .strokeBorder(lineWidth: 1)
+                                    .foregroundStyle(Color.gray4)
+                            )
+                            .cornerRadius(12, corners: .allCorners)
+                            .lineLimit(5)
+                            .focused($focusState, equals: true)
+                    }
+                    
                 }
                 .padding(.top, 40)
                 .padding(16)
             }
             .onAppear() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.focusState = true
                 }
             }
             
             Button {
                 //api 연결
+                formText = ""
+                isFormSendSuccess = true
             } label: {
                 Text("확인")
                     .shortcutsZipBody1()
