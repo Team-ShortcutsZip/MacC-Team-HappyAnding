@@ -17,6 +17,7 @@ enum TextLiteral {
     static let cancel: String = "취소"
     static let next: String = "다음"
     static let upload: String = "업로드"
+    static let confirm: String = "확인"
     static let close: String = "닫기"
     static let done: String = "완료"
     static let edit: String = "편집"
@@ -262,5 +263,10 @@ enum TextLiteral {
     static let updateInfoViewVersion: String = "2023.10.23 | 1.3.3"
     static let updateInfoViewFooterTitle: String = "ShortcutsZip에게\n전하고 싶은 말이 있나요?"
     static let updateInfoViewComment: String = "의견 남기러 가기"
-
+    
+    //MARK: -ShortcutsZipFormView
+    static let formViewTitle: String = "ShortcutsZip에게\n전하고 싶은 말을 남겨 주세요"
+    static let formViewSubTitle: String = "기능 제안, 칭찬 등 무엇이든 작성해주세요"
+    static let formViewSuccessMessage: String = "소중한 의견을 잘 전달했어요"
+    static let formViewTextPlaceholder: String = "답변 입력하기"
 }

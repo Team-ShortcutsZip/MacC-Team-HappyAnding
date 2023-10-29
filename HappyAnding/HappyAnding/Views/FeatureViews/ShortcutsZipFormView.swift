@@ -23,10 +23,10 @@ struct ShortcutsZipFormView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    Text("ShortcutsZip에게\n전하고 싶은 말을 남겨 주세요")
+                    Text(TextLiteral.formViewTitle)
                         .shortcutsZipTitle1()
                         .foregroundStyle(Color.gray6)
-                    Text("기능 제안, 칭찬 등 무엇이든 작성해주세요")
+                    Text(TextLiteral.formViewSubTitle)
                         .shortcutsZipHeadline()
                         .foregroundStyle(Color.gray4)
                     
@@ -37,7 +37,7 @@ struct ShortcutsZipFormView: View {
                                 Image(systemName: "checkmark.circle.fill")
                                     .largeShortcutIcon()
                                     .foregroundStyle(Color.shortcutsZipSuccess)
-                                Text("소중한 의견을 잘 전달했어요")
+                                Text(TextLiteral.formViewSuccessMessage)
                                     .shortcutsZipHeadline()
                                     .foregroundStyle(Color.gray4)
                             }
@@ -47,7 +47,7 @@ struct ShortcutsZipFormView: View {
                             Spacer()
                         }
                     } else {
-                        TextField("답변 입력하기", text: $formText, axis: .vertical)
+                        TextField(TextLiteral.formViewTextPlaceholder, text: $formText, axis: .vertical)
                             .shortcutsZipBody1()
                             .padding(.horizontal, 12)
                             .padding(.vertical, 16)
@@ -73,10 +73,12 @@ struct ShortcutsZipFormView: View {
             
             Button {
                 //api 연결
+                print(shortcutsZipViewModel.userInfo?.nickname ?? "")
+                print(Date.now)
                 formText = ""
                 isFormSendSuccess = true
             } label: {
-                Text("확인")
+                Text(TextLiteral.confirm)
                     .shortcutsZipBody1()
                     .fontWeight(.semibold)
                     .foregroundStyle( Color.textIcon )
