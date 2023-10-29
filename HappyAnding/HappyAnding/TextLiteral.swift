@@ -84,7 +84,6 @@ enum TextLiteral {
     static let nicknameTextFieldDuplicateTitle: String = "닉네임 중복 확인"
     static let nicknameTextFieldDuplicateSuccessMessage: String = "사용할 수 있는 닉네임이에요"
     static let nicknameTextFieldDuplicateFailMessage: String = "이미 사용 중인 닉네임이에요"
-    static let nicknameTextFieldDuplicateSuccessLabel: String = "확인"
     static let nicknameTextFieldDuplicateFailLabel: String = "다시 입력하기"
     static let nicknameTextFieldTitle: String = "닉네임 (최대 8글자)"
     static let nicknameTextFieldDuplicateCheck: String = "중복확인"
@@ -252,7 +251,6 @@ enum TextLiteral {
     static let customShareViewControllerSignInAlertMessage: String = "이 기능은 로그인 후 사용할 수 있는 기능이에요"
     static let customShareViewControllerLinkVaildAlertTitle: String = "잘못된 접근이에요"
     static let customShareViewControllerLinkVaildAlertMessage: String = "해당 링크는 ShortcutsZip으로 공유할 수 없어요"
-    static let customShareViewControllerCheck: String = "확인"
     
     //MARK: - GradeAlertView
     static let gradeAlertMessage: String = "단축어 작성 레벨이 상승했어요!"
