@@ -86,6 +86,8 @@
 		A31F1844292A637300AF4A82 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+String.swift */; };
 		A31F1846292A638700AF4A82 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
+		A323D3CA2AEE870700DDA716 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323D3C92AEE870700DDA716 /* Form.swift */; };
+		A323D3CC2AEEA10F00DDA716 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323D3CB2AEEA10F00DDA716 /* FormViewModel.swift */; };
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3439AF529395A100043E273 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B729114FB200C3DA13 /* UserAuth.swift */; };
 		A3439AF629395A3A0043E273 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
@@ -270,6 +272,8 @@
 		A0DD085629276608008177BB /* URL+DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+DeepLink.swift"; sourceTree = "<group>"; };
 		A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipViewModel.swift; sourceTree = "<group>"; };
 		A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCategoryShortcutView.swift; sourceTree = "<group>"; };
+		A323D3C92AEE870700DDA716 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
+		A323D3CB2AEEA10F00DDA716 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		A34BF82729AF3D55009BC946 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
@@ -650,6 +654,7 @@
 				F976E82B29368E0D0088BBA1 /* Version.swift */,
 				F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */,
 				872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */,
+				A323D3C92AEE870700DDA716 /* Form.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -677,6 +682,7 @@
 				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
 				F9AFF6E22A59153B00FFFFAD /* WriteShortcutViewModel.swift */,
 				F92766542A61A032009C4EC2 /* WriteShortcutModalViewModel.swift */,
+				A323D3CB2AEEA10F00DDA716 /* FormViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -936,6 +942,7 @@
 				A3FF0183291648A300384211 /* MailView.swift in Sources */,
 				4D061BBA2A475EE800F76835 /* ExploreShortcutViewModel.swift in Sources */,
 				A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */,
+				A323D3CC2AEEA10F00DDA716 /* FormViewModel.swift in Sources */,
 				87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */,
 				A34BF82D29AFC34F009BC946 /* AboutShortcutGradeView.swift in Sources */,
 				4D93D06F2A5956E60042CBA8 /* ShowProfileViewModel.swift in Sources */,
@@ -958,6 +965,7 @@
 				F9AFF6E32A59153B00FFFFAD /* WriteShortcutViewModel.swift in Sources */,
 				8786B2E629A7F987000B46A1 /* String+Date.swift in Sources */,
 				F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */,
+				A323D3CA2AEE870700DDA716 /* Form.swift in Sources */,
 				4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
 				876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */,

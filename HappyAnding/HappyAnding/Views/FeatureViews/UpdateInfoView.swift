@@ -67,7 +67,7 @@ struct UpdateInfoView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.shortcutsZipBackground)
         .sheet(isPresented: self.$isShowFormView) {
-            ShortcutsZipFormView()
+            ShortcutsZipFormView(viewModel: FormViewModel())
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
         }

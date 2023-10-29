@@ -13,7 +13,7 @@ struct ShortcutsZipFormView: View {
         case text
     }
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
+    @StateObject var viewModel: FormViewModel
     
     @FocusState var focusState: Bool
     @State var formText: String = ""
@@ -72,9 +72,7 @@ struct ShortcutsZipFormView: View {
             }
             
             Button {
-                //api 연결
-                print(shortcutsZipViewModel.userInfo?.nickname ?? "")
-                print(Date.now)
+                viewModel.uploadUserForm(formContent: formText)
                 formText = ""
                 isFormSendSuccess = true
             } label: {
@@ -94,8 +92,4 @@ struct ShortcutsZipFormView: View {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
-}
-
-#Preview {
-    ShortcutsZipFormView()
 }
