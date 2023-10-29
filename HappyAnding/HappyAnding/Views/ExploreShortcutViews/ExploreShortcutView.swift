@@ -21,18 +21,13 @@ struct ExploreShortcutView: View {
                 VStack(spacing: 32) {
                     
                     if isUpdateAnnnouncementShow {
-                        Button {
-                            isUpdateAnnnouncementShow = false
-//                            viewModel.announcementCellDidTap()
-                        } label: {
-                            AnnouncementCell(isAnnouncementShow: $isUpdateAnnnouncementShow,
-                                             icon: "updateAppIcon",
-                                             tagName: TextLiteral.appUpdateTag,
-                                             title: TextLiteral.updateCellDescription,
-                                             isCanDismiss: true)
-                            .navigationLinkRouter(data: NavigationUpdateInfo.first)
-                            .id(000)
-                        }
+                        AnnouncementCell(isAnnouncementShow: $isUpdateAnnnouncementShow,
+                                         icon: "updateAppIcon",
+                                         tagName: TextLiteral.appUpdateTag,
+                                         title: TextLiteral.updateCellDescription,
+                                         isCanDismiss: true)
+                        .navigationLinkRouter(data: NavigationUpdateInfo.first)
+                        .id(000)
                     }
                     
                     sectionView(with: .recent)
