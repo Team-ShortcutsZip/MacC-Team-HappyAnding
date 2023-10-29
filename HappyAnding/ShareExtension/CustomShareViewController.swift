@@ -20,6 +20,8 @@ class CustomShareViewController: UIViewController {
     var itemDone: UIBarButtonItem!
     var itemCancel: UIBarButtonItem!
     
+    private let hapticManager = HapticManager.instance
+    
     ///viewdidload
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,6 +135,7 @@ class CustomShareViewController: UIViewController {
     }
     @objc private func doneAction() {
         shareExtensionViewModel.setData()
+        hapticManager.notification(type: .success)
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     func dismissAction() {

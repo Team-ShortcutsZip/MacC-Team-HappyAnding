@@ -79,6 +79,8 @@ struct ShareExtensionValidationCheckTextField: View {
     
     var index: Int
     
+    private let hapticManager = HapticManager.instance
+    
     var body: some View {
         VStack {
             
@@ -119,6 +121,9 @@ struct ShareExtensionValidationCheckTextField: View {
                         .shortcutsZipBody2()
                         .foregroundStyle(Color.shortcutsZipError)
                         .padding(.leading)
+                        .onAppear() {
+                            hapticManager.notification(type: .error)
+                        }
                 }
                 
                 Spacer()

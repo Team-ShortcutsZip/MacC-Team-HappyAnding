@@ -50,7 +50,8 @@ struct ShortcutCell: View {
     var rankNumber: Int?
     var sectionType: SectionType?
     let navigationParentView: NavigationParentView
-    
+    private let hapticManager = HapticManager.instance
+
     var body: some View {
         
         ZStack {
@@ -67,6 +68,7 @@ struct ShortcutCell: View {
                                     shortcutsZipViewModel.updateNumberOfDownload(shortcut: shortcut, downloadlinkIndex: 0)
                                 }
                             }
+                            hapticManager.notification(type: .success)
                         } else {
                             loginAlerter.isPresented = true
                         }
