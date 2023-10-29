@@ -21,20 +21,20 @@ struct UpdateInfoView: View {
                 header()
                 
                 //TODO: Model 만들어서 Foreach로 돌리기. 다음 업데이트
-                aboutFeatureCell(type: "기능 업데이트",
-                                 title: "더욱 쉬워진 단축어 작성 과정",
+                aboutFeatureCell(type: TextLiteral.updateInfoViewTypeUpdate,
+                                 title: TextLiteral.featTitleFirst,
                                  image: "easierShortcutWrite",
-                                 description: "이제는 단축어 작성 과정에서 제목을 직접 입력하지 않아도 괜찮아요. 단축어 링크만 붙여넣으면 ShortcutsZip이 자동으로 제목을 채워준답니다. 이 기능은 단축어 앱의 공유 시트에서 바로 작성할 때도 만나볼 수 있어요.")
+                                 description: TextLiteral.featContentFirst)
                 
-                aboutFeatureCell(type: "기능 업데이트",
-                                 title: "간편하게 외부 링크 살펴보기",
+                aboutFeatureCell(type: TextLiteral.updateInfoViewTypeUpdate,
+                                 title: TextLiteral.featTitleSecond,
                                  image: "easierExternalURL",
-                                 description: "다른 유저에게 단축어에 대해 더 자세한 정보를 알려 주고 싶을 때가 있지 않나요? 단축어 설명이나 댓글에 URL을 입력하면 ShortcutsZip이 자동으로 인식해 해당 웹사이트로 바로 이동할 수 있는 링크를 제공해요.")
+                                 description: TextLiteral.featContentSecond)
                 
-                aboutFeatureCell(type: "기능 업데이트",
-                                 title: "단축어와 댓글 작성 날짜 확인",
+                aboutFeatureCell(type: TextLiteral.updateInfoViewTypeUpdate,
+                                 title: TextLiteral.featTitleThird,
                                  image: nil,
-                                 description: "이제 단축어를 업데이트하지 않아도 언제 업로드 된 단축어인지 알 수 있어요. 댓글에도 날짜가 표시되어서 내 단축어에 달린 최근 댓글에 빠르게 피드백 할 수 있답니다.")
+                                 description: TextLiteral.featContentThird)
                 
                 VStack(alignment: .center, spacing: 20) {
                     Text(TextLiteral.updateInfoViewFooterTitle)
