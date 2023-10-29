@@ -88,6 +88,7 @@
 		A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		A323D3CA2AEE870700DDA716 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323D3C92AEE870700DDA716 /* Form.swift */; };
 		A323D3CC2AEEA10F00DDA716 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323D3CB2AEEA10F00DDA716 /* FormViewModel.swift */; };
+		A323D3D02AEEE4B400DDA716 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39504862AD46B9B0019895E /* HapticManager.swift */; };
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3439AF529395A100043E273 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B729114FB200C3DA13 /* UserAuth.swift */; };
 		A3439AF629395A3A0043E273 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
@@ -1003,7 +1004,6 @@
 				87E99CBB28FFF298009B691F /* IconModalView.swift in Sources */,
 				87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */,
 				F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */,
-				A39504872AD46B9B0019895E /* HapticManager.swift in Sources */,
 				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
@@ -1037,6 +1037,7 @@
 				8788374A2920D549009B3F54 /* Binding+Extension.swift in Sources */,
 				87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */,
 				F9724BBF292755E400860F8A /* Comment.swift in Sources */,
+				A323D3D02AEEE4B400DDA716 /* HapticManager.swift in Sources */,
 				87E99CA328FFF22E009B691F /* ExploreCurationView.swift in Sources */,
 				A0F822B729164D2300AF4448 /* ListCategoryShortcutView.swift in Sources */,
 				87B47F3B2A3DC2740009E75F /* ReadCurationViewModel.swift in Sources */,
