@@ -11,6 +11,7 @@
 		4D061BBA2A475EE800F76835 /* ExploreShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D061BB92A475EE800F76835 /* ExploreShortcutViewModel.swift */; };
 		4D3DBB88292E67E600DE8160 /* EditNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3DBB87292E67E500DE8160 /* EditNicknameView.swift */; };
 		4D3DBB962934E31A00DE8160 /* ShowProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3DBB952934E31A00DE8160 /* ShowProfileView.swift */; };
+		4D5889E82AA36A52000C4849 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5889E72AA36A52000C4849 /* AppDelegate.swift */; };
 		4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */; };
 		4D6A9EFF29A36E9C00D02522 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 4D6A9EFE29A36E9C00D02522 /* WrappingHStack */; };
 		4D6A9F0129A3A92F00D02522 /* wrappinghstack+license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4D6A9F0029A3A92E00D02522 /* wrappinghstack+license.txt */; };
@@ -19,6 +20,7 @@
 		4D7D16082986BBDE008B3332 /* TextLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D16062986BBD7008B3332 /* TextLiteral.swift */; };
 		4D93D06F2A5956E60042CBA8 /* ShowProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D93D06E2A5956E60042CBA8 /* ShowProfileViewModel.swift */; };
 		4D93D0752A61D0D10042CBA8 /* ReadShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D93D0742A61D0D10042CBA8 /* ReadShortcutViewModel.swift */; };
+		4D93D0772A73C9330042CBA8 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4D93D0762A73C9330042CBA8 /* FirebaseMessaging */; };
 		4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */; };
 		4DF15D732A4ECC7D0014F854 /* ListShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF15D722A4ECC7D0014F854 /* ListShortcutViewModel.swift */; };
 		4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF15D742A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift */; };
@@ -200,6 +202,7 @@
 		4D061BB92A475EE800F76835 /* ExploreShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreShortcutViewModel.swift; sourceTree = "<group>"; };
 		4D3DBB87292E67E500DE8160 /* EditNicknameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditNicknameView.swift; sourceTree = "<group>"; };
 		4D3DBB952934E31A00DE8160 /* ShowProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileView.swift; sourceTree = "<group>"; };
+		4D5889E72AA36A52000C4849 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		4D6A9F0029A3A92E00D02522 /* wrappinghstack+license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "wrappinghstack+license.txt"; sourceTree = "<group>"; };
 		4D778A33290A53BA00C15AC4 /* UIApplication+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Keyboard.swift"; sourceTree = "<group>"; };
@@ -323,6 +326,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D93D0772A73C9330042CBA8 /* FirebaseMessaging in Frameworks */,
 				F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */,
 				F94B43632907B19A00987819 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				F94B435F2907B19A00987819 /* FirebaseAuth in Frameworks */,
@@ -359,6 +363,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DB674822AF11B7900A83C0B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				4D5889E72AA36A52000C4849 /* AppDelegate.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		8786B2DD29A7F8C8000B46A1 /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +487,7 @@
 				3D41EE06290A458B008BE986 /* Info.plist */,
 				87E99CC22901454D009B691F /* Extensions */,
 				A39504852AD46ACB0019895E /* Support */,
+				4DB674822AF11B7900A83C0B /* Support */,
 				87E99C9828FFF1D2009B691F /* Views */,
 				87E99CD729042503009B691F /* Model */,
 				A0F822AA2910B8B900AF4448 /* ViewModel */,
@@ -775,6 +788,7 @@
 				F94B43602907B19A00987819 /* FirebaseFirestore */,
 				F94B43622907B19A00987819 /* FirebaseFirestoreCombine-Community */,
 				4D6A9EFE29A36E9C00D02522 /* WrappingHStack */,
+				4D93D0762A73C9330042CBA8 /* FirebaseMessaging */,
 			);
 			productName = HappyAnding;
 			productReference = 87E99C6A28F94EA6009B691F /* HappyAnding.app */;
@@ -996,6 +1010,7 @@
 				A39504872AD46B9B0019895E /* HapticManager.swift in Sources */,
 				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
+				4D5889E82AA36A52000C4849 /* AppDelegate.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
 				87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */,
 				F91F09DF29AE0B5E00E04FA0 /* GradeAlertView.swift in Sources */,
@@ -1525,6 +1540,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4D6A9EFD29A36E9C00D02522 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
 			productName = WrappingHStack;
+		};
+		4D93D0762A73C9330042CBA8 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		A3FC4746292A61550058BF26 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

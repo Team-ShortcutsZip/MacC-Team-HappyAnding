@@ -8,8 +8,6 @@
 import SwiftUI
 
 import FirebaseCore
-import FirebaseFirestore
-
 
 @main
 struct HappyAndingApp: App {
@@ -29,6 +27,8 @@ struct HappyAndingApp: App {
     init() {
         FirebaseApp.configure()
     }
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
