@@ -1,5 +1,5 @@
 //
-//  UpdateInfoView.swift
+//  AboutUpdateView.swift
 //  HappyAnding
 //
 //  Created by HanGyeongjun on 2023/05/29.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UpdateInfoView: View {
+struct AboutUpdateView: View {
     @Environment(\.loginAlertKey) var loginAlerter
     
     @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
@@ -67,7 +67,7 @@ struct UpdateInfoView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.shortcutsZipBackground)
         .sheet(isPresented: self.$isShowFormView) {
-            ShortcutsZipFormView(viewModel: FormViewModel())
+            SuggestionFormView(viewModel: SuggestionFormViewModel())
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
         }
@@ -128,6 +128,6 @@ struct UpdateInfoView: View {
 
 struct UpdateInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateInfoView()
+        AboutUpdateView()
     }
 }

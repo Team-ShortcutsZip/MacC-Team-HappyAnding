@@ -426,8 +426,8 @@ extension ShortcutsZipViewModel {
             db.collection("User").document((model as! User).id).setData((model as! User).dictionary)
         case _ as Comments:
             db.collection("Comment").document((model as! Comments).id).setData((model as! Comments).dictionary)
-        case _ as Form:
-            db.collection("Form").document((model as! Form).id).setData((model as! Form).dictionary)
+        case _ as SuggestionForm:
+            db.collection("SuggestionForm").document((model as! SuggestionForm).id).setData((model as! SuggestionForm).dictionary)
         default:
             print("this is not a model.")
         }

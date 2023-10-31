@@ -102,7 +102,7 @@ extension View {
         case is CheckVersionView:
             CheckVersionView()
         case is NavigationUpdateInfo:
-            UpdateInfoView()
+            AboutUpdateView()
         default:
             EmptyView()
         }
@@ -154,7 +154,7 @@ struct NavigationViewModifier: ViewModifier {
                 CheckVersionView()
             }
             .navigationDestination(for: NavigationUpdateInfo.self) { _ in
-                UpdateInfoView()
+                AboutUpdateView()
             }
     }
 }

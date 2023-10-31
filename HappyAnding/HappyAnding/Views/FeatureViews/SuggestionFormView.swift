@@ -1,5 +1,5 @@
 //
-//  ShortcutsZipFormView.swift
+//  SuggestionFormView.swift
 //  HappyAnding
 //
 //  Created by HanGyeongjun on 10/23/23.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct ShortcutsZipFormView: View {
+struct SuggestionFormView: View {
         
     enum Field: Hashable {
         case text
     }
     
-    @StateObject var viewModel: FormViewModel
+    @StateObject var viewModel: SuggestionFormViewModel
     
     @FocusState var focusState: Bool
     @State var formText: String = ""
@@ -23,10 +23,10 @@ struct ShortcutsZipFormView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    Text(TextLiteral.formViewTitle)
+                    Text(TextLiteral.SuggestionFormViewTitle)
                         .shortcutsZipTitle1()
                         .foregroundStyle(Color.gray6)
-                    Text(TextLiteral.formViewSubTitle)
+                    Text(TextLiteral.SuggestionFormViewSubTitle)
                         .shortcutsZipHeadline()
                         .foregroundStyle(Color.gray4)
                     
@@ -37,7 +37,7 @@ struct ShortcutsZipFormView: View {
                                 Image(systemName: "checkmark.circle.fill")
                                     .largeShortcutIcon()
                                     .foregroundStyle(Color.shortcutsZipSuccess)
-                                Text(TextLiteral.formViewSuccessMessage)
+                                Text(TextLiteral.SuggestionFormViewSuccessMessage)
                                     .shortcutsZipHeadline()
                                     .foregroundStyle(Color.gray4)
                             }
@@ -47,7 +47,7 @@ struct ShortcutsZipFormView: View {
                             Spacer()
                         }
                     } else {
-                        TextField(TextLiteral.formViewTextPlaceholder, text: $formText, axis: .vertical)
+                        TextField(TextLiteral.SuggestionFormViewTextPlaceholder, text: $formText, axis: .vertical)
                             .shortcutsZipBody1()
                             .padding(.horizontal, 12)
                             .padding(.vertical, 16)

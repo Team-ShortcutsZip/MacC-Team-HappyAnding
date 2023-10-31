@@ -25,7 +25,7 @@ struct ExploreShortcutView: View {
                                          icon: "updateAppIcon",
                                          tagName: TextLiteral.appUpdateTag,
                                          title: TextLiteral.updateCellDescription,
-                                         isCanDismiss: true)
+                                         isDismissible: true)
                         .navigationLinkRouter(data: NavigationUpdateInfo.first)
                         .id(000)
                     }

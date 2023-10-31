@@ -1,5 +1,5 @@
 //
-//  Form.swift
+//  SuggestionForm.swift
 //  HappyAnding
 //
 //  Created by HanGyeongjun on 10/29/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Form: Identifiable, Codable, Hashable {
+struct SuggestionForm: Identifiable, Codable, Hashable {
     
     var id = UUID().uuidString
     var userInfo: String

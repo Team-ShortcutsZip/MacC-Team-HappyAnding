@@ -13,10 +13,11 @@ struct AnnouncementCell: View {
     
     var icon: String?
     var tagName: String?
+    //TODO: - 태그 컬러 변경 가능하도록 수정
     //    var tagColor: UIColor?
     var title: String
     var description: String?
-    var isCanDismiss: Bool
+    var isDismissible: Bool
     
     var body: some View {
         if (isAnnouncementShow) {
@@ -65,7 +66,7 @@ struct AnnouncementCell: View {
                     }
                     
                     Spacer()
-                    if isCanDismiss {
+                    if isDismissible {
                         Button {
                             isAnnouncementShow = false
                         } label: {

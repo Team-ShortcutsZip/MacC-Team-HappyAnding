@@ -269,9 +269,9 @@ enum TextLiteral {
     static let featContentSecond: String = "다른 유저에게 단축어에 대해 더 자세한 정보를 알려 주고 싶을 때가 있지 않나요? 단축어 설명이나 댓글에 URL을 입력하면 ShortcutsZip이 자동으로 인식해 해당 웹사이트로 바로 이동할 수 있는 링크를 제공해요."
     static let featContentThird: String = "이제 단축어를 업데이트하지 않아도 언제 업로드 된 단축어인지 알 수 있어요. 댓글에도 날짜가 표시되어서 내 단축어에 달린 최근 댓글에 빠르게 피드백 할 수 있답니다."
     
-    //MARK: -ShortcutsZipFormView
-    static let formViewTitle: String = "ShortcutsZip에게\n전하고 싶은 말을 남겨 주세요"
-    static let formViewSubTitle: String = "기능 제안, 칭찬 등 무엇이든 작성해주세요"
-    static let formViewSuccessMessage: String = "소중한 의견을 잘 전달했어요"
-    static let formViewTextPlaceholder: String = "답변 입력하기"
+    //MARK: -SuggestionFormView
+    static let SuggestionFormViewTitle: String = "ShortcutsZip에게\n전하고 싶은 말을 남겨 주세요"
+    static let SuggestionFormViewSubTitle: String = "기능 제안, 칭찬 등 무엇이든 작성해주세요."
+    static let SuggestionFormViewSuccessMessage: String = "소중한 의견을 잘 전달했어요"
+    static let SuggestionFormViewTextPlaceholder: String = "답변 입력하기"
 }
