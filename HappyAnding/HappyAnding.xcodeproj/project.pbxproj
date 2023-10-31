@@ -360,6 +360,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DB674822AF11B7900A83C0B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				4D5889E72AA36A52000C4849 /* AppDelegate.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		8786B2DD29A7F8C8000B46A1 /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +483,7 @@
 				87E606AD2910623C00C3DA13 /* HappyAnding.entitlements */,
 				3D41EE06290A458B008BE986 /* Info.plist */,
 				87E99CC22901454D009B691F /* Extensions */,
+				4DB674822AF11B7900A83C0B /* Support */,
 				87E99C9828FFF1D2009B691F /* Views */,
 				87E99CD729042503009B691F /* Model */,
 				A0F822AA2910B8B900AF4448 /* ViewModel */,
@@ -524,7 +533,6 @@
 			isa = PBXGroup;
 			children = (
 				87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */,
-				4D5889E72AA36A52000C4849 /* AppDelegate.swift */,
 				A04ACB0229027F4F004A85A6 /* TabView */,
 				87E99CC52901457B009B691F /* Components */,
 				87E99C9B28FFF1F4009B691F /* ExploreShortcutViews */,
