@@ -32,7 +32,11 @@ class ShortcutsZipViewModel: ObservableObject {
     @Published var shortcutsInCategory: [[Shortcuts]] = [[Shortcuts]].init(repeating: [], count: Category.allCases.count) // Category에서 사용할 숏컷 배열
     
     @Published var curationsMadeByUser: [Curation] = []         // 유저가 만든 큐레이션배열
-    @Published var userCurations: [Curation] = []
+    @Published var userCurations: [Curation] = [] {
+        didSet {
+            self.refreshPersonalCurations()
+        }
+    }
     @Published var personalCurations: [Curation] = []           // "땡땡님을 위한 모음집" 큐레이션배열
     @Published var adminCurations: [Curation] = []
     
@@ -422,6 +426,8 @@ extension ShortcutsZipViewModel {
             db.collection("User").document((model as! User).id).setData((model as! User).dictionary)
         case _ as Comments:
             db.collection("Comment").document((model as! Comments).id).setData((model as! Comments).dictionary)
+        case _ as SuggestionForm:
+            db.collection("SuggestionForm").document((model as! SuggestionForm).id).setData((model as! SuggestionForm).dictionary)
         default:
             print("this is not a model.")
         }
@@ -913,8 +919,9 @@ extension ShortcutsZipViewModel {
     
     func fetchComment(shortcutID: String) -> Comments {
         if let index = allComments.firstIndex(where: {$0.id == shortcutID}) {
-            allComments[index].comments = allComments[index].fetchSortedComment()
-            return allComments[index]
+            var allComments = self.allComments[index]
+            allComments.comments = allComments.fetchSortedComment()
+            return allComments
         }
         return Comments(id: shortcutID, comments: [])
     }

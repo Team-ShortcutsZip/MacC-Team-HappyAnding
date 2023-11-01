@@ -21,11 +21,6 @@ struct MyShortcutCardListView: View {
     @State var isGradeAlertPresented = false
     
     var shortcuts: [Shortcuts]?
-    var data: NavigationListShortcutType {
-        NavigationListShortcutType(sectionType: .myShortcut,
-                                   shortcuts: self.shortcuts,
-                                   navigationParentView: self.navigationParentView)
-    }
     
     let navigationParentView: NavigationParentView
     
@@ -37,7 +32,7 @@ struct MyShortcutCardListView: View {
                 Spacer()
                 
                 MoreCaptionTextView(text: TextLiteral.more)
-                    .navigationLinkRouter(data: data)
+                    .navigationLinkRouter(data: SectionType.myShortcut)
             }
             .padding(.horizontal, 16)
             
@@ -56,13 +51,10 @@ struct MyShortcutCardListView: View {
                     if let shortcuts {
                         ForEach(Array((shortcuts.enumerated())), id: \.offset) { index, shortcut in
                             if index < 7 {
-                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                      navigationParentView: self.navigationParentView)
-                                
                                 MyShortcutCardView(myShortcutIcon: shortcut.sfSymbol,
                                                    myShortcutName: shortcut.title,
                                                    myShortcutColor: shortcut.color)
-                                .navigationLinkRouter(data: data)
+                                .navigationLinkRouter(data: shortcut)
                             }
                         }
                     }
@@ -82,7 +74,7 @@ struct MyShortcutCardListView: View {
     
     @ViewBuilder
     private func writeShortcutView() -> some View {
-        WriteShortcutView(isWriting: $isWriting, isEdit: false)
+        WriteShortcutView(viewModel: WriteShortcutViewModel(isEdit: false))
             .modifierNavigation()
     }
 }

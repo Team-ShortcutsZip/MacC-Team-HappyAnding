@@ -64,7 +64,7 @@ extension Color {
         return LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
         
     }
-    static func fetchDefualtGradient() -> LinearGradient {
+    static func fetchDefaultGradient() -> LinearGradient {
         LinearGradient(colors: [Color.gray1], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }

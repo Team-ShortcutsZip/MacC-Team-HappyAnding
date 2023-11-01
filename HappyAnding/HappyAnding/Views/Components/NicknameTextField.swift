@@ -31,11 +31,11 @@ struct NicknameTextField: View {
         var color: Color {
             switch self {
             case .focus:
-                return .shortcutsZipPrimary
+                return Color.shortcutsZipPrimary
             case .focusError:
-                return .shortcutsZipError
+                return Color.shortcutsZipError
             case .notfocus:
-                return .gray2
+                return Color.gray2
             }
         }
         
@@ -69,6 +69,8 @@ struct NicknameTextField: View {
     
     var initName = ""
     
+    private let hapticManager = HapticManager.instance
+
     var body: some View {
         
         VStack(alignment: .leading, spacing: 8) {
@@ -79,11 +81,14 @@ struct NicknameTextField: View {
             if nicknameFocus == .focusError {
                 Text(nicknameError.message)
                     .shortcutsZipFootnote()
-                    .foregroundColor(.shortcutsZipError)
+                    .foregroundStyle(Color.shortcutsZipError)
+                    .onAppear() {
+                        hapticManager.notification(type: .error)
+                    }
             } else {
                 Text(TextLiteral.nicknameTextFieldSpace)
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
             }
         }
         .onChange(of: nickname) { _ in
@@ -101,7 +106,7 @@ struct NicknameTextField: View {
         .alert(TextLiteral.nicknameTextFieldDuplicateTitle, isPresented: $isCheckedDuplicated) {
             Button {
             } label: {
-                Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessLabel : TextLiteral.nicknameTextFieldDuplicateFailLabel)
+                Text(nicknameState == .success ? TextLiteral.confirm : TextLiteral.nicknameTextFieldDuplicateFailLabel)
             }
         } message: {
             Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessMessage : TextLiteral.nicknameTextFieldDuplicateFailMessage)
@@ -118,7 +123,7 @@ struct NicknameTextField: View {
                     .focused($isFocused)
                     .frame(height: 52)
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .padding(.horizontal, 16)
                     .onAppear { UIApplication.shared.hideKeyboard() }
                 
@@ -128,7 +133,7 @@ struct NicknameTextField: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
                     .strokeBorder(lineWidth: 1)
-                    .foregroundColor(nicknameFocus.color)
+                    .foregroundStyle(nicknameFocus.color)
             )
             
             Button {
@@ -147,12 +152,12 @@ struct NicknameTextField: View {
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .shortcutsZipPrimary.opacity(0.13) : .shortcutsZipPrimary)
+                        .foregroundStyle(nicknameState != .none || nickname.isEmpty || initName == nickname ? Color.shortcutsZipPrimary.opacity(0.13) : Color.shortcutsZipPrimary)
                         .frame(width: 80, height: 52)
                     
                     Text(TextLiteral.nicknameTextFieldDuplicateCheck)
                         .shortcutsZipBody1()
-                        .foregroundColor(nicknameState != .none || nickname.isEmpty || initName == nickname ? .textButtonDisable : .textIcon)
+                        .foregroundStyle(nicknameState != .none || nickname.isEmpty || initName == nickname ? Color.textButtonDisable : Color.textIcon)
                 }
             }
             .disabled(nicknameState != .none || nickname.isEmpty || initName == nickname)
@@ -167,18 +172,18 @@ struct NicknameTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .smallIcon()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                 }
             } else {
                 if nicknameState == .fail {
                     Image(systemName: "exclamationmark.circle.fill")
                         .smallIcon()
-                        .foregroundColor(.shortcutsZipError)
+                        .foregroundStyle(Color.shortcutsZipError)
                         .onTapGesture { }
                 } else if nicknameState == .success {
                     Image(systemName: "checkmark.circle.fill")
                         .smallIcon()
-                        .foregroundColor(.shortcutsZipSuccess)
+                        .foregroundStyle(Color.shortcutsZipSuccess)
                         .onTapGesture { }
                 }
             }

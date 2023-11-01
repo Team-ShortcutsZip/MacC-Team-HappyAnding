@@ -6,12 +6,6 @@
 //
 import SwiftUI
 
-enum CurationType: String {
-    case myCuration = "내가 작성한 추천 모음집"
-    case userCuration = "사용자 추천 모음집"
-    case personalCuration = "님을 위한 추천 모음집"
-}
-
 /**
  Parameter
  - UserCurations: 화면에서 보여줘야할 큐레이션 리스트를 전달해주세요
@@ -21,60 +15,46 @@ enum CurationType: String {
 
 struct ListCurationView: View {
     
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
-    @State var data: NavigationListCurationType
+    @StateObject var viewModel: ListCurationViewModel
     
     var body: some View {
-        let titleString = data.type == .personalCuration ? (shortcutsZipViewModel.userInfo?.nickname ?? "") : ""
-        if data.curation.count == 0 {
-            Text("아직 \(titleString)\(data.type.rawValue)\(titleString.contains("단축어") ? "가" : "이") 없어요")
-                .shortcutsZipBody2()
-                .foregroundColor(Color.gray4)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
-                .navigationBarTitle("\(titleString)\(data.type.rawValue)")
-                .navigationBarTitleDisplayMode(.inline)
-        } else {
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    Rectangle()
-                        .fill(Color.shortcutsZipBackground)
-                        .frame(height: 20)
-                    switch data.type {
-                    case .personalCuration:
-                        makeCurationCellList(shortcutsZipViewModel.personalCurations)
-                    case .userCuration:
-                        makeCurationCellList(shortcutsZipViewModel.userCurations)
-                    case .myCuration:
-                        makeCurationCellList(shortcutsZipViewModel.curationsMadeByUser)
+        VStack {
+            if viewModel.curationList.isEmpty {
+                Text(viewModel.getEmptyContentsWording())
+                    .shortcutsZipBody2()
+                    .foregroundStyle(Color.gray4)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        Spacer()
+                            .frame(height: 20)
+                        makeCurationCellList(viewModel.curationList)
+                        
+                        Spacer()
+                            .frame(height: 32)
                     }
-                    Rectangle()
-                        .fill(Color.shortcutsZipBackground)
-                        .frame(height: 32)
                 }
+                .scrollIndicators(.hidden)
+                .scrollContentBackground(.hidden)
+                .listStyle(.plain)
             }
-            .scrollIndicators(.hidden)
-            .listStyle(.plain)
-            .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
-            .navigationBarBackground ({ Color.shortcutsZipBackground })
-            .scrollContentBackground(.hidden)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(data.title ?? "")
         }
+        .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
+        .navigationBarBackground ({ Color.shortcutsZipBackground })
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(viewModel.sectionTitle)
     }
     
     @ViewBuilder
     private func makeCurationCellList(_ curations: [Curation]) -> some View {
         ForEach(Array(curations.enumerated()), id: \.offset) { index, curation in
             
-            let data = NavigationReadUserCurationType(userCuration: curation,
-                                                      navigationParentView: self.data.navigationParentView)
-            
             UserCurationCell(curation: curation,
                              lineLimit: 2,
-                             navigationParentView: self.data.navigationParentView)
-            .navigationLinkRouter(data: data)
+                             navigationParentView: .curations)
+            .navigationLinkRouter(data: curation)
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
             .listRowBackground(Color.shortcutsZipBackground)

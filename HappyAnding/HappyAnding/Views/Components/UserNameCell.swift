@@ -18,29 +18,35 @@ import SwiftUI
  
  - description:
  - 해당 뷰는 넓이가 부모 프레임에 꽉차도록 만들어졌습니다. 여백이 필요한 경우 부모프레임 또는 해당 뷰를 불러온 후 설정해주세요.
-
+ 
  */
 struct UserNameCell: View {
-    var userInformation: User?
-    var gradeImage: Image?
+    var userInformation: User
+    var gradeImage: Image
     
     var body: some View {
         HStack {
             gradeImage
                 .font(.system(size: 24, weight: .medium))
                 .frame(width: 24, height: 24)
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
             
-            Text(userInformation?.nickname ?? TextLiteral.withdrawnUser)
-                .shortcutsZipBody2()
-                .foregroundColor(.gray4)
+            if !userInformation.nickname.isEmpty {
+                Text(userInformation.nickname)
+                    .shortcutsZipBody2()
+                    .foregroundStyle(Color.gray4)
+            } else {
+                Text(TextLiteral.withdrawnUser)
+                    .shortcutsZipBody2()
+                    .foregroundStyle(Color.gray4)
+            }
             
             Spacer()
             
-            if userInformation?.nickname != nil {
+            if !userInformation.id.isEmpty {
                 Image(systemName: "chevron.right")
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
             }
             
         }
@@ -48,15 +54,15 @@ struct UserNameCell: View {
         .padding(.vertical, 10)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.gray1)
+                .fill(Color.gray1)
         )
-        .navigationLinkRouter(data: NavigationProfile(userInfo: self.userInformation))
-        .disabled(self.userInformation == nil)
+        .navigationLinkRouter(data: self.userInformation)
+        .disabled(self.userInformation.id.isEmpty)
     }
 }
 
 struct UserNameCell_Previews: PreviewProvider {
     static var previews: some View {
-        UserNameCell()
+        UserNameCell(userInformation: User(), gradeImage: Image(systemName: "person.crop.circle.fill"))
     }
 }

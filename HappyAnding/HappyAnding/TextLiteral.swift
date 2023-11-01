@@ -17,6 +17,7 @@ enum TextLiteral {
     static let cancel: String = "취소"
     static let next: String = "다음"
     static let upload: String = "업로드"
+    static let confirm: String = "확인"
     static let close: String = "닫기"
     static let done: String = "완료"
     static let edit: String = "편집"
@@ -34,10 +35,10 @@ enum TextLiteral {
     
     //MARK: - announcementCell
     static let newFeatureTag: String = "새로운 기능"
-    static let updateTag: String = "업데이트"
+    static let appUpdateTag: String = "업데이트"
     
     //MARK: - updateCell
-    static let updateCellDescription: String = "업데이트된 내용 살펴보기"
+    static let updateCellDescription: String = "새로운 기능들 살펴보기"
     
     //MARK: - ShortcutGrade
     static let shortcutGradeTitle: String = "단축어 작성 등급"
@@ -83,7 +84,6 @@ enum TextLiteral {
     static let nicknameTextFieldDuplicateTitle: String = "닉네임 중복 확인"
     static let nicknameTextFieldDuplicateSuccessMessage: String = "사용할 수 있는 닉네임이에요"
     static let nicknameTextFieldDuplicateFailMessage: String = "이미 사용 중인 닉네임이에요"
-    static let nicknameTextFieldDuplicateSuccessLabel: String = "확인"
     static let nicknameTextFieldDuplicateFailLabel: String = "다시 입력하기"
     static let nicknameTextFieldTitle: String = "닉네임 (최대 8글자)"
     static let nicknameTextFieldDuplicateCheck: String = "중복확인"
@@ -130,12 +130,13 @@ enum TextLiteral {
     
     // MARK: - ReadShortcutContentView
     static let readShortcutContentViewDescription: String = "단축어 설명"
+    static let readShortcutContentViewPostedDate: String = "작성 날짜"
     static let readShortcutContentViewCategory: String = "카테고리"
     static let readShortcutContentViewRequiredApps: String = "단축어 사용에 필요한 앱"
     static let readShortcutContentViewRequirements: String = "단축어 사용을 위한 요구사항"
     
     // MARK: - ReadShortcutVersionView
-    static let readShortcutVersionViewNoUpdates: String = "업데이트된 버전이 없어요"
+    static let readShortcutVersionViewNoUpdates: String = "최신 버전의 단축어에요"
     static let readShortcutVersionViewUpdateContent: String = "업데이트 내용"
     static let readShortcutVersionViewDownloadPreviousVersion: String = "이전 버전 다운로드"
     
@@ -163,9 +164,9 @@ enum TextLiteral {
     static let exploreCurationViewAdminCurations: String = "숏컷집 추천 모음집"
     static let exploreCurationViewUserCurations: String = "사용자 추천 모음집"
     
-    // MARK: - ReadUserCurationView
-    static let readUserCurationViewDeletionTitle: String = "추천 모음집 삭제"
-    static let readUserCurationViewDeletionMessage: String = "추천 모음집을 삭제하시겠어요?"
+    // MARK: - ReadCurationView
+    static let readCurationViewDeletionTitle: String = "추천 모음집 삭제"
+    static let readCurationViewDeletionMessage: String = "추천 모음집을 삭제하시겠어요?"
     
     // MARK: - WriteCurationSetView
     static let writeCurationSetViewNoShortcuts: String = "아직 선택할 수 있는 단축어가 없어요\n단축어를 업로드하거나 좋아요를 눌러주세요"
@@ -250,9 +251,27 @@ enum TextLiteral {
     static let customShareViewControllerSignInAlertMessage: String = "이 기능은 로그인 후 사용할 수 있는 기능이에요"
     static let customShareViewControllerLinkVaildAlertTitle: String = "잘못된 접근이에요"
     static let customShareViewControllerLinkVaildAlertMessage: String = "해당 링크는 ShortcutsZip으로 공유할 수 없어요"
-    static let customShareViewControllerCheck: String = "확인"
     
     //MARK: - GradeAlertView
     static let gradeAlertMessage: String = "단축어 작성 레벨이 상승했어요!"
     static let gradeAlertMessageBlank: String = ""
+    
+    //MARK: -UpdateInfoView
+    static let updateInfoViewTitle: String = "ShortcutsZip 업데이트 소식"
+    static let updateInfoViewVersion: String = "2023.10.23 | 1.3.3"
+    static let updateInfoViewTypeUpdate: String = "기능 업데이트"
+    static let updateInfoViewFooterTitle: String = "ShortcutsZip에게\n전하고 싶은 말이 있나요?"
+    static let updateInfoViewComment: String = "의견 남기러 가기"
+    static let featTitleFirst: String = "더욱 쉬워진 단축어 작성 과정"
+    static let featTitleSecond: String = "간편하게 외부 링크 살펴보기"
+    static let featTitleThird: String = "단축어와 댓글 작성 날짜 확인"
+    static let featContentFirst: String = "이제는 단축어 작성 과정에서 제목을 직접 입력하지 않아도 괜찮아요. 단축어 링크만 붙여넣으면 ShortcutsZip이 자동으로 제목을 채워준답니다. 이 기능은 단축어 앱의 공유 시트에서 바로 작성할 때도 만나볼 수 있어요."
+    static let featContentSecond: String = "다른 유저에게 단축어에 대해 더 자세한 정보를 알려 주고 싶을 때가 있지 않나요? 단축어 설명이나 댓글에 URL을 입력하면 ShortcutsZip이 자동으로 인식해 해당 웹사이트로 바로 이동할 수 있는 링크를 제공해요."
+    static let featContentThird: String = "이제 단축어를 업데이트하지 않아도 언제 업로드 된 단축어인지 알 수 있어요. 댓글에도 날짜가 표시되어서 내 단축어에 달린 최근 댓글에 빠르게 피드백 할 수 있답니다."
+    
+    //MARK: -SuggestionFormView
+    static let SuggestionFormViewTitle: String = "ShortcutsZip에게\n전하고 싶은 말을 남겨 주세요"
+    static let SuggestionFormViewSubTitle: String = "기능 제안, 칭찬 등 무엇이든 작성해주세요."
+    static let SuggestionFormViewSuccessMessage: String = "소중한 의견을 잘 전달했어요"
+    static let SuggestionFormViewTextPlaceholder: String = "답변 입력하기"
 }

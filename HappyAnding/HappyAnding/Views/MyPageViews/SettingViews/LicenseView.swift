@@ -31,14 +31,14 @@ struct LicenseCell: View {
         VStack(alignment: .leading) {
             Text(.init(title))
                 .shortcutsZipTitle2()
-                .foregroundColor(Color.gray5)
+                .foregroundStyle(Color.gray5)
                 .multilineTextAlignment(.leading)
                 .padding(.top, 36)
                 .tint(.gray5)
             
             Text(text)
                 .shortcutsZipBody2()
-                .foregroundColor(Color.gray4)
+                .foregroundStyle(Color.gray4)
                 .multilineTextAlignment(.leading)
             Spacer()
         }

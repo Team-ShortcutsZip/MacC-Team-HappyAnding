@@ -28,7 +28,6 @@ struct ShortcutTabView: View {
     @State private var tempCurationId = ""
     
     @State private var randomCategories = Category.allCases.shuffled().prefix(2)
-    @State var isFolded = true
     @State private var twiceTappedTab = 0
     
     @State private var firstTabID = UUID()
@@ -46,9 +45,12 @@ struct ShortcutTabView: View {
         UITabBar.appearance().clipsToBounds = true
     }
     
+    private let hapticManager = HapticManager.instance
+    
     var handler: Binding<Int> { Binding(
         get: { self.selectedTab },
         set: {
+            hapticManager.impact(style: .light)
             if $0 == self.selectedTab {
                 twiceTappedTab = $0
             }
@@ -71,11 +73,6 @@ struct ShortcutTabView: View {
                             didTappedTabViewItem(proxy, scrollID: 333, navigationPath: &shortcutNavigation.navigationPath, viewID: &thirdTabID)
                         }
                         self.twiceTappedTab = 0
-                    }
-                    .onChange(of: isFolded) { _ in
-                        withAnimation {
-                            proxy.scrollTo(999, anchor: .bottom)
-                        }
                     }
                     .environmentObject(shortcutNavigation)
                     .tabItem {
@@ -113,7 +110,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func firstTab() -> some View {
-        ExploreShortcutView(isFolded: $isFolded, randomCategories: Array(randomCategories))
+        ExploreShortcutView(viewModel: ExploreShortcutViewModel(), randomCategories: Array(randomCategories))
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(firstTabID)
@@ -121,7 +118,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func secondTab() -> some View {
-        ExploreCurationView()
+        ExploreCurationView(viewModel: ExploreCurationViewModel())
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(secondTabID)
@@ -152,8 +149,7 @@ struct ShortcutTabView: View {
         tempShortcutId  = shortcutIDfromURL
         isShortcutDeeplink = true
         
-        let data = NavigationReadShortcutType(shortcutID: self.tempShortcutId,
-                                              navigationParentView: .myPage)
+        let data = shortcutsZipViewModel.fetchShortcutDetail(id: tempShortcutId)
         navigateLink(data: data)
     }
     
@@ -175,9 +171,7 @@ struct ShortcutTabView: View {
         isCurationDeeplink = true
         
         if let curation = shortcutsZipViewModel.fetchCurationDetail(curationID: tempCurationId) {
-            let data = NavigationReadUserCurationType(userCuration: curation,
-                                                      navigationParentView: .myPage)
-            navigateLink(data: data)
+            navigateLink(data: curation)
         }
     }
     

@@ -21,7 +21,8 @@ struct GradeAlertView: View {
     var delayTime = 0.5
     
     let gradeImage = ["level1Super", "level5Super", "level10Super", "level25Super", "level50Super"]
-    
+    private let hapticManager = HapticManager.instance
+
     var body: some View {
         ZStack {
             Color.black
@@ -35,7 +36,7 @@ struct GradeAlertView: View {
                     VStack(spacing: 60) {
                         if index < 1 {
                             Rectangle()
-                                .foregroundColor(Color.white)
+                                .fill(Color.white)
                                 .frame(width: 170, height: 198)
                         } else {
                             Image(gradeImage[index - 1])
@@ -53,13 +54,14 @@ struct GradeAlertView: View {
                 
                 Text(isTextShowing ? TextLiteral.gradeAlertMessage : TextLiteral.gradeAlertMessageBlank)
                     .shortcutsZipTitle1()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .padding(.bottom, 60)
                     .disabled(isTextShowing)
             }
             .padding(.top, 66)
         }
         .onAppear() {
+            hapticManager.notification(type: .success)
             index = shortcutsZipViewModel.shortcutGrade - 1
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 withAnimation(.spring(response: 0.7, dampingFraction: 0.3, blendDuration: 0)) {
@@ -85,7 +87,7 @@ struct GradeAlertView: View {
                         isShowing = false
                     } label: {
                         Image(systemName: "xmark")
-                            .foregroundColor(.gray5)
+                            .foregroundStyle(Color.gray5)
                             .font(.system(size: 24, weight: .medium))
                     }
                 }

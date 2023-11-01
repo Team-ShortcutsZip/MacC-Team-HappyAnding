@@ -37,12 +37,9 @@ struct SearchView: View {
                         VStack(spacing: 0) {
                             ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
                                 
-                                let data = NavigationReadShortcutType(shortcutID: shortcut.id,
-                                                                      navigationParentView: .shortcuts)
-                                
                                 ShortcutCell(shortcut: shortcut,
                                              navigationParentView: NavigationParentView.shortcuts)
-                                .navigationLinkRouter(data: data)
+                                .navigationLinkRouter(data: shortcut)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
                             }
@@ -78,7 +75,7 @@ struct SearchView: View {
         HStack(alignment: .center, spacing: 8) {
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                 TextField(TextLiteral.searchViewPrompt, text: $searchText)
                     .shortcutsZipBody1()
                     .accentColor(.gray5)
@@ -113,7 +110,7 @@ struct SearchView: View {
                     ForEach(keywords.keyword, id: \.self) { keyword in
                         Text(keyword)
                             .shortcutsZipBody2()
-                            .foregroundColor(Color.gray4)
+                            .foregroundStyle(Color.gray4)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 8)
                             .overlay(
@@ -136,7 +133,7 @@ struct SearchView: View {
         VStack(alignment: .center) {
             Text("\'\(searchText)\'의 결과가 없어요.\n원하는 단축어가 있다면 제안해보세요!").multilineTextAlignment(.center)
                 .shortcutsZipBody1()
-                .foregroundColor(Color.gray4)
+                .foregroundStyle(Color.gray4)
             
             Link(destination: URL(string: TextLiteral.searchViewProposalURL)!) {
                 Text(TextLiteral.searchViewProposal)

@@ -8,15 +8,13 @@
 import SwiftUI
 
 import FirebaseCore
-import FirebaseFirestore
-
 
 @main
 struct HappyAndingApp: App {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.openURL) private var openURL
     
-    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel()
+    @StateObject var shortcutsZipViewModel = ShortcutsZipViewModel.share
     @StateObject var loginAlerter = Alerter()
     @StateObject var gradeAlerter = Alerter()
     
@@ -30,13 +28,15 @@ struct HappyAndingApp: App {
         FirebaseApp.configure()
     }
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     var body: some Scene {
         WindowGroup {
             if isShowingLaunchScreen {
                 ZStack {
                     Color.shortcutsZipPrimary.ignoresSafeArea()
                     Text("ShortcutsZip")
-                        .foregroundColor(Color.white)
+                        .foregroundStyle(Color.white)
                         .font(.system(size: 26, weight: .bold))
                         .frame(maxHeight: .infinity)
                         .ignoresSafeArea()

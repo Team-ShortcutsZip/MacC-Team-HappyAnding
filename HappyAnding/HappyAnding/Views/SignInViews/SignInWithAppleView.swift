@@ -30,11 +30,11 @@ struct SignInWithAppleView: View {
             
             Text(TextLiteral.signInWithAppleViewTitle)
                 .shortcutsZipLargeTitle()
-                .foregroundColor(.shortcutsZipPrimary)
+                .foregroundStyle(Color.shortcutsZipPrimary)
             
             Text(TextLiteral.signInWithAppleViewSubTitle)
                 .shortcutsZipBody2()
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
             
             Spacer()
             
@@ -43,12 +43,12 @@ struct SignInWithAppleView: View {
             }, label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray5)
                         .padding(.horizontal, 16)
                         .frame(height: 52)
-                        .foregroundColor(.gray5)
                     
                     Label(TextLiteral.signInWithAppleViewSignInWithApple, systemImage: "applelogo")
-                        .foregroundColor(.shortcutsZipWhite)
+                        .foregroundStyle(Color.shortcutsZipWhite)
                 }
                 .padding(.bottom, 8)
             })
@@ -59,7 +59,7 @@ struct SignInWithAppleView: View {
             }, label: {
                 Text(TextLiteral.signInWithAppleViewUseWithoutSignIn)
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
             })
             .padding(.bottom, 12)
         }

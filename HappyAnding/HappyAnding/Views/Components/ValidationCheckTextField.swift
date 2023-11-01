@@ -77,6 +77,8 @@ struct ValidationCheckTextField: View {
     
     @FocusState private var isFocused: Bool
     
+    private let hapticManager = HapticManager.instance
+
     var body: some View {
         VStack {
             
@@ -89,7 +91,7 @@ struct ValidationCheckTextField: View {
                 if let lengthLimit {
                     Text("\(content.count)/\(lengthLimit)")
                         .shortcutsZipBody2()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(strokeColor)
                         .padding(.trailing, 16)
                 }
             }
@@ -107,7 +109,7 @@ struct ValidationCheckTextField: View {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .strokeBorder(lineWidth: 1)
-                    .foregroundColor(strokeColor)
+                    .foregroundStyle(strokeColor)
             )
             .padding(.horizontal, 16)
             
@@ -115,8 +117,11 @@ struct ValidationCheckTextField: View {
                 if isExceeded {
                     Text(textFieldError.message)
                         .shortcutsZipBody2()
-                        .foregroundColor(.shortcutsZipError)
+                        .foregroundStyle(Color.shortcutsZipError)
                         .padding(.leading)
+                        .onAppear() {
+                            hapticManager.notification(type: .error)
+                        }
                 }
                 
                 Spacer()
@@ -132,13 +137,13 @@ struct ValidationCheckTextField: View {
         HStack {
             Text(title)
                 .shortcutsZipHeadline()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .padding(.leading, 16)
             
             if textType.isOptional {
                 Text(TextLiteral.validationCheckTextFieldOption)
                     .shortcutsZipFootnote()
-                    .foregroundColor(.gray3)
+                    .foregroundStyle(Color.gray3)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -183,7 +188,7 @@ struct ValidationCheckTextField: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
                     .padding(16)
-                    .foregroundColor(.gray2)
+                    .foregroundStyle(Color.gray2)
                     .onTapGesture {
                         isFocused = true
                     }
@@ -210,19 +215,19 @@ struct ValidationCheckTextField: View {
             case .doneSuccess:
                 Image(systemName: "checkmark.circle.fill")
                     .smallIcon()
-                    .foregroundColor(.shortcutsZipSuccess)
+                    .foregroundStyle(Color.shortcutsZipSuccess)
                     .onTapGesture { }
             case .doneFail:
                 Image(systemName: "exclamationmark.circle.fill")
                     .smallIcon()
-                    .foregroundColor(.shortcutsZipError)
+                    .foregroundStyle(Color.shortcutsZipError)
             case .inProgressSuccess:
                 Button {
                     content.removeAll()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .smallIcon()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                 }
             case .inProgressFail:
                 Button {
@@ -230,7 +235,7 @@ struct ValidationCheckTextField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .smallIcon()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                 }
             }
         }

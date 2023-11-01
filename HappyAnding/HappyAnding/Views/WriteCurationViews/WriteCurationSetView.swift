@@ -16,12 +16,7 @@ struct WriteCurationSetView: View {
     
     @State var shortcutCells = [ShortcutCellModel]()
     @State var isSelected = false
-    @State var curation = Curation(title: "",
-                                   subtitle: "",
-                                   isAdmin: false,
-                                   background: "White",
-                                   author: "",
-                                   shortcuts: [ShortcutCellModel]())
+    @Binding var curation: Curation
     @State var isTappedQuestionMark: Bool = false
     @State var deletedShortcutCells = [ShortcutCellModel]()
     
@@ -38,7 +33,7 @@ struct WriteCurationSetView: View {
                 Spacer()
                 Text(TextLiteral.writeCurationSetViewNoShortcuts)
                     .shortcutsZipBody2()
-                    .foregroundColor(.gray4)
+                    .foregroundStyle(Color.gray4)
                     .multilineTextAlignment(.center)
                 Spacer()
                 
@@ -62,7 +57,7 @@ struct WriteCurationSetView: View {
                 } label: {
                     Text(TextLiteral.cancel)
                         .shortcutsZipBody1()
-                        .foregroundColor(.gray4)
+                        .foregroundStyle(Color.gray4)
                 }
             }
             
@@ -70,7 +65,7 @@ struct WriteCurationSetView: View {
                 Text(TextLiteral.next)
                     .navigationLinkRouter(data: WriteCurationInfoType(curation: curation, deletedShortcutCells: deletedShortcutCells, isEdit: isEdit), isPresented: $isWriting)
                     .shortcutsZipHeadline()
-                    .foregroundColor(curation.shortcuts.isEmpty ? .shortcutsZipPrimary.opacity(0.3) : .shortcutsZipPrimary)
+                    .foregroundStyle(curation.shortcuts.isEmpty ? Color.shortcutsZipPrimary.opacity(0.3) : Color.shortcutsZipPrimary)
                     .disabled(curation.shortcuts.isEmpty)
             }
         }
@@ -81,14 +76,14 @@ struct WriteCurationSetView: View {
         HStack(alignment: .bottom, spacing: 8) {
             Text(TextLiteral.writeCurationSetViewSelectionTitle)
                 .shortcutsZipSb()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
             Text(TextLiteral.writeCurationSetViewSelectionDescription)
                 .shortcutsZipFootnote()
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
             Spacer()
             Text("\(curation.shortcuts.count)개")
                 .shortcutsZipBody2()
-                .foregroundColor(.shortcutsZipPrimary)
+                .foregroundStyle(Color.shortcutsZipPrimary)
         }
         .padding(.horizontal, 16)
     }
@@ -113,19 +108,13 @@ struct WriteCurationSetView: View {
         Text(TextLiteral.writeCurationSetViewSelectionInformation)
             .frame(maxWidth: .infinity, alignment: .leading)
             .shortcutsZipBody2()
-            .foregroundColor(.gray5)
+            .foregroundStyle(Color.gray5)
             .padding(.all, 16)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.gray1)
+                    .fill(Color.gray1)
             )
             .padding(.horizontal, 16)
             .padding(.bottom, 20)
-    }
-}
-
-struct WriteCurationSetView_Previews: PreviewProvider {
-    static var previews: some View {
-        WriteCurationSetView(isWriting: .constant(false), isEdit: false)
     }
 }

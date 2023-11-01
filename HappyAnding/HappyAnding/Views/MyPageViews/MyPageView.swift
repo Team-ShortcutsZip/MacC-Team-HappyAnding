@@ -29,13 +29,13 @@ struct MyPageView: View {
                         shortcutsZipViewModel.fetchShortcutGradeImage(isBig: true, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: shortcutsZipViewModel.userInfo?.id ?? "!"))
                             .font(.system(size: 60, weight: .medium))
                             .frame(width: 60, height: 60)
-                            .foregroundColor(.gray3)
+                            .foregroundStyle(Color.gray3)
                             .id(333)
                     }
                     
                     Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
                         .shortcutsZipTitle1()
-                        .foregroundColor(.gray5)
+                        .foregroundStyle(Color.gray5)
                     
                     Spacer()
                 }
@@ -51,13 +51,8 @@ struct MyPageView: View {
                                        navigationParentView: .myPage)
                 
                 // MARK: - 내가 작성한 큐레이션
-                
-                UserCurationListView(data: NavigationListCurationType(type: .myCuration,
-                                                                      title: TextLiteral.myPageViewMyCuration,
-                                                                      isAllUser: false,
-                                                                      navigationParentView: .myPage,
-                                                                      curation: shortcutsZipViewModel.curationsMadeByUser))
-                .frame(maxWidth: .infinity)
+                UserCurationListView(data: CurationType.myCuration)
+                    .frame(maxWidth: .infinity)
                 
                 // MARK: - 좋아요한 단축어
                 
@@ -75,7 +70,7 @@ struct MyPageView: View {
             ToolbarItem {
                 Image(systemName: "gearshape.fill")
                     .shortcutsZipHeadline()
-                    .foregroundColor(.gray5)
+                    .foregroundStyle(Color.gray5)
                     .navigationLinkRouter(data: NavigationSettingView.first)
             }
         }
@@ -93,20 +88,15 @@ struct MyPageShortcutListCell: View {
     var type: SectionType
     let shortcuts: [Shortcuts]
     
-    var data: NavigationListShortcutType {
-        NavigationListShortcutType(sectionType: self.type,
-                                   shortcuts: self.shortcuts,
-                                   navigationParentView: .myPage)
-    }
     var body: some View {
         HStack() {
             Text(type == .myLovingShortcut ? TextLiteral.myPageViewLikedShortcuts : TextLiteral.myPageViewDownloadedShortcuts)
                 .shortcutsZipTitle2()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .padding(.trailing, 9)
             Text("\(shortcuts.count)개")
                 .shortcutsZipBody2()
-                .foregroundColor(Color.tagText)
+                .foregroundStyle(Color.tagText)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 4)
                 .background(
@@ -119,11 +109,11 @@ struct MyPageShortcutListCell: View {
             Spacer()
             Image(systemName: "chevron.forward")
                 .mediumIcon()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
             
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)
-        .navigationLinkRouter(data: data)
+        .navigationLinkRouter(data: self.type)
     }
 }

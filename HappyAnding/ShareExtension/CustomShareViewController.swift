@@ -20,6 +20,8 @@ class CustomShareViewController: UIViewController {
     var itemDone: UIBarButtonItem!
     var itemCancel: UIBarButtonItem!
     
+    private let hapticManager = HapticManager.instance
+    
     ///viewdidload
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,7 @@ class CustomShareViewController: UIViewController {
         if  UserDefaults.shared.string(forKey: "ShareUserInfo") == nil || UserDefaults.shared.bool(forKey: "isSignInForShareExtension") == false {
             let alert = UIAlertController(title: TextLiteral.customShareViewControllerSignInAlertTitle, message:
                                             TextLiteral.customShareViewControllerSignInAlertMessage, preferredStyle: .alert)
-            let action = UIAlertAction(title: TextLiteral.customShareViewControllerCheck, style: .default) { _ in
+            let action = UIAlertAction(title: TextLiteral.confirm, style: .default) { _ in
                 self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
             }
             alert.addAction(action)
@@ -44,7 +46,7 @@ class CustomShareViewController: UIViewController {
             //링크가 적절하지 않을 때
             if !self.shareExtensionViewModel.isLinkValid(content: "\(url)") {
                 let alert = UIAlertController(title: TextLiteral.customShareViewControllerLinkVaildAlertTitle, message: TextLiteral.customShareViewControllerLinkVaildAlertMessage, preferredStyle: .alert)
-                let action = UIAlertAction(title: TextLiteral.customShareViewControllerCheck, style: .default) { action in
+                let action = UIAlertAction(title: TextLiteral.confirm, style: .default) { action in
                     self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
                 }
                 alert.addAction(action)
@@ -133,6 +135,7 @@ class CustomShareViewController: UIViewController {
     }
     @objc private func doneAction() {
         shareExtensionViewModel.setData()
+        hapticManager.notification(type: .success)
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     func dismissAction() {

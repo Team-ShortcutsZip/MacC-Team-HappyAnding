@@ -54,7 +54,7 @@ struct CheckBoxShortcutCell: View {
     var toggle: some View {
         Image(systemName: isShortcutTapped ? "checkmark.square.fill" : "square")
             .smallIcon()
-            .foregroundColor(isShortcutTapped ? .shortcutsZipPrimary : .gray3)
+            .foregroundStyle(isShortcutTapped ? Color.shortcutsZipPrimary : Color.gray3)
             .padding(.leading, 20)
     }
     
@@ -68,7 +68,7 @@ struct CheckBoxShortcutCell: View {
             
             Image(systemName: shortcutCell.sfSymbol)
                 .mediumShortcutIcon()
-                .foregroundColor(.white)
+                .foregroundStyle(Color.white)
         }
         .padding(.leading, 12)
     }
@@ -78,11 +78,11 @@ struct CheckBoxShortcutCell: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(shortcutCell.title)
                 .shortcutsZipHeadline()
-                .foregroundColor(.gray5)
+                .foregroundStyle(Color.gray5)
                 .lineLimit(1)
             Text(shortcutCell.subtitle)
                 .shortcutsZipFootnote()
-                .foregroundColor(.gray3)
+                .foregroundStyle(Color.gray3)
                 .lineLimit(2)
         }
         .padding(.leading, 12)

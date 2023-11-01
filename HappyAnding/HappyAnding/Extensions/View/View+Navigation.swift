@@ -77,22 +77,20 @@ extension View {
     @ViewBuilder
     func getDestination<T: Hashable>(data: T) -> some View {
         switch data {
-        case is NavigationListShortcutType:
-            ListShortcutView(data: data as! NavigationListShortcutType)
-        case is NavigationReadShortcutType:
-            ReadShortcutView(data: data as! NavigationReadShortcutType)
-        case is NavigationReadUserCurationType:
-            ReadUserCurationView(data: data as! NavigationReadUserCurationType)
-        case is NavigationListCurationType:
-            ListCurationView(data: data as! NavigationListCurationType)
-        case is NavigationProfile:
-            ShowProfileView(data: data as! NavigationProfile)
+        case is SectionType:
+            ListShortcutView(viewModel: ListShortcutViewModel(data: data as! SectionType))
+        case is Shortcuts:
+            ReadShortcutView(viewModel: ReadShortcutViewModel(data: data as! Shortcuts))
+        case is Curation:
+            ReadCurationView(viewModel: ReadCurationViewModel(data: data as! Curation))
+        case is CurationType:
+            ListCurationView(viewModel: ListCurationViewModel(data: data as! CurationType))
+        case is User:
+            ShowProfileView(viewModel: ShowProfileViewModel(data: data as! User))
         case is NavigationSearch:
             SearchView()
-        case is NavigationListCategoryShortcutType:
-            ListCategoryShortcutView(data: data as!  NavigationListCategoryShortcutType)
-        case is Curation:
-            ReadAdminCurationView(curation: data as! Curation)
+        case is Category:
+            ListCategoryShortcutView(viewModel: ListCategoryShortcutViewModel(data: data as! Category))
         case is NavigationNicknameView:
             EditNicknameView()
         case is NavigationSettingView:
@@ -103,6 +101,8 @@ extension View {
             WithdrawalView()
         case is CheckVersionView:
             CheckVersionView()
+        case is NavigationUpdateInfo:
+            AboutUpdateView()
         default:
             EmptyView()
         }
@@ -117,26 +117,23 @@ struct NavigationViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
         
-            .navigationDestination(for: NavigationProfile.self) { data in
-                ShowProfileView(data: data)
+            .navigationDestination(for: User.self) { data in
+                ShowProfileView(viewModel: ShowProfileViewModel(data: data))
             }
             .navigationDestination(for: Curation.self) { data in
-                ReadAdminCurationView(curation: data)
+                ReadCurationView(viewModel: ReadCurationViewModel(data: data))
             }
-            .navigationDestination(for: NavigationReadUserCurationType.self) { data in
-                ReadUserCurationView(data: data)
+            .navigationDestination(for: CurationType.self) { data in
+                ListCurationView(viewModel: ListCurationViewModel(data: data))
             }
-            .navigationDestination(for: NavigationListCurationType.self) { data in
-                ListCurationView(data: data)
+            .navigationDestination(for: Shortcuts.self) { data in
+                ReadShortcutView(viewModel: ReadShortcutViewModel(data: data))
             }
-            .navigationDestination(for: NavigationReadShortcutType.self) { data in
-                ReadShortcutView(data: data)
+            .navigationDestination(for: SectionType.self) { data in
+                ListShortcutView(viewModel: ListShortcutViewModel(data: data))
             }
-            .navigationDestination(for: NavigationListShortcutType.self) { data in
-                ListShortcutView(data: data)
-            }
-            .navigationDestination(for: NavigationListCategoryShortcutType.self) { data in
-                ListCategoryShortcutView(data: data)
+            .navigationDestination(for: Category.self) { data in
+                ListCategoryShortcutView(viewModel: ListCategoryShortcutViewModel(data: data))
             }
             .navigationDestination(for: NavigationLisence.self) { value in
                 LicenseView()
@@ -155,6 +152,9 @@ struct NavigationViewModifier: ViewModifier {
             }
             .navigationDestination(for: NavigationCheckVersion.self) { _ in
                 CheckVersionView()
+            }
+            .navigationDestination(for: NavigationUpdateInfo.self) { _ in
+                AboutUpdateView()
             }
     }
 }
