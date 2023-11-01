@@ -47,3 +47,7 @@ enum NavigationWithdrawal: Hashable, Equatable {
 enum NavigationCheckVersion: Hashable, Equatable {
     case first
 }
+
+enum NavigationUpdateInfo: Hashable, Equatable {
+    case first
+}

@@ -106,7 +106,7 @@ struct NicknameTextField: View {
         .alert(TextLiteral.nicknameTextFieldDuplicateTitle, isPresented: $isCheckedDuplicated) {
             Button {
             } label: {
-                Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessLabel : TextLiteral.nicknameTextFieldDuplicateFailLabel)
+                Text(nicknameState == .success ? TextLiteral.confirm : TextLiteral.nicknameTextFieldDuplicateFailLabel)
             }
         } message: {
             Text(nicknameState == .success ? TextLiteral.nicknameTextFieldDuplicateSuccessMessage : TextLiteral.nicknameTextFieldDuplicateFailMessage)

@@ -101,6 +101,8 @@ extension View {
             WithdrawalView()
         case is CheckVersionView:
             CheckVersionView()
+        case is NavigationUpdateInfo:
+            AboutUpdateView()
         default:
             EmptyView()
         }
@@ -150,6 +152,9 @@ struct NavigationViewModifier: ViewModifier {
             }
             .navigationDestination(for: NavigationCheckVersion.self) { _ in
                 CheckVersionView()
+            }
+            .navigationDestination(for: NavigationUpdateInfo.self) { _ in
+                AboutUpdateView()
             }
     }
 }

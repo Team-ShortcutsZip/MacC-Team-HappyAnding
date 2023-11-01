@@ -34,6 +34,10 @@ struct SettingView: View {
             SettingCell(title: TextLiteral.settingViewVersion)
                 .navigationLinkRouter(data: NavigationCheckVersion.first)
             
+            // MARK: - 업데이트 소식
+            SettingCell(title: "업데이트 소식")
+                .navigationLinkRouter(data: NavigationUpdateInfo.first)
+            
             if !useWithoutSignIn {
                 divider
                 
