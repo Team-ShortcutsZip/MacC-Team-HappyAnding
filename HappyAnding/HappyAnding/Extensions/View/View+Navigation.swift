@@ -20,12 +20,12 @@ extension View {
      */
     @ViewBuilder
     func modifierNavigation() -> some View {
-        if #available(iOS 16.1, *) {
+//        if #available(iOS 16.1, *) {
+//            self
+//                .modifier(NavigationViewModifier())
+//        } else {
             self
-                .modifier(NavigationViewModifier())
-        } else {
-            self
-        }
+//        }
     }
     
     
@@ -35,28 +35,28 @@ extension View {
      */
     @ViewBuilder
     func navigationLinkRouter<T: Hashable>(data: T) -> some View {
-        if #available(iOS 16.1, *) {
-            NavigationLink(value: data) {
-                self
-            }
-        } else {
+//        if #available(iOS 16.1, *) {
+//            NavigationLink(value: data) {
+//                self
+//            }
+//        } else {
             NavigationLink(destination: getDestination(data: data)) {
                 self
             }
-        }
+//        }
     }
     
     @ViewBuilder
     func navigationLinkRouter<T: Hashable>(data: T, isPresented: Binding<Bool>) -> some View {
-        if #available(iOS 16.1, *) {
-            NavigationLink(value: data) {
-                self
-            }
-        } else {
+//        if #available(iOS 16.1, *) {
+//            NavigationLink(value: data) {
+//                self
+//            }
+//        } else {
             NavigationLink(destination: getDestination(data: data, isPresented: isPresented)) {
                 self
             }
-        }
+//        }
     }
     
     
