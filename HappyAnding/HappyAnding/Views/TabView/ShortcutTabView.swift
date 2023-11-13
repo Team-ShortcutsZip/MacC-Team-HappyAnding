@@ -201,22 +201,22 @@ extension View {
     func didTappedTabViewItem(_ proxy: ScrollViewProxy, scrollID: Int, navigationPath: inout NavigationPath, viewID: inout UUID) {
         
         // MARK: Navigation Stack
-        if #available(iOS 16.1, *) {
-            
-            // Root View로 이동
-            if navigationPath.count > 0 {
-                navigationPath = NavigationPath()
-                
-            } else {
-                // 최상단으로 이동
-                withAnimation {
-                    proxy.scrollTo(scrollID, anchor: .bottom)
-                }
-            }
-            
-            // MARK: Navigation View
-        } else {
+//        if #available(iOS 16.1, *) {
+//            
+//            // Root View로 이동
+//            if navigationPath.count > 0 {
+//                navigationPath = NavigationPath()
+//                
+//            } else {
+//                // 최상단으로 이동
+//                withAnimation {
+//                    proxy.scrollTo(scrollID, anchor: .bottom)
+//                }
+//            }
+//            
+//            // MARK: Navigation View
+//        } else {
             viewID = UUID()
         }
-    }
+//    }
 }

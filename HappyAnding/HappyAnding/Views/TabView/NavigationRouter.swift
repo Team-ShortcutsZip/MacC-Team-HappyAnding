@@ -15,15 +15,15 @@ struct NavigationRouter<Content>: View where Content: View {
     
     var body: some View {
 
-        if #available(iOS 16.1, *) {
-            NavigationStack(path: $path, root: content)
-                .modifier(NavigationViewModifier())
-            
-        } else {
+//        if #available(iOS 16.1, *) {
+//            NavigationStack(path: $path, root: content)
+//                .modifier(NavigationViewModifier())
+//            
+//        } else {
             NavigationView(content: content)
                 .navigationViewStyle(StackNavigationViewStyle())
         }
-    }
+//    }
 }
 
 

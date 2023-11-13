@@ -75,9 +75,9 @@ final class WriteShortcutViewModel: ObservableObject {
         // 서버에 추가 또는 수정
         shortcutsZipViewModel.setData(model: shortcut)
         
-        if #available(iOS 16.1, *) {
-            writeShortcutNavigation.navigationPath = .init()
-        }
+//        if #available(iOS 16.1, *) {
+//            writeShortcutNavigation.navigationPath = .init()
+//        }
     }
     
     func isUnavailableUploadButton() -> Bool {
