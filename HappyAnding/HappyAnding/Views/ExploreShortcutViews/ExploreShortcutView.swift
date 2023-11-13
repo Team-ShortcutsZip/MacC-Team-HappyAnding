@@ -11,7 +11,7 @@ struct ExploreShortcutView: View {
     
     @StateObject var viewModel: ExploreShortcutViewModel
     
-    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = true
+    @AppStorage("isNewUpdateAnnnouncementShow") var isNewUpdateAnnnouncementShow: Bool = true
     
     let randomCategories: [Category]
     
@@ -20,8 +20,8 @@ struct ExploreShortcutView: View {
             ScrollView {
                 VStack(spacing: 32) {
                     
-                    if isUpdateAnnnouncementShow {
-                        AnnouncementCell(isAnnouncementShow: $isUpdateAnnnouncementShow,
+                    if isNewUpdateAnnnouncementShow {
+                        AnnouncementCell(isAnnouncementShow: $isNewUpdateAnnnouncementShow,
                                          icon: "updateAppIcon",
                                          tagName: TextLiteral.appUpdateTag,
                                          title: TextLiteral.updateCellDescription,

@@ -258,7 +258,7 @@ enum TextLiteral {
     
     //MARK: -UpdateInfoView
     static let updateInfoViewTitle: String = "ShortcutsZip 업데이트 소식"
-    static let updateInfoViewVersion: String = "2023.11.2 | 1.4.0"
+    static let updateInfoViewVersion: String = "2023.11.14 | 1.4.1"
     static let updateInfoViewTypeUpdate: String = "기능 업데이트"
     static let updateInfoViewFooterTitle: String = "ShortcutsZip에게\n전하고 싶은 말이 있나요?"
     static let updateInfoViewComment: String = "의견 남기러 가기"

@@ -35,6 +35,10 @@ struct AboutUpdateView: View {
                                  title: TextLiteral.featTitleThird,
                                  image: nil,
                                  description: TextLiteral.featContentThird)
+                aboutFeatureCell(type: "버그 수정",
+                                 title: "iOS 17.1에서 발생하는 버그 수정",
+                                 image: nil,
+                                 description: "iOS 17.1 및 그 이후의 iOS에서 발생하는 버그를 수정했어요. 단축어를 자세히 둘러보고 나갈 때 탭 바가 사라지고 뒤로가기 동작이 정상적으로 작동하지 않는 문제가 있었어요. 불편함을 느끼셨을 사용자 분들께 사과드려요.")
                 
                 VStack(alignment: .center, spacing: 20) {
                     Text(TextLiteral.updateInfoViewFooterTitle)

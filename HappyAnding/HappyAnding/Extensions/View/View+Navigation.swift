@@ -99,7 +99,7 @@ extension View {
             LicenseView()
         case is NavigationWithdrawal:
             WithdrawalView()
-        case is CheckVersionView:
+        case is NavigationCheckVersion:
             CheckVersionView()
         case is NavigationUpdateInfo:
             AboutUpdateView()
