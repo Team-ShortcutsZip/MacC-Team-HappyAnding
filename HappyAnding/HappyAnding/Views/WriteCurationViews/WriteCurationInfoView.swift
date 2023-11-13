@@ -64,9 +64,9 @@ struct WriteCurationInfoView: View {
                     shortcutsZipViewModel.addCuration(curation: data.curation, isEdit: data.isEdit, deletedShortcutCells: data.deletedShortcutCells)
                     
                     self.isWriting.toggle()
-                    if #available(iOS 16.1, *) {
-                        writeCurationNavigation.navigationPath = .init()
-                    }
+//                    if #available(iOS 16.1, *) {
+//                        writeCurationNavigation.navigationPath = .init()
+//                    }
                 } label: {
                     Text(TextLiteral.upload)
                         .shortcutsZipHeadline()
