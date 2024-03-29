@@ -1,17 +1,20 @@
 ---
 name: Feature
-about: Suggest an idea for this project
-title: "[Feat] "
-labels: enhancement
+about: 기능 개발
+title: "[Feat]"
+labels: Type-Feature
 assignees: ''
 
 ---
 
-## 필요한 기능
-- 기능을 설명해주세요
+## Summary
+- 해당 이슈를 간략히 설명해주세요.
 
-## 해야 할 일 
-- [ ] 태스크 작성
+## Goals
+- 해당 이슈로 구현할 기능의 목표를 설명해주세요.
 
-## 추가 컨텍스트
-- 추가로 작성해야할 말이 있으면 작성해주세요
+## Plan
+- 해당 이슈를 완료할 목표 기한을 설정해주세요.
+
+## Additional Context
+- 추가로 작성해야할 말이 있으면 작성해주세요.
