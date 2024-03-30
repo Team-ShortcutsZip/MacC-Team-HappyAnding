@@ -106,6 +106,7 @@
 		A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */; };
 		A38F3B1F2AE62E8D0036FCAC /* SuggestionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38F3B1E2AE62E8D0036FCAC /* SuggestionFormView.swift */; };
 		A39504882AD46B9B0019895E /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39504862AD46B9B0019895E /* HapticManager.swift */; };
+		A397D89E2BB81F9C0047A03D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A397D89D2BB81F9C0047A03D /* FirebaseMessaging */; };
 		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A3C404D62A23D0E800C3BA75 /* AboutUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C404D52A23D0E800C3BA75 /* AboutUpdateView.swift */; };
 		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */; };
@@ -361,6 +362,7 @@
 			files = (
 				A3FC474B292A61550058BF26 /* FirebaseDatabase in Frameworks */,
 				A3FC474D292A61550058BF26 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				A397D89E2BB81F9C0047A03D /* FirebaseMessaging in Frameworks */,
 				A3FC4747292A61550058BF26 /* FirebaseAnalytics in Frameworks */,
 				A3FC4749292A61550058BF26 /* FirebaseAuth in Frameworks */,
 			);
@@ -857,6 +859,7 @@
 				A3FC4748292A61550058BF26 /* FirebaseAuth */,
 				A3FC474A292A61550058BF26 /* FirebaseDatabase */,
 				A3FC474C292A61550058BF26 /* FirebaseFirestoreCombine-Community */,
+				A397D89D2BB81F9C0047A03D /* FirebaseMessaging */,
 			);
 			productName = ShareExtension;
 			productReference = A3A6AD14292763E2004C49DC /* ShareExtension.appex */;
@@ -1554,6 +1557,11 @@
 			productName = WrappingHStack;
 		};
 		4D93D0762A73C9330042CBA8 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		A397D89D2BB81F9C0047A03D /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
