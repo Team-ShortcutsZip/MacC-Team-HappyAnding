@@ -16,7 +16,7 @@ struct ShortcutTabView: View {
     @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
     
     @StateObject var shortcutNavigation = ShortcutNavigation()
-    @StateObject var curationNavigation = CurationNavigation()
+    @StateObject var communityNavigation = CommunityNavigation()
     @StateObject var profileNavigation = ProfileNavigation()
     
     @AppStorage("signInStatus") var signInStatus = false
@@ -80,10 +80,10 @@ struct ShortcutTabView: View {
                     }
                     .tag(1)
                 
-                NavigationRouter(content: secondTab, path: $curationNavigation.navigationPath)
-                    .environmentObject(curationNavigation)
+                NavigationRouter(content: secondTab, path: $communityNavigation.navigationPath)
+                    .environmentObject(communityNavigation)
                     .tabItem {
-                        Label("추천모음집", systemImage: "folder.fill")
+                        Label("커뮤니티", systemImage: "bubble.left.and.bubble.right.fill")
                     }
                     .tag(2)
                 
@@ -118,7 +118,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func secondTab() -> some View {
-        ExploreCurationView(viewModel: ExploreCurationViewModel())
+        CommunityView()
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(secondTabID)
@@ -181,7 +181,7 @@ struct ShortcutTabView: View {
         case 1:
             shortcutNavigation.navigationPath.append(data)
         case 2:
-            curationNavigation.navigationPath.append(data)
+            communityNavigation.navigationPath.append(data)
         case 3:
             profileNavigation.navigationPath.append(data)
         default:

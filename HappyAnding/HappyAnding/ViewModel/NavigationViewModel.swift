@@ -15,8 +15,7 @@ class ShortcutNavigation: ObservableObject {
     }
 }
 
-
-class CurationNavigation: ObservableObject {
+class CommunityNavigation: ObservableObject {
     @Published var navigationPath: NavigationPath
     
     init() {

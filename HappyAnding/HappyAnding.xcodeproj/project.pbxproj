@@ -107,6 +107,8 @@
 		A38F3B1F2AE62E8D0036FCAC /* SuggestionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38F3B1E2AE62E8D0036FCAC /* SuggestionFormView.swift */; };
 		A39504882AD46B9B0019895E /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39504862AD46B9B0019895E /* HapticManager.swift */; };
 		A397D89E2BB81F9C0047A03D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A397D89D2BB81F9C0047A03D /* FirebaseMessaging */; };
+		A397D89F2BB821220047A03D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5889E72AA36A52000C4849 /* AppDelegate.swift */; };
+		A397D8A32BB8219F0047A03D /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A397D8A22BB8219F0047A03D /* CommunityView.swift */; };
 		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A3C404D62A23D0E800C3BA75 /* AboutUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C404D52A23D0E800C3BA75 /* AboutUpdateView.swift */; };
 		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */; };
@@ -292,6 +294,7 @@
 		A38115B9292B447D0043E8B8 /* ShortcutCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCardCell.swift; sourceTree = "<group>"; };
 		A38F3B1E2AE62E8D0036FCAC /* SuggestionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionFormView.swift; sourceTree = "<group>"; };
 		A39504862AD46B9B0019895E /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		A397D8A22BB8219F0047A03D /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		A3A6AD14292763E2004C49DC /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A6AD1B292763E2004C49DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3A6AD232927BA06004C49DC /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
@@ -371,14 +374,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4DB674822AF11B7900A83C0B /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				4D5889E72AA36A52000C4849 /* AppDelegate.swift */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
 		8786B2DD29A7F8C8000B46A1 /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -495,7 +490,6 @@
 				3D41EE06290A458B008BE986 /* Info.plist */,
 				87E99CC22901454D009B691F /* Extensions */,
 				A39504852AD46ACB0019895E /* Support */,
-				4DB674822AF11B7900A83C0B /* Support */,
 				87E99C9828FFF1D2009B691F /* Views */,
 				87E99CD729042503009B691F /* Model */,
 				A0F822AA2910B8B900AF4448 /* ViewModel */,
@@ -544,6 +538,7 @@
 		87E99C9828FFF1D2009B691F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A397D8A12BB8217B0047A03D /* CommunityViews */,
 				87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */,
 				A04ACB0229027F4F004A85A6 /* TabView */,
 				87E99CC52901457B009B691F /* Components */,
@@ -727,9 +722,18 @@
 		A39504852AD46ACB0019895E /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				4D5889E72AA36A52000C4849 /* AppDelegate.swift */,
 				A39504862AD46B9B0019895E /* HapticManager.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		A397D8A12BB8217B0047A03D /* CommunityViews */ = {
+			isa = PBXGroup;
+			children = (
+				A397D8A22BB8219F0047A03D /* CommunityView.swift */,
+			);
+			path = CommunityViews;
 			sourceTree = "<group>";
 		};
 		A3A6AD15292763E2004C49DC /* ShareExtension */ = {
@@ -982,6 +986,7 @@
 				A0DD085729276608008177BB /* URL+DeepLink.swift in Sources */,
 				87E99CD929042536009B691F /* SectionType.swift in Sources */,
 				872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */,
+				A397D8A32BB8219F0047A03D /* CommunityView.swift in Sources */,
 				A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */,
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
@@ -1091,6 +1096,7 @@
 				A3439AF529395A100043E273 /* UserAuth.swift in Sources */,
 				A31F1846292A638700AF4A82 /* (null) in Sources */,
 				F9DB8EB92939853D00516CE1 /* ShareExtensionValidationTextField.swift in Sources */,
+				A397D89F2BB821220047A03D /* AppDelegate.swift in Sources */,
 				F92766562A61A0E5009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */,
 				8786B2EA29A7F9E7000B46A1 /* View+NavigationBar.swift in Sources */,
 				A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */,
