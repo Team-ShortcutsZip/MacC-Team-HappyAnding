@@ -118,7 +118,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func secondTab() -> some View {
-        CommunityView()
+        CommunityView(postTite: "")
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(secondTabID)

@@ -109,6 +109,7 @@
 		A397D89E2BB81F9C0047A03D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A397D89D2BB81F9C0047A03D /* FirebaseMessaging */; };
 		A397D89F2BB821220047A03D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5889E72AA36A52000C4849 /* AppDelegate.swift */; };
 		A397D8A32BB8219F0047A03D /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A397D8A22BB8219F0047A03D /* CommunityView.swift */; };
+		A397D8A52BB854560047A03D /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A397D8A42BB854560047A03D /* PhotoPicker.swift */; };
 		A3A6AD1E292763E2004C49DC /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3A6AD14292763E2004C49DC /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A3C404D62A23D0E800C3BA75 /* AboutUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C404D52A23D0E800C3BA75 /* AboutUpdateView.swift */; };
 		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */; };
@@ -295,6 +296,7 @@
 		A38F3B1E2AE62E8D0036FCAC /* SuggestionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionFormView.swift; sourceTree = "<group>"; };
 		A39504862AD46B9B0019895E /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		A397D8A22BB8219F0047A03D /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		A397D8A42BB854560047A03D /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		A3A6AD14292763E2004C49DC /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A6AD1B292763E2004C49DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3A6AD232927BA06004C49DC /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
@@ -538,11 +540,11 @@
 		87E99C9828FFF1D2009B691F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A397D8A12BB8217B0047A03D /* CommunityViews */,
 				87E99C6D28F94EA6009B691F /* HappyAndingApp.swift */,
 				A04ACB0229027F4F004A85A6 /* TabView */,
 				87E99CC52901457B009B691F /* Components */,
 				87E99C9B28FFF1F4009B691F /* ExploreShortcutViews */,
+				A397D8A12BB8217B0047A03D /* CommunityViews */,
 				87E99C9728FFF1C0009B691F /* WriteShortcutViews */,
 				87E99C9A28FFF1E9009B691F /* ReadShortcutViews */,
 				87E99C9C28FFF1FE009B691F /* ExploreCurationViews */,
@@ -732,6 +734,7 @@
 			isa = PBXGroup;
 			children = (
 				A397D8A22BB8219F0047A03D /* CommunityView.swift */,
+				A397D8A42BB854560047A03D /* PhotoPicker.swift */,
 			);
 			path = CommunityViews;
 			sourceTree = "<group>";
@@ -1001,6 +1004,7 @@
 				F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */,
 				A323D3CA2AEE870700DDA716 /* SuggestionForm.swift in Sources */,
 				4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */,
+				A397D8A52BB854560047A03D /* PhotoPicker.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
 				876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */,
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,

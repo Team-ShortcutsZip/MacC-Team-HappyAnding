@@ -14,6 +14,14 @@ extension View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
     
+    func roundedBorder(cornerRadius: CGFloat, color: Color = Color("CharcoalGray"), opacity: Double = 0.04, lineWidth: CGFloat = 2) -> some View {
+        self.overlay(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(color.opacity(opacity), lineWidth: lineWidth)
+                .blendMode(.multiply)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+    }
 }
 
 
