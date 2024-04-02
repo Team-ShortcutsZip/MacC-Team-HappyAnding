@@ -27,7 +27,7 @@ struct OrderedCell: View {
                     .foregroundStyle(Color.white.opacity(0.64))
                 Text("\(index)")
                     .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(SCZColor.CharcoalGray.opacity64)
+                    .foregroundStyle(SCZColor.CharcoalGray.opacity64 )
                     .blendMode(.colorBurn)
             }
             Text(shortcut.title)
@@ -82,6 +82,7 @@ struct UnorderedCell: View{
                     .frame(width: 2, height: 30)
                     .foregroundStyle(SCZColor.colors[shortcut.color]?.color(for: colorScheme).fillGradient() ?? SCZColor.defaultColor)
                 Image(systemName: shortcut.sfSymbol)
+                    .foregroundStyle(SCZColor.CharcoalGray.opacity88)
             }
             Text(shortcut.title)
                 .foregroundStyle(SCZColor.Basic)

@@ -87,7 +87,7 @@ struct PromotionCard: View {
                     let maxIcons = count > 3 ? 2 : 3
 
                     ForEach(Array(promotion.shortcuts.enumerated()).prefix(maxIcons), id: \.offset) { index, shortcut in
-                        ShortcutIcon(sfsymbol: shortcut.sfSymbol, color: shortcut.color)
+                        ShortcutIcon(sfsymbol: shortcut.sfSymbol, color: shortcut.color, size: 66)
                     }
                     if maxIcons == 2 {
                         MoreShortcutIcon(count: count - 2)
@@ -119,28 +119,6 @@ struct PromotionCard: View {
         .frame(height: 240)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal, 16)
-    }
-}
-
-struct ShortcutIcon: View {
-    @Environment(\.colorScheme) var colorScheme
-    
-    let sfsymbol: String
-    let color: String
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 13)
-                .foregroundStyle(SCZColor.colors[color]?.color(for: colorScheme).fillGradient() ?? SCZColor.defaultColor)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 13)
-                        .strokeBorder(.white.opacity(0.24), lineWidth: 2)
-                )
-                .frame(width: 66, height: 66)
-            Image(systemName: sfsymbol)
-                .font(.system(size: 32))
-                .foregroundStyle(Color.white)
-        }
     }
 }
 
