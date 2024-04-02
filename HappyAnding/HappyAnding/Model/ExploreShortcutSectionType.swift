@@ -12,6 +12,26 @@ enum ExploreShortcutSectionType: String {
     case mostDownloaded = "trophy.fill"
     case mostLoved = "heart.fill"
     
+    func getTitleImage() -> some View {
+        switch self {
+        case .new:
+            return Image(systemName: self.rawValue)
+                .foregroundStyle(
+                    Color(hexString: "E4C139")
+                )
+                
+        case .mostDownloaded:
+            return Image(systemName: self.rawValue)
+                .foregroundStyle(
+                    Color(hexString: "404040", opacity: 0.48)
+                )
+        case .mostLoved:
+            return Image(systemName: self.rawValue)
+                .foregroundStyle(
+                    Color(hexString: "3366FF", opacity: 0.88)
+                )
+        }
+    }
     func getTitleView() -> some View {
         switch self {
         case .new:

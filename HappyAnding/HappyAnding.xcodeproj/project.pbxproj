@@ -155,6 +155,8 @@
 		F980171C2BBC29F7004F2EA7 /* CardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171B2BBC29F7004F2EA7 /* CardSection.swift */; };
 		F980171E2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */; };
 		F98017202BBC2A6F004F2EA7 /* ExploreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */; };
+		F98017222BBC3FD8004F2EA7 /* ExpandedRankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017212BBC3FD8004F2EA7 /* ExpandedRankingView.swift */; };
+		F98017242BBC4061004F2EA7 /* ShortcutIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017232BBC4061004F2EA7 /* ShortcutIcon.swift */; };
 		F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* UIFont+Extension.swift */; };
 		F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
@@ -329,6 +331,8 @@
 		F980171B2BBC29F7004F2EA7 /* CardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSection.swift; sourceTree = "<group>"; };
 		F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreShortcutSectionType.swift; sourceTree = "<group>"; };
 		F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCell.swift; sourceTree = "<group>"; };
+		F98017212BBC3FD8004F2EA7 /* ExpandedRankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedRankingView.swift; sourceTree = "<group>"; };
+		F98017232BBC4061004F2EA7 /* ShortcutIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutIcon.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCell.swift; sourceTree = "<group>"; };
 		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
@@ -572,6 +576,7 @@
 				4D061BB72A47531800F76835 /* ExploreShortcutView.swift */,
 				87E99CC8290145B8009B691F /* ListShortcutView.swift */,
 				A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */,
+				F98017212BBC3FD8004F2EA7 /* ExpandedRankingView.swift */,
 			);
 			path = ExploreShortcutViews;
 			sourceTree = "<group>";
@@ -643,6 +648,7 @@
 				F98017192BBC29D6004F2EA7 /* PromotionSection.swift */,
 				F980171B2BBC29F7004F2EA7 /* CardSection.swift */,
 				F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */,
+				F98017232BBC4061004F2EA7 /* ShortcutIcon.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -975,6 +981,7 @@
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
 				4DF15D732A4ECC7D0014F854 /* ListShortcutViewModel.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* UIApplication+Keyboard.swift in Sources */,
+				F98017242BBC4061004F2EA7 /* ShortcutIcon.swift in Sources */,
 				A3766B232904330300708F83 /* ReadCurationView.swift in Sources */,
 				87E606B0291062F900C3DA13 /* AppleAuthCoordinator.swift in Sources */,
 				F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */,
@@ -1011,6 +1018,7 @@
 				A309862F2BBFE6B90004D993 /* View+Shadow.swift in Sources */,
 				87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */,
 				87E99CBB28FFF298009B691F /* IconModalView.swift in Sources */,
+				F98017222BBC3FD8004F2EA7 /* ExpandedRankingView.swift in Sources */,
 				87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */,
 				F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */,
 				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,

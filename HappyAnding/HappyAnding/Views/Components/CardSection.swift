@@ -33,9 +33,9 @@ struct CardSection: View {
         .padding(.vertical, 4)
     }
     var ExpandButton: some View {
-        Button{
-            print("더보기 연결")
-        }label: {
+        NavigationLink {
+            ExpandedRankingView(type: type, shortcuts: shortcuts)
+        } label: {
             VStack(alignment: .center, spacing: 4) {
                 Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
                 Text("더보기")

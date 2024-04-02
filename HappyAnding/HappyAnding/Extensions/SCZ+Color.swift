@@ -505,31 +505,72 @@ extension SCZColor {
         endPoint: .bottom
     )
     
-    static let gold = LinearGradient(
-        colors: [Color(hexString: "E4C139"),
-                 Color(hexString: "8D7516")],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-    static let silver = LinearGradient(
-        colors: [Color(hexString: "999999"),
-                 Color(hexString: "717171")],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-    static let bronze = LinearGradient(
-        colors: [Color(hexString: "E6BA92"),
-                 Color(hexString: "A66F3B")],
-        startPoint: .top,
-        endPoint: .bottom
-    )
     
+    struct Seal {
+        static let gold = LinearGradient(
+            colors: [Color(hexString: "E4C139"),
+                     Color(hexString: "8D7516")],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        static let silver = LinearGradient(
+            colors: [Color(hexString: "999999"),
+                     Color(hexString: "717171")],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        static let bronze = LinearGradient(
+            colors: [Color(hexString: "E6BA92"),
+                     Color(hexString: "A66F3B")],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        static let iron = LinearGradient(
+            colors: [CharcoalGray.opacity16],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        static let defaultColor = LinearGradient(
+            colors: [CharcoalGray.opacity08],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        static let textGold = LinearGradient(
+            colors: [Color(hexString: "E4C139"),
+                     Color(hexString: "8D7516")],
+            startPoint: .bottom,
+            endPoint: .top
+        )
+        static let textSilver = LinearGradient(
+            colors: [Color(hexString: "999999"),
+                     Color(hexString: "717171")],
+            startPoint: .bottom,
+            endPoint: .top
+        )
+        static let textBronze = LinearGradient(
+            colors: [Color(hexString: "E6BA92"),
+                     Color(hexString: "A66F3B")],
+            startPoint: .bottom,
+            endPoint: .top
+        )
+        static let textIron = LinearGradient(
+            colors: [CharcoalGray.opacity88],
+            startPoint: .bottom,
+            endPoint: .top
+        )
+        static let textDefault = LinearGradient(
+            colors: [CharcoalGray.opacity48],
+            startPoint: .bottom,
+            endPoint: .top
+        )
+    }
     struct CharcoalGray {
         static let color: Color = Color(hexString: "404040")
         static let opacity88 = Color(hexString: "404040", opacity: 0.88)
         static let opacity64 = Color(hexString: "404040", opacity: 0.64)
         static let opacity48 = Color(hexString: "404040", opacity: 0.48)
         static let opacity24 = Color(hexString: "404040", opacity: 0.24)
+        static let opacity16 = Color(hexString: "404040", opacity: 0.16)
         static let opacity08 = Color(hexString: "404040", opacity: 0.08)
         static let opacity04 = Color(hexString: "404040", opacity: 0.04)
     }
