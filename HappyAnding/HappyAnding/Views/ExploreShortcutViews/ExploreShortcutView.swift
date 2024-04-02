@@ -11,167 +11,72 @@ struct ExploreShortcutView: View {
     
     @StateObject var viewModel: ExploreShortcutViewModel
     
-    @AppStorage("isUpdateAnnnouncementShow") var isUpdateAnnnouncementShow: Bool = true
-    
-    let randomCategories: [Category]
-    
+    let sectionType: [ExploreShortcutSectionType] = [.new, .mostDownloaded, .mostLoved]
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                VStack(spacing: 32) {
-                    
-                    if isUpdateAnnnouncementShow {
-                        AnnouncementCell(isAnnouncementShow: $isUpdateAnnnouncementShow,
-                                         icon: "updateAppIcon",
-                                         tagName: TextLiteral.appUpdateTag,
-                                         title: TextLiteral.updateCellDescription,
-                                         isDismissible: true)
-                        .navigationLinkRouter(data: NavigationUpdateInfo.first)
-                        .id(000)
+        ScrollView(.vertical, showsIndicators: false) {
+            LazyVStack(spacing: 12, pinnedViews:[.sectionHeaders]) {
+                Section {
+                    PromoteSection(items: viewModel.fetchAdminCuration())
+                    ForEach (sectionType, id: \.self) { type in
+                        CardSection(type: type, shortcuts: viewModel.fetchShortcuts(by: type))
                     }
-                    
-                    sectionView(with: .recent)
-                        .id(111)
-                    
-                    categoryCardView(with: randomCategories[0])
-                    
-                    sectionView(with: .download)
-                    
-                    categoryCardView(with: randomCategories[1])
-                    
-                    sectionView(with: .popular)
-                    
-                    VStack {
-                        HStack {
-                            SubtitleTextView(text: TextLiteral.categoryViewTitle)
-                            
-                            Spacer()
-                            
-                            Button {
-                                viewModel.changeDisplayedCategories()
-                            } label: {
-                                MoreCaptionTextView(text: viewModel.isCategoryCellViewFolded ? TextLiteral.categoryViewUnfold : TextLiteral.categoryViewFold)
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                            ForEach(Array(Category.allCases.enumerated()), id: \.offset) { index, value in
-                                
-                                if index < viewModel.numberOfDisplayedCategories {
-                                    
-                                    categoryCellView(with: value.translateName())
-                                        .navigationLinkRouter(data: value)
-                                    
-                                }
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 16)
-                        .id(999)
-                    }
-                }
-                .padding(.top, 20)
-                .padding(.bottom, 44)
-            }
-            .onChange(of: viewModel.isCategoryCellViewFolded) { _ in
-                withAnimation {
-                    proxy.scrollTo(999, anchor: .bottom)
+                } header: {
+                    SearchBar()
                 }
             }
+            .padding(.bottom, 40)
         }
-        .scrollIndicators(.hidden)
-        .navigationBarTitle(TextLiteral.exploreShortcutViewTitle)
-        .navigationBarTitleDisplayMode(.large)
-        .background(Color.shortcutsZipBackground)
-        .toolbar {
-            ToolbarItem {
-                Image(systemName: "magnifyingglass")
-                    .shortcutsZipHeadline()
-                    .foregroundStyle(Color.gray5)
-                    .navigationLinkRouter(data: NavigationSearch.first)
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    //TODO: 알림창 연결
+                    print("알림창 연결")
+                } label: {
+                    Image(systemName: "bell.badge.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(
+                            Color(hexString: "3366FF"),
+                            LinearGradient(
+                                colors: [SCZColor.CharcoalGray.color, SCZColor.CharcoalGray.opacity48],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                }
+                
+            }
+            ToolbarItem(placement: .topBarLeading) {
+                Text("둘러보기")
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundStyle(
+                        LinearGradient(colors: [SCZColor.CharcoalGray.color, SCZColor.CharcoalGray.opacity48], startPoint: .top, endPoint: .bottom)
+                    )
             }
         }
-        .navigationBarBackground ({ Color.shortcutsZipBackground })
+        
     }
-    
 }
 
-// MARK: ViewBuilder
-extension ExploreShortcutView {
-    
-    @ViewBuilder
-    private func sectionView(with sectionType: SectionType) -> some View {
-        
-        let shortcuts = viewModel.fetchShortcuts(by: sectionType)
-        
-        VStack(spacing: 0) {
-            HStack {
-                SubtitleTextView(text: sectionType.title)
-                
-                Spacer()
-                
-                MoreCaptionTextView(text: TextLiteral.more)
-                    .navigationLinkRouter(data: sectionType)
-            }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 12)
-            
-            ForEach(Array(shortcuts.enumerated()), id:\.offset) { index, shortcut in
-                if index < 3 {
-                    ShortcutCell(shortcut: shortcut,
-                                 rankNumber: (sectionType == .download) ? index : nil,
-                                 navigationParentView: .shortcuts)
-                    .navigationLinkRouter(data: shortcut)
-                }
-            }
-            .background(Color.shortcutsZipBackground)
+//TODO: 배경색상 적용 필요
+struct SearchBar: View {
+    @State var text: String = ""
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+            TextField("단축어 제작의 기본", text: $text)
+                .frame(maxHeight: .infinity)
         }
-    }
-    
-    @ViewBuilder
-    private func categoryCardView(with category: Category) -> some View {
-        
-        VStack(spacing: 0) {
-            HStack {
-                
-                SubtitleTextView(text: category.translateName())
-                
-                Spacer()
-                
-                MoreCaptionTextView(text: TextLiteral.more)
-                    .navigationLinkRouter(data: category)
-            }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 12)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(viewModel.fetchShortcuts(by: category).prefix(7), id: \.self) { shortcut in
-                        
-                        ShortcutCardCell(categoryShortcutIcon: shortcut.sfSymbol,
-                                         categoryShortcutName: shortcut.title,
-                                         categoryShortcutColor: shortcut.color)
-                        .navigationLinkRouter(data: shortcut)
-                    }
-                }
-                .padding(.horizontal, 16)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func categoryCellView(with categoryName: String) -> some View {
-        RoundedRectangle(cornerSize: CGSize(width: 12, height: 12))
-            .strokeBorder(Color.gray1, lineWidth: 1)
-            .background(Color.shortcutsZipWhite)
-            .cornerRadius(12)
-            .frame(maxWidth: .infinity, minHeight:48, maxHeight: 48)
-            .overlay {
-                Text(categoryName)
-                    .shortcutsZipBody2()
-                    .foregroundStyle(Color.gray5)
-            }
+        .padding(.horizontal, 16)
+        .frame(height: 40)
+        .background(
+            Capsule()
+                .fill(SCZColor.CharcoalGray.opacity04)
+                .overlay(
+                    Capsule()
+                        .stroke(Color.white.opacity(0.12), lineWidth: 2)
+                )
+        )
+        .padding(.horizontal, 16)
     }
 }
 

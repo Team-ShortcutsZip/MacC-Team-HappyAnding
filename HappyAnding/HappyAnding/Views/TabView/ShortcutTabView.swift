@@ -110,7 +110,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func firstTab() -> some View {
-        ExploreShortcutView(viewModel: ExploreShortcutViewModel(), randomCategories: Array(randomCategories))
+        ExploreShortcutView(viewModel: ExploreShortcutViewModel())
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(firstTabID)
