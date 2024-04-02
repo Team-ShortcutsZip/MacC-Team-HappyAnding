@@ -150,6 +150,11 @@
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
+		F98017182BBC29A7004F2EA7 /* SCZ+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */; };
+		F980171A2BBC29D6004F2EA7 /* PromotionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017192BBC29D6004F2EA7 /* PromotionSection.swift */; };
+		F980171C2BBC29F7004F2EA7 /* CardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171B2BBC29F7004F2EA7 /* CardSection.swift */; };
+		F980171E2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */; };
+		F98017202BBC2A6F004F2EA7 /* ExploreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */; };
 		F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99569172901DC4D0060AAEF /* UIFont+Extension.swift */; };
 		F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
@@ -319,6 +324,11 @@
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewModel.swift; sourceTree = "<group>"; };
+		F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCZ+Color.swift"; sourceTree = "<group>"; };
+		F98017192BBC29D6004F2EA7 /* PromotionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionSection.swift; sourceTree = "<group>"; };
+		F980171B2BBC29F7004F2EA7 /* CardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSection.swift; sourceTree = "<group>"; };
+		F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreShortcutSectionType.swift; sourceTree = "<group>"; };
+		F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCell.swift; sourceTree = "<group>"; };
 		F99569172901DC4D0060AAEF /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCell.swift; sourceTree = "<group>"; };
 		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
@@ -416,13 +426,6 @@
 			path = ExploreShortcutViewModels;
 			sourceTree = "<group>";
 		};
-		8788E1A22A484528007C3852 /* WriteShortcutViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = WriteShortcutViewModels;
-			sourceTree = "<group>";
-		};
 		8788E1A32A484533007C3852 /* ReadShortcutViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,20 +433,6 @@
 				4D93D06E2A5956E60042CBA8 /* ShowProfileViewModel.swift */,
 			);
 			path = ReadShortcutViewModels;
-			sourceTree = "<group>";
-		};
-		8788E1A42A484542007C3852 /* WriteCurationViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = WriteCurationViewModels;
-			sourceTree = "<group>";
-		};
-		8788E1A52A48456E007C3852 /* MyPageViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MyPageViewModels;
 			sourceTree = "<group>";
 		};
 		87E606AE291062D300C3DA13 /* SignInViews */ = {
@@ -615,6 +604,7 @@
 				8786B2DE29A7F8D1000B46A1 /* View */,
 				8786B2DD29A7F8C8000B46A1 /* String */,
 				87E99CC329014572009B691F /* Color+Extension.swift */,
+				F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */,
 				8786B2EB29A7FAD2000B46A1 /* UIColor+Extension.swift */,
 				F99569172901DC4D0060AAEF /* UIFont+Extension.swift */,
 				4D778A33290A53BA00C15AC4 /* UIApplication+Keyboard.swift */,
@@ -650,6 +640,9 @@
 				F91A72C22999160E00CA135A /* Alerter.swift */,
 				F91F09DE29AE0B5E00E04FA0 /* GradeAlertView.swift */,
 				F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */,
+				F98017192BBC29D6004F2EA7 /* PromotionSection.swift */,
+				F980171B2BBC29F7004F2EA7 /* CardSection.swift */,
+				F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -669,6 +662,7 @@
 				F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */,
 				872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */,
 				A323D3C92AEE870700DDA716 /* SuggestionForm.swift */,
+				F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -686,11 +680,8 @@
 			isa = PBXGroup;
 			children = (
 				8788E1A12A484518007C3852 /* ExploreShortcutViewModels */,
-				8788E1A22A484528007C3852 /* WriteShortcutViewModels */,
 				8788E1A32A484533007C3852 /* ReadShortcutViewModels */,
 				8788E19E2A483FDF007C3852 /* ExploreCurationViewModels */,
-				8788E1A42A484542007C3852 /* WriteCurationViewModels */,
-				8788E1A52A48456E007C3852 /* MyPageViewModels */,
 				A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */,
 				4D61A766291E1EE8000EF531 /* NavigationViewModel.swift */,
 				F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */,
@@ -978,6 +969,7 @@
 				A0DD085729276608008177BB /* URL+DeepLink.swift in Sources */,
 				87E99CD929042536009B691F /* SectionType.swift in Sources */,
 				872A7D8F2918393B004A05B8 /* PrivacyPolicyView.swift in Sources */,
+				F980171A2BBC29D6004F2EA7 /* PromotionSection.swift in Sources */,
 				A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */,
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
@@ -989,11 +981,14 @@
 				8795A170292AB945004B765F /* UIScreen+Size.swift in Sources */,
 				F9AFF6E32A59153B00FFFFAD /* WriteShortcutViewModel.swift in Sources */,
 				8786B2E629A7F987000B46A1 /* String+Date.swift in Sources */,
+				F980171C2BBC29F7004F2EA7 /* CardSection.swift in Sources */,
+				F980171E2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift in Sources */,
 				F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */,
 				A323D3CA2AEE870700DDA716 /* SuggestionForm.swift in Sources */,
 				4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
 				876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */,
+				F98017202BBC2A6F004F2EA7 /* ExploreCell.swift in Sources */,
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
 				87E99CA728FFF23E009B691F /* ListCurationView.swift in Sources */,
 				F9CAEF832914855900224B0A /* Date+String.swift in Sources */,
@@ -1043,6 +1038,7 @@
 				A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */,
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
 				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
+				F98017182BBC29A7004F2EA7 /* SCZ+Color.swift in Sources */,
 				87DBFB062A2127C0000CC442 /* CheckVersionView.swift in Sources */,
 				A3FF01882918581E00384211 /* LicenseView.swift in Sources */,
 				A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
