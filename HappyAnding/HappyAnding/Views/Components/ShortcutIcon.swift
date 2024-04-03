@@ -10,7 +10,7 @@ import SwiftUI
 struct ShortcutIcon: View {
     @Environment(\.colorScheme) var colorScheme
     
-    let sfsymbol: String
+    let sfSymbol: String
     let color: String
     let size: CGFloat
     
@@ -23,7 +23,7 @@ struct ShortcutIcon: View {
                         .strokeBorder(.white.opacity(0.24), lineWidth: 2)
                 )
                 .frame(width: size, height: size)
-            Image(systemName: sfsymbol)
+            Image(systemName: sfSymbol)
                 .font(.system(size: 28))
                 .foregroundStyle(Color.white)
         }
@@ -31,5 +31,5 @@ struct ShortcutIcon: View {
 }
 
 #Preview {
-    ShortcutIcon(sfsymbol: "play.rectangle.fill", color: "Red", size: 56)
+    ShortcutIcon(sfSymbol: "play.rectangle.fill", color: "Red", size: 56)
 }

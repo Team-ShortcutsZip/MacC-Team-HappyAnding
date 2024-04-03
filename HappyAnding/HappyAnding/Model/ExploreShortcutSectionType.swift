@@ -40,7 +40,7 @@ enum ExploreShortcutSectionType: String {
                     .foregroundStyle(
                         Color(hexString: "E4C139")
                     )
-                Text("새로 올라온")
+                Text(TextLiteral.newShortcutsTitle)
                     .foregroundStyle(SCZColor.Basic)
             }
                 
@@ -50,7 +50,7 @@ enum ExploreShortcutSectionType: String {
                     .foregroundStyle(
                         Color(hexString: "404040", opacity: 0.48)
                     )
-                Text("다운로드 순위")
+                Text(TextLiteral.downloadRankViewTitle)
                     .foregroundStyle(SCZColor.Basic)
             }
         case .mostLoved:
@@ -59,7 +59,7 @@ enum ExploreShortcutSectionType: String {
                     .foregroundStyle(
                         Color(hexString: "3366FF", opacity: 0.88)
                     )
-                Text("사랑받는")
+                Text(TextLiteral.lovedShortcutViewTitle)
                     .foregroundStyle(SCZColor.Basic)
             }
         }

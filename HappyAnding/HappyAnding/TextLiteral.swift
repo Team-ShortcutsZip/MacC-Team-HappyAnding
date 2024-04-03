@@ -53,9 +53,10 @@ enum TextLiteral {
     
     // MARK: - RecentRegisteredView
     static let recentRegisteredViewTitle: String = "최신 단축어"
+    static let newShortcutsTitle: String = "새로 올라온"
     
     // MARK: - LovedShortcutView
-    static let lovedShortcutViewTitle: String = "사랑받는 단축어"
+    static let lovedShortcutViewTitle: String = "사랑받는"
     
     // MARK: - DownloadRankView
     static let downloadRankViewTitle: String = "다운로드 순위"

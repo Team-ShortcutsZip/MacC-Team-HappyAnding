@@ -21,6 +21,11 @@ extension Color {
         
         self.init(.sRGB, red: red, green: green, blue: blue, opacity: opacity)
     }
+    
+    func toGradient() -> LinearGradient {
+        return LinearGradient(colors: [self], startPoint: .top, endPoint: .bottom)
+    }
+    
 }
 
 extension Color {
