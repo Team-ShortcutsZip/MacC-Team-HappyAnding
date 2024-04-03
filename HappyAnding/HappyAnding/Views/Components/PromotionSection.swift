@@ -87,7 +87,7 @@ struct PromotionCard: View {
                     let maxIcons = count > 3 ? 2 : 3
 
                     ForEach(Array(promotion.shortcuts.enumerated()).prefix(maxIcons), id: \.offset) { index, shortcut in
-                        ShortcutIcon(sfsymbol: shortcut.sfSymbol, color: shortcut.color, size: 66)
+                        ShortcutIcon(sfSymbol: shortcut.sfSymbol, color: shortcut.color, size: 66)
                     }
                     if maxIcons == 2 {
                         MoreShortcutIcon(count: count - 2)

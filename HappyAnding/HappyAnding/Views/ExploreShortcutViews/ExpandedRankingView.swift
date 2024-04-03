@@ -51,20 +51,8 @@ struct ExpandedShortcutCell: View {
     let shortcut: Shortcuts
     var body: some View {
         HStack(spacing: 14) {
-            ZStack {
-                Image("Seal")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 28)
-                    .foregroundStyle(
-                        fetchSealColor(index: index)
-                    )
-                Text("\(index)")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(fetchTextColor(index: index))
-                    .blendMode(fetchBlendMode(index: index))
-            }
-            ShortcutIcon(sfsymbol: shortcut.sfSymbol, color: shortcut.color, size: 56)
+            Seal(index: index, type: .ranking)
+            ShortcutIcon(sfSymbol: shortcut.sfSymbol, color: shortcut.color, size: 56)
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(shortcut.title)
@@ -82,47 +70,5 @@ struct ExpandedShortcutCell: View {
                 .foregroundStyle(SCZColor.CharcoalGray.opacity24)
         }
         .padding(.vertical, 6)
-    }
-    
-    private func fetchSealColor(index: Int) -> LinearGradient {
-        switch index {
-        case 1:
-            return SCZColor.Seal.gold
-        case 2:
-            return SCZColor.Seal.silver
-        case 3:
-            return SCZColor.Seal.bronze
-        case 4,5:
-            return SCZColor.Seal.iron
-        default:
-            return SCZColor.Seal.defaultColor
-            
-        }
-    }
-    private func fetchTextColor(index: Int) ->  LinearGradient {
-        switch index {
-        case 1:
-            return SCZColor.Seal.textGold
-        case 2:
-            return SCZColor.Seal.textSilver
-        case 3:
-            return SCZColor.Seal.textBronze
-        case 4,5:
-            return SCZColor.Seal.textIron
-        default:
-            return SCZColor.Seal.textDefault
-            
-        }
-    }
-    
-    private func fetchBlendMode(index: Int) -> BlendMode {
-        switch index{
-        case 1, 2, 3:
-            return .multiply
-        case 4,5:
-            return .colorBurn
-        default:
-            return .normal
-        }
     }
 }

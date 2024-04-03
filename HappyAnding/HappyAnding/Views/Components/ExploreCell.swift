@@ -19,17 +19,7 @@ struct OrderedCell: View {
     let index: Int
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ZStack {
-                Image("Seal")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 28)
-                    .foregroundStyle(Color.white.opacity(0.64))
-                Text("\(index)")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundStyle(SCZColor.CharcoalGray.opacity64 )
-                    .blendMode(.colorBurn)
-            }
+            Seal(index: index, type: .exploreCell)
             Text(shortcut.title)
                 .foregroundStyle(SCZColor.Basic)
                 .font(.system(size: 15, weight: .bold))
