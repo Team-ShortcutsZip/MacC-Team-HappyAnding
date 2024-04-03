@@ -15,8 +15,12 @@ struct CardSection: View {
         VStack(alignment: .leading, spacing: 6) {
             type.getTitleView()
                 .font(.system(size: 20, weight: .semibold))
+                .padding(.horizontal, 13)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
+                    Rectangle()
+                        .foregroundStyle(Color.clear)
+                        .frame(width: 13)
                     ForEach(Array(shortcuts.enumerated()).prefix(5), id: \.offset) { index, shortcut in
                         switch type {
                         case .new:
@@ -26,10 +30,10 @@ struct CardSection: View {
                         }
                     }
                     ExpandButton
+                        .padding(.trailing, 13)
                 }
             }
         }
-        .padding(.horizontal, 13)
         .padding(.vertical, 4)
     }
     var ExpandButton: some View {
@@ -49,7 +53,7 @@ struct CardSection: View {
                 RoundedRectangle(cornerRadius: 12)
                     .strokeBorder(Color.white.opacity(0.12), lineWidth: 2)
             )
-            .shadow(color: Color(hexString: "404040", opacity: 0.04), radius: 4, x: 0, y: 2)
+            .shadow(color: SCZColor.CharcoalGray.opacity04, radius: 4, x: 0, y: 2)
         }
     }
 }
