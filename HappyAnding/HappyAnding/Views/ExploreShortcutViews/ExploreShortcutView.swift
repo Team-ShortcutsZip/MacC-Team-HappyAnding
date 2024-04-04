@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreShortcutView: View {
     
     @StateObject var viewModel: ExploreShortcutViewModel
+    @State var isSearchBarActivated = false
     
     let sectionType: [ExploreShortcutSectionType] = [.new, .mostDownloaded, .mostLoved]
     var body: some View {
@@ -21,7 +22,7 @@ struct ExploreShortcutView: View {
                         CardSection(type: type, shortcuts: viewModel.fetchShortcuts(by: type))
                     }
                 } header: {
-                    SearchBar()
+                    SearchBar(isActivated: $isSearchBarActivated)
                 }
             }
             .padding(.bottom, 40)
@@ -53,18 +54,29 @@ struct ExploreShortcutView: View {
                     )
             }
         }
-        
+        .navigationBarBackground({Color.clear})
+        .background(
+            ZStack{
+                Color.white
+                SCZColor.CharcoalGray.opacity04
+            }
+                .ignoresSafeArea()
+        )
     }
 }
 
 //TODO: 배경색상 적용 필요
 struct SearchBar: View {
     @State var text: String = ""
+    @FocusState private var isSearchBarActivated: Bool
+    @Binding var isActivated: Bool
+    
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
             TextField("단축어 제작의 기본", text: $text)
                 .frame(maxHeight: .infinity)
+                .focused($isSearchBarActivated)
         }
         .padding(.horizontal, 16)
         .frame(height: 40)
@@ -77,6 +89,9 @@ struct SearchBar: View {
                 )
         )
         .padding(.horizontal, 16)
+        .onChange(of: isSearchBarActivated) { _ in
+            isActivated.toggle()
+        }
     }
 }
 
