@@ -85,6 +85,8 @@
 		A0DD085729276608008177BB /* URL+DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DD085629276608008177BB /* URL+DeepLink.swift */; };
 		A0F822AC2910B8F100AF4448 /* ShortcutsZipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */; };
 		A0F822B729164D2300AF4448 /* ListCategoryShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */; };
+		A309862B2BBFE5650004D993 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5889E72AA36A52000C4849 /* AppDelegate.swift */; };
+		A309862D2BBFE5F50004D993 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A309862C2BBFE5F50004D993 /* FirebaseMessaging */; };
 		A31F1844292A637300AF4A82 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+String.swift */; };
 		A31F1846292A638700AF4A82 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
@@ -361,6 +363,7 @@
 			files = (
 				A3FC474B292A61550058BF26 /* FirebaseDatabase in Frameworks */,
 				A3FC474D292A61550058BF26 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				A309862D2BBFE5F50004D993 /* FirebaseMessaging in Frameworks */,
 				A3FC4747292A61550058BF26 /* FirebaseAnalytics in Frameworks */,
 				A3FC4749292A61550058BF26 /* FirebaseAuth in Frameworks */,
 			);
@@ -369,14 +372,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4DB674822AF11B7900A83C0B /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				4D5889E72AA36A52000C4849 /* AppDelegate.swift */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
 		8786B2DD29A7F8C8000B46A1 /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,7 +488,6 @@
 				3D41EE06290A458B008BE986 /* Info.plist */,
 				87E99CC22901454D009B691F /* Extensions */,
 				A39504852AD46ACB0019895E /* Support */,
-				4DB674822AF11B7900A83C0B /* Support */,
 				87E99C9828FFF1D2009B691F /* Views */,
 				87E99CD729042503009B691F /* Model */,
 				A0F822AA2910B8B900AF4448 /* ViewModel */,
@@ -726,6 +720,7 @@
 			isa = PBXGroup;
 			children = (
 				A39504862AD46B9B0019895E /* HapticManager.swift */,
+				4D5889E72AA36A52000C4849 /* AppDelegate.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -857,6 +852,7 @@
 				A3FC4748292A61550058BF26 /* FirebaseAuth */,
 				A3FC474A292A61550058BF26 /* FirebaseDatabase */,
 				A3FC474C292A61550058BF26 /* FirebaseFirestoreCombine-Community */,
+				A309862C2BBFE5F50004D993 /* FirebaseMessaging */,
 			);
 			productName = ShareExtension;
 			productReference = A3A6AD14292763E2004C49DC /* ShareExtension.appex */;
@@ -1088,6 +1084,7 @@
 				A3439AF529395A100043E273 /* UserAuth.swift in Sources */,
 				A31F1846292A638700AF4A82 /* (null) in Sources */,
 				F9DB8EB92939853D00516CE1 /* ShareExtensionValidationTextField.swift in Sources */,
+				A309862B2BBFE5650004D993 /* AppDelegate.swift in Sources */,
 				F92766562A61A0E5009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */,
 				8786B2EA29A7F9E7000B46A1 /* View+NavigationBar.swift in Sources */,
 				A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */,
@@ -1554,6 +1551,11 @@
 			productName = WrappingHStack;
 		};
 		4D93D0762A73C9330042CBA8 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		A309862C2BBFE5F50004D993 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
