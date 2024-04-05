@@ -87,6 +87,7 @@
 		A0F822B729164D2300AF4448 /* ListCategoryShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */; };
 		A309862B2BBFE5650004D993 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5889E72AA36A52000C4849 /* AppDelegate.swift */; };
 		A309862D2BBFE5F50004D993 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A309862C2BBFE5F50004D993 /* FirebaseMessaging */; };
+		A309862F2BBFE6B90004D993 /* View+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A309862E2BBFE6B90004D993 /* View+Shadow.swift */; };
 		A31F1844292A637300AF4A82 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+String.swift */; };
 		A31F1846292A638700AF4A82 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A31F1848292A64D700AF4A82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
@@ -279,6 +280,7 @@
 		A0DD085629276608008177BB /* URL+DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+DeepLink.swift"; sourceTree = "<group>"; };
 		A0F822AB2910B8F100AF4448 /* ShortcutsZipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipViewModel.swift; sourceTree = "<group>"; };
 		A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCategoryShortcutView.swift; sourceTree = "<group>"; };
+		A309862E2BBFE6B90004D993 /* View+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Shadow.swift"; sourceTree = "<group>"; };
 		A323D3C92AEE870700DDA716 /* SuggestionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionForm.swift; sourceTree = "<group>"; };
 		A323D3CB2AEEA10F00DDA716 /* SuggestionFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionFormViewModel.swift; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 				8786B2E329A7F966000B46A1 /* View+NavigationBar.swift */,
 				8751B29829A32CC000C2B27E /* View+Navigation.swift */,
 				8786B33D29ABA5A9000B46A1 /* View+Shape.swift */,
+				A309862E2BBFE6B90004D993 /* View+Shadow.swift */,
 				8786B2E129A7F93B000B46A1 /* View+UIFont.swift */,
 			);
 			path = View;
@@ -1010,6 +1013,7 @@
 				87E99CA128FFF225009B691F /* MyPageView.swift in Sources */,
 				8792478D2918CE450040D5C3 /* UINavigationContoller+Gesture.swift in Sources */,
 				8786B33C29ABA588000B46A1 /* View+Gesture.swift in Sources */,
+				A309862F2BBFE6B90004D993 /* View+Shadow.swift in Sources */,
 				87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */,
 				87E99CBB28FFF298009B691F /* IconModalView.swift in Sources */,
 				87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */,
