@@ -16,16 +16,17 @@ extension View {
     }
     
     ///반투명 테두리가 있는 둥근 모서리를 설정하기 위한 확장입니다.
-    ///테두리의 두께, 블랜드 모드는 고정값입니다.
+    ///테두리의 두께는 고정값입니다.
     ///
     ///cornerRadius: 둥근 모서리의 정도를 설정합니다. 기본값 16.
     ///color: 테두리의 색상을 설정합니다. 기본값 "CharcoalGray"
+    ///isBlendMode: 블랜드모드 적용을 조정합니다. 기본값 false
     ///opacity: 테두리의 투명도를 설정합니다. 기본값 1.0
-    func roundedBorder(cornerRadius: CGFloat = 16, color: Color = Color("CharcoalGray"), opacity: Double = 1.0) -> some View {
+    func roundedBorder(cornerRadius: CGFloat = 16, color: Color = Color("CharcoalGray"), isBlendMode: Bool = false, opacity: Double = 1.0) -> some View {
         self.overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
                 .strokeBorder(color.opacity(opacity), lineWidth: 2)
-                .blendMode(.multiply)
+                .blendMode(isBlendMode ? .multiply : .normal)
         )
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
