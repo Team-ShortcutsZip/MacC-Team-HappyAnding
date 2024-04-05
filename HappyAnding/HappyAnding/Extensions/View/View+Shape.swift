@@ -22,11 +22,11 @@ extension View {
     ///color: 테두리의 색상을 설정합니다. 기본값 "CharcoalGray"
     ///isBlendMode: 블랜드모드 적용을 조정합니다. 기본값 false
     ///opacity: 테두리의 투명도를 설정합니다. 기본값 1.0
-    func roundedBorder(cornerRadius: CGFloat = 16, color: Color = Color("CharcoalGray"), isBlendMode: Bool = false, opacity: Double = 1.0) -> some View {
+    func roundedBorder(cornerRadius: CGFloat = 16, color: Color = Color("CharcoalGray"), isNormalBlend: Bool = true, opacity: Double = 1.0) -> some View {
         self.overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
                 .strokeBorder(color.opacity(opacity), lineWidth: 2)
-                .blendMode(isBlendMode ? .multiply : .normal)
+                .blendMode(isNormalBlend ? .normal : .multiply)
         )
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
