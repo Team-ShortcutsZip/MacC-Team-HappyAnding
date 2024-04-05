@@ -24,7 +24,7 @@ extension View {
     func roundedBorder(cornerRadius: CGFloat = 16, color: Color = Color("CharcoalGray"), opacity: Double = 1.0) -> some View {
         self.overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(color.opacity(opacity), lineWidth: 2)
+                .strokeBorder(color.opacity(opacity), lineWidth: 2)
                 .blendMode(.multiply)
         )
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
