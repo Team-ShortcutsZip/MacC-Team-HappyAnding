@@ -48,10 +48,7 @@ struct OrderedCell: View {
         .frame(width: 108, height: 144, alignment: .top)
         .background( SCZColor.colors[shortcut.color]?.color(for: colorScheme).fillGradient() ?? SCZColor.defaultColor)
         .cornerRadius(16)
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.white.opacity(0.12), lineWidth: 2)
-        )
+        .roundedBorder(cornerRadius: 16, color: Color.white, isNormalBlend: true, opacity: 0.12)
     }
     
     private func formatNumber(_ number: Int) -> String {
@@ -90,6 +87,6 @@ struct UnorderedCell: View{
                 )
         )
         .cornerRadius(16)
-        .shadow(color: SCZColor.CharcoalGray.opacity04, radius: 4, x: 0, y: 2)
+        .dropShadow()
     }
 }

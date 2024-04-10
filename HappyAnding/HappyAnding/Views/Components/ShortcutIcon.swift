@@ -18,10 +18,7 @@ struct ShortcutIcon: View {
         ZStack {
             RoundedRectangle(cornerRadius: 13)
                 .foregroundStyle(SCZColor.colors[color]?.color(for: colorScheme).fillGradient() ?? SCZColor.defaultColor)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 13)
-                        .strokeBorder(.white.opacity(0.24), lineWidth: 2)
-                )
+                .roundedBorder(cornerRadius: 13, color: .white, isNormalBlend: true, opacity: 0.24)
                 .frame(width: size, height: size)
             Image(systemName: sfSymbol)
                 .font(.system(size: 28))
