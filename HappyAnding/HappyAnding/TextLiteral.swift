@@ -31,7 +31,7 @@ enum TextLiteral {
     static let appStoreUrl: String = "itms-apps://itunes.apple.com/app/6444001181"
     
     // MARK: - ExploreShortcutView
-    static let exploreShortcutViewTitle: String = "단축어 둘러보기"
+    static let exploreShortcutViewTitle: String = "둘러보기"
     
     //MARK: - announcementCell
     static let newFeatureTag: String = "새로운 기능"
