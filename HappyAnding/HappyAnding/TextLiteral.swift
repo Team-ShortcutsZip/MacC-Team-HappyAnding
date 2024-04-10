@@ -67,7 +67,7 @@ enum TextLiteral {
     static let categoryViewFold: String = "접기"
     
     // MARK: - MyShortcutCardListView
-    static let myShortcutCardListViewTitle: String = "내가 작성한 단축어"
+    static let myShortcutCardListViewTitle: String = "작성한 단축어"
     
     // MARK: - ValidationCheckTextField
     static let validationCheckTextFieldInvalid: String = "단축어 링크가 아니에요"
@@ -226,8 +226,8 @@ enum TextLiteral {
     // MARK: - MyPageView
     static let myPageViewTitle: String = "프로필"
     static let myPageViewMyCuration: String = "내가 작성한 추천 모음집"
-    static let myPageViewLikedShortcuts: String = "좋아요한 단축어"
-    static let myPageViewDownloadedShortcuts: String = "다운로드한 단축어"
+    static let myPageViewLikedShortcuts: String = "내가 좋아요한"
+    static let myPageViewDownloadedShortcuts: String = "다운로드한"
     
     // MARK: - MailView
     static let mailViewReceiver: String = "shortcutszip@gmail.com"

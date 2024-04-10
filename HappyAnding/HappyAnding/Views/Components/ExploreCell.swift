@@ -7,19 +7,18 @@
 
 import SwiftUI
 
-enum CellType {
-    case ordered
-    case unorderd
-}
-
 struct OrderedCell: View {
     @Environment(\.colorScheme) var colorScheme
 
-    let shortcut: Shortcuts
+    let type: SectionType
     let index: Int
+    let shortcut: Shortcuts
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Seal(index: index, type: .exploreCell)
+            if type == .download || type == .popular {
+                Seal(index: index, type: .exploreCell)
+            }
             Text(shortcut.title)
                 .foregroundStyle(SCZColor.Basic)
                 .font(.system(size: 15, weight: .bold))
@@ -88,5 +87,31 @@ struct UnorderedCell: View{
         )
         .cornerRadius(16)
         .dropShadow()
+    }
+}
+
+struct ExpandedCell: View {
+    let type: SectionType
+    let shortcuts: [Shortcuts]
+    
+    var body: some View {
+        NavigationLink {
+            ExpandedRankingView(type: type, shortcuts: shortcuts)
+        } label: {
+            VStack(alignment: .center, spacing: 4) {
+                Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
+                Text("더보기")
+            }
+            .foregroundStyle(Color.white.opacity(0.88))
+            .font(.system(size: 15, weight: .semibold))
+            .frame(width: 108, height: 144, alignment: .center)
+            .background(SCZColor.CharcoalGray.opacity08)
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(Color.white.opacity(0.12), lineWidth: 2)
+            )
+            .shadow(color: SCZColor.CharcoalGray.opacity04, radius: 4, x: 0, y: 2)
+        }
     }
 }

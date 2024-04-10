@@ -154,7 +154,6 @@
 		F98017182BBC29A7004F2EA7 /* SCZ+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */; };
 		F980171A2BBC29D6004F2EA7 /* PromotionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017192BBC29D6004F2EA7 /* PromotionSection.swift */; };
 		F980171C2BBC29F7004F2EA7 /* CardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171B2BBC29F7004F2EA7 /* CardSection.swift */; };
-		F980171E2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */; };
 		F98017202BBC2A6F004F2EA7 /* ExploreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */; };
 		F98017222BBC3FD8004F2EA7 /* ExpandedRankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017212BBC3FD8004F2EA7 /* ExpandedRankingView.swift */; };
 		F98017242BBC4061004F2EA7 /* ShortcutIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017232BBC4061004F2EA7 /* ShortcutIcon.swift */; };
@@ -331,7 +330,6 @@
 		F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCZ+Color.swift"; sourceTree = "<group>"; };
 		F98017192BBC29D6004F2EA7 /* PromotionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionSection.swift; sourceTree = "<group>"; };
 		F980171B2BBC29F7004F2EA7 /* CardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSection.swift; sourceTree = "<group>"; };
-		F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreShortcutSectionType.swift; sourceTree = "<group>"; };
 		F980171F2BBC2A6F004F2EA7 /* ExploreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCell.swift; sourceTree = "<group>"; };
 		F98017212BBC3FD8004F2EA7 /* ExpandedRankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedRankingView.swift; sourceTree = "<group>"; };
 		F98017232BBC4061004F2EA7 /* ShortcutIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutIcon.swift; sourceTree = "<group>"; };
@@ -671,7 +669,6 @@
 				F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */,
 				872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */,
 				A323D3C92AEE870700DDA716 /* SuggestionForm.swift */,
-				F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -992,7 +989,6 @@
 				F9AFF6E32A59153B00FFFFAD /* WriteShortcutViewModel.swift in Sources */,
 				8786B2E629A7F987000B46A1 /* String+Date.swift in Sources */,
 				F980171C2BBC29F7004F2EA7 /* CardSection.swift in Sources */,
-				F980171E2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift in Sources */,
 				F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */,
 				A323D3CA2AEE870700DDA716 /* SuggestionForm.swift in Sources */,
 				4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */,

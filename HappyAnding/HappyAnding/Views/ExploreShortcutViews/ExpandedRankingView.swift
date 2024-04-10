@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExpandedRankingView: View {
-    let type: ExploreShortcutSectionType
+    let type: SectionType
     let shortcuts: [Shortcuts]
     
     var body: some View {
@@ -16,7 +16,7 @@ struct ExpandedRankingView: View {
             VStack(spacing: 5) {
                 ForEach(0..<shortcuts.count, id: \.self) { i in
                     VStack (spacing: 5) {
-                        ExpandedShortcutCell(index: i+1, shortcut: shortcuts[i])
+                        ExpandedShortcutCell(type: type, index: i+1, shortcut: shortcuts[i])
                         
                         if i != shortcuts.count - 1 {
                             Divider()
@@ -32,7 +32,7 @@ struct ExpandedRankingView: View {
         }
         .toolbar{
             ToolbarItem(placement: .principal) {
-                type.getTitleImage()
+                type.fetchTitleIcon()
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -47,11 +47,14 @@ struct ExpandedRankingView: View {
 }
 
 struct ExpandedShortcutCell: View {
+    let type: SectionType
     let index: Int
     let shortcut: Shortcuts
     var body: some View {
         HStack(spacing: 14) {
-            Seal(index: index, type: .ranking)
+            if type == .popular || type == .download {
+                Seal(index: index, type: .ranking)
+            }
             ShortcutIcon(sfSymbol: shortcut.sfSymbol, color: shortcut.color, size: 56)
             
             VStack(alignment: .leading, spacing: 2) {

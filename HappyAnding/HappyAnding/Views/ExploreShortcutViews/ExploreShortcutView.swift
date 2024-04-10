@@ -12,7 +12,7 @@ struct ExploreShortcutView: View {
     @StateObject var viewModel: ExploreShortcutViewModel
     @Binding var isSearchActivated: Bool
     
-    let sectionType: [ExploreShortcutSectionType] = [.new, .mostDownloaded, .mostLoved]
+    let sectionType: [SectionType] = [.recent, .download, .popular]
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 12) {
