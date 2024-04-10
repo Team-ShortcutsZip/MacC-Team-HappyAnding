@@ -224,7 +224,7 @@ enum TextLiteral {
     static let signInWithAppleViewUseWithoutSignIn: String = "로그인 없이 둘러보기"
     
     // MARK: - MyPageView
-    static let myPageViewTitle: String = "프로필"
+    static let myPageViewTitle: String = "나의 공간"
     static let myPageViewMyCuration: String = "내가 작성한 추천 모음집"
     static let myPageViewLikedShortcuts: String = "내가 좋아요한"
     static let myPageViewDownloadedShortcuts: String = "다운로드한"
