@@ -23,48 +23,10 @@ struct SearchView: View {
     
     var body: some View {
         VStack {
-            
-            searchTextfield
-            
-            if !isSearched {
-                recommendKeyword
-                Spacer()
-            } else {
-                if shortcutResults.count == 0 {
-                    proposeView
-                } else {
-                    ScrollView {
-                        VStack(spacing: 0) {
-                            ForEach(shortcutResults.sorted(by: { $0.title < $1.title }), id: \.self) { shortcut in
-                                
-                                ShortcutCell(shortcut: shortcut,
-                                             navigationParentView: NavigationParentView.shortcuts)
-                                .navigationLinkRouter(data: shortcut)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-                            }
-                        }
-                    }
-                    .scrollDismissesKeyboard(.immediately)
-                }
-            }
+            SearchBar()
         }
-        .onAppear() {
-            self.keywords = shortcutsZipViewModel.keywords
-        }
-        .onSubmit(of: .search, runSearch)
-        .onChange(of: searchText) { _ in
-            didChangedSearchText()
-            if !searchText.isEmpty {
-                isSearched = true
-            } else if searchText.isEmpty && !isSearching {
-                shortcutResults.removeAll()
-                isSearched = false
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .background(Color.shortcutsZipBackground)
-        .navigationBarBackground ({ Color.shortcutsZipBackground })
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black.opacity(0.13).ignoresSafeArea())
     }
     
     private func runSearch() {
@@ -160,8 +122,30 @@ struct SearchView: View {
     }
 }
 
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
+struct SearchBar: View {
+    @State var text: String = ""
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+            TextField("단축어 제작의 기본", text: $text)
+                .frame(maxHeight: .infinity)
+        }
+        
+        .padding(.horizontal, 16)
+        .frame(height: 40)
+        .background(
+            Capsule()
+                .fill(SCZColor.CharcoalGray.opacity04)
+                .overlay(
+                    Capsule()
+                        .stroke(Color.white.opacity(0.12), lineWidth: 2)
+                )
+        )
+        .padding(.horizontal, 16)
     }
+}
+
+#Preview {
+    SearchView()
 }
