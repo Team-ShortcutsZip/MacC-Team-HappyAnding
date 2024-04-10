@@ -168,6 +168,7 @@
 		F9DB8EBB293986E100516CE1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
 		F9DB8EBD293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */; };
 		F9DB8ED3293B4C3200516CE1 /* ShareExtensionTagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */; };
+		F9E7073A2BC6933000319533 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E707392BC6933000319533 /* SearchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -343,6 +344,7 @@
 		F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionValidationTextField.swift; sourceTree = "<group>"; };
 		F9DB8EBC293987BD00516CE1 /* ShareExtensionCustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCustomTextEditor.swift; sourceTree = "<group>"; };
 		F9DB8ED2293B4C3200516CE1 /* ShareExtensionTagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionTagTextField.swift; sourceTree = "<group>"; };
+		F9E707392BC6933000319533 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -544,6 +546,7 @@
 				A34BF82929AFC308009BC946 /* FeatureViews */,
 				87E606AE291062D300C3DA13 /* SignInViews */,
 				8792479A291BDF820040D5C3 /* SearchView.swift */,
+				F9E707392BC6933000319533 /* SearchViewModel.swift */,
 				3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */,
 				F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */,
 			);
@@ -994,6 +997,7 @@
 				A323D3CA2AEE870700DDA716 /* SuggestionForm.swift in Sources */,
 				4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
+				F9E7073A2BC6933000319533 /* SearchViewModel.swift in Sources */,
 				876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */,
 				F98017202BBC2A6F004F2EA7 /* ExploreCell.swift in Sources */,
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
