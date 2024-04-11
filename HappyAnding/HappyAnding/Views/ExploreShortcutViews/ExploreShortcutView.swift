@@ -20,6 +20,7 @@ struct ExploreShortcutView: View {
                 ForEach (sectionType, id: \.self) { type in
                     CardSection(type: type, shortcuts: viewModel.fetchShortcuts(by: type))
                 }
+                
             }
             .padding(.bottom, 40)
         }

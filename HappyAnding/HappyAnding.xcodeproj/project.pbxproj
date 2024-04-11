@@ -669,6 +669,7 @@
 				F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */,
 				872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */,
 				A323D3C92AEE870700DDA716 /* SuggestionForm.swift */,
+				F980171D2BBC2A24004F2EA7 /* ExploreShortcutSectionType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
