@@ -26,32 +26,13 @@ struct PromoteSection: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            GeometryReader { proxy in
-                let baseOffset: CGFloat = spacing + visibleEdgeSpace
-                let pageWidth: CGFloat = proxy.size.width - (visibleEdgeSpace + spacing) * 2
-                let offsetX: CGFloat = baseOffset + CGFloat(currentIndex) * -pageWidth + CGFloat(currentIndex) * -spacing + dragOffset
-                
-                HStack(spacing: spacing) {
-                    ForEach(0..<items.count, id: \.self) { index in
-                        PromotionCard(promotion: items[index])
-                    }
+            TabView(selection: $currentIndex) {
+                ForEach(0..<items.count, id: \.self) { index in
+                    PromotionCard(promotion: items[index])
                 }
-                .offset(x: offsetX)
-                .animation(.spring(), value: currentIndex)
-                .gesture(
-                    DragGesture()
-                        .updating($dragOffset) { value, out, _ in
-                            out = value.translation.width
-                        }
-                        .onEnded { value in
-                            let offsetX = value.translation.width
-                            let progress = -offsetX / pageWidth
-                            let increment = Int(progress.rounded())
-                            
-                            currentIndex = max(min(currentIndex + increment, pageCount - 1), 0)
-                        }
-                )
+                
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
             .frame(height:240)
             HStack(spacing: 8) {
                 ForEach((0..<items.count), id: \.self) { index in
@@ -60,8 +41,7 @@ struct PromoteSection: View {
                               SCZColor.promotionIndicator.opacity(1) :
                                 SCZColor.promotionIndicator.opacity(0.38)
                         )
-                        .frame(width: 6)
-                    
+                        .frame(width: 8)
                 }
             }
         }
@@ -125,17 +105,11 @@ struct PromotionCard: View {
 struct MoreShortcutIcon: View {
     let count: Int
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 13)
-                .foregroundStyle(Color.white.opacity(0.12))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 13)
-                        .strokeBorder(.white.opacity(0.24), lineWidth: 2)
-                )
-                .frame(width: 66, height: 66)
-            Text("+\(count)")
-                .foregroundStyle(SCZColor.CharcoalGray.opacity48)
-                .font(.system(size: 24, weight: .medium))
-        }
+        Text("+\(count)")
+            .foregroundStyle(SCZColor.CharcoalGray.opacity48)
+            .font(.system(size: 24, weight: .medium))
+            .frame(width: 66, height: 66)
+            .background(Color.white.opacity(0.12))
+            .roundedBorder(cornerRadius: 13, color: Color.white, isNormalBlend: true, opacity: 0.24)
     }
 }

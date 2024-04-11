@@ -10,44 +10,63 @@ import SwiftUI
 struct ExploreShortcutView: View {
     
     @StateObject var viewModel: ExploreShortcutViewModel
-    @State var isSearchBarActivated = false
+    @Binding var isSearchActivated: Bool
     
-    let sectionType: [ExploreShortcutSectionType] = [.new, .mostDownloaded, .mostLoved]
+    let sectionType: [SectionType] = [.recent, .download, .popular]
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 12, pinnedViews:[.sectionHeaders]) {
-                Section {
-                    PromoteSection(items: viewModel.fetchAdminCuration())
-                    ForEach (sectionType, id: \.self) { type in
-                        CardSection(type: type, shortcuts: viewModel.fetchShortcuts(by: type))
-                    }
-                } header: {
-                    SearchBar(isActivated: $isSearchBarActivated)
+            VStack(spacing: 12) {
+                PromoteSection(items: viewModel.fetchAdminCuration())
+                ForEach (sectionType, id: \.self) { type in
+                    CardSection(type: type, shortcuts: viewModel.fetchShortcuts(by: type))
                 }
+                
             }
             .padding(.bottom, 40)
         }
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    //TODO: 알림창 연결
-                    print("알림창 연결")
-                } label: {
-                    Image(systemName: "bell.badge.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(
-                            Color(hexString: "3366FF"),
-                            LinearGradient(
-                                colors: [SCZColor.CharcoalGray.color, SCZColor.CharcoalGray.opacity48],
-                                startPoint: .top,
-                                endPoint: .bottom
+                HStack {
+                    Button {
+                        //TODO: 알림창 연결
+                        withAnimation {
+                            isSearchActivated.toggle()
+                        }
+                        print("검색창")
+                    } label: {
+                        Image(systemName: "sparkle.magnifyingglass")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [SCZColor.CharcoalGray.opacity88, SCZColor.CharcoalGray.opacity48],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                                .opacity(0.64)
                             )
-                        )
+                    }
+                    Button {
+                        //TODO: 알림창 연결
+                        print("알림창 연결")
+                    } label: {
+                        Image(systemName: "bell.badge.fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(
+                                Color(hexString: "3366FF"),
+                                LinearGradient(
+                                    colors: [SCZColor.CharcoalGray.opacity88, SCZColor.CharcoalGray.opacity48],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                                .opacity(0.64)
+                            )
+                    }
                 }
+                
                 
             }
             ToolbarItem(placement: .topBarLeading) {
-                Text("둘러보기")
+                Text(TextLiteral.exploreShortcutViewTitle)
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(
                         LinearGradient(colors: [SCZColor.CharcoalGray.color, SCZColor.CharcoalGray.opacity48], startPoint: .top, endPoint: .bottom)
@@ -64,34 +83,3 @@ struct ExploreShortcutView: View {
         )
     }
 }
-
-//TODO: 배경색상 적용 필요
-struct SearchBar: View {
-    @State var text: String = ""
-    @FocusState private var isSearchBarActivated: Bool
-    @Binding var isActivated: Bool
-    
-    var body: some View {
-        HStack {
-            Image(systemName: "magnifyingglass")
-            TextField("단축어 제작의 기본", text: $text)
-                .frame(maxHeight: .infinity)
-                .focused($isSearchBarActivated)
-        }
-        .padding(.horizontal, 16)
-        .frame(height: 40)
-        .background(
-            Capsule()
-                .fill(SCZColor.CharcoalGray.opacity04)
-                .overlay(
-                    Capsule()
-                        .stroke(Color.white.opacity(0.12), lineWidth: 2)
-                )
-        )
-        .padding(.horizontal, 16)
-        .onChange(of: isSearchBarActivated) { _ in
-            isActivated.toggle()
-        }
-    }
-}
-
