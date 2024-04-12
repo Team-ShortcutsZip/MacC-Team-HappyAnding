@@ -24,7 +24,7 @@ class FirestoreTests: XCTestCase {
     }
     
     private let testPostId = "4B7F5702-EF0C-4C51-95F9-4CDCA499A58B"
-    private let testAnswerId = "94F96B2B-71AC-4616-95AD-545EF80F65C1"
+    private let testAnswerId = "E0B83A68-9536-4976-BD64-41DCB21DB304"
     private let testCommentId = "C644F4BF-5F32-4F67-B2D8-18F182A1FB2C"
     
 
@@ -225,6 +225,34 @@ class FirestoreTests: XCTestCase {
          
          waitForExpectations(timeout: 5, handler: nil)
      }
+    
+    // 답변에 좋아요를 누르는 함수 테스트
+    func testLikeAnswer() {
+        let expectation = self.expectation(description: "likeAnswer")
+        let answerId = testAnswerId
+        let userId = "1"
+        
+        repository.likeAnswer(answerId: answerId, userId: userId) { success in
+            XCTAssertTrue(success, "Liking an answer should succeed.")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    // 답변에 좋아요를 제거하는 함수 테스트
+    func testUnlikeAnswer() {
+        let expectation = self.expectation(description: "unlikeAnswer")
+        let answerId = testAnswerId
+        let userId = "1"
+        
+        repository.unlikeAnswer(answerId: answerId, userId: userId) { success in
+            XCTAssertTrue(success, "Unliking an answer should succeed.")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
     
 //MARK: - 댓글 관련 테스트
     
