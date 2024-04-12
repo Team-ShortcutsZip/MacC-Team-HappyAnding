@@ -307,6 +307,69 @@ class CommunityRepository {
                 }
             }
     }
+    
+    func likeAnswer(answerId: String, userId: String, completion: @escaping (Bool) -> Void) {
+        let answerRef = db.collection(answerCollection).document(answerId)
+        
+        answerRef.getDocument { (document, error) in
+            if let document = document, let data = document.data(), error == nil {
+                var likedBy = data["likedBy"] as? [String: Bool] ?? [:]
+                
+                if likedBy[userId] != true {
+                    likedBy[userId] = true
+                    
+                    let likeCount = (data["likeCount"] as? Int ?? 0) + 1
+
+                    answerRef.updateData([
+                        "likedBy": likedBy,
+                        "likeCount": likeCount
+                    ]) { error in
+                        if error != nil {
+                            completion(false)
+                        } else {
+                            completion(true)
+                        }
+                    }
+                } else {
+                    completion(true)
+                }
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    func unlikeAnswer(answerId: String, userId: String, completion: @escaping (Bool) -> Void) {
+        let answerRef = db.collection(answerCollection).document(answerId)
+
+        answerRef.getDocument { documentSnapshot, error in
+            guard let document = documentSnapshot, let data = document.data(), error == nil else {
+                completion(false)
+                return
+            }
+            
+            var likedBy = data["likedBy"] as? [String: Bool] ?? [:]
+            
+            if likedBy[userId] == true {
+                likedBy.removeValue(forKey: userId)
+                
+                let likeCount = max((data["likeCount"] as? Int ?? 0) - 1, 0)
+
+                answerRef.updateData([
+                    "likedBy": likedBy,
+                    "likeCount": likeCount
+                ]) { error in
+                    if error != nil {
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
+                }
+            } else {
+                completion(true)
+            }
+        }
+    }
 
 //MARK: - 댓글 관련 함수
     
