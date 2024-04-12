@@ -8,35 +8,38 @@
 import Foundation
 
 struct Post: Identifiable, Codable, Equatable, Hashable {
-    var id = UUID().uuidString
-    var type: String = ""
-    var title: String = ""
-    var body: String = ""
-    var postedBy: String
-    var postedAt:[String] = [Date().getDate()]
-    var images: [String] = []
-    var likesCount: Int = 0
-    var commentsCount: Int
-    var tags: [String] = []
-    var comments: [String] = []
-    var answers: [String] = []
     
-
+    let id : String
+    let type: PostType
+    let createdAt: String
+    let author: String
+    
+    var content: String
+    var shortcuts: [String]
+    var images: [String]
+    var likedBy: [String:Bool]
+    var likeCount: Int
+    var commentCount: Int
+    
+    init(type: PostType, content: String, author: String, shortcuts: [String] = [], images: [String] = []) {
+        
+        self.id = UUID().uuidString
+        self.createdAt = Date().getDate()
+        
+        self.type = type
+        self.content = content
+        self.author = author
+        self.shortcuts = shortcuts
+        self.images = images
+        
+        self.likeCount = 0
+        self.commentCount = 0
+        self.likedBy = [:]
+        
+    }
+    
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()
         return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
-    }
-    
-    init(type: String, title: String, body: String, postedBy: String, images: [String], likesCount: Int, commentsCount: Int, tags: [String], comments: [String], answers: [String]) {
-        self.type = type
-        self.title = title
-        self.body = body
-        self.postedBy = postedBy
-        self.images = images
-        self.likesCount = likesCount
-        self.commentsCount = commentsCount
-        self.tags = tags
-        self.comments = comments
-        self.answers = answers
     }
 }

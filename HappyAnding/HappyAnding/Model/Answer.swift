@@ -8,26 +8,35 @@
 import Foundation
 
 struct Answer: Identifiable, Codable, Equatable, Hashable {
-    var id = UUID().uuidString
-    var body: String = ""
-    var postedBy: String = ""
-    var postedAt:[String] = [Date().getDate()]
-    var images: [String] = []
-    var likesCount: Int = 0
-    var isAccepted: Bool = false
-    var comments: [String] = []
+    
+    let id: String
+    let postId : String
+    let createdAt: String
+    let author: String
+    
+    var content: String
+    var isAccepted: Bool
+    var images: [String]
+    var likedBy: [String:Bool]
+    var likeCount: Int
+    
+    init(content: String, author: String, postId:String, images: [String] = []) {
+        
+        self.id = UUID().uuidString
+        self.createdAt = Date().getDate()
+        
+        self.content = content
+        self.isAccepted = false
+        self.author = author
+        self.postId = postId
+        self.images = images
+        
+        self.likeCount = 0
+        self.likedBy = [:]
+    }
     
     var dictionary: [String: Any] {
         let data = (try? JSONEncoder().encode(self)) ?? Data()
         return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
-    }
-    
-    init(body: String, postedBy: String, images: [String] = [], likesCount: Int = 0, isAccepted: Bool = false, comments: [String] = []) {
-        self.body = body
-        self.postedBy = postedBy
-        self.images = images
-        self.likesCount = likesCount
-        self.isAccepted = isAccepted
-        self.comments = comments
     }
 }
