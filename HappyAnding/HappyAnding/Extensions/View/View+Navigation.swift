@@ -87,8 +87,6 @@ extension View {
             ListCurationView(viewModel: ListCurationViewModel(data: data as! CurationType))
         case is User:
             ShowProfileView(viewModel: ShowProfileViewModel(data: data as! User))
-        case is NavigationSearch:
-            SearchView()
         case is Category:
             ListCategoryShortcutView(viewModel: ListCategoryShortcutViewModel(data: data as! Category))
         case is NavigationNicknameView:
@@ -140,9 +138,6 @@ struct NavigationViewModifier: ViewModifier {
             }
             .navigationDestination(for: NavigationWithdrawal.self) { _ in
                 WithdrawalView()
-            }
-            .navigationDestination(for: NavigationSearch.self) { _ in
-                SearchView()
             }
             .navigationDestination(for: NavigationSettingView.self) { _ in
                 SettingView()

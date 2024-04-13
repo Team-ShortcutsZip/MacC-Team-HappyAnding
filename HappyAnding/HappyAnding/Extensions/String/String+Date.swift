@@ -34,4 +34,20 @@ extension String {
         
         return date
     }
+    
+    func getPostDateFormat() -> String? {
+        let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = "yyyyMMddHHmmss"
+
+            if let date = inputFormatter.date(from: self) {
+                let outputFormatter = DateFormatter()
+                outputFormatter.locale = Locale(identifier: "ko_KR")
+                outputFormatter.dateFormat = "M월 d일 a h시 m분"
+
+                let output = outputFormatter.string(from: date)
+                return output
+            } else {
+                return nil
+            }
+    }
 }

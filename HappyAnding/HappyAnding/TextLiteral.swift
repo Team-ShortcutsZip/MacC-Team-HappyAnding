@@ -246,6 +246,18 @@ enum TextLiteral {
     static let searchViewRecommendedKeyword: String = "추천 검색어"
     static let searchViewProposal: String = "단축어 제안하기"
     static let searchViewProposalURL: String = "https://docs.google.com/forms/d/e/1FAIpQLScQc3KeYjDGCE-C2YRU-Hwy2XNy5bt89KVX1OMUzRiySaMX1Q/viewform"
+    static let searchViewMoreResult: String = "더 많은 검색 결과 보기"
+    static let searchViewRelatedShortcut: String = "관련된 단축어"
+    static let searchVIewRelatedPost: String = "관련된 글"
+    static func searchViewEmptyResult(_ searchText: String) -> String {
+            return "😵 \'\(searchText)\'에 관련된 단축어나 글이 없어요."
+        }
+    static func searchTextRelatedShortcutShare(_ searchText: String) -> String {
+            return "\'\(searchText)\' 관련 단축어 공유하기"
+        }
+    static func searchTextRelatedPost(_ searchText: String) -> String {
+            return "\'\(searchText)\' 관련 질문하기"
+        }
     
     //MARK: - CustomShareViewController
     static let customShareViewControllerSignInAlertTitle: String = "로그인을 먼저 진행해주세요"
