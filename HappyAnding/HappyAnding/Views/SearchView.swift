@@ -8,8 +8,6 @@
 import MessageUI
 import SwiftUI
 
-//TODO: 머지 전 화면 연결 필요
-///검색 방식 변경 필요할 수도..(현재는 기존 방식 유지)
 struct SearchView: View {
     @StateObject var viewModel: SearchViewModel
     @FocusState var searchBarFocused: Bool
