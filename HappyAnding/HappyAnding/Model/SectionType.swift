@@ -83,8 +83,8 @@ enum SectionType {
         case .popular:
             return Image(systemName: self.icon)
                 .foregroundStyle(
-                    Color(hexString: "3366FF", opacity: 0.88),
-                    Color(hexString: "3366FF", opacity: 0.88)
+                    SCZColor.SCZBlue.opacity88,
+                    SCZColor.SCZBlue.opacity88
                 )
         case .myShortcut:
             return Image(systemName: "square.text.square.fill")
@@ -101,8 +101,8 @@ enum SectionType {
         case .myLovingShortcut:
             return Image(systemName: "heart.fill")
                 .foregroundStyle(
-                    Color(hexString: "3366FF", opacity: 0.88),
-                    Color(hexString: "3366FF", opacity: 0.88)
+                    SCZColor.SCZBlue.opacity88,
+                    SCZColor.SCZBlue.opacity88
                 )
         }
     }

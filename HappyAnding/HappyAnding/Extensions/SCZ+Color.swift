@@ -60,7 +60,6 @@ struct GradientType {
 }
 
 struct SCZColor {
-    static let defaultColor = Red().light.fillGradient()
     static let colors: [String: ColorProtocol] = [
         "Red": Red(),
         "Coral": Coral(),
@@ -71,6 +70,7 @@ struct SCZColor {
         "Teal": Teal(),
         "Cyan": Cyan(),
         "Blue": Blue(),
+        "Pink": Pink(),
         "Purple": Purple(),
         "LightPurple": Lavendar(),
         "Silver": Silver(),
@@ -565,7 +565,7 @@ extension SCZColor {
         )
     }
     struct CharcoalGray {
-        static let color: Color = Color(hexString: "404040")
+        static let color = Color(hexString: "404040")
         static let opacity88 = Color(hexString: "404040", opacity: 0.88)
         static let opacity64 = Color(hexString: "404040", opacity: 0.64)
         static let opacity48 = Color(hexString: "404040", opacity: 0.48)
@@ -573,5 +573,14 @@ extension SCZColor {
         static let opacity16 = Color(hexString: "404040", opacity: 0.16)
         static let opacity08 = Color(hexString: "404040", opacity: 0.08)
         static let opacity04 = Color(hexString: "404040", opacity: 0.04)
+    }
+    
+    ///SCZBlue 색상 사용 시 백그라운드에 white 색상 넣어줘야 의도한 색으로 나타납니다.
+    struct SCZBlue {
+        static let color = Color(hexString: "3366FF")
+        static let opacity88 = Color(hexString: "3366FF", opacity: 0.88)
+        static let opacity48 = Color(hexString: "3366FF", opacity: 0.48)
+        static let opacity16 = Color(hexString: "3366FF", opacity: 0.16)
+        static let opacity08 = Color(hexString: "3366FF", opacity: 0.08)
     }
 }

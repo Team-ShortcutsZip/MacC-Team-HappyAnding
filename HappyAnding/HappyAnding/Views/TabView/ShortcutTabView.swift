@@ -109,14 +109,8 @@ struct ShortcutTabView: View {
                 }
 
                 if isSearchActivated {
-                    Color.black.opacity(0.33)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            withAnimation {
-                                isSearchActivated.toggle()
-                            }
-                            
-                        }
+                    SearchView(viewModel: SearchViewModel(), isSearchAcivated: $isSearchActivated)
+                        .background(.ultraThickMaterial)
                 }
             }
         }
