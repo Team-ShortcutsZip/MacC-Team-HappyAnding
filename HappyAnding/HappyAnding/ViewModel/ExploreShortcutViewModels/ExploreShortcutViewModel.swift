@@ -27,8 +27,12 @@ final class ExploreShortcutViewModel: ObservableObject {
     func fetchShortcuts(by category: Category) -> [Shortcuts] {
         self.shortcutsZipViewModel.shortcutsInCategory[category.index]
     }
-    
+
     func fetchShortcuts(by sectionType: SectionType) -> [Shortcuts] {
         sectionType.filterShortcuts(from: self.shortcutsZipViewModel)
+    }
+    
+    func fetchAdminCuration() -> [Curation] {
+        self.shortcutsZipViewModel.adminCurations
     }
 }

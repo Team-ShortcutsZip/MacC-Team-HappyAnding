@@ -31,7 +31,7 @@ enum TextLiteral {
     static let appStoreUrl: String = "itms-apps://itunes.apple.com/app/6444001181"
     
     // MARK: - ExploreShortcutView
-    static let exploreShortcutViewTitle: String = "단축어 둘러보기"
+    static let exploreShortcutViewTitle: String = "둘러보기"
     
     //MARK: - announcementCell
     static let newFeatureTag: String = "새로운 기능"
@@ -53,9 +53,10 @@ enum TextLiteral {
     
     // MARK: - RecentRegisteredView
     static let recentRegisteredViewTitle: String = "최신 단축어"
+    static let newShortcutsTitle: String = "새로 올라온"
     
     // MARK: - LovedShortcutView
-    static let lovedShortcutViewTitle: String = "사랑받는 단축어"
+    static let lovedShortcutViewTitle: String = "사랑받는"
     
     // MARK: - DownloadRankView
     static let downloadRankViewTitle: String = "다운로드 순위"
@@ -66,7 +67,7 @@ enum TextLiteral {
     static let categoryViewFold: String = "접기"
     
     // MARK: - MyShortcutCardListView
-    static let myShortcutCardListViewTitle: String = "내가 작성한 단축어"
+    static let myShortcutCardListViewTitle: String = "작성한 단축어"
     
     // MARK: - ValidationCheckTextField
     static let validationCheckTextFieldInvalid: String = "단축어 링크가 아니에요"
@@ -225,8 +226,8 @@ enum TextLiteral {
     // MARK: - MyPageView
     static let myPageViewTitle: String = "프로필"
     static let myPageViewMyCuration: String = "내가 작성한 추천 모음집"
-    static let myPageViewLikedShortcuts: String = "좋아요한 단축어"
-    static let myPageViewDownloadedShortcuts: String = "다운로드한 단축어"
+    static let myPageViewLikedShortcuts: String = "내가 좋아요한"
+    static let myPageViewDownloadedShortcuts: String = "다운로드한"
     
     // MARK: - MailView
     static let mailViewReceiver: String = "shortcutszip@gmail.com"
