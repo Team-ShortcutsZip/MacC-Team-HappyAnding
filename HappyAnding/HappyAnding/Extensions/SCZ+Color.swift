@@ -578,9 +578,9 @@ extension SCZColor {
     ///SCZBlue 색상 사용 시 백그라운드에 white 색상 넣어줘야 의도한 색으로 나타납니다.
     struct SCZBlue {
         static let color = Color(hexString: "3366FF")
-        static let opacity88 = Color(hexString: "3366FF", opacity: 0.88)
-        static let opacity48 = Color(hexString: "3366FF", opacity: 0.48)
-        static let opacity16 = Color(hexString: "3366FF", opacity: 0.16)
-        static let opacity08 = Color(hexString: "3366FF", opacity: 0.08)
+        static let opacity88 = Color(hexString: "4B78FF", opacity: 0.88)
+        static let opacity48 = Color(hexString: "9DB6FF", opacity: 0.48)
+        static let opacity16 = Color(hexString: "DEE7FF", opacity: 0.16)
+        static let opacity08 = Color(hexString: "EFF3FF", opacity: 0.08)
     }
 }
