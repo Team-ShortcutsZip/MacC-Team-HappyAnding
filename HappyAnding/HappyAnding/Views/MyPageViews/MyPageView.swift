@@ -150,6 +150,7 @@ struct MyPageSection: View {
                         Image(systemName: isFolded ? "chevron.down" : "chevron.up")
                             .foregroundStyle(SCZColor.CharcoalGray.opacity48)
                     }
+                    .frame(width: 24, height: 24)
                 }
             }
             .padding(.horizontal, 16)
