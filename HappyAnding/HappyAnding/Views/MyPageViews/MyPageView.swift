@@ -8,22 +8,16 @@
 import SwiftUI
 
 struct MyPageView: View {
-    
-    @EnvironmentObject var shortcutsZipViewModel: ShortcutsZipViewModel
-    
-    @AppStorage("useWithoutSignIn") var useWithoutSignIn: Bool = false
-    
-    @State var isTappedUserGradeButton = false
-    
+    @StateObject var viewModel: MyPageViewModel
+
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
-                
-                //MARK: - 사용자 프로필
                 Button {
                     //프로필 설정 페이지 연걸
                 } label: {
                     HStack {
+                        //TODO: 프로필 이미지 - 등급 시스템과 동일 추후 이미지 연결
                         Image("profile_ex")
                             .resizable()
                             .scaledToFit()
@@ -31,28 +25,12 @@ struct MyPageView: View {
                         
                         VStack(spacing: 9) {
                             HStack {
-                                //뱃지 영역 ExploreShortcutView 머지 후 Seal 이용하기
-                                Image(systemName: "seal")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30)
-                                Image(systemName: "seal")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30)
-                                Image(systemName: "seal")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30)
-                                Image(systemName: "seal")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30)
+                                //TODO: 추가 예정 이미지 확정되면 넣기
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             Divider()
                             HStack {
-                                Text(shortcutsZipViewModel.userInfo?.nickname ?? TextLiteral.defaultUser)
+                                Text(viewModel.fetchUserInfo())
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .foregroundStyle(SCZColor.Basic)
                                 Image(systemName: "slider.horizontal.3")
@@ -69,18 +47,23 @@ struct MyPageView: View {
                 }
                 .padding(.horizontal, 16)
                 
-                MyPageSection(type: .myShortcut, shortcuts: $shortcutsZipViewModel.shortcutsMadeByUser)
-                Divider()
-                    .padding(.horizontal, 16)
-                    .foregroundStyle(SCZColor.CharcoalGray.opacity08)
-                MyPageSection(type: .myDownloadShortcut, shortcuts: $shortcutsZipViewModel.shortcutsUserDownloaded)
-                Divider()
-                    .padding(.horizontal, 16)
-                    .foregroundStyle(SCZColor.CharcoalGray.opacity08)
-                MyPageSection(type: .myLovingShortcut, shortcuts: $shortcutsZipViewModel.shortcutsUserLiked)
-                Divider()
-                    .padding(.horizontal, 16)
-                    .foregroundStyle(SCZColor.CharcoalGray.opacity08)
+                MyPageSection(type: .myShortcut, shortcuts: $viewModel.myShortcuts, isFolded: .constant(false))
+
+                MyPageSection(type: .myDownloadShortcut, shortcuts: $viewModel.myDownloadShortcuts, isFolded: $viewModel.isMyDownloadShortcutFolded)
+                
+                if viewModel.isMyDownloadShortcutFolded {
+                    Divider()
+                        .padding(.horizontal, 16)
+                        .foregroundStyle(SCZColor.CharcoalGray.opacity08)
+                }
+                
+                MyPageSection(type: .myLovingShortcut, shortcuts: $viewModel.myLovingShortcuts, isFolded: $viewModel.isMyLovingShortcutFolded)
+                
+                if viewModel.isMyLovingShortcutFolded {
+                    Divider()
+                        .padding(.horizontal, 16)
+                        .foregroundStyle(SCZColor.CharcoalGray.opacity08)
+                }
             }
             .padding(.bottom, 30)
             .padding(.top, 12)
@@ -138,8 +121,7 @@ struct MyPageView: View {
 struct MyPageSection: View {
     let type: SectionType
     @Binding var shortcuts: [Shortcuts]
-    @State var isFolded = false
-    
+    @Binding var isFolded: Bool
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -171,9 +153,9 @@ struct MyPageSection: View {
                 }
             }
             .padding(.horizontal, 16)
-            
+            let maxNum = shortcuts.count > 3 ? 2 : 3
             if type == .myShortcut || !isFolded {
-                ScrollView(.horizontal, showsIndicators: false ) {
+                ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         Rectangle()
                             .frame(width: 16)
@@ -189,17 +171,17 @@ struct MyPageSection: View {
                                     .roundedBorder(cornerRadius: 16, color: .white, isNormalBlend: true, opacity: 0.12)
                             }
                             
-                            ForEach(shortcuts.prefix(5), id: \.self) { shortcut in
+                            ForEach(shortcuts.prefix(maxNum), id: \.self) { shortcut in
                                 OrderedCell(type: .myShortcut, index: 0, shortcut: shortcut)
                             }
-                            if shortcuts.count > 5 {
+                            if shortcuts.count > maxNum {
                                 ExpandedCell(type: type, shortcuts: shortcuts)
                             }
                         } else {
-                            ForEach(shortcuts.prefix(4), id: \.self) { shortcut in
+                            ForEach(shortcuts.prefix(maxNum), id: \.self) { shortcut in
                                 UnorderedCell(shortcut: shortcut)
                             }
-                            if shortcuts.count > 4 {
+                            if shortcuts.count > maxNum {
                                 ExpandedCell(type: type, shortcuts: shortcuts)
                             }
                         }

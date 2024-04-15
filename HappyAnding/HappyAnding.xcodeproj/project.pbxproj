@@ -172,6 +172,7 @@
 		F9A86DA62A0B54ED00405E12 /* UserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A86DA52A0B54ED00405E12 /* UserNameCell.swift */; };
 		F9AC2BB62935201C00165820 /* CheckUpdateVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */; };
 		F9AFF6E32A59153B00FFFFAD /* WriteShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AFF6E22A59153B00FFFFAD /* WriteShortcutViewModel.swift */; };
+		F9B99F262BCD73A10094F47B /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B99F252BCD73A10094F47B /* MyPageViewModel.swift */; };
 		F9BA11D329A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9BA11D429A389EA00176807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9BA11D229A389EA00176807 /* GoogleService-Info.plist */; };
 		F9CAEF832914855900224B0A /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAEF822914855900224B0A /* Date+String.swift */; };
@@ -355,6 +356,7 @@
 		F9AC2BB52935201C00165820 /* CheckUpdateVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUpdateVersion.swift; sourceTree = "<group>"; };
 		F9AC2BB92935D34C00165820 /* Image+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+View.swift"; sourceTree = "<group>"; };
 		F9AFF6E22A59153B00FFFFAD /* WriteShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteShortcutViewModel.swift; sourceTree = "<group>"; };
+		F9B99F252BCD73A10094F47B /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		F9BA11D229A389EA00176807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9CAEF822914855900224B0A /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		F9DB8EB82939853D00516CE1 /* ShareExtensionValidationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionValidationTextField.swift; sourceTree = "<group>"; };
@@ -706,6 +708,7 @@
 		A0F822AA2910B8B900AF4448 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				F9B99F242BCD738B0094F47B /* MyPageViewModels */,
 				8788E1A12A484518007C3852 /* ExploreShortcutViewModels */,
 				8788E1A32A484533007C3852 /* ReadShortcutViewModels */,
 				8788E19E2A483FDF007C3852 /* ExploreCurationViewModels */,
@@ -799,6 +802,14 @@
 				87DBFB052A2127C0000CC442 /* CheckVersionView.swift */,
 			);
 			path = SettingViews;
+			sourceTree = "<group>";
+		};
+		F9B99F242BCD738B0094F47B /* MyPageViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F9B99F252BCD73A10094F47B /* MyPageViewModel.swift */,
+			);
+			path = MyPageViewModels;
 			sourceTree = "<group>";
 		};
 		F9DB8ECB293B30EC00516CE1 /* Recovered References */ = {
@@ -1084,6 +1095,7 @@
 				F9136EB6293612310034AAB2 /* ShortcutsZipView.swift in Sources */,
 				87E99CB128FFF273009B691F /* WriteCurationSetView.swift in Sources */,
 				4D61A767291E1EE8000EF531 /* NavigationViewModel.swift in Sources */,
+				F9B99F262BCD73A10094F47B /* MyPageViewModel.swift in Sources */,
 				4D93D0752A61D0D10042CBA8 /* ReadShortcutViewModel.swift in Sources */,
 				F96D45BD29816578000C2441 /* StickyHeader.swift in Sources */,
 				87E99CEE29080D33009B691F /* User.swift in Sources */,

@@ -137,7 +137,7 @@ struct ShortcutTabView: View {
     
     @ViewBuilder
     private func thirdTab() -> some View {
-        MyPageView()
+        MyPageView(viewModel: MyPageViewModel())
             .modifierNavigation()
             .navigationBarBackground ({ Color.shortcutsZipBackground })
             .id(thirdTabID)
