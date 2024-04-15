@@ -30,7 +30,7 @@ struct CardSection: View {
                         case .recent:
                             UnorderedCell(shortcut: shortcut)
                         default:
-                            OrderedCell(type: .download, index: index, shortcut: shortcut)
+                            OrderedCell(type: .download, index: index+1, shortcut: shortcut)
                         }
                     }
                     ExpandedCell(type: type, shortcuts: shortcuts)
