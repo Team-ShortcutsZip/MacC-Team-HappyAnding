@@ -52,7 +52,7 @@ struct ExploreShortcutView: View {
                         Image(systemName: "bell.badge.fill")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(
-                                SCZColor.SCZBlue.color,
+                                SCZColor.SCZBlue.strong,
                                 LinearGradient(
                                     colors: [SCZColor.CharcoalGray.opacity88, SCZColor.CharcoalGray.opacity48],
                                     startPoint: .top,
