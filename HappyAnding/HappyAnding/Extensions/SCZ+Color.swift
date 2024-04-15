@@ -576,7 +576,7 @@ extension SCZColor {
     }
     
     struct SCZBlue {
-        static let color = Color(hexString: "3366FF")
+        static let strong = Color(hexString: "3366FF")
         static let opacity88 = Color(hexString: "4B78FF", opacity: 0.88)
         static let opacity48 = Color(hexString: "9DB6FF", opacity: 0.48)
         static let opacity16 = Color(hexString: "DEE7FF", opacity: 0.16)
