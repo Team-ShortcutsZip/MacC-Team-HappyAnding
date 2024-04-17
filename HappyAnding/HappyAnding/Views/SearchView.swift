@@ -301,38 +301,38 @@ struct SearchSuggestionList: View {
                     
                     if index != viewModel.keywords.keyword.count-1 {
                         Divider()
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 8)
                             .foregroundStyle(SCZColor.CharcoalGray.opacity08)
                     }
                 }
             } else {
                 //검색 기록
                 ForEach(0..<viewModel.searchHistory.count, id: \.self) { index in
-                    HStack {
-                        Button {
-                            withAnimation {
-                                viewModel.searchText = viewModel.searchHistory[index]
-                                searchBarFocused = false
-                            }
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "clock.arrow.circlepath")
-                                    .foregroundStyle(Color.white)
-                                Text(viewModel.searchHistory[index])
-                                //Pretendard 16 regular
-                                    .font(.system(size: 16, weight: .regular))
-                                    .foregroundStyle(SCZColor.CharcoalGray.opacity88)
-                                    .multilineTextAlignment(.leading)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
+                    Button {
+                        withAnimation {
+                            viewModel.searchText = viewModel.searchHistory[index]
+                            searchBarFocused = false
                         }
-                        Button {
-                            withAnimation {
-                                viewModel.removeSearchHistory(index: index)
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "clock.arrow.circlepath")
+                                .foregroundStyle(Color.white)
+                            Text(viewModel.searchHistory[index])
+                            //Pretendard 16 regular
+                                .font(.system(size: 16, weight: .regular))
+                                .foregroundStyle(SCZColor.CharcoalGray.opacity88)
+                                .multilineTextAlignment(.leading)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Button {
+                                withAnimation {
+                                    viewModel.removeSearchHistory(index: index)
+                                }
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(SCZColor.CharcoalGray.opacity24)
                             }
-                        } label: {
-                            Image(systemName: "xmark")
-                                .foregroundStyle(SCZColor.CharcoalGray.opacity24)
+                            .frame(width: 24, height: 24)
                         }
                     }
                     .padding(.horizontal, 16)
@@ -340,7 +340,7 @@ struct SearchSuggestionList: View {
                     
                     if index != viewModel.searchHistory.count-1 {
                         Divider()
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 8)
                             .foregroundStyle(SCZColor.CharcoalGray.opacity08)
                     }
                 }
