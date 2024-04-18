@@ -122,6 +122,7 @@
 		A3C5576C292BE084003907DC /* ShareExtensionWriteShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C5576B292BE084003907DC /* ShareExtensionWriteShortcutView.swift */; };
 		A3D348552BD1233000DE814C /* View+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D348542BD1233000DE814C /* View+Font.swift */; };
 		A3D348562BD1233A00DE814C /* View+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D348542BD1233000DE814C /* View+Font.swift */; };
+		A3D348572BD140CC00DE814C /* Image+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9AC2BB92935D34C00165820 /* Image+View.swift */; };
 		A3FC4747292A61550058BF26 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC4746292A61550058BF26 /* FirebaseAnalytics */; };
 		A3FC4749292A61550058BF26 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC4748292A61550058BF26 /* FirebaseAuth */; };
 		A3FC474B292A61550058BF26 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = A3FC474A292A61550058BF26 /* FirebaseDatabase */; };
@@ -1153,6 +1154,7 @@
 				F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */,
 				A3FC4753292A61AE0058BF26 /* IconModalView.swift in Sources */,
 				4D7D16082986BBDE008B3332 /* TextLiteral.swift in Sources */,
+				A3D348572BD140CC00DE814C /* Image+View.swift in Sources */,
 				A3FC474F292A616D0058BF26 /* UIFont+Extension.swift in Sources */,
 				8786B2ED29A7FAFA000B46A1 /* UIColor+Extension.swift in Sources */,
 				A3FC475B292A61CE0058BF26 /* Category.swift in Sources */,
