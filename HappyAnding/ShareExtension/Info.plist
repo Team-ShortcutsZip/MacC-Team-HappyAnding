@@ -17,5 +17,12 @@
 		<key>NSExtensionPrincipalClass</key>
 		<string>CustomShareNavigationController</string>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Bold.otf</string>
+		<string>Pretendard-SemiBold.otf</string>
+		<string>Pretendard-Medium.otf</string>
+		<string>Pretendard-Regular.otf</string>
+	</array>
 </dict>
 </plist>

@@ -1,5 +1,5 @@
 //
-//  Font+Extension.swift
+//  View+Font.swift
 //  HappyAnding
 //
 //  Created by HanGyeongjun on 4/13/24.
