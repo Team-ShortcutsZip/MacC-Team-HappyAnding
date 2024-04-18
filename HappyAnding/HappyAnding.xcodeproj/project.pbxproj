@@ -94,6 +94,8 @@
 		A323D3CA2AEE870700DDA716 /* SuggestionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323D3C92AEE870700DDA716 /* SuggestionForm.swift */; };
 		A323D3CC2AEEA10F00DDA716 /* SuggestionFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323D3CB2AEEA10F00DDA716 /* SuggestionFormViewModel.swift */; };
 		A323D3D02AEEE4B400DDA716 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39504862AD46B9B0019895E /* HapticManager.swift */; };
+		A329F7362BCA5E5700ED20DA /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A329F7352BCA5E5700ED20DA /* Font+Extension.swift */; };
+		A329F7372BCA5E5800ED20DA /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A329F7352BCA5E5700ED20DA /* Font+Extension.swift */; };
 		A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */; };
 		A3439AF529395A100043E273 /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E606B729114FB200C3DA13 /* UserAuth.swift */; };
 		A3439AF629395A3A0043E273 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
@@ -283,6 +285,11 @@
 		A309862E2BBFE6B90004D993 /* View+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Shadow.swift"; sourceTree = "<group>"; };
 		A323D3C92AEE870700DDA716 /* SuggestionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionForm.swift; sourceTree = "<group>"; };
 		A323D3CB2AEEA10F00DDA716 /* SuggestionFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionFormViewModel.swift; sourceTree = "<group>"; };
+		A329F72E2BCA4FDE00ED20DA /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		A329F72F2BCA4FDE00ED20DA /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		A329F7312BCA4FDE00ED20DA /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		A329F7332BCA4FDE00ED20DA /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		A329F7352BCA5E5700ED20DA /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 		A33F74AD2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxShortcutCell.swift; sourceTree = "<group>"; };
 		A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		A34BF82729AF3D55009BC946 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
@@ -379,6 +386,7 @@
 			children = (
 				8786B2E529A7F987000B46A1 /* String+Date.swift */,
 				A34BF83429B1BA13009BC946 /* String+Formatter.swift */,
+				A329F7352BCA5E5700ED20DA /* Font+Extension.swift */,
 			);
 			path = String;
 			sourceTree = "<group>";
@@ -496,6 +504,7 @@
 				A0F822AA2910B8B900AF4448 /* ViewModel */,
 				4D7D16062986BBD7008B3332 /* TextLiteral.swift */,
 				87E99C7128F94EA8009B691F /* Assets.xcassets */,
+				A329F70F2BCA4F8F00ED20DA /* Resources */,
 				87E99C7328F94EA8009B691F /* Preview Content */,
 			);
 			path = HappyAnding;
@@ -699,6 +708,25 @@
 				A323D3CB2AEEA10F00DDA716 /* SuggestionFormViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A329F70F2BCA4F8F00ED20DA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A329F7102BCA4FB200ED20DA /* Pretendard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A329F7102BCA4FB200ED20DA /* Pretendard */ = {
+			isa = PBXGroup;
+			children = (
+				A329F7312BCA4FDE00ED20DA /* Pretendard-Bold.otf */,
+				A329F7332BCA4FDE00ED20DA /* Pretendard-SemiBold.otf */,
+				A329F72E2BCA4FDE00ED20DA /* Pretendard-Medium.otf */,
+				A329F72F2BCA4FDE00ED20DA /* Pretendard-Regular.otf */,
+			);
+			path = Pretendard;
 			sourceTree = "<group>";
 		};
 		A3439B01293A93960043E273 /* Recovered References */ = {
@@ -1019,6 +1047,7 @@
 				87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */,
 				F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */,
 				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,
+				A329F7362BCA5E5700ED20DA /* Font+Extension.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				4D5889E82AA36A52000C4849 /* AppDelegate.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
@@ -1098,6 +1127,7 @@
 				A3FC4756292A61B60058BF26 /* CategoryModalView.swift in Sources */,
 				A3FC4758292A61C50058BF26 /* Shortcuts.swift in Sources */,
 				8786B2E729A7F9DF000B46A1 /* String+Date.swift in Sources */,
+				A329F7372BCA5E5800ED20DA /* Font+Extension.swift in Sources */,
 				A3FC475A292A61CC0058BF26 /* Keyword.swift in Sources */,
 				A3439AFC2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
 				F9DB8ED3293B4C3200516CE1 /* ShareExtensionTagTextField.swift in Sources */,
