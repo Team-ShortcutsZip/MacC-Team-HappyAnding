@@ -17,10 +17,11 @@ struct Answer: Identifiable, Codable, Equatable, Hashable {
     var content: String
     var isAccepted: Bool
     var images: [String]
+    var thumbnailImages: [String]
     var likedBy: [String:Bool]
     var likeCount: Int
     
-    init(content: String, author: String, postId:String, images: [String] = []) {
+    init(content: String, author: String, postId:String, images: [String] = [], thumbnailImages: [String] = []) {
         
         self.id = UUID().uuidString
         self.createdAt = Date().getDate()
@@ -30,6 +31,7 @@ struct Answer: Identifiable, Codable, Equatable, Hashable {
         self.author = author
         self.postId = postId
         self.images = images
+        self.thumbnailImages = thumbnailImages
         
         self.likeCount = 0
         self.likedBy = [:]

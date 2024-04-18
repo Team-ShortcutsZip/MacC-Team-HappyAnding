@@ -17,11 +17,12 @@ struct Post: Identifiable, Codable, Equatable, Hashable {
     var content: String
     var shortcuts: [String]
     var images: [String]
+    var thumbnailImages: [String]
     var likedBy: [String:Bool]
     var likeCount: Int
     var commentCount: Int
     
-    init(type: PostType, content: String, author: String, shortcuts: [String] = [], images: [String] = []) {
+    init(type: PostType, content: String, author: String, shortcuts: [String] = [], images: [String] = [], thumbnailImages: [String] = []) {
         
         self.id = UUID().uuidString
         self.createdAt = Date().getDate()
@@ -31,6 +32,7 @@ struct Post: Identifiable, Codable, Equatable, Hashable {
         self.author = author
         self.shortcuts = shortcuts
         self.images = images
+        self.thumbnailImages = thumbnailImages
         
         self.likeCount = 0
         self.commentCount = 0
