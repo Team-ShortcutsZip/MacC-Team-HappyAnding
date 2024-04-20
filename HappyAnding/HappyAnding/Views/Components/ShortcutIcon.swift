@@ -21,7 +21,7 @@ struct ShortcutIcon: View {
                 .roundedBorder(cornerRadius: 13, color: .white, isNormalBlend: true, opacity: 0.24)
                 .frame(width: size, height: size)
             Image(systemName: sfSymbol)
-                .font(.system(size: 28))
+                .font(.system(size: size/2 - 5))
                 .foregroundStyle(Color.white)
         }
     }

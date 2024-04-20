@@ -37,17 +37,32 @@ extension String {
     
     func getPostDateFormat() -> String? {
         let inputFormatter = DateFormatter()
-            inputFormatter.dateFormat = "yyyyMMddHHmmss"
-
-            if let date = inputFormatter.date(from: self) {
-                let outputFormatter = DateFormatter()
-                outputFormatter.locale = Locale(identifier: "ko_KR")
-                outputFormatter.dateFormat = "M월 d일 a h시 m분"
-
-                let output = outputFormatter.string(from: date)
-                return output
-            } else {
-                return nil
-            }
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: self) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.locale = Locale(identifier: "ko_KR")
+            outputFormatter.dateFormat = "M월 d일 a h시 m분"
+            
+            let output = outputFormatter.string(from: date)
+            return output
+        } else {
+            return nil
+        }
+    }
+    func getVersionDateFormat() -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: self) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.locale = Locale(identifier: "ko_KR")
+            outputFormatter.dateFormat = "yyyy년 M월 d일"
+            
+            let output = outputFormatter.string(from: date)
+            return output
+        } else {
+            return nil
+        }
     }
 }

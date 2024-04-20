@@ -52,6 +52,7 @@ final class ReadShortcutViewModel: ObservableObject {
     }
     
     init(data: Shortcuts) {
+        print("*****init")
         self.author = User()
         self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.id) ?? data
         self.isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.id)

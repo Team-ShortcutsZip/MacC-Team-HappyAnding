@@ -30,6 +30,16 @@ extension View {
         )
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
+    
+    func roundedBackground() -> some View {
+        self
+            .font(.system(size: 14, weight: .regular))
+            .foregroundStyle(SCZColor.CharcoalGray.opacity64)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(SCZColor.CharcoalGray.opacity04)
+            .roundedBorder(cornerRadius: 16, color: Color.white.opacity(0.12), isNormalBlend: true)
+    }
 }
 
 
