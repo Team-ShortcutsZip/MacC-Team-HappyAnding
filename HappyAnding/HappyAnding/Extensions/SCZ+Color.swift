@@ -60,7 +60,6 @@ struct GradientType {
 }
 
 struct SCZColor {
-    static let defaultColor = Red().light.fillGradient()
     static let colors: [String: ColorProtocol] = [
         "Red": Red(),
         "Coral": Coral(),
@@ -71,6 +70,7 @@ struct SCZColor {
         "Teal": Teal(),
         "Cyan": Cyan(),
         "Blue": Blue(),
+        "Pink": Pink(),
         "Purple": Purple(),
         "LightPurple": Lavendar(),
         "Silver": Silver(),
@@ -565,7 +565,7 @@ extension SCZColor {
         )
     }
     struct CharcoalGray {
-        static let color: Color = Color(hexString: "404040")
+        static let color = Color(hexString: "404040")
         static let opacity88 = Color(hexString: "404040", opacity: 0.88)
         static let opacity64 = Color(hexString: "404040", opacity: 0.64)
         static let opacity48 = Color(hexString: "404040", opacity: 0.48)
@@ -573,5 +573,13 @@ extension SCZColor {
         static let opacity16 = Color(hexString: "404040", opacity: 0.16)
         static let opacity08 = Color(hexString: "404040", opacity: 0.08)
         static let opacity04 = Color(hexString: "404040", opacity: 0.04)
+    }
+    
+    struct SCZBlue {
+        static let strong = Color(hexString: "3366FF")
+        static let opacity88 = Color(hexString: "4B78FF")
+        static let opacity48 = Color(hexString: "9DB6FF")
+        static let opacity16 = Color(hexString: "DEE7FF")
+        static let opacity08 = Color(hexString: "EFF3FF")
     }
 }

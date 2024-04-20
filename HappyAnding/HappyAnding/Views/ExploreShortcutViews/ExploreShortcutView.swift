@@ -17,6 +17,7 @@ struct ExploreShortcutView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 12) {
                 PromoteSection(items: viewModel.fetchAdminCuration())
+                    .padding(.top, 12)
                 ForEach (sectionType, id: \.self) { type in
                     CardSection(type: type, shortcuts: viewModel.fetchShortcuts(by: type))
                 }
@@ -32,7 +33,6 @@ struct ExploreShortcutView: View {
                         withAnimation {
                             isSearchActivated.toggle()
                         }
-                        print("검색창")
                     } label: {
                         Image(systemName: "sparkle.magnifyingglass")
                             .symbolRenderingMode(.palette)
@@ -52,7 +52,7 @@ struct ExploreShortcutView: View {
                         Image(systemName: "bell.badge.fill")
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(
-                                Color(hexString: "3366FF"),
+                                SCZColor.SCZBlue.strong,
                                 LinearGradient(
                                     colors: [SCZColor.CharcoalGray.opacity88, SCZColor.CharcoalGray.opacity48],
                                     startPoint: .top,

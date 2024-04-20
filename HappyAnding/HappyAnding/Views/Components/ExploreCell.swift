@@ -45,7 +45,7 @@ struct OrderedCell: View {
         }
         .padding(12)
         .frame(width: 108, height: 144, alignment: .top)
-        .background( SCZColor.colors[shortcut.color]?.color(for: colorScheme).fillGradient() ?? SCZColor.defaultColor)
+        .background( SCZColor.colors[shortcut.color]?.color(for: colorScheme).fillGradient() ?? Color.clear.toGradient())
         .cornerRadius(16)
         .roundedBorder(cornerRadius: 16, color: Color.white, isNormalBlend: true, opacity: 0.12)
     }
@@ -66,7 +66,7 @@ struct UnorderedCell: View{
             HStack {
                 RoundedRectangle(cornerRadius: 1)
                     .frame(width: 2, height: 30)
-                    .foregroundStyle(SCZColor.colors[shortcut.color]?.color(for: colorScheme).fillGradient() ?? SCZColor.defaultColor)
+                    .foregroundStyle(SCZColor.colors[shortcut.color]?.color(for: colorScheme).fillGradient() ?? Color.clear.toGradient())
                 Image(systemName: shortcut.sfSymbol)
                     .foregroundStyle(SCZColor.CharcoalGray.opacity88)
             }

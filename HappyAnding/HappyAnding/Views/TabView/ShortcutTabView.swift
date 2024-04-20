@@ -97,6 +97,7 @@ struct ShortcutTabView: View {
                         }
                         .tag(3)
                 }
+                .zIndex(1)
                 .onChange(of: phase) { newPhase in
                     switch newPhase {
                     case .background: isShortcutDeeplink = false; isCurationDeeplink = false
@@ -109,14 +110,9 @@ struct ShortcutTabView: View {
                 }
 
                 if isSearchActivated {
-                    Color.black.opacity(0.33)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            withAnimation {
-                                isSearchActivated.toggle()
-                            }
-                            
-                        }
+                    SearchView(viewModel: SearchViewModel(), isSearchAcivated: $isSearchActivated)
+                        .background(.ultraThickMaterial)
+                        .zIndex(2)
                 }
             }
         }
