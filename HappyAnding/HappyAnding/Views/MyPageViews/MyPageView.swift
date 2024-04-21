@@ -74,6 +74,7 @@ struct MyPageView: View {
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(
                         LinearGradient(colors: [SCZColor.CharcoalGray.color, SCZColor.CharcoalGray.opacity48], startPoint: .top, endPoint: .bottom)
+                            .opacity(0.64)
                     )
             }
             ToolbarItem(placement: .topBarTrailing) {
@@ -90,7 +91,7 @@ struct MyPageView: View {
                                     colors: [SCZColor.CharcoalGray.color, SCZColor.CharcoalGray.opacity48],
                                     startPoint: .top,
                                     endPoint: .bottom
-                                )
+                                ).opacity(0.64)
                             )
                     }
                     Button {
@@ -126,7 +127,7 @@ struct MyPageSection: View {
         
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                type.fetchTitleIcon()
+                type.fetchTitleImage()
                 Text(type.title)
                 //pretendard 16 bold
                     .font(.system(size: 16, weight: .bold))
@@ -150,7 +151,7 @@ struct MyPageSection: View {
                         Image(systemName: isFolded ? "chevron.down" : "chevron.up")
                             .foregroundStyle(SCZColor.CharcoalGray.opacity48)
                     }
-                    .frame(width: 24, height: 24)
+                    .frame(width: 28, height: 28)
                 }
             }
             .padding(.horizontal, 16)

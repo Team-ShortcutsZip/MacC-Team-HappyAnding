@@ -10,31 +10,35 @@ import SwiftUI
 struct CardSection: View {
     let type: SectionType
     let shortcuts: [Shortcuts]
-    
+    let horizontalPadding: CGFloat = 16
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                type.fetchTitleIcon()
+                type.fetchTitleImage()
                 Text(type.title)
                     .foregroundStyle(SCZColor.Basic)
             }
-                .font(.system(size: 20, weight: .semibold))
-                .padding(.horizontal, 13)
+            .font(.system(size: 20, weight: .semibold))
+            .padding(.horizontal, horizontalPadding)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
                     Rectangle()
                         .foregroundStyle(Color.clear)
-                        .frame(width: 13)
+                        .frame(width: horizontalPadding-6)
                     ForEach(Array(shortcuts.enumerated()).prefix(5), id: \.offset) { index, shortcut in
-                        switch type {
-                        case .recent:
-                            UnorderedCell(shortcut: shortcut)
-                        default:
-                            OrderedCell(type: .download, index: index+1, shortcut: shortcut)
+                        Button {
+                            //ReadShortcutView 연결
+                        } label: {
+                            switch type {
+                            case .recent:
+                                UnorderedCell(shortcut: shortcut)
+                            default:
+                                OrderedCell(type: .download, index: index+1, shortcut: shortcut)
+                            }
                         }
                     }
                     ExpandedCell(type: type, shortcuts: shortcuts)
-                        .padding(.trailing, 13)
+                        .padding(.trailing, horizontalPadding)
                 }
             }
         }

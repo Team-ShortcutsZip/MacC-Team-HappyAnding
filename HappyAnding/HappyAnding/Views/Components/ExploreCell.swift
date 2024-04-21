@@ -102,10 +102,15 @@ struct ExpandedCell: View {
                 Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
                 Text("더보기")
             }
-            .foregroundStyle(Color.white.opacity(0.88))
+            .foregroundStyle(SCZColor.CharcoalGray.opacity64)
             .font(.system(size: 15, weight: .semibold))
             .frame(width: 108, height: 144, alignment: .center)
-            .background(SCZColor.CharcoalGray.opacity08)
+            .background(
+                ZStack {
+                    Color.white.opacity(0.24)
+                    SCZColor.CharcoalGray.opacity08
+                }
+            )
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)

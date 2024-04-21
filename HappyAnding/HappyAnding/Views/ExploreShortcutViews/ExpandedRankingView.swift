@@ -32,7 +32,7 @@ struct ExpandedRankingView: View {
         }
         .toolbar{
             ToolbarItem(placement: .principal) {
-                type.fetchTitleIcon()
+                type.fetchTitleImage()
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
