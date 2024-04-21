@@ -26,15 +26,11 @@ struct CardSection: View {
                         .foregroundStyle(Color.clear)
                         .frame(width: horizontalPadding-6)
                     ForEach(Array(shortcuts.enumerated()).prefix(5), id: \.offset) { index, shortcut in
-                        Button {
-                            //ReadShortcutView 연결
-                        } label: {
-                            switch type {
-                            case .recent:
-                                UnorderedCell(shortcut: shortcut)
-                            default:
-                                OrderedCell(type: .download, index: index+1, shortcut: shortcut)
-                            }
+                        switch type {
+                        case .recent:
+                            UnorderedCell(shortcut: shortcut)
+                        default:
+                            OrderedCell(type: .download, index: index+1, shortcut: shortcut)
                         }
                     }
                     ExpandedCell(type: type, shortcuts: shortcuts)
