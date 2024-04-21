@@ -23,18 +23,20 @@ class FirestoreTests: XCTestCase {
         super.tearDown()
     }
     
-    private let testPostId = "4B7F5702-EF0C-4C51-95F9-4CDCA499A58B"
-    private let testAnswerId = "E0B83A68-9536-4976-BD64-41DCB21DB304"
+    private let testPostId = "8F242D05-3FB4-4604-880A-93A99B3F77AF"
+    private let testAnswerId = "CECD1EBA-2157-41ED-AA24-AEBD4D105272"
     private let testCommentId = "C644F4BF-5F32-4F67-B2D8-18F182A1FB2C"
     
 
 //MARK: - 글 관련 테스트
+    
+
 
     // 모든 글 가져오기 테스트
-    func testGetPosts() {
+    func testGetAllPosts() {
         let expectation = self.expectation(description: "getPosts")
         
-        repository.getPosts { posts in
+        repository.getAllPosts { posts in
             
             print("\n")
             
@@ -50,11 +52,11 @@ class FirestoreTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
     }
-    
+
     // 무한스크롤 글 가져오기 함수 테스트
-    func testGetPosts2() {
+    func testGetPosts() {
         let expectation = self.expectation(description: "getPosts")
-        let limit = 10 //
+        let limit = 10
         let lastCreatedAt: String? = "20240411102228"
 
         repository.getPosts(limit: limit, lastCreatedAt: lastCreatedAt) { posts in
@@ -91,12 +93,32 @@ class FirestoreTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    // 글 업데이트 테스트
+    // 글 생성 테스트 with Images
+    func testCreatePostWithImages() {
+        let expectation = self.expectation(description: "Completion handler invoked")
+        
+        let testPost = Post(type:PostType.General, content: "This is a test post", author:"1")
+        let testImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+        let testthumbnailImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+        
+        repository.createPost(post: testPost, images: testImages, thumbnailImages: testthumbnailImages) { success in
+            
+            XCTAssertTrue(success, "Post Create should succed.")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+     // 글 업데이트 테스트
     func testUpdatePost() {
         let expectation = self.expectation(description: "updatePost")
         
-        let postid = testPostId
-        repository.updatePost(postid: postid, content: "Updated Content", shortcuts: ["Shortcut1"], images: ["ImageURL1"]) { success in
+        let testImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+        let testthumbnailImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+        
+        let postId = testPostId
+        repository.updatePost(postId: postId, content: "Updated Content", shortcuts: ["Shortcut1"], images:testImages, thumbnailImages: testthumbnailImages) { success in
             XCTAssertTrue(success, "Post update should succeed.")
             expectation.fulfill()
         }
@@ -114,7 +136,7 @@ class FirestoreTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 20, handler: nil)
     }
     
     
@@ -185,13 +207,34 @@ class FirestoreTests: XCTestCase {
          
          waitForExpectations(timeout: 5, handler: nil)
      }
+    
+    // 새로운 답변을 생성하는 함수 with Images 테스트
+    func testCreateAnswerWithImages() {
+        let expectation = self.expectation(description: "createAnswer")
+        let answer = Answer(content: "Test answer", author: "1", postId: testPostId)
+        
+        let testImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+        let testthumbnailImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+        
+        repository.createAnswer(answer: answer, images: testImages, thumbnailImages: testthumbnailImages) { success in
+            XCTAssertTrue(success, "Answer creation should succeed.")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    
      
      // 기존의 답변을 업데이트하는 함수 테스트
      func testUpdateAnswer() {
          let expectation = self.expectation(description: "updateAnswer")
          let answerId = testAnswerId
          
-         repository.updateAnswer(answerId: answerId, content: "Updated content", images: ["UpdatedImageURL"]) { success in
+         let testImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+         let testthumbnailImages = [UIImage(named: "updateAppIcon")!, UIImage(named: "updateAppIcon")!]
+         
+         repository.updateAnswer(answerId: answerId, content: "Updated content", images: testImages, thumbnailImages: testthumbnailImages) { success in
              XCTAssertTrue(success, "Answer update should succeed.")
              expectation.fulfill()
          }

@@ -33,8 +33,11 @@ class CommunityRepository {
             let imageData = image.pngData()!
             let imageId = UUID().uuidString
             let imageRef = storage.child("community/\(imageId).png")
+            
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/png"
 
-            imageRef.putData(imageData, metadata: nil) { metadata, error in
+            imageRef.putData(imageData, metadata: metadata) { metadata, error in
                 if let error = error {
                     print(error.localizedDescription)
                     imageUploadGroup.leave()
@@ -68,29 +71,27 @@ class CommunityRepository {
     
     private func deleteImages(with urls: [String], completion: @escaping (Bool) -> Void) {
         let storage = Storage.storage()
-        
-        // 카운터를 사용하여 모든 삭제 작업이 완료되었는지 추적합니다.
-        var deleteCount = 0
+        let dispatchGroup = DispatchGroup()
+
         var deleteErrors = false
 
         for url in urls {
-            // URL로부터 참조를 얻습니다.
             let ref = storage.reference(forURL: url)
             
-            // 참조를 사용하여 이미지 삭제
+            dispatchGroup.enter()
+
             ref.delete { error in
                 if let error = error {
                     deleteErrors = true
                 }
-                
-                deleteCount += 1
-                if deleteCount == urls.count {
-                    completion(!deleteErrors)
-                }
+                dispatchGroup.leave()
             }
         }
+
+        dispatchGroup.notify(queue: .main) {
+            completion(!deleteErrors)
+        }
     }
-    
     
     
     
@@ -140,31 +141,15 @@ class CommunityRepository {
         }
     }
     
-   
-   // 글 생성
-//    func createPost(post: Post, completion: @escaping (Bool) -> Void) {
-//        let documentId = post.id
-//        do {
-//            try db.collection(postCollection).document(documentId).setData(from: post) { error in
-//                if error != nil {
-//                    completion(false)
-//                } else {
-//                    completion(true)
-//                }
-//            }
-//        } catch {
-//            completion(false)
-//        }
-//    }
-//    
     
-    // 글 생성 with images
+    // 글 생성
     func createPost(post: Post, images: [UIImage]? = nil, thumbnailImages: [UIImage]? = nil, completion: @escaping (Bool) -> Void) {
         let documentId = post.id
         
         do {
             try db.collection(postCollection).document(documentId).setData(from: post) { error in
                 if let error = error {
+                    print(error.localizedDescription)
                     completion(false)
                     return
                 }
@@ -172,6 +157,7 @@ class CommunityRepository {
                 var imageURLs: [String] = []
                 var thumbnailURLs: [String] = []
                 let dispatchGroup = DispatchGroup()
+            
 
                 // 일반 이미지 업로드
                 if let images = images, !images.isEmpty {
@@ -208,13 +194,13 @@ class CommunityRepository {
                     if !updateData.isEmpty {
                         self.db.collection(self.postCollection).document(documentId).updateData(updateData) { error in
                             if let error = error {
+                                print(error.localizedDescription)
                                 completion(false)
                             } else {
                                 completion(true)
                             }
                         }
                     } else {
-                        // 업데이트할 데이터가 없으면 성공으로 처리
                         completion(true)
                     }
                 }
@@ -224,35 +210,10 @@ class CommunityRepository {
         }
     }
     
-   
-//   // 글 업데이트
-//    func updatePost(postid: String, content: String? = nil, shortcuts: [String]? = nil, images: [UIImage]? = nil, thumbnailImages: [UIImage]? = nil, completion: @escaping (Bool) -> Void) {
-//    
-//        var updateFields: [String: Any] = [:]
-//        
-//        if let content = content {
-//            updateFields["content"] = content
-//        }
-//        if let shortcuts = shortcuts {
-//            updateFields["shortcuts"] = shortcuts
-//        }
-//
-//        if !updateFields.isEmpty {
-//            db.collection(postCollection).document(postid).updateData(updateFields) { error in
-//                if error != nil {
-//                    completion(false)
-//                } else {
-//                    completion(true)
-//                }
-//            }
-//        } else {
-//            completion(true)
-//        }
-//    }
-    
+    // 글 업데이트
     func updatePost(postId: String, content: String? = nil, shortcuts: [String]? = nil, images: [UIImage]? = nil, thumbnailImages: [UIImage]? = nil, completion: @escaping (Bool) -> Void) {
-        let db = Firestore.firestore()
-        let documentRef = db.collection("posts").document(postId)
+        
+        let documentRef = db.collection(postCollection).document(postId)
 
         var updateFields: [String: Any] = [:]
         if let content = content {
@@ -264,11 +225,12 @@ class CommunityRepository {
 
         documentRef.updateData(updateFields) { error in
             if let error = error {
+                print(error.localizedDescription)
                 completion(false)
                 return
             }
+            
 
-            // 이미지 업데이트 로직
             guard images != nil || thumbnailImages != nil else {
                 completion(true)
                 return
@@ -322,35 +284,36 @@ class CommunityRepository {
         let group = DispatchGroup()
         var overallSuccess = true
         
-        // 게시물의 이미지 URL을 가져오고 삭제
+        let documentRef = db.collection(postCollection).document(postId)
+        
         group.enter()
-        db.collection(postCollection).document(postId).getDocument { document, error in
+        documentRef.getDocument { document, error in
             if let document = document, document.exists {
                 let imageUrls = document.data()?["images"] as? [String] ?? []
                 let thumbnailUrls = document.data()?["thumbnailImages"] as? [String] ?? []
                 let allUrls = imageUrls + thumbnailUrls
-                
-                // 이미지 삭제 로직
-                for url in allUrls {
-                    let ref = Storage.storage().reference(forURL: url)
-                    ref.delete { error in
-                        if error != nil {
+                if !allUrls.isEmpty {
+                    self.deleteImages(with: allUrls) { success in
+                        if !success {
                             overallSuccess = false
                         }
+                        group.leave()
                     }
+                } else {
+                    group.leave()
                 }
-            }
-            group.leave()
-        }
-        
-        // 게시물 삭제
-        group.enter()
-        db.collection(postCollection).document(postId).delete { error in
-            if error != nil {
+                
+            } else {
                 overallSuccess = false
             }
-            group.leave()
+            
+            documentRef.delete { error in
+                if error != nil {
+                    overallSuccess = false
+                }
+            }
         }
+        
         
         // 관련된 답변(Answer) 삭제
         group.enter()
@@ -361,7 +324,11 @@ class CommunityRepository {
                 return
             }
             for document in documents {
-                document.reference.delete()
+                self.deleteAnswer(answerId:document.data()["id"] as? String ?? "") { success in
+                    if (!success) {
+                        overallSuccess = false
+                    }
+                }
             }
             group.leave()
         }
@@ -380,7 +347,6 @@ class CommunityRepository {
             group.leave()
         }
         
-        // 모든 삭제 작업이 완료되었는지 확인
         group.notify(queue: .main) {
             completion(overallSuccess)
         }
@@ -470,21 +436,7 @@ class CommunityRepository {
             }
     }
     
-//    func createAnswer(answer: Answer, completion: @escaping (Bool) -> Void) {
-//        let documentId = answer.id
-//        do {
-//            try db.collection(answerCollection).document(documentId).setData(from: answer) { error in
-//                if error != nil {
-//                    completion(false)
-//                } else {
-//                    completion(true)
-//                }
-//            }
-//        } catch {
-//            completion(false)
-//        }
-//    }
-
+    // 답변 생성
     func createAnswer(answer: Answer, images: [UIImage]? = nil, thumbnailImages: [UIImage]? = nil, completion: @escaping (Bool) -> Void) {
         let documentId = answer.id  // Answer 객체의 ID를 사용
 
@@ -536,7 +488,6 @@ class CommunityRepository {
                             completion(error == nil)
                         }
                     } else {
-                        // 업데이트할 데이터가 없으면 성공으로 처리
                         completion(true)
                     }
                 }
@@ -546,36 +497,10 @@ class CommunityRepository {
         }
     }
     
-//    func updateAnswer(answerId: String, content: String? = nil, images: [String]? = nil, completion: @escaping (Bool) -> Void) {
-//        
-//        var updateFields: [String: Any] = [:]
-//        
-//        if let newContent = content {
-//            updateFields["content"] = newContent
-//        }
-//        
-//        if let newImages = images {
-//            updateFields["images"] = newImages
-//        }
-//
-//        if !updateFields.isEmpty {
-//            db.collection(answerCollection).document(answerId).updateData(updateFields) { error in
-//                if error != nil {
-//                    completion(false)
-//                } else {
-//                    completion(true)
-//                }
-//            }
-//        } else {
-//            completion(true)
-//        }
-//    }
-    
-    
-    
-    
+
+    // 답변 업데이트
     func updateAnswer(answerId: String, content: String? = nil, images: [UIImage]? = nil, thumbnailImages: [UIImage]? = nil, completion: @escaping (Bool) -> Void) {
-        let db = Firestore.firestore()
+
         let documentRef = db.collection(answerCollection).document(answerId)
 
         var updateFields: [String: Any] = [:]
@@ -635,6 +560,7 @@ class CommunityRepository {
         }
     }
     
+    // 답변 채택
     func acceptAnswer(answerId: String, completion: @escaping (Bool) -> Void) {
         let answerRef = db.collection(answerCollection).document(answerId)
 
@@ -647,26 +573,12 @@ class CommunityRepository {
         }
     }
     
-    
-//    func deleteAnswer(answerId: String, completion: @escaping (Bool) -> Void) {
-//        db.collection(answerCollection).document(answerId)
-//            .delete() { error in
-//                if error != nil {
-//                    completion(false)
-//                } else {
-//                    completion(true)
-//                }
-//            }
-//    }
-    
-    
-    
+    // 답변 삭제
     func deleteAnswer(answerId: String, completion: @escaping (Bool) -> Void) {
         let db = Firestore.firestore()
         let group = DispatchGroup()
         var overallSuccess = true
         
-        // 답변의 이미지 URL을 가져오고 삭제
         group.enter()
         db.collection(answerCollection).document(answerId).getDocument { document, error in
             if let document = document, document.exists {
@@ -674,34 +586,34 @@ class CommunityRepository {
                 let thumbnailUrls = document.data()?["thumbnailImages"] as? [String] ?? []
                 let allUrls = imageUrls + thumbnailUrls
 
-                // 이미지 삭제 로직
-                for url in allUrls {
-                    let ref = Storage.storage().reference(forURL: url)
-                    ref.delete { error in
-                        if error != nil {
+                if !allUrls.isEmpty {
+                    self.deleteImages(with: allUrls) { success in
+                        if !success {
                             overallSuccess = false
                         }
+                        group.leave()
                     }
+                } else {
+                    group.leave()
+                }
+            } else {
+                overallSuccess = false
+                group.leave()
+            }
+            
+            db.collection(self.answerCollection).document(answerId).delete { error in
+                if error != nil {
+                    overallSuccess = false
                 }
             }
-            group.leave()
         }
         
-        // 답변 삭제
-        group.enter()
-        db.collection(answerCollection).document(answerId).delete { error in
-            if error != nil {
-                overallSuccess = false
-            }
-            group.leave()
-        }
-        
-        // 모든 삭제 작업이 완료되었는지 확인
         group.notify(queue: .main) {
             completion(overallSuccess)
         }
     }
     
+    // 답변 좋아요
     func likeAnswer(answerId: String, userId: String, completion: @escaping (Bool) -> Void) {
         let answerRef = db.collection(answerCollection).document(answerId)
         
@@ -733,6 +645,8 @@ class CommunityRepository {
         }
     }
     
+    
+    // 답변 좋아요 취소
     func unlikeAnswer(answerId: String, userId: String, completion: @escaping (Bool) -> Void) {
         let answerRef = db.collection(answerCollection).document(answerId)
 
@@ -822,8 +736,6 @@ class CommunityRepository {
         if !updates.isEmpty {
             db.collection(communityCommentCollection).document(commentId).updateData(updates) { error in
                 if let error = error {
-                    print("안녕")
-                    print(error)
                     completion(false)
                 } else {
                     completion(true)
