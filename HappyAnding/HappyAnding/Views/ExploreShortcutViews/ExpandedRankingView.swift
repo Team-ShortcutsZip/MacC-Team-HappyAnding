@@ -73,5 +73,6 @@ struct ExpandedShortcutCell: View {
                 .foregroundStyle(SCZColor.CharcoalGray.opacity24)
         }
         .padding(.vertical, 6)
+        .padding(.horizontal, type == .popular || type == .download ? 0 : 8)
     }
 }
