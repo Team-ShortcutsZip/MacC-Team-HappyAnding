@@ -15,7 +15,7 @@ struct ListShortcutView: View {
             VStack(spacing: 5) {
                 ForEach(0..<viewModel.shortcuts.count, id: \.self) { i in
                     VStack (spacing: 5) {
-                        ExpandedShortcutCell(type: viewModel.sectionType, index: i+1, shortcut: viewModel.shortcuts[i])
+                        ListShortcutCell(type: viewModel.sectionType, index: i+1, shortcut: viewModel.shortcuts[i])
                         
                         if i != viewModel.shortcuts.count - 1 {
                             Divider()
@@ -45,7 +45,7 @@ struct ListShortcutView: View {
     }
 }
 
-struct ExpandedShortcutCell: View {
+struct ListShortcutCell: View {
     let type: SectionType
     let index: Int
     let shortcut: Shortcuts
