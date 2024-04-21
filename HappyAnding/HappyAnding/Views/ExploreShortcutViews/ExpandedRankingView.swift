@@ -1,5 +1,5 @@
 //
-//  ExpandedRankingView.swift
+//  ListShortcutView.swift
 //  HappyAnding
 //
 //  Created by JeonJimin on 4/2/24.
@@ -7,18 +7,17 @@
 
 import SwiftUI
 
-struct ExpandedRankingView: View {
-    let type: SectionType
-    let shortcuts: [Shortcuts]
+struct ListShortcutView: View {
+    @StateObject var viewModel: ListShortcutViewModel
     
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 5) {
-                ForEach(0..<shortcuts.count, id: \.self) { i in
+                ForEach(0..<viewModel.shortcuts.count, id: \.self) { i in
                     VStack (spacing: 5) {
-                        ExpandedShortcutCell(type: type, index: i+1, shortcut: shortcuts[i])
+                        ExpandedShortcutCell(type: viewModel.sectionType, index: i+1, shortcut: viewModel.shortcuts[i])
                         
-                        if i != shortcuts.count - 1 {
+                        if i != viewModel.shortcuts.count - 1 {
                             Divider()
                                 .padding(.vertical, 8)
                                 .foregroundStyle(SCZColor.CharcoalGray.opacity08)
@@ -32,7 +31,7 @@ struct ExpandedRankingView: View {
         }
         .toolbar{
             ToolbarItem(placement: .principal) {
-                type.fetchTitleImage()
+                viewModel.sectionType.fetchTitleImage()
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -74,5 +73,6 @@ struct ExpandedShortcutCell: View {
         }
         .padding(.vertical, 6)
         .padding(.horizontal, type == .popular || type == .download ? 0 : 8)
+        .navigationLinkRouter(data: shortcut)
     }
 }

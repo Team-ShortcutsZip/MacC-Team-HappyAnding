@@ -22,7 +22,6 @@
 		4D93D0752A61D0D10042CBA8 /* ReadShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D93D0742A61D0D10042CBA8 /* ReadShortcutViewModel.swift */; };
 		4D93D0772A73C9330042CBA8 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4D93D0762A73C9330042CBA8 /* FirebaseMessaging */; };
 		4DAD635E292AB61700ABF8C1 /* UpdateShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */; };
-		4DF15D732A4ECC7D0014F854 /* ListShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF15D722A4ECC7D0014F854 /* ListShortcutViewModel.swift */; };
 		4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF15D742A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift */; };
 		4DF62DD52A0550ED00A8B377 /* UIScreen+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795A16F292AB945004B765F /* UIScreen+Size.swift */; };
 		87276C382933F6AB00C92F4C /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87276C372933F6AB00C92F4C /* CustomTextEditor.swift */; };
@@ -71,7 +70,6 @@
 		87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC028FFF2B5009B691F /* CategoryModalView.swift */; };
 		87E99CC429014572009B691F /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC329014572009B691F /* Color+Extension.swift */; };
 		87E99CC7290145AD009B691F /* ShortcutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC6290145AD009B691F /* ShortcutCell.swift */; };
-		87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CC8290145B8009B691F /* ListShortcutView.swift */; };
 		87E99CCB290145C4009B691F /* UserCurationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCA290145C4009B691F /* UserCurationCell.swift */; };
 		87E99CCD290145CC009B691F /* AdminCurationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CCC290145CC009B691F /* AdminCurationCell.swift */; };
 		87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E99CD22901465F009B691F /* ValidationCheckTextField.swift */; };
@@ -160,6 +158,7 @@
 		F96D45BB29804057000C2441 /* EnvironmentValues+Alerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45BA29804057000C2441 /* EnvironmentValues+Alerter.swift */; };
 		F96D45BD29816578000C2441 /* StickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45BC29816578000C2441 /* StickyHeader.swift */; };
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
+		F975C2102BD59982006CC401 /* ListShortcutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F975C20F2BD59982006CC401 /* ListShortcutViewModel.swift */; };
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
 		F98017182BBC29A7004F2EA7 /* SCZ+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */; };
@@ -236,7 +235,6 @@
 		4D93D06E2A5956E60042CBA8 /* ShowProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowProfileViewModel.swift; sourceTree = "<group>"; };
 		4D93D0742A61D0D10042CBA8 /* ReadShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadShortcutViewModel.swift; sourceTree = "<group>"; };
 		4DAD635D292AB61700ABF8C1 /* UpdateShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateShortcutView.swift; sourceTree = "<group>"; };
-		4DF15D722A4ECC7D0014F854 /* ListShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListShortcutViewModel.swift; sourceTree = "<group>"; };
 		4DF15D742A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCategoryShortcutViewModel.swift; sourceTree = "<group>"; };
 		87276C372933F6AB00C92F4C /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		872A7D8E2918393B004A05B8 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
@@ -286,7 +284,6 @@
 		87E99CC028FFF2B5009B691F /* CategoryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModalView.swift; sourceTree = "<group>"; };
 		87E99CC329014572009B691F /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		87E99CC6290145AD009B691F /* ShortcutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCell.swift; sourceTree = "<group>"; };
-		87E99CC8290145B8009B691F /* ListShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListShortcutView.swift; sourceTree = "<group>"; };
 		87E99CCA290145C4009B691F /* UserCurationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCurationCell.swift; sourceTree = "<group>"; };
 		87E99CCC290145CC009B691F /* AdminCurationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminCurationCell.swift; sourceTree = "<group>"; };
 		87E99CD22901465F009B691F /* ValidationCheckTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationCheckTextField.swift; sourceTree = "<group>"; };
@@ -343,6 +340,7 @@
 		F96D45BA29804057000C2441 /* EnvironmentValues+Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Alerter.swift"; sourceTree = "<group>"; };
 		F96D45BC29816578000C2441 /* StickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeader.swift; sourceTree = "<group>"; };
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		F975C20F2BD59982006CC401 /* ListShortcutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListShortcutViewModel.swift; sourceTree = "<group>"; };
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewModel.swift; sourceTree = "<group>"; };
 		F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCZ+Color.swift"; sourceTree = "<group>"; };
@@ -445,8 +443,8 @@
 			isa = PBXGroup;
 			children = (
 				4D061BB92A475EE800F76835 /* ExploreShortcutViewModel.swift */,
-				4DF15D722A4ECC7D0014F854 /* ListShortcutViewModel.swift */,
 				4DF15D742A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift */,
+				F975C20F2BD59982006CC401 /* ListShortcutViewModel.swift */,
 			);
 			path = ExploreShortcutViewModels;
 			sourceTree = "<group>";
@@ -597,7 +595,6 @@
 			isa = PBXGroup;
 			children = (
 				4D061BB72A47531800F76835 /* ExploreShortcutView.swift */,
-				87E99CC8290145B8009B691F /* ListShortcutView.swift */,
 				A0F822B629164D2300AF4448 /* ListCategoryShortcutView.swift */,
 				F98017212BBC3FD8004F2EA7 /* ExpandedRankingView.swift */,
 			);
@@ -1038,7 +1035,6 @@
 				A38115BA292B447D0043E8B8 /* ShortcutCardCell.swift in Sources */,
 				8792479B291BDF820040D5C3 /* SearchView.swift in Sources */,
 				A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */,
-				4DF15D732A4ECC7D0014F854 /* ListShortcutViewModel.swift in Sources */,
 				4D778A34290A53BA00C15AC4 /* UIApplication+Keyboard.swift in Sources */,
 				F98017242BBC4061004F2EA7 /* ShortcutIcon.swift in Sources */,
 				A3766B232904330300708F83 /* ReadCurationView.swift in Sources */,
@@ -1083,6 +1079,7 @@
 				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,
 				A3D348552BD1233000DE814C /* View+Font.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
+				F975C2102BD59982006CC401 /* ListShortcutViewModel.swift in Sources */,
 				F930E0002BBD51EC003C2686 /* Seal.swift in Sources */,
 				4D5889E82AA36A52000C4849 /* AppDelegate.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
@@ -1103,7 +1100,6 @@
 				87E99CB928FFF291009B691F /* WriteShortcutView.swift in Sources */,
 				87E99CCD290145CC009B691F /* AdminCurationCell.swift in Sources */,
 				8786B2E229A7F93B000B46A1 /* View+UIFont.swift in Sources */,
-				87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */,
 				F92766552A61A032009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */,
 				A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */,
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
@@ -1414,7 +1410,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1437,7 +1432,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1459,7 +1453,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1480,7 +1473,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
