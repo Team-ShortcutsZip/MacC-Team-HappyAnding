@@ -48,6 +48,7 @@ struct OrderedCell: View {
         .background( SCZColor.colors[shortcut.color]?.color(for: colorScheme).fillGradient() ?? Color.clear.toGradient())
         .cornerRadius(16)
         .roundedBorder(cornerRadius: 16, color: Color.white, isNormalBlend: true, opacity: 0.12)
+        .navigationLinkRouter(data: shortcut)
     }
     
     private func formatNumber(_ number: Int) -> String {
@@ -87,6 +88,7 @@ struct UnorderedCell: View{
         )
         .cornerRadius(16)
         .dropShadow()
+        .navigationLinkRouter(data: shortcut)
     }
 }
 
@@ -95,23 +97,25 @@ struct ExpandedCell: View {
     let shortcuts: [Shortcuts]
     
     var body: some View {
-        NavigationLink {
-            ExpandedRankingView(type: type, shortcuts: shortcuts)
-        } label: {
-            VStack(alignment: .center, spacing: 4) {
-                Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
-                Text("더보기")
-            }
-            .foregroundStyle(Color.white.opacity(0.88))
-            .font(.system(size: 15, weight: .semibold))
-            .frame(width: 108, height: 144, alignment: .center)
-            .background(SCZColor.CharcoalGray.opacity08)
-            .cornerRadius(12)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.white.opacity(0.12), lineWidth: 2)
-            )
-            .shadow(color: SCZColor.CharcoalGray.opacity04, radius: 4, x: 0, y: 2)
+        VStack(alignment: .center, spacing: 4) {
+            Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled.fill")
+            Text("더보기")
         }
+        .foregroundStyle(SCZColor.CharcoalGray.opacity64)
+        .font(.system(size: 15, weight: .semibold))
+        .frame(width: 108, height: 144, alignment: .center)
+        .background(
+            ZStack {
+                Color.white.opacity(0.24)
+                SCZColor.CharcoalGray.opacity08
+            }
+        )
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(Color.white.opacity(0.12), lineWidth: 2)
+        )
+        .shadow(color: SCZColor.CharcoalGray.opacity04, radius: 4, x: 0, y: 2)
+        .navigationLinkRouter(data: type)
     }
 }

@@ -2,56 +2,77 @@
 //  ListShortcutView.swift
 //  HappyAnding
 //
-//  Created by 이지원 on 2022/10/20.
+//  Created by JeonJimin on 4/2/24.
 //
 
 import SwiftUI
 
-/// - parameters:
-/// sectionType: 다운로드 순위에서 접근할 시, .download를, 사랑받는 앱에서 접근시 .popular를 넣어주세요.
 struct ListShortcutView: View {
-    
     @StateObject var viewModel: ListShortcutViewModel
     
     var body: some View {
-        if viewModel.shortcuts.count == 0 {
-            Text("아직 \(viewModel.sectionType.title)가 없어요")
-                .shortcutsZipBody2()
-                .foregroundStyle(Color.gray4)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-                .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
-                .navigationTitle(viewModel.sectionType.title)
-                .navigationBarTitleDisplayMode(.inline)
-        } else {
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    
-                    //TODO: 무한 스크롤을 위한 업데이트 함수 필요
-                    makeShortcutCellList(viewModel.shortcuts)
-                    
+        ScrollView(.vertical) {
+            VStack(spacing: 5) {
+                ForEach(0..<viewModel.shortcuts.count, id: \.self) { i in
+                    VStack (spacing: 5) {
+                        ListShortcutCell(type: viewModel.sectionType, index: i+1, shortcut: viewModel.shortcuts[i])
+                        
+                        if i != viewModel.shortcuts.count - 1 {
+                            Divider()
+                                .padding(.vertical, 8)
+                                .foregroundStyle(SCZColor.CharcoalGray.opacity08)
+                        }
+                    }
+                    .padding(.horizontal, 12)
                 }
-                .padding(.top, 16)
-                .padding(.bottom, 44)
             }
-            .listRowBackground(Color.shortcutsZipBackground)
-            .listStyle(.plain)
-            .background(Color.shortcutsZipBackground.ignoresSafeArea(.all, edges: .all))
-            .scrollContentBackground(.hidden)
-            .navigationTitle(viewModel.sectionType.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackground ({ Color.shortcutsZipBackground })
+            .padding(.top, 12)
+            .padding(.bottom, 22)
+        }
+        .toolbar{
+            ToolbarItem(placement: .principal) {
+                viewModel.sectionType.fetchTitleImage()
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    //TODO: 기능 연결
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease")
+                        .foregroundStyle(SCZColor.CharcoalGray.opacity64)
+                }
+            }
         }
     }
-    
-    @ViewBuilder
-    private func makeShortcutCellList(_ shortcuts: [Shortcuts]) -> some View {
-        ForEach(shortcuts.indices, id: \.self) { index in
-            let shortcut = shortcuts[index]
-            ShortcutCell(shortcut: shortcut,
-                         rankNumber: (viewModel.sectionType == .download) ? index : nil,
-                         navigationParentView: .shortcuts)
-            .navigationLinkRouter(data: shortcut)
+}
+
+struct ListShortcutCell: View {
+    let type: SectionType
+    let index: Int
+    let shortcut: Shortcuts
+    var body: some View {
+        HStack(spacing: 14) {
+            if type == .popular || type == .download {
+                Seal(index: index, type: .ranking)
+            }
+            ShortcutIcon(sfSymbol: shortcut.sfSymbol, color: shortcut.color, size: 56)
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(shortcut.title)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(SCZColor.Basic)
+                Text(shortcut.subtitle)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundStyle(SCZColor.CharcoalGray.opacity48)
+            }
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 5)
+            
+            Image(systemName: "chevron.right")
+                .foregroundStyle(SCZColor.CharcoalGray.opacity24)
         }
+        .padding(.vertical, 6)
+        .padding(.horizontal, type == .popular || type == .download ? 0 : 8)
+        .navigationLinkRouter(data: shortcut)
     }
 }

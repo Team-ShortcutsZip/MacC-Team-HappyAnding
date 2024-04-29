@@ -73,7 +73,7 @@ struct SCZColor {
         "Pink": Pink(),
         "Purple": Purple(),
         "LightPurple": Lavendar(),
-        "Silver": Silver(),
+        "Gray": Silver(),
         "Khaki": Khaki(),
         "Brown": Brown()
     ]

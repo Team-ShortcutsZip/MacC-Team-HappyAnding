@@ -23,7 +23,7 @@ struct ExploreShortcutView: View {
                 }
                 
             }
-            .padding(.bottom, 40)
+            .padding(.bottom, 96)
         }
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
@@ -70,6 +70,7 @@ struct ExploreShortcutView: View {
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(
                         LinearGradient(colors: [SCZColor.CharcoalGray.color, SCZColor.CharcoalGray.opacity48], startPoint: .top, endPoint: .bottom)
+                            .opacity(0.64)
                     )
             }
         }
