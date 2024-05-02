@@ -582,4 +582,12 @@ extension SCZColor {
         static let opacity16 = Color(hexString: "DEE7FF")
         static let opacity08 = Color(hexString: "EFF3FF")
     }
+    
+    struct SCZRed {
+        static let dangerouslyRed = Color(hexString: "DD0008")
+        static let red = Color(hexString: "FF453A")
+    }
+    
+    static let systemWhite = Color(hexString: "FFFFFF")
+    static let systemBlack = Color(hexString: "000000")
 }

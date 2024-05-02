@@ -37,17 +37,67 @@ extension String {
     
     func getPostDateFormat() -> String? {
         let inputFormatter = DateFormatter()
-            inputFormatter.dateFormat = "yyyyMMddHHmmss"
-
-            if let date = inputFormatter.date(from: self) {
-                let outputFormatter = DateFormatter()
-                outputFormatter.locale = Locale(identifier: "ko_KR")
-                outputFormatter.dateFormat = "M월 d일 a h시 m분"
-
-                let output = outputFormatter.string(from: date)
-                return output
-            } else {
-                return nil
-            }
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: self) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.locale = Locale(identifier: "ko_KR")
+            outputFormatter.dateFormat = "M월 d일 a h시 m분"
+            
+            let output = outputFormatter.string(from: date)
+            return output
+        } else {
+            return nil
+        }
+    }
+    func getVersionDateFormat() -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        if let date = inputFormatter.date(from: self) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.locale = Locale(identifier: "ko_KR")
+            outputFormatter.dateFormat = "yyyy년 M월 d일"
+            
+            let output = outputFormatter.string(from: date)
+            return output
+        } else {
+            return nil
+        }
+    }
+    
+    func getCommentDateFormat() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        
+        let commentDateFormatter = DateFormatter()
+        commentDateFormatter.dateFormat = "yyyy.MM.dd"
+        
+        guard let date = dateFormatter.date(from: self) else {
+            return ""
+        }
+        
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        let difference = calendar.dateComponents([.year, .month, .weekOfYear, .day, .hour, .minute], from: date, to: currentDate)
+        
+        if let years = difference.year, years > 0 {
+            return commentDateFormatter.string(from: date)
+        } else if let months = difference.month, months >= 11 {
+            return commentDateFormatter.string(from: date)
+        } else if let months = difference.month, months > 0 {
+            return "\(months)개월 전"
+        } else if let weeks = difference.weekOfYear, weeks > 0 {
+            return "\(weeks)주 전"
+        } else if let days = difference.day, days > 0 {
+            return "\(days)일 전"
+        } else if let hours = difference.hour, hours > 0 {
+            return "\(hours)시간 전"
+        } else if let minutes = difference.minute, minutes > 0 {
+            return "\(minutes)분 전"
+        } else {
+            return "방금 전"
+        }
     }
 }

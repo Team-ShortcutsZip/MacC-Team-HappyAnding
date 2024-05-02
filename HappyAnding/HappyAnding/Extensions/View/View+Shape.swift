@@ -30,6 +30,14 @@ extension View {
         )
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
+    
+    func roundedBackground(background: Color) -> some View {
+        self
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(background)
+            .roundedBorder(cornerRadius: 16, color: Color.white.opacity(0.12), isNormalBlend: true)
+    }
 }
 
 
@@ -44,5 +52,18 @@ struct RoundedCorner: Shape {
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
+    }
+}
+
+//MARK: - 삼각형
+/// 삼각형 모양을 그리는 경우에 사용합니다.
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        Path { path in
+            path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.closeSubpath() 
+        }
     }
 }
