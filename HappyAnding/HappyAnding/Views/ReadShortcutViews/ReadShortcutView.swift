@@ -598,6 +598,9 @@ struct ReadShortcutCommentView: View {
                     .cornerRadius(16 ,corners: (viewModel.comment.depth == 1) && (!viewModel.isEditingComment) ? [.bottomLeft, .bottomRight] : .allCorners)
             )
         }
+        .onAppear {
+            UIApplication.shared.hideKeyboard()
+        }
         .padding(.bottom, isFocused ? 7.5 : 70)
         .id("CommentTextField")
     }
@@ -635,7 +638,6 @@ private struct CommentTextFieldStyle: TextFieldStyle {
             .disableAutocorrection(true)
             .textInputAutocapitalization(.never)
             .descriptionReadable()
-            .lineLimit(11)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, maxHeight: 271, alignment: .leading)
     }
 }
