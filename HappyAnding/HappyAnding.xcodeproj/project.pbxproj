@@ -160,6 +160,7 @@
 		F96D45BB29804057000C2441 /* EnvironmentValues+Alerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45BA29804057000C2441 /* EnvironmentValues+Alerter.swift */; };
 		F96D45BD29816578000C2441 /* StickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96D45BC29816578000C2441 /* StickyHeader.swift */; };
 		F9724BBF292755E400860F8A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9724BBE292755E400860F8A /* Comment.swift */; };
+		F975C2172BD96994006CC401 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F975C2162BD96994006CC401 /* Int+Extension.swift */; };
 		F976E82C29368E0D0088BBA1 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E82B29368E0D0088BBA1 /* Version.swift */; };
 		F976E85129395B350088BBA1 /* ShareExtensionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */; };
 		F98017182BBC29A7004F2EA7 /* SCZ+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */; };
@@ -342,6 +343,11 @@
 		F96D45BA29804057000C2441 /* EnvironmentValues+Alerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Alerter.swift"; sourceTree = "<group>"; };
 		F96D45BC29816578000C2441 /* StickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeader.swift; sourceTree = "<group>"; };
 		F9724BBE292755E400860F8A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		F975C2122BD91321006CC401 /* SF-Compact-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Rounded-Semibold.otf"; sourceTree = "<group>"; };
+		F975C2132BD91321006CC401 /* SF-Compact-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Rounded-Medium.otf"; sourceTree = "<group>"; };
+		F975C2142BD91322006CC401 /* SF-Compact-Rounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Rounded-Bold.otf"; sourceTree = "<group>"; };
+		F975C2152BD91322006CC401 /* SF-Compact-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Compact-Rounded-Regular.otf"; sourceTree = "<group>"; };
+		F975C2162BD96994006CC401 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		F976E82B29368E0D0088BBA1 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F976E85029395B350088BBA1 /* ShareExtensionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewModel.swift; sourceTree = "<group>"; };
 		F98017172BBC29A7004F2EA7 /* SCZ+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCZ+Color.swift"; sourceTree = "<group>"; };
@@ -642,6 +648,7 @@
 				F9AC2BB92935D34C00165820 /* Image+View.swift */,
 				A3439AFA2939B0E80043E273 /* UserDefaults+Extension.swift */,
 				F96D45BA29804057000C2441 /* EnvironmentValues+Alerter.swift */,
+				F975C2162BD96994006CC401 /* Int+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -722,6 +729,7 @@
 		A329F70F2BCA4F8F00ED20DA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F975C2112BD91309006CC401 /* SFCompactRounded */,
 				A329F7102BCA4FB200ED20DA /* Pretendard */,
 			);
 			path = Resources;
@@ -799,6 +807,17 @@
 				87DBFB052A2127C0000CC442 /* CheckVersionView.swift */,
 			);
 			path = SettingViews;
+			sourceTree = "<group>";
+		};
+		F975C2112BD91309006CC401 /* SFCompactRounded */ = {
+			isa = PBXGroup;
+			children = (
+				F975C2142BD91322006CC401 /* SF-Compact-Rounded-Bold.otf */,
+				F975C2132BD91321006CC401 /* SF-Compact-Rounded-Medium.otf */,
+				F975C2152BD91322006CC401 /* SF-Compact-Rounded-Regular.otf */,
+				F975C2122BD91321006CC401 /* SF-Compact-Rounded-Semibold.otf */,
+			);
+			path = SFCompactRounded;
 			sourceTree = "<group>";
 		};
 		F9DB8ECB293B30EC00516CE1 /* Recovered References */ = {
@@ -937,6 +956,7 @@
 			packageReferences = (
 				F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4D6A9EFD29A36E9C00D02522 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+				F975C2182BDA3A70006CC401 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 			);
 			productRefGroup = 87E99C6B28F94EA6009B691F /* Products */;
 			projectDirPath = "";
@@ -1070,6 +1090,7 @@
 				87E99C7028F94EA6009B691F /* ShortcutTabView.swift in Sources */,
 				F99569182901DC4D0060AAEF /* UIFont+Extension.swift in Sources */,
 				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,
+				F975C2172BD96994006CC401 /* Int+Extension.swift in Sources */,
 				A3D348552BD1233000DE814C /* View+Font.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				F930E0002BBD51EC003C2686 /* Seal.swift in Sources */,
@@ -1608,6 +1629,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.0.0;
+			};
+		};
+		F975C2182BDA3A70006CC401 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/swiftui-introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

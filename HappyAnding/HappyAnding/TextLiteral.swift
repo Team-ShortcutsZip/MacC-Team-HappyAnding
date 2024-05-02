@@ -20,11 +20,12 @@ enum TextLiteral {
     static let confirm: String = "확인"
     static let close: String = "닫기"
     static let done: String = "완료"
-    static let edit: String = "편집"
+    static let edit: String = "수정하기"
     static let update: String = "업데이트"
     static let later: String = "나중에"
-    static let share: String = "공유"
-    static let delete: String = "삭제"
+    static let share: String = "공유하기"
+    static let delete: String = "삭제하기"
+    static let report: String = "신고하기"
     static let withdrawnUser: String = "탈퇴한 사용자"
     static let defaultUser: String = "user"
     
@@ -53,7 +54,6 @@ enum TextLiteral {
     
     // MARK: - RecentRegisteredView
     static let recentRegisteredViewTitle: String = "최신 단축어"
-    static let newShortcutsTitle: String = "새로 올라온"
     
     // MARK: - LovedShortcutView
     static let lovedShortcutViewTitle: String = "사랑받는"
@@ -117,35 +117,27 @@ enum TextLiteral {
     static let categoryModalViewTitle: String = "카테고리"
     
     // MARK: - ReadShortcutView
-    static let readShortcutViewBasicTabTitle: String = "기본 정보"
-    static let readShortcutViewVersionTabTitle: String = "버전 정보"
-    static let readShortcutViewCommentTabTitle: String = "댓글"
+    static let readShortcutViewVersionTitle: String = "버전 업데이트 정보"
+    static let readShortcutViewCommentTitle: String = "댓글"
     static let readShortcutViewDeletionTitle: String = "단축어 삭제"
     static let readShortcutViewDeletionMessage: String = "단축어를 삭제하시겠어요?"
     static let readShortcutViewDeletionMessageDowngrade: String = "단축어를 삭제하시겠어요? \n이 글을 삭제하면 등급이 내려가요."
+    static let readShortcutViewFilterNew: String = "최신"
+    static let readShortcutViewFilterAll: String = "전체"
+    static let readShortcutViewCommentDescriptionBeforeLogin: String = "로그인 후 댓글을 작성할 수 있어요"
+    static let readShortcutViewCommentDescription: String = "댓글 남기기"
+    static let readShortcutViewShortcutHeart: String = "하트를 날려 감사를 표했어요"
+    static let readShortcutContentViewCategory: String = "카테고리"
+    static let readShortcutContentViewRequiredApps: String = "필요한 앱"
+    
+    //추후 사용안하는 경우 삭제
     static let readShortcutViewDeleteFixesTitle: String = "수정사항 삭제"
     static let readShortcutViewDeleteFixes: String = "수정사항을 삭제하시겠어요?"
     static let readShortcutViewKeepFixes: String = "계속 작성"
-    static let readShortcutViewCommentDescriptionBeforeLogin: String = "로그인 후 댓글을 작성할 수 있어요"
-    static let readShortcutViewCommentDescription: String = "댓글을 입력하세요"
-    
-    // MARK: - ReadShortcutContentView
-    static let readShortcutContentViewDescription: String = "단축어 설명"
-    static let readShortcutContentViewPostedDate: String = "작성 날짜"
-    static let readShortcutContentViewCategory: String = "카테고리"
-    static let readShortcutContentViewRequiredApps: String = "단축어 사용에 필요한 앱"
-    static let readShortcutContentViewRequirements: String = "단축어 사용을 위한 요구사항"
-    
-    // MARK: - ReadShortcutVersionView
-    static let readShortcutVersionViewNoUpdates: String = "최신 버전의 단축어에요"
-    static let readShortcutVersionViewUpdateContent: String = "업데이트 내용"
-    static let readShortcutVersionViewDownloadPreviousVersion: String = "이전 버전 다운로드"
-    
+
     // MARK: - ReadShortcutCommentView
-    static let readShortcutCommentViewNoComments: String = "등록된 댓글이 없어요"
     static let readShortcutCommentViewDeletionTitle: String = "댓글 삭제"
     static let readShortcutCommentViewDeletionMessage: String = "답글도 함께 삭제돼요. 댓글을 삭제하시겠어요?"
-    static let readShortcutCommentViewReply: String = "답글"
     static let readShortcutCommentViewEdit: String = "수정"
     
     // MARK: - UpdateShortcutView
@@ -243,9 +235,6 @@ enum TextLiteral {
     
     // MARK: - SearchView
     static let searchViewPrompt: String = "제목 또는 관련앱으로 검색하세요"
-    static let searchViewRecommendedKeyword: String = "추천 검색어"
-    static let searchViewProposal: String = "단축어 제안하기"
-    static let searchViewProposalURL: String = "https://docs.google.com/forms/d/e/1FAIpQLScQc3KeYjDGCE-C2YRU-Hwy2XNy5bt89KVX1OMUzRiySaMX1Q/viewform"
     static let searchViewMoreResult: String = "더 많은 검색 결과 보기"
     static let searchViewRelatedShortcut: String = "관련된 단축어"
     static let searchVIewRelatedPost: String = "관련된 글"

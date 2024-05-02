@@ -47,12 +47,13 @@ final class ReadShortcutViewModel: ObservableObject {
     @Published var isLinkValid = false
     @Published var isDescriptionValid = false
     
+    @Published var isVersionFolded = true
+    
     var isUpdateValid: Bool {
         isLinkValid && isDescriptionValid
     }
     
     init(data: Shortcuts) {
-        print("*****init")
         self.author = User()
         self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: data.id) ?? data
         self.isMyLike = shortcutsZipViewModel.checkLikedShortrcut(shortcutID: data.id)
@@ -72,16 +73,6 @@ final class ReadShortcutViewModel: ObservableObject {
         }
     }
     
-    func moveTab(to tab: Int) {
-        self.currentTab = tab
-    }
-    
-    func setReply(to comment: Comment) {
-        self.nestedCommentTarget = comment.user_nickname
-        self.comment.bundle_id = comment.bundle_id
-        self.comment.depth = 1
-    }
-    
     func checkIfDownloaded() {
         if (shortcutsZipViewModel.userInfo?.downloadedShortcuts.firstIndex(where: { $0.id == shortcut.id })) == nil {
             shortcut.numberOfDownload += 1
@@ -94,10 +85,41 @@ final class ReadShortcutViewModel: ObservableObject {
     
     func onViewDisappear() {
         if isMyLike != isMyFirstLike {
-            shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+            
         }
     }
     
+    func toggleIsMyLike() {
+        isMyLike.toggle()
+        shortcutsZipViewModel.updateNumberOfLike(isMyLike: isMyLike, shortcut: shortcut)
+    }
+    func checkAuthor() -> Bool {
+        return self.shortcut.author == shortcutsZipViewModel.currentUser()
+    }
+    
+    func getUrl() -> URL? {
+        if let url = URL(string: shortcut.downloadLink[0]) {
+            checkIfDownloaded()
+            isDownloadingShortcut = true
+            return url
+        }
+        return nil
+    }
+    
+    
+    //MARK: - Shortcut
+    
+    func refreshShortcut() {
+        self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcut.id) ?? shortcut
+    }
+    
+    func updateShortcut() {
+        shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut,
+                                                    updateDescription: updateDescription,
+                                                    updateLink: updatedLink)
+        self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcut.id) ?? shortcut
+        isUpdatingShortcut.toggle()
+    }
     func deleteShortcut() {
         shortcutsZipViewModel.deleteShortcutIDInUser(shortcutID: shortcut.id)
         shortcutsZipViewModel.deleteShortcutInCuration(curationsIDs: shortcut.curationIDs, shortcutID: shortcut.id)
@@ -105,13 +127,27 @@ final class ReadShortcutViewModel: ObservableObject {
         shortcutsZipViewModel.shortcutsMadeByUser = shortcutsZipViewModel.shortcutsMadeByUser.filter { $0.id != shortcut.id }
         shortcutsZipViewModel.updateShortcutGrade()
     }
-    
-    func cancelEditingComment() {
-        self.isEditingComment.toggle()
-        self.comment = self.comment.resetComment()
-        self.commentText = ""
+    func shareShortcut() {
+        guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
+        let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        guard let window = windowScene?.windows.first else { return }
+        window.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
     
+    //MARK: - UserGrading
+    func checkDownGrading() {
+        isDeletingShortcut.toggle()
+        isDowngradingUserLevel = shortcutsZipViewModel.isShortcutDowngrade()
+    }
+    
+    func fetchUserGrade(id: String) -> Image {
+        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: id))
+    }
+}
+
+//MARK: - Comment
+extension ReadShortcutViewModel {
     func postComment() {
         if !isEditingComment {
             comment.contents = commentText
@@ -131,34 +167,10 @@ final class ReadShortcutViewModel: ObservableObject {
         self.comments.comments = comments.fetchSortedComment()
     }
     
-    func cancelNestedComment() {
-        comment.bundle_id = "\(Date().getDate())_\(UUID().uuidString)"
-        comment.depth = 0
-    }
-    
-    func checkAuthor() -> Bool {
-        return self.shortcut.author == shortcutsZipViewModel.currentUser()
-    }
-    
-    func shareShortcut() {
-        guard let deepLink = URL(string: "ShortcutsZip://myPage/detailView?shortcutID=\(shortcut.id)") else { return }
-        let activityVC = UIActivityViewController(activityItems: [deepLink], applicationActivities: nil)
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        guard let window = windowScene?.windows.first else { return }
-        window.rootViewController?.present(activityVC, animated: true, completion: nil)
-    }
-    
-    func checkDowngrading() {
-        isDeletingShortcut.toggle()
-        isDowngradingUserLevel = shortcutsZipViewModel.isShortcutDowngrade()
-    }
-    
-    func updateShortcut() {
-        shortcutsZipViewModel.updateShortcutVersion(shortcut: shortcut,
-                                                    updateDescription: updateDescription,
-                                                    updateLink: updatedLink)
-        self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcut.id) ?? shortcut
-        isUpdatingShortcut.toggle()
+    func cancelEditingComment() {
+        self.isEditingComment.toggle()
+        self.comment = self.comment.resetComment()
+        self.commentText = ""
     }
     
     func deleteComment() {
@@ -171,11 +183,20 @@ final class ReadShortcutViewModel: ObservableObject {
         shortcutsZipViewModel.setData(model: comments)
     }
     
-    func fetchUserGrade(id: String) -> Image {
-        shortcutsZipViewModel.fetchShortcutGradeImage(isBig: false, shortcutGrade: shortcutsZipViewModel.checkShortcutGrade(userID: id))
+    
+    //MARK: -  대댓글
+    func getReplyNumber(bundleId: String) -> Int {
+        self.comments.comments.filter{ $0.bundle_id == bundleId }.count-1
     }
     
-    func refreshShortcut() {
-        self.shortcut = shortcutsZipViewModel.fetchShortcutDetail(id: shortcut.id) ?? shortcut
+    func setReply(to comment: Comment) {
+        self.nestedCommentTarget = comment.user_nickname + " " + comment.contents
+        self.comment.bundle_id = comment.bundle_id
+        self.comment.depth = 1
+    }
+    
+    func cancelReply() {
+        comment.bundle_id = "\(Date().getDate())_\(UUID().uuidString)"
+        comment.depth = 0
     }
 }

@@ -998,7 +998,7 @@ extension ShortcutsZipViewModel {
     func fetchShortcutGradeImage(isBig: Bool, shortcutGrade: ShortcutGrade) -> Image {
         switch shortcutGrade {
         case .level0:
-            return Image(systemName: "person.crop.circle.fill")
+            return Image("profileIcon")
         case .level1:
             return Image(isBig ? "level1Big" : "level1Small")
         case .level2:
