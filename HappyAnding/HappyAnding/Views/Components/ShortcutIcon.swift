@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//TODO: 추후 사이즈별 아이콘 크기 조절 필요
 struct ShortcutIcon: View {
     @Environment(\.colorScheme) var colorScheme
     
@@ -16,17 +17,23 @@ struct ShortcutIcon: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 13)
-                .foregroundStyle(SCZColor.colors[color]?.color(for: colorScheme).fillGradient() ?? Color.clear.toGradient())
-                .roundedBorder(cornerRadius: 13, color: .white, isNormalBlend: true, opacity: 0.24)
+            Image(systemName: "app.fill")
+                .resizable()
+                .scaledToFit()
                 .frame(width: size, height: size)
+                .foregroundStyle(SCZColor.colors[color]?.color(for: colorScheme).fillGradient() ??  Color.clear.toGradient())
+            Image(size>50 ? "appLarge" : "app")
+                .resizable()
+                .scaledToFit()
+                .frame(width: size, height: size)
+                .foregroundStyle(SCZColor.colors[color]?.color(for: colorScheme).strokeGradient() ??  Color.clear.toGradient())
             Image(systemName: sfSymbol)
-                .font(.system(size: size/2 - 5))
+                .font(.system(size: size/2))
                 .foregroundStyle(Color.white)
         }
     }
 }
-
+ 
 #Preview {
-    ShortcutIcon(sfSymbol: "play.rectangle.fill", color: "Red", size: 56)
+    ShortcutIcon(sfSymbol: "alarm.fill", color: "Yellow", size: 96)
 }
