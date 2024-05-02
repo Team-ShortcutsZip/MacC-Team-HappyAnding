@@ -64,8 +64,26 @@ extension View {
     func smallShortcutIcon() -> some View {
         ModifiedContent(content: self, modifier: FontWithLineHeight(font: .smallShortcutIcon, lineHeight: 20))
     }
+    func regular16() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: UIFont(name: Pretendard.regular.rawValue, size: 16) ?? UIFont.systemFont(ofSize: 16), lineHeight: 24))
+    }
+    func  medium16() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: UIFont(name: Pretendard.medium.rawValue, size: 16) ?? UIFont.systemFont(ofSize: 16), lineHeight: 24))
+    }
+    func medium17() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: UIFont(name: Pretendard.medium.rawValue, size: 17) ?? UIFont.systemFont(ofSize: 17), lineHeight: 24))
+    }
+    func semiBold17() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: UIFont(name: Pretendard.semiBold.rawValue, size: 17) ?? UIFont.systemFont(ofSize: 17), lineHeight: 24))
+    }
+    func numRegular16() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: UIFont(name: SFCompactRounded.regular.rawValue, size: 16) ?? UIFont.systemFont(ofSize: 16), lineHeight: 24))
+    }
+    
+    func descriptionReadable() -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: UIFont(name: Pretendard.regular.rawValue, size: 16) ?? UIFont.systemFont(ofSize: 16), lineHeight: 24))
+    }
 }
-
 
 // MARK: - View Modifier
 /**

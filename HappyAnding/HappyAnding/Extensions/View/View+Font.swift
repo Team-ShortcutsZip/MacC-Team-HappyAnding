@@ -18,6 +18,13 @@ enum Pretendard: String {
     case bold = "Pretendard-Bold"
 }
 
+enum SFCompactRounded: String {
+    case regular = "SF-Compact-Rounded-Regular"
+    case medium = "SF-Compact-Rounded-Medium"
+    case semiBold = "SF-Compact-Rounded-Semibold"
+    case bold = "SF-Compact-Rounded-Bold"
+}
+
 ///Pretendard 폰트를 기존 modifier와 같이 사용할 수 있게 해 주는 Extension
 ///사용 예시
 ///Text("단축어").largeTitle()
@@ -53,6 +60,10 @@ extension View {
     }
     
     func customPretendard(fontName: Pretendard, size: CGFloat) -> some View {
+        self.modifier(CustomFontStyle(fontName: fontName.rawValue, size: size))
+    }
+    
+    func customSFCompactRounded(fontName: SFCompactRounded, size: CGFloat) -> some View {
         self.modifier(CustomFontStyle(fontName: fontName.rawValue, size: size))
     }
 }
