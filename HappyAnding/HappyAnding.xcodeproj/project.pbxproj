@@ -125,6 +125,14 @@
 		A3FF01882918581E00384211 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF01872918581E00384211 /* LicenseView.swift */; };
 		A3FF018A2918F8EF00384211 /* apache.txt in Resources */ = {isa = PBXBuildFile; fileRef = A3FF01892918F8EF00384211 /* apache.txt */; };
 		A3FF018E291ACFA500384211 /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF018D291ACFA500384211 /* WithdrawalView.swift */; };
+		F86DC3902BBC74CB00926285 /* CommunityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86DC38F2BBC74CB00926285 /* CommunityRepository.swift */; };
+		F86DC3922BBDB7E800926285 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86DC3912BBDB7E800926285 /* Post.swift */; };
+		F86DC3942BBDB7F200926285 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86DC3932BBDB7F200926285 /* Answer.swift */; };
+		F86DC3962BBDBECF00926285 /* CommunityComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86DC3952BBDBECF00926285 /* CommunityComment.swift */; };
+		F86DC3982BBDE17C00926285 /* CommunityRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86DC3972BBDE17C00926285 /* CommunityRepositoryTest.swift */; };
+		F86DC39B2BBE7A0600926285 /* PostType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86DC39A2BBE7A0600926285 /* PostType.swift */; };
+		F86DC39D2BC92FCD00926285 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F86DC39C2BC92FCD00926285 /* FirebaseStorage */; };
+		F86E620A2BE35DFE00E26806 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86E62092BE35DFE00E26806 /* SearchRepository.swift */; };
 		F90DEA4F29327E4D002140E2 /* NavigationStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8764C0D6291F85DF00E1593B /* NavigationStackModel.swift */; };
 		F90DEA5029327E5D002140E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87E99C7128F94EA8009B691F /* Assets.xcassets */; };
 		F90DEA5129327E62002140E2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D41EE07290A4C18008BE986 /* Launch Screen.storyboard */; };
@@ -301,6 +309,13 @@
 		A3FF01872918581E00384211 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
 		A3FF01892918F8EF00384211 /* apache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = apache.txt; sourceTree = "<group>"; };
 		A3FF018D291ACFA500384211 /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
+		F86DC38F2BBC74CB00926285 /* CommunityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRepository.swift; sourceTree = "<group>"; };
+		F86DC3912BBDB7E800926285 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		F86DC3932BBDB7F200926285 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		F86DC3952BBDBECF00926285 /* CommunityComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityComment.swift; sourceTree = "<group>"; };
+		F86DC3972BBDE17C00926285 /* CommunityRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityRepositoryTest.swift; sourceTree = "<group>"; };
+		F86DC39A2BBE7A0600926285 /* PostType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostType.swift; sourceTree = "<group>"; };
+		F86E62092BE35DFE00E26806 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		F9131B6A2922D38D00868A0E /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
 		F9136EB5293612310034AAB2 /* ShortcutsZipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsZipView.swift; sourceTree = "<group>"; };
 		F91A72C0299915C500CA135A /* MoreCaptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCaptionTextView.swift; sourceTree = "<group>"; };
@@ -336,6 +351,7 @@
 				F94B435D2907B19A00987819 /* FirebaseAnalytics in Frameworks */,
 				F94B43632907B19A00987819 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				F94B435F2907B19A00987819 /* FirebaseAuth in Frameworks */,
+				F86DC39D2BC92FCD00926285 /* FirebaseStorage in Frameworks */,
 				F94B43612907B19A00987819 /* FirebaseFirestore in Frameworks */,
 				4D6A9EFF29A36E9C00D02522 /* WrappingHStack in Frameworks */,
 			);
@@ -489,6 +505,7 @@
 		87E99C6C28F94EA6009B691F /* HappyAnding */ = {
 			isa = PBXGroup;
 			children = (
+				F86DC38E2BBC74B600926285 /* Repository */,
 				87E606AD2910623C00C3DA13 /* HappyAnding.entitlements */,
 				3D41EE06290A458B008BE986 /* Info.plist */,
 				87E99CC22901454D009B691F /* Extensions */,
@@ -516,6 +533,7 @@
 			isa = PBXGroup;
 			children = (
 				87E99C7E28F94EA8009B691F /* HappyAndingTests.swift */,
+				F86DC3972BBDE17C00926285 /* CommunityRepositoryTest.swift */,
 			);
 			path = HappyAndingTests;
 			sourceTree = "<group>";
@@ -672,6 +690,10 @@
 				F91F09DC29AE012600E04FA0 /* ShortcutGrade.swift */,
 				872B5D3C2A2E0FF9008DCC57 /* CurationType.swift */,
 				A323D3C92AEE870700DDA716 /* SuggestionForm.swift */,
+				F86DC3912BBDB7E800926285 /* Post.swift */,
+				F86DC3932BBDB7F200926285 /* Answer.swift */,
+				F86DC3952BBDBECF00926285 /* CommunityComment.swift */,
+				F86DC39A2BBE7A0600926285 /* PostType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -766,6 +788,15 @@
 			path = SettingViews;
 			sourceTree = "<group>";
 		};
+		F86DC38E2BBC74B600926285 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				F86DC38F2BBC74CB00926285 /* CommunityRepository.swift */,
+				F86E62092BE35DFE00E26806 /* SearchRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		F9DB8ECB293B30EC00516CE1 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -798,6 +829,7 @@
 				F94B43622907B19A00987819 /* FirebaseFirestoreCombine-Community */,
 				4D6A9EFE29A36E9C00D02522 /* WrappingHStack */,
 				4D93D0762A73C9330042CBA8 /* FirebaseMessaging */,
+				F86DC39C2BC92FCD00926285 /* FirebaseStorage */,
 			);
 			productName = HappyAnding;
 			productReference = 87E99C6A28F94EA6009B691F /* HappyAnding.app */;
@@ -993,6 +1025,7 @@
 				F96D45B72980301F000C2441 /* SubtitleTextView.swift in Sources */,
 				A323D3CA2AEE870700DDA716 /* SuggestionForm.swift in Sources */,
 				4DF15D752A4ECE1F0014F854 /* ListCategoryShortcutViewModel.swift in Sources */,
+				F86DC3902BBC74CB00926285 /* CommunityRepository.swift in Sources */,
 				87E99CDB29042CCA009B691F /* Category.swift in Sources */,
 				876B4F6F299E3D91009672D9 /* NavigationRouter.swift in Sources */,
 				A04ACB062903D0B2004A85A6 /* MyShortcutCardView.swift in Sources */,
@@ -1000,7 +1033,9 @@
 				F9CAEF832914855900224B0A /* Date+String.swift in Sources */,
 				87E606B629114F7D00C3DA13 /* WriteNicknameView.swift in Sources */,
 				4D7D16072986BBD7008B3332 /* TextLiteral.swift in Sources */,
+				F86DC3922BBDB7E800926285 /* Post.swift in Sources */,
 				87E99CC128FFF2B5009B691F /* CategoryModalView.swift in Sources */,
+				F86DC3962BBDBECF00926285 /* CommunityComment.swift in Sources */,
 				87E606B829114FB200C3DA13 /* UserAuth.swift in Sources */,
 				8788E1A02A48408F007C3852 /* ExploreCurationViewModel.swift in Sources */,
 				8786B33E29ABA5A9000B46A1 /* View+Shape.swift in Sources */,
@@ -1021,6 +1056,7 @@
 				F91A72C32999160E00CA135A /* Alerter.swift in Sources */,
 				87E99CAD28FFF261009B691F /* ReadShortcutView.swift in Sources */,
 				4D5889E82AA36A52000C4849 /* AppDelegate.swift in Sources */,
+				F86DC39B2BBE7A0600926285 /* PostType.swift in Sources */,
 				A33F74AE2908D8C800B8D0D0 /* CheckBoxShortcutCell.swift in Sources */,
 				87E606B22910649B00C3DA13 /* SignInWithAppleView.swift in Sources */,
 				A38F3B1F2AE62E8D0036FCAC /* SuggestionFormView.swift in Sources */,
@@ -1041,8 +1077,10 @@
 				87E99CC9290145B8009B691F /* ListShortcutView.swift in Sources */,
 				F92766552A61A032009C4EC2 /* WriteShortcutModalViewModel.swift in Sources */,
 				A3FF01862918552E00384211 /* AboutTeamView.swift in Sources */,
+				F86E620A2BE35DFE00E26806 /* SearchRepository.swift in Sources */,
 				87E99C6E28F94EA6009B691F /* HappyAndingApp.swift in Sources */,
 				87E99CD32901465F009B691F /* ValidationCheckTextField.swift in Sources */,
+				F86DC3942BBDB7F200926285 /* Answer.swift in Sources */,
 				87DBFB062A2127C0000CC442 /* CheckVersionView.swift in Sources */,
 				A3FF01882918581E00384211 /* LicenseView.swift in Sources */,
 				A3439AFB2939B0E80043E273 /* UserDefaults+Extension.swift in Sources */,
@@ -1068,6 +1106,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87E99C7F28F94EA8009B691F /* HappyAndingTests.swift in Sources */,
+				F86DC3982BBDE17C00926285 /* CommunityRepositoryTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,7 +1325,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfile_Dev_20231113;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfile_Dev_20240317;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1329,7 +1368,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfile_Dev_20231113;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipProfile_Dev_20240317;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1438,7 +1477,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtProfile_Dev_20231113;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtProfile_Dev_20240317;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1470,7 +1509,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.happyanding.HappyAnding.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtProfile_Dev_20231113;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = ShortcutsZipShareExtProfile_Dev_20240317;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1577,6 +1616,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreCombine-Community";
+		};
+		F86DC39C2BC92FCD00926285 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F94B435B2907B19A00987819 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		F94B435C2907B19A00987819 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
