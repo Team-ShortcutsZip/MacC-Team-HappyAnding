@@ -8,62 +8,62 @@
 import SwiftUI
 
 //TODO: 레포지터리 머지 시 삭제 필요
-enum PostType: String, Codable {
-    case General = "General"
-    case Question = "Question"
-}
-
-struct Post: Identifiable, Codable, Equatable, Hashable {
-    
-    let id : String
-    let type: PostType
-    let createdAt: String
-    let author: String
-    
-    var content: String
-    var shortcuts: [String]
-    var images: [String]
-    var likedBy: [String:Bool]
-    var likeCount: Int
-    var commentCount: Int
-    
-    init(type: PostType, content: String, author: String, shortcuts: [String] = [], images: [String] = []) {
-        
-        self.id = UUID().uuidString
-        self.createdAt = Date().getDate()
-        
-        self.type = type
-        self.content = content
-        self.author = author
-        self.shortcuts = shortcuts
-        self.images = images
-        
-        self.likeCount = 0
-        self.commentCount = 0
-        self.likedBy = [:]
-        
-    }
-    
-    init() {
-        self.id = UUID().uuidString
-        self.createdAt = Date().getDate()
-        
-        self.type = .General
-        self.content = "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하"
-        self.author = "author"
-        self.shortcuts = ["shortcuts"]
-        self.images = ["images"]
-        
-        self.likeCount = 0
-        self.commentCount = 0
-        self.likedBy = [:]
-    }
-    
-    var dictionary: [String: Any] {
-        let data = (try? JSONEncoder().encode(self)) ?? Data()
-        return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
-    }
-}
+//enum PostType: String, Codable {
+//    case General = "General"
+//    case Question = "Question"
+//}
+//
+//struct Post: Identifiable, Codable, Equatable, Hashable {
+//    
+//    let id : String
+//    let type: PostType
+//    let createdAt: String
+//    let author: String
+//    
+//    var content: String
+//    var shortcuts: [String]
+//    var images: [String]
+//    var likedBy: [String:Bool]
+//    var likeCount: Int
+//    var commentCount: Int
+//    
+//    init(type: PostType, content: String, author: String, shortcuts: [String] = [], images: [String] = []) {
+//        
+//        self.id = UUID().uuidString
+//        self.createdAt = Date().getDate()
+//        
+//        self.type = type
+//        self.content = content
+//        self.author = author
+//        self.shortcuts = shortcuts
+//        self.images = images
+//        
+//        self.likeCount = 0
+//        self.commentCount = 0
+//        self.likedBy = [:]
+//        
+//    }
+//    
+//    init() {
+//        self.id = UUID().uuidString
+//        self.createdAt = Date().getDate()
+//        
+//        self.type = .General
+//        self.content = "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하"
+//        self.author = "author"
+//        self.shortcuts = ["shortcuts"]
+//        self.images = ["images"]
+//        
+//        self.likeCount = 0
+//        self.commentCount = 0
+//        self.likedBy = [:]
+//    }
+//    
+//    var dictionary: [String: Any] {
+//        let data = (try? JSONEncoder().encode(self)) ?? Data()
+//        return (try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]) ?? [:]
+//    }
+//}
 
 final class SearchViewModel: ObservableObject {
     private let shortcutsZipViewModel = ShortcutsZipViewModel.share
